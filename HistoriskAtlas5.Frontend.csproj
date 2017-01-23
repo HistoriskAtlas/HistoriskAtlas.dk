@@ -1,0 +1,716 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProjectGuid>{5FDCAE50-2798-4243-BFE6-38F751658D65}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <OutputPath>bin</OutputPath>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <TypeScriptToolsVersion>1.7</TypeScriptToolsVersion>
+    <TypeScriptEmitDecoratorMetadata>True</TypeScriptEmitDecoratorMetadata>
+    <TypeScriptExperimentalDecorators>True</TypeScriptExperimentalDecorators>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="activate.html" />
+    <Content Include="bin\Antlr3.Runtime.dll" />
+    <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
+    <Content Include="bin\Newtonsoft.Json.dll" />
+    <Content Include="bin\Svg.dll" />
+    <Content Include="bin\System.Web.Optimization.dll" />
+    <Content Include="bin\WebGrease.dll" />
+    <Content Include="bower_components\polymer-ts\.bower.json" />
+    <Content Include="bower_components\polymer-ts\bower.json" />
+    <Content Include="bower_components\polymer-ts\LICENSE.txt" />
+    <Content Include="bower_components\polymer-ts\polymer-ts.html" />
+    <Content Include="bower_components\polymer-ts\polymer-ts.js" />
+    <Content Include="bower_components\polymer-ts\polymer-ts.js.map" />
+    <Content Include="bower_components\polymer-ts\polymer-ts.min.html" />
+    <Content Include="bower_components\polymer-ts\polymer-ts.min.js" />
+    <Content Include="bower_components\polymer-ts\polymer-ts.min.js.map" />
+    <Content Include="bower_components\polymer-ts\polymer-ts.ts" />
+    <Content Include="bower_components\polymer-ts\README.md" />
+    <Content Include="css\ol.css" />
+    <Content Include="cs\proxy\test.xml" />
+    <Content Include="elements\admin\windows\window-admin\panel-geo-admin\panel-geo-admin.html" />
+    <Content Include="elements\admin\windows\window-admin\panel-tag-admin\panel-tag-admin.html" />
+    <Content Include="elements\admin\windows\window-dev\window-dev.html" />
+    <Content Include="elements\core\dialogs\dialog-video-intro\dialog-video-intro.html" />
+    <Content Include="elements\core\input\dropdown-input\dropdown-input.html" />
+    <Content Include="elements\core\input\confirm-input\confirm-input.html" />
+    <Content Include="elements\core\collections\ha-geos-search\ha-geos-search.html" />
+    <Content Include="elements\core\collections\ha-geo\ha-geo.html" />
+    <Content Include="elements\core\collections\ha-contents\ha-contents.html" />
+    <Content Include="elements\core\collections\ha-collections\ha-collections.html" />
+    <Content Include="elements\core\collections\ha-digdag\ha-digdag.html" />
+    <Content Include="elements\core\collections\ha-institutions\ha-institutions.html" />
+    <Content Include="elements\core\collections\ha-licenses\ha-licenses.html" />
+    <Content Include="elements\core\collections\ha-users\ha-users.html" />
+    <Content Include="elements\core\dialogs\dialog-alert\dialog-alert.html" />
+    <Content Include="elements\core\dialogs\dialog-selection\dialog-selection.html" />
+    <Content Include="elements\core\dialogs\dialog-confirm\dialog-confirm.html" />
+    <Content Include="elements\core\dialogs\dialog-add-to-homescreen\dialog-add-to-homescreen.html" />
+    <Content Include="elements\core\dialogs\dialog-tour-intro\dialog-tour-intro.html" />
+    <Content Include="elements\core\dialogs\dialog-tour\dialog-tour.html" />
+    <Content Include="elements\core\dialogs\dialog-report\dialog-report.html" />
+    <Content Include="elements\core\dialogs\dialog-share-link\dialog-share-link.html" />
+    <Content Include="elements\core\dialogs\dialog-text\dialog-text.html" />
+    <Content Include="elements\core\collections\ha-image\ha-image.html" />
+    <Content Include="elements\core\icons\cc-icons\cc-icons.html" />
+    <Content Include="elements\core\icons\ha-icons\ha-icons.html" />
+    <Content Include="elements\core\lists\geo-list\geo-list.html" />
+    <Content Include="elements\core\panels\panel-theme\panel-theme.html" />
+    <Content Include="elements\core\content-viewer\content-viewer.html" />
+    <Content Include="elements\core\windows\abouts\window-member-signup\window-member-signup.html" />
+    <Content Include="elements\core\windows\window-institution\window-institution.html" />
+    <Content Include="elements\core\windows\window-geo\window-geo-by-line\window-geo-by-line.html" />
+    <Content Include="elements\editor\windows\window-editorial\panel-user-editorial\panel-user-editorial.html" />
+    <Content Include="elements\editor\windows\window-editorial\panel-geo-editorial\panel-geo-editorial.html" />
+    <Content Include="elements\editor\windows\window-editorial\window-editorial.html" />
+    <Content Include="elements\ha_writer.aspx" />
+    <Content Include="elements\ha_editor.aspx" />
+    <Content Include="elements\ha_admin.aspx" />
+    <Content Include="elements\ha_core_geo_only.aspx" />
+    <Content Include="elements\ha_core.aspx" />
+    <Content Include="elements\core\icons\licens-mark\licens-mark.html" />
+    <Content Include="elements\admin\lists\list-auto-suggest\list-auto-suggest.html" />
+    <Content Include="elements\core\main-app\main-search\main-search.html" />
+    <Content Include="elements\core\main-menu\main-menu-item\main-menu-item.html" />
+    <Content Include="elements\core\main-menu\main-menu.html" />
+    <Content Include="elements\core\main-app\global-app\global-app.html" />
+    <Content Include="elements\core\map\map-tooltip\map-tooltip.html" />
+    <Content Include="elements\admin\windows\window-admin\panel-admin\panel-admin.html" />
+    <Content Include="elements\core\panels\panel-route\panel-route.html" />
+    <Content Include="elements\core\red-ribbon\red-ribbon.html" />
+    <Content Include="elements\core\panels\panel-intro-beta\panel-intro-beta.html" />
+    <Content Include="elements\core\panels\panel-map\panel-map.html" />
+    <Content Include="elements\core\panels\panel-digdag\panel-digdag.html" />
+    <Content Include="elements\core\map\map-controls\map-controls.html" />
+    <Content Include="elements\core\dialogs\dialog-publish\dialog-rich-text.html" />
+    <Content Include="elements\writer\file-upload\file-upload.html" />
+    <Content Include="elements\core\input\plain-text\plain-text.html" />
+    <Content Include="elements\core\time-line-slider\time-line-slider.html" />
+    <Content Include="elements\core\time-lines\time-lines.html" />
+    <Content Include="elements\core\timewarp\time-warp-closed\time-warp-closed.html" />
+    <Content Include="elements\core\timewarp\time-warp-button\time-warp-button.html" />
+    <Content Include="elements\core\timewarp\time-warp-opacity-button\time-warp-opacity-button.html" />
+    <Content Include="elements\core\timewarp\time-warp-map-button\time-warp-map-button.html" />
+    <Content Include="elements\core\timewarp\time-warp-close-button\time-warp-close-button.html" />
+    <Content Include="elements\core\timewarp\time-warp-shape-button\time-warp-shape-button.html" />
+    <Content Include="elements\core\dialogs\dialog-loading\dialog-loading.html" />
+    <Content Include="elements\core\toast-wrapper\toast-wrapper.html" />
+    <Content Include="elements\core\mit-atlas-button\mit-atlas-button.html" />
+    <Content Include="elements\core\time-line\time-line.html" />
+    <Content Include="elements\core\input\rich-text\rich-text.html" />
+    <Content Include="elements\core\panels\panel-tag\panel-tag.html" />
+    <Content Include="elements\core\windows\abouts\window-contact\window-contact.html" />
+    <Content Include="elements\core\windows\abouts\window-monetary-support\window-monetary-support.html" />
+    <Content Include="elements\core\windows\abouts\window-become-a-member\window-become-a-member.html" />
+    <Content Include="elements\core\windows\abouts\window-committee\window-committee.html" />
+    <Content Include="elements\core\windows\abouts\window-the-association\window-the-association.html" />
+    <Content Include="elements\admin\windows\window-admin\panel-institution-admin\panel-institution-admin.html" />
+    <Content Include="elements\admin\windows\window-admin\panel-user-admin\panel-user-admin.html" />
+    <Content Include="elements\core\windows\window-geo\window-geo-add-content\window-geo-add-content.html" />
+    <Content Include="elements\core\windows\window-geo\window-geo-tag-list\window-geo-tag-list.html" />
+    <Content Include="elements\admin\windows\window-admin\window-admin.html" />
+    <Content Include="elements\editor\array-sort-selector\array-sort-selector.html" />
+    <Content Include="elements\writer\windows\window-geo-editorial\window-geo-editorial-panel-notes\window-geo-editorial-panel-notes.html" />
+    <Content Include="elements\writer\windows\window-geo-editorial\window-geo-editorial.html" />
+    <Content Include="elements\writer\windows\window-user-news\window-user-news.html" />
+    <Content Include="elements\core\windows\window-terms-of-use\window-terms-of-use.html" />
+    <Content Include="elements\core\windows\abouts\window-about\window-about.html" />
+    <Content Include="elements\core\windows\window-privacy\window-privacy.html" />
+    <Content Include="elements\core\windows\window-geo\window-geo-settings\window-geo-settings.html" />
+    <Content Include="elements\core\windows\window-geo\window-geo-biblio\window-geo-biblio.html" />
+    <Content Include="elements\core\windows\window-route\window-route.html" />
+    <Content Include="elements\core\windows\window-routes\window-routes.html" />
+    <Content Include="elements\core\windows\window-feedback\window-feedback.html" />
+    <Content Include="elements\core\windows\window-login\panel-create-user\panel-create-user.html" />
+    <Content Include="elements\core\windows\window-login\panel-login\panel-login.html" />
+    <Content Include="elements\writer\windows\window-profile\window-profile.html" />
+    <Content Include="elements\core\windows\window-image\window-image.html" />
+    <Content Include="elements\core\windows\window-favourites\window-favourites.html" />
+    <Content Include="elements\core\windows\window-intro-beta\window-intro-beta.html" />
+    <Content Include="elements\core\windows\window-region-type\window-region-type.html" />
+    <Content Include="elements\core\windows\window-region\window-region.html" />
+    <Content Include="elements\core\windows\window-map\window-map.html" />
+    <Content Include="html\RegionTypeAbouts\110.html" />
+    <Content Include="html\RegionTypeAbouts\109.html" />
+    <Content Include="html\RegionTypeAbouts\106.html" />
+    <Content Include="html\RegionTypeAbouts\105.html" />
+    <Content Include="html\RegionTypeAbouts\104.html" />
+    <Content Include="html\RegionTypeAbouts\62.html" />
+    <Content Include="html\RegionTypeAbouts\113.html" />
+    <Content Include="html\RegionTypeAbouts\26.html" />
+    <Content Include="html\RegionTypeAbouts\108.html" />
+    <Content Include="html\RegionTypeAbouts\103.html" />
+    <Content Include="html\RegionTypeAbouts\68.html" />
+    <Content Include="html\RegionTypeAbouts\43.html" />
+    <Content Include="html\RegionTypeAbouts\59.html" />
+    <Content Include="html\RegionTypeAbouts\42.html" />
+    <Content Include="html\RegionTypeAbouts\39.html" />
+    <Content Include="html\RegionTypeAbouts\33.html" />
+    <Content Include="html\RegionTypeAbouts\29.html" />
+    <Content Include="html\RegionTypeAbouts\23.html" />
+    <Content Include="html\RegionTypeAbouts\81.html" />
+    <Content Include="html\RegionTypeAbouts\76.html" />
+    <Content Include="html\RegionTypeAbouts\65.html" />
+    <Content Include="html\RegionTypeAbouts\82.html" />
+    <Content Include="html\RegionTypeAbouts\80.html" />
+    <Content Include="html\RegionTypeAbouts\79.html" />
+    <Content Include="html\RegionTypeAbouts\66.html" />
+    <Content Include="html\RegionTypeAbouts\46.html" />
+    <Content Include="html\RegionTypeAbouts\45.html" />
+    <Content Include="html\RegionTypeAbouts\100.html" />
+    <Content Include="html\RegionTypeAbouts\107.html" />
+    <Content Include="html\RegionTypeAbouts\16.html" />
+    <Content Include="html\RegionTypeAbouts\11.html" />
+    <Content Include="html\RegionTypeAbouts\77.html" />
+    <Content Include="html\RegionTypeAbouts\40.html" />
+    <Content Include="html\RegionTypeAbouts\102.html" />
+    <Content Include="html\RegionTypeAbouts\101.html" />
+    <Content Include="images\logos\HoD2017logo.png" />
+    <Content Include="images\logos\nordea-fonden-black-logo.png" />
+    <Content Include="images\logos\nordea-fonden-white-logo.png" />
+    <Content Include="images\markers\move-marker.png" />
+    <Content Include="images\markers\tag0.svg" />
+    <Content Include="images\red-ribbon\red-ribbon.png" />
+    <Content Include="images\red-ribbon\red-curtain.jpg" />
+    <Content Include="images\red-ribbon\scissorsClosed.png" />
+    <Content Include="images\red-ribbon\scissorsOpen1.png" />
+    <Content Include="images\red-ribbon\scissorsOpen2.png" />
+    <Content Include="images\youtubePlay.png" />
+    <Content Include="js\jquery\Base64.js" />
+    <Content Include="js\jquery\jquery-2.2.0.min.js" />
+    <Content Include="js\jquery\jquery-ui-1.11.0.js" />
+    <Content Include="js\jquery\jquery-ui.1.11.4.custom.js" />
+    <Content Include="js\jquery\jquery-ui.1.11.4.custom.min.js" />
+    <Content Include="js\jquery\jquery.mCustomScrollbar.concat.min.js" />
+    <Content Include="js\jquery\jquery.md5.js" />
+    <Content Include="js\jquery\jquery.mobile.1.4.5.custom.js" />
+    <Content Include="js\jquery\jquery.mobile.1.4.5.custom.min.js" />
+    <Content Include="js\jquery\jquery.mobile.custom.js" />
+    <Content Include="js\jquery\simplegallery.js" />
+    <Content Include="js\ol\ol-custom.js" />
+    <Content Include="html\RegionTypeAbouts\64.html" />
+    <Content Include="ProofOfConcept\DigDag\ol.canvastile.js" />
+    <Content Include="bowerupdate.bat" />
+    <TypeScriptCompile Include="bower_components\polymer-ts\polymer-ts.d.ts" />
+    <TypeScriptCompile Include="classes\appmode.ts" />
+    <TypeScriptCompile Include="classes\HAClasses\hasubcontentexternal.ts" />
+    <TypeScriptCompile Include="classes\HAClasses\hasubcontentbiblio.ts" />
+    <TypeScriptCompile Include="classes\HAClasses\hasubcontenttext.ts" />
+    <TypeScriptCompile Include="classes\HAClasses\hasubcontent.ts" />
+    <TypeScriptCompile Include="classes\HAClasses\halicens.ts" />
+    <TypeScriptCompile Include="classes\localStorage.ts" />
+    <TypeScriptCompile Include="classes\common.ts" />
+    <TypeScriptCompile Include="classes\HAClasses\hacollection.ts" />
+    <TypeScriptCompile Include="classes\HAClasses\hamap.ts" />
+    <TypeScriptCompile Include="classes\HAClasses\haregiontypecategory.ts" />
+    <TypeScriptCompile Include="classes\HAClasses\haregiontype.ts" />
+    <TypeScriptCompile Include="classes\Map\IconLayerNonClustered.ts" />
+    <TypeScriptCompile Include="classes\Map\IconLayerBase.ts" />
+    <TypeScriptCompile Include="classes\Map\TimelineMap.ts" />
+    <TypeScriptCompile Include="classes\Map\kDtree.ts" />
+    <TypeScriptCompile Include="classes\services.ts" />
+    <TypeScriptCompile Include="classes\Map\DigDagHelperLayer.ts" />
+    <TypeScriptCompile Include="classes\Map\RouteLayer.ts" />
+    <TypeScriptCompile Include="classes\Map\TileLayer.ts" />
+    <TypeScriptCompile Include="classes\Map\IconLayer.ts" />
+    <TypeScriptCompile Include="classes\HAClasses\hageo.ts" />
+    <TypeScriptCompile Include="classes\Map\Icon.ts" />
+    <TypeScriptCompile Include="classes\Map\BackLayer.ts" />
+    <TypeScriptCompile Include="classes\Map\HillshadeLayer.ts" />
+    <TypeScriptCompile Include="classes\HAClasses\hatag.ts" />
+    <TypeScriptCompile Include="classes\HAClasses\haimage.ts" />
+    <TypeScriptCompile Include="classes\HAClasses\hapdf.ts" />
+    <TypeScriptCompile Include="classes\HAClasses\hauser.ts" />
+    <TypeScriptCompile Include="classes\HAClasses\hainstitution.ts" />
+    <TypeScriptCompile Include="classes\Map\MainMap.ts" />
+    <TypeScriptCompile Include="classes\HAClasses\hacontent.ts" />
+    <TypeScriptCompile Include="classes\HAClasses\hageolog.ts" />
+    <TypeScriptCompile Include="classes\HAClasses\hatext.ts" />
+    <TypeScriptCompile Include="classes\Map\DigDagLayer.ts" />
+    <TypeScriptCompile Include="classes\HAClasses\haregion.ts" />
+    <TypeScriptCompile Include="elements\admin\windows\window-admin\panel-geo-admin\panel-geo-admin.ts" />
+    <TypeScriptCompile Include="elements\admin\windows\window-admin\panel-tag-admin\panel-tag-admin.ts" />
+    <TypeScriptCompile Include="elements\admin\windows\window-dev\window-dev.ts" />
+    <TypeScriptCompile Include="elements\core\dialogs\dialog-video-intro\dialog-video-intro.ts" />
+    <TypeScriptCompile Include="elements\core\input\dropdown-input\dropdown-input.ts" />
+    <TypeScriptCompile Include="elements\core\input\confirm-input\confirm-input.ts" />
+    <TypeScriptCompile Include="elements\core\collections\base\tags.ts" />
+    <Content Include="browserconfig.xml" />
+    <Content Include="elements\core\collections\ha-geos\ha-geos.html" />
+    <Content Include="elements\core\collections\ha-regions\ha-regions.html" />
+    <Content Include="css\app.css" />
+    <Content Include="css\color.css" />
+    <Content Include="css\timewarp.css" />
+    <Content Include="css\map.css" />
+    <Content Include="css\responsive.css" />
+    <Content Include="Default.aspx" />
+    <Content Include="elements\core\collections\ha-tags\ha-tags.html" />
+    <Content Include="elements\core\collections\ha-maps\ha-maps.html" />
+    <Content Include="elements\core\windows\window-geo\window-geo.html" />
+    <Content Include="elements\core\windows\window-search\window-search.html" />
+    <Content Include="elements\core\windows\window-login\window-login.html" />
+    <Content Include="elements\core\windows\window-basic\window-basic.html" />
+    <Content Include="elements\core\map\map-menu\map-menu.html" />
+    <Content Include="elements\core\main-app\main-app.html" />
+    <Content Include="favico.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="images\appicons\android-128x128.png" />
+    <Content Include="images\appicons\android-144x144.png" />
+    <Content Include="images\appicons\android-192x192.png" />
+    <Content Include="images\appicons\android-196x196.png" />
+    <Content Include="images\appicons\android-36x36.png" />
+    <Content Include="images\appicons\android-48x48.png" />
+    <Content Include="images\appicons\android-72x72.png" />
+    <Content Include="images\appicons\android-96x96.png" />
+    <Content Include="images\appicons\apple-touch-icon-114x114.png" />
+    <Content Include="images\appicons\apple-touch-icon-120x120.png" />
+    <Content Include="images\appicons\apple-touch-icon-144x144.png" />
+    <Content Include="images\appicons\apple-touch-icon-152x152.png" />
+    <Content Include="images\appicons\apple-touch-icon-180x180.png" />
+    <Content Include="images\appicons\apple-touch-icon-57x57.png" />
+    <Content Include="images\appicons\apple-touch-icon-60x60.png" />
+    <Content Include="images\appicons\apple-touch-icon-72x72.png" />
+    <Content Include="images\appicons\apple-touch-icon-76x76.png" />
+    <Content Include="images\appicons\apple-touch-icon.png" />
+    <Content Include="images\appicons\coast-228x228.png" />
+    <Content Include="images\appicons\favicon-128x128.png" />
+    <Content Include="images\appicons\favicon-16x16.png" />
+    <Content Include="images\appicons\favicon-256x256.png" />
+    <Content Include="images\appicons\favicon-32x32.png" />
+    <Content Include="images\appicons\favicon-48x48.png" />
+    <Content Include="images\appicons\favicon-64x64.png" />
+    <Content Include="images\appicons\favicon-96x96.png" />
+    <Content Include="images\appicons\FirefoxOS\icon-128.png" />
+    <Content Include="images\appicons\FirefoxOS\icon-512.png" />
+    <Content Include="images\appicons\FirefoxOS\icon-60.png" />
+    <Content Include="images\appicons\FirefoxOS\icon-90.png" />
+    <Content Include="images\appicons\logo-1000x1000.png" />
+    <Content Include="images\appicons\ie-icons\tile150x150.png" />
+    <Content Include="images\appicons\ie-icons\tile310x150.png" />
+    <Content Include="images\appicons\ie-icons\tile310x310.png" />
+    <Content Include="images\appicons\ie-icons\tile70x70.png" />
+    <Content Include="images\appicons\mstile-144x144.png" />
+    <Content Include="images\appicons\Windows10\BadgeLogo.scale-100.png" />
+    <Content Include="images\appicons\Windows10\BadgeLogo.scale-125.png" />
+    <Content Include="images\appicons\Windows10\BadgeLogo.scale-150.png" />
+    <Content Include="images\appicons\Windows10\BadgeLogo.scale-200.png" />
+    <Content Include="images\appicons\Windows10\BadgeLogo.scale-400.png" />
+    <Content Include="images\appicons\Windows10\SplashScreen.scale-100.png" />
+    <Content Include="images\appicons\Windows10\SplashScreen.scale-125.png" />
+    <Content Include="images\appicons\Windows10\SplashScreen.scale-150.png" />
+    <Content Include="images\appicons\Windows10\SplashScreen.scale-200.png" />
+    <Content Include="images\appicons\Windows10\SplashScreen.scale-400.png" />
+    <Content Include="images\appicons\Windows10\Square150x150Logo.scale-100.png" />
+    <Content Include="images\appicons\Windows10\Square150x150Logo.scale-125.png" />
+    <Content Include="images\appicons\Windows10\Square150x150Logo.scale-150.png" />
+    <Content Include="images\appicons\Windows10\Square150x150Logo.scale-200.png" />
+    <Content Include="images\appicons\Windows10\Square150x150Logo.scale-400.png" />
+    <Content Include="images\appicons\Windows10\Square310x310Logo.scale-100.png" />
+    <Content Include="images\appicons\Windows10\Square310x310Logo.scale-125.png" />
+    <Content Include="images\appicons\Windows10\Square310x310Logo.scale-150.png" />
+    <Content Include="images\appicons\Windows10\Square310x310Logo.scale-200.png" />
+    <Content Include="images\appicons\Windows10\Square310x310Logo.scale-400.png" />
+    <Content Include="images\appicons\Windows10\Square44x44Logo.scale-100.png" />
+    <Content Include="images\appicons\Windows10\Square44x44Logo.scale-125.png" />
+    <Content Include="images\appicons\Windows10\Square44x44Logo.scale-150.png" />
+    <Content Include="images\appicons\Windows10\Square44x44Logo.scale-200.png" />
+    <Content Include="images\appicons\Windows10\Square44x44Logo.scale-400.png" />
+    <Content Include="images\appicons\Windows10\Square44x44Logo.targetsize-16.png" />
+    <Content Include="images\appicons\Windows10\Square44x44Logo.targetsize-24.png" />
+    <Content Include="images\appicons\Windows10\Square44x44Logo.targetsize-256.png" />
+    <Content Include="images\appicons\Windows10\Square44x44Logo.targetsize-48.png" />
+    <Content Include="images\appicons\Windows10\Square71x71Logo.scale-100.png" />
+    <Content Include="images\appicons\Windows10\Square71x71Logo.scale-125.png" />
+    <Content Include="images\appicons\Windows10\Square71x71Logo.scale-150.png" />
+    <Content Include="images\appicons\Windows10\Square71x71Logo.scale-200.png" />
+    <Content Include="images\appicons\Windows10\Square71x71Logo.scale-400.png" />
+    <Content Include="images\appicons\Windows10\StoreLogo.scale-100.png" />
+    <Content Include="images\appicons\Windows10\StoreLogo.scale-125.png" />
+    <Content Include="images\appicons\Windows10\StoreLogo.scale-150.png" />
+    <Content Include="images\appicons\Windows10\StoreLogo.scale-200.png" />
+    <Content Include="images\appicons\Windows10\StoreLogo.scale-400.png" />
+    <Content Include="images\appicons\Windows10\Wide310x150Logo.scale-100.png" />
+    <Content Include="images\appicons\Windows10\Wide310x150Logo.scale-125.png" />
+    <Content Include="images\appicons\Windows10\Wide310x150Logo.scale-150.png" />
+    <Content Include="images\appicons\Windows10\Wide310x150Logo.scale-200.png" />
+    <Content Include="images\appicons\Windows10\Wide310x150Logo.scale-400.png" />
+    <Content Include="images\appicons\WindowsApp.Shared\Badge.scale-100.png" />
+    <Content Include="images\appicons\WindowsApp.Shared\Badge.scale-140.png" />
+    <Content Include="images\appicons\WindowsApp.Shared\Badge.scale-180.png" />
+    <Content Include="images\appicons\WindowsApp.Shared\Badge.scale-240.png" />
+    <Content Include="images\appicons\WindowsApp.Shared\Square150x150.scale-100.png" />
+    <Content Include="images\appicons\WindowsApp.Shared\Square150x150.scale-140.png" />
+    <Content Include="images\appicons\WindowsApp.Shared\Square150x150.scale-180.png" />
+    <Content Include="images\appicons\WindowsApp.Shared\Square150x150.scale-240.png" />
+    <Content Include="images\appicons\WindowsApp.Shared\Square150x150.scale-80.png" />
+    <Content Include="images\appicons\WindowsApp.Shared\Store.scale-100.png" />
+    <Content Include="images\appicons\WindowsApp.Shared\Store.scale-140.png" />
+    <Content Include="images\appicons\WindowsApp.Shared\Store.scale-180.png" />
+    <Content Include="images\appicons\WindowsApp.Shared\Store.scale-240.png" />
+    <Content Include="images\appicons\WindowsApp.Shared\Wide310x150.scale-100.png" />
+    <Content Include="images\appicons\WindowsApp.Shared\Wide310x150.scale-140.png" />
+    <Content Include="images\appicons\WindowsApp.Shared\Wide310x150.scale-180.png" />
+    <Content Include="images\appicons\WindowsApp.Shared\Wide310x150.scale-240.png" />
+    <Content Include="images\appicons\WindowsApp.Shared\Wide310x150.scale-80.png" />
+    <Content Include="images\appicons\WindowsApp.WindowsPhone\SplashScreen.scale-100.png" />
+    <Content Include="images\appicons\WindowsApp.WindowsPhone\SplashScreen.scale-140.png" />
+    <Content Include="images\appicons\WindowsApp.WindowsPhone\SplashScreen.scale-240.png" />
+    <Content Include="images\appicons\WindowsApp.WindowsPhone\Square44x44.scale-100.png" />
+    <Content Include="images\appicons\WindowsApp.WindowsPhone\Square44x44.scale-140.png" />
+    <Content Include="images\appicons\WindowsApp.WindowsPhone\Square44x44.scale-240.png" />
+    <Content Include="images\appicons\WindowsApp.WindowsPhone\Square71x71.scale-100.png" />
+    <Content Include="images\appicons\WindowsApp.WindowsPhone\Square71x71.scale-140.png" />
+    <Content Include="images\appicons\WindowsApp.WindowsPhone\Square71x71.scale-240.png" />
+    <Content Include="images\appicons\WindowsApp.Windows\SplashScreen.scale-100.png" />
+    <Content Include="images\appicons\WindowsApp.Windows\SplashScreen.scale-140.png" />
+    <Content Include="images\appicons\WindowsApp.Windows\SplashScreen.scale-180.png" />
+    <Content Include="images\appicons\WindowsApp.Windows\Square30x30.scale-100.png" />
+    <Content Include="images\appicons\WindowsApp.Windows\Square30x30.scale-140.png" />
+    <Content Include="images\appicons\WindowsApp.Windows\Square30x30.scale-180.png" />
+    <Content Include="images\appicons\WindowsApp.Windows\Square30x30.scale-80.png" />
+    <Content Include="images\appicons\WindowsApp.Windows\Square30x30.targetsize-16.png" />
+    <Content Include="images\appicons\WindowsApp.Windows\Square30x30.targetsize-256.png" />
+    <Content Include="images\appicons\WindowsApp.Windows\Square30x30.targetsize-32.png" />
+    <Content Include="images\appicons\WindowsApp.Windows\Square30x30.targetsize-48.png" />
+    <Content Include="images\appicons\WindowsApp.Windows\Square310x310.scale-100.png" />
+    <Content Include="images\appicons\WindowsApp.Windows\Square310x310.scale-140.png" />
+    <Content Include="images\appicons\WindowsApp.Windows\Square310x310.scale-180.png" />
+    <Content Include="images\appicons\WindowsApp.Windows\Square310x310.scale-80.png" />
+    <Content Include="images\appicons\WindowsApp.Windows\Square70x70.scale-100.png" />
+    <Content Include="images\appicons\WindowsApp.Windows\Square70x70.scale-140.png" />
+    <Content Include="images\appicons\WindowsApp.Windows\Square70x70.scale-180.png" />
+    <Content Include="images\appicons\WindowsApp.Windows\Square70x70.scale-80.png" />
+    <Content Include="images\markers\marker.png" />
+    <Content Include="images\markers\marker.svg" />
+    <Content Include="images\markers\tag546.svg" />
+    <Content Include="images\markers\tag555.svg" />
+    <Content Include="images\markers\tag570.svg" />
+    <Content Include="images\markers\tag571.svg" />
+    <Content Include="images\markers\tag582.svg" />
+    <Content Include="images\markers\tag593.svg" />
+    <Content Include="images\markers\tag594.svg" />
+    <Content Include="images\markers\tag595.svg" />
+    <Content Include="images\markers\tag596.svg" />
+    <Content Include="images\markers\tag597.svg" />
+    <Content Include="images\markers\tag598.svg" />
+    <Content Include="images\markers\tag599.svg" />
+    <Content Include="images\markers\tag604.svg" />
+    <Content Include="images\markers\tag606.svg" />
+    <Content Include="images\markers\tag607.svg" />
+    <Content Include="images\markers\tag608.svg" />
+    <Content Include="images\markers\tag609.svg" />
+    <Content Include="images\markers\tag624.svg" />
+    <Content Include="images\markers\tag625.svg" />
+    <Content Include="images\markers\tag626.svg" />
+    <Content Include="images\markers\tag627.svg" />
+    <Content Include="images\markers\tag628.svg" />
+    <Content Include="images\markers\tag629.svg" />
+    <Content Include="images\markers\tag630.svg" />
+    <Content Include="images\markers\tag632.svg" />
+    <Content Include="images\markers\tag633.svg" />
+    <Content Include="images\markers\tag642.svg" />
+    <Content Include="images\markers\tag653.svg" />
+    <Content Include="images\markers\tag654.svg" />
+    <Content Include="images\markers\tag655.svg" />
+    <Content Include="images\markers\tag656.svg" />
+    <Content Include="images\markers\tag657.svg" />
+    <Content Include="images\markers\tag658.svg" />
+    <Content Include="images\markers\tag659.svg" />
+    <Content Include="images\markers\tag660.svg" />
+    <Content Include="images\markers\tag661.svg" />
+    <Content Include="images\markers\tag662.svg" />
+    <Content Include="images\markers\tag663.svg" />
+    <Content Include="images\markers\tag664.svg" />
+    <Content Include="images\markers\tag665.svg" />
+    <Content Include="images\markers\tag681.svg" />
+    <Content Include="images\markers\tag682.svg" />
+    <Content Include="images\markers\tag683.svg" />
+    <Content Include="images\markers\tag684.svg" />
+    <Content Include="images\markers\tag707.svg" />
+    <Content Include="images\PDF_icon.png" />
+    <Content Include="ProofOfConcept\DigDag\Default.aspx" />
+    <Content Include="ProofOfConcept\DigDag\test.png" />
+    <Content Include="ProofOfConcept\HeightMap\Default.aspx" />
+    <Content Include="ProofOfConcept\TimeWarp\Default.aspx" />
+    <TypeScriptCompile Include="classes\Map\TimeWarp.ts" />
+    <TypeScriptCompile Include="elements\core\collections\ha-geos-search\ha-geos-search.ts" />
+    <TypeScriptCompile Include="elements\core\collections\ha-geo\ha-geo.ts" />
+    <TypeScriptCompile Include="elements\core\collections\ha-geos\ha-geos.ts" />
+    <TypeScriptCompile Include="elements\core\collections\ha-contents\ha-contents.ts" />
+    <TypeScriptCompile Include="elements\core\collections\ha-collections\ha-collections.ts" />
+    <TypeScriptCompile Include="elements\core\collections\ha-digdag\ha-digdag.ts" />
+    <TypeScriptCompile Include="elements\core\collections\ha-institutions\ha-institutions.ts" />
+    <TypeScriptCompile Include="elements\core\collections\ha-licenses\ha-licenses.ts" />
+    <TypeScriptCompile Include="elements\core\collections\ha-users\ha-users.ts" />
+    <TypeScriptCompile Include="elements\core\collections\ha-regions\ha-regions.ts" />
+    <TypeScriptCompile Include="elements\core\collections\ha-tags\ha-tags.ts" />
+    <TypeScriptCompile Include="elements\core\collections\ha-maps\ha-maps.ts" />
+    <TypeScriptCompile Include="elements\core\dialogs\dialog-alert\dialog-alert.ts" />
+    <TypeScriptCompile Include="elements\core\dialogs\dialog-selection\dialog-selection.ts" />
+    <TypeScriptCompile Include="elements\core\dialogs\dialog-confirm\dialog-confirm.ts" />
+    <TypeScriptCompile Include="elements\core\dialogs\dialog-add-to-homescreen\dialog-add-to-homescreen.ts" />
+    <TypeScriptCompile Include="elements\core\dialogs\dialog-tour-intro\dialog-tour-intro.ts" />
+    <TypeScriptCompile Include="elements\core\dialogs\dialog-tour\dialog-tour.ts" />
+    <TypeScriptCompile Include="elements\core\dialogs\dialog-report\dialog-report.ts" />
+    <TypeScriptCompile Include="elements\core\dialogs\dialog-share-link\dialog-share-link.ts" />
+    <TypeScriptCompile Include="elements\core\dialogs\dialog-text\dialog-text.ts" />
+    <TypeScriptCompile Include="elements\core\collections\ha-image\ha-image.ts" />
+    <TypeScriptCompile Include="elements\core\icons\licens-mark\licens-mark.ts" />
+    <TypeScriptCompile Include="elements\admin\lists\list-auto-suggest\list-auto-suggest.ts" />
+    <TypeScriptCompile Include="elements\core\lists\geo-list\geo-list.ts" />
+    <TypeScriptCompile Include="elements\core\main-app\main-search\main-search.ts" />
+    <TypeScriptCompile Include="elements\core\main-menu\main-menu-item\main-menu-item.ts" />
+    <TypeScriptCompile Include="elements\core\main-menu\main-menu.ts" />
+    <TypeScriptCompile Include="elements\core\main-app\global-app\global-app.ts" />
+    <TypeScriptCompile Include="elements\core\map\map-tooltip\map-tooltip.ts" />
+    <TypeScriptCompile Include="elements\admin\windows\window-admin\panel-admin\panel-admin.ts" />
+    <TypeScriptCompile Include="elements\core\panels\panel-theme\panel-theme.ts" />
+    <TypeScriptCompile Include="elements\core\panels\panel-route\panel-route.ts" />
+    <TypeScriptCompile Include="elements\core\content-viewer\content-viewer.ts" />
+    <TypeScriptCompile Include="elements\core\red-ribbon\red-ribbon.ts" />
+    <TypeScriptCompile Include="elements\core\panels\panel-digdag\panel-digdag.ts" />
+    <TypeScriptCompile Include="elements\core\panels\panel-intro-beta\panel-intro-beta.ts" />
+    <TypeScriptCompile Include="elements\core\panels\panel-tag\panel-tag.ts" />
+    <TypeScriptCompile Include="elements\core\panels\panel-map\panel-map.ts" />
+    <TypeScriptCompile Include="elements\core\map\map-controls\map-controls.ts" />
+    <TypeScriptCompile Include="elements\core\windows\abouts\window-member-signup\window-member-signup.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-institution\window-institution.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-geo\window-geo-by-line\window-geo-by-line.ts" />
+    <TypeScriptCompile Include="elements\editor\windows\window-editorial\panel-user-editorial\panel-user-editorial.ts" />
+    <TypeScriptCompile Include="elements\editor\windows\window-editorial\panel-geo-editorial\panel-geo-editorial.ts" />
+    <TypeScriptCompile Include="elements\editor\windows\window-editorial\window-editorial.ts" />
+    <TypeScriptCompile Include="elements\core\dialogs\dialog-publish\dialog-rich-text.ts" />
+    <TypeScriptCompile Include="elements\writer\file-upload\file-upload.ts" />
+    <TypeScriptCompile Include="elements\core\input\plain-text\plain-text.ts" />
+    <TypeScriptCompile Include="elements\core\time-line-slider\time-line-slider.ts" />
+    <TypeScriptCompile Include="elements\core\time-lines\time-lines.ts" />
+    <TypeScriptCompile Include="elements\core\timewarp\time-warp-closed\time-warp-closed.ts" />
+    <TypeScriptCompile Include="elements\core\timewarp\time-warp-button\time-warp-button.ts" />
+    <TypeScriptCompile Include="elements\core\timewarp\time-warp-opacity-button\time-warp-opacity-button.ts" />
+    <TypeScriptCompile Include="elements\core\timewarp\time-warp-map-button\time-warp-map-button.ts" />
+    <TypeScriptCompile Include="elements\core\timewarp\time-warp-close-button\time-warp-close-button.ts" />
+    <TypeScriptCompile Include="elements\core\timewarp\time-warp-shape-button\time-warp-shape-button.ts" />
+    <TypeScriptCompile Include="elements\core\dialogs\dialog-loading\dialog-loading.ts" />
+    <TypeScriptCompile Include="elements\core\toast-wrapper\toast-wrapper.ts" />
+    <TypeScriptCompile Include="elements\core\mit-atlas-button\mit-atlas-button.ts" />
+    <TypeScriptCompile Include="elements\core\time-line\time-line.ts" />
+    <TypeScriptCompile Include="elements\core\input\rich-text\rich-text.ts" />
+    <TypeScriptCompile Include="elements\core\windows\abouts\window-contact\window-contact.ts" />
+    <TypeScriptCompile Include="elements\core\windows\abouts\window-monetary-support\window-monetary-support.ts" />
+    <TypeScriptCompile Include="elements\core\windows\abouts\window-become-a-member\window-become-a-member.ts" />
+    <TypeScriptCompile Include="elements\core\windows\abouts\window-committee\window-committee.ts" />
+    <TypeScriptCompile Include="elements\core\windows\abouts\window-the-association\window-the-association.ts" />
+    <TypeScriptCompile Include="elements\admin\windows\window-admin\panel-institution-admin\panel-institution-admin.ts" />
+    <TypeScriptCompile Include="elements\admin\windows\window-admin\panel-user-admin\panel-user-admin.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-geo\window-geo-add-content\window-geo-add-content.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-geo\window-geo-tag-list\window-geo-tag-list.ts" />
+    <TypeScriptCompile Include="elements\admin\windows\window-admin\window-admin.ts" />
+    <TypeScriptCompile Include="elements\editor\array-sort-selector\array-sort-selector.ts" />
+    <TypeScriptCompile Include="elements\writer\windows\window-geo-editorial\window-geo-editorial-panel-notes\window-geo-editorial-panel-notes.ts" />
+    <TypeScriptCompile Include="elements\writer\windows\window-geo-editorial\window-geo-editorial.ts" />
+    <TypeScriptCompile Include="elements\writer\windows\window-user-news\window-user-news.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-terms-of-use\window-terms-of-use.ts" />
+    <TypeScriptCompile Include="elements\core\windows\abouts\window-about\window-about.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-privacy\window-privacy.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-geo\window-geo-settings\window-geo-settings.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-geo\window-geo-biblio\window-geo-biblio.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-route\window-route.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-routes\window-routes.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-feedback\window-feedback.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-login\panel-create-user\panel-create-user.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-login\panel-login\panel-login.ts" />
+    <TypeScriptCompile Include="elements\writer\windows\window-profile\window-profile.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-image\window-image.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-geo\window-geo.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-favourites\window-favourites.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-intro-beta\window-intro-beta.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-region-type\window-region-type.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-region\window-region.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-map\window-map.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-search\window-search.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-login\window-login.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-basic\window-basic.ts" />
+    <TypeScriptCompile Include="elements\core\map\map-menu\map-menu.ts" />
+    <TypeScriptCompile Include="elements\core\main-app\main-app.ts" />
+    <TypeScriptCompile Include="typings\jQuery\jqueryui.d.ts" />
+    <TypeScriptCompile Include="typings\openlayers.d.ts" />
+    <TypeScriptCompile Include="typings\facebook.d.ts" />
+    <TypeScriptCompile Include="typings\googleApi.d.ts" />
+    <TypeScriptCompile Include="typings\base64.d.ts" />
+    <TypeScriptCompile Include="typings\jQuery\jquery.md5.d.ts" />
+    <TypeScriptCompile Include="typings\jQuery\jquery.d.ts" />
+    <Content Include="web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ProofOfConcept\DigDag\ol.canvastile.js" />
+    <Content Include="packages.config" />
+    <Content Include="ha.appcache" />
+    <Content Include="manifest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bower.json" />
+    <Content Include="pdf\Retningslinjer for formidling på borgerlaget på HistoriskAtlas.dk.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="pdf\Retningslinjer for formidling på kulturinstitutionslaget på HistoriskAtlas.dk.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Properties\PublishProfiles\beta.historiskatlas.dk.pubxml" />
+    <None Include="Properties\PublishProfiles\historiskatlas.dk.pubxml" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="cs\bundles\Bundles.cs" />
+    <Compile Include="cs\proxy\BiblioProxy.cs" />
+    <Compile Include="cs\proxy\EncodeIDProxy.cs" />
+    <Compile Include="cs\proxy\RouteProxy.cs" />
+    <Compile Include="cs\Service.cs" />
+    <Compile Include="cs\Markers.cs" />
+    <Compile Include="cs\RobotsTxt.cs" />
+    <Compile Include="cs\Sitemap.cs" />
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="elements\ha_writer.aspx.cs">
+      <DependentUpon>ha_writer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="elements\ha_editor.aspx.cs">
+      <DependentUpon>ha_editor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="elements\ha_admin.aspx.cs">
+      <DependentUpon>ha_admin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="elements\ha_core_geo_only.aspx.cs">
+      <DependentUpon>ha_core_geo_only.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="elements\ha_core.aspx.cs">
+      <DependentUpon>ha_core.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="cs\bundles\HTMLBundle.cs" />
+    <Compile Include="cs\bundles\HTMLBundleTransform.cs" />
+    <Compile Include="ProofOfConcept\DigDag\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProofOfConcept\HeightMap\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProofOfConcept\TimeWarp\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Svg, Version=0.5.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Svg.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WebGrease">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="elements\writer\dialogs\" />
+    <Folder Include="typings\closure-library\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>HistoriskAtlas5.Frontend</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyName>HistoriskAtlas5.Frontend</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>51169</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:61772/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
+    <PublishDatabases>false</PublishDatabases>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>false</TypeScriptSourceMap>
+    <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
+    <PublishDatabases>false</PublishDatabases>
+  </PropertyGroup>
+  <Import Project="$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets')" />
+</Project>

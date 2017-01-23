@@ -1,0 +1,120 @@
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Text.RegularExpressions;
+using System.Web;
+using System.Web.UI;
+
+namespace HistoriskAtlas5.Frontend
+{
+    public partial class Default : Page
+    {
+        public bool dev, crawler;
+        public HAGeo passedGeo;
+        public HATag passedTag;
+        public HATheme passedTheme;
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            string deep = GetDeep();
+            dev = (Request.QueryString["dev"] != null ? (Request.QueryString["dev"] != "false") : !Request.Url.Host.Contains("historiskatlas.dk"));
+            crawler = Regex.IsMatch(Request.UserAgent, @"bot|crawler", RegexOptions.IgnoreCase);
+            passedGeo = GetGeo(deep);
+            if (passedGeo != null)
+                if ("/" + passedGeo.urlPath != Server.UrlDecode(HttpContext.Current.Request.Url.AbsolutePath)) //TODO: only if direct deep link is detected.
+                    HttpContext.Current.Response.Redirect(passedGeo.absUrlPath, true);
+
+            passedTag = GetTag(deep);
+            passedTheme = GetTheme(deep);
+        }
+
+        private string GetDeep()
+        {
+            char[] split = { '/' };
+            string[] a = Request.RawUrl.Split(split);
+            //return (a.Length > 1 && a[a.Length - 1].ToLower() != "default.aspx") ? a[a.Length - 1] : "";
+
+            if (a.Length > 2)
+                HttpContext.Current.Response.RedirectPermanent(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/" + a[a.Length - 1], true);
+
+            return (a[1].ToLower() != "default.aspx") ? a[1] : "";
+        }
+
+        private HAGeo GetGeo(string deep)
+        {
+            if (deep == "")
+                return null;
+
+            Match match = new Regex(@"_\(([0-9]+)\)($|\?)").Match(deep);
+            if (!match.Success)
+                return null;
+
+            int geoID = int.Parse(match.Groups[1].Value);
+
+
+            string schema = crawler ? "{geo:[id,title,intro,lat,lng,{contents:[{texts:[headline,text1]}]},{geo_images:[{image:[id,text]}]}]}" : "{geo:[id,title,intro,lat,lng]}";
+            HAGeos geos = (new Service<HAGeos>()).Get("geo.json?v=1&schema=" + schema + "&geoid=" + geoID + "&online=true");
+
+            if (geos.data.Length == 0)
+                return null;
+
+            return geos.data[0];
+        }
+
+        private HATag GetTag(string deep)
+        {
+            if (deep == "")
+                return null;
+
+            if (this.passedGeo != null)
+                return null;
+
+            HATags tags = (new Service<HATags>()).Get("tag.json?v=1&schema={tag:[id,plurName]}&plurName=" + deep + "&category=9"); //only subject for now
+
+            if (tags.data.Length == 0)
+                return null;
+
+            return tags.data[0];
+        }
+
+        private HATheme GetTheme(string deep)
+        {
+            if (deep == "")
+                return null;
+
+            if (this.passedGeo != null)
+                return null;
+
+            HAThemes themes = (new Service<HAThemes>()).Get("theme.json?v=1&schema={theme:[id,name,mapid,maplatitude,maplongitude,mapzoom,tagid,{content:[{texts:[headline,text1]}]}]}&id=" + deep);
+
+            if (themes.data.Length == 0)
+                return null;
+
+            return themes.data[0];
+        }
+
+        public string json(object obj) { return JsonConvert.SerializeObject(obj); }
+
+        public HATags sitemapTags
+        {
+            get
+            {
+                return (passedGeo != null || !crawler) ? new HATags() { data = new HATag[0] } : (new Service<HATags>()).Get("tag.json?v=1&count=all&schema={tag:{fields:[plurname],filters:[" + (passedTag == null ? "{children:[exists]}" : "{parents:{id:" + passedTag.id + "}}") + "]}}" + (passedTag == null ? "&category=9" : "")); //only subject for now
+            }
+        }
+
+        public HAGeos sitemapGeos
+        {
+            get
+            {
+                return (passedTag == null || !crawler) ? new HAGeos() { data = new HAGeo[0] } : (new Service<HAGeos>()).Get("geo.json?v=1&count=all&schema={geo:{fields:[id,title],filters:[{tag_geos:[{tagid:" + passedTag.id + "}]}]}}");
+            }
+        }
+
+        public string htmlEncode(string text)
+        {
+            return HttpUtility.HtmlEncode(text);                
+        }
+    }
+}
