@@ -15,12 +15,14 @@
     private helper: DigDagHelperLayer;
 
     constructor(type: string, year: number) {
+        var source = new ol.source.XYZ({ url: DigDagLayer.getUrl(type, year), crossOrigin: 'Anonymous' });
+        (<any>source).setCanvasTileClass();
+
+        super({ source: source });
+
+        this.source = source;
         this._type = type;
         this._year = year;
-        this.source = new ol.source.XYZ({ url: this.url, crossOrigin: 'Anonymous' });
-        (<any>this.source).setCanvasTileClass();
-
-        super({ source: this.source });
         //this.mainMap = mainMap;
 
         if (!DigDagLayer.borderRegion)
@@ -61,7 +63,11 @@
     }
 
     private get url(): string {
-        return 'http://tile.historiskatlas.dk/digdag/' + this._type + '/' + this._year + '/{z}/{x}/{y}.png';
+        return DigDagLayer.getUrl(this._type, this._year);
+    }
+
+    public static getUrl(type: string, year: number) {
+        return 'http://tile.historiskatlas.dk/digdag/' + type + '/' + year + '/{z}/{x}/{y}.png';
     }
 
     public show(type: string) {
@@ -149,7 +155,7 @@
         context.drawImage(image, 0, 0);
 
         var imageData: ImageData = context.getImageData(0, 0, DigDagLayer.tileSize, DigDagLayer.tileSize);
-        this.data = imageData.data;
+        this.data = <any>imageData.data;
         
         //if (this.tileCoord[0] < 9)
         this.quadTree = this.createQuadTree(this.quadTree, 0);

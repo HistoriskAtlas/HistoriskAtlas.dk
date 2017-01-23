@@ -8,8 +8,8 @@ class WindowProfile extends polymer.Base implements polymer.Element {
     public user: HAUser & Object;
 
     constructor() {
-        this.user = App.haUsers.user;
         super();
+        this.user = App.haUsers.user;
     }
 
     @observe('user.*')

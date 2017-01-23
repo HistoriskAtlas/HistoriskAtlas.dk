@@ -5,9 +5,9 @@ class WindowRegion extends polymer.Base implements polymer.Element {
     public region: HaRegion & Object;
 
     constructor(region: HaRegion) {
+        super();
         this.$.ajax.url = Common.api + 'region.json';
         this.region = region;
-        super();
     }
 
     //ready() {

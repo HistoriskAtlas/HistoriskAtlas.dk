@@ -2,7 +2,7 @@
     private source: ol.source.Vector;
 
     constructor() {
-        this.source = new ol.source.Vector();
+        var source = new ol.source.Vector();
 
         //var feature = new ol.Feature({
         //    geometry: new (<any>ol.geom.LineString)([Common.toMapCoord([9.418085, 55.756011]), Common.toMapCoord([9.593907, 55.707600])])
@@ -22,7 +22,7 @@
         //source.addFeature(feature);
 
         super({
-            source: this.source,
+            source: source,
             style: new ol.style.Style({
                 stroke: new ol.style.Stroke({
                     color: [0, 93, 154, 1],
@@ -30,6 +30,8 @@
                 })
             })
         })
+
+        this.source = source;
 
         //$.getJSON("proxy/route.json?loc=55.756011,9.418085&loc=55.707600,9.593907", (data) => {
         //    var route = new (<any>ol.format.Polyline)({

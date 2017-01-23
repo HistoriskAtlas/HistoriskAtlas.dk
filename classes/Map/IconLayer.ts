@@ -58,7 +58,7 @@
         });
 
 
-        var canvas = this.circleCanvas(false);
+        var canvas = IconLayer.circleCanvas(false);
         IconLayer.ugcBackStyle = new ol.style.Style({
             image: new ol.style.Icon({
                 src: canvas.toDataURL()
@@ -76,7 +76,7 @@
             //}))
         });
 
-        var ugcCanvas = this.circleCanvas(true);
+        var ugcCanvas = IconLayer.circleCanvas(true);
         IconLayer.ugcBackStyle = new ol.style.Style({
             image: new ol.style.Icon({
                 src: ugcCanvas.toDataURL()
@@ -254,7 +254,7 @@
     //    return [lonlat[0], lonlat[1]];
     //}
 
-    private circleCanvas(isUGC: boolean): HTMLCanvasElement {
+    private static circleCanvas(isUGC: boolean): HTMLCanvasElement {
         var canvas = document.createElement('canvas');
         canvas.width = 32;
         canvas.height = 32;

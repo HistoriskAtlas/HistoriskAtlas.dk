@@ -16,13 +16,7 @@
     private lastPixel: ol.Pixel;
 
     constructor(elem: HTMLElement, timeline: TimeLine) {
-        this.timeline = timeline;
-        this.extent = 20037508.34;
-        this.color = '#000000'; //timeline.main ? '#005d9a' : '#000000';
-        this.fillColor = timeline.main ? '#005d9a' : '#ffcc00';
-        this.textColor = timeline.main ? '#ffffff' : '#000000';
-
-        this.view = new ol.View({
+        var view = new ol.View({
             center: [timeline.year * TimelineMap.yearWidth, TimelineMap.offsetY],
             zoom: 10,
             minZoom: 6,
@@ -30,23 +24,23 @@
             extent: [TimelineMap.minYear * TimelineMap.yearWidth, TimelineMap.offsetY, TimelineMap.maxYear * TimelineMap.yearWidth, TimelineMap.offsetY],
             enableRotation: false
         });
-        this.view.on('change:center', (event) => {
-            var center = this.view.getCenter();
+        view.on('change:center', (event) => {
+            var center = view.getCenter();
             if (center[1] != TimelineMap.offsetY)
-                this.view.setCenter([center[0], TimelineMap.offsetY]);
+                view.setCenter([center[0], TimelineMap.offsetY]);
             if (center[0] < TimelineMap.minYear * TimelineMap.yearWidth)
-                this.view.setCenter([TimelineMap.minYear * TimelineMap.yearWidth, TimelineMap.offsetY]);
+                view.setCenter([TimelineMap.minYear * TimelineMap.yearWidth, TimelineMap.offsetY]);
             if (center[0] > TimelineMap.maxYear * TimelineMap.yearWidth)
-                this.view.setCenter([TimelineMap.maxYear * TimelineMap.yearWidth, TimelineMap.offsetY]);
+                view.setCenter([TimelineMap.maxYear * TimelineMap.yearWidth, TimelineMap.offsetY]);
         });
-        this.view.on('change:resolution', (event) => {
-            this.timeline.set('zoom', this.view.getZoom());
+        view.on('change:resolution', (event) => {
+            timeline.set('zoom', view.getZoom());
         });
 
 
         super({
             target: elem,
-            view: this.view,
+            view: view,
             renderer: 'canvas',
             controls: [],
             interactions: [
@@ -56,7 +50,12 @@
                 new ol.interaction.MouseWheelZoom({ duration: 500 })
             ]
         });
-
+        this.view = view;
+        this.timeline = timeline;
+        this.extent = 20037508.34;
+        this.color = '#000000'; //timeline.main ? '#005d9a' : '#000000';
+        this.fillColor = timeline.main ? '#005d9a' : '#ffcc00';
+        this.textColor = timeline.main ? '#ffffff' : '#000000';
 
         var sourceLine = new ol.source.Vector();
 

@@ -87,6 +87,7 @@
     <link rel="import" href="bower_components/paper-item/paper-icon-item.html">
     <link rel="import" href="bower_components/paper-item/paper-item-body.html">
     <link rel="import" href="bower_components/paper-checkbox/paper-checkbox.html">
+    <link rel="import" href="bower_components/paper-material/paper-material.html">
     <link rel="import" href="bower_components/paper-menu/paper-submenu.html">
     <link rel="import" href="bower_components/paper-menu/paper-menu.html">
     <link rel="import" href="bower_components/paper-input/paper-input.html">

@@ -46,6 +46,8 @@ class WindowBasic extends polymer.Base implements polymer.Element {
     public cancelClose: boolean;
 
     constructor() {
+        super();
+
         this.dom = $(this.domHost)
 
         if (this.right)
@@ -68,9 +70,11 @@ class WindowBasic extends polymer.Base implements polymer.Element {
 
         //if (this.fullscreen)
         //    this.fullscreenChanged();
-        setTimeout(() => { this.elevation = 2; this.dom.css('transition', 'opacity 0.2s'); this.dom.css('opacity', 1); }, 0);
-
-        super();
+        setTimeout(() => {
+            this.elevation = 2;
+            this.dom.css('transition', 'opacity 0.2s');
+            this.dom.css('opacity', 1);
+        }, 0);
     }
 
     //@computed({ type: String })

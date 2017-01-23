@@ -1,0 +1,9 @@
+﻿
+/bower_components
+/obj/Debug
+/packages
+/.vs
+/elements/**/*.js
+/elements/**/*.js.map
+/classes/**/*.js
+/classes/**/*.js.map

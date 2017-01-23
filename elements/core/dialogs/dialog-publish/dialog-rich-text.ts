@@ -13,10 +13,10 @@ class DialogRichText extends polymer.Base implements polymer.Element {
     private _confirmCallback: (string) => void;
 
     constructor(headline: string, placeholder: string, confirmCallback: (string) => void) {
+        super();
         this.headline = headline;
         this.placeholder = placeholder;
         this._confirmCallback = confirmCallback
-        super();
     }
 
     @listen('dialog.iron-overlay-closed')

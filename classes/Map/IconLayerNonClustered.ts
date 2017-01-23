@@ -2,11 +2,13 @@
     private source: ol.source.Vector; //TODO: Make non static?
 
     constructor() {
-        this.source = new ol.source.Vector();
+        var source = new ol.source.Vector();
 
-        super(this.source, (feature: Icon, resolution) => {
+        super(source, (feature: Icon, resolution) => {
             return feature.getStyle();
         })
+
+        this.source = source;
     }
 
     public addIcon(icon: Icon) {

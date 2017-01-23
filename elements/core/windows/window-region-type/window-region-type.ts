@@ -5,9 +5,9 @@ class WindowRegionType extends polymer.Base implements polymer.Element {
     public regionType: HARegionType & Object;
 
     constructor(regionType: HARegionType) {
+        super();
         this.$.ajax.url = Common.api + 'regiontype.json';
         this.regionType = regionType;
-        super();
     }
 
     ready() {

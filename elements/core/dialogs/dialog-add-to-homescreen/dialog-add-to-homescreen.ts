@@ -5,8 +5,8 @@ class DialogAddToHomescreen extends polymer.Base implements polymer.Element {
     public os: string;
 
     constructor(os: string) {
-        this.os = os;
         super();
+        this.os = os;
     }
 
     dismissTap() {

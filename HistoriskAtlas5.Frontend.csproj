@@ -9,7 +9,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <TypeScriptToolsVersion>1.7</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
     <TypeScriptEmitDecoratorMetadata>True</TypeScriptEmitDecoratorMetadata>
     <TypeScriptExperimentalDecorators>True</TypeScriptExperimentalDecorators>
     <UseIISExpress>true</UseIISExpress>
@@ -204,7 +204,6 @@
     <Content Include="js\jquery\jquery.mobile.custom.js" />
     <Content Include="js\ol\ol-custom.js" />
     <Content Include="html\RegionTypeAbouts\64.html" />
-    <Content Include="bowerupdate.bat" />
     <TypeScriptCompile Include="bower_components\polymer-ts\polymer-ts.d.ts" />
     <Content Include="bower_components\polymer-ts\polymer-ts.ts" />
     <TypeScriptCompile Include="classes\appmode.ts" />
@@ -567,6 +566,7 @@
     <Content Include="pdf\Retningslinjer for formidling på kulturinstitutionslaget på HistoriskAtlas.dk.pdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="bowerupdate.bat" />
     <None Include="Properties\PublishProfiles\beta.historiskatlas.dk.pubxml" />
     <None Include="Properties\PublishProfiles\historiskatlas.dk.pubxml" />
     <None Include="web.Debug.config">
@@ -685,6 +685,15 @@
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
     <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
     <PublishDatabases>false</PublishDatabases>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptTarget>ES5</TypeScriptTarget>

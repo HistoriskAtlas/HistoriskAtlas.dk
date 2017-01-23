@@ -8,8 +8,8 @@ class WindowSearch extends polymer.Base implements polymer.Element {
     public addresses: Array<Address>;
 
     constructor(search: string) {
-        this.search = search;
         super();
+        this.search = search;
         this.doSearch();
     }
     

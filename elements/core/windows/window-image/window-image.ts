@@ -31,6 +31,8 @@ class WindowImage extends polymer.Base implements polymer.Element {
     public windowGeo: WindowGeo; //not needed when created static
 
     constructor(windowGeo: WindowGeo, width: number, height: number, left: number, top: number) {
+        super();
+
         this.windowGeo = windowGeo;
         this.set('width', width);
         this.set('height', height);
@@ -50,8 +52,6 @@ class WindowImage extends polymer.Base implements polymer.Element {
         if (this.youTubeEmbedUrl(this.contents))
             $('.overlay').css('pointer-events', 'none')
         $(window).resize(() => $(this.$.container).scrollLeft(this.geo.images.indexOf(this.image) * $(this.$.container).width()));
-
-        super();
     }
 
 

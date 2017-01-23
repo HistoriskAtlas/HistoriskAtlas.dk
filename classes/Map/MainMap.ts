@@ -16,8 +16,8 @@
     private longtitude: number;
     private latitude: number;
     private zoom: number;
-    private maxZoom: number;
-    private minZoom: number;
+    private static maxZoom: number = 19;
+    private static minZoom: number = 2;
     public runAnimation: boolean;
     public dom: JQuery;
     private view: ol.View;
@@ -39,18 +39,17 @@
         4: NonClustered IconLayer(?)
         5: DigDag
         */
-        this.maxZoom = 19;
-        this.minZoom = 2;
-        this.view = new ol.View({ center: Common.toMapCoord([coord[1], coord[0]]), zoom: zoom, minZoom: this.minZoom, maxZoom: this.maxZoom });
+        var view = new ol.View({ center: Common.toMapCoord([coord[1], coord[0]]), zoom: zoom, minZoom: MainMap.minZoom, maxZoom: MainMap.maxZoom });
+        var dragPan = new ol.interaction.DragPan();
         super({
             target: document.getElementById('map'),
-            view: this.view,
+            view: view,
             renderer: 'canvas',
             controls: [],
             interactions: [
                 new ol.interaction.DragRotate(),
                 new ol.interaction.DoubleClickZoom(),
-                this.dragPan = new ol.interaction.DragPan(),
+                dragPan,
                 new ol.interaction.PinchRotate(),
                 new ol.interaction.PinchZoom(),
                 //new ol.interaction.KeyboardPan(),
@@ -62,6 +61,8 @@
             loadTilesWhileInteracting: true,
             pixelRatio: 1.0 //TODO: good idea?
         });
+        this.dragPan = dragPan;
+        this.view = view;
         this.longtitude = 0;
         this.latitude = 0;
         this.zoom = 0;
@@ -496,11 +497,11 @@
 
     public zoomAnim(delta: number) {
         if (delta < 1)
-            if (this.view.getZoom() >= this.maxZoom)
+            if (this.view.getZoom() >= MainMap.maxZoom)
                 return;
 
         if (delta > 1)
-            if (this.view.getZoom() <= this.minZoom)
+            if (this.view.getZoom() <= MainMap.minZoom)
                 return;
 
         var zoom = ol.animation.zoom({

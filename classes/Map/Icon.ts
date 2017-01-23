@@ -11,11 +11,12 @@
 
     constructor(geo: HaGeo, coord4326: ol.Coordinate) {
         //this.coord3857 = Common.toMapCoord([geo.lng, geo.lat]);
-        this.point = new ol.geom.Point(Common.toMapCoord(coord4326));
+        var point = new ol.geom.Point(Common.toMapCoord(coord4326));
         super({
-            geometry: this.point,
+            geometry: point,
             name: geo.title
         })
+        this.point = point;
         this.geo = geo;
         geo.icon = this;
         this.setId(this.geo.id); //TODO: what if not sat? ie, newly created.

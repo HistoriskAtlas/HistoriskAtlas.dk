@@ -18,14 +18,15 @@
     public context: CanvasRenderingContext2D;
 
     constructor(type: string, year: number) {
+        var source = new ol.source.XYZ({ url: DigDagLayer.getUrl(type, year), crossOrigin: 'Anonymous' });
+        super({ source: source });
         this._type = type;
         this._year = year;
         this._active = false;
         this._dirty = true;
         this.loaded = 0;
         this.loading = 0;
-        this.source = new ol.source.XYZ({ url: this.url, crossOrigin: 'Anonymous' });
-        super({ source: this.source });
+        this.source = source;
         this.setVisible(false);
 
         this.context = document.createElement('canvas').getContext('2d');
@@ -100,7 +101,7 @@
     }
 
     private get url(): string {
-        return 'http://tile.historiskatlas.dk/digdag/' + this._type + '/' + this._year + '/{z}/{x}/{y}.png';
+        return DigDagLayer.getUrl(this._type, this._year);
     }
 
     public update(id: number) {
