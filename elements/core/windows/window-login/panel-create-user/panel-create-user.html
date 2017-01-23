@@ -1,0 +1,50 @@
+﻿<dom-module id="panel-create-user">
+    <template>
+        <style>
+            paper-input, gold-email-input {
+                margin: 0px 5px;
+            }
+            .link {
+                text-decoration: underline;
+                cursor: pointer;
+            }
+            .row {
+                display: flex; 
+                width: 100%;
+            }
+            .row > paper-input {
+                flex-grow: 1; 
+                min-width: 100px;
+            }
+        </style>
+        <paper-input id="inputLogin" label="Brugernavn" required error-message="[[loginErrorMessage(login)]]" value="{{login}}"></paper-input>
+        <div class="row">
+            <paper-input id="inputFirstname" label="Fornavn" required auto-validate error-message="Fornavn skal udfyldes" value="{{firstname}}"></paper-input>
+            <paper-input id="inputLastname" label="Efternavn" required auto-validate error-message="Efternavn skal udfyldes" value="{{lastname}}"></paper-input>
+        </div>
+        <gold-email-input id="inputEmail" label="Email" required error-message="Ikke korrekt email" auto-validate value="{{email}}"></gold-email-input>
+        <div class="row">
+
+            <!--<paper-input-container style="flex-grow:1">
+                <label>Adgangskode</label>
+                <input is="iron-input" value="{{password1}}" type="password">
+            </paper-input-container>-->
+
+            <paper-input id="inputPassword1" label="Adgangskode" required minlength="6" error-message="[[passwordErrorMessage(password1)]]" value="{{password1}}" type="password"></paper-input>
+            <paper-input id="inputPassword2" label="Gentag adgangskode" required minlength="6" error-message="[[passwordErrorMessage(password2)]]" value="{{password2}}" type="password"></paper-input>
+        </div>
+        <div style="margin-top:30px; align-self:center; font-size:13px">
+            <paper-checkbox checked="{{accepted}}">Jeg har læst og accepteret&nbsp;</paper-checkbox>
+            <span class="link" on-tap="termsOfUseTap">brugsbetingelserne</span>
+        </div>
+        <paper-button id="createUser" class="HAPrimColor" style="margin-top:10px" on-tap="createUser">opret bruger</paper-button>
+
+        <paper-dialog id="confirmationDialog">
+            <h2>Bruger oprettet</h2>
+            <p>Brugeren er oprettet men endnu ikke aktiveret. Du vil modtage en mail med instruktioner om, hvordan du aktiverer din bruger.</p>
+            <div class="buttons">
+                <paper-button dialog-confirm>OK</paper-button>
+            </div>
+        </paper-dialog>
+    </template>
+</dom-module>

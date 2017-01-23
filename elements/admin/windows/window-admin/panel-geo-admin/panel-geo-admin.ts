@@ -1,0 +1,134 @@
+﻿@component("panel-geo-admin")
+class PanelGeoAdmin extends polymer.Base implements polymer.Element {
+
+    @property({ type: Array })
+    public geos: Array<any>;
+
+    @property({ type: Object })
+    public geo: any;
+
+    @property({ type: String, value: '' })
+    public filter: string;
+
+    @property({ type: Boolean })
+    public selected: boolean;
+
+    @observe('selected')
+    selectedChanged() {
+        if (this.selected && !this.geos) {
+            this.geos = [];
+            this.sortOnTitle();
+            this.fetchGeos();
+        }
+    }
+
+    filterCheckForEnter(e: any) {
+        if (e.keyCode === 13)
+            this.fetchGeos();
+    }
+
+    public fetchGeos() {
+        Services.get('geo', {
+            'schema': '{geo:{' + (this.filter ? 'filters:{title:{like:' + this.filter + '}},' : '') + 'fields:[id,title,created,{tag_geos:[{tag:[plurname,{category:3}]}]},{user:[login,firstname,lastname]}]}}',  //{title:{like:' + this.filter + '}}
+            'count': '100'
+        }, (result) => {
+            this.updateGeos(result.data);
+        })
+    }
+    public updateGeos(newList: Array<any>) {
+        //this.set('geos', (newList ? newList : this.geos).sort(this.compare));
+        this.$.admin.sort(null, newList);
+    }
+
+    itemTap(e: any) {
+        this.$.admin.select(e.model.item);
+    }
+    @observe('geo')
+    private getGeo() {
+        if (!this.geo)
+            return;
+        Services.get('geo', {
+            'schema': '{geo:[title,intro,online]}',
+            'id': this.geo.id
+        }, (result) => {
+            for (var attr in result.data[0])
+                this.set('geo.' + attr, result.data[0][attr])
+        })
+    }
+
+    //getAutosuggestSchema(children: any): string {
+    //    if (!children)
+    //        return;
+    //    var existingIds: Array<number> = [];
+    //    for (var item of children)
+    //        existingIds.push(item.child.id)
+    //    return '{tag:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},category:' + this.tag.category + ',plurname:{like:$input}},fields:[id,plurname]}}';
+    //}
+
+    onlineClass(online: boolean): string {
+        if (online == null)
+            return '';
+        return online ? 'online' : 'offline';
+    }
+
+    formatDate(date: string): string {
+        return Common.formatDate(date);
+    }
+
+    formatInstitutions(tag_geos: Array<any>): string {
+        var institutions: Array<string> = [];
+        for (var tag_geo of tag_geos)
+            if (tag_geo.tag.category == 3)
+                institutions.push(tag_geo.tag.plurname);
+        return institutions.join(', ');
+    }
+
+    isInstitutionCaetgory(category: number): boolean {
+        return category == 3;
+    }
+
+    titleTap() {
+        Common.geoClick(this.geo.id);
+    }
+    
+    sortOnId() {
+        this.$.admin.sort(this.compareId);
+    }
+    compareId(a: any, b: any): number {
+        return a.id - b.id;
+    }
+
+    sortOnTitle() {
+        this.$.admin.sort(this.compareTitle);
+    }
+    compareTitle(a: any, b: any): number {
+        return a.title.localeCompare(b.title);
+    }
+
+    sortOnUser() {
+        this.$.admin.sort(this.compareUser);
+    }
+    compareUser(a: any, b: any): number {
+        return (a.user.firstname + a.user.lastname).localeCompare(b.user.firstname + b.user.lastname);
+    }
+
+    sortOnDate() {
+        this.$.admin.sort(this.compareDate);
+    }
+    compareDate(a: any, b: any): number {
+        return new Date(a.created).getTime() - new Date(b.created).getTime();
+    }
+
+    sortOnInstitution() {
+        this.$.admin.sort(this.compareInstitution);
+    }
+    compareInstitution(a: any, b: any): number {
+        var objA = a.tag_geos.find((obj) => obj.tag.category == 3);
+        var objB = b.tag_geos.find((obj) => obj.tag.category == 3);
+        var aName = objA ? objA.tag.plurname : '';
+        var bName = objB ? objB.tag.plurname : '';
+        return aName.localeCompare(bName);
+    }
+}
+
+PanelGeoAdmin.register();

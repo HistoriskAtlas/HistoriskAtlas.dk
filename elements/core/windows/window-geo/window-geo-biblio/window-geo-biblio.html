@@ -1,0 +1,108 @@
+﻿<dom-module id="window-geo-biblio">
+    <style>
+        :host {
+            display: block;
+            /*padding: 0px 10px;*/
+            overflow-y: auto;
+            width: 100%;
+        }
+        .cql {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .cql > div {
+            font-weight: bold;
+            font-size: 13px;
+        }
+        .buttons {
+            font-size: 14px;
+            color: #3f51b5;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -ms-flex-direction: row;
+            -webkit-flex-direction: row;
+            flex-direction: row;
+            -ms-flex-pack: end;
+            -webkit-justify-content: flex-end;
+            justify-content: flex-end;            
+        }
+        .searching {
+            text-align: center;
+            font-style: italic;
+            font-weight: bold;
+            font-size: 13px;
+        }
+        .listitem {
+            display: flex;
+            flex-direction: column;
+            border-bottom: solid 1px;
+            border-bottom-color: #ececec; /*TODO: How to make generic reference in dynamically created component?*/
+            font-size: 13px;
+            /*height: 32px;*/
+            cursor: pointer;
+            padding: 10px 0px;
+        }
+        .listitem > div:nth-child(1) {
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            min-height: 18px;
+        }
+        .listitem > div:nth-child(2) {
+            font-style: italic;
+        }
+        paper-icon-button.close {
+            width: 18px;
+            height: 18px;
+            padding: 0px;
+            flex-shrink: 0;
+        }
+        iron-icon {
+            width: 18px;
+            height: 18px;
+        }
+        .cql-header {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+    </style>
+    <template>
+        <iron-ajax id="ajax"
+                   url="[[url]]"
+                   params="[[params]]"
+                   handle-as="json"
+                   on-response="handleResponse"></iron-ajax>
+
+        <template is="dom-if" if="[[editing]]">
+            <div class="cql">
+                <div class="cql-header" on-tap="toggleCqlTap"><iron-icon icon="[[toggleIcon(showCql)]]"></iron-icon>Søgestreng</div>
+                <template is="dom-if" if="[[showCql]]">
+                    <plain-text content="{{immediatecql}}" editable placeholder="CQL søgestreng" maxlength="512"></plain-text>
+                    <div class="buttons">
+                        <paper-button on-tap="search">Søg</paper-button>
+                    </div>
+                </template>
+            </div>
+        </template>
+        <template is="dom-if" if="[[searching]]">
+            <div class="searching">
+                Søger efter litteratur...
+            </div>
+        </template>
+        <template id="biblioRepeat" is="dom-repeat" items="[[biblios]]" as="biblio">
+            <div class="listitem light-grey-border" on-tap="biblioTap">
+                <div>
+                    <div>[[biblio.title]]</div>
+                    <template is="dom-if" if="[[editing]]">
+                        <paper-icon-button class="close" icon="close" on-tap="closeTap"></paper-icon-button>
+                    </template>
+                </div>
+                <div>[[secondLine(biblio.creator, biblio.date, biblio.format)]]</div>
+                <div>[[biblio.subject]]</div>
+                <div>[[biblio.description]]</div>
+            </div>
+        </template>
+    </template>
+</dom-module>

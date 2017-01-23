@@ -1,0 +1,91 @@
+﻿<dom-module id="rich-text">
+    <style>
+        :host {
+            display: flex; 
+            flex-direction:column;
+            position:relative;
+            /*transition: background-color 0.4s;*/
+        }
+
+        #content, #placeholder {
+            padding-top: 17px;
+            outline: none;
+            min-height: 16px;
+            transition: padding-top 0.4s;
+        }
+
+        paper-icon-button {
+            padding: 0px;
+            margin: 0px 1px;
+            width: 20px;
+            height: 20px;
+        }
+
+        #editorPanel {
+            position: absolute;
+            top: 0px;
+            display: flex;
+            width: calc(100% - 34px);
+            justify-content:flex-start;
+            transition: opacity 0.4s, padding-top 0.4s;
+            opacity: 0;
+            color: grey;
+            pointer-events: none;
+            background-color: inherit;
+            padding-top: 0px;
+        }
+        #placeholder {
+            position: absolute;
+            top: 0px;
+            pointer-events: none;
+            color: red;
+            display: none;
+        }
+
+        #content:empty:not(:focus) ~ #placeholder {
+            display: block !important;
+        }
+
+        #content:focus {
+            padding-top: 25px !important;
+        }
+        #content:focus ~ #placeholder {
+            padding-top: 25px !important;
+        }
+        #content:focus ~ #editorPanel {
+            opacity: 1;
+            pointer-events: auto;
+            padding-top: 5px;
+        }
+
+    </style>
+    <template>
+
+        <div id="content" contenteditable$="[[editable]]" on-blur="blur" on-focus="focus" on-input="input" on-keypress="keypress" on-paste="paste"></div>
+
+        <template is="dom-if" if="[[editable]]">
+            <div id="placeholder">[[placeholder]]</div>
+            <div id="editorPanel">
+
+                <template is="dom-if" if="[[isIE]]">
+                    <button on-tap="boldTap" on-focus="focusButton" style="font-weight:bold; padding:0px; width:20px; height:20px">B</button>
+                    <button on-tap="italicTap" on-focus="focusButton" style="font-style:italic; padding:0px; width:20px; height:20px">I</button>
+                    <button on-tap="linkTap" on-focus="focusButton" style="padding:0px 2px; height:20px">link</button>
+                </template>        
+                <template is="dom-if" if="[[!isIE]]">
+                    <paper-icon-button on-tap="boldTap" on-focus="focusButton" icon="ha:boldDK"></paper-icon-button>
+                    <paper-icon-button on-tap="italicTap" on-focus="focusButton" icon="ha:italicDK"></paper-icon-button>
+                    <paper-icon-button on-tap="linkTap" on-focus="focusButton" icon="link"></paper-icon-button>
+                </template>
+                
+                <paper-icon-button on-tap="undoTap" on-focus="focusButton" icon="undo"></paper-icon-button>
+                <paper-icon-button on-tap="redoTap" on-focus="focusButton" icon="redo"></paper-icon-button>
+                <template is="dom-if" if="[[maxlength]]">
+                    <div style="flex-grow:1; text-align:right">[[length]] / [[maxlength]]</div>
+                </template>
+            </div>
+
+            <dialog-text id="linkUrlDialog" text="Angiv adresse til link" confirm-callback="link-url-confirmed"></dialog-text>
+        </template>
+    </template>
+</dom-module>

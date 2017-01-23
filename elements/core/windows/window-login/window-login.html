@@ -1,0 +1,33 @@
+﻿<dom-module id="window-login">
+    <template>
+        <style>
+            paper-tabs {
+                --paper-tabs-selection-bar-color: #ffffff !important; /*WAS #005d9a*/
+                /*--paper-tabs-selection-bar: { height: 4px };*/
+                /*background-color: transparent !important;*/
+            }            
+            paper-tab {
+                /*--paper-tab-ink: white;*/
+                --paper-tab-content: { background-color:transparent; font-weight: 500 !important; }
+            }
+            .content {
+                display: flex; 
+                flex-direction: column; 
+                justify-content: space-around; 
+                padding: 20px; 
+                flex-grow: 1;
+                width: 100%;
+            }
+        </style>
+        <window-basic id="windowbasic" window-title="Log ind" width="400" toolbar-height="medium-tall">
+            <paper-tabs selected="{{selectedTab}}" class="header bottom fit" noink>
+                <paper-tab>Log ind</paper-tab>
+                <paper-tab>Opret bruger</paper-tab>
+            </paper-tabs>
+            <iron-pages selected="[[selectedTab]]" style="display:flex; flex-grow:1">
+                <panel-login class="content"></panel-login>
+                <panel-create-user class="content"></panel-create-user>
+            </iron-pages>
+        </window-basic>
+    </template>
+</dom-module>

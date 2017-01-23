@@ -1,0 +1,29 @@
+﻿<dom-module id="window-about">
+    <style>
+        .intro {
+            display: block;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .headline {
+            display: block;
+            font-weight: bold;
+        }
+        a {
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 5px;
+        }
+    </style>
+    <template>
+        <window-basic id="windowbasic" window-title="Om HistoriskAtlas.dk" width="660" height="510" toolbar-mode="waterfall">
+            <div style="margin:17px; font-size:14px">
+                <span class="intro">Om...</span>
+                <br />
+                <a on-tap="privacyTap">Cookie- og privatlivspolitik</a><br />
+                <a on-tap="termsOfUseTap">Brugsbetingelser</a><br />
+                <a href="../../../pdf/Retningslinjer for formidling på borgerlaget på HistoriskAtlas.dk.pdf" target="_blank">Retningslinjer for formidling på borgerlaget på HistoriskAtlas.dk</a><br />
+            </div>
+        </window-basic>
+    </template>
+</dom-module>

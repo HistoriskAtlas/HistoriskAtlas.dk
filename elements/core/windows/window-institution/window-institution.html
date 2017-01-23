@@ -1,0 +1,17 @@
+﻿<dom-module id="window-institution">
+    <style>
+
+    </style>
+    <template>
+        <ha-geos-search tag="[[institution.tag]]" geos="{{geos}}"></ha-geos-search>
+        <window-basic id="windowbasic" window-title="[[institution.name]]" width="660" height="510" toolbar-mode="waterfall">
+            <div style="margin: 0px 17px 17px 17px; font-size:14px">
+                <content-viewer content="[[institution.content]]"></content-viewer>
+                <div><a href="[[formatUrl(institution.url)]]" target="_blank">website</a></div>
+                <br><br>
+                <b>Fortællinger</b><br>
+                <geo-list geos="{{geos}}" compare-function="sortByTitle"></geo-list>
+            </div>
+        </window-basic>
+    </template>
+</dom-module>

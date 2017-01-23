@@ -41,7 +41,6 @@
     <Content Include="bower_components\polymer-ts\polymer-ts.min.html" />
     <Content Include="bower_components\polymer-ts\polymer-ts.min.js" />
     <Content Include="bower_components\polymer-ts\polymer-ts.min.js.map" />
-    <Content Include="bower_components\polymer-ts\polymer-ts.ts" />
     <Content Include="bower_components\polymer-ts\README.md" />
     <Content Include="css\ol.css" />
     <Content Include="cs\proxy\test.xml" />
@@ -203,12 +202,11 @@
     <Content Include="js\jquery\jquery.mobile.1.4.5.custom.js" />
     <Content Include="js\jquery\jquery.mobile.1.4.5.custom.min.js" />
     <Content Include="js\jquery\jquery.mobile.custom.js" />
-    <Content Include="js\jquery\simplegallery.js" />
     <Content Include="js\ol\ol-custom.js" />
     <Content Include="html\RegionTypeAbouts\64.html" />
-    <Content Include="ProofOfConcept\DigDag\ol.canvastile.js" />
     <Content Include="bowerupdate.bat" />
     <TypeScriptCompile Include="bower_components\polymer-ts\polymer-ts.d.ts" />
+    <Content Include="bower_components\polymer-ts\polymer-ts.ts" />
     <TypeScriptCompile Include="classes\appmode.ts" />
     <TypeScriptCompile Include="classes\HAClasses\hasubcontentexternal.ts" />
     <TypeScriptCompile Include="classes\HAClasses\hasubcontentbiblio.ts" />
@@ -445,10 +443,6 @@
     <Content Include="images\markers\tag684.svg" />
     <Content Include="images\markers\tag707.svg" />
     <Content Include="images\PDF_icon.png" />
-    <Content Include="ProofOfConcept\DigDag\Default.aspx" />
-    <Content Include="ProofOfConcept\DigDag\test.png" />
-    <Content Include="ProofOfConcept\HeightMap\Default.aspx" />
-    <Content Include="ProofOfConcept\TimeWarp\Default.aspx" />
     <TypeScriptCompile Include="classes\Map\TimeWarp.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-geos-search\ha-geos-search.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-geo\ha-geo.ts" />
@@ -561,7 +555,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ProofOfConcept\DigDag\ol.canvastile.js" />
     <Content Include="packages.config" />
     <Content Include="ha.appcache" />
     <Content Include="manifest.json">
@@ -621,18 +614,6 @@
     </Compile>
     <Compile Include="cs\bundles\HTMLBundle.cs" />
     <Compile Include="cs\bundles\HTMLBundleTransform.cs" />
-    <Compile Include="ProofOfConcept\DigDag\Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ProofOfConcept\HeightMap\Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ProofOfConcept\TimeWarp\Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime">

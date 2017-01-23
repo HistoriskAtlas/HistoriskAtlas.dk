@@ -1,0 +1,61 @@
+﻿<dom-module id="panel-route">
+    <template>
+        <style>
+            .content {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+            }
+            .list {
+                /*display:flex; 
+                flex-direction:column; 
+                justify-content:flex-start; 
+                flex-grow:1;
+                padding-left:20px;*/ 
+                
+                display: block;
+                padding: 0px 10px;
+                overflow-y: auto;  
+                flex-grow: 1;              
+            }
+            .listitem {
+                display: flex;
+                align-items: center;
+                border-bottom: solid 1px;
+                border-bottom-color: #ececec; /*TODO: How to make generic reference in dynamically created component?*/
+                font-size: 13px;
+                height: 32px; /*was 25px*/
+                cursor: pointer;
+            }
+            img {
+                height: 25px;
+            }   
+            span.icon {
+                width: 25px;
+                margin-right: 10px;
+                display: flex;
+                justify-content: center;
+                color: #005D9A;
+            }
+            paper-fab {
+                margin: 10px;
+                align-self: flex-end;
+            }
+        </style>
+        <div class="content">
+            <div class="list">
+                <template id="templateCollections" is="dom-repeat" items="[[collections]]" as="collection">
+                    <div class="listitem light-gray-border" on-tap="collectionTap">
+                        <span class="icon"><iron-icon icon="timeline"></span>
+                        <span>[[collection.title]]</span>
+                    </div>
+                </template>
+            </div>
+            <paper-fab icon="add" class="HAPrimColor" on-tap="newRoute"></paper-fab>
+        </div>
+
+        <!--<dialog-text id="routeTitleDialog" confirm-callback="route-title-confirmed">
+            <h2>Angiv titel på rute</h2>
+        </dialog-text>-->
+    </template>
+</dom-module>

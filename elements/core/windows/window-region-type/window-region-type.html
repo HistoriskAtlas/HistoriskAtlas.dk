@@ -1,0 +1,51 @@
+﻿<dom-module id="window-region-type">
+    <template>
+        <style>
+            .content {
+                padding: 18px; 
+                flex-grow: 1;
+                font-size: 13px;
+                min-height: 0px;
+                /*overflow-y: auto;*/
+            }
+            .top {
+                display: flex; 
+                align-content: space-between;
+                font-size: 16px;
+                font-weight: bold;
+            }
+            .headline {
+                font-weight: bold;
+                font-size: 13px;
+            }
+            .listitem {
+                display: flex;
+                align-items: center;
+                border-bottom: solid 1px;
+                border-bottom-color: #ececec;
+                font-size: 13px;
+                height: 25px;
+            }
+            .listitem > span {
+                cursor: pointer;
+            }
+            .title {
+                flex-grow: 1;
+            }
+        </style>
+
+        <iron-ajax id="ajax"
+                   params="[[params]]"
+                   handle-as="json"
+                   on-response="handleResponse"></iron-ajax>
+
+        <window-basic id="windowbasic" window-title="[[regionType.name]]" toolbar-mode="waterfall">
+            <div class="content" id="scroller">
+                <div class="top HAInvertedPrimColor"><div>[[regionType.regionTypeCategory.name]]</div><div style="flex-grow:1"></div><div class="type">[[years(regionType.periodStart,regionType.periodEnd)]]</div></div>
+                <br>
+                <br>
+                <div id="about"></div>
+            </div>
+        </window-basic>
+    </template>
+</dom-module>

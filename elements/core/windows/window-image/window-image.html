@@ -1,0 +1,172 @@
+﻿<dom-module id="window-image">
+    <style>
+        /*.container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: calc(100% - 64px);
+        }
+        .image {
+            max-width: 100%;
+            max-height: 100%;
+            align-self: center;        
+        }*/
+        #container {
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            /*height: 100%;*/
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 0px;
+        }
+        .inner-container {
+            display: flex;
+            /*width: 400%;*/
+            /*height: calc(100% - 128px);*/
+            flex-grow: 1;
+        }
+        .image-container {
+            /*display:flex;
+            flex-direction: column;
+            justify-content: center;*/
+
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 100%;
+            /*height: 100%;*/
+        }
+        /*.image {
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }*/
+        .overlay {
+            position: absolute;
+            width: 100%;
+            /*height: calc(100% - 128px);*/
+            /*top: 64px;*/
+            left: 0px;
+            top: 0px;
+            bottom: 64px;
+        }
+        .bottom {
+            /*position: absolute;*/
+            /*width: 100%;*/
+            height: 64px;
+            /*top: calc(100% - 64px);*/
+            font-size: 12px;
+            padding: 5px 17px 5px 17px;
+            display:flex; 
+            justify-content: space-between
+        }
+        .prefixed {
+            display: flex;
+            white-space: nowrap;
+        }
+        .arrows {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+        .arrows paper-icon-button {
+            padding: 0px;
+            border-radius: 50%;
+            background-color: rgba(0,0,0,0.3);
+            margin: 10px;
+            pointer-events: all;
+        }
+
+        /*TODO: should be reused across elements..... */
+        paper-item {
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 14px;
+            height: 42px;
+            font-weight: normal !important;
+            --paper-item-min-height: 42px;
+        }
+        paper-item:before {
+            background-color: transparent !important;
+        }
+        paper-item:after {
+            background-color: transparent !important;
+        }
+        paper-item:hover {
+            background-color: lightgray !important;
+        }
+
+    </style>
+    <template>
+        <ha-image id="haImageService" image="{{image}}" editing="[[editing]]" licens="{{licens}}" geo="[[geo]]"></ha-image>
+        <window-basic id="windowbasic" window-title="[[geo.title]]" lightbox="true" fullscreen="[[fullscreen]]" width="[[width]]" height="[[height]]" left="[[left]]" top="[[top]]">
+            <template is="dom-if" if="[[editing]]">
+                <div class="toolbar">
+                    <paper-menu-button horizontal-align="right">
+                        <paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>
+                        <paper-menu class="dropdown-content">
+                            <paper-item on-tap="deleteImage">Slet billede</paper-item>
+                        </paper-menu>
+                    </paper-menu-button>
+                </div>
+            </template>
+            <div id="container">
+                <div class="inner-container">
+
+
+                    <template is="dom-if" if="[[youTubeEmbedUrl(contents)]]">
+                        <iframe src="[[youTubeEmbedUrl(contents)]]" frameborder="0" allowfullscreen style="width:100%"></iframe>
+                    </template>
+
+
+                    <template id="templateImages" is="dom-repeat" items="[[geo.images]]">
+                        
+                        
+
+
+
+                        <div class="image-container" style$="[[imageStyle(item)]]">
+                            <template is="dom-if" if="[[showHighRes(item,image)]]">
+                                <img src="[[item.url]]" style="display:none" on-load="imageload">
+                            </template>
+                        </div>
+
+
+
+
+
+                    </template>
+                </div>
+                <div class="overlay noselect">
+                    <div class="arrows">
+                        <div><paper-icon-button icon="paper-tabs:chevron-left" hidden$="[[isFirstImage(image)]]" on-tap="arrowLeftTap"></paper-icon-button></div>
+                        <div><paper-icon-button icon="paper-tabs:chevron-right" hidden$="[[isLastImage(image)]]" on-tap="arrowRightTap"></paper-icon-button></div>
+                    </div>
+                </div>
+            </div>
+            <div id="bottom" class="bottom">
+                <div>
+                    <plain-text content="{{image.text}}" editable="[[editing]]" placeholder="Skriv billedteksten her..." maxlength="255" style="min-width:130px"></plain-text>
+                    <div class="prefixed" style="margin-top:2px">
+                        <span>Fotograf:&nbsp;</span>
+                        <plain-text content="{{image.photographer}}" editable="[[editing]]" placeholder="Ikke angivet" maxlength="100" show-placeholder-when-not-editing style="min-width:130px"></plain-text>
+                    </div>
+                </div>
+                <div style="padding-left: 10px; display: flex; flex-direction:column; align-items:flex-end">
+                    <div class="prefixed">
+                        <span>Billede fra&nbsp;</span>
+                        <plain-text content="{{image.year}}" editable="[[editing]]" placeholder="årstal" maxlength="4" numeric style="min-width:31px"></plain-text>
+                    </div>
+                    <div class="prefixed" style="align-items: flex-start">
+                        <licens-mark licens="[[licens]]" editing="[[editing]]" vertical-align="bottom"></licens-mark>
+                        <plain-text content="{{image.licensee}}" editable="[[editing]]" placeholder="rettighedshaver" maxlength="255" style="min-width:83px; margin-left:10px; margin-top: 2px;"></plain-text>
+                    </div>
+                </div>
+            </div>
+        </window-basic>
+    </template>
+</dom-module>

@@ -3,6 +3,7 @@
   "dependencies": {
     "web-animations-js": "^2.2.2",
     "webcomponentsjs": "^0.7.20",
+    "polymer-ts": "*",
     "iron-ajax": "PolymerElements/iron-ajax#1.0.0",
     "iron-pages": "PolymerElements/iron-pages#^1.0.0",
     "iron-collapse": "PolymerElements/iron-collapse#^1.0.0",

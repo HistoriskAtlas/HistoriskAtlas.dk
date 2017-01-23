@@ -1,0 +1,94 @@
+﻿<dom-module id="mit-atlas-button">
+    <template>
+        <style>
+            :host {
+                display: flex;
+                align-self: stretch;
+                /*background-color: #00477d;*/
+            }
+            paper-menu-button {
+                align-self: center;
+            }
+            paper-item {
+                cursor: pointer;
+                white-space: nowrap;
+                font-size: 14px;
+                height: 42px;
+                font-weight: normal !important;
+                --paper-item-min-height: 42px;
+            }
+            paper-item:before {
+                background-color: transparent !important;
+            }
+            paper-item:after {
+                background-color: transparent !important;
+            }
+            paper-item:hover {
+                background-color: lightgray !important;
+            }
+            paper-button {
+                margin: 0px;
+                text-transform: none;
+                min-width: initial;
+                font-size: 16px;
+                display: flex;
+                flex-direction: row;
+                align-items: flex-end;
+                padding-right: 0px;
+            }
+            .mit-atlas {
+                margin-bottom: -1px;
+            }
+            /*.mit-atlas > span {
+                font-weight:lighter
+            }*/
+            .name {
+                font-size: 12px;
+                font-weight: lighter; 
+                margin-bottom: -2px;
+                /*text-align: center;*/
+            }
+            iron-icon {
+                width: 36px;
+                height: 36px;
+                margin-bottom: -3px;
+            }
+
+            paper-item.spacer {
+                min-height: 10px; 
+                height: 10px;
+            }
+            paper-item.spacer > div {
+                width: 100%;
+                height: 1px;
+                border: none;
+                background-color: lightgrey;
+            }
+
+        </style>
+        <paper-menu-button id="button" no-animations="[[noAnimations(user)]]" horizontal-align="right" no-overlap>
+            <paper-button class="dropdown-trigger">
+                <div style="text-align: right">
+                    <div class="name">[[text(user,user.firstname)]]</div>
+                    <div class="mit-atlas">MitAtlas</div>
+                </div>
+                <iron-icon icon="social:person"></iron-icon>
+            </paper-button>
+            <paper-menu id="menu" class="dropdown-content">
+                <paper-item on-tap="newGeoTap">Opret fortælling</paper-item>
+                <!--<paper-item on-tap="profileTap">Min profil</paper-item>-->
+                <paper-item on-tap="newsTap">Nyheder</paper-item>
+                <template is="dom-if" if="[[user.isEditor]]">
+                    <paper-item disabled class="spacer"><div></div></paper-item>
+                    <paper-item on-tap="editorialTap">Redaktion</paper-item>
+                </template>
+                <template is="dom-if" if="[[user.isAdmin]]">
+                    <paper-item on-tap="adminTap">Administration</paper-item>
+                </template>
+                <paper-item disabled class="spacer"><div></div></paper-item>
+                <paper-item on-tap="logOutTap">Log ud</paper-item>
+            </paper-menu>
+        </paper-menu-button>
+
+    </template>
+</dom-module>

@@ -1,0 +1,100 @@
+﻿<dom-module id="panel-institution-admin">
+    <template>
+        <style>
+            :host {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+            .list {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                margin-right: 5px;
+            }
+            iron-list {
+                flex-grow: 1;
+                overflow: scroll !important;
+            }
+            .item {
+                padding: 2px 10px;
+                cursor: pointer;
+            }
+            .item:hover {
+                background-color:#ddd;
+            }
+            .item > span {
+                display: inline-block;
+                overflow-x: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                padding-right: 5px;
+            }
+            .item > span:nth-child(1) {
+                width: 30%;
+                max-width: 200px;
+                font-weight: bold;
+            }
+            .item > span:nth-child(2) {
+                width: 15%;
+                max-width: 80px;
+            }
+            .item > span:nth-child(3) {
+                width: 50%;
+            }
+            .headline {
+                font-weight: bold;
+                background-color: inherit !important;
+                padding-top: 10px;
+                font-size: 16px;
+                margin-right: 8px; /*scrollbarspace*/
+                user-select: none;
+            }
+
+            paper-input {
+                flex-grow: 1;
+                --paper-input-container-input:
+                {
+                    font-size: 13px;
+                }
+            }
+        </style>
+
+        <panel-admin id="admin" items="{{institutions}}" item="{{institution}}">
+            <div class="top">
+                <paper-input id="inputFilter" no-label-float autofocus tabindex="0" value="{{filter}}" on-keydown="filterCheckForEnter" placeholder="filter"></paper-input>
+            </div>
+
+            <div class="list">
+                <div class="item headline">
+                    <span on-tap="sortOnName">Navn</span>
+                    <span on-tap="sortOnType">Type</span>
+                    <span on-tap="sortOnUsers">Brugere</span>
+                </div>
+                <iron-list items="{{institutions}}" max-physical-count="50">
+                    <template>
+                        <div class="item" on-tap="itemTap">
+                            <span>[[item.tag.plurname]]</span>
+                            <span>[[instType(item.type)]]</span>
+                            <span>[[userNames(item.user_institutions)]]</span>
+                        </div>
+                    </template>
+                </iron-list>
+            </div>
+
+            <div class="details">
+                <template is="dom-if" if="[[institution]]">
+                    <div style="font-weight: bold; font-size:16px">[[institution.tag.plurname]]</div>
+                    <div>[[instType(institution.type)]]</div>
+                    <confirm-input label="navn" value="{{institution.tag.plurname}}"></confirm-input>
+                    <confirm-input label="website" value="{{institution.url}}"></confirm-input>
+                    <confirm-input label="email" value="{{institution.email}}"></confirm-input>
+                    <div style="padding-top:15px; font-weight:bold">brugere</div>
+                    <list-auto-suggest id="userAutosuggest" items="{{institution.user_institutions}}" autosuggest-service="user" autosuggest-schema="[[getAutosuggestSchema(institution.user_institutions)]]" name-path="user.firstname,$ ,user.lastname,$ (,user.login,$)" suggest-name-path="firstname,$ ,lastname,$ (,login,$)"></list-auto-suggest>
+                </template>
+            </div>
+
+        </panel-admin>
+
+    </template>
+</dom-module>

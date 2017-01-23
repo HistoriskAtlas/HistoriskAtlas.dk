@@ -1,0 +1,164 @@
+﻿<dom-module id="panel-user-admin">
+    <template>
+        <style>
+            :host {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+            .top {
+                display: flex;
+                flex-shrink: 0;
+            }
+            .list {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                margin-right: 5px;
+            }
+
+            iron-list {
+                flex-grow: 1;
+                overflow: scroll !important;
+            }
+
+            .item {
+                padding: 2px 10px;
+                cursor: pointer;
+            }
+            .item:hover {
+                background-color: #ddd;
+            }
+            .item > span {
+                display: inline-block;
+                overflow-x: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                padding-right: 5px;
+            }
+            .item > span:nth-child(1) {
+                width: 20%;
+                max-width: 200px;
+            }
+            .item > span:nth-child(2) {
+                width: 30%;
+                font-weight: bold;
+            }
+            .item > span:nth-child(3) {
+                width: 16%;
+            }
+            .item > span:nth-child(4) {
+                width: 29%;
+            }
+
+            .headline {
+                font-weight: bold;
+                background-color: inherit !important;
+                padding-top: 10px;
+                font-size: 16px;
+                margin-right: 8px; /*scrollbarspace*/
+            }
+            paper-input {
+                flex-grow: 1;
+                --paper-input-container-input: {
+                    font-size: 13px;
+                }
+            }
+            #inputFilter {
+                margin-right: 10px;
+            }
+            paper-dropdown-menu {
+                --paper-input-container-input: {
+                    font-size: 13px;
+                }
+                width: 110px;
+            }
+            paper-item {
+                font-size: 13px;
+                min-height: 30px;
+            }
+
+            .is-active {
+                cursor: pointer;
+            }
+            .is-active.active:before {
+                content: 'aktiv';
+                color: darkgreen;
+            }
+            .is-active.inactive:before {
+                content: 'inaktiv';
+                color: darkred;
+            }
+            .list-title {
+                padding-top: 15px; 
+                font-weight: bold;
+                user-select: none;
+            }
+        </style>
+
+        <panel-admin id="admin" items="{{users}}" item="{{user}}">
+            <div class="top">
+                <paper-input no-label-float autofocus tabindex="0" value="{{filter}}" on-keydown="filterCheckForEnter" placeholder="filter" style="margin-right:10px"></paper-input>
+                <paper-dropdown-menu no-label-float style="margin-right:10px">
+                    <paper-listbox class="dropdown-content" selected="{{roleIDFilter}}">
+                        <template is="dom-repeat" items="[[roleNames]]">
+                            <paper-item>[[item]]</paper-item>
+                        </template>
+                        <paper-item>alle roller</paper-item>
+                    </paper-listbox>
+                </paper-dropdown-menu>
+                <paper-dropdown-menu no-label-float>
+                    <paper-listbox class="dropdown-content" selected="{{kind}}">
+                        <paper-item>alle brugere</paper-item>
+                        <paper-item>professionelle</paper-item>
+                        <!--<paper-item>borgere</paper-item> API not possible (not exists)-->
+                    </paper-listbox>
+                </paper-dropdown-menu>
+            </div>
+
+            <div class="list">
+                <div class="item headline">
+                    <span on-tap="sortOnLogin">Brugernavn</span>
+                    <span on-tap="sortOnName">Navn</span>
+                    <span on-tap="sortOnRole">Rolle</span>
+                    <span on-tap="sortOnInstitution">Institution</span>
+                </div>
+                <iron-list items="{{users}}" max-physical-count="50">
+                    <template>
+                        <div class="item" on-tap="itemTap">
+                            <span>[[item.login]]</span>
+                            <span>[[item.firstname]] [[item.lastname]]</span>
+                            <span>[[roleName(item.roleid)]]</span>
+                            <span>[[institutions(item.user_institutions)]]</span>
+                        </div>
+                    </template>
+                </iron-list>
+            </div>
+
+            <div class="details">
+                <template is="dom-if" if="[[showDetails]]">
+                    <div style="display:flex">
+                        <div>[[user.login]]</div>
+                        <div style="flex-grow:1"></div>
+                        <div class$="is-active [[activeClass(user.isactive)]]" on-tap="activeTap"></div>
+                    </div>
+                    <div style="font-weight: bold; font-size:16px">[[user.firstname]] [[user.lastname]]</div>
+                    <dropdown-input label="rolle" selected="{{user.roleid}}">
+                        <template is="dom-repeat" items="[[roleNames]]">
+                            <paper-item>[[item]]</paper-item>
+                        </template>
+                    </dropdown-input>
+                    <confirm-input label="email" value="{{user.email}}" tabindex="0"></confirm-input>
+                    <confirm-input label="intern note" value="{{user.internalnote}}" multiline tabindex="0"></confirm-input>
+                    <div class="list-title">institutioner</div>
+                    <list-auto-suggest id="institutionAutosuggest" items="{{user.user_institutions}}" autosuggest-service="institution" autosuggest-schema="[[getAutosuggestSchema(user.user_institutions)]]" name-path="institution.tag.plurname" suggest-name-path="tag.plurname"></list-auto-suggest>
+                    <div class="list-title">skribenter</div>
+                    <list-auto-suggest id="writerAutosuggest" items="{{user.userhierarkis}}" autosuggest-service="user" autosuggest-schema="[[getUserAutosuggestSchema(user.userhierarkis)]]" name-path="child.firstname,$ ,child.lastname,$ (,child.login,$)" suggest-name-path="firstname,$ ,lastname,$ (,login,$)"></list-auto-suggest>
+                    <div class="list-title">redaktører</div>
+                    <list-auto-suggest id="editorAutosuggest" items="{{user.userhierarkis1}}" autosuggest-service="user" autosuggest-schema="[[getUserAutosuggestSchema(user.userhierarkis1)]]" name-path="parent.firstname,$ ,parent.lastname,$ (,parent.login,$)" suggest-name-path="firstname,$ ,lastname,$ (,login,$)"></list-auto-suggest>
+                </template>
+            </div>
+        </panel-admin>
+
+    </template>
+</dom-module>

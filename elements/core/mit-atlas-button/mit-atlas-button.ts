@@ -1,0 +1,69 @@
+﻿@component("mit-atlas-button")
+class MitAtlasButton extends polymer.Base implements polymer.Element {
+
+    @property({ type: Object })
+    public user: HAUser;
+
+    @listen("button.tap")
+    buttonTap() {
+        //if (!App.isDev) {
+        //    App.toast.show('Vi oplever i øjeblikket problemer med at logge ind. Kom tilbage igen lidt senere!');
+        //    return;
+        //}
+
+        if (App.haUsers.user.isDefault)
+            Common.dom.append(WindowLogin.create());
+    }
+
+    @listen("button.paper-dropdown-open")
+    buttonPaperDropdownOpen() {
+        //this.$.menu.selected = null;
+
+        if (App.haUsers.user.isDefault)
+            this.$.button.close();
+    }
+    
+    newGeoTap() {
+        if (!App.haUsers.user.isActive) {
+            App.toast.show('Du kan ikke oprette en fortælling, før brugeren er aktiveret. Se mail sendt til ' + App.haUsers.user.email + '.');
+            return;
+        }
+
+        App.haGeos.newGeo();
+    }
+
+    profileTap() {
+        $(this).append(WindowProfile.create());
+    }
+
+    newsTap() {
+        $(this).append(WindowUserNews.create());
+    }
+
+    adminTap() {
+        $(this).append(WindowAdmin.create());
+    }
+    editorialTap() {
+        $(this).append(WindowEditorial.create());
+    }
+
+    logOutTap() {
+        Services.get('exit', {}, (result) => {
+            if (result.data.status.code == 2)
+                App.haUsers.set('user', HAUser.default);
+            //else
+            //    error logging out
+        })
+    }
+
+    noAnimations(user: HAUser): boolean {
+        return user.isDefault;
+    }
+
+    text(user: HAUser): string {
+        return user.isDefault ? 'Log ind på' : user.firstname;
+    }
+
+}
+
+MitAtlasButton.register();
