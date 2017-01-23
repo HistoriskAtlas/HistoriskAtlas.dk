@@ -32,9 +32,5 @@
     "paper-toggle-button": "PolymerElements/paper-toggle-button#^1.0.0",
     "paper-spinner": "PolymerElements/paper-spinner#^1.0.0",
     "gold-email-input": "PolymerElements/gold-email-input#^1.0.0"
-  },
-  "resolutions": {
-    "webcomponentsjs": "^0.7.18",
-    "web-animations-js": "^2.2.2"
   }
 }
