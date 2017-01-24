@@ -70,6 +70,7 @@
     <Content Include="elements\core\collections\ha-image\ha-image.html" />
     <Content Include="elements\core\icons\cc-icons\cc-icons.html" />
     <Content Include="elements\core\icons\ha-icons\ha-icons.html" />
+    <Content Include="elements\core\lists\geo-list-item\geo-list-item.html" />
     <Content Include="elements\core\lists\geo-list\geo-list.html" />
     <Content Include="elements\core\panels\panel-theme\panel-theme.html" />
     <Content Include="elements\core\content-viewer\content-viewer.html" />
@@ -85,7 +86,7 @@
     <Content Include="elements\ha_core_geo_only.aspx" />
     <Content Include="elements\ha_core.aspx" />
     <Content Include="elements\core\icons\licens-mark\licens-mark.html" />
-    <Content Include="elements\admin\lists\list-auto-suggest\list-auto-suggest.html" />
+    <Content Include="elements\writer\lists\list-auto-suggest\list-auto-suggest.html" />
     <Content Include="elements\core\main-app\main-search\main-search.html" />
     <Content Include="elements\core\main-menu\main-menu-item\main-menu-item.html" />
     <Content Include="elements\core\main-menu\main-menu.html" />
@@ -466,7 +467,8 @@
     <TypeScriptCompile Include="elements\core\dialogs\dialog-text\dialog-text.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-image\ha-image.ts" />
     <TypeScriptCompile Include="elements\core\icons\licens-mark\licens-mark.ts" />
-    <TypeScriptCompile Include="elements\admin\lists\list-auto-suggest\list-auto-suggest.ts" />
+    <TypeScriptCompile Include="elements\core\lists\geo-list-item\geo-list-item.ts" />
+    <TypeScriptCompile Include="elements\writer\lists\list-auto-suggest\list-auto-suggest.ts" />
     <TypeScriptCompile Include="elements\core\lists\geo-list\geo-list.ts" />
     <TypeScriptCompile Include="elements\core\main-app\main-search\main-search.ts" />
     <TypeScriptCompile Include="elements\core\main-menu\main-menu-item\main-menu-item.ts" />

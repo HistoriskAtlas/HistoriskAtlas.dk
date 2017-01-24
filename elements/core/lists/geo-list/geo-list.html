@@ -1,6 +1,6 @@
 ﻿<dom-module id="geo-list">
     <style>
-        .listitem {
+        /*.listitem {
             display: flex;
             align-items: center;
             border-bottom: solid 1px;
@@ -18,14 +18,15 @@
             display: flex;
             justify-content: center;
             color: #005D9A;
-        }
+        }*/
     </style>
     <template>
         <template is="dom-repeat" items="[[geos]]" as="geo" sort="[[compareFunction]]">
-            <div class="listitem light-grey-border" on-tap="geoTap">
+            <geo-list-item geo="[[geo]]" on-tap="geoTap"></geo-list-item>
+            <!--<div class="listitem light-grey-border" on-tap="geoTap">
                 <span class="icon"><img src="[[geo.icon.marker]]"></span>
                 <span>[[geo.title]]</span>
-            </div>
+            </div>-->
         </template>
     </template>
 </dom-module>

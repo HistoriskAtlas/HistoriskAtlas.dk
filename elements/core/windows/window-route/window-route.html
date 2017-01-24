@@ -1,45 +1,18 @@
 ﻿<dom-module id="window-route">
     <template>
         <style>
-            .list {
-                /*display:flex; 
-                flex-direction:column; 
-                justify-content:flex-start; 
-                flex-grow:1;
-                padding-left:20px;*/ 
-                
-                display: block;
-                padding: 0px 10px;
-                overflow-y: auto;                
-            }
-            .listitem {
-                display: flex;
-                align-items: center;
-                border-bottom: solid 1px;
-                border-bottom-color: #ececec; /*TODO: How to make generic reference in dynamically created component?*/
-                font-size: 13px;
-                height: 32px; /*was 25px*/
-                cursor: pointer;
-            }
-            img {
-                height: 25px;
-            }   
-            span.icon {
-                width: 25px;
-                margin-right: 10px;
-                display: flex;
-                justify-content: center;
-                color: #005D9A;
-            }
         </style>
         <window-basic id="windowbasic" window-title="[[route.title]]" width="400" height="650" right="10">
-            <div class="list">
-                <template id="templateGeos" is="dom-repeat" items="[[route.geos]]" as="geo">
-                    <div class="listitem light-gray-border" on-tap="geoTap">
-                        <span class="icon"><img src="[[geo.icon.marker]]"></span>
-                        <span>[[geo.title]]</span>
+            <div style="margin: 17px; font-size:14px">
+                <list-auto-suggest id="geoAutosuggest" items="{{route.geos}}" autosuggest-service="geo" autosuggest-schema="[[getAutosuggestSchema(route.geos,route.geos.length)]]" name-path="title" suggest-name-path="title">
+                    <div class="list">
+                        <template is="dom-repeat" items="[[route.geos]]" as="geo">
+                            <geo-list-item geo="[[geo]]" closeable></geo-list-item>
+                        </template>
                     </div>
-                </template>
+                    <paper-fab icon="add" mini class="HAPrimColor add-button"></paper-fab>
+                    <paper-fab icon="close" mini class="HAPrimColor remove-button"></paper-fab>
+                </list-auto-suggest>
             </div>
         </window-basic>
     </template>

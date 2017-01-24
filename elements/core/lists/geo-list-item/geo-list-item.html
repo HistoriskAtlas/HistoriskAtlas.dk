@@ -1,0 +1,33 @@
+﻿<dom-module id="geo-list-item">
+    <style>
+        .listitem {
+            display: flex;
+            align-items: center;
+            border-bottom: solid 1px;
+            border-bottom-color: #ececec;
+            font-size: 13px;
+            height: 32px;
+            cursor: pointer;
+        }
+        img {
+            height: 32px;
+            margin-top: 6px;
+        }
+        span.icon {
+            width: 25px;
+            margin-right: 10px;
+            display: flex;
+            justify-content: center;
+            color: #005D9A;
+        }
+    </style>
+    <template>
+        <div class="listitem light-grey-border">
+            <span class="icon"><img src="[[geo.icon.marker]]"></span>
+            <span style="flex-grow:1">[[geo.title]]</span>
+            <template is="dom-if" if="[[closeable]]">
+                <paper-icon-button icon="close" on-tap="closeTap"></paper-icon-button>
+            </template>
+        </div>
+    </template>
+</dom-module>

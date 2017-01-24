@@ -29,61 +29,43 @@ class PanelRoute extends polymer.Base implements polymer.Element {
     //}
 
     collectionTap(e: any) {
-        this.openRoute(<HaCollection>e.model.collection);
+        //this.openRoute(<HaCollection>e.model.collection);
+        (<HaCollection>e.model.collection).open();
     }
-    private openRoute(route: HaCollection) {
-        if (App.windowRoute) {
-            App.windowRoute.setRoute(route);
-            (<WindowBasic>App.windowRoute.$.windowbasic).bringToFront();
-        } else
-            Common.dom.append(WindowRoute.create(route));
+    //private openRoute(route: HaCollection) {
+    //    if (App.windowRoute) {
+    //        App.windowRoute.setRoute(route);
+    //        (<WindowBasic>App.windowRoute.$.windowbasic).bringToFront();
+    //    } else
+    //        Common.dom.append(WindowRoute.create(route));
 
-        if (this.geoToAdd) {
-            App.windowRoute.addGeo(this.geoToAdd);
-            this.geoToAdd = null;
-        }
-    }
-
-    newRoute() {
-        //this.$.routeTitleDialog.open();
-        Common.dom.append(DialogText.create('Angiv titel på rute', (title) => this.routeTitleConfirmed(title)));
-   }
-    //@listen('routeTitleDialog.iron-overlay-closed')
-    //routeTitleDialogClosed(e: any) {
-    //    this.closeDialog(e.detail.confirmed);
+    //    //if (this.geoToAdd) {
+    //    //    App.windowRoute.addGeo(this.geoToAdd);
+    //    //    this.geoToAdd = null;
+    //    //}
     //}
 
-    //checkForEnter(e: any) {
-    //    if (e.which === 13) {
-    //        this.$.routeTitleDialog.close();
-    //        this.closeDialog(true);
-    //    }
-    //}
-    //private closeDialog(confirmed: boolean) {
-    //    if (confirmed) {
-    //        var route: HaCollection = App.haCollections.newCollection(this.newTitle);
-    //        this.push('collections', route);
-    //        this.openRoute(route);
-    //    }
-    //    this.newTitle = '';
-    //}
+   // newRoute() {
+   //     //this.$.routeTitleDialog.open();
+   //     Common.dom.append(DialogText.create('Angiv titel på rute', (title) => this.routeTitleConfirmed(title)));
+   //}
 
     //@listen('route-title-confirmed')
-    routeTitleConfirmed(title: string) {
-        var route: HaCollection = App.haCollections.newCollection(title);
-        this.push('collections', route);
-        this.openRoute(route);
-    }
+    //routeTitleConfirmed(title: string) {
+    //    var route: HaCollection = App.haCollections.newCollection(title);
+    //    this.push('collections', route);
+    //    this.openRoute(route);
+    //}
 
-    public addGeo(geo: HaGeo) {
-        this.geoToAdd = geo;
-        this.drawerOpen = true;
-        //this.$.windowbasic.bringToFront();
-        if (this.collections.length == 0)
-            this.newRoute();
-        else
-            App.toast.show("Vælg rute eller opret ny")
-    }
+    //public addGeo(geo: HaGeo) {
+    //    this.geoToAdd = geo;
+    //    this.drawerOpen = true;
+    //    //this.$.windowbasic.bringToFront();
+    //    if (this.collections.length == 0)
+    //        this.newRoute();
+    //    else
+    //        App.toast.show("Vælg rute eller opret ny")
+    //}
 }
 
 PanelRoute.register();

@@ -1,0 +1,73 @@
+﻿<dom-module id="list-auto-suggest">
+    <template>
+        <style>
+            :host {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+            .item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .selectable {
+                cursor: pointer;
+            }
+            :host > .selectable:first-child {
+                font-weight: bold;
+            }
+            paper-icon-button {
+                width: 18px;
+                height: 18px;
+                padding: 0px;
+                margin: -1px;
+            }
+            paper-input {
+                flex-grow: 1;
+                --paper-input-container-input:
+                {
+                    font-size: 13px;
+                }
+                --paper-input-container-underline-focus: {
+                    border-bottom: 1px solid black;
+                }
+            }
+        </style>
+        <content select=".list">
+            <div>
+                <template is="dom-repeat" items="[[items]]">
+                    <div class="item" on-tap="selectTap">
+                        <div>[[name(item)]]</div>
+                        <paper-icon-button icon="close" on-tap="closeTap"></paper-icon-button>
+                    </div>
+                </template>
+            </div>
+        </content>
+        <div class="item" style="padding-top:10px; height:30px">
+            <paper-input id="inputAutocomplete" no-label-float autofocus tabindex="0" value="{{input}}" hidden$="[[!autocompleteIsOpen]]" on-keydown="checkForEnter"></paper-input>
+            <div on-tap="toggleAutocomplete" style="margin-left:auto">
+                <template is="dom-if" if="[[!autocompleteIsOpen]]">
+                    <div>
+                        <content select=".add-button">
+                            <paper-icon-button icon="add"></paper-icon-button>
+                        </content>
+                    </div>
+                </template>
+                <template is="dom-if" if="[[autocompleteIsOpen]]">
+                    <div>
+                        <content select=".remove-button">
+                            <paper-icon-button icon="close"></paper-icon-button>
+                        </content>
+                    </div>
+                </template>
+            </div>
+        </div>
+        <template is="dom-repeat" items="[[autocompleteItems]]">
+            <div class="item selectable">
+                <div on-tap="addTap">[[suggestName(item)]]</div>
+            </div>
+        </template>
+
+    </template>
+</dom-module>
