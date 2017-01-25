@@ -33,13 +33,8 @@ class MitAtlasButton extends polymer.Base implements polymer.Element {
     }
 
     newRouteTap() {
-        Common.dom.append(DialogText.create('Angiv titel på rute', (title) => this.routeTitleConfirmed(title)));
+        App.haCollections.newRoute();
     }
-    routeTitleConfirmed(title: string) {
-        var route: HaCollection = App.haCollections.newCollection(title);
-        route.open();
-    }
-
 
     profileTap() {
         $(this).append(WindowProfile.create());

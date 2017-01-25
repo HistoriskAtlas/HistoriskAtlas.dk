@@ -1,0 +1,14 @@
+﻿<dom-module id="geo-sortable-list">
+    <style>
+        
+    </style>
+    <template>
+        <sortable-js animation="150" handle=".drag-handle">
+            <template is="dom-repeat" items="{{items}}">
+                <div>
+                    <geo-list-item geo="[[item]]" closeable></geo-list-item>
+                </div>
+            </template>
+        </sortable-js>
+    </template>
+</dom-module>

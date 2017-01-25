@@ -1,0 +1,114 @@
+﻿<dom-module id="panel-digdag">
+    <style>
+        :host {
+            display: block;
+            /*padding: 0px 10px;*/
+        }
+        .headline {
+            font-size: 16px;
+            font-weight: bold;
+            padding-bottom: 30px;
+            /*padding-top: 20px;*/
+            padding-left: 10px;        
+        }
+        .attribution {
+            font-size: 13px;
+            padding: 30px 10px 10px 10px;
+            color: var(--dark-gray-color);
+        }
+        .listitem {
+            display: flex;
+            align-items: center;
+            border-bottom: solid 1px;
+            border-bottom-color: var(--light-gray-color);
+            /*padding: 5px 0px;*/
+            font-size: 13px;
+            height: 32px; /*was 25px*/
+        }
+        .listitem > span {
+            cursor: pointer;
+        }
+        .listsubitem {
+            padding-left: 10px !important;
+            background-color: var(--light-gray-color);
+        }
+        .title {
+            flex-grow: 1;
+            user-select: none;
+            padding: 0px 0px 0px 30px;
+            font-size: 13px;
+        }
+        paper-icon-button ~ .title {
+            padding-left: 0px !important;
+        }
+        .inactive {
+            color: var(--dark-gray-color);
+        }
+        paper-icon-button {
+            width: 30px !important; /*was 25px*/
+            height: 30px !important; /*was 25px*/
+            padding: 3px !important;
+            color: var(--primary-color);
+            -webkit-transform: rotate(-90deg);
+            transform: rotate(-90deg);
+            transition: transform 0.3s, -webkit-transform 0.3s;
+        }
+        paper-icon-button[active] {
+            transform: rotate(0deg) !important;
+        }
+        paper-radio-button {
+            --paper-radio-button-unchecked-color: #cccccc !important;
+            --paper-radio-button-unchecked-background-color: #cccccc !important;
+            --paper-radio-button-checked-color: var(--primary-color);
+            --paper-radio-button-label-spacing: 6px;
+        }
+        paper-radio-button.disabled {
+            --paper-radio-button-unchecked-color: var(--light-gray-color);
+            --paper-radio-button-unchecked-background-color: var(--light-gray-color);
+        }
+        /*paper-tooltip {
+            width: 230px;
+            line-height: 1.1;
+        }*/
+        paper-icon-button.info {
+            -webkit-transform: none !important;
+            transform: none !important;
+            margin-right: 5px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .listitem:hover > .info {
+            opacity: 1 !important;
+            transition: opacity 0.3s 0.5s !important;
+        }
+    </style>
+    <template>
+        <div class="headline">
+            <!--Danmarks historisk-administrative geografi<br />- fra 1660 til 2010<br> (pt. låst til 1980)-->
+        </div>
+        <div class="listitem" on-tap="disabledTap">
+            <span class="title" style="font-size:13px; font-weight:bold">Deaktiver</span>
+            <paper-radio-button noink checked="{{disabled(type)}}" class="disabled"></paper-radio-button>
+        </div>
+        <template is="dom-repeat" items="{{digdags}}" as="digdag">
+            <div class="listitem light-gray-border" on-tap="digdagTap">
+                <div style="cursor:pointer"><paper-icon-button icon="arrow-drop-down" toggles disabled active="{{digdag.showChildren}}" noink></paper-icon-button></div>
+                <span class="noselect">[[digdag.name]]</span>
+            </div>
+            <template is="dom-if" if="[[digdag.showChildren]]">
+                <template id="childTemplate" is="dom-repeat" items="{{digdag.regionTypes}}" as="child">
+                    <div class$="[[classListItem(year,child)]]" on-tap="childTap" on-down="childDown">
+                        <template is="dom-if" if="[[showInfoButton(touchDevice,digdag)]]">
+                            <paper-icon-button class="info" icon="info-outline" on-tap="infoTap" keyBindings="[[child]]"></paper-icon-button> <!--keyBindings="[[child]]" needed because of on-tap (?!?!?!) -->
+                        </template>
+                        <span class="title">[[child.name]]</span>
+                        <paper-radio-button noink checked="{{child.active}}"></paper-radio-button>
+                    </div>
+                </template>
+            </template>
+        </template>
+        <div class="attribution">
+            Data leveret af <a href="http://digdag.dk/" target="_blank" style="color:inherit">DigDag.dk</a>
+        </div>
+    </template>
+</dom-module>

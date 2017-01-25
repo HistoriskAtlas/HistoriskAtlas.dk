@@ -1,0 +1,51 @@
+﻿<dom-module id="dialog-tour">
+    <template>
+        <style>
+            #container {
+                position: absolute;
+            }
+            #dialog {
+                position: absolute !important;
+                width: 300px; 
+            }
+            .dialog-left {
+                left:0px !important;
+                right: initial !important;
+            }
+            .dialog-right {
+                right:0px !important;
+                left: initial !important;
+            }
+            .dialog-top {
+                top:0px !important;
+                bottom: initial !important;
+            }
+            .dialog-bottom {
+                bottom:0px !important;
+                top: initial !important;
+            }
+            #arrow {
+                background-color: white;
+                width: 30px;
+                height: 30px;
+                padding: 0px;
+                margin: 0px;
+                position: absolute;
+                transform: rotate(45deg);
+            }
+        </style>
+        <div id="container">
+            <paper-dialog id="dialog" opened="[[opened]]" no-cancel-on-outside-click no-cancel-on-esc-key>
+                <div id="arrow"></div>
+                <div>
+                    <b>[[title]]</b><br>
+                    [[text]]
+                </div>
+                <div class="buttons">
+                    <paper-button dialog-dismiss on-tap="closeTap">Luk</paper-button>
+                    <paper-button dialog-confirm on-tap="nextTap">[[nextText(buttonOK)]]</paper-button>
+                </div>
+            </paper-dialog>
+        </div>
+    </template>
+</dom-module>

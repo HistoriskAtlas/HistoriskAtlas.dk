@@ -1,0 +1,27 @@
+﻿<dom-module id="dialog-route-selection">
+    <template>
+        <style>
+            paper-dialog paper-dialog-scrollable {
+                --paper-dialog-scrollable: {
+                    box-sizing: border-box;
+                    max-width: 360px;
+                    max-height: 500px;
+                }
+            }
+            paper-item {
+                cursor: pointer;
+            }
+        </style>
+        <paper-dialog id="dialog" opened>
+            <H2>[[title]]</H2>
+            <paper-dialog-scrollable>
+                <paper-menu>
+                    <paper-item on-tap="newRouteTap">Ny rute...</paper-item>
+                    <template is="dom-repeat" items="[[collections]]" as="collection">
+                        <paper-item on-tap="existingRouteTap">[[collection.title]]</paper-item>
+                    </template>
+                </paper-menu>
+            </paper-dialog-scrollable>
+        </paper-dialog>
+    </template>
+</dom-module>

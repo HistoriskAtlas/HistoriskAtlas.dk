@@ -1,0 +1,24 @@
+﻿<dom-module id="dialog-rich-text">
+    <template>
+        <style>
+            paper-dialog {
+                width: 520px;
+            }
+            .headline {
+                /*font-weight: bold;*/
+            }
+            rich-text {
+                min-height: 150px;
+                margin-top: 0px;
+            }
+        </style>
+        <paper-dialog id="dialog" always-on-top opened no-cancel-on-outside-click>
+            <div class="headline">[[headline]]</div>
+            <rich-text content="{{input}}" editable placeholder="[[placeholder]]"></rich-text>
+            <div class="buttons">
+                <paper-button dialog-dismiss>Annullér</paper-button>
+                <paper-button dialog-confirm>OK</paper-button>
+            </div>
+        </paper-dialog>
+    </template>
+</dom-module>

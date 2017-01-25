@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<browserconfig>
+  <msapplication>
+    <tile>
+		<square70x70logo src="/images/appicons/ie-icons/tile70x70.png" />
+		<square150x150logo src="/images/appicons/ie-icons/tile150x150.png" />
+		<wide310x150logo src="/images/appicons/ie-icons/tile310x150.png" />
+		<square310x310logo src="/images/appicons/ie-icons/tile310x310.png" />
+		<tilecolor>#006596</tilecolor>
+    </tile>
+  </msapplication>
+</browserconfig>

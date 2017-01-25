@@ -49,42 +49,47 @@
         return this._geos;
     }
 
-    public open() {
-        if (this._geos.length > 0 || !this._id) {
-            this.openRouteWindow();
-            return;
-        }
+    //public open() {
+    //    //if (this._geos.length > 0 || !this._id) {
+    //        App.haCollections.select(this);
+    //    //    return;
+    //    //}
 
-        Services.get('geo', { count: 'all', schema: '{geo:{fields:[geoid,title],filters:[{collection_geos:[{collectionid:' + this._id + '}]}]}}' }, (result) => {
-            for (var data of result.data) {
-                var geo = App.haGeos.geos[data.geoid];
-                if (!geo)
-                    continue;
-                geo.title = data.title;
-                this._geos.push(geo) //TODO: use notify system.............
-            }
-            this.openRouteWindow();
-        })
+    //    //Services.get('geo', { count: 'all', schema: '{geo:{fields:[geoid,title],filters:[{collection_geos:[{collectionid:' + this._id + '}]}]}}', sort: '{collection_geos:[ordering]}' }, (result) => {
+    //    //    for (var data of result.data) {
+    //    //        var geo = App.haGeos.geos[data.geoid];
+    //    //        if (!geo)
+    //    //            continue;
+    //    //        geo.title = data.title;
+    //    //        this._geos.push(geo) //TODO: use notify system.............
+    //    //    }
+    //    //    App.haCollections.select(this);
+    //    //})
 
-    }
-    private openRouteWindow() {
-        if (App.windowRoute) {
-            App.windowRoute.setRoute(this);
-            (<WindowBasic>App.windowRoute.$.windowbasic).bringToFront();
-        } else
-            Common.dom.append(WindowRoute.create(this));
-    }
-    public save() {
+    //}
+    //private openRouteWindow() {
+    //    if (App.windowRoute) {
+    //        App.windowRoute.setRoute(this);
+    //        (<WindowBasic>App.windowRoute.$.windowbasic).bringToFront();
+    //    } else
+    //        Common.dom.append(WindowRoute.create(this));
+    //}
+    public save(callback?: () => void) {
         var data: any = {
             title: this._title,
         };
         if (this._id) { //TODO: not tested yet?
             data.collectionid = this._id;
-            Services.update('collection', data, () => { })
+            Services.update('collection', data, () => {
+                if (callback)
+                    callback();
+            })
         } else {
             data.userid = App.haUsers.user.id;
             Services.insert('collection', data, (result) => {
                 this._id = result.data[0].collectionid;
+                if (callback)
+                    callback();
             });
         }
     }
@@ -109,6 +114,25 @@
         Services.delete('collection_geo', data, (result) => {
 
         });
+    }
+
+    public updateOrdering(indexStart: number, indexEnd: number) {
+        if (indexStart > indexEnd) {
+            var temp = indexStart;
+            indexStart = indexEnd;
+            indexEnd = temp;
+        }
+
+        for (var i = indexStart; i <= indexEnd; i++) {
+            var data: any = {
+                collectionid: this._id,
+                geoid: this._geos[i].id,
+                ordering: i
+            };
+            Services.update('collection_geo', data, (result) => {
+
+            });
+        }
     }
 
 }

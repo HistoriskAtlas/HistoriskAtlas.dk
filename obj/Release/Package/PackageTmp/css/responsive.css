@@ -1,0 +1,125 @@
+﻿/* Polymer defined narrow */ 
+@media (max-width: 639px) {
+    .hide-when-narrow {
+        display: none !important;
+    }
+    .fullscreen-when-narrow {
+        left: 0px !important;
+        right: 0px !important;
+        top: 0px !important;
+        bottom: 0px !important;
+        width: 100vw !important;
+        height: 100vh !important;
+    }
+}
+
+.fullscreen {
+    left: 0px !important;
+    right: 0px !important;
+    top: 0px !important;
+    bottom: 0px !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    transition: left 0.4s, right 0.4s, top 0.4s, bottom 0.4s, width 0.4s, height 0.4s;
+}
+
+/* Polymer defined wide */ 
+@media (min-width: 640px) {
+    .hide-when-wide {
+        display: none !important;
+    }
+    #scrim.paper-drawer-panel {
+        display:none !important;
+    }
+    .responsive-nudge {
+        margin-left: 316px !important; /*300 + 16 WAS 256 + 16*/
+    }
+    .responsive-nudge-timelines {
+        margin-left: 300px !important;
+        width: calc(100% - 300px);
+    }
+}
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    /* Styles */
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen and (min-width : 321px) {
+    /* Styles */
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen and (max-width : 320px) {
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+}
+
+/* iPads (landscape) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) {
+}
+
+/* iPads (portrait) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {
+}
+
+@media only screen and (max-width : 576px) {
+        .contentRight { float: none; width: 100%;}
+        .simplegallery .content { height: 250px; }
+        .simplegallery .content img{ width: inherit; margin: 0px auto; display: block; }
+        .simplegallery { margin: 0px; }
+        element.style { display: block; }
+}
+
+
+/* Desktops and laptops ----------- */
+@media only screen and (max-width : 767px) { 
+    /* Windows */
+    .window-container { margin: 50px 0px 0px 0px; width: 100%; height: 100%; padding: 10px 0px 5px 0px; left: 0%; }
+    .tab-content {height: auto;} /*Kan ikke være auto, da der skulle kunne scrolles*/
+    .tabs {height: 100%; }
+    #IntroContent { width: 100%; float: none; padding: 0em 0em 5px 0px;}
+    .gallery { padding: 0px; margin: 0px;}
+    .preview img {width: 100%;}
+    .thumbnails {width: 100%;}
+    .thumbnails img {width: 50px;}
+
+    .navbar-default .navbar-collapse, .navbar-default .navbar-form { background-color: #FFF;}
+    .navbar .nav > li > a { color: #000; }
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a { color: #000; }
+    .navbar-form { float: none; }
+
+    .dropdown-menu {
+        height: auto;
+        max-height: 500px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    
+}
+
+
+/* Desktops and laptops ----------- */
+@media only screen and (min-width : 1224px) { /* ALT OVER 1224px */
+}
+
+/* Large screens ----------- */
+@media only screen and (min-width : 1824px) {
+
+    /* Styles */
+}
+
+/* iPhone 4 ----------- */
+@media only screen and (-webkit-min-device-pixel-ratio : 1.5), only screen and (min-device-pixel-ratio : 1.5) {
+    .tab-content {height: 100%;} 
+
+}
+
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {     
+    .dropdown-menu { height: auto; max-height: 230px; overflow-x: hidden; }
+}

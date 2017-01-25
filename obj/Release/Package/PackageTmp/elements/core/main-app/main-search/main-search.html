@@ -1,0 +1,56 @@
+﻿<dom-module id="main-search">
+    <style>
+        :host {
+            display: flex;
+            align-items: center;
+            width: 36px;
+            transition: width 0.3s ease;
+        }
+        :host.expanded {
+            width: 100%;
+        }
+        #searchContainer {
+            display:flex;
+            transition: background-color 0.3s ease, padding-left 0.3s ease;
+            border-radius: 3px;
+            height: 36px;
+            width: 100%;
+        }
+        :host.expanded > #searchContainer {
+            background-color: white;
+            padding-left: 8px;
+        }
+        #searchContainer > paper-input {
+            flex-grow: 1;
+            flex-basis: 0px;
+            margin: 0px;
+            --paper-input-container-input-color: var(--primary-color); 
+            --paper-input-container-label: { color: lightgray };
+            --paper-input-container-underline: { display: none };
+            --paper-input-container-underline-focus: { display: none };
+            --paper-input-container-underline-disabled: { display: none };
+            --paper-input-container: { padding: 6px 0 };
+        }
+        paper-icon-button {
+            flex-shrink: 0;
+        }
+        #searchContainer > paper-icon-button {
+            transition: color 0.3s ease;
+            width: 36px;
+            height: 36px;
+            padding: 6px;
+        }
+        :host.expanded > #searchContainer > paper-icon-button {
+            color: var(--primary-color);
+        } 
+    </style>
+    <template>
+        <template is="dom-if" if="[[open]]">
+            <paper-icon-button id="searchClose" icon="close" on-tap="searchCloseTap"></paper-icon-button>
+        </template>
+        <div id="searchContainer">
+            <paper-input id="searchInput" no-label-float class="search" label="Søg på historiskatlas.dk"></paper-input>
+            <paper-icon-button icon="search" on-tap="searchIconTap"></paper-icon-button>
+        </div>
+    </template>
+</dom-module>

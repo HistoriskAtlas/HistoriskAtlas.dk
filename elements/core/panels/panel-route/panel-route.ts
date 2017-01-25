@@ -30,7 +30,8 @@ class PanelRoute extends polymer.Base implements polymer.Element {
 
     collectionTap(e: any) {
         //this.openRoute(<HaCollection>e.model.collection);
-        (<HaCollection>e.model.collection).open();
+        //(<HaCollection>e.model.collection).open();
+        App.haCollections.select(<HaCollection>e.model.collection);
     }
     //private openRoute(route: HaCollection) {
     //    if (App.windowRoute) {

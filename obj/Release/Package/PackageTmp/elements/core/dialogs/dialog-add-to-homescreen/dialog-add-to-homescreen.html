@@ -1,0 +1,23 @@
+﻿<dom-module id="dialog-add-to-homescreen">
+    <template>
+        <style>
+            paper-dialog {
+                width: 350px;
+            }
+        </style>
+        <paper-dialog id="dialog" opened auto-fit-on-attach>
+            <div>
+                <template is="dom-if" if="[[isAndroid(os)]]">
+                    Hvis du vil tilføje HistoriskAtlas.dk til din startskærm, så tryk på <iron-icon icon="more-vert"></iron-icon> øverst til højre på skærmen og vælg "Føj til startskærm".
+                </template>
+                <template is="dom-if" if="[[isIOS(os)]]">
+                    Hvis du vil tilføje HistoriskAtlas.dk til din startskærm, så tryk på&nbsp; <svg width="14" height="19" style="vertical-align: middle" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"><g><g id="gsquare"><path id="square" fill="#000000" d="m13.00606,7.57721l-2.84544,0c-0.36968,0 -0.67215,0.33429 -0.67215,0.74286s0.30247,0.74286 0.67215,0.74286l2.16206,0l0,8.79057l-10.97839,0l0,-8.79057l2.38613,0c0.36968,0 0.67215,-0.33429 0.67215,-0.74286s-0.30247,-0.74286 -0.67215,-0.74286l-3.06947,0c-0.36968,0 -0.66096,0.37143 -0.66096,0.78001l0,10.30103c0,0.40857 0.29128,0.68094 0.66096,0.68094l12.3451,0c0.36968,0 0.66096,-0.27237 0.66096,-0.68094l0,-10.30103c0,-0.40858 -0.29128,-0.78001 -0.66096,-0.78001l0.00001,0z" /></g><g id="garrow"><path id="arrow" fill="#000000" d="m6.72148,13.14869c0.36968,0 0.67215,-0.33429 0.67215,-0.74286l0,-10.06581l2.86782,2.82288c0.12324,0.1238 0.29128,0.18572 0.44809,0.18572c0.19045,0 0.36968,-0.08665 0.50411,-0.24764c0.24644,-0.30951 0.22406,-0.78001 -0.05603,-1.05238l-3.86485,-3.80097c-0.24644,-0.23523 -0.60493,-0.24764 -0.8626,-0.02478c-0.12324,0.06192 -0.22406,0.17335 -0.29128,0.29715l-3.34955,3.55338c-0.26886,0.28478 -0.28004,0.75523 -0.02242,1.05238c0.25767,0.29715 0.68333,0.30951 0.95219,0.02478l2.3301,-2.47623l0,9.73152c0.00012,0.40857 0.30258,0.74286 0.67226,0.74286l0.00001,0z" /></g></g></svg> &nbsp;og vælg "Føj til hjemmeskærm".
+                </template>
+            </div>
+            <div class="buttons">
+                <paper-button dialog-dismiss on-tap="dismissTap">Vis ikke igen</paper-button>
+                <paper-button dialog-confirm>OK</paper-button>
+            </div>
+        </paper-dialog>
+    </template>
+</dom-module>

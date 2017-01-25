@@ -1,0 +1,37 @@
+﻿<dom-module id="dialog-loading">
+    <template>
+        <style>
+            :host {
+                display: block;
+                bottom: 11px;
+                position: absolute;
+                width: 100%;
+                font-size: 14px;
+                pointer-events: none;
+            }
+            paper-material {
+                background-color: #ffffff;
+                margin-right: auto;
+                margin-left: auto;
+                width: 200px;
+                transition: box-shadow 1s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            }
+            paper-material[elevation='0'] {
+                opacity: 0;
+            }
+            paper-material > div {
+                padding: 7px 10px;
+                text-align: center;
+                height: 17px;
+            }
+            paper-progress {
+                width: initial;
+                --paper-progress-active-color: var(--primary-color);
+            }
+        </style>
+        <paper-material elevation$="[[elevation]]" animated>
+            <div>[[shownText(text)]]</div>
+            <paper-progress indeterminate></paper-progress>
+        </paper-material>
+    </template>
+</dom-module>

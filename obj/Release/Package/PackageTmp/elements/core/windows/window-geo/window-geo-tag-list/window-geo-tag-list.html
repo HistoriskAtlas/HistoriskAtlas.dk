@@ -1,0 +1,58 @@
+﻿<dom-module id="window-geo-tag-list">
+    <style>
+        :host {
+            display: flex;
+            flex-wrap: wrap;
+            min-width: 1px;
+        }
+        :host > span {
+            font-size: 9px; 
+            font-weight: bold; 
+            margin-right: 10px;
+            align-self: center;
+            margin-bottom: 2px;
+            margin-left: 10px;
+        }
+        .tag {
+            background-color: #f2f2f2; 
+            padding: 2px 8px 2px 8px; 
+            /*margin: 1px 2px 1px 2px;*/
+            margin-right: 2px;
+            margin-bottom: 2px; 
+            display: flex;
+            flex-grow: 1;
+            text-align: center;
+        }
+        .tag > span {
+            flex-grow: 1;
+        }
+        .remove-tag-icon {
+            width:16px; 
+            height:16px; 
+            padding-left:5px; 
+            cursor:pointer            
+        }
+    </style>
+    <template>
+        <span>[[title]]</span>
+        <template is="dom-repeat" items="[[tags]]" as="tag">
+            <div class="tag">
+                <span>[[tag.plurName]]</span>
+                <template is="dom-if" if="[[editing]]">
+                    <iron-icon class="remove-tag-icon" icon="close" on-tap="removeTagTap"></iron-icon>
+                </template>
+            </div>
+        </template>
+        <template is="dom-if" if="[[editing]]">
+            <div class="tag" style="cursor:pointer; flex-grow:0" on-tap="addTagTap">
+                <template is="dom-if" if="[[addingTag]]">
+                    <span style="font-style:italic">Vælg fra listen</span>
+                </template>
+                <template is="dom-if" if="[[!addingTag]]">
+                    <iron-icon icon="add" style="width:16px; height:16px; flex-grow:1"></iron-icon>
+                </template>
+            </div>
+        </template>
+        <span style="flex-grow:10"></span>
+    </template>
+</dom-module>

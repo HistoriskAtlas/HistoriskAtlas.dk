@@ -103,12 +103,13 @@
     <%--<link rel="import" href="bower_components/paper-radio-group/paper-radio-group.html">--%>
     <link rel="import" href="bower_components/paper-radio-button/paper-radio-button.html">   
     <link rel="import" href="bower_components/paper-dialog/paper-dialog.html">   
+    <link rel="import" href="bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">   
     <link rel="import" href="bower_components/paper-dropdown-menu/paper-dropdown-menu.html">   
     <link rel="import" href="bower_components/paper-listbox/paper-listbox.html">   
     <link rel="import" href="bower_components/paper-toggle-button/paper-toggle-button.html">   
     <%--<link rel="import" href="bower_components/paper-spinner/paper-spinner-lite.html">--%>   
-    <link rel="import" href="bower_components/gold-email-input/gold-email-input.html">   
-    
+    <link rel="import" href="bower_components/gold-email-input/gold-email-input.html">    
+    <link rel="import" href="bower_components/polymer-sortablejs/polymer-sortablejs.html">
     
     <%=string.Format("<link rel=\"import\" href=\"{0}\">", System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/bundles/ha_core_" + (passedGeo == null ? "" : "geo_only_")  + "html"))%>
 

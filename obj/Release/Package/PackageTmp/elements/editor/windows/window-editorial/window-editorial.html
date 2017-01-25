@@ -1,0 +1,32 @@
+﻿<dom-module id="window-editorial">
+    <style>
+        :host {
+            color: black;
+            font-size: 13px;
+        }
+        paper-tabs {
+            --paper-tabs-selection-bar-color: white !important;
+        }
+
+        iron-pages {
+            /*padding: 10px;*/
+            height: 100%;
+        }
+
+    </style>
+    <template>
+        <window-basic id="windowbasic" window-title="Redaktion" allow-fullscreen width="800" height="510" toolbar-height="medium-tall" toolbar-mode="standard">
+
+            <paper-tabs id="tabs" selected="{{selectedTab}}" noink class="header bottom fit">
+                <paper-tab>Skribenters fortællinger</paper-tab>
+                <paper-tab>Skribenter</paper-tab>
+            </paper-tabs>
+
+            <iron-pages selected="[[selectedTab]]" selected-attribute="selected">
+                <panel-geo-editorial></panel-geo-editorial>
+                <panel-user-editorial></panel-user-editorial>
+            </iron-pages>
+
+        </window-basic>
+    </template>
+</dom-module>

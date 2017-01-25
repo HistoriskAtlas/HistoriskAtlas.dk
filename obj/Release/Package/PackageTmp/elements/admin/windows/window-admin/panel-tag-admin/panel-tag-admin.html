@@ -1,0 +1,119 @@
+﻿<dom-module id="panel-tag-admin">
+    <template>
+        <style>
+            :host {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+            .top {
+                display: flex;
+            }
+            .list {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                margin-right: 5px;
+            }
+            iron-list {
+                flex-grow: 1;
+            }
+            .item {
+                padding: 2px 10px;
+                cursor: pointer;
+            }
+            .item:hover {
+                background-color:#ddd;
+            }
+            .item > span {
+                display: inline-block;
+                overflow-x: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                padding-right: 5px;
+            }
+            .item > span:nth-child(1) {
+                width: 65%;
+                max-width: 350px;
+                font-weight: bold;
+            }
+            .item > span:nth-child(2) {
+                width: 30%;
+                max-width: 150px;
+            }
+            .item > span:nth-child(3) {
+                width: 50%;
+            }
+            .headline {
+                font-weight: bold;
+                background-color: inherit !important;
+                padding-top: 10px;
+                font-size: 16px;
+                margin-right: 8px; /*scrollbarspace*/
+                user-select: none;
+            }
+
+            paper-input {
+                flex-grow: 1;
+                --paper-input-container-input:
+                {
+                    font-size: 13px;
+                }
+            }
+            #inputFilter {
+                margin-right: 10px;
+            }
+            paper-dropdown-menu {
+                --paper-input-container-input: {
+                    font-size: 13px;
+                }
+                width: 160px;
+            }
+            paper-item {
+                font-size: 13px;
+                min-height: 30px;
+            }
+        </style>
+        
+        <panel-admin id="admin" items="{{tags}}" item="{{tag}}">
+            <div class="top">
+                <paper-input id="inputFilter" no-label-float autofocus tabindex="0" value="{{filter}}" on-keydown="filterCheckForEnter" placeholder="filter"></paper-input>
+                <paper-dropdown-menu no-label-float>
+                    <paper-listbox class="dropdown-content" selected="{{categoryIndex}}">
+                        <template is="dom-repeat" items="[[categories]]">
+                            <paper-item>[[item.name]]</paper-item>
+                        </template>
+                    </paper-listbox>
+                </paper-dropdown-menu>
+            </div>
+
+            <div class="list">
+                <div class="item headline">
+                    <span on-tap="sortOnName">Navn</span>
+                    <span>Kategori</span>
+                </div>
+                <iron-list items="{{tags}}" max-physical-count="50">
+                    <template>
+                        <div class="item" on-tap="itemTap">
+                            <span>[[item.plurname]]</span>
+                            <span>[[categoryName(item.category)]]</span>
+                        </div>
+                    </template>
+                </iron-list>
+            </div>
+
+            <div class="details">
+                <template is="dom-if" if="[[tag]]">
+                    <div style="font-weight: bold; font-size:16px">[[tag.plurname]]</div>
+                    <div>[[categoryName(tag.category)]]</div>
+                    <confirm-input label="flertal" value="{{tag.plurname}}"></confirm-input>
+                    <confirm-input label="ental" value="{{tag.singname}}"></confirm-input>
+                    <div style="padding-top:15px; font-weight:bold">undertags</div>
+                    <list-auto-suggest id="undertagsAutosuggest" items="{{tag.children}}" autosuggest-service="tag" autosuggest-schema="[[getAutosuggestSchema(tag.children)]]" name-path="child.plurname" suggest-name-path="plurname"></list-auto-suggest>
+                </template>
+            </div>
+
+        </panel-admin>
+
+    </template>
+</dom-module>

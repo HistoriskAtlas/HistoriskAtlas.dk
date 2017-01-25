@@ -167,7 +167,9 @@
                                 <paper-item on-tap="reportTap">Anmeld...</paper-item>
                                 <paper-item disabled style="min-height:10px; height:10px"><div style="width:100%;height:1px;border: none;background-color: lightgrey;"></div></paper-item>
                             </template>
-                            <!--<paper-item on-tap="addToRouteTap">Tilføj til rute</paper-item>-->
+                            <template is="dom-if" if="[[isWriter()]]">
+                                <paper-item on-tap="addToRouteTap">Tilføj til rute</paper-item>
+                            </template>
                             <paper-item on-tap="addToFavouritesTap">Tilføj til favoritter</paper-item>
                             <template is="dom-if" if="[[editing]]">
                                 <paper-item disabled style="min-height:10px; height:10px"><div style="width:100%;height:1px;border: none;background-color: lightgrey;"></div></paper-item>
@@ -288,7 +290,7 @@
             <dialog-report id="reportDialog" geo="{{geo}}"></dialog-report>
 
             <dialog-text id="contentTitleDialog" text="Angiv titel på faneblad" confirm-callback="content-title-confirmed"></dialog-text>
-
+            
             <dialog-selection id="addContentDialog">
                 <paper-item on-tap="addTextContentTap">Tilføj tekstfane</paper-item>
                 <template is="dom-if" if="[[isProUser()]]">

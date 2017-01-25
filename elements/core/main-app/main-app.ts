@@ -4,9 +4,8 @@ class App extends polymer.Base implements polymer.Element {
     public static global: Global;
     public static map: MainMap;
     public static windowFavourites: WindowFavourites;
-    //public static windowRoutes: WindowRoutes;
     public static mainMenu: MainMenu;
-    public static windowRoute: WindowRoute;
+    //public static windowRoute: WindowRoute;
     public static mapTooltip: MapTooltip;
     public static toast: ToastWrapper;
     public static loading: DialogLoading;

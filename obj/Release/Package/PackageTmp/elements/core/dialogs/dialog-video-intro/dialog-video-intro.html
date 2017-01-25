@@ -1,0 +1,38 @@
+﻿<dom-module id="dialog-video-intro">
+    <template>
+        <style>
+            .auto-resizable-iframe {
+              /*max-width: 560px;*/
+              margin: 24px auto 0px auto;
+            }
+
+            .auto-resizable-iframe > div {
+              position: relative;
+              padding-bottom: 56.25%;
+              height: 0px;
+            }
+
+            .auto-resizable-iframe iframe {
+              position: absolute;
+              top: 0px;
+              left: 0px;
+              width: 100%;
+              height: 100%;
+            }
+
+            paper-dialog {
+                width: 608px;
+            }
+        </style>
+        <paper-dialog id="dialog" opened with-backdrop>
+            <div class="auto-resizable-iframe">
+                <div>
+                    <iframe src="https://www.youtube.com/embed/_-gr0gsa2oo?rel=0&showinfo=0&autoplay=1" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="buttons">
+                <paper-button dialog-confirm>LUK</paper-button>
+            </div>
+        </paper-dialog>
+    </template>
+</dom-module>

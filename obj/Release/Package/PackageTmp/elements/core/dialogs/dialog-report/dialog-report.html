@@ -1,0 +1,27 @@
+﻿<dom-module id="dialog-report">
+    <template>
+        <style>
+            #dialog {
+                width: 500px;
+            }
+        </style>
+        <paper-dialog id="dialog">
+            <h2>Anmeld "<span>[[geo.title]]</span>"</h2>
+            <div>Du kan anmelde overtrædelser af ophavsret, faktuelt forkerte oplysninger eller anstødeligt indhold. Vi undersøger alle anmeldelser og vurderer evt. konsekvenser. Vi kontakter dig evt. for uddybende oplysninger. Vælg hvilken anmeldelse du ønsker at foretage herunder.</div>
+            <div class="buttons" style="flex-wrap: wrap">
+                <paper-button dialog-dismiss>Annullér</paper-button>
+                <paper-button dialog-confirm on-tap="reportLicensViolation">Ophavsretlig overtrædelse</paper-button>
+                <paper-button dialog-confirm on-tap="reportFalseInformation">Forkerte oplysninger</paper-button>
+                <paper-button dialog-confirm on-tap="reportOffensiveContent">Anstødeligt indhold</paper-button>
+            </div>
+        </paper-dialog>
+
+        <paper-dialog id="dialogDone">
+            <h2>Anmeldelse modtaget</h2>
+            <div>Vi behandler dine anmeldelse snarest.</div>
+            <div class="buttons">
+                <paper-button dialog-confirm>OK</paper-button>
+            </div>
+        </paper-dialog>
+    </template>
+</dom-module>

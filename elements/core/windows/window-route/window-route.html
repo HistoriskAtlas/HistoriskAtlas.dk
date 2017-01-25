@@ -6,9 +6,14 @@
             <div style="margin: 17px; font-size:14px">
                 <list-auto-suggest id="geoAutosuggest" items="{{route.geos}}" autosuggest-service="geo" autosuggest-schema="[[getAutosuggestSchema(route.geos,route.geos.length)]]" name-path="title" suggest-name-path="title">
                     <div class="list">
-                        <template is="dom-repeat" items="[[route.geos]]" as="geo">
-                            <geo-list-item geo="[[geo]]" closeable></geo-list-item>
-                        </template>
+                        <geo-sortable-list id="geoSortableList" items="{{route.geos}}"></geo-sortable-list>
+                        <!--<sortable-js animation="150" handle=".drag-handle">
+                            <template is="dom-repeat" items="[[route.geos]]">
+                                <div>
+                                    <geo-list-item geo="[[item]]" closeable></geo-list-item>
+                                </div>
+                            </template>
+                        </sortable-js>-->
                     </div>
                     <paper-fab icon="add" mini class="HAPrimColor add-button"></paper-fab>
                     <paper-fab icon="close" mini class="HAPrimColor remove-button"></paper-fab>

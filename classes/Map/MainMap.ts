@@ -397,6 +397,9 @@
             return true;
         });
 
+        if (!icons)
+            return null;
+
         if (icons.length == 0)
             return null;
 

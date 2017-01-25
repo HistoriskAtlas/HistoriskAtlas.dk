@@ -194,19 +194,9 @@ class WindowGeo extends polymer.Base implements polymer.Element {
             App.haUsers.push('user.favourites.geos', this.geo);
     }
 
-    //addToRouteTap() {
-    //    if (App.windowRoute)
-    //        App.windowRoute.addGeo(this.geo);
-    //    else {
-    //        //if (!App.global.routesActive)
-    //        //    App.global.routesActive = true;
-    //        //App.windowRoutes.addGeo(this.geo);
-    //        App
-    //        if (!App.mainMenu.showMenuRoutes)
-    //            App.mainMenu.showMenuRoutes = true;
-    //        App.mainMenu.panelRoute.addGeo(this.geo);
-    //    }
-    //}
+    addToRouteTap() {
+        Common.dom.append(DialogRouteSelection.create('Tilføj til rute...', this.geo));
+    }
 
     deleteGeo() { 
         $(this).append(DialogConfirm.create('delete-geo', 'Er du sikker på at du vil slette denne fortælling?'));
@@ -400,6 +390,10 @@ class WindowGeo extends polymer.Base implements polymer.Element {
 
     isProUser(): boolean {
         return typeof App == 'undefined' ? false : App.haUsers.user.isPro;
+    }
+
+    isWriter(): boolean {
+        return typeof App == 'undefined' ? false : App.haUsers.user.isWriter;
     }
 
     //menuIcon(editing: boolean): string {

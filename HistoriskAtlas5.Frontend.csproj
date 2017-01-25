@@ -70,6 +70,8 @@
     <Content Include="elements\core\collections\ha-image\ha-image.html" />
     <Content Include="elements\core\icons\cc-icons\cc-icons.html" />
     <Content Include="elements\core\icons\ha-icons\ha-icons.html" />
+    <Content Include="elements\writer\dialogs\dialog-route-selection\dialog-route-selection.html" />
+    <Content Include="elements\writer\lists\geo-sortable-list\geo-sortable-list.html" />
     <Content Include="elements\core\lists\geo-list-item\geo-list-item.html" />
     <Content Include="elements\core\lists\geo-list\geo-list.html" />
     <Content Include="elements\core\panels\panel-theme\panel-theme.html" />
@@ -467,6 +469,8 @@
     <TypeScriptCompile Include="elements\core\dialogs\dialog-text\dialog-text.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-image\ha-image.ts" />
     <TypeScriptCompile Include="elements\core\icons\licens-mark\licens-mark.ts" />
+    <TypeScriptCompile Include="elements\writer\dialogs\dialog-route-selection\dialog-route-selection.ts" />
+    <TypeScriptCompile Include="elements\writer\lists\geo-sortable-list\geo-sortable-list.ts" />
     <TypeScriptCompile Include="elements\core\lists\geo-list-item\geo-list-item.ts" />
     <TypeScriptCompile Include="elements\writer\lists\list-auto-suggest\list-auto-suggest.ts" />
     <TypeScriptCompile Include="elements\core\lists\geo-list\geo-list.ts" />
@@ -647,7 +651,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="elements\writer\dialogs\" />
     <Folder Include="typings\closure-library\" />
   </ItemGroup>
   <PropertyGroup>

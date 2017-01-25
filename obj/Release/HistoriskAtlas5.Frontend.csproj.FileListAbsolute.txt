@@ -1,0 +1,9 @@
+C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\bin\manifest.json
+C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\bin\pdf\Retningslinjer for formidling på borgerlaget på HistoriskAtlas.dk.pdf
+C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\bin\pdf\Retningslinjer for formidling på kulturinstitutionslaget på HistoriskAtlas.dk.pdf
+C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\bin\HistoriskAtlas5.Frontend.dll.config
+C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\bin\HistoriskAtlas5.Frontend.dll
+C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\bin\HistoriskAtlas5.Frontend.pdb
+C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csprojResolveAssemblyReference.cache
+C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.dll
+C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.pdb

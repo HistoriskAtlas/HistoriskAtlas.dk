@@ -1,0 +1,44 @@
+﻿.timewarpButtons {
+    border-radius: 10px;
+}
+
+.showtimewarp {
+    top: 8.5em;
+    margin-left: 0.5em;
+}
+
+.timewarpbuttons {
+    /*position: fixed;
+    background-color: #006596 !important;
+    border-radius: 10px;*/
+}
+
+    .timewarpbuttons a {
+        /*display: block;
+        color: white;
+        font-size: 16px;
+        font-family: Verdana;
+        font-weight: bold;
+        margin: 2px;
+        text-decoration: none;
+        text-align: center;
+        height: 20px;
+        width: 20px;
+        padding-bottom: 4px;*/
+    }
+
+.ol-touch .timewarpbuttons a {
+    /*font-size: 20px;
+    height: 30px;
+    width: 30px;
+    line-height: 26px;*/
+}
+
+.timewarpbuttons a:hover {
+    cursor: pointer;
+}
+
+#timewarpOpacity {
+    position: fixed;
+    width: 100px;
+}
