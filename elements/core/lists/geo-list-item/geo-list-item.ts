@@ -7,6 +7,9 @@ class GeoListItem extends polymer.Base implements polymer.Element {
     @property({ type: Boolean })
     public closeable: boolean;
 
+    @property({ type: Boolean })
+    public dragable: boolean;
+
     closeTap(e: any) {
         this.fire('close', this.geo);
     }

@@ -28,6 +28,10 @@ var GeoListItem = (function (_super) {
         property({ type: Boolean }), 
         __metadata('design:type', Boolean)
     ], GeoListItem.prototype, "closeable", void 0);
+    __decorate([
+        property({ type: Boolean }), 
+        __metadata('design:type', Boolean)
+    ], GeoListItem.prototype, "dragable", void 0);
     GeoListItem = __decorate([
         component("geo-list-item"), 
         __metadata('design:paramtypes', [])

@@ -28,7 +28,9 @@
         <div class="listitem light-grey-border">
             <span class="icon"><img src="[[geo.icon.marker]]"></span>
             <span style="flex-grow:1">[[geo.title]]</span>
-            <iron-icon icon="editor:drag-handle" class="drag-handle"></iron-icon>
+            <template is="dom-if" if="[[dragable]]">
+                <iron-icon icon="editor:drag-handle" class="drag-handle"></iron-icon>
+            </template>
             <template is="dom-if" if="[[closeable]]">
                 <paper-icon-button icon="close" on-tap="closeTap"></paper-icon-button>
             </template>
