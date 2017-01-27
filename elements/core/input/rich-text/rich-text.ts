@@ -82,8 +82,8 @@ class RichText extends polymer.Base implements polymer.Element {
 
     @observe('content')
     contentChanged() {
-        //if (!this.content)
-        //    return;
+        if (this.content == null)
+            return;
 
         var content;
 

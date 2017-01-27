@@ -47,6 +47,7 @@
     <Content Include="elements\admin\windows\window-admin\panel-geo-admin\panel-geo-admin.html" />
     <Content Include="elements\admin\windows\window-admin\panel-tag-admin\panel-tag-admin.html" />
     <Content Include="elements\admin\windows\window-dev\window-dev.html" />
+    <Content Include="elements\core\collections\ha-content\ha-content.html" />
     <Content Include="elements\core\dialogs\dialog-video-intro\dialog-video-intro.html" />
     <Content Include="elements\core\input\dropdown-input\dropdown-input.html" />
     <Content Include="elements\core\input\confirm-input\confirm-input.html" />
@@ -248,6 +249,7 @@
     <TypeScriptCompile Include="elements\admin\windows\window-admin\panel-geo-admin\panel-geo-admin.ts" />
     <TypeScriptCompile Include="elements\admin\windows\window-admin\panel-tag-admin\panel-tag-admin.ts" />
     <TypeScriptCompile Include="elements\admin\windows\window-dev\window-dev.ts" />
+    <TypeScriptCompile Include="elements\core\collections\ha-content\ha-content.ts" />
     <TypeScriptCompile Include="elements\core\dialogs\dialog-video-intro\dialog-video-intro.ts" />
     <TypeScriptCompile Include="elements\core\input\dropdown-input\dropdown-input.ts" />
     <TypeScriptCompile Include="elements\core\input\confirm-input\confirm-input.ts" />

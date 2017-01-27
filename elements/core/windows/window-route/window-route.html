@@ -2,8 +2,10 @@
     <template>
         <style>
         </style>
+        <ha-content content="{{route.content}}"></ha-content>
         <window-basic id="windowbasic" window-title="[[route.title]]" width="400" height="650" right="10">
-            <div style="margin: 17px; font-size:14px">
+            <div style="margin: 0px 17px 17px 17px; font-size:14px">
+                <content-viewer content="{{route.content}}" editing></content-viewer>
                 <list-auto-suggest id="geoAutosuggest" items="{{route.geos}}" autosuggest-service="geo" autosuggest-schema="[[getAutosuggestSchema(route.geos,route.geos.length)]]" name-path="title" suggest-name-path="title">
                     <div class="list">
                         <geo-sortable-list id="geoSortableList" items="{{route.geos}}"></geo-sortable-list>

@@ -7,3 +7,4 @@
 /elements/**/*.js.map
 /classes/**/*.js
 /classes/**/*.js.map
+/**/*.pubxml.user

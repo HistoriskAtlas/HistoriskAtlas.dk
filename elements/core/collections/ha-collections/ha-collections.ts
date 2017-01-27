@@ -8,7 +8,7 @@ class HaCollections extends polymer.Base implements polymer.Element {
     public collection: HaCollection;
 
     public getCollectionsFromUser() {
-        Services.get('collection', { count: 'all', schema: '{collection:[collectionid,title,{userid:' + App.haUsers.user.id + '}]}' }, (result) => { //,{collection_geos:[{collapse:geoid}]}
+        Services.get('collection', { count: 'all', schema: '{collection:[collectionid,title,ugc,distance,type,{userid:' + App.haUsers.user.id + '}]}' }, (result) => { //,{collection_geos:[{collapse:geoid}]}
             //var newCollections: Array<HaCollection> = this.collections;
             for (var data of result.data)
                 this.push('collections',new HaCollection(data));
@@ -50,6 +50,20 @@ class HaCollections extends polymer.Base implements polymer.Element {
     collectionChanged() {
         if (!this.collection)
             return;
+
+        if (!this.collection.content) {
+            Services.get('collection', { schema: '{collection:[' + ContentViewer.contentSchema + ']}', collectionid: this.collection.id }, (result) => { //,{collection_geos:[{collapse:geoid}]}
+                if (result.data[0].content) 
+                    this.set('collection.content', new HaContent(result.data[0].content))
+                else {
+                    var content = new HaContent({ contenttypeid: 0, ordering: 0, texts: [{ headline: '', text1: '' }] });
+                    this.set('collection.content', content);
+                    content.insert(() => {
+                        Services.update('collection', { collectionid: this.collection.id, contentid: content.id });
+                    });
+                }
+            })
+        }
 
         if (this.collection.geos.length > 0 || !this.collection.id)
             return;

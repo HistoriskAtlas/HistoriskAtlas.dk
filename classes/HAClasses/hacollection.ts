@@ -2,6 +2,10 @@
     public _id: number;
     private _title: string;
     private _geos: Array<HaGeo>;
+    private _ugc: boolean;
+    private _distance: number;
+    private _type: number;
+    private _content: HaContent;
     //private maps: Array<HaGeo>;
     //private _geoIds: Array<number>;
 
@@ -14,6 +18,9 @@
 
         this._id = data.collectionid;
         this._title = data.title;
+        this._ugc = data.ugc;
+        this._distance = data.distance;
+        this._type = data.type;
 
         //if (data.collection_geos)
         //    for (var geoid of data.collection_geos) {
@@ -32,6 +39,22 @@
     get title(): string {
         return this._title;
     }
+
+    get ugc(): boolean {
+        return this._ugc;
+    }
+
+    get distance(): number {
+        return this._distance;
+    }
+
+    get content(): HaContent {
+        return this._content;
+    }
+    set content(val: HaContent) {
+        this._content = val;
+    }
+
 
     get geos(): Array<HaGeo> {
         //if (this._geoIds.length > 0) {

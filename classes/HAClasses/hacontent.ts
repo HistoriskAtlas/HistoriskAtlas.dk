@@ -49,6 +49,9 @@
 
         return '';
     }
+    set headline(value: string) {
+        //See ha-content
+    }
 
     public get isText(): boolean {
         return this._contenttypeid == 0;
@@ -66,7 +69,7 @@
         return this.isText || this.isBiblio;
     }
 
-    public insert() {
+    public insert(callback?: () => void) {
         var data: any = {
             geoid: this._geoid,
             ordering: this._ordering,
@@ -83,6 +86,8 @@
             for (var external of this.externals)
                 external.insert();
 
+            if (callback)
+                callback();
 
             //var data: any = {
             //    contentid: this._id,

@@ -22,7 +22,7 @@ class HaContents extends polymer.Base implements polymer.Element {
             return;
         this.set('params', {
             'geoid': this.geo.id, 
-            'count': 'all',//                     TODO: exclude content types based on if editing........
+            'count': 'all',//TODO: exclude content types based on if editing........
             'schema': ContentViewer.contentSchema
         });
         this.$.ajax.generateRequest();
@@ -56,36 +56,36 @@ class HaContents extends polymer.Base implements polymer.Element {
                 if (splice.addedCount > 0)
                     (<HaContent>splice.object[splice.index]).insert();
 
-                for (content of splice.removed)
+                for (var content of splice.removed)
                     (<HaContent>content).delete();
             }
             return;
         }
 
-        var content: HaContent = this.contents[props[1].substring(1)];
-        if (props.length == 2)
-            content.update(property);
+        //var content: HaContent = this.contents[props[1].substring(1)];
+        //if (props.length == 2)
+        //    content.update(property);
 
-        if (props.length == 3 && property == 'splices') { //SubContent inserted...
-            var splice = changeRecord.value.indexSplices[0];
+        //if (props.length == 3 && property == 'splices') { //SubContent inserted...
+        //    var splice = changeRecord.value.indexSplices[0];
 
-            //TODO: Multiple adds??
-            if (splice.addedCount > 0)
-                (splice.object[splice.index]).insert((propsReturned: Array<string>) => {
-                    for (var propReturned of propsReturned) {
-                        //var test = props[0] + '.' + props[1].substring(1) + '.' + props[2] + '.' + splice.index + '.' + propReturned;
-                        //var value = splice.object[splice.index][propReturned];
-                        this.notifyPath(props[0] + '.' + props[1].substring(1) + '.' + props[2] + '.' + splice.index + '.' + propReturned, splice.object[splice.index][propReturned]);
-                        //this.set(props[0] + '.' + props[1].substring(1) + '.' + props[2] + '.' + splice.index + '.' + propReturned, propsReturned[propReturned]);
-                    }
-                }); //TODO: notify changes in callback when new values are returned (created, id and user)
+        //    //TODO: Multiple adds??
+        //    if (splice.addedCount > 0)
+        //        (splice.object[splice.index]).insert((propsReturned: Array<string>) => {
+        //            for (var propReturned of propsReturned) {
+        //                //var test = props[0] + '.' + props[1].substring(1) + '.' + props[2] + '.' + splice.index + '.' + propReturned;
+        //                //var value = splice.object[splice.index][propReturned];
+        //                this.notifyPath(props[0] + '.' + props[1].substring(1) + '.' + props[2] + '.' + splice.index + '.' + propReturned, splice.object[splice.index][propReturned]);
+        //                //this.set(props[0] + '.' + props[1].substring(1) + '.' + props[2] + '.' + splice.index + '.' + propReturned, propsReturned[propReturned]);
+        //            }
+        //        }); //TODO: notify changes in callback when new values are returned (created, id and user)
 
-            for (var subcontent of splice.removed)
-                subcontent.delete();
-        }
+        //    for (var subcontent of splice.removed)
+        //        subcontent.delete();
+        //}
 
-        if (props.length == 4)
-            content[props[2]][props[3].substring(1)].update(property);
+        //if (props.length == 4)
+        //    content[props[2]][props[3].substring(1)].update(property);
     }
 
     private selectSubContents() {
