@@ -76,3 +76,4 @@ var HAInstitution = (function () {
     HAInstitution.types = [, 'Arkiv', 'Bibliotek', 'Museum'];
     return HAInstitution;
 }());
+//# sourceMappingURL=hainstitution.js.map

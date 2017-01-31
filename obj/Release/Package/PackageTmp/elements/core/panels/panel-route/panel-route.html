@@ -37,6 +37,9 @@
                 justify-content: center;
                 color: #005D9A;
             }
+            span.title {
+                flex-grow: 1;
+            }
             /*paper-fab {
                 margin: 10px;
                 align-self: flex-end;
@@ -47,7 +50,8 @@
                 <template id="templateCollections" is="dom-repeat" items="[[collections]]" as="collection">
                     <div class="listitem light-gray-border" on-tap="collectionTap">
                         <span class="icon"><iron-icon icon="timeline"></span>
-                        <span>[[collection.title]]</span>
+                        <span class="title">[[collection.title]]</span>
+                        <span>[[formatDistance(collection.distance)]]</span>
                     </div>
                 </template>
             </div>

@@ -64,6 +64,11 @@ var PanelTag = (function (_super) {
     };
     PanelTag.prototype.toggle = function (selected) {
         IconLayer.updateDisabled = true;
+        //App.haTags.tags.forEach((tag: HaTag) => {
+        //    if (tag.isTop)
+        //        if (tag.category == this.tagCategory)
+        //            tag.selected = selected;
+        //});
         HaTags.tagTop[this.tagCategory].selected = selected;
         IconLayer.updateDisabled = false;
         IconLayer.updateShown();
@@ -95,3 +100,4 @@ var PanelTag = (function (_super) {
     return PanelTag;
 }(polymer.Base));
 PanelTag.register();
+//# sourceMappingURL=panel-tag.js.map

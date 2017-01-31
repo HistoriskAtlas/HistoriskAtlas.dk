@@ -67,3 +67,4 @@ var WindowGeoTagList = (function (_super) {
     return WindowGeoTagList;
 }(polymer.Base));
 WindowGeoTagList.register();
+//# sourceMappingURL=window-geo-tag-list.js.map

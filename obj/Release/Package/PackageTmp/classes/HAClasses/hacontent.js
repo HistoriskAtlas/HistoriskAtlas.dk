@@ -51,6 +51,9 @@ var HaContent = (function () {
             }
             return '';
         },
+        set: function (value) {
+            //See ha-content
+        },
         enumerable: true,
         configurable: true
     });
@@ -89,7 +92,7 @@ var HaContent = (function () {
         enumerable: true,
         configurable: true
     });
-    HaContent.prototype.insert = function () {
+    HaContent.prototype.insert = function (callback) {
         var _this = this;
         var data = {
             geoid: this._geoid,
@@ -102,7 +105,7 @@ var HaContent = (function () {
             for (var _i = 0, _a = _this.texts; _i < _a.length; _i++) {
                 var text = _a[_i];
                 text.insert(null);
-            }
+            } //TODO callbacks needed?
             for (var _b = 0, _c = _this.biblios; _b < _c.length; _b++) {
                 var biblio = _c[_b];
                 biblio.insert();
@@ -111,6 +114,26 @@ var HaContent = (function () {
                 var external = _e[_d];
                 external.insert();
             }
+            if (callback)
+                callback();
+            //var data: any = {
+            //    contentid: this._id,
+            //};
+            //switch (this._type) {
+            //    //case ContentType.Text:
+            //    //    data.headline = this._headline;
+            //    //    data.text1 = this._text; //use Common.html2rich( ?
+            //    //    Services.insert('text', data, (result) => { //TODO: Not always text...
+            //    //        this._textid = result.data[0].id;
+            //    //    })
+            //    //    break;
+            //    case ContentType.Biblio:
+            //        data.cql = this._cql;
+            //        Services.insert('biblio', data, (result) => { //TODO: Not always text...
+            //            this._biblioid = result.data[0].id;
+            //        })
+            //        break;
+            //}
         });
     };
     HaContent.prototype.update = function (property) {
@@ -122,6 +145,7 @@ var HaContent = (function () {
     };
     HaContent.prototype.delete = function () {
         Services.delete('content', { id: this._id, deletemode: 'permanent' }, function (result) { });
+        //TODO wait for below to finish first?
         for (var _i = 0, _a = this.texts; _i < _a.length; _i++) {
             var text = _a[_i];
             text.delete();
@@ -134,9 +158,23 @@ var HaContent = (function () {
             var external = _e[_d];
             external.delete();
         }
+        //switch (this._type) {
+        //    case ContentType.Text:
+        //        Services.delete('text', { textid: this._textid, deletemode: 'permanent' }, (result) => { })
+        //        break;
+        //    case ContentType.Biblio:
+        //        Services.delete('biblio', { biblioid: this._biblioid, deletemode: 'permanent' }, (result) => { })
+        //        break;
+        //}
     };
     HaContent.prototype.sort = function (otherContent) {
         return this._ordering - otherContent.ordering;
     };
     return HaContent;
 }());
+//enum ContentType {
+//    Intro,
+//    Text,
+//    Biblio
+//} 
+//# sourceMappingURL=hacontent.js.map

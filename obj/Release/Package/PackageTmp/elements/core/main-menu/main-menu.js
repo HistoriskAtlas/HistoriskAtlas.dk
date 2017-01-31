@@ -190,3 +190,4 @@ var MainMenu = (function (_super) {
     return MainMenu;
 }(polymer.Base));
 MainMenu.register();
+//# sourceMappingURL=main-menu.js.map

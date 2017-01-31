@@ -76,6 +76,7 @@ var Tags = (function (_super) {
             this.splice(Tags.categoryNames[tag.category], this[Tags.categoryNames[tag.category]].indexOf(tag), 1);
         Services.delete('tag_' + this.tagRelationName, JSON.parse('{ "tagid": ' + tag.id + ', "' + this.tagRelationName + 'id": ' + this.tagRelationId + ' }'));
     };
+    //public tagsById: Array<HaTag> = [];
     Tags.categoryNames = [, , , 'institutions', , , , , , 'subjects', 'periods'];
     __decorate([
         property({ type: Array, notify: true }), 
@@ -95,3 +96,4 @@ var Tags = (function (_super) {
     ], Tags.prototype, "licens", void 0);
     return Tags;
 }(polymer.Base));
+//# sourceMappingURL=tags.js.map

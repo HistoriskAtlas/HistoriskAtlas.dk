@@ -22,7 +22,7 @@ var Common = (function () {
     });
     Common.rich2html = function (rich) {
         var result = rich;
-        result = result.replace(Common.r2hLinebreak, '<br>');
+        result = result.replace(Common.r2hLinebreak, '<br>'); //Need to be first(?)
         result = result.replace(Common.r2hItalic, '<i>$1</i>');
         result = result.replace(Common.r2hBold, '<b>$1</b>');
         result = result.replace(Common.r2hA, "<a href='$1'>$2</a>");
@@ -36,7 +36,7 @@ var Common = (function () {
         result = result.replace(Common.h2rSpace, " ");
         result = result.replace(Common.h2rDiv, "\n$1");
         result = result.replace(Common.h2rA, "[$1 $2]");
-        result = result.replace(Common.h2rLinebreak, "\n");
+        result = result.replace(Common.h2rLinebreak, "\n"); //Needs to be last
         return result;
     };
     Common.toMapCoord = function (coord) {
@@ -139,3 +139,4 @@ var KeySplice = (function () {
     }
     return KeySplice;
 }());
+//# sourceMappingURL=common.js.map

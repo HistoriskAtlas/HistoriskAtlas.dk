@@ -33,6 +33,8 @@ var DialogShareLink = (function (_super) {
             if ('App' in window)
                 App.toast.show('Kunne ikke kopiere linket. Kopiér det manuelt.');
         }
+        //if (!succeed)
+        //    App.toast
     };
     __decorate([
         property({ type: String }), 
@@ -45,3 +47,4 @@ var DialogShareLink = (function (_super) {
     return DialogShareLink;
 }(polymer.Base));
 DialogShareLink.register();
+//# sourceMappingURL=dialog-share-link.js.map

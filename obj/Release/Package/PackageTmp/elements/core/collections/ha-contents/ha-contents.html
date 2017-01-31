@@ -11,6 +11,8 @@
                    on-response="handleResponse"></iron-ajax>
     
         <array-selector id="selectorEditorialContent" items="{{contents}}" selected="{{editorialContent}}"></array-selector>
-
+        <template is="dom-repeat" items="{{contents}}" as="content">
+            <ha-content content="{{content}}"></ha-content>
+        </template>
     </template>
 </dom-module>

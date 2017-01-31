@@ -32,6 +32,7 @@ class PanelRoute extends polymer.Base implements polymer.Element {
         //this.openRoute(<HaCollection>e.model.collection);
         //(<HaCollection>e.model.collection).open();
         App.haCollections.select(<HaCollection>e.model.collection);
+        //App.haCollections.set('collection', e.model.collection);
     }
     //private openRoute(route: HaCollection) {
     //    if (App.windowRoute) {
@@ -67,6 +68,9 @@ class PanelRoute extends polymer.Base implements polymer.Element {
     //    else
     //        App.toast.show("Vælg rute eller opret ny")
     //}
+    public formatDistance(distance: number): string {
+        return HaCollection.formatDistance(distance);
+    }
 }
 
 PanelRoute.register();

@@ -70,6 +70,9 @@ var TimeWarp = (function (_super) {
         this.down([e.detail.x - e.detail.dx, e.detail.y - e.detail.dy], true);
         this.listenerKeyPointerDrag = App.map.on('pointermove', function (event) { _this.pointerDrag(event); });
         App.map.once('pointerup', function (event) { ol.Observable.unByKey(_this.listenerKeyPointerMove); });
+        //Try to get drag on track working on touch.... didnt work...
+        //$('#map').on('mousemove.timewarp', (event) => { this.pointerDrag(event) });
+        //App.map.once('pointerup', (event) => { $('#map').off('mousemove.timewarp'); });
     };
     Object.defineProperty(TimeWarp.prototype, "isVisible", {
         get: function () {
@@ -148,6 +151,7 @@ var TimeWarp = (function (_super) {
     TimeWarp.prototype.precomposeTimeWarp = function (event) {
         var ctx = event.context;
         this.pixelRatio = event.frameState.pixelRatio;
+        //ctx.globalCompositeOperation = 'source-over'; //TODO: needed?
         this.applyPath(ctx);
         ctx.save();
         ctx.clip();
@@ -157,7 +161,7 @@ var TimeWarp = (function (_super) {
         ctx.restore();
         this.applyPath(ctx);
         if (this.position) {
-            ctx.strokeStyle = '#fece00';
+            ctx.strokeStyle = '#fece00'; //WAS 005b9c
             ctx.lineWidth = this.lineWidth * this.pixelRatio;
             ctx.stroke();
             if (this.mode == TimeWarpModes.OPENING || this.mode == TimeWarpModes.CLOSING_FROM_CIRCLE || this.mode == TimeWarpModes.CLOSING_FROM_SPLIT) {
@@ -167,6 +171,7 @@ var TimeWarp = (function (_super) {
         }
     };
     TimeWarp.prototype.applyPath = function (ctx) {
+        //TODO: when Path2D object becomes widely supported, used this instead... only needed to update path when changed...
         var x = this.position[0] * this.pixelRatio;
         var y = this.position[1] * this.pixelRatio;
         ctx.beginPath();
@@ -202,20 +207,26 @@ var TimeWarp = (function (_super) {
                 ctx.rect((this.rectX * this.pixelRatio), (rectY * this.pixelRatio), (this.rectWidth * this.pixelRatio), (rectHeight * this.pixelRatio));
                 break;
         }
+        //ctx.closePath(); //TODO: not needed?
     };
     TimeWarp.prototype.toggleMode = function () {
         var _this = this;
         if (this.timerID)
             clearInterval(this.timerID);
         if (this.mode == TimeWarpModes.CIRCLE) {
+            //this.morph = 0.0;
             this.mode = TimeWarpModes.MORPH;
+            //this.splitIndex = Math.floor((event.pageX * 2.0) / App.map.getSize()[0]);
+            //this.splitIndex = 1;
             this.rectWidth = App.map.getSize()[0] / 2.0 + this.lineWidth / 2.0;
+            //this.rectX = this.splitIndex * (App.map.getSize()[0] / 2.0);
             this.rectX = App.map.getSize()[0] / 2.0;
             this.timerID = setInterval(function () {
                 _this.timerMorphToSplit();
             }, 1000 / 60);
         }
         else {
+            //this.morph = 1.0;
             this.mode = TimeWarpModes.MORPH;
             this.timerID = setInterval(function () {
                 _this.timerMorphToCircle();
@@ -253,7 +264,9 @@ var TimeWarp = (function (_super) {
         var ease2 = 1 - ease;
         var size = App.map.getSize();
         var closedPosition = [size[0] - this.closedPositionRight, this.closedPositionTop];
+        //var openPosition = [size[0] / 2, size[1] / 2];
         this.position = [this.positionOpen[0] * ease + closedPosition[0] * ease2, this.positionOpen[1] * ease + closedPosition[1] * ease2];
+        //this.radius = (Math.min(size[0], size[1]) * 0.3) * ease + this.closedRadius * ease2;
         this.radius = this.radiusOpen * ease + this.closedRadius * ease2;
         App.map.render();
         if (this.morph >= 1.0) {
@@ -295,7 +308,7 @@ var TimeWarp = (function (_super) {
             clearInterval(this.timerID);
             this.timerID = 0;
             App.map.renderSync();
-            this.setVisible(false);
+            this.setVisible(false); //TODO: Remove layer instead?
             App.timeWarpClosed.show();
         }
     };
@@ -322,7 +335,7 @@ var TimeWarp = (function (_super) {
     });
     Object.defineProperty(TimeWarp.prototype, "closedRadius", {
         get: function () {
-            return 28;
+            return 28; //56 / 2
         },
         enumerable: true,
         configurable: true
@@ -354,6 +367,7 @@ var TimeWarp = (function (_super) {
                 this.dragMode = TimeWarpDragModes.NONE;
         }
         else if (this.position && this.mode == TimeWarpModes.SPLIT) {
+            //var displace = this.splitIndex == 0 ? this.rectWidth - mouseDownCoords[0] : this.rectX - mouseDownCoords[0];
             var displace = this.rectX - mouseDownCoords[0];
             if (Math.abs(displace) < 8) {
                 this.dragMode = TimeWarpDragModes.SPLIT;
@@ -376,6 +390,7 @@ var TimeWarp = (function (_super) {
         App.map.pan(deltaX * modifier, -deltaY * modifier);
     };
     TimeWarp.prototype.pointerDrag = function (event) {
+        //var newposition = this.getMouseCoordinates(event);
         var newposition = event.originalEvent.type == 'touchmove' ? this.centerCoordFromTouches(event.originalEvent.touches, true) : (event.pixel ? event.pixel : [event.offsetX, event.offsetY]);
         switch (this.dragMode) {
             case TimeWarpDragModes.CIRCLE_RADIUS:
@@ -395,8 +410,13 @@ var TimeWarp = (function (_super) {
                 App.map.preventDrag(event);
                 break;
             case TimeWarpDragModes.SPLIT:
+                //if (this.splitIndex == 0) {
+                //    this.rectWidth = newposition[0] + this.mouseDisplace[0];
+                //}
+                //else {
                 this.rectX = newposition[0] + this.mouseDisplace[0];
                 this.rectWidth = App.map.getSize()[0] - this.rectX + this.lineWidth / 2.0;
+                //}
                 App.map.preventDrag(event);
                 break;
         }
@@ -455,8 +475,14 @@ var TimeWarp = (function (_super) {
         this.un('precompose', this.precomposeTimeWarp);
         this.un('postcompose', this.postcomposeTimeWarp);
     };
+    //private getMouseCoordinates(event) {
+    //    var mouseCoordinates = App.map.getEventPixel(event.originalEvent);
+    //    return mouseCoordinates;
+    //}
     TimeWarp.prototype.getHoverInterface = function (pixel) {
+        //var displace = this.splitIndex == 0 ? Math.abs(this.rectWidth - pixel[0]) : Math.abs(this.rectX - pixel[0]);
         if (this.mode == TimeWarpModes.SPLIT)
+            //return (this.splitIndex == 0 ? Math.abs(this.rectWidth - pixel[0]) : Math.abs(this.rectX - pixel[0]) < 8) ? 'ew-resize' : null;
             return Math.abs(this.rectX - pixel[0]) < 8 ? 'ew-resize' : null;
         if (this.mode == TimeWarpModes.CIRCLE) {
             var dist = Math.sqrt(Math.pow(this.position[0] - pixel[0], 2) + Math.pow(this.position[1] - pixel[1], 2));
@@ -464,13 +490,15 @@ var TimeWarp = (function (_super) {
                 var radiusX = this.position[0] * this.pixelRatio;
                 var radiusY = this.position[1] * this.pixelRatio;
                 if (pixel[0] < (radiusY + 40) && pixel[1] > (radiusY - 40))
-                    return 'ew-resize';
+                    return 'ew-resize'; //TODO: not fixed number "40"
                 if (pixel[0] < (radiusX + 40) && pixel[0] > (radiusX - 40))
                     return 'n-resize';
                 if (pixel[0] < radiusX && pixel[1] > radiusY)
                     return 'sw-resize';
                 if (pixel[0] > radiusX && pixel[1] < radiusY)
                     return 'sw-resize';
+                //if (pixel[0] < radiusX && pixel[1] < radiusY) return 'se-resize';
+                //if (pixel[0] > radiusX && pixel[1] > radiusY) return 'se-resize';
                 return 'se-resize';
             }
             if (dist < this.radius)
@@ -481,11 +509,12 @@ var TimeWarp = (function (_super) {
     TimeWarp.prototype.inside = function (coord) {
         var pixel = App.map.getPixelFromCoordinate(coord);
         if (this.mode == TimeWarpModes.SPLIT)
-            return this.rectX < pixel[0];
+            return this.rectX < pixel[0]; //TODO: not tested!
         return Math.sqrt(Math.pow(this.position[0] - pixel[0], 2) + Math.pow(this.position[1] - pixel[1], 2)) < this.radius;
     };
     Object.defineProperty(TimeWarp.prototype, "extent", {
         get: function () {
+            //var coords: Array<ol.Coordinate> = [];
             var pixel1;
             var pixel2;
             switch (this.mode) {
@@ -502,6 +531,13 @@ var TimeWarp = (function (_super) {
                     pixel2 = [this.position[0] + this.radius, this.position[1] + this.radius];
                     break;
             }
+            //if (this.mode == TimeWarpModes.SPLIT) {
+            //    coords.push(App.map.getCoordinateFromPixel([this.rectX, 0]));
+            //    coords.push(App.map.getCoordinateFromPixel([this.rectX + this.rectWidth, App.map.getSize()[1]]));
+            //} else {
+            //    coords.push(App.map.getCoordinateFromPixel([this.position[0] - this.radius, this.position[1] - this.radius]));
+            //    coords.push(App.map.getCoordinateFromPixel([this.position[0] + this.radius, this.position[1] + this.radius]));
+            //}
             return ol.extent.boundingExtent([App.map.getCoordinateFromPixel(pixel1), App.map.getCoordinateFromPixel(pixel2)]);
         },
         enumerable: true,
@@ -512,3 +548,4 @@ var TimeWarp = (function (_super) {
     TimeWarp.pi3div2 = Math.PI * (3 / 2);
     return TimeWarp;
 }(TileLayer));
+//# sourceMappingURL=TimeWarp.js.map

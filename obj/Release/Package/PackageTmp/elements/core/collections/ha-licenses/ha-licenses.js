@@ -18,6 +18,7 @@ var HaLicenses = (function (_super) {
         _super.apply(this, arguments);
     }
     HaLicenses.prototype.ready = function () {
+        //TODO: better to fetch from API?
         this.licenses = [];
         this.byTagID = [];
         this.add(new HaLicens(80, 'Copyright', 'https://www.retsinformation.dk/Forms/R0710.aspx?id=164796'));
@@ -44,3 +45,4 @@ var HaLicenses = (function (_super) {
     return HaLicenses;
 }(polymer.Base));
 HaLicenses.register();
+//# sourceMappingURL=ha-licenses.js.map

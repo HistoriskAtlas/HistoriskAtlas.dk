@@ -19,6 +19,12 @@ var WindowRegion = (function (_super) {
         this.$.ajax.url = Common.api + 'region.json';
         this.region = region;
     }
+    //ready() {
+    //    setTimeout(() =>
+    //        (<any>$(this.$.scroller)).mCustomScrollbar({
+    //            theme: "minimal-dark"
+    //        }), 100);
+    //}
     WindowRegion.prototype.regionChanged = function () {
         if (this.region.type)
             return;
@@ -58,6 +64,9 @@ var WindowRegion = (function (_super) {
     };
     WindowRegion.prototype.regionTap = function (e) {
         Common.dom.append(WindowRegion.create(e.model.item));
+        //(<any>$(this.$.scroller)).mCustomScrollbar({
+        //    theme: "minimal-dark"
+        //});
     };
     __decorate([
         property({ type: Object }), 
@@ -76,3 +85,4 @@ var WindowRegion = (function (_super) {
     return WindowRegion;
 }(polymer.Base));
 WindowRegion.register();
+//# sourceMappingURL=window-region.js.map

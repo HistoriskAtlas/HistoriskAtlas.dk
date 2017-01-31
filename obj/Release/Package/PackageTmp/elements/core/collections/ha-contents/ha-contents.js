@@ -39,7 +39,6 @@ var HaContents = (function (_super) {
         this.contents = newContents;
     };
     HaContents.prototype.contentsChanged = function (changeRecord) {
-        var _this = this;
         var props = changeRecord.path.split('.');
         var property = props.pop();
         if (props.length == 0) {
@@ -50,34 +49,36 @@ var HaContents = (function (_super) {
             if (property == 'splices') {
                 this.selectSubContents();
                 var splice = changeRecord.value.indexSplices[0];
+                //TODO: Multiple adds??
                 if (splice.addedCount > 0)
                     splice.object[splice.index].insert();
                 for (var _i = 0, _a = splice.removed; _i < _a.length; _i++) {
-                    content = _a[_i];
+                    var content = _a[_i];
                     content.delete();
                 }
             }
             return;
         }
-        var content = this.contents[props[1].substring(1)];
-        if (props.length == 2)
-            content.update(property);
-        if (props.length == 3 && property == 'splices') {
-            var splice = changeRecord.value.indexSplices[0];
-            if (splice.addedCount > 0)
-                (splice.object[splice.index]).insert(function (propsReturned) {
-                    for (var _i = 0, propsReturned_1 = propsReturned; _i < propsReturned_1.length; _i++) {
-                        var propReturned = propsReturned_1[_i];
-                        _this.notifyPath(props[0] + '.' + props[1].substring(1) + '.' + props[2] + '.' + splice.index + '.' + propReturned, splice.object[splice.index][propReturned]);
-                    }
-                });
-            for (var _b = 0, _c = splice.removed; _b < _c.length; _b++) {
-                var subcontent = _c[_b];
-                subcontent.delete();
-            }
-        }
-        if (props.length == 4)
-            content[props[2]][props[3].substring(1)].update(property);
+        //var content: HaContent = this.contents[props[1].substring(1)];
+        //if (props.length == 2)
+        //    content.update(property);
+        //if (props.length == 3 && property == 'splices') { //SubContent inserted...
+        //    var splice = changeRecord.value.indexSplices[0];
+        //    //TODO: Multiple adds??
+        //    if (splice.addedCount > 0)
+        //        (splice.object[splice.index]).insert((propsReturned: Array<string>) => {
+        //            for (var propReturned of propsReturned) {
+        //                //var test = props[0] + '.' + props[1].substring(1) + '.' + props[2] + '.' + splice.index + '.' + propReturned;
+        //                //var value = splice.object[splice.index][propReturned];
+        //                this.notifyPath(props[0] + '.' + props[1].substring(1) + '.' + props[2] + '.' + splice.index + '.' + propReturned, splice.object[splice.index][propReturned]);
+        //                //this.set(props[0] + '.' + props[1].substring(1) + '.' + props[2] + '.' + splice.index + '.' + propReturned, propsReturned[propReturned]);
+        //            }
+        //        }); //TODO: notify changes in callback when new values are returned (created, id and user)
+        //    for (var subcontent of splice.removed)
+        //        subcontent.delete();
+        //}
+        //if (props.length == 4)
+        //    content[props[2]][props[3].substring(1)].update(property);
     };
     HaContents.prototype.selectSubContents = function () {
         this.$.selectorEditorialContent.select(this.contents.filter(function (content) { return content.isEditorial; }).pop());
@@ -117,3 +118,4 @@ var HaContents = (function (_super) {
     return HaContents;
 }(polymer.Base));
 HaContents.register();
+//# sourceMappingURL=ha-contents.js.map

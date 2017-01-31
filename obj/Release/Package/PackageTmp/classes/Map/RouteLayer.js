@@ -19,14 +19,15 @@ var RouteLayer = (function (_super) {
         this.cache = {};
         this.source = source;
     }
-    RouteLayer.prototype.addPath = function (loc1, loc2) {
+    RouteLayer.prototype.addPath = function (loc1, loc2, type, callback) {
         var _this = this;
-        var cacheIndex = (loc1.toString() + 'x' + loc2.toString()).replace(/\./g, 'd').replace(/,/g, 'c');
+        var cacheIndex = (loc1.toString() + 'x' + loc2.toString() + 't' + type).replace(/\./g, 'd').replace(/,/g, 'c');
         if (this.cache[cacheIndex]) {
+            callback(this.cache[cacheIndex].distance);
             this.source.addFeature(this.cache[cacheIndex]);
             return;
         }
-        $.getJSON("proxy/route.json?loc=" + loc1[0] + "," + loc1[1] + "&loc=" + loc2[0] + "," + loc2[1], function (data) {
+        $.getJSON("proxy/route.json?type=" + type + "&loc=" + loc1[0] + "," + loc1[1] + "&loc=" + loc2[0] + "," + loc2[1], function (data) {
             var route = new ol.format.Polyline({
                 factor: 1e5
             }).readGeometry(data.geometry, {
@@ -34,8 +35,10 @@ var RouteLayer = (function (_super) {
                 featureProjection: 'EPSG:3857'
             });
             var feature = new ol.Feature(route);
+            feature.distance = data.distance;
             _this.source.addFeature(feature);
             _this.cache[cacheIndex] = feature;
+            callback(data.distance);
         });
     };
     RouteLayer.prototype.clear = function () {
@@ -43,3 +46,4 @@ var RouteLayer = (function (_super) {
     };
     return RouteLayer;
 }(ol.layer.Vector));
+//# sourceMappingURL=RouteLayer.js.map

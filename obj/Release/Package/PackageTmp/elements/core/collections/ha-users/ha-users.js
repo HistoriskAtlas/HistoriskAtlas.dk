@@ -18,11 +18,31 @@ var HaUsers = (function (_super) {
         _super.apply(this, arguments);
     }
     HaUsers.prototype.ready = function () {
+        //this.$.ajax.url = Common.api + 'user.json';
         this.user = HAUser.default;
     };
+    //public handleResponse() {
+    //}
+    //public fetchUsers(callback: () => void) {
+    //    if (this.users) {
+    //        callback();
+    //        return;
+    //    }
+    //    Services.get('user', {
+    //        'schema': '{user:[id,firstname,lastname,role]}',
+    //        'count': 'all'
+    //    }, (result) => {
+    //        var users: Array<HAUser> = [];
+    //        for (var data of result.data)
+    //            users.push(new HAUser(data));
+    //        this.set('users', users);
+    //        callback();
+    //    })
+    //}
     HaUsers.prototype.login = function (data) {
         var _this = this;
         this._loggingIn = true;
+        //var user = new HAUser(data);
         Services.get('user', {
             'schema': '{user:[location,created,licensename,{userhierarkis:[empty,{child:[id,login,firstname,lastname]}]},{userhierarkis1:[empty,{parent:[id,login,firstname,lastname]}]},{geos:[empty,{collapse:geoid}]},{user_institutions:[{institution:[id,url,email,type,deleted,tagid]}]}]}',
             'userid': data.id
@@ -39,7 +59,11 @@ var HaUsers = (function (_super) {
                 else
                     HaGeos.usersGeoIDs.push(geoID);
             }
+            //Moved to constructer for HAUser...
+            //for (var user_institution of result.data[0].user_institutions)
+            //    user.institutions.push(new HAInstitution(user_institution.institution));
             _this.set('user', user);
+            //IconLayer.updateShown();
             App.haGeos.login();
             App.haCollections.getCollectionsFromUser();
             _this._loggingIn = false;
@@ -72,7 +96,9 @@ var HaUsers = (function (_super) {
         }
     };
     HaUsers.prototype.geosChanged = function (test) {
+        //alert('test');
         this.fire('userFavouritesGeosChanged');
+        ///TODO: fire custom event? listen for it on window-favourites?
     };
     HaUsers.prototype.userPropertyChanged = function (e) {
         var property = e.path.split('.')[1];
@@ -90,6 +116,8 @@ var HaUsers = (function (_super) {
         if (this.user.isDefault || this._loggingIn)
             return;
         Services.update('user', JSON.parse('{ "id": ' + this.user.id + ', "' + property + '": "' + this.user[property] + '" }'), null, function (data) {
+            //TODO: Handle error when trying to update a login to an existing one.... make "login" unique in mssql first.......................
+            //alert('error');
         });
     };
     HaUsers.getApiFilter = function (filter) {
@@ -138,3 +166,4 @@ var HaUsers = (function (_super) {
     return HaUsers;
 }(polymer.Base));
 HaUsers.register();
+//# sourceMappingURL=ha-users.js.map

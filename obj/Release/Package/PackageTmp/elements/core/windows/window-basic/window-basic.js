@@ -26,7 +26,7 @@ var WindowBasic = (function (_super) {
             this.set('left', Math.max(0, Math.floor((Common.dom.width() - this.width) / 2)));
         if (!this.top)
             this.set('top', Math.max(0, Math.floor((Common.dom.height() - this.height) / 2)));
-        this.dom.css('position', 'fixed');
+        this.dom.css('position', 'fixed'); //was absolute
         this.dom.css('opacity', 0);
         this.dom.offset({ left: this.left, top: this.top });
         this.dom.width(this.width);
@@ -34,12 +34,15 @@ var WindowBasic = (function (_super) {
         this.dom.css('display', 'block');
         this.dom.addClass('fullscreen-when-narrow');
         this.bringToFront();
+        //if (this.fullscreen)
+        //    this.fullscreenChanged();
         setTimeout(function () {
             _this.elevation = 2;
             _this.dom.css('transition', 'opacity 0.2s');
             _this.dom.css('opacity', 1);
         }, 0);
     }
+    //@computed({ type: String })
     WindowBasic.prototype.toolbarClass = function (secColor, lightbox, toolbarHeight) {
         return 'noselect' + (toolbarHeight ? ' ' + toolbarHeight : '') + (lightbox ? ' lightbox' : (secColor ? ' HASecColor' : ' HAPrimColor'));
     };
@@ -59,8 +62,10 @@ var WindowBasic = (function (_super) {
         var _this = this;
         if (!this.dom)
             return;
+        //if (this.fullscreen) {
         this.dom.css('transition', WindowBasic.defaultTransition);
         setTimeout(function () { return _this.dom.css('transition', 'opacity 0.2s'); }, 500);
+        //}
         this.dom.toggleClass('fullscreen');
     };
     WindowBasic.prototype.leftChanged = function () {
@@ -229,3 +234,4 @@ var WindowBasic = (function (_super) {
     return WindowBasic;
 }(polymer.Base));
 WindowBasic.register();
+//# sourceMappingURL=window-basic.js.map

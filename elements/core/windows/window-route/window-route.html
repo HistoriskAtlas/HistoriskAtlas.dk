@@ -1,11 +1,41 @@
 ﻿<dom-module id="window-route">
     <template>
         <style>
+            .info-line {
+                font-size: small;
+                font-style: italic;
+                margin: 0px 10px 20px 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .dropdown-content {
+                padding: 5px 5px 3px 5px;
+            }
+            .dropdown-content > div {
+                padding: 4px;
+                cursor: pointer;
+                white-space: nowrap;
+            }
         </style>
         <ha-content content="{{route.content}}"></ha-content>
         <window-basic id="windowbasic" window-title="[[route.title]]" width="400" height="650" right="10">
             <div style="margin: 0px 17px 17px 17px; font-size:14px">
                 <content-viewer content="{{route.content}}" editing></content-viewer>
+                <div class="info-line">
+                    <paper-menu-button id="paperMenuButtonType" horizontal-align="right">
+                        <div class="dropdown-trigger">
+                            <span>[[formatType(route.type)]]</span>
+                            <iron-icon icon="arrow-drop-down"></iron-icon>
+                        </div>
+                        <div class="dropdown-content">
+                            <template is="dom-repeat" items="[[types()]]">
+                                <div on-tap="typeTap">[[item]]</div>
+                            </template>
+                        </div>
+                    </paper-menu-button>
+                    <span>[[formatDistance(route.distance)]]</span>
+                </div>
                 <list-auto-suggest id="geoAutosuggest" items="{{route.geos}}" autosuggest-service="geo" autosuggest-schema="[[getAutosuggestSchema(route.geos,route.geos.length)]]" name-path="title" suggest-name-path="title">
                     <div class="list">
                         <geo-sortable-list id="geoSortableList" items="{{route.geos}}"></geo-sortable-list>

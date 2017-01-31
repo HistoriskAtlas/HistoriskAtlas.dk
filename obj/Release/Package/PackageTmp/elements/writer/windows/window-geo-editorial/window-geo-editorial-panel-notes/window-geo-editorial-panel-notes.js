@@ -37,3 +37,4 @@ var WindowGeoEditorialPanelNotes = (function (_super) {
     return WindowGeoEditorialPanelNotes;
 }(polymer.Base));
 WindowGeoEditorialPanelNotes.register();
+//# sourceMappingURL=window-geo-editorial-panel-notes.js.map

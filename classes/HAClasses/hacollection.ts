@@ -8,6 +8,7 @@
     private _content: HaContent;
     //private maps: Array<HaGeo>;
     //private _geoIds: Array<number>;
+    public static types: Array<string> = ['Kørsel', 'Cykling', 'Til fods']
 
     constructor(data: any) {
         this._geos = [];
@@ -47,6 +48,12 @@
     get distance(): number {
         return this._distance;
     }
+    set distance(val: number) {
+        this._distance = val;
+    }
+    public static formatDistance(distance: number): string {
+        return distance < 1000 ? distance + ' m' : (distance / 1000).toFixed(1) + ' km';
+    }
 
     get content(): HaContent {
         return this._content;
@@ -55,6 +62,12 @@
         this._content = val;
     }
 
+    get type(): number {
+        return this._type;
+    }
+    set type(val: number) {
+        this._type = val;
+    }
 
     get geos(): Array<HaGeo> {
         //if (this._geoIds.length > 0) {
@@ -70,6 +83,9 @@
         //}
 
         return this._geos;
+    }
+    set geos(val: Array<HaGeo>) {
+        this._geos = val;
     }
 
     //public open() {
@@ -123,9 +139,15 @@
             geoid: geo.id,
             ordering: this.geos.indexOf(geo)
         };
-        Services.insert('collection_geo', data, (result) => {
-            
-        });
+        Services.insert('collection_geo', data, (result) => {});
+    }
+
+    public saveDistance() {
+        var data: any = {
+            collectionid: this._id,
+            distance: this._distance
+        };
+        Services.update('collection', data, (result) => {});
     }
 
     public removeGeo(geo: HaGeo) {
@@ -134,9 +156,7 @@
             geoid: geo.id,
             deletemode: 'permanent'
         };
-        Services.delete('collection_geo', data, (result) => {
-
-        });
+        Services.delete('collection_geo', data, (result) => {});
     }
 
     public updateOrdering(indexStart: number, indexEnd: number) {
@@ -152,9 +172,7 @@
                 geoid: this._geos[i].id,
                 ordering: i
             };
-            Services.update('collection_geo', data, (result) => {
-
-            });
+            Services.update('collection_geo', data, (result) => {});
         }
     }
 

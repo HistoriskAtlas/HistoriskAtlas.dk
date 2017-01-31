@@ -18,13 +18,32 @@ var WindowRoute = (function (_super) {
         _super.apply(this, arguments);
     }
     WindowRoute.prototype.windowBasicClosed = function () {
+        this.route.saveDistance();
         App.haCollections.deselect(this.route);
         App.map.routeLayer.clear();
     };
-    WindowRoute.prototype.routeChanged = function (val) {
-        App.map.showRouteLayer();
-        this.updateRouteLayer();
-    };
+    //@observe('route')
+    //routeChanged(val: HaCollection) {
+    //    App.map.showRouteLayer()
+    //    //this.updateRouteLayer();
+    //}
+    //public setRoute(route: HaCollection) {
+    //    this.route = route;
+    //    App.map.routeLayer.clear();
+    //    for (var i = 1; i < route.geos.length; i++)
+    //        App.map.routeLayer.addPath(route.geos[i].icon.coord4326, route.geos[i - 1].icon.coord4326);
+    //}
+    //public addGeo(geo: HaGeo) {
+    //    this.push('route.geos', geo);
+    //    this.route.saveNewGeo(geo)
+    //    if (this.route.geos.length > 1) {
+    //        var lastGeo: HaGeo = this.route.geos[this.route.geos.length - 2];
+    //        App.map.routeLayer.addPath(geo.icon.coord4326, lastGeo.icon.coord4326);
+    //    }
+    //}
+    //geoTap(e: any) {
+    //    Common.dom.append(WindowGeo.create(<HaGeo>e.model.geo));
+    //}
     WindowRoute.prototype.getAutosuggestSchema = function (geos) {
         var existingIds = [];
         for (var _i = 0, geos_1 = geos; _i < geos_1.length; _i++) {
@@ -40,36 +59,53 @@ var WindowRoute = (function (_super) {
         var geo = App.haGeos.geos[e.detail.id];
         geo.title = e.detail.title;
         App.map.centerAnim(geo.coord, 3000, true, true);
+        //geo.zoomUntilUnclustered
         this.push('route.geos', geo);
         this.route.saveNewGeo(geo);
-        if (this.route.geos.length > 1) {
-            var lastGeo = this.route.geos[this.route.geos.length - 2];
-            App.map.routeLayer.addPath(geo.icon.coord4326, lastGeo.icon.coord4326);
-        }
+        //if (this.route.geos.length > 1) {
+        //    var lastGeo: HaGeo = this.route.geos[this.route.geos.length - 2];
+        //    App.map.routeLayer.addPath(geo.icon.coord4326, lastGeo.icon.coord4326, (distance) => {
+        //        this.route.distance += distance;
+        //    });
+        //}
     };
     WindowRoute.prototype.geoRemoved = function (e) {
         var geo = App.haGeos.geos[e.detail.id];
         this.splice('route.geos', this.route.geos.indexOf(geo), 1);
         this.route.removeGeo(geo);
-        this.updateRouteLayer();
+        //this.updateRouteLayer();
     };
     WindowRoute.prototype.geoSortableListUpdate = function (e) {
         if (e.detail) {
-            this.updateRouteLayer();
-            this.route.updateOrdering(e.detail.oldIndex, e.detail.newIndex);
+            //this.updateRouteLayer();
+            this.route.updateOrdering(e.detail.oldIndex, e.detail.newIndex); //TODO: wait for routelayer update so distance can also be saved, same in the two above.........?
         }
     };
-    WindowRoute.prototype.updateRouteLayer = function () {
-        App.map.routeLayer.clear();
-        if (!this.route)
-            return;
-        var lastGeo;
-        for (var _i = 0, _a = this.route.geos; _i < _a.length; _i++) {
-            var geo = _a[_i];
-            if (lastGeo)
-                App.map.routeLayer.addPath(geo.icon.coord4326, lastGeo.icon.coord4326);
-            lastGeo = geo;
-        }
+    //@observe('route.geos.splices')
+    //routeGeosSplices(changeRecord: ChangeRecord<HaGeo>) {
+    //    if (!changeRecord)
+    //        return;
+    //    for (var indexSplice of changeRecord.indexSplices) {
+    //        for (var geo of indexSplice.removed)
+    //            this.route.removeGeo(geo);
+    //        for (var i = indexSplice.index; i < indexSplice.index + indexSplice.addedCount; i++)
+    //            this.route.saveNewGeo(this.route.geos[i]);
+    //        if (indexSplice.addedCount > 0)
+    //            this.route.updateOrdering();
+    //    }
+    //}
+    WindowRoute.prototype.formatDistance = function (distance) {
+        return HaCollection.formatDistance(distance);
+    };
+    WindowRoute.prototype.formatType = function (type) {
+        return HaCollection.types[type];
+    };
+    WindowRoute.prototype.types = function () {
+        return HaCollection.types;
+    };
+    WindowRoute.prototype.typeTap = function (e) {
+        this.set('route.type', HaCollection.types.indexOf(e.model.item));
+        this.$$('#paperMenuButtonType').close();
     };
     __decorate([
         property({ type: Object, notify: true }), 
@@ -81,12 +117,6 @@ var WindowRoute = (function (_super) {
         __metadata('design:paramtypes', []), 
         __metadata('design:returntype', void 0)
     ], WindowRoute.prototype, "windowBasicClosed", null);
-    __decorate([
-        observe('route'), 
-        __metadata('design:type', Function), 
-        __metadata('design:paramtypes', [HaCollection]), 
-        __metadata('design:returntype', void 0)
-    ], WindowRoute.prototype, "routeChanged", null);
     __decorate([
         listen('geoAutosuggestSelected'), 
         __metadata('design:type', Function), 
@@ -118,3 +148,4 @@ var WindowRoute = (function (_super) {
     return WindowRoute;
 }(polymer.Base));
 WindowRoute.register();
+//# sourceMappingURL=window-route.js.map

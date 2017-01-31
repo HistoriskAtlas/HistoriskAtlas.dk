@@ -6,15 +6,16 @@ class WindowRoute extends polymer.Base implements polymer.Element {
 
     @listen('windowbasic.closed') 
     windowBasicClosed() {
+        this.route.saveDistance();
         App.haCollections.deselect(this.route)
         App.map.routeLayer.clear();
     }
 
-    @observe('route')
-    routeChanged(val: HaCollection) {
-        App.map.showRouteLayer()
-        this.updateRouteLayer();
-    }
+    //@observe('route')
+    //routeChanged(val: HaCollection) {
+    //    App.map.showRouteLayer()
+    //    //this.updateRouteLayer();
+    //}
 
     //public setRoute(route: HaCollection) {
     //    this.route = route;
@@ -57,10 +58,12 @@ class WindowRoute extends polymer.Base implements polymer.Element {
         //geo.zoomUntilUnclustered
         this.push('route.geos', geo);
         this.route.saveNewGeo(geo)
-        if (this.route.geos.length > 1) {
-            var lastGeo: HaGeo = this.route.geos[this.route.geos.length - 2];
-            App.map.routeLayer.addPath(geo.icon.coord4326, lastGeo.icon.coord4326);
-        }
+        //if (this.route.geos.length > 1) {
+        //    var lastGeo: HaGeo = this.route.geos[this.route.geos.length - 2];
+        //    App.map.routeLayer.addPath(geo.icon.coord4326, lastGeo.icon.coord4326, (distance) => {
+        //        this.route.distance += distance;
+        //    });
+        //}
     }
 
     @listen('geoAutosuggestRemoved')
@@ -68,17 +71,18 @@ class WindowRoute extends polymer.Base implements polymer.Element {
         var geo = App.haGeos.geos[e.detail.id];
         this.splice('route.geos', this.route.geos.indexOf(geo), 1);
         this.route.removeGeo(geo);
-        this.updateRouteLayer();
+        //this.updateRouteLayer();
     }
 
     @listen('geoSortableList.update') 
     geoSortableListUpdate(e: any)
     {
         if (e.detail) {
-            this.updateRouteLayer();
-            this.route.updateOrdering(e.detail.oldIndex, e.detail.newIndex);
+            //this.updateRouteLayer();
+            this.route.updateOrdering(e.detail.oldIndex, e.detail.newIndex); //TODO: wait for routelayer update so distance can also be saved, same in the two above.........?
         }
     }
+
     //@observe('route.geos.splices')
     //routeGeosSplices(changeRecord: ChangeRecord<HaGeo>) {
     //    if (!changeRecord)
@@ -93,19 +97,22 @@ class WindowRoute extends polymer.Base implements polymer.Element {
     //    }
     //}
 
-    private updateRouteLayer() {
-        App.map.routeLayer.clear();
-        if (!this.route)
-            return;
-
-        var lastGeo;
-        for (var geo of this.route.geos) {
-            if (lastGeo)
-                App.map.routeLayer.addPath(geo.icon.coord4326, lastGeo.icon.coord4326);
-            lastGeo = geo;
-        }
+    public formatDistance(distance: number): string {
+        return HaCollection.formatDistance(distance);
     }
 
+    public formatType(type: number): string {
+        return HaCollection.types[type];
+    }
+
+    public types(): Array<string> {
+        return HaCollection.types;
+    }
+
+    typeTap(e: any) {
+        this.set('route.type', HaCollection.types.indexOf(e.model.item));
+        this.$$('#paperMenuButtonType').close();
+    }
 }
 
 WindowRoute.register();

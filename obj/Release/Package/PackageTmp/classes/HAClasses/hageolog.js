@@ -51,3 +51,4 @@ var HaGeoLog = (function () {
     });
     return HaGeoLog;
 }());
+//# sourceMappingURL=hageolog.js.map
