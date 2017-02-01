@@ -29,6 +29,9 @@ var HaCollection = (function () {
         get: function () {
             return this._title;
         },
+        set: function (val) {
+            this._title = val;
+        },
         enumerable: true,
         configurable: true
     });
@@ -138,19 +141,13 @@ var HaCollection = (function () {
         }
     };
     HaCollection.prototype.saveNewGeo = function (geo) {
-        var data = {
-            collectionid: this._id,
-            geoid: geo.id,
-            ordering: this.geos.indexOf(geo)
-        };
-        Services.insert('collection_geo', data, function (result) { });
+        Services.insert('collection_geo', { collectionid: this._id, geoid: geo.id, ordering: this.geos.indexOf(geo) }, function (result) { });
     };
     HaCollection.prototype.saveDistance = function () {
-        var data = {
-            collectionid: this._id,
-            distance: this._distance
-        };
-        Services.update('collection', data, function (result) { });
+        Services.update('collection', { collectionid: this._id, distance: this._distance }, function (result) { });
+    };
+    HaCollection.prototype.saveTitle = function () {
+        Services.update('collection', { collectionid: this._id, title: this._title }, function (result) { });
     };
     HaCollection.prototype.removeGeo = function (geo) {
         var data = {

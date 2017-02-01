@@ -11,6 +11,10 @@ class WindowRoute extends polymer.Base implements polymer.Element {
         App.map.routeLayer.clear();
     }
 
+    renameTap() {
+        Common.dom.append(DialogText.create('Angiv ny titel på rute', (title) => this.set('route.title', title)));
+    }
+
     //@observe('route')
     //routeChanged(val: HaCollection) {
     //    App.map.showRouteLayer()

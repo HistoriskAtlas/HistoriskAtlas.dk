@@ -81,25 +81,6 @@
             pointer-events: all;
         }
 
-        /*TODO: should be reused across elements..... */
-        paper-item {
-            cursor: pointer;
-            white-space: nowrap;
-            font-size: 14px;
-            height: 42px;
-            font-weight: normal !important;
-            --paper-item-min-height: 42px;
-        }
-        paper-item:before {
-            background-color: transparent !important;
-        }
-        paper-item:after {
-            background-color: transparent !important;
-        }
-        paper-item:hover {
-            background-color: lightgray !important;
-        }
-
     </style>
     <template>
         <ha-image id="haImageService" image="{{image}}" editing="[[editing]]" licens="{{licens}}" geo="[[geo]]"></ha-image>
@@ -109,7 +90,7 @@
                     <paper-menu-button horizontal-align="right">
                         <paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>
                         <paper-menu class="dropdown-content">
-                            <paper-item on-tap="deleteImage">Slet billede</paper-item>
+                            <menu-item on-tap="deleteImage">Slet billede</menu-item>
                         </paper-menu>
                     </paper-menu-button>
                 </div>

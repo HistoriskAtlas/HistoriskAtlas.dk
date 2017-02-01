@@ -1,0 +1,12 @@
+﻿.menu-style-theme-HoD2017 {
+    background-color: #e4e7eb;
+    background-image: url(../../../../images/theme/HoD2017back.jpg);
+    background-size: 100%;
+    background-position: bottom;
+    background-repeat: no-repeat;
+}
+.logo-theme-HoD2017 {
+    width: 80%;
+    display: block;
+    margin: 50px auto 40px auto;
+}

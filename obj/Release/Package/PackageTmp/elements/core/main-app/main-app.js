@@ -84,6 +84,12 @@ var App = (function (_super) {
     App.prototype.disableLeftPanelSwipe = function (touchDevice, narrow) {
         return !touchDevice || !narrow;
     };
+    App.prototype.mainMenuClass = function (theme, showMainMenu) {
+        if (this.theme.id == 'hod2017' && !showMainMenu)
+            return 'menu-style-theme-HoD2017';
+        else
+            return '';
+    };
     App.prototype.created = function () {
         App.passed = window.passed;
         if (!App.passed.theme)

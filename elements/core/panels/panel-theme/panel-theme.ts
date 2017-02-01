@@ -34,6 +34,13 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         return item.name == theme.name;
     }
 
+    public getThemeByName(name: string): ITheme {
+        for (var theme of this.themes)
+            if (theme.name == name)
+                return theme;
+        return null;
+    }
+
     @observe('showThemeMenu')
     showThemeMenuChanged(newVal: boolean, oldVal: boolean) {
         if (newVal && oldVal !== undefined)
@@ -60,6 +67,14 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         if (!content)
             return null;
         return new HaContent(content);
+    }
+
+    hideHeadline(theme: ITheme): boolean {
+        return this.isHoD2017(theme);
+    }
+
+    isHoD2017(theme: ITheme): boolean {
+        return theme.id == 'hod2017';
     }
 
     //itemTap(e: any) {

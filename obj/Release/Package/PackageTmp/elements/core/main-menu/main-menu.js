@@ -24,6 +24,7 @@ var MainMenu = (function (_super) {
         this.panelPeriod = this.$.panelPeriod;
         this.panelRoute = this.$.panelRoute;
         this.panelDigdag = this.$.panelDigdag;
+        //this.panelTheme = this.$$('#panelTheme');
         this.menuItems = [];
         var elems = this.querySelectorAll('main-menu-item');
         for (var i = 0; i < elems.length; i++)
@@ -48,6 +49,10 @@ var MainMenu = (function (_super) {
     };
     MainMenu.prototype.tap1001 = function () {
         Common.dom.append(WindowInstitution.create(App.haTags.byId[731]));
+    };
+    MainMenu.prototype.tapHOD2017 = function () {
+        this.set('showMenuThemes', true);
+        this.set('theme', this.$$('#panelTheme').getThemeByName('Historier om Danmark 2017'));
     };
     MainMenu.prototype.aboutTap = function () {
         Common.dom.append(WindowAbout.create());

@@ -40,6 +40,9 @@
     get title(): string {
         return this._title;
     }
+    set title(val: string) {
+        this._title = val;
+    }
 
     get ugc(): boolean {
         return this._ugc;
@@ -134,20 +137,14 @@
     }
 
     public saveNewGeo(geo: HaGeo) {
-        var data: any = {
-            collectionid: this._id,
-            geoid: geo.id,
-            ordering: this.geos.indexOf(geo)
-        };
-        Services.insert('collection_geo', data, (result) => {});
+        Services.insert('collection_geo', { collectionid: this._id, geoid: geo.id, ordering: this.geos.indexOf(geo) }, (result) => {});
     }
 
     public saveDistance() {
-        var data: any = {
-            collectionid: this._id,
-            distance: this._distance
-        };
-        Services.update('collection', data, (result) => {});
+        Services.update('collection', { collectionid: this._id, distance: this._distance }, (result) => {});
+    }
+    public saveTitle() {
+        Services.update('collection', { collectionid: this._id, title: this._title }, (result) => { });
     }
 
     public removeGeo(geo: HaGeo) {

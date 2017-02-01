@@ -162,6 +162,13 @@ class App extends polymer.Base implements polymer.Element {
         return !touchDevice || !narrow;
     }
 
+    mainMenuClass(theme: ITheme, showMainMenu: boolean): string {
+        if (this.theme.id == 'hod2017' && !showMainMenu)
+            return 'menu-style-theme-HoD2017'
+        else
+            return '';
+    }
+
     created() {
         App.passed = (<any>window).passed;
 

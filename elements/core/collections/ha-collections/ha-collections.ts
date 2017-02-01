@@ -97,6 +97,9 @@ class HaCollections extends polymer.Base implements polymer.Element {
 
         if (changeRecord.path == 'collection.type')
             this.updateRouteLayer();
+
+        if (changeRecord.path == 'collection.title')
+            this.collection.saveTitle();
     }
 
     @observe('collection.geos.splices')

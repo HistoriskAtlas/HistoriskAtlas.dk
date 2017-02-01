@@ -114,27 +114,6 @@
             background-size: 20%;
         }
 
-        /*TODO: should be reused across elements..... */
-        paper-item {
-            cursor: pointer;
-            white-space: nowrap;
-            font-size: 14px;
-            height: 42px;
-            font-weight: normal !important;
-            --paper-item-min-height: 42px;
-        }
-        paper-item:before {
-            background-color: transparent !important;
-        }
-        paper-item:after {
-            background-color: transparent !important;
-        }
-        paper-item:hover {
-            background-color: lightgray !important;
-        }
-        .sublist paper-item {
-            padding-left: 30px;
-        }
         content-viewer {
             padding: 0px 17px;
         }
@@ -151,33 +130,33 @@
                     <paper-menu-button dynamic-align close-on-activate no-overlap>
                         <paper-icon-button icon="social:share" class="dropdown-trigger"></paper-icon-button>
                         <paper-menu class="dropdown-content">
-                            <paper-item on-tap="shareFB">Del til Facebook</paper-item>
-                            <paper-item on-tap="shareLink">Del med link</paper-item>
-                            <paper-item on-tap="shareQR">Del med QR-kode</paper-item>
+                            <menu-item on-tap="shareFB">Del til Facebook</menu-item>
+                            <menu-item on-tap="shareLink">Del med link</menu-item>
+                            <menu-item on-tap="shareQR">Del med QR-kode</menu-item>
                         </paper-menu>
                     </paper-menu-button>
                     <paper-menu-button id="morePaperMenuButton" dynamic-align close-on-activate no-overlap>
                         <paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>
                         <paper-menu id="addMenu" class="dropdown-content">
                             <!--<template is="dom-if" if="[[editing]]">
-                                <paper-item on-tap="addContent">Nyt faneblad</paper-item>
-                                <paper-item disabled style="min-height:10px; height:10px"><div style="width:100%;height:1px;border: none;background-color: lightgrey;"></div></paper-item>
+                                <menu-item on-tap="addContent">Nyt faneblad</menu-item>
+                                <menu-item disabled style="min-height:10px; height:10px"><div style="width:100%;height:1px;border: none;background-color: lightgrey;"></div></menu-item>
                             </template>-->
                             <template is="dom-if" if="[[canReport(geo.isUGC)]]">
-                                <paper-item on-tap="reportTap">Anmeld...</paper-item>
-                                <paper-item disabled style="min-height:10px; height:10px"><div style="width:100%;height:1px;border: none;background-color: lightgrey;"></div></paper-item>
+                                <menu-item on-tap="reportTap">Anmeld...</menu-item>
+                                <menu-item spacer></menu-item>
                             </template>
                             <template is="dom-if" if="[[isWriter()]]">
-                                <paper-item on-tap="addToRouteTap">Tilføj til rute</paper-item>
+                                <menu-item on-tap="addToRouteTap">Tilføj til rute</menu-item>
                             </template>
-                            <paper-item on-tap="addToFavouritesTap">Tilføj til favoritter</paper-item>
+                            <menu-item on-tap="addToFavouritesTap">Tilføj til favoritter</menu-item>
                             <template is="dom-if" if="[[editing]]">
-                                <paper-item disabled style="min-height:10px; height:10px"><div style="width:100%;height:1px;border: none;background-color: lightgrey;"></div></paper-item>
-                                <paper-item on-tap="toggleAddContentSubmenu">Tilføj fane...</paper-item>
-                                <paper-item on-tap="togglePublishedTap">[[togglePublishText(geo.online)]]</paper-item>
-                                <paper-item on-tap="editorialTap">Redaktion</paper-item>
-                                <paper-item disabled style="min-height:10px; height:10px"><div style="width:100%;height:1px;border: none;background-color: lightgrey;"></div></paper-item>
-                                <paper-item on-tap="deleteGeo">Slet fortælling</paper-item>
+                                <menu-item spacer></menu-item>
+                                <menu-item on-tap="toggleAddContentSubmenu">Tilføj fane...</menu-item>
+                                <menu-item on-tap="togglePublishedTap">[[togglePublishText(geo.online)]]</menu-item>
+                                <menu-item on-tap="editorialTap">Redaktion</menu-item>
+                                <menu-item spacer></menu-item>
+                                <menu-item on-tap="deleteGeo">Slet fortælling</menu-item>
                             </template>
                         </paper-menu>
                     </paper-menu-button>
@@ -206,10 +185,10 @@
                     <template is="dom-if" if="[[editing]]">
                         <paper-dialog id="tabMenu" no-overlap horizontal-align="left" vertical-align="top">
                             <paper-menu style="padding:8px 0px; margin: -2px 0px 0px 0px" on-iron-activate="closeTabMenu">
-                                <paper-item on-tap="deleteContent">Slet fane</paper-item>
-                                <paper-item on-tap="renameContent" disabled="[[!curContent.isText]]">Omdøb fane</paper-item>
-                                <paper-item on-tap="moveLeftContent" disabled="[[contentIsFirst(curContent.ordering)]]">Flyt til venstre</paper-item>
-                                <paper-item on-tap="moveRightContent" disabled="[[contentIsLast(curContent.ordering)]]">Flyt til højre</paper-item>
+                                <menu-item on-tap="deleteContent">Slet fane</menu-item>
+                                <menu-item on-tap="renameContent" disabled="[[!curContent.isText]]">Omdøb fane</menu-item>
+                                <menu-item on-tap="moveLeftContent" disabled="[[contentIsFirst(curContent.ordering)]]">Flyt til venstre</menu-item>
+                                <menu-item on-tap="moveRightContent" disabled="[[contentIsLast(curContent.ordering)]]">Flyt til højre</menu-item>
                             </paper-menu>
                         </paper-dialog>
                     </template>
@@ -292,9 +271,9 @@
             <dialog-text id="contentTitleDialog" text="Angiv titel på faneblad" confirm-callback="content-title-confirmed"></dialog-text>
             
             <dialog-selection id="addContentDialog">
-                <paper-item on-tap="addTextContentTap">Tilføj tekstfane</paper-item>
+                <menu-item on-tap="addTextContentTap">Tilføj tekstfane</menu-item>
                 <template is="dom-if" if="[[isProUser()]]">
-                    <paper-item on-tap="addBiblioContentTap">Tilføj litteraturfane</paper-item>
+                    <menu-item on-tap="addBiblioContentTap">Tilføj litteraturfane</menu-item>
                 </template>
             </dialog-selection>
         </template>

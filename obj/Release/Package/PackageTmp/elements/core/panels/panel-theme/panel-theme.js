@@ -40,6 +40,14 @@ var PanelTheme = (function (_super) {
     PanelTheme.prototype.active = function (item, theme) {
         return item.name == theme.name;
     };
+    PanelTheme.prototype.getThemeByName = function (name) {
+        for (var _i = 0, _a = this.themes; _i < _a.length; _i++) {
+            var theme = _a[_i];
+            if (theme.name == name)
+                return theme;
+        }
+        return null;
+    };
     PanelTheme.prototype.showThemeMenuChanged = function (newVal, oldVal) {
         if (newVal && oldVal !== undefined)
             this.theme = Global.defaultTheme;
@@ -63,6 +71,12 @@ var PanelTheme = (function (_super) {
         if (!content)
             return null;
         return new HaContent(content);
+    };
+    PanelTheme.prototype.hideHeadline = function (theme) {
+        return this.isHoD2017(theme);
+    };
+    PanelTheme.prototype.isHoD2017 = function (theme) {
+        return theme.id == 'hod2017';
     };
     __decorate([
         property({ type: Boolean }), 

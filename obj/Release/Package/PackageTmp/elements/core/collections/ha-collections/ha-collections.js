@@ -100,6 +100,8 @@ var HaCollections = (function (_super) {
             return;
         if (changeRecord.path == 'collection.type')
             this.updateRouteLayer();
+        if (changeRecord.path == 'collection.title')
+            this.collection.saveTitle();
     };
     HaCollections.prototype.routeGeosSplices = function (changeRecord) {
         var _this = this;

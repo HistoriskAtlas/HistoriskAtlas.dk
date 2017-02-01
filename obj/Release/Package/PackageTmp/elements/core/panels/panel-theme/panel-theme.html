@@ -3,6 +3,9 @@
          :host {
             display: block;
         }
+        .host-container {
+            margin-top:15px;
+        }
         .header {
             flex-grow: 1;
             display: flex;
@@ -11,13 +14,27 @@
             height: 32px;
             border-bottom: solid 1px;
             border-bottom-color: var(--light-gray-color);
+            /*transition: border-bottom-color 0.3s;*/
         }
+        /*main-menu-item[show] .header {
+            border-bottom-color: darkgray !important;
+        }*/
         .header > span {
             flex-grow: 1;
-            transition: font-size .3s
+            transition: font-size .3s, opacity .3s;
         }
         main-menu-item[show] .header > span {
             font-size: 15px;
+        }
+        main-menu-item[show] .header[hide-when-active] {
+            position: absolute;
+            width: 100%;
+            top: 0px;
+            z-index: 2;
+            border-bottom: none;
+        }
+        main-menu-item[show] .header[hide-when-active] > span {
+            opacity: 0;
         }
         content-viewer {
             font-size: 13px;
@@ -28,15 +45,19 @@
         }
     </style>
     <template>
-        <div style="margin-top:15px">
+        <div class="host-container">
             <template id="themeRepeater" is="dom-repeat" items="{{themes}}">
                 <main-menu-item show$="[[active(item,theme)]]" show-main-menu="{{showThemeMenu}}">
-                    <div class="header">
+                    <div class="header" hide-when-active$="[[hideHeadline(item)]]">
                         <span>[[item.name]]</span>
                         <iron-icon icon="close" hidden$="[[!active(item,theme)]]"></iron-icon>
                     </div>
+
+                    <template is="dom-if" if="[[isHoD2017(item)]]">
+                        <img class="logo-theme-HoD2017" src="../../../../images/theme/HoD2017logo.png">
+                    </template>
+
                     <content-viewer content="[[newHaContent(item.content)]]"></content-viewer>
-                    <!--<rich-text content="[[item.content.texts.0.text1]]"></rich-text>--> <!--TODO: create generic 'content' viewer! share between panel-theme, window-geo and window-institution-->
                 </main-menu-item>
             </template>
         </div>

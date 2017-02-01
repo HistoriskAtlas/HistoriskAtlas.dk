@@ -6,6 +6,7 @@ class MainMenu extends polymer.Base implements polymer.Element {
     public panelPeriod: PanelTag;
     public panelRoute: PanelRoute;
     public panelDigdag: PanelDigDag;
+    //public panelTheme: PanelTheme;
     private menuItems: Array<MainMenuItem>;
 
     @property({ type: Boolean, notify: true })
@@ -72,6 +73,7 @@ class MainMenu extends polymer.Base implements polymer.Element {
         this.panelPeriod = this.$.panelPeriod;
         this.panelRoute = this.$.panelRoute;
         this.panelDigdag = this.$.panelDigdag;
+        //this.panelTheme = this.$$('#panelTheme');
 
         this.menuItems = [];
         var elems = this.querySelectorAll('main-menu-item');
@@ -98,6 +100,10 @@ class MainMenu extends polymer.Base implements polymer.Element {
 
     tap1001() {
         Common.dom.append(WindowInstitution.create(App.haTags.byId[731]));
+    }
+    tapHOD2017() {
+        this.set('showMenuThemes', true);
+        this.set('theme', (<PanelTheme>this.$$('#panelTheme')).getThemeByName('Historier om Danmark 2017'));
     }
 
     aboutTap() {

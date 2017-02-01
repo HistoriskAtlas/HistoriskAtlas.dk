@@ -22,6 +22,10 @@ var WindowRoute = (function (_super) {
         App.haCollections.deselect(this.route);
         App.map.routeLayer.clear();
     };
+    WindowRoute.prototype.renameTap = function () {
+        var _this = this;
+        Common.dom.append(DialogText.create('Angiv ny titel på rute', function (title) { return _this.set('route.title', title); }));
+    };
     //@observe('route')
     //routeChanged(val: HaCollection) {
     //    App.map.showRouteLayer()

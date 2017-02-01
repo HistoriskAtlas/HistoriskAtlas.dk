@@ -43,6 +43,7 @@
     <Content Include="bower_components\polymer-ts\polymer-ts.min.js.map" />
     <Content Include="bower_components\polymer-ts\README.md" />
     <Content Include="css\ol.css" />
+    <Content Include="css\theme.css" />
     <Content Include="cs\proxy\test.xml" />
     <Content Include="elements\admin\windows\window-admin\panel-geo-admin\panel-geo-admin.html" />
     <Content Include="elements\admin\windows\window-admin\panel-tag-admin\panel-tag-admin.html" />
@@ -71,6 +72,7 @@
     <Content Include="elements\core\collections\ha-image\ha-image.html" />
     <Content Include="elements\core\icons\cc-icons\cc-icons.html" />
     <Content Include="elements\core\icons\ha-icons\ha-icons.html" />
+    <Content Include="elements\core\lists\menu-item\menu-item.html" />
     <Content Include="elements\writer\dialogs\dialog-route-selection\dialog-route-selection.html" />
     <Content Include="elements\writer\lists\geo-sortable-list\geo-sortable-list.html" />
     <Content Include="elements\core\lists\geo-list-item\geo-list-item.html" />
@@ -185,6 +187,7 @@
     <Content Include="html\RegionTypeAbouts\40.html" />
     <Content Include="html\RegionTypeAbouts\102.html" />
     <Content Include="html\RegionTypeAbouts\101.html" />
+    <Content Include="images\theme\HoD2017back.jpg" />
     <Content Include="images\logos\HoD2017logo.png" />
     <Content Include="images\logos\nordea-fonden-black-logo.png" />
     <Content Include="images\logos\nordea-fonden-white-logo.png" />
@@ -195,6 +198,7 @@
     <Content Include="images\red-ribbon\scissorsClosed.png" />
     <Content Include="images\red-ribbon\scissorsOpen1.png" />
     <Content Include="images\red-ribbon\scissorsOpen2.png" />
+    <Content Include="images\theme\HoD2017logo.png" />
     <Content Include="images\youtubePlay.png" />
     <Content Include="js\jquery\Base64.js" />
     <Content Include="js\jquery\jquery-2.2.0.min.js" />
@@ -471,6 +475,7 @@
     <TypeScriptCompile Include="elements\core\dialogs\dialog-text\dialog-text.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-image\ha-image.ts" />
     <TypeScriptCompile Include="elements\core\icons\licens-mark\licens-mark.ts" />
+    <TypeScriptCompile Include="elements\core\lists\menu-item\menu-item.ts" />
     <TypeScriptCompile Include="elements\writer\dialogs\dialog-route-selection\dialog-route-selection.ts" />
     <TypeScriptCompile Include="elements\writer\lists\geo-sortable-list\geo-sortable-list.ts" />
     <TypeScriptCompile Include="elements\core\lists\geo-list-item\geo-list-item.ts" />
