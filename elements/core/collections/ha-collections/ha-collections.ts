@@ -50,9 +50,18 @@ class HaCollections extends polymer.Base implements polymer.Element {
     }
 
     @observe('collection')
-    collectionChanged() {
-        if (!this.collection)
+    collectionChanged(newVal: HaCollection, oldVal: HaCollection) {
+        if (oldVal) {
+            App.map.routeLayer.clear();
+            for (var geo of oldVal.geos)
+                geo.isPartOfCurrentCollection = false;
+        }
+
+        if (!newVal)
             return;
+
+        for (var geo of newVal.geos)
+            geo.isPartOfCurrentCollection = true;
 
         App.map.showRouteLayer();
 
@@ -87,6 +96,8 @@ class HaCollections extends polymer.Base implements polymer.Element {
             }
             this.set('collection.geos', geos);
             this.updateRouteLayer();
+            for (var geo of this.collection.geos)
+                geo.isPartOfCurrentCollection = true;
         })
     }
 
@@ -106,28 +117,66 @@ class HaCollections extends polymer.Base implements polymer.Element {
     routeGeosSplices(changeRecord: ChangeRecord<HaGeo>) {
         if (!changeRecord)
             return;
+
         for (var indexSplice of changeRecord.indexSplices) {
-            //for (var geo of indexSplice.removed)
-            //    this.route.removeGeo(geo);
-            if (indexSplice.removed.length > 0)
-                this.updateRouteLayer();
-            if (indexSplice.addedCount > 0) {
-                if (indexSplice.index == this.collection.geos.length - 1) {
-                    //for (var i = indexSplice.index; i < indexSplice.index + indexSplice.addedCount; i++) {
-                    if (this.collection.geos.length > 1) {
-                        var lastGeo: HaGeo = this.collection.geos[indexSplice.index - 1];
-                        App.map.routeLayer.addPath(this.collection.geos[indexSplice.index].icon.coord4326, lastGeo.icon.coord4326, this.collection.type, (distance) => {
-                            this.set('collection.distance', this.collection.distance + Math.round(distance));
-                        });
-                    }
-                    //}
-                } else
-                    this.updateRouteLayer();
-            //this.route.saveNewGeo(this.route.geos[i]);
+            for (var geo of indexSplice.removed) {
+                geo.isPartOfCurrentCollection = false;
+                geo.icon.updateStyle();
             }
+            for (var i = indexSplice.index; i < indexSplice.index + indexSplice.addedCount; i++)
+                this.collection.geos[i].isPartOfCurrentCollection = true;
+        }
+
+        for (var keySplice of changeRecord.keySplices) {
+            if (keySplice.removed.length > 0 || keySplice.added.length > 0)
+                this.updateRouteLayer();
+
+            //if (keySplice.added[0] == this.collection.geos[] {
+            //    //for (var i = indexSplice.index; i < indexSplice.index + indexSplice.addedCount; i++) {
+            //    var geo = this.collection.geos[indexSplice.index];
+            //    //this.updateIconStyle(geo;)
+            //    if (this.collection.geos.length > 1) {
+            //        var lastGeo: HaGeo = this.collection.geos[indexSplice.index - 1];
+            //        App.map.routeLayer.addPath(geo.icon.coord4326, lastGeo.icon.coord4326, this.collection.type, (distance) => {
+            //            this.set('collection.distance', this.collection.distance + Math.round(distance));
+            //        });
+            //    }
+            //    //}
+            //} else
+            //    this.updateRouteLayer();
+
+
+        }
+
+
+
+        //for (var indexSplice of changeRecord.indexSplices) {
+        //    for (var geo of indexSplice.removed)
+        //        this.updateIconStyle(geo, true);
+        //    if (indexSplice.removed.length > 0)
+        //        this.updateRouteLayer();
+        //    if (indexSplice.addedCount > 0) {
+        //        for (var i = indexSplice.index; i < indexSplice.index + indexSplice.addedCount; i++)
+        //            this.updateIconStyle(indexSplice. this.collection.geos[i]);
+
+        //        if (indexSplice.index == this.collection.geos.length - 1) {
+        //            //for (var i = indexSplice.index; i < indexSplice.index + indexSplice.addedCount; i++) {
+        //            var geo = this.collection.geos[indexSplice.index];
+        //            //this.updateIconStyle(geo;)
+        //            if (this.collection.geos.length > 1) {
+        //                var lastGeo: HaGeo = this.collection.geos[indexSplice.index - 1];
+        //                App.map.routeLayer.addPath(geo.icon.coord4326, lastGeo.icon.coord4326, this.collection.type, (distance) => {
+        //                    this.set('collection.distance', this.collection.distance + Math.round(distance));
+        //                });
+        //            }
+        //            //}
+        //        } else
+        //            this.updateRouteLayer();
+        //    //this.route.saveNewGeo(this.route.geos[i]);
+        //    }
             
                 
-        }
+        //}
     }
 
     private updateRouteLayer() {
@@ -149,6 +198,7 @@ class HaCollections extends polymer.Base implements polymer.Element {
         var totalDistance: number = 0;
         this.waitingForCallbackCount = this.collection.geos.length - 1;
         for (var geo of this.collection.geos) {
+            //this.updateIconStyle(geo);
             if (lastGeo) {
                 App.map.routeLayer.addPath(geo.icon.coord4326, lastGeo.icon.coord4326, this.collection.type, (distance) => {
                     totalDistance += Math.round(distance);
@@ -161,7 +211,22 @@ class HaCollections extends polymer.Base implements polymer.Element {
             }
             lastGeo = geo;
         }
+
+        setTimeout(() => {
+            for (var geo of this.collection.geos)
+                this.notifyPath('collection.geos.' + this.collection.geos.indexOf(geo) + '.icon.marker', geo.icon.marker);
+        }, 10);
+        setTimeout(() => {
+            for (var geo of this.collection.geos)
+                geo.icon.updateStyle();
+        }, 100);
     }
+
+    //public updateIconStyle(geo: HaGeo, mapOnly: boolean = false) {
+    //    geo.icon.updateStyle();
+    //    if (!mapOnly)
+    //        this.notifyPath('collection.geos.' + this.collection.geos.indexOf(geo) + '.icon.marker', geo.icon.marker);
+    //}
 
     private nextUpdateRouteLayerRequest() {
         if (this.updateRouteLayerRequestCount > 0) {

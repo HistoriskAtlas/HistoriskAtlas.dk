@@ -12,18 +12,12 @@ var Hillshade = (function (_super) {
                 crossOrigin: 'Anonymous'
             })
         });
-        this.setVisible(false); //TOOD: Remove layer instead?
+        this.setVisible(false);
         mainMap.addLayer(this);
-        //this.on('precompose', (event: any) => {
-        //    event.context.globalCompositeOperation = 'overlay';
-        //});
-        //this.on('postcompose', (event: any) => {
-        //    event.context.globalCompositeOperation = 'source-over';
-        //});
     }
     Hillshade.prototype.update = function (opacity) {
         if (opacity == 0) {
-            this.setVisible(false); //TOOD: Remove layer instead?
+            this.setVisible(false);
             return;
         }
         if (!this.isVisible)
@@ -39,4 +33,3 @@ var Hillshade = (function (_super) {
     });
     return Hillshade;
 }(ol.layer.Tile));
-//# sourceMappingURL=HillshadeLayer.js.map

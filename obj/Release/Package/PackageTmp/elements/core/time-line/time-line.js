@@ -118,4 +118,3 @@ var TimeLine = (function (_super) {
     return TimeLine;
 }(polymer.Base));
 TimeLine.register();
-//# sourceMappingURL=time-line.js.map

@@ -87,4 +87,3 @@ var Address = (function () {
     return Address;
 }());
 WindowSearch.register();
-//# sourceMappingURL=window-search.js.map

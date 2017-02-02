@@ -58,6 +58,15 @@
                     </template>
 
                     <content-viewer content="[[newHaContent(item.content)]]"></content-viewer>
+
+                    <template is="dom-if" if="[[isHoD2017(item)]]">
+                        <div style="margin-left: 20px; margin-bottom:100px; background-color:transparent !important" class="HAInvertedPrimColor">
+                            <div>Landsdækkende rutenet</div>
+                            <div>Vandrehistorier</div>
+                            <div>Opret din egen rute</div>
+                        </div>
+                    </template>
+
                 </main-menu-item>
             </template>
         </div>

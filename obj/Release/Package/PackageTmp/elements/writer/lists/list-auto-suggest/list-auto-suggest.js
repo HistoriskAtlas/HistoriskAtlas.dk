@@ -57,11 +57,7 @@ var ListAutoSuggest = (function (_super) {
             this.setAutocompleteItems([]);
             return;
         }
-        //var existingIds: Array<number> = [];
-        //for (var item of this.items)
-        //    existingIds.push(item.institution.id) //TODO
         Services.get(this.autosuggestService, {
-            //'schema': '{institution:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},tag:{plurname:{like:' + this.input + '}}},fields:[id,{tag:[plurname]}]}}',
             'schema': this.autosuggestSchema.replace('$input', this.input),
             'count': 5
         }, function (result) {
@@ -160,4 +156,3 @@ var ListAutoSuggest = (function (_super) {
     return ListAutoSuggest;
 }(polymer.Base));
 ListAutoSuggest.register();
-//# sourceMappingURL=list-auto-suggest.js.map

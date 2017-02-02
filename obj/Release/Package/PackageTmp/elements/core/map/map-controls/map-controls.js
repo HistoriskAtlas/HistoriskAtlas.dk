@@ -18,7 +18,7 @@ var MapControls = (function (_super) {
         _super.apply(this, arguments);
     }
     MapControls.prototype.liftChanged = function (newVal) {
-        $(this).css('margin-bottom', newVal ? '79px' : '15px'); /*64 + 15*/
+        $(this).css('margin-bottom', newVal ? '79px' : '15px');
     };
     MapControls.prototype.mapRotationChanged = function (newVal) {
         $(this.$.compass).css('display', Math.abs(newVal) < 0.05 ? 'none' : 'initial');
@@ -98,4 +98,3 @@ var MapControls = (function (_super) {
     return MapControls;
 }(polymer.Base));
 MapControls.register();
-//# sourceMappingURL=map-controls.js.map

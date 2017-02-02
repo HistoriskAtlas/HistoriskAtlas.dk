@@ -2746,6 +2746,7 @@ declare module ol {
         interface GeometryType extends String { }
 
         class Circle {
+            constructor(center: ol.Coordinate, radius?: number, layout?: ol.geom.GeometryLayout);
         }
 
         /**
@@ -2770,6 +2771,7 @@ declare module ol {
         }
 
         class GeometryCollection {
+            //constructor(options?: Array<ol.geom.Geometry>);
         }
 
         class LinearRing {

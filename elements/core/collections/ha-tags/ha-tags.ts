@@ -21,6 +21,9 @@ class HaTags extends polymer.Base implements polymer.Element {
     private childIDs: Array<Array<number>>;
     private tagIdsInStorage: Array<number>;
 
+    private static blankMarker: HTMLImageElement;
+    private static numberMarkers: Array<string> = [];
+
     ready() {
         this.tags = [];
         this.byId = [];
@@ -144,8 +147,8 @@ class HaTags extends polymer.Base implements polymer.Element {
         var context = canvas.getContext("2d");
         var x: number = 0;
         var y: number = 0;
-        var marker = document.createElement("img");
-        $(marker).on('load', () => {
+        HaTags.blankMarker = document.createElement("img");
+        $(HaTags.blankMarker).on('load', () => {
             $(markers).on('load', () => {
                 while (true) {
                     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -157,7 +160,7 @@ class HaTags extends polymer.Base implements polymer.Element {
                     contextTemp.putImageData(blankImageData, 0, 0);
                     contextTemp.putImageData(blankImageData, markerSize - 1, 0);
 
-                    context.drawImage(marker, 0, 0);
+                    context.drawImage(HaTags.blankMarker, 0, 0);
                     context.drawImage(canvasTemp, delta, delta);
 
                     if (tagID) {
@@ -185,7 +188,7 @@ class HaTags extends polymer.Base implements polymer.Element {
             });
             markers.src = 'images/markers/all.png';
         });
-        marker.src = 'images/markers/marker.png';
+        HaTags.blankMarker.src = 'images/markers/marker.png';
     }
 
     private invertColors(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
@@ -196,8 +199,94 @@ class HaTags extends polymer.Base implements polymer.Element {
             imageData.data[i + 2] = 408 - imageData.data[i + 2]; //255 + 153
         }
         context.putImageData(imageData, 0, 0);
-
     }
+
+    public static numberMarker(number: number): string {
+        var marker: string = this.numberMarkers[number];
+        if (marker)
+            return marker;
+
+        var canvas = document.createElement('canvas');
+        canvas.width = 36;
+        canvas.height = 48;
+        var context = canvas.getContext("2d");
+        context.fillStyle = '#FFFFFF';
+        context.font = 'bold 18px Roboto'
+
+        context.drawImage(HaTags.blankMarker, 0, 0);
+        this.redColors(canvas, context);
+
+        var text = number.toString();
+        context.fillText(text, (canvas.width - context.measureText(text).width) / 2.0, 24)
+
+        marker = canvas.toDataURL()
+        this.numberMarkers[number] = marker;
+
+        return marker;
+    }
+
+    private static redColors(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
+        var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        for (var i = 0; i < imageData.data.length; i += 4) {
+            var hsl = this.rgbToHsl(imageData.data[i], imageData.data[i + 1], imageData.data[i + 2])
+            var rgb = this.hslToRgb(0, hsl.s, hsl.l)
+            imageData.data[i] = rgb.r;
+            imageData.data[i + 1] = rgb.g;
+            imageData.data[i + 2] = rgb.b;
+        }
+        context.putImageData(imageData, 0, 0);
+    }
+
+
+
+
+    private static rgbToHsl(r, g, b) {
+    r /= 255, g /= 255, b /= 255;
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+    if (max == min) {
+        h = s = 0; // achromatic
+    } else {
+        var d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+    }
+    return ({ h: h, s: s, l: l });
+}
+
+    private static hslToRgb(h, s, l) {
+    var r, g, b;
+    if (s == 0) {
+        r = g = b = l; // achromatic
+    } else {
+        function hue2rgb(p, q, t) {
+            if (t < 0) t += 1;
+            if (t > 1) t -= 1;
+            if (t < 1 / 6) return p + (q - p) * 6 * t;
+            if (t < 1 / 2) return q;
+            if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+            return p;
+        }
+        var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        var p = 2 * l - q;
+        r = hue2rgb(p, q, h + 1 / 3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1 / 3);
+    }
+    return ({
+        r: Math.round(r * 255),
+        g: Math.round(g * 255),
+        b: Math.round(b * 255),
+    });
+}
+
+
+
 
     //public includeInSitemap(tag: HaTag): boolean {
     //    return this.passedTag ? tag.isChildOf(this.passedTag) : (tag.isTop && tag.category == 9); //only subjects for now

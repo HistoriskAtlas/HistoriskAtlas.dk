@@ -109,4 +109,3 @@ var PanelTheme = (function (_super) {
     return PanelTheme;
 }(polymer.Base));
 PanelTheme.register();
-//# sourceMappingURL=panel-theme.js.map

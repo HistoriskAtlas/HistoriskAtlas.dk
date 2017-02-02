@@ -9,6 +9,8 @@
     //public small: boolean;
     public iconStyle: ol.style.Icon;
 
+    //private static styleCache: any = {};
+
     constructor(geo: HaGeo, coord4326: ol.Coordinate) {
         //this.coord3857 = Common.toMapCoord([geo.lng, geo.lat]);
         var point = new ol.geom.Point(Common.toMapCoord(coord4326));
@@ -67,18 +69,19 @@
     //}
 
     public updateStyle(): void {
+        //var marker = this.marker;
+        //var style: ol.style.Style = Icon.styleCache[marker + '']
+
+        //if (!style) {
         var style = new ol.style.Style({
             image: this.iconStyle = new ol.style.Icon({
                 anchor: [0.5, 1.0],
-                //scale: this.scale,
-                //size: [30, 40], //WAS 20, 27
-                //src: "http://historiskatlas.dk/images/dots/dot" + dotIndex + ".png"
-                //src: HaTags.tagsWithMarkers[Math.floor(Math.random() * HaTags.tagsWithMarkers.length)].marker
-                //src: this.geo.tags2.length == 0 ? Icon.defaultMarker : (this.geo.tags2[0].marker ? this.geo.tags2[0].marker : Icon.defaultMarker)
                 src: this.marker,
                 opacity: this.geo.online || this.geo.isMoving ? 1.0 : 0.5
             })
         });
+        //    Icon.styleCache[marker] = style;
+        //}
 
         if (!this.geo.isMoving) {
             this.setStyle(style);
@@ -118,7 +121,7 @@
         this.minDist = Math.sqrt(minDistSquared);
     }
 
-    private get marker(): string {
+    public get marker(): string {
         //var hasChildrenTag: HaTag;
         //for (var tag of this.geo.tags)
         //    if (tag.marker) {
@@ -129,6 +132,8 @@
 
         //if (hasChildrenTag)
         //    return this.geo.isUGC ? hasChildrenTag.invertedMarker : hasChildrenTag.marker;        
+        if (this.geo.isPartOfCurrentCollection)
+            return HaTags.numberMarker(App.haCollections.collection.geos.indexOf(this.geo) + 1);
 
         if (this.geo.primaryTag)
             if (this.geo.primaryTag.marker)

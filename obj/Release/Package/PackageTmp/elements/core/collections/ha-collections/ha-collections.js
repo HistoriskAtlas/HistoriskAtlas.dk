@@ -23,13 +23,10 @@ var HaCollections = (function (_super) {
     HaCollections.prototype.getCollectionsFromUser = function () {
         var _this = this;
         Services.get('collection', { count: 'all', schema: '{collection:[collectionid,title,ugc,distance,type,{userid:' + App.haUsers.user.id + '}]}' }, function (result) {
-            //var newCollections: Array<HaCollection> = this.collections;
             for (var _i = 0, _a = result.data; _i < _a.length; _i++) {
                 var data = _a[_i];
                 _this.push('collections', new HaCollection(data));
             }
-            //newCollections.push(new HaCollection(data));
-            //this.set('collections', newCollections);
         });
     };
     HaCollections.prototype.select = function (collection, addGeo) {
@@ -59,10 +56,21 @@ var HaCollections = (function (_super) {
         });
         return collection;
     };
-    HaCollections.prototype.collectionChanged = function () {
+    HaCollections.prototype.collectionChanged = function (newVal, oldVal) {
         var _this = this;
-        if (!this.collection)
+        if (oldVal) {
+            App.map.routeLayer.clear();
+            for (var _i = 0, _a = oldVal.geos; _i < _a.length; _i++) {
+                var geo = _a[_i];
+                geo.isPartOfCurrentCollection = false;
+            }
+        }
+        if (!newVal)
             return;
+        for (var _b = 0, _c = newVal.geos; _b < _c.length; _b++) {
+            var geo = _c[_b];
+            geo.isPartOfCurrentCollection = true;
+        }
         App.map.showRouteLayer();
         if (!this.collection.content) {
             Services.get('collection', { schema: '{collection:[' + ContentViewer.contentSchema + ']}', collectionid: this.collection.id }, function (result) {
@@ -93,6 +101,10 @@ var HaCollections = (function (_super) {
             }
             _this.set('collection.geos', geos);
             _this.updateRouteLayer();
+            for (var _b = 0, _c = _this.collection.geos; _b < _c.length; _b++) {
+                var geo = _c[_b];
+                geo.isPartOfCurrentCollection = true;
+            }
         });
     };
     HaCollections.prototype.typeChanged = function (changeRecord) {
@@ -104,28 +116,22 @@ var HaCollections = (function (_super) {
             this.collection.saveTitle();
     };
     HaCollections.prototype.routeGeosSplices = function (changeRecord) {
-        var _this = this;
         if (!changeRecord)
             return;
         for (var _i = 0, _a = changeRecord.indexSplices; _i < _a.length; _i++) {
             var indexSplice = _a[_i];
-            //for (var geo of indexSplice.removed)
-            //    this.route.removeGeo(geo);
-            if (indexSplice.removed.length > 0)
-                this.updateRouteLayer();
-            if (indexSplice.addedCount > 0) {
-                if (indexSplice.index == this.collection.geos.length - 1) {
-                    //for (var i = indexSplice.index; i < indexSplice.index + indexSplice.addedCount; i++) {
-                    if (this.collection.geos.length > 1) {
-                        var lastGeo = this.collection.geos[indexSplice.index - 1];
-                        App.map.routeLayer.addPath(this.collection.geos[indexSplice.index].icon.coord4326, lastGeo.icon.coord4326, this.collection.type, function (distance) {
-                            _this.set('collection.distance', _this.collection.distance + Math.round(distance));
-                        });
-                    }
-                }
-                else
-                    this.updateRouteLayer();
+            for (var _b = 0, _c = indexSplice.removed; _b < _c.length; _b++) {
+                var geo = _c[_b];
+                geo.isPartOfCurrentCollection = false;
+                geo.icon.updateStyle();
             }
+            for (var i = indexSplice.index; i < indexSplice.index + indexSplice.addedCount; i++)
+                this.collection.geos[i].isPartOfCurrentCollection = true;
+        }
+        for (var _d = 0, _e = changeRecord.keySplices; _d < _e.length; _d++) {
+            var keySplice = _e[_d];
+            if (keySplice.removed.length > 0 || keySplice.added.length > 0)
+                this.updateRouteLayer();
         }
     };
     HaCollections.prototype.updateRouteLayer = function () {
@@ -158,6 +164,18 @@ var HaCollections = (function (_super) {
             }
             lastGeo = geo;
         }
+        setTimeout(function () {
+            for (var _i = 0, _a = _this.collection.geos; _i < _a.length; _i++) {
+                var geo = _a[_i];
+                _this.notifyPath('collection.geos.' + _this.collection.geos.indexOf(geo) + '.icon.marker', geo.icon.marker);
+            }
+        }, 10);
+        setTimeout(function () {
+            for (var _i = 0, _a = _this.collection.geos; _i < _a.length; _i++) {
+                var geo = _a[_i];
+                geo.icon.updateStyle();
+            }
+        }, 100);
     };
     HaCollections.prototype.nextUpdateRouteLayerRequest = function () {
         if (this.updateRouteLayerRequestCount > 0) {
@@ -176,7 +194,7 @@ var HaCollections = (function (_super) {
     __decorate([
         observe('collection'), 
         __metadata('design:type', Function), 
-        __metadata('design:paramtypes', []), 
+        __metadata('design:paramtypes', [HaCollection, HaCollection]), 
         __metadata('design:returntype', void 0)
     ], HaCollections.prototype, "collectionChanged", null);
     __decorate([
@@ -198,4 +216,3 @@ var HaCollections = (function (_super) {
     return HaCollections;
 }(polymer.Base));
 HaCollections.register();
-//# sourceMappingURL=ha-collections.js.map

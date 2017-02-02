@@ -8,7 +8,7 @@ class WindowRoute extends polymer.Base implements polymer.Element {
     windowBasicClosed() {
         this.route.saveDistance();
         App.haCollections.deselect(this.route)
-        App.map.routeLayer.clear();
+        //App.map.routeLayer.clear();
     }
 
     renameTap() {
@@ -82,7 +82,6 @@ class WindowRoute extends polymer.Base implements polymer.Element {
     geoSortableListUpdate(e: any)
     {
         if (e.detail) {
-            //this.updateRouteLayer();
             this.route.updateOrdering(e.detail.oldIndex, e.detail.newIndex); //TODO: wait for routelayer update so distance can also be saved, same in the two above.........?
         }
     }

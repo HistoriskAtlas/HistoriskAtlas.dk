@@ -9,7 +9,8 @@
             source: source,
             style: new ol.style.Style({
                 stroke: new ol.style.Stroke({
-                    color: [0, 93, 154, 1],
+                    //color: [0, 93, 154, 1],
+                    color: [153, 0, 0, 1],
                     width: 5
                 })
             })
@@ -34,6 +35,19 @@
                 dataProjection: 'EPSG:4326',
                 featureProjection: 'EPSG:3857'
             });
+
+
+            //var coord = Common.toMapCoord(loc2);
+            //var stop = new ol.geom.Circle(coord, 100);
+            //var featureStop = new ol.Feature(stop);
+            //featureStop.setStyle(new ol.style.Style({
+            //    zIndex: 10,
+            //    fill: new ol.style.Fill({
+            //        color: [255, 0, 0, 1]
+            //    })
+            //}))
+            //this.source.addFeature(featureStop);
+
             var feature = new ol.Feature(route);
             (<any>feature).distance = data.distance;
             this.source.addFeature(feature);

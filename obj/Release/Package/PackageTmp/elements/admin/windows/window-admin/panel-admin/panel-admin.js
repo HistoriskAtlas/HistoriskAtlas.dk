@@ -44,4 +44,3 @@ var PanelAdmin = (function (_super) {
     return PanelAdmin;
 }(polymer.Base));
 PanelAdmin.register();
-//# sourceMappingURL=panel-admin.js.map

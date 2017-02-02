@@ -10,7 +10,6 @@ var AppMode = (function () {
         var os = (ua.match(/(iPad|iPhone|iPod)/i)) ? 'ios' : (ua.match(/(android)/i) ? 'android' : (ua.match(/(windows)/i) ? 'windows' : undefined));
         switch (os) {
             case 'ios':
-                //TODO: dosent detect if browser is safari... apperently hard to do...
                 appmodecapable = ("standalone" in window.navigator);
                 appmode = window.navigator.standalone;
             case 'android':
@@ -22,10 +21,8 @@ var AppMode = (function () {
                     }
                 break;
         }
-        //TODO: Better way in Chrome 42+!!! See: https://developers.google.com/web/updates/2015/03/increasing-engagement-with-app-install-banners-in-chrome-for-android
         if (appmodecapable && !appmode)
             Common.dom.append(DialogAddToHomescreen.create(os));
     };
     return AppMode;
 }());
-//# sourceMappingURL=appmode.js.map

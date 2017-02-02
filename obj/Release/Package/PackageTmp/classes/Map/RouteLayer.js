@@ -11,7 +11,7 @@ var RouteLayer = (function (_super) {
             source: source,
             style: new ol.style.Style({
                 stroke: new ol.style.Stroke({
-                    color: [0, 93, 154, 1],
+                    color: [153, 0, 0, 1],
                     width: 5
                 })
             })
@@ -46,4 +46,3 @@ var RouteLayer = (function (_super) {
     };
     return RouteLayer;
 }(ol.layer.Vector));
-//# sourceMappingURL=RouteLayer.js.map

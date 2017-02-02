@@ -69,7 +69,7 @@ var PanelCreateUser = (function (_super) {
                 email: this.email,
                 firstname: this.firstname,
                 lastname: this.lastname,
-                role: 2 //Has no effect(?)
+                role: 2
             })
         }, function (result) {
             if (result.data.status.code == 1) {
@@ -134,4 +134,3 @@ var PanelCreateUser = (function (_super) {
     return PanelCreateUser;
 }(polymer.Base));
 PanelCreateUser.register();
-//# sourceMappingURL=panel-create-user.js.map

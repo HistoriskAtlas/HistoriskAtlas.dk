@@ -24,4 +24,3 @@ var WindowFeedback = (function (_super) {
     return WindowFeedback;
 }(polymer.Base));
 WindowFeedback.register();
-//# sourceMappingURL=window-feedback.js.map

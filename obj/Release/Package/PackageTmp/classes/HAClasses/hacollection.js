@@ -1,7 +1,6 @@
 var HaCollection = (function () {
     function HaCollection(data) {
         this._geos = [];
-        //this._geoIds = [];
         if (!data)
             return;
         this._id = data.collectionid;
@@ -9,14 +8,6 @@ var HaCollection = (function () {
         this._ugc = data.ugc;
         this._distance = data.distance;
         this._type = data.type;
-        //if (data.collection_geos)
-        //    for (var geoid of data.collection_geos) {
-        //        var geo = App.haGeos.geos[geoid];
-        //        if (geo)
-        //            this._geos.push(geo);
-        //        else
-        //            this._geoIds.push(geoid);
-        //    }
     }
     Object.defineProperty(HaCollection.prototype, "id", {
         get: function () {
@@ -77,17 +68,6 @@ var HaCollection = (function () {
     });
     Object.defineProperty(HaCollection.prototype, "geos", {
         get: function () {
-            //if (this._geoIds.length > 0) {
-            //    var newGeoIds: Array<number> = [];
-            //    for (var geoid of this._geoIds) {
-            //        var geo = App.haGeos.geos[geoid];
-            //        if (geo)
-            //            this._geos.push(geo)
-            //        else
-            //            newGeoIds.push(geoid)
-            //    }
-            //    this._geoIds = newGeoIds;
-            //}
             return this._geos;
         },
         set: function (val) {
@@ -96,29 +76,6 @@ var HaCollection = (function () {
         enumerable: true,
         configurable: true
     });
-    //public open() {
-    //    //if (this._geos.length > 0 || !this._id) {
-    //        App.haCollections.select(this);
-    //    //    return;
-    //    //}
-    //    //Services.get('geo', { count: 'all', schema: '{geo:{fields:[geoid,title],filters:[{collection_geos:[{collectionid:' + this._id + '}]}]}}', sort: '{collection_geos:[ordering]}' }, (result) => {
-    //    //    for (var data of result.data) {
-    //    //        var geo = App.haGeos.geos[data.geoid];
-    //    //        if (!geo)
-    //    //            continue;
-    //    //        geo.title = data.title;
-    //    //        this._geos.push(geo) //TODO: use notify system.............
-    //    //    }
-    //    //    App.haCollections.select(this);
-    //    //})
-    //}
-    //private openRouteWindow() {
-    //    if (App.windowRoute) {
-    //        App.windowRoute.setRoute(this);
-    //        (<WindowBasic>App.windowRoute.$.windowbasic).bringToFront();
-    //    } else
-    //        Common.dom.append(WindowRoute.create(this));
-    //}
     HaCollection.prototype.save = function (callback) {
         var _this = this;
         var data = {
@@ -172,9 +129,6 @@ var HaCollection = (function () {
             Services.update('collection_geo', data, function (result) { });
         }
     };
-    //private maps: Array<HaGeo>;
-    //private _geoIds: Array<number>;
     HaCollection.types = ['Kørsel', 'Cykling', 'Til fods'];
     return HaCollection;
 }());
-//# sourceMappingURL=hacollection.js.map

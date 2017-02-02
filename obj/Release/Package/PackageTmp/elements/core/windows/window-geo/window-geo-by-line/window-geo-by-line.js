@@ -18,7 +18,7 @@ var WindowGeoByLine = (function (_super) {
         _super.apply(this, arguments);
     }
     WindowGeoByLine.prototype.show1001User = function (institution) {
-        return institution.id == 731; //1001 institution
+        return institution.id == 731;
     };
     WindowGeoByLine.prototype.showUser = function (institutions) {
         return institutions.length == 0;
@@ -41,4 +41,3 @@ var WindowGeoByLine = (function (_super) {
     return WindowGeoByLine;
 }(polymer.Base));
 WindowGeoByLine.register();
-//# sourceMappingURL=window-geo-by-line.js.map

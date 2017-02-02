@@ -21,7 +21,7 @@ var WindowGeo = (function (_super) {
         this.dev = this.standalone ? window.passed.dev : App.isDev;
         this.geo = this.standalone ? new HaGeo(window.passed.geo, false, false) : geo;
         this.editing = typeof App == 'undefined' ? false : App.haUsers.user.canEdit(this.geo);
-        this.touchDevice = 'ontouchstart' in window || !!navigator.maxTouchPoints; //bind from MainApp instead, when converting from dynamically creating elements.
+        this.touchDevice = 'ontouchstart' in window || !!navigator.maxTouchPoints;
         var target = this.$.windowbasic;
         target.ondrop = function (e) {
             if (!_this.editing)
@@ -42,35 +42,16 @@ var WindowGeo = (function (_super) {
             event.stopPropagation();
             return false;
         };
-        //TODO: maybe... on mobile.....
-        //$(this.$.imageContainer).on('swipeleft', () => this.imageTap());
         if (typeof App != 'undefined')
             if (App.haGeos.firstGeoTour) {
                 App.haGeos.firstGeoTour.close();
                 App.haGeos.firstGeoTour = null;
             }
     }
-    //private contentToDelete: HaContent;
-    //@observe("geo.*")
-    //geoChanged(changeRecord: any) {
-    //    //alert('changed: ' + changeRecord.value);
-    //    if (changeRecord.path.indexOf('.') !== -1)
-    //        this.set('geo', this.geo);
-    //        //this.set(changeRecord.path, changeRecord.value);
-    //}
-    //@listen("add.paper-dropdown-open")
-    //addPaperDropdownOpen() {
-    //    this.$.addMenu.selected = null;
-    //}
-    //@listen("addToFavourites.tap")
     WindowGeo.prototype.tabTap = function (e) {
         var repeater = this.$$('#templateContentTabs');
         this.curContent = repeater.modelForElement(e.target).content;
     };
-    //@observe('curContent')
-    //curContentChanged() {
-    //    setTimeout(() => { this.$$('#tabMenu').notifyResize(); }, 0);
-    //}
     WindowGeo.prototype.togglePublishText = function (online) {
         return (online ? 'Afp' : 'P') + 'ublicér fortælling';
     };
@@ -110,13 +91,13 @@ var WindowGeo = (function (_super) {
         var ordering = this.contents.length == 0 ? 1 : Math.max.apply(Math, this.contents.map(function (o) { return o.ordering; })) + 1;
         var content = new HaContent({ geoid: this.geo.id, ordering: ordering, contenttypeid: 0, texts: [{ headline: e.detail, text1: '' }] });
         this.push('contents', content);
-        this.selectedTab = ordering; //this.contents.length;
+        this.selectedTab = ordering;
     };
     WindowGeo.prototype.addBiblioContentTap = function () {
-        var ordering = this.contents.length == 0 ? 1 : Math.max.apply(Math, this.contents.map(function (o) { return o.ordering; })) + 1; //TODO: same as above?
+        var ordering = this.contents.length == 0 ? 1 : Math.max.apply(Math, this.contents.map(function (o) { return o.ordering; })) + 1;
         var content = new HaContent({ geoid: this.geo.id, ordering: ordering, contenttypeid: 1, biblios: [{ cql: this.geo.title }] });
         this.push('contents', content);
-        this.selectedTab = ordering; //this.contents.length;
+        this.selectedTab = ordering;
     };
     WindowGeo.prototype.toggleAddContentSubmenu = function (e) {
         this.$$('#addContentDialog').open();
@@ -198,21 +179,6 @@ var WindowGeo = (function (_super) {
         this.$.windowbasic.close();
         App.haGeos.deleteGeo(this.geo);
     };
-    //addTagTap() {
-    //    this.addingTag = !this.addingTag;
-    //    if (!this.addingTag) {
-    //        App.mainMenu.panelSubject.haGeoServiceAwaitingTagSelect = null;
-    //        return;
-    //    }
-    //    App.mainMenu.drawerOpen = true;
-    //    App.mainMenu.showMenuSubjects = true;
-    //    App.mainMenu.panelSubject.haGeoServiceAwaitingTagSelect = this.$.haGeoService;
-    //    App.toast.show('Vælg fra listen');
-    //}
-    //removeTagTap(e) {
-    //    //this.splice('geo.tags2', this.geo.tags2.indexOf(e.model.tag), 1);
-    //    (<HaGeoService>this.$.haGeoService).removeTag(e.model.dataHost.dataHost.tag);
-    //}
     WindowGeo.prototype.reportTap = function (e) {
         this.$$('#reportDialog').open();
     };
@@ -265,17 +231,7 @@ var WindowGeo = (function (_super) {
         this.startUpload();
         this.fileUpload.uploadClick();
     };
-    //licens(): HaLicens {
-    //    return this.geo.licens;
-    //}
     WindowGeo.prototype.licensChanged = function (e) {
-        //    var curLicens = this.geo.licens;
-        //    if (curLicens) {
-        //        var tag = App.haTags.byId[curLicens.tagID];
-        //        this.splice('geo.tags', this.geo.tags.indexOf(tag), 1);
-        //    }
-        //    var tag = App.haTags.byId[e.detail.tagID];
-        //    this.push('geo.tags', tag)
         this.$.haGeoService.addTagById(e.detail.tagID, true, true);
     };
     WindowGeo.prototype.readMoreTapped = function () {
@@ -285,8 +241,6 @@ var WindowGeo = (function (_super) {
     WindowGeo.prototype.startUpload = function () {
         this.uploading = true;
         if (!this.fileUpload) {
-            //    $(this.fileUpload).css('display', 'flex');
-            //else {
             this.fileUpload = FileUpload.create(true, '*.jpg,*.png', 'target');
             this.listen(this.fileUpload, 'success', 'uploadSuccess');
             $(this.$.imageContainer).append(this.fileUpload);
@@ -294,30 +248,14 @@ var WindowGeo = (function (_super) {
     };
     WindowGeo.prototype.uploadSuccess = function (result) {
         this.uploading = false;
-        //$(this.fileUpload).css('display', 'none');
         this.push('geo.images', result.detail.image);
     };
-    //ready() { //standalone only
-    //    if (this.geo)
-    //        return;
-    //    this.standalone = true;
-    //    this.dev = (<any>window).passed.dev;
-    //    this.geo = new HaGeo((<any>window).passed.geo);
-    //}
-    //creator(user: HAUser, tags: any): string {
-    //    if (tags.length == 0)
-    //        return '';
-    //    return this.geo.creator;
-    //}
     WindowGeo.prototype.isProUser = function () {
         return typeof App == 'undefined' ? false : App.haUsers.user.isPro;
     };
     WindowGeo.prototype.isWriter = function () {
         return typeof App == 'undefined' ? false : App.haUsers.user.isWriter;
     };
-    //menuIcon(editing: boolean): string {
-    //    return editing ? 'more-vert' : 'add'
-    //}
     WindowGeo.prototype.notNull = function (object) {
         return !!object;
     };
@@ -445,4 +383,3 @@ var WindowGeo = (function (_super) {
     return WindowGeo;
 }(polymer.Base));
 WindowGeo.register();
-//# sourceMappingURL=window-geo.js.map

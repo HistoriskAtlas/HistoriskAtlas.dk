@@ -24,4 +24,3 @@ var WindowTermsOfUse = (function (_super) {
     return WindowTermsOfUse;
 }(polymer.Base));
 WindowTermsOfUse.register();
-//# sourceMappingURL=window-terms-of-use.js.map

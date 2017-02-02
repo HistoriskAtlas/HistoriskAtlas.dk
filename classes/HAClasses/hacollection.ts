@@ -157,6 +157,7 @@
     }
 
     public updateOrdering(indexStart: number, indexEnd: number) {
+
         if (indexStart > indexEnd) {
             var temp = indexStart;
             indexStart = indexEnd;
@@ -171,6 +172,15 @@
             };
             Services.update('collection_geo', data, (result) => {});
         }
+        //setTimeout(() => {
+        //    for (var i = indexStart; i <= indexEnd; i++) {
+        //        App.haCollections.updateIconStyle(this._geos[i]);
+        //    }
+        //}, 10)
+
+
+        //Services.update('collection_geo', { collectionid: this._id, geoid: this._geos[indexStart].id, ordering: indexStart }, (result) => { });
+        //Services.update('collection_geo', { collectionid: this._id, geoid: this._geos[indexEnd].id, ordering: indexEnd }, (result) => { });
     }
 
 }

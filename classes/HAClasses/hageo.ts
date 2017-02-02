@@ -15,6 +15,7 @@
     private inYear: boolean;
     public shown: boolean;
     private _isMoving: boolean;
+    private _isPartOfCurrentCollection: boolean;
     public userLayer: boolean;
 
     public icon: Icon;
@@ -272,7 +273,27 @@
         return this._isMoving;
     }
     public set isMoving(val: boolean) {
+        var beforeBelongs = this.belongsOnNonClusteredLayer;
         this._isMoving = val;
+        if (beforeBelongs != this.belongsOnNonClusteredLayer)
+            this.moveToLayer(val);
+    }
+
+    public get isPartOfCurrentCollection(): boolean {
+        return this._isPartOfCurrentCollection;
+    }
+    public set isPartOfCurrentCollection(val: boolean) {
+        var beforeBelongs = this.belongsOnNonClusteredLayer;
+        this._isPartOfCurrentCollection = val;
+        if (beforeBelongs != this.belongsOnNonClusteredLayer)
+            this.moveToLayer(val);
+    }
+
+    private get belongsOnNonClusteredLayer(): boolean {
+        return this._isMoving || this._isPartOfCurrentCollection;
+    }
+
+    private moveToLayer(val: boolean) {
         if (val) {
             if ((<any>IconLayer.source).getFeatures().indexOf(this.icon) > -1)
                 IconLayer.source.removeFeature(this.icon);
@@ -283,7 +304,6 @@
             this.icon.updateStyle();
             IconLayer.source.addFeature(this.icon);
         }
-        //IconLayer.updateShown();
     }
 
     public connectUser() {
