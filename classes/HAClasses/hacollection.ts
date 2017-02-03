@@ -8,11 +8,12 @@
     private _content: HaContent;
     //private maps: Array<HaGeo>;
     //private _geoIds: Array<number>;
+    public tags: Array<HaTag>;
     public static types: Array<string> = ['Kørsel', 'Cykling', 'Til fods']
 
     constructor(data: any) {
         this._geos = [];
-        //this._geoIds = [];
+        this.tags = [];
 
         if (!data)
             return;
@@ -23,7 +24,7 @@
         this._distance = data.distance;
         this._type = data.type;
 
-        //if (data.collection_geos)
+//if (data.collection_geos)
         //    for (var geoid of data.collection_geos) {
         //        var geo = App.haGeos.geos[geoid];
         //        if (geo)

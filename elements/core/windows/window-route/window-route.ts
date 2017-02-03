@@ -4,6 +4,16 @@ class WindowRoute extends polymer.Base implements polymer.Element {
     @property({ type: Object, notify: true })
     public route: HaCollection;
 
+    @property({ type: Array })
+    public subjects: Array<HaTag>;
+
+    @property({ type: Array })
+    public periods: Array<HaTag>;
+
+    @property({ type: Boolean, value: true })
+    public editing: boolean;
+
+
     @listen('windowbasic.closed') 
     windowBasicClosed() {
         this.route.saveDistance();
@@ -115,6 +125,13 @@ class WindowRoute extends polymer.Base implements polymer.Element {
     typeTap(e: any) {
         this.set('route.type', HaCollection.types.indexOf(e.model.item));
         this.$$('#paperMenuButtonType').close();
+    }
+
+    showPeriodTags(length: number, editing: boolean): boolean {
+        return editing || length > 0;
+    }
+    tagsService(): Tags {
+        return App.haCollections;
     }
 }
 

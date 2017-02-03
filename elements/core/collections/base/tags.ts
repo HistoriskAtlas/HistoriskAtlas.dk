@@ -9,18 +9,23 @@
     @property({ type: Array, notify: true })
     public institutions: Array<HaTag>;
 
+    @property({ type: Array, notify: true })
+    public destinations: Array<HaTag>;
+
     @property({ type: Object, notify: true })
     public licens: HaLicens;
 
     //public tagsById: Array<HaTag> = [];
 
-    private static categoryNames: Array<string> = [, , , 'institutions', , , , , , 'subjects', 'periods'];
+    private static categoryNames: Array<string> = [, , , 'institutions', , , , , 'destinations', 'subjects', 'periods'];
     private tagRelationName: string;
-    private tagRelationId: number;
+    //private tagRelationId: number;
+    private subProperty: string;
 
-    protected initTags(tagRelationName: string, tagRelationId: number) {
+    protected initTags(tagRelationName: string, /*tagRelationId: number, */subProperty?: string) {
         this.tagRelationName = tagRelationName;
-        this.tagRelationId = tagRelationId;
+        //this.tagRelationId = tagRelationId;
+        this.subProperty = subProperty;
         for (var categoryName of Tags.categoryNames)
             if (categoryName)
                 this.set(categoryName, [])
@@ -58,7 +63,7 @@
             this.push(Tags.categoryNames[tag.category], tag);
 
         if (save)
-            Services.insert('tag_' + this.tagRelationName, JSON.parse('{ "tagid": ' + tag.id + ', "' + this.tagRelationName + 'id": ' + this.tagRelationId + ' }'));
+            Services.insert('tag_' + this.propertyName(), JSON.parse('{ "tagid": ' + tag.id + ', "' + this.propertyName() + 'id": ' + this.propertyId() + ' }')); //this.tagRelationId
 
         return true;
     }
@@ -75,7 +80,14 @@
         if (Tags.categoryNames[tag.category])
             this.splice(Tags.categoryNames[tag.category], this[Tags.categoryNames[tag.category]].indexOf(tag), 1);
 
-        Services.delete('tag_' + this.tagRelationName, JSON.parse('{ "tagid": ' + tag.id + ', "' + this.tagRelationName + 'id": ' + this.tagRelationId + ' }'));
+        Services.delete('tag_' + this.propertyName(), JSON.parse('{ "tagid": ' + tag.id + ', "' + this.propertyName() + 'id": ' + this.propertyId() + ' }')); //this.tagRelationId
     }
 
+    private propertyName(): string {
+        return this.subProperty ? this.subProperty : this.tagRelationName
+    }
+
+    private propertyId(): number {
+        return (this.subProperty ? this[this.tagRelationName][this.subProperty] : this[this.tagRelationName]).id;
+    }
 }

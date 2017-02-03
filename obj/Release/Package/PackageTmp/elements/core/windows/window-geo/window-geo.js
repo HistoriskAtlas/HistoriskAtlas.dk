@@ -277,6 +277,9 @@ var WindowGeo = (function (_super) {
     WindowGeo.prototype.contentIsLast = function (ordering) {
         return ordering == this.contents.length;
     };
+    WindowGeo.prototype.tagsService = function () {
+        return this.$.haGeoService;
+    };
     __decorate([
         property({ type: Object }), 
         __metadata('design:type', Object)

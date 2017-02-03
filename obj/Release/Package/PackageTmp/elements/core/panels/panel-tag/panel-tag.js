@@ -43,9 +43,9 @@ var PanelTag = (function (_super) {
         e.model.set('subTag.selected', !e.model.subTag.selected);
     };
     PanelTag.prototype._tagTap = function (tag) {
-        if (this.haGeoServiceAwaitingTagSelect) {
-            if (this.haGeoServiceAwaitingTagSelect.addTag(tag, true, true))
-                this.haGeoServiceAwaitingTagSelect = null;
+        if (this.tagsServiceAwaitingTagSelect) {
+            if (this.tagsServiceAwaitingTagSelect.addTag(tag, true, true))
+                this.tagsServiceAwaitingTagSelect = null;
             else
                 App.toast.show('"' + tag.plurName + '" er allerede tilføjet. Vælg en anden.');
             return true;

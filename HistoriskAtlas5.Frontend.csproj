@@ -72,7 +72,9 @@
     <Content Include="elements\core\collections\ha-image\ha-image.html" />
     <Content Include="elements\core\icons\cc-icons\cc-icons.html" />
     <Content Include="elements\core\icons\ha-icons\ha-icons.html" />
+    <Content Include="elements\core\lists\tag-list-item\tag-list-item.html" />
     <Content Include="elements\core\lists\menu-item\menu-item.html" />
+    <Content Include="elements\writer\dialogs\dialog-tag-selection\dialog-tag-selection.html" />
     <Content Include="elements\writer\dialogs\dialog-route-selection\dialog-route-selection.html" />
     <Content Include="elements\writer\lists\geo-sortable-list\geo-sortable-list.html" />
     <Content Include="elements\core\lists\geo-list-item\geo-list-item.html" />
@@ -129,10 +131,11 @@
     <Content Include="elements\admin\windows\window-admin\panel-institution-admin\panel-institution-admin.html" />
     <Content Include="elements\admin\windows\window-admin\panel-user-admin\panel-user-admin.html" />
     <Content Include="elements\core\windows\window-geo\window-geo-add-content\window-geo-add-content.html" />
-    <Content Include="elements\core\windows\window-geo\window-geo-tag-list\window-geo-tag-list.html" />
+    <Content Include="elements\core\lists\horizontal-tag-list\horizontal-tag-list.html" />
     <Content Include="elements\admin\windows\window-admin\window-admin.html" />
     <Content Include="elements\editor\array-sort-selector\array-sort-selector.html" />
-    <Content Include="elements\writer\windows\window-geo-editorial\window-geo-editorial-panel-notes\window-geo-editorial-panel-notes.html" />
+    <Content Include="elements\writer\panels\panel-publication\panel-publication.html" />
+    <Content Include="elements\writer\panels\panel-editorial-notes\panel-editorial-notes.html" />
     <Content Include="elements\writer\windows\window-geo-editorial\window-geo-editorial.html" />
     <Content Include="elements\writer\windows\window-user-news\window-user-news.html" />
     <Content Include="elements\core\windows\window-terms-of-use\window-terms-of-use.html" />
@@ -475,7 +478,9 @@
     <TypeScriptCompile Include="elements\core\dialogs\dialog-text\dialog-text.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-image\ha-image.ts" />
     <TypeScriptCompile Include="elements\core\icons\licens-mark\licens-mark.ts" />
+    <TypeScriptCompile Include="elements\core\lists\tag-list-item\tag-list-item.ts" />
     <TypeScriptCompile Include="elements\core\lists\menu-item\menu-item.ts" />
+    <TypeScriptCompile Include="elements\writer\dialogs\dialog-tag-selection\dialog-tag-selection.ts" />
     <TypeScriptCompile Include="elements\writer\dialogs\dialog-route-selection\dialog-route-selection.ts" />
     <TypeScriptCompile Include="elements\writer\lists\geo-sortable-list\geo-sortable-list.ts" />
     <TypeScriptCompile Include="elements\core\lists\geo-list-item\geo-list-item.ts" />
@@ -526,10 +531,11 @@
     <TypeScriptCompile Include="elements\admin\windows\window-admin\panel-institution-admin\panel-institution-admin.ts" />
     <TypeScriptCompile Include="elements\admin\windows\window-admin\panel-user-admin\panel-user-admin.ts" />
     <TypeScriptCompile Include="elements\core\windows\window-geo\window-geo-add-content\window-geo-add-content.ts" />
-    <TypeScriptCompile Include="elements\core\windows\window-geo\window-geo-tag-list\window-geo-tag-list.ts" />
+    <TypeScriptCompile Include="elements\core\lists\horizontal-tag-list\horizontal-tag-list.ts" />
     <TypeScriptCompile Include="elements\admin\windows\window-admin\window-admin.ts" />
     <TypeScriptCompile Include="elements\editor\array-sort-selector\array-sort-selector.ts" />
-    <TypeScriptCompile Include="elements\writer\windows\window-geo-editorial\window-geo-editorial-panel-notes\window-geo-editorial-panel-notes.ts" />
+    <TypeScriptCompile Include="elements\writer\panels\panel-publication\panel-publication.ts" />
+    <TypeScriptCompile Include="elements\writer\panels\panel-editorial-notes\panel-editorial-notes.ts" />
     <TypeScriptCompile Include="elements\writer\windows\window-geo-editorial\window-geo-editorial.ts" />
     <TypeScriptCompile Include="elements\writer\windows\window-user-news\window-user-news.ts" />
     <TypeScriptCompile Include="elements\core\windows\window-terms-of-use\window-terms-of-use.ts" />

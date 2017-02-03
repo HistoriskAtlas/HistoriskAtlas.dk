@@ -1,5 +1,5 @@
 ﻿@component("ha-collections")
-class HaCollections extends polymer.Base implements polymer.Element {
+class HaCollections extends Tags implements polymer.Element {
 
     @property({ type: Array, notify: true })
     public collections: Array<HaCollection> = [];
@@ -60,6 +60,8 @@ class HaCollections extends polymer.Base implements polymer.Element {
         if (!newVal)
             return;
 
+        this.initTags('collection', /*this.collection.id,*/ 'content');
+
         for (var geo of newVal.geos)
             geo.isPartOfCurrentCollection = true;
 
@@ -67,8 +69,11 @@ class HaCollections extends polymer.Base implements polymer.Element {
 
         if (!this.collection.content) {
             Services.get('collection', { schema: '{collection:[' + ContentViewer.contentSchema + ']}', collectionid: this.collection.id }, (result) => { //,{collection_geos:[{collapse:geoid}]}
-                if (result.data[0].content) 
+                if (result.data[0].content) {
                     this.set('collection.content', new HaContent(result.data[0].content))
+                    for (var tagid of result.data[0].content.tag_contents)
+                        this.addTag(App.haTags.byId[tagid], true, false);
+                }
                 else {
                     var content = new HaContent({ contenttypeid: 0, ordering: 0, texts: [{ headline: '', text1: '' }] });
                     this.set('collection.content', content);

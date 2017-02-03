@@ -16,7 +16,7 @@ class HaImageService extends Tags implements polymer.Element {
 
     @observe("image")
     imageChanged() {
-        this.initTags('image', this.image.id);
+        this.initTags('image'/*, this.image.id*/);
     }
     
     @observe("image.text")

@@ -21,7 +21,7 @@ class HaGeoService extends Tags implements polymer.Element {
 
     @observe("geo")
     geoChanged(newVal: number, oldVal: number) {
-        this.initTags('geo', this.geo.id);
+        this.initTags('geo'/*, this.geo.id*/);
         if (!this.geo.id)
             return;
         this.ignoreChanges = true;
@@ -85,7 +85,8 @@ class HaGeoService extends Tags implements polymer.Element {
         this.geo.primaryTag = this.geo.getNewPrimaryTag;
         if (oldPrimaryTag != this.geo.primaryTag) {
             this.geo.icon.updateStyle();
-            Services.update('geo', { primarytagid: this.geo.primaryTag.id, geoid: this.geo.id });
+            if (this.geo.primaryTag) //TODO: Fix bug on API... how to set value to NULL?.......................................
+                Services.update('geo', { primarytagid: this.geo.primaryTag.id, geoid: this.geo.id });
         }
         
         //for (var indexSplice of change.indexSplices) {

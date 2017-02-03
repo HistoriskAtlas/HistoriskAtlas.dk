@@ -1,6 +1,20 @@
 ﻿<dom-module id="window-route">
     <template>
         <style>
+            .content {
+                margin: 0px 17px 17px 17px;
+                font-size: 14px;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+            .content > * {
+                flex-shrink: 0;
+            }
+            list-auto-suggest {
+                flex-grow: 1;
+                flex-shrink: 1 !important;
+            }
             .info-line {
                 font-size: small;
                 font-style: italic;
@@ -29,7 +43,7 @@
                 </paper-menu-button>
             </div>
 
-            <div style="margin: 0px 17px 17px 17px; font-size:14px">
+            <div class="content">
                 <content-viewer content="{{route.content}}" editing></content-viewer>
                 <div class="info-line">
                     <paper-menu-button id="paperMenuButtonType" horizontal-align="right">
@@ -52,6 +66,10 @@
                     <paper-fab icon="add" mini class="HAPrimColor add-button"></paper-fab>
                     <paper-fab icon="close" mini class="HAPrimColor remove-button"></paper-fab>
                 </list-auto-suggest>
+                <horizontal-tag-list title="EMNER" menu="Subject" tags="[[subjects]]" editing="[[editing]]" tags-service="[[tagsService()]]"></horizontal-tag-list>
+                <template is="dom-if" if="[[showPeriodTags(periods.length,editing)]]">
+                    <horizontal-tag-list title="PERIODER" menu="Period" tags="[[periods]]" editing="[[editing]]" tags-service="[[tagsService()]]"></horizontal-tag-list>
+                </template>
             </div>
         </window-basic>
     </template>

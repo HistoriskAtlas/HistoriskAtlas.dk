@@ -12,58 +12,62 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var WindowGeoTagList = (function (_super) {
-    __extends(WindowGeoTagList, _super);
-    function WindowGeoTagList() {
+var HorizontalTagList = (function (_super) {
+    __extends(HorizontalTagList, _super);
+    function HorizontalTagList() {
         _super.apply(this, arguments);
     }
-    WindowGeoTagList.prototype.addTagTap = function () {
+    HorizontalTagList.prototype.addTagTap = function () {
         this.addingTag = !this.addingTag;
         if (!this.addingTag) {
-            App.mainMenu['panel' + this.menu].haGeoServiceAwaitingTagSelect = null;
+            App.mainMenu['panel' + this.menu].tagsServiceAwaitingTagSelect = null;
             return;
         }
         App.mainMenu.drawerOpen = true;
         App.mainMenu['showMenu' + this.menu + 's'] = true;
-        App.mainMenu['panel' + this.menu].haGeoServiceAwaitingTagSelect = this.domHost.$.haGeoService;
+        App.mainMenu['panel' + this.menu].tagsServiceAwaitingTagSelect = this.tagsService;
         App.toast.show('Vælg fra listen');
     };
-    WindowGeoTagList.prototype.removeTagTap = function (e) {
-        this.domHost.$.haGeoService.removeTag(e.model.dataHost.dataHost.tag);
+    HorizontalTagList.prototype.removeTagTap = function (e) {
+        this.tagsService.removeTag(e.model.dataHost.dataHost.tag);
     };
-    WindowGeoTagList.prototype.tagsLengthChanged = function () {
+    HorizontalTagList.prototype.tagsLengthChanged = function () {
         this.addingTag = false;
     };
     __decorate([
         property({ type: String }), 
         __metadata('design:type', String)
-    ], WindowGeoTagList.prototype, "title", void 0);
+    ], HorizontalTagList.prototype, "title", void 0);
     __decorate([
         property({ type: String }), 
         __metadata('design:type', String)
-    ], WindowGeoTagList.prototype, "menu", void 0);
+    ], HorizontalTagList.prototype, "menu", void 0);
     __decorate([
         property({ type: Array }), 
         __metadata('design:type', Array)
-    ], WindowGeoTagList.prototype, "tags", void 0);
+    ], HorizontalTagList.prototype, "tags", void 0);
     __decorate([
         property({ type: Boolean }), 
         __metadata('design:type', Boolean)
-    ], WindowGeoTagList.prototype, "editing", void 0);
+    ], HorizontalTagList.prototype, "editing", void 0);
     __decorate([
         property({ type: Boolean, value: false }), 
         __metadata('design:type', Boolean)
-    ], WindowGeoTagList.prototype, "addingTag", void 0);
+    ], HorizontalTagList.prototype, "addingTag", void 0);
+    __decorate([
+        property({ type: Object }), 
+        __metadata('design:type', Tags)
+    ], HorizontalTagList.prototype, "tagsService", void 0);
     __decorate([
         observe('tags.length'), 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', []), 
         __metadata('design:returntype', void 0)
-    ], WindowGeoTagList.prototype, "tagsLengthChanged", null);
-    WindowGeoTagList = __decorate([
-        component("window-geo-tag-list"), 
+    ], HorizontalTagList.prototype, "tagsLengthChanged", null);
+    HorizontalTagList = __decorate([
+        component("horizontal-tag-list"), 
         __metadata('design:paramtypes', [])
-    ], WindowGeoTagList);
-    return WindowGeoTagList;
+    ], HorizontalTagList);
+    return HorizontalTagList;
 }(polymer.Base));
-WindowGeoTagList.register();
+HorizontalTagList.register();

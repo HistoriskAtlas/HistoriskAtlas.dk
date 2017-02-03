@@ -12,28 +12,28 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var WindowGeoEditorialPanelNotes = (function (_super) {
-    __extends(WindowGeoEditorialPanelNotes, _super);
-    function WindowGeoEditorialPanelNotes() {
+var PanelEditorialNotes = (function (_super) {
+    __extends(PanelEditorialNotes, _super);
+    function PanelEditorialNotes() {
         _super.apply(this, arguments);
     }
-    WindowGeoEditorialPanelNotes.prototype.sort = function (a, b) {
+    PanelEditorialNotes.prototype.sort = function (a, b) {
         return a.created > b.created ? -1 : 1;
     };
-    WindowGeoEditorialPanelNotes.prototype.createdTime = function (created) {
+    PanelEditorialNotes.prototype.createdTime = function (created) {
         return Common.shortTime(created);
     };
-    WindowGeoEditorialPanelNotes.prototype.createdDate = function (created) {
+    PanelEditorialNotes.prototype.createdDate = function (created) {
         return Common.shortDate(created);
     };
     __decorate([
         property({ type: Object }), 
         __metadata('design:type', HaContent)
-    ], WindowGeoEditorialPanelNotes.prototype, "content", void 0);
-    WindowGeoEditorialPanelNotes = __decorate([
-        component("window-geo-editorial-panel-notes"), 
+    ], PanelEditorialNotes.prototype, "content", void 0);
+    PanelEditorialNotes = __decorate([
+        component("panel-editorial-notes"), 
         __metadata('design:paramtypes', [])
-    ], WindowGeoEditorialPanelNotes);
-    return WindowGeoEditorialPanelNotes;
+    ], PanelEditorialNotes);
+    return PanelEditorialNotes;
 }(polymer.Base));
-WindowGeoEditorialPanelNotes.register();
+PanelEditorialNotes.register();

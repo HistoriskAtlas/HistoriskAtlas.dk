@@ -17,7 +17,7 @@ var ContentViewer = (function (_super) {
     function ContentViewer() {
         _super.apply(this, arguments);
     }
-    ContentViewer.contentSchema = '{content:[id,geoid,ordering,deleted,contenttypeid,{texts:[empty,id,created,{user:[firstname,lastname]},headline,text1]},{biblios:[empty,id,created,cql]},{externalcontent:[empty,id,created,externalsourceid,text,link]}]}';
+    ContentViewer.contentSchema = '{content:[id,geoid,ordering,deleted,contenttypeid,{texts:[empty,id,created,{user:[firstname,lastname]},headline,text1]},{biblios:[empty,id,created,cql]},{externalcontent:[empty,id,created,externalsourceid,text,link]},{tag_contents:[{collapse:tagid}]}]}';
     __decorate([
         property({ type: Object, notify: true }), 
         __metadata('design:type', HaContent)

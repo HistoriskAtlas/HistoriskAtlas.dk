@@ -67,6 +67,7 @@ var HaCollections = (function (_super) {
         }
         if (!newVal)
             return;
+        this.initTags('collection', 'content');
         for (var _b = 0, _c = newVal.geos; _b < _c.length; _b++) {
             var geo = _c[_b];
             geo.isPartOfCurrentCollection = true;
@@ -74,8 +75,13 @@ var HaCollections = (function (_super) {
         App.map.showRouteLayer();
         if (!this.collection.content) {
             Services.get('collection', { schema: '{collection:[' + ContentViewer.contentSchema + ']}', collectionid: this.collection.id }, function (result) {
-                if (result.data[0].content)
+                if (result.data[0].content) {
                     _this.set('collection.content', new HaContent(result.data[0].content));
+                    for (var _i = 0, _a = result.data[0].content.tag_contents; _i < _a.length; _i++) {
+                        var tagid = _a[_i];
+                        _this.addTag(App.haTags.byId[tagid], true, false);
+                    }
+                }
                 else {
                     var content = new HaContent({ contenttypeid: 0, ordering: 0, texts: [{ headline: '', text1: '' }] });
                     _this.set('collection.content', content);
@@ -214,5 +220,5 @@ var HaCollections = (function (_super) {
         __metadata('design:paramtypes', [])
     ], HaCollections);
     return HaCollections;
-}(polymer.Base));
+}(Tags));
 HaCollections.register();

@@ -10,7 +10,7 @@ class PanelTag extends polymer.Base implements polymer.Element {
     //public isChildOf(subTag: HaTag, tag: HaTag): boolean {
     //    return subTag.isChildOf(tag);
     //}
-    public haGeoServiceAwaitingTagSelect: HaGeoService;
+    public tagsServiceAwaitingTagSelect: Tags;
 
     public includeTag(tag: HaTag): boolean {
         return tag.isTop && tag.category == this.tagCategory;
@@ -47,9 +47,9 @@ class PanelTag extends polymer.Base implements polymer.Element {
     }
 
     private _tagTap(tag: HaTag): boolean {
-        if (this.haGeoServiceAwaitingTagSelect) {
-            if (this.haGeoServiceAwaitingTagSelect.addTag(tag, true, true))
-                this.haGeoServiceAwaitingTagSelect = null;
+        if (this.tagsServiceAwaitingTagSelect) {
+            if (this.tagsServiceAwaitingTagSelect.addTag(tag, true, true))
+                this.tagsServiceAwaitingTagSelect = null;
             else
                 App.toast.show('"' + tag.plurName + '" er allerede tilføjet. Vælg en anden.')
             return true;

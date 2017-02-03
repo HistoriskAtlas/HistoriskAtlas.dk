@@ -18,7 +18,7 @@ var HaImageService = (function (_super) {
         _super.apply(this, arguments);
     }
     HaImageService.prototype.imageChanged = function () {
-        this.initTags('image', this.image.id);
+        this.initTags('image');
     };
     HaImageService.prototype.textChanged = function () {
         Services.update('image', { id: this.image.id, text: this.image.text });

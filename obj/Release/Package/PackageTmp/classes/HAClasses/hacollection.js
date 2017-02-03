@@ -1,6 +1,7 @@
 var HaCollection = (function () {
     function HaCollection(data) {
         this._geos = [];
+        this.tags = [];
         if (!data)
             return;
         this._id = data.collectionid;

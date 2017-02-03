@@ -22,7 +22,7 @@ var HaGeoService = (function (_super) {
         this.$.ajax.url = Common.api + 'geo.json';
     };
     HaGeoService.prototype.geoChanged = function (newVal, oldVal) {
-        this.initTags('geo', this.geo.id);
+        this.initTags('geo');
         if (!this.geo.id)
             return;
         this.ignoreChanges = true;
@@ -72,7 +72,8 @@ var HaGeoService = (function (_super) {
         this.geo.primaryTag = this.geo.getNewPrimaryTag;
         if (oldPrimaryTag != this.geo.primaryTag) {
             this.geo.icon.updateStyle();
-            Services.update('geo', { primarytagid: this.geo.primaryTag.id, geoid: this.geo.id });
+            if (this.geo.primaryTag)
+                Services.update('geo', { primarytagid: this.geo.primaryTag.id, geoid: this.geo.id });
         }
     };
     HaGeoService.prototype.handleResponse = function () {

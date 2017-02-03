@@ -119,7 +119,7 @@
         }
     </style>
     <template>
-        <ha-geo id="haGeoService" geo="{{geo}}" editing="[[editing]]" subjects="{{subjects}}" periods="{{periods}}" institutions="{{institutions}}" licens="{{licens}}"></ha-geo>
+        <ha-geo id="haGeoService" geo="{{geo}}" editing="[[editing]]" subjects="{{subjects}}" periods="{{periods}}" institutions="{{institutions}}" destinations="{{destinations}}" licens="{{licens}}"></ha-geo>
         <ha-contents geo="[[geo]]" contents="{{contents}}" editorial-content="{{editorialContent}}"></ha-contents>
         <template is="dom-if" if="[[standalone]]">
             <ha-licenses></ha-licenses>
@@ -233,9 +233,9 @@
                         <div style="flex-grow:1"></div>
                         <div class="content tags">
 
-                            <window-geo-tag-list title="EMNER" menu="Subject" tags="[[subjects]]" editing="[[editing]]"></window-geo-tag-list>
+                            <horizontal-tag-list title="EMNER" menu="Subject" tags="[[subjects]]" editing="[[editing]]" tags-service="[[tagsService()]]"></horizontal-tag-list>
                             <template is="dom-if" if="[[showPeriodTags(periods.length,editing)]]">
-                                <window-geo-tag-list title="PERIODER" menu="Period" tags="[[periods]]" editing="[[editing]]"></window-geo-tag-list>
+                                <horizontal-tag-list title="PERIODER" menu="Period" tags="[[periods]]" editing="[[editing]]" tags-service="[[tagsService()]]"></horizontal-tag-list>
                             </template>
 
                         </div>
@@ -284,7 +284,7 @@
         </template>-->
 
         <template is="dom-if" if="[[windowEditorialShown]]" restamp>
-            <window-geo-editorial geo="{{geo}}" content="{{editorialContent}}" on-closed="windowEditorialClosed"></window-geo-editorial>
+            <window-geo-editorial geo="{{geo}}" content="{{editorialContent}}" destinations="{{destinations}}" tags-service="[[tagsService()]]" on-closed="windowEditorialClosed"></window-geo-editorial>
         </template>
     
     </template>

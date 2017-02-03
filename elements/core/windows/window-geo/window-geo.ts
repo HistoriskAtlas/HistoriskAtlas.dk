@@ -424,6 +424,9 @@ class WindowGeo extends polymer.Base implements polymer.Element {
     contentIsLast(ordering: number) {
         return ordering == this.contents.length;
     }
+    tagsService(): Tags {
+        return this.$.haGeoService;
+    }
 }
 
 WindowGeo.register();

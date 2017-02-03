@@ -66,10 +66,28 @@ var WindowRoute = (function (_super) {
         this.set('route.type', HaCollection.types.indexOf(e.model.item));
         this.$$('#paperMenuButtonType').close();
     };
+    WindowRoute.prototype.showPeriodTags = function (length, editing) {
+        return editing || length > 0;
+    };
+    WindowRoute.prototype.tagsService = function () {
+        return App.haCollections;
+    };
     __decorate([
         property({ type: Object, notify: true }), 
         __metadata('design:type', HaCollection)
     ], WindowRoute.prototype, "route", void 0);
+    __decorate([
+        property({ type: Array }), 
+        __metadata('design:type', Array)
+    ], WindowRoute.prototype, "subjects", void 0);
+    __decorate([
+        property({ type: Array }), 
+        __metadata('design:type', Array)
+    ], WindowRoute.prototype, "periods", void 0);
+    __decorate([
+        property({ type: Boolean, value: true }), 
+        __metadata('design:type', Boolean)
+    ], WindowRoute.prototype, "editing", void 0);
     __decorate([
         listen('windowbasic.closed'), 
         __metadata('design:type', Function), 

@@ -17,9 +17,9 @@ var Tags = (function (_super) {
     function Tags() {
         _super.apply(this, arguments);
     }
-    Tags.prototype.initTags = function (tagRelationName, tagRelationId) {
+    Tags.prototype.initTags = function (tagRelationName, subProperty) {
         this.tagRelationName = tagRelationName;
-        this.tagRelationId = tagRelationId;
+        this.subProperty = subProperty;
         for (var _i = 0, _a = Tags.categoryNames; _i < _a.length; _i++) {
             var categoryName = _a[_i];
             if (categoryName)
@@ -58,7 +58,7 @@ var Tags = (function (_super) {
         if (Tags.categoryNames[tag.category])
             this.push(Tags.categoryNames[tag.category], tag);
         if (save)
-            Services.insert('tag_' + this.tagRelationName, JSON.parse('{ "tagid": ' + tag.id + ', "' + this.tagRelationName + 'id": ' + this.tagRelationId + ' }'));
+            Services.insert('tag_' + this.propertyName(), JSON.parse('{ "tagid": ' + tag.id + ', "' + this.propertyName() + 'id": ' + this.propertyId() + ' }'));
         return true;
     };
     Tags.prototype.removeTagById = function (tagId) {
@@ -74,9 +74,15 @@ var Tags = (function (_super) {
         this.splice(this.tagRelationName + '.tags', this[this.tagRelationName].tags.indexOf(tag), 1);
         if (Tags.categoryNames[tag.category])
             this.splice(Tags.categoryNames[tag.category], this[Tags.categoryNames[tag.category]].indexOf(tag), 1);
-        Services.delete('tag_' + this.tagRelationName, JSON.parse('{ "tagid": ' + tag.id + ', "' + this.tagRelationName + 'id": ' + this.tagRelationId + ' }'));
+        Services.delete('tag_' + this.propertyName(), JSON.parse('{ "tagid": ' + tag.id + ', "' + this.propertyName() + 'id": ' + this.propertyId() + ' }'));
     };
-    Tags.categoryNames = [, , , 'institutions', , , , , , 'subjects', 'periods'];
+    Tags.prototype.propertyName = function () {
+        return this.subProperty ? this.subProperty : this.tagRelationName;
+    };
+    Tags.prototype.propertyId = function () {
+        return (this.subProperty ? this[this.tagRelationName][this.subProperty] : this[this.tagRelationName]).id;
+    };
+    Tags.categoryNames = [, , , 'institutions', , , , , 'destinations', 'subjects', 'periods'];
     __decorate([
         property({ type: Array, notify: true }), 
         __metadata('design:type', Array)
@@ -89,6 +95,10 @@ var Tags = (function (_super) {
         property({ type: Array, notify: true }), 
         __metadata('design:type', Array)
     ], Tags.prototype, "institutions", void 0);
+    __decorate([
+        property({ type: Array, notify: true }), 
+        __metadata('design:type', Array)
+    ], Tags.prototype, "destinations", void 0);
     __decorate([
         property({ type: Object, notify: true }), 
         __metadata('design:type', HaLicens)

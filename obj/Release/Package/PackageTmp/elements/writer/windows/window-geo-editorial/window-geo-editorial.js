@@ -26,9 +26,17 @@ var WindowGeoEditorial = (function (_super) {
         __metadata('design:type', HaGeo)
     ], WindowGeoEditorial.prototype, "geo", void 0);
     __decorate([
+        property({ type: Array, notify: true }), 
+        __metadata('design:type', Array)
+    ], WindowGeoEditorial.prototype, "destinations", void 0);
+    __decorate([
         property({ type: Object, notify: true }), 
         __metadata('design:type', HaContent)
     ], WindowGeoEditorial.prototype, "content", void 0);
+    __decorate([
+        property({ type: Object }), 
+        __metadata('design:type', Tags)
+    ], WindowGeoEditorial.prototype, "tagsService", void 0);
     WindowGeoEditorial = __decorate([
         component("window-geo-editorial"), 
         __metadata('design:paramtypes', [])
