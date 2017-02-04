@@ -13,6 +13,11 @@ class WindowRoute extends polymer.Base implements polymer.Element {
     @property({ type: Boolean, value: true })
     public editing: boolean;
 
+    @property({ type: Boolean, value: false })
+    public windowEditorialShown: boolean;
+
+    @property({ type: Array, notify: true })
+    public destinations: Array<HaTag>;
 
     @listen('windowbasic.closed') 
     windowBasicClosed() {
@@ -23,6 +28,13 @@ class WindowRoute extends polymer.Base implements polymer.Element {
 
     renameTap() {
         Common.dom.append(DialogText.create('Angiv ny titel på rute', (title) => this.set('route.title', title)));
+    }
+
+    editorialTap() {
+        this.windowEditorialShown = !this.windowEditorialShown;
+    }
+    windowEditorialClosed() {
+        this.windowEditorialShown = false;
     }
 
     //@observe('route')

@@ -25,6 +25,12 @@ var WindowRoute = (function (_super) {
         var _this = this;
         Common.dom.append(DialogText.create('Angiv ny titel på rute', function (title) { return _this.set('route.title', title); }));
     };
+    WindowRoute.prototype.editorialTap = function () {
+        this.windowEditorialShown = !this.windowEditorialShown;
+    };
+    WindowRoute.prototype.windowEditorialClosed = function () {
+        this.windowEditorialShown = false;
+    };
     WindowRoute.prototype.getAutosuggestSchema = function (geos) {
         var existingIds = [];
         for (var _i = 0, geos_1 = geos; _i < geos_1.length; _i++) {
@@ -88,6 +94,14 @@ var WindowRoute = (function (_super) {
         property({ type: Boolean, value: true }), 
         __metadata('design:type', Boolean)
     ], WindowRoute.prototype, "editing", void 0);
+    __decorate([
+        property({ type: Boolean, value: false }), 
+        __metadata('design:type', Boolean)
+    ], WindowRoute.prototype, "windowEditorialShown", void 0);
+    __decorate([
+        property({ type: Array, notify: true }), 
+        __metadata('design:type', Array)
+    ], WindowRoute.prototype, "destinations", void 0);
     __decorate([
         listen('windowbasic.closed'), 
         __metadata('design:type', Function), 

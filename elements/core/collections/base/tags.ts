@@ -80,7 +80,7 @@
         if (Tags.categoryNames[tag.category])
             this.splice(Tags.categoryNames[tag.category], this[Tags.categoryNames[tag.category]].indexOf(tag), 1);
 
-        Services.delete('tag_' + this.propertyName(), JSON.parse('{ "tagid": ' + tag.id + ', "' + this.propertyName() + 'id": ' + this.propertyId() + ' }')); //this.tagRelationId
+        Services.delete('tag_' + this.propertyName(), JSON.parse('{ "tagid": ' + tag.id + ', "' + this.propertyName() + 'id": ' + this.propertyId() + ', "deletemode": "permanent" }')); //this.tagRelationId
     }
 
     private propertyName(): string {

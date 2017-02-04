@@ -206,7 +206,7 @@
         <ha-regions type="[[regionTypeID]]"></ha-regions>
         <ha-users user="{{user}}"></ha-users>
         <ha-digdag digdags="{{digdags}}"></ha-digdag>
-        <ha-collections collections="{{collections}}" collection="{{collection}}" subjects="{{collectionSubjects}}" periods="{{collectionPeriods}}" institutions="{{collectionInstitutions}}" licens="{{collectionLicens}}"></ha-collections>
+        <ha-collections collections="{{collections}}" collection="{{collection}}" subjects="{{collectionSubjects}}" periods="{{collectionPeriods}}" institutions="{{collectionInstitutions}}" destinations="{{collectionDestinations}}"  licens="{{collectionLicens}}"></ha-collections>
         <ha-licenses></ha-licenses>
 
         <iron-media-query query-matches="{{narrow}}" query="(max-width:640px)"></iron-media-query>
@@ -324,7 +324,7 @@
         </template>
         
         <template is="dom-if" if="[[collection]]" restamp>
-            <window-route route="{{collection}}" subjects="[[collectionSubjects]]" periods="[[collectionPeriods]]"></window-route>
+            <window-route route="{{collection}}" subjects="[[collectionSubjects]]" periods="[[collectionPeriods]]" destinations="[[collectionDestinations]]"></window-route>
         </template>
 
     </template>

@@ -39,6 +39,7 @@
                     <paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>
                     <paper-menu class="dropdown-content">
                         <menu-item on-tap="renameTap">Omdøb</menu-item>
+                        <menu-item on-tap="editorialTap">Redaktion</menu-item>
                     </paper-menu>
                 </paper-menu-button>
             </div>
@@ -72,5 +73,10 @@
                 </template>
             </div>
         </window-basic>
+
+        <template is="dom-if" if="[[windowEditorialShown]]" restamp>
+            <window-route-editorial destinations="{{destinations}}" tags-service="[[tagsService()]]" on-closed="windowEditorialClosed"></window-route-editorial>
+        </template>
+
     </template>
 </dom-module>

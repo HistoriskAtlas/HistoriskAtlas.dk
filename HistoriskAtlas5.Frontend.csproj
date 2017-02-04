@@ -136,6 +136,7 @@
     <Content Include="elements\editor\array-sort-selector\array-sort-selector.html" />
     <Content Include="elements\writer\panels\panel-publication\panel-publication.html" />
     <Content Include="elements\writer\panels\panel-editorial-notes\panel-editorial-notes.html" />
+    <Content Include="elements\writer\windows\window-route-editorial\window-route-editorial.html" />
     <Content Include="elements\writer\windows\window-geo-editorial\window-geo-editorial.html" />
     <Content Include="elements\writer\windows\window-user-news\window-user-news.html" />
     <Content Include="elements\core\windows\window-terms-of-use\window-terms-of-use.html" />
@@ -536,6 +537,7 @@
     <TypeScriptCompile Include="elements\editor\array-sort-selector\array-sort-selector.ts" />
     <TypeScriptCompile Include="elements\writer\panels\panel-publication\panel-publication.ts" />
     <TypeScriptCompile Include="elements\writer\panels\panel-editorial-notes\panel-editorial-notes.ts" />
+    <TypeScriptCompile Include="elements\writer\windows\window-route-editorial\window-route-editorial.ts" />
     <TypeScriptCompile Include="elements\writer\windows\window-geo-editorial\window-geo-editorial.ts" />
     <TypeScriptCompile Include="elements\writer\windows\window-user-news\window-user-news.ts" />
     <TypeScriptCompile Include="elements\core\windows\window-terms-of-use\window-terms-of-use.ts" />
