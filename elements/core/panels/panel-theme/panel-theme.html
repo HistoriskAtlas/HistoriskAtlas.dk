@@ -59,12 +59,10 @@
 
                     <content-viewer content="[[newHaContent(item.content)]]"></content-viewer>
 
+                    <collection-list top-levels="{{routeTopLevels}}" collections="{{collections}}"></collection-list>
+
                     <template is="dom-if" if="[[isHoD2017(item)]]">
-                        <div style="margin-left: 20px; margin-bottom:100px; background-color:transparent !important" class="HAInvertedPrimColor">
-                            <div>Landsdækkende rutenet</div>
-                            <div>Vandrehistorier</div>
-                            <div>Opret din egen rute</div>
-                        </div>
+                        <div style="margin-top: 10px; margin-left: 30px; font-size: 13px;">Opret din egen rute</div>
                     </template>
 
                 </main-menu-item>

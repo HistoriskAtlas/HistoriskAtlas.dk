@@ -1,0 +1,38 @@
+﻿<dom-module id="collection-list-item">
+    <style>
+        .listitem {
+            display: flex;
+            align-items: center;
+            border-bottom: solid 1px;
+            border-bottom-color: #ececec; /*TODO: How to make generic reference in dynamically created component?*/
+            font-size: 13px;
+            height: 32px; /*was 25px*/
+            cursor: pointer;
+        }
+        .icon {
+            width: 25px;
+            /*margin-right: 10px;*/
+            display: flex;
+            justify-content: center;
+            color: #005D9A;
+
+            padding-left:20px;
+        }
+        .listitem[offline] > .icon {
+            opacity: 0.5;
+        }
+        span.title {
+            flex-grow: 1;
+        }
+        span.distance {
+            padding-right: 8px;
+        }
+    </style>
+    <template>
+        <div class="listitem light-gray-border" offline$="[[!collection.online]]">
+            <span class="icon"><iron-icon icon="timeline"></span>
+            <span class="title">[[collection.title]]</span>
+            <span class="distance">[[formatDistance(collection.distance)]]</span>
+        </div>
+    </template>
+</dom-module>

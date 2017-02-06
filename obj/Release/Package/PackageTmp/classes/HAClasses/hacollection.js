@@ -6,9 +6,11 @@ var HaCollection = (function () {
             return;
         this._id = data.collectionid;
         this._title = data.title;
+        this._online = data.online;
         this._ugc = data.ugc;
         this._distance = data.distance;
         this._type = data.type;
+        this._userid = data.userid;
     }
     Object.defineProperty(HaCollection.prototype, "id", {
         get: function () {
@@ -23,6 +25,16 @@ var HaCollection = (function () {
         },
         set: function (val) {
             this._title = val;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(HaCollection.prototype, "online", {
+        get: function () {
+            return this._online;
+        },
+        set: function (val) {
+            this._online = val;
         },
         enumerable: true,
         configurable: true
@@ -67,6 +79,13 @@ var HaCollection = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(HaCollection.prototype, "userid", {
+        get: function () {
+            return this._userid;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(HaCollection.prototype, "geos", {
         get: function () {
             return this._geos;
@@ -91,6 +110,7 @@ var HaCollection = (function () {
         }
         else {
             data.userid = App.haUsers.user.id;
+            data.ugc = !App.haUsers.user.isPro;
             Services.insert('collection', data, function (result) {
                 _this._id = result.data[0].collectionid;
                 if (callback)
@@ -101,11 +121,10 @@ var HaCollection = (function () {
     HaCollection.prototype.saveNewGeo = function (geo) {
         Services.insert('collection_geo', { collectionid: this._id, geoid: geo.id, ordering: this.geos.indexOf(geo) }, function (result) { });
     };
-    HaCollection.prototype.saveDistance = function () {
-        Services.update('collection', { collectionid: this._id, distance: this._distance }, function (result) { });
-    };
-    HaCollection.prototype.saveTitle = function () {
-        Services.update('collection', { collectionid: this._id, title: this._title }, function (result) { });
+    HaCollection.prototype.saveProp = function (prop) {
+        var data = { collectionid: this._id };
+        data[prop] = this['_' + prop];
+        Services.update('collection', data, function (result) { });
     };
     HaCollection.prototype.removeGeo = function (geo) {
         var data = {

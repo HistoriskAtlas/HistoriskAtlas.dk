@@ -18,7 +18,7 @@ var WindowRoute = (function (_super) {
         _super.apply(this, arguments);
     }
     WindowRoute.prototype.windowBasicClosed = function () {
-        this.route.saveDistance();
+        this.route.saveProp('distance');
         App.haCollections.deselect(this.route);
     };
     WindowRoute.prototype.renameTap = function () {
@@ -30,6 +30,12 @@ var WindowRoute = (function (_super) {
     };
     WindowRoute.prototype.windowEditorialClosed = function () {
         this.windowEditorialShown = false;
+    };
+    WindowRoute.prototype.togglePublishText = function (online) {
+        return (online ? 'Afp' : 'P') + 'ublicér rute';
+    };
+    WindowRoute.prototype.togglePublishedTap = function () {
+        this.set('route.online', !this.route.online);
     };
     WindowRoute.prototype.getAutosuggestSchema = function (geos) {
         var existingIds = [];

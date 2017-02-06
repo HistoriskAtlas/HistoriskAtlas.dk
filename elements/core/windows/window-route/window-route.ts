@@ -21,7 +21,7 @@ class WindowRoute extends polymer.Base implements polymer.Element {
 
     @listen('windowbasic.closed') 
     windowBasicClosed() {
-        this.route.saveDistance();
+        this.route.saveProp('distance');
         App.haCollections.deselect(this.route)
         //App.map.routeLayer.clear();
     }
@@ -35,6 +35,13 @@ class WindowRoute extends polymer.Base implements polymer.Element {
     }
     windowEditorialClosed() {
         this.windowEditorialShown = false;
+    }
+
+    togglePublishText(online: boolean): string {
+        return (online ? 'Afp' : 'P') + 'ublicér rute';
+    }
+    togglePublishedTap() {
+        this.set('route.online', !this.route.online);
     }
 
     //@observe('route')

@@ -2,7 +2,9 @@
     public _id: number;
     private _title: string;
     private _geos: Array<HaGeo>;
+    private _online: boolean;
     private _ugc: boolean;
+    private _userid: number;
     private _distance: number;
     private _type: number;
     private _content: HaContent;
@@ -20,9 +22,11 @@
 
         this._id = data.collectionid;
         this._title = data.title;
+        this._online = data.online;
         this._ugc = data.ugc;
         this._distance = data.distance;
         this._type = data.type;
+        this._userid = data.userid;
 
 //if (data.collection_geos)
         //    for (var geoid of data.collection_geos) {
@@ -43,6 +47,13 @@
     }
     set title(val: string) {
         this._title = val;
+    }
+
+    get online(): boolean {
+        return this._online;
+    }
+    set online(val: boolean) {
+        this._online = val;
     }
 
     get ugc(): boolean {
@@ -71,6 +82,10 @@
     }
     set type(val: number) {
         this._type = val;
+    }
+
+    get userid(): number {
+        return this._userid;
     }
 
     get geos(): Array<HaGeo> {
@@ -129,6 +144,7 @@
             })
         } else {
             data.userid = App.haUsers.user.id;
+            data.ugc = !App.haUsers.user.isPro;
             Services.insert('collection', data, (result) => {
                 this._id = result.data[0].collectionid;
                 if (callback)
@@ -141,11 +157,10 @@
         Services.insert('collection_geo', { collectionid: this._id, geoid: geo.id, ordering: this.geos.indexOf(geo) }, (result) => {});
     }
 
-    public saveDistance() {
-        Services.update('collection', { collectionid: this._id, distance: this._distance }, (result) => {});
-    }
-    public saveTitle() {
-        Services.update('collection', { collectionid: this._id, title: this._title }, (result) => { });
+    public saveProp(prop: string) {
+        var data = { collectionid: this._id };
+        data[prop] = this['_' + prop];
+        Services.update('collection', data, (result) => { });
     }
 
     public removeGeo(geo: HaGeo) {

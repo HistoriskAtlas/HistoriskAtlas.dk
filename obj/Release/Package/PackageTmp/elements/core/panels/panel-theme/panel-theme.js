@@ -67,6 +67,16 @@ var PanelTheme = (function (_super) {
         else
             this.theme = theme;
     };
+    PanelTheme.prototype.themeChanged = function () {
+        if (this.isHoD2017(this.theme)) {
+            this.set('routeTopLevels', [
+                { name: 'Landsdækkende rutenet', shown: false, filter: function (collection) { return true; } },
+                { name: 'Vandrehistorier', shown: false, filter: function (collection) { return true; } }
+            ]);
+        }
+        else
+            this.set('routeTopLevels', []);
+    };
     PanelTheme.prototype.newHaContent = function (content) {
         if (!content)
             return null;
@@ -91,6 +101,14 @@ var PanelTheme = (function (_super) {
         __metadata('design:type', Array)
     ], PanelTheme.prototype, "themes", void 0);
     __decorate([
+        property({ type: Array, notify: true }), 
+        __metadata('design:type', Array)
+    ], PanelTheme.prototype, "collections", void 0);
+    __decorate([
+        property({ type: Array }), 
+        __metadata('design:type', Array)
+    ], PanelTheme.prototype, "routeTopLevels", void 0);
+    __decorate([
         observe('showThemeMenu'), 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', [Boolean, Boolean]), 
@@ -102,6 +120,12 @@ var PanelTheme = (function (_super) {
         __metadata('design:paramtypes', [Object]), 
         __metadata('design:returntype', void 0)
     ], PanelTheme.prototype, "shown", null);
+    __decorate([
+        observe('theme'), 
+        __metadata('design:type', Function), 
+        __metadata('design:paramtypes', []), 
+        __metadata('design:returntype', void 0)
+    ], PanelTheme.prototype, "themeChanged", null);
     PanelTheme = __decorate([
         component("panel-theme"), 
         __metadata('design:paramtypes', [])

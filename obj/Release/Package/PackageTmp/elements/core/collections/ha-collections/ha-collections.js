@@ -25,6 +25,7 @@ var HaCollections = (function (_super) {
         Services.get('collection', { count: 'all', schema: '{collection:[collectionid,title,ugc,distance,type,{userid:' + App.haUsers.user.id + '}]}' }, function (result) {
             for (var _i = 0, _a = result.data; _i < _a.length; _i++) {
                 var data = _a[_i];
+                data.online = false;
                 _this.push('collections', new HaCollection(data));
             }
         });
@@ -116,10 +117,14 @@ var HaCollections = (function (_super) {
     HaCollections.prototype.typeChanged = function (changeRecord) {
         if (!this.collection)
             return;
-        if (changeRecord.path == 'collection.type')
+        var path = changeRecord.path.split('.');
+        if (path.length != 2)
+            return;
+        var prop = path[1];
+        if (prop == 'type')
             this.updateRouteLayer();
-        if (changeRecord.path == 'collection.title')
-            this.collection.saveTitle();
+        if (prop == 'title' || prop == 'online' || prop == 'type')
+            this.collection.saveProp(prop);
     };
     HaCollections.prototype.routeGeosSplices = function (changeRecord) {
         if (!changeRecord)

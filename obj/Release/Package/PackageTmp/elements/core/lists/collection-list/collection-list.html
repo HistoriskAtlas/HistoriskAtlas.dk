@@ -1,0 +1,61 @@
+﻿<dom-module id="collection-list">
+    <style>
+        .listitem {
+            display: flex;
+            align-items: center;
+            border-bottom: solid 1px;
+            border-bottom-color: #ececec; /*TODO: How to make generic reference in dynamically created component?*/
+            font-size: 13px;
+            height: 32px; /*was 25px*/
+            cursor: pointer;
+        }
+
+        .listitem > span {
+            cursor: pointer;
+            flex-grow: 1;
+        }
+        .listsubitem {
+            padding-left: 40px !important;
+            background-color: var(--light-gray-color);
+        }
+        paper-icon-button {
+            width: 30px !important; /*was 25px*/
+            height: 30px !important; /*was 25px*/
+            padding: 3px !important;
+            color: var(--primary-color);
+            -webkit-transform: rotate(-90deg);
+            transform: rotate(-90deg);
+            transition: transform 0.3s, -webkit-transform 0.3s;
+        }
+        paper-icon-button[active] {
+            transform: rotate(0deg) !important;
+        }
+        .spacer {
+            height: 20px;
+        }
+
+    </style>
+    <template>
+
+        <template is="dom-repeat" items="[[topLevels]]" as="topLevel">
+
+            <template is="dom-if" if="[[isSpacer(topLevel)]]">
+                <div class="spacer"></div>
+            </template>
+
+            <template is="dom-if" if="[[!isSpacer(topLevel)]]">
+                <div class="listitem light-gray-border" on-tap="toggleShown">
+                    <paper-icon-button icon="arrow-drop-down" toggles active="[[topLevel.shown]]" noink></paper-icon-button>
+                    <span>[[topLevel.name]]</span>
+                </div>
+                <template is="dom-if" if="[[topLevel.shown]]">
+                    <template id="templateCollections" is="dom-repeat" items="[[collections]]" as="collection" filter="[[topLevel.filter]]" observe="type,distance">
+                        <collection-list-item collection="[[collection]]" on-tap="collectionTap"></collection-list-item>
+                    </template>
+                </template>
+            </template>
+
+        </template>
+
+    </template>
+</dom-module>

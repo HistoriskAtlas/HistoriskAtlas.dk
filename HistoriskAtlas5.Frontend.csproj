@@ -72,6 +72,8 @@
     <Content Include="elements\core\collections\ha-image\ha-image.html" />
     <Content Include="elements\core\icons\cc-icons\cc-icons.html" />
     <Content Include="elements\core\icons\ha-icons\ha-icons.html" />
+    <Content Include="elements\core\lists\collection-list\collection-list.html" />
+    <Content Include="elements\core\lists\collection-list-item\collection-list-item.html" />
     <Content Include="elements\core\lists\tag-list-item\tag-list-item.html" />
     <Content Include="elements\core\lists\menu-item\menu-item.html" />
     <Content Include="elements\writer\dialogs\dialog-tag-selection\dialog-tag-selection.html" />
@@ -479,6 +481,8 @@
     <TypeScriptCompile Include="elements\core\dialogs\dialog-text\dialog-text.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-image\ha-image.ts" />
     <TypeScriptCompile Include="elements\core\icons\licens-mark\licens-mark.ts" />
+    <TypeScriptCompile Include="elements\core\lists\collection-list\collection-list.ts" />
+    <TypeScriptCompile Include="elements\core\lists\collection-list-item\collection-list-item.ts" />
     <TypeScriptCompile Include="elements\core\lists\tag-list-item\tag-list-item.ts" />
     <TypeScriptCompile Include="elements\core\lists\menu-item\menu-item.ts" />
     <TypeScriptCompile Include="elements\writer\dialogs\dialog-tag-selection\dialog-tag-selection.ts" />

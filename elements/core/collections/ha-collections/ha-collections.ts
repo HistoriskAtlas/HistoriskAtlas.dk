@@ -11,12 +11,12 @@ class HaCollections extends Tags implements polymer.Element {
     private updateRouteLayerRequestCount: number = 0;
 
     public getCollectionsFromUser() {
-        Services.get('collection', { count: 'all', schema: '{collection:[collectionid,title,ugc,distance,type,{userid:' + App.haUsers.user.id + '}]}' }, (result) => { //,{collection_geos:[{collapse:geoid}]}
-            //var newCollections: Array<HaCollection> = this.collections;
-            for (var data of result.data)
-                this.push('collections',new HaCollection(data));
-                //newCollections.push(new HaCollection(data));
-            //this.set('collections', newCollections);
+        //TODO: Only get offline collections... onlines shoule be fetchted another place
+        Services.get('collection', { count: 'all', schema: '{collection:[collectionid,title,ugc,distance,type,{userid:' + App.haUsers.user.id + '}]}' }, (result) => {
+            for (var data of result.data) {
+                data.online = false;
+                this.push('collections', new HaCollection(data));
+            }
         })
     }
 
@@ -111,11 +111,15 @@ class HaCollections extends Tags implements polymer.Element {
         if (!this.collection)
             return;
 
-        if (changeRecord.path == 'collection.type')
-            this.updateRouteLayer();
+        var path = (<string>changeRecord.path).split('.');
+        if (path.length != 2)
+            return
 
-        if (changeRecord.path == 'collection.title')
-            this.collection.saveTitle();
+        var prop = path[1]
+        if (prop == 'type')
+            this.updateRouteLayer();
+        if (prop == 'title' || prop == 'online' || prop == 'type')
+            this.collection.saveProp(prop);
     }
 
     @observe('collection.geos.splices')

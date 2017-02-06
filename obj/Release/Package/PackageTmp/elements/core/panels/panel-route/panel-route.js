@@ -16,13 +16,17 @@ var PanelRoute = (function (_super) {
     __extends(PanelRoute, _super);
     function PanelRoute() {
         _super.call(this);
+        this.topLevels = [
+            { name: 'Mine ruter', shown: false, filter: function (collection) { return collection.userid == App.haUsers.user.id; } },
+            { name: 'spacer', shown: false, filter: null },
+            { name: 'Køreruter', shown: false, filter: function (collection) { return collection.type == 0; } },
+            { name: 'Cykelruter', shown: false, filter: function (collection) { return collection.type == 1; } },
+            { name: 'Til fods', shown: false, filter: function (collection) { return collection.type == 2; } },
+            { name: 'spacer', shown: false, filter: null },
+            { name: 'Under 10 km', shown: false, filter: function (collection) { return collection.distance < 10000; } },
+            { name: 'Over 10 km', shown: false, filter: function (collection) { return collection.distance >= 10000; } }
+        ];
     }
-    PanelRoute.prototype.collectionTap = function (e) {
-        App.haCollections.select(e.model.collection);
-    };
-    PanelRoute.prototype.formatDistance = function (distance) {
-        return HaCollection.formatDistance(distance);
-    };
     __decorate([
         property({ type: Boolean, notify: true }), 
         __metadata('design:type', Boolean)
@@ -31,6 +35,10 @@ var PanelRoute = (function (_super) {
         property({ type: Array, notify: true }), 
         __metadata('design:type', Array)
     ], PanelRoute.prototype, "collections", void 0);
+    __decorate([
+        property({ type: Array }), 
+        __metadata('design:type', Array)
+    ], PanelRoute.prototype, "topLevels", void 0);
     PanelRoute = __decorate([
         component("panel-route"), 
         __metadata('design:paramtypes', [])
