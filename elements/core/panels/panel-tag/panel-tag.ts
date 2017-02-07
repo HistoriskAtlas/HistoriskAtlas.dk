@@ -7,6 +7,9 @@ class PanelTag extends polymer.Base implements polymer.Element {
     @property({ type: Number })
     public tagCategory: number;
 
+    @property({ type: Array, notify: true })
+    public tagTops: Array<HaTag>;
+
     //public isChildOf(subTag: HaTag, tag: HaTag): boolean {
     //    return subTag.isChildOf(tag);
     //}
@@ -31,6 +34,13 @@ class PanelTag extends polymer.Base implements polymer.Element {
     public sortByYear(tag1: HaTag, tag2: HaTag) {
         return tag1.yearStart - tag2.yearStart;
     }
+
+    //ready() {
+    //    setTimeout(() => {
+    //        this.$.selector.select(HaTags.tagTop[this.tagCategory])
+    //        //this.tagTop = HaTags.tagTop[this.tagCategory];
+    //    }, 2000);
+    //}
 
     tagTap(e: any) {
         if (this._tagTap(e.model.tag))
@@ -63,17 +73,26 @@ class PanelTag extends polymer.Base implements polymer.Element {
         e.stopPropagation();
     }
 
-    @listen("buttonAll.tap")
-    buttonAllTap() {
-        this.toggle(true);
+    //@listen("buttonAll.tap")
+    //buttonAllTap() {
+    //    this.toggle(true);
+    //}
+
+    //@listen("buttonNone.tap")
+    //buttonNoneTap() {
+    //    this.toggle(false);
+    //}
+
+    tagTopSelected(tagTops: Array<HaTag>): boolean {
+        var tag = tagTops[this.tagCategory];
+        return tag ? tag.selected : false;
     }
 
-    @listen("buttonNone.tap")
-    buttonNoneTap() {
-        this.toggle(false);
+    toggleTop() {
+        this.toggle();
     }
 
-    private toggle(selected: boolean) {
+    private toggle() {
         IconLayer.updateDisabled = true;
         //App.haTags.tags.forEach((tag: HaTag) => {
         //    if (tag.isTop)
@@ -81,7 +100,9 @@ class PanelTag extends polymer.Base implements polymer.Element {
         //            tag.selected = selected;
         //});
 
-        HaTags.tagTop[this.tagCategory].selected = selected;
+        //HaTags.tagTop[this.tagCategory].selected = selected;
+        this.set('tagTops.' + this.tagCategory + '.selected', !this.tagTopSelected(this.tagTops));
+
         IconLayer.updateDisabled = false;
         IconLayer.updateShown();
     }

@@ -51,12 +51,26 @@
         if (this._selected == val)
             return;
         
-        if (!val)
-            HaTags.tagTop[this.category]._selected = false; // TODO: notifyPath....
-
-
         var idsChanged = this.justSetSelected(val);
 
+        var tagTop = App.haTags.tagTops[this.category];
+        if (!val) {
+            if (tagTop.selected) {
+                tagTop._selected = false;
+                App.haTags.notifyPath('tagTops.' + this.category + '.selected', false)
+            }
+        } else {
+            var allSelected = true;
+            for (var tag of tagTop.children)
+                if (!tag.selected) {
+                    allSelected = false;
+                    break;
+                }
+            if (allSelected) {
+                tagTop._selected = true;
+                App.haTags.notifyPath('tagTops.' + this.category + '.selected', true)
+            }
+        }
 
 
         //this._selected = val;

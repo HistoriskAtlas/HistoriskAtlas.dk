@@ -3,6 +3,9 @@ class HaTags extends polymer.Base implements polymer.Element {
     @property({ type: Array, notify: true })
     public tags: Array<HaTag>;
 
+    @property({ type: Array, notify: true/*, value: Array<HaTag>(20)*/ })
+    public tagTops: Array<HaTag>;
+
     @property({ type: Object, notify: true }) //Not used yet
     public passedTag: HaTag;
 
@@ -13,7 +16,7 @@ class HaTags extends polymer.Base implements polymer.Element {
     public static tagsWithMarkers: Array<HaTag> = new Array<HaTag>(10000);
     //public static tagUGC: HaTag; //only needed because UGC cant add subjects yet........................................................................
     //public static tagUserLayer: HaTag; //TODO: create as seperate map layer instead....................................................................
-    public static tagTop: Array<HaTag> = new Array<HaTag>(20);
+    //public static tagTop: Array<HaTag> = new Array<HaTag>(20);
 
     public byId: Array<HaTag>; //Needed because polymer dosnt suppert asigning to array, ie. tags[id] = tag
 
@@ -58,19 +61,22 @@ class HaTags extends polymer.Base implements polymer.Element {
         //HaTags.tagTop[9] = new HaTag({ id: 1000000 + 9, category: 9, plurname: '' });
         //HaTags.tagTop[9].selected = true;
 
+        var tagTops = [];
+
         this.tags.forEach((tag: HaTag) => {
             tag.translateRelations(this.parentIDs[tag.id], this.childIDs[tag.id])
             if (tag.isTop) {
-                var topTag = HaTags.tagTop[tag.category];
+                var topTag = tagTops[tag.category];
                 if (!topTag) {
-                    HaTags.tagTop[tag.category] = new HaTag({ id: 1000000 + tag.category, category: tag.category, plurname: '' });
-                    topTag = HaTags.tagTop[tag.category];
+                    tagTops[tag.category] = new HaTag({ id: 1000000 + tag.category, category: tag.category, plurname: '' });
+                    topTag = tagTops[tag.category];
                     if (tag.category == 9)
                         topTag.selected = true;
                 }
                 topTag.children.push(tag);
             }
         });
+        this.set('tagTops', tagTops)
         this.parentIDs = null;
         this.childIDs = null;
 

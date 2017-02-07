@@ -18,6 +18,9 @@ class MainMenu extends polymer.Base implements polymer.Element {
     @property({ type: Array, notify: true })
     public tags: Array<HaTag>;
 
+    @property({ type: Array, notify: true})
+    public tagTops: Array<HaTag>;
+
     @property({ type: Array })
     public digdags: Array<HaDigDag>;
 

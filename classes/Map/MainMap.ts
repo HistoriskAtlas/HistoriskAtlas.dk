@@ -180,7 +180,7 @@
                     }
                     $("#map").css("cursor", 'pointer');
                     if (this.curHoverObject instanceof HaGeo)
-                        (<HaGeo>this.curHoverObject).showToolTip();
+                        (<HaGeo>this.curHoverObject).showToolTip(); //TODO: Cancel this, if mapTooltip is hidden......................................
                     //if (this.curHoverObject instanceof Array)
                     //    this.showMultipleGeosToolTip(<Array<HaGeo>>this.curHoverObject);
                     if (this.curHoverObject instanceof HaRegion)
@@ -197,7 +197,7 @@
         });
 
         this.on('pointerdrag', (event) => {
-            this._moving = true; //TODO: Not always so.........................................................................................
+            this._moving = true; //TODO: Not always so.....................................
             if (this.curHoverObject instanceof HaGeo)
                 this.iconLayer.dragEvent(event, <HaGeo>this.curHoverObject);
         });

@@ -286,7 +286,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
             data.ugc = this.curRequest.ugc;
             data.online = !this.curRequest.userLayer;
 
-            var geo: HaGeo = new HaGeo(data, !this.curRequest.removeAlso || HaTags.tagTop[9].selected ? true : this.curRequest.userLayer, this.curRequest.userLayer);
+            var geo: HaGeo = new HaGeo(data, !this.curRequest.removeAlso || App.haTags.tagTops[9].selected ? true : this.curRequest.userLayer, this.curRequest.userLayer);
             //if (!geo.online)
             //    geo.addTag(HaTags.tagUserLayer);
 
@@ -312,7 +312,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
     public updateShownGeos(idsChanged: Array<number>, changedTo: boolean, themeTagID: number = null, userCreators: boolean = null, profCreators: boolean = null) {
         App.loading.show(HaGeos.showingText);
 
-        if ((this.curRequest.userLayer && !idsChanged) || (HaTags.tagTop[9].selected && !idsChanged)) {
+        if ((this.curRequest.userLayer && !idsChanged) || (App.haTags.tagTops[9].selected && !idsChanged)) {
             this.updateShownGeosFinally(idsChanged);
             return;
         }
@@ -328,7 +328,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
 
         var selectedTagIds: Array<number> = [];
         if (idsChanged && changedTo) {
-            if (idsChanged.indexOf(HaTags.tagTop[9].id) > -1) {
+            if (idsChanged.indexOf(App.haTags.tagTops[9].id) > -1) {
                 App.haGeos.geos.forEach((geo) => {
                     if (!geo.shown)
                         geo.show();
