@@ -10,7 +10,7 @@ class WindowRoute extends polymer.Base implements polymer.Element {
     @property({ type: Array })
     public periods: Array<HaTag>;
 
-    @property({ type: Boolean, value: true })
+    @property({ type: Boolean })
     public editing: boolean;
 
     @property({ type: Boolean, value: false })
@@ -107,9 +107,8 @@ class WindowRoute extends polymer.Base implements polymer.Element {
         //this.updateRouteLayer();
     }
 
-    @listen('geoSortableList.update') 
-    geoSortableListUpdate(e: any)
-    {
+    @listen('update')  //geoSortableList.update....
+    geoSortableListUpdate(e: any) {
         if (e.detail) {
             this.route.updateOrdering(e.detail.oldIndex, e.detail.newIndex); //TODO: wait for routelayer update so distance can also be saved, same in the two above.........?
         }

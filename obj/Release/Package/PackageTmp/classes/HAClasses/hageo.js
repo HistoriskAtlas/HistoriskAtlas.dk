@@ -287,7 +287,8 @@ var HaGeo = (function () {
         var _this = this;
         if (this._title)
             App.mapTooltip.setText(this._title);
-        else if (this._title != '')
+        else if (this._title != '') {
+            App.mapTooltip.setText('');
             Services.get('geo', {
                 schema: JSON.stringify({
                     geo: {
@@ -299,8 +300,9 @@ var HaGeo = (function () {
                 })
             }, function (result) {
                 _this._title = result.data[0].title;
-                App.mapTooltip.setText(_this._title);
+                App.mapTooltip.setText(_this._title, true);
             });
+        }
     };
     return HaGeo;
 }());

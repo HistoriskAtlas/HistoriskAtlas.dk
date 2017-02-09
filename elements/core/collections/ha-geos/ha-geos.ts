@@ -62,7 +62,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
     }
 
     public login() {
-        this.processRequest({ themeTagID: this.theme.tagid, ugc: false, removeAlso: false, userLayer: true });
+        this.processRequest({ themeTagID: this.theme.tagid, ugc: !App.haUsers.user.isPro, removeAlso: false, userLayer: true });
     }
 
     public logout() {
@@ -206,6 +206,56 @@ class HaGeos extends polymer.Base implements polymer.Element {
             if (tag.selected)
                 selectedTagIds.push(tag.id);
 
+        var schema = {   //TODO: Dont fetch geos without tag id 530 (non ready) or convert 530's to "remove all themes"
+            geo: {
+                fields: [
+                    'id',
+                    'lat',
+                    'lng',
+                    'ptid'
+                ],
+                filters: !this.curRequest.userLayer ? [] : [
+                    {
+                        user: [{ userhierarkis1: [{ parentid: App.haUsers.user.id /*is editor for owner*/ }] }]
+                    },
+                    {
+                        user: [{ id: App.haUsers.user.id /*is owner*/ }]
+                    }
+                ]
+
+                //filters: this.curRequest.selectedByTags ?
+                //    [{ tag_geos: [{ tagid: { in: selectedTagIds } }] }]
+                //    :
+                //    [{ id: { not: this.lastGeoIdsLoaded } }] //TODO: Problem... way to long URL generated!.........
+                //[{ tag_geos: [{ tagid: { except: selectedTagIds } }] }] Problem: dosnt work... Should use ALL instead of ANY....
+
+            }
+        }
+
+        if (this.curRequest.userLayer)
+            schema.geo.fields.push('online');
+
+        if (App.haUsers.user.institutions)
+            if (App.haUsers.user.institutions.length > 0)
+                schema.geo.filters.push(
+                    <any>{
+                        tag_geos: [
+                            {
+                                tag: [
+                                    {
+                                        institutions: [
+                                            {
+                                                id: App.haUsers.user.institutions[0].id /*is same institution TODO: cur inst not only [0]*/
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                )
+
+
         this.params = {
             v: 1,
             count: '*',
@@ -213,47 +263,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
             tag_geos: JSON.stringify([
                 { tagid: this.curRequest.themeTagID }
             ]),
-            schema: JSON.stringify({   //TODO: Dont fetch geos without tag id 530 (non ready) or convert 530's to "remove all themes"
-                geo: {
-                    fields: [
-                        'id',
-                        //'title',
-                        'lat',
-                        'lng',
-                        'ptid'
-                    ],
-                    filters: !this.curRequest.userLayer ? [] : [
-                        {
-                            user: [ { userhierarkis1: [ { parentid: App.haUsers.user.id /*is editor for owner*/ } ] } ]
-                        },
-                        {
-                            user: [ { id: App.haUsers.user.id /*is owner*/ } ]
-                        },
-                        (!App.haUsers.user.institutions ? null : (App.haUsers.user.institutions.length == 0 ? null : {
-                            tag_geos: [
-                                {
-                                    tag: [
-                                        {
-                                            institutions: [
-                                                {
-                                                    id: App.haUsers.user.institutions[0].id /*is same institution TODO: cur inst not only [0]*/
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        }))
-                    ] 
-
-                    //filters: this.curRequest.selectedByTags ?
-                    //    [{ tag_geos: [{ tagid: { in: selectedTagIds } }] }]
-                    //    :
-                    //    [{ id: { not: this.lastGeoIdsLoaded } }] //TODO: Problem... way to long URL generated!.........
-                        //[{ tag_geos: [{ tagid: { except: selectedTagIds } }] }] Problem: dosnt work... Should use ALL instead of ANY....
-
-                }
-            })
+            schema: JSON.stringify(schema)
         }
 
         if (this.curRequest.userLayer)
@@ -284,7 +294,8 @@ class HaGeos extends polymer.Base implements polymer.Element {
             //this.lastGeoIdsLoaded.push(data.id);
 
             data.ugc = this.curRequest.ugc;
-            data.online = !this.curRequest.userLayer;
+            if (!this.curRequest.userLayer)
+                data.online = true;
 
             var geo: HaGeo = new HaGeo(data, !this.curRequest.removeAlso || App.haTags.tagTops[9].selected ? true : this.curRequest.userLayer, this.curRequest.userLayer);
             //if (!geo.online)
@@ -304,7 +315,6 @@ class HaGeos extends polymer.Base implements polymer.Element {
         //if (!App.useClustering)
         //    IconLayer.updateMinDist();
         //IconLayer.updateShown();
-
 
         this.updateShownGeos(null, null, this.curRequest.themeTagID, this.userCreators, this.profCreators); //WAS true, true
     }

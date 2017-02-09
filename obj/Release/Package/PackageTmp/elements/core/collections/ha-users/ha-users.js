@@ -41,7 +41,8 @@ var HaUsers = (function (_super) {
             }
             _this.set('user', user);
             App.haGeos.login();
-            App.haCollections.getCollectionsFromUser();
+            if (App.haCollections.allCollectionsFetched)
+                App.haCollections.getCollectionsFromUser();
             _this._loggingIn = false;
         });
     };

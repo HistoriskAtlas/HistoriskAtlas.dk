@@ -47,6 +47,10 @@
             --paper-checkbox-checked-color: var(--primary-color);
             --paper-checkbox-size: 14px; /*was 13px*/
         }
+        paper-checkbox.top {
+            margin-right: -1px;
+            --paper-checkbox-size: 16px;
+        }
         .listsubitem > paper-checkbox {
             --paper-checkbox-unchecked-color: #cccccc !important;
             --paper-checkbox-unchecked-background-color: #cccccc !important;
@@ -63,9 +67,16 @@
         }
     </style>
     <template>
+        <!--<array-selector id="selector" items="[[tags]]" selected="{{tagTop}}"></array-selector>-->
+
         <div class="headline">
             <!--Find historiske emner, der interesserer netop dig-->
         </div>
+
+        <div class="listitem light-gray-border" style="justify-content: flex-end" on-tap="toggleTop"> <!--on-tap="tagTap"-->
+            <paper-checkbox class="top" noink checked="[[tagTopSelected(tagTops,tagTops.*)]]" on-tap="cancel"></paper-checkbox>
+        </div>
+
         <template is="dom-repeat" items="{{tags}}" filter="includeTag" sort="[[sortFunction(tagCategory)]]" as="tag">
             <div class="listitem light-gray-border" on-tap="tagTap">
                 <paper-icon-button icon="arrow-drop-down" toggles active="{{tag.showSubTags}}" noink on-tap="cancel" style$="[[hideArrow(tag)]]"></paper-icon-button>
@@ -82,10 +93,10 @@
             </template>
         </template>
 
-        <div class="buttons">
+        <!--<div class="buttons">
             <paper-button id="buttonAll">Vælg alle</paper-button>
             <paper-button id="buttonNone">Fravælg alle</paper-button>
-        </div>
+        </div>-->
 
     </template>
 </dom-module>

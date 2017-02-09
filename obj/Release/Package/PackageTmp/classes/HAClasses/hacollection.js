@@ -2,6 +2,7 @@ var HaCollection = (function () {
     function HaCollection(data) {
         this._geos = [];
         this.tags = [];
+        this.features = [];
         if (!data)
             return;
         this._id = data.collectionid;
@@ -11,6 +12,15 @@ var HaCollection = (function () {
         this._distance = data.distance;
         this._type = data.type;
         this._userid = data.userid;
+        if (data.collection_geos) {
+            var collection_geos = data.collection_geos.sort(function (a, b) { return a.ordering - b.ordering; });
+            for (var _i = 0, collection_geos_1 = collection_geos; _i < collection_geos_1.length; _i++) {
+                var collection_geo = collection_geos_1[_i];
+                var geo = App.haGeos.geos[collection_geo.geoid];
+                if (geo)
+                    this._geos.push(geo);
+            }
+        }
     }
     Object.defineProperty(HaCollection.prototype, "id", {
         get: function () {
@@ -86,6 +96,16 @@ var HaCollection = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(HaCollection.prototype, "selected", {
+        get: function () {
+            return this._selected;
+        },
+        set: function (val) {
+            this._selected = val;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(HaCollection.prototype, "geos", {
         get: function () {
             return this._geos;
@@ -109,8 +129,11 @@ var HaCollection = (function () {
             });
         }
         else {
-            data.userid = App.haUsers.user.id;
-            data.ugc = !App.haUsers.user.isPro;
+            data.userid = this._userid;
+            data.ugc = this._ugc;
+            data.online = this._online;
+            data.type = this._type;
+            data.distance = this._distance;
             Services.insert('collection', data, function (result) {
                 _this._id = result.data[0].collectionid;
                 if (callback)
@@ -122,9 +145,13 @@ var HaCollection = (function () {
         Services.insert('collection_geo', { collectionid: this._id, geoid: geo.id, ordering: this.geos.indexOf(geo) }, function (result) { });
     };
     HaCollection.prototype.saveProp = function (prop) {
+        var _this = this;
         var data = { collectionid: this._id };
         data[prop] = this['_' + prop];
-        Services.update('collection', data, function (result) { });
+        Services.update('collection', data, function (result) {
+            if (prop == 'online')
+                App.toast.show('Ruten er nu ' + (_this._online ? '' : 'af') + 'publiceret');
+        });
     };
     HaCollection.prototype.removeGeo = function (geo) {
         var data = {

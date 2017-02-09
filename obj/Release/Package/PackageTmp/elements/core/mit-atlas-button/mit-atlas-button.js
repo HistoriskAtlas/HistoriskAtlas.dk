@@ -17,6 +17,9 @@ var MitAtlasButton = (function (_super) {
     function MitAtlasButton() {
         _super.apply(this, arguments);
     }
+    MitAtlasButton.prototype.ready = function () {
+        this.isDevOrBeta = Common.isDevOrBeta;
+    };
     MitAtlasButton.prototype.buttonTap = function () {
         if (App.haUsers.user.isDefault)
             Common.dom.append(WindowLogin.create());
@@ -63,6 +66,10 @@ var MitAtlasButton = (function (_super) {
         property({ type: Object }), 
         __metadata('design:type', HAUser)
     ], MitAtlasButton.prototype, "user", void 0);
+    __decorate([
+        property({ type: Boolean }), 
+        __metadata('design:type', Boolean)
+    ], MitAtlasButton.prototype, "isDevOrBeta", void 0);
     __decorate([
         listen("button.tap"), 
         __metadata('design:type', Function), 

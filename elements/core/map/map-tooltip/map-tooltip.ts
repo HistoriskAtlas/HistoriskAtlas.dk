@@ -4,12 +4,19 @@ class MapTooltip extends polymer.Base implements polymer.Element {
     @property({ type: String })
     public tooltipText: string;
 
-    public setText(text: string) {
+    private shown: boolean = false;;
+
+    public setText(text: string, ifShown?: boolean) {
+        if (ifShown && !this.shown)
+            return;
+
+        this.shown = true;
         this.set('tooltipText', text);
         this.$.tooltip.show();
     }
 
     public hide() {
+        this.shown = false;
         this.$.tooltip.hide();
     }
 

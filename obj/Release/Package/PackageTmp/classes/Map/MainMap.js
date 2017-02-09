@@ -157,6 +157,8 @@ var MainMap = (function (_super) {
                 }
                 _this.centerAnim(centerGeo.coord, _this.view.getResolution() / 8, true, false);
             }
+            if (_this.curHoverObject instanceof HaCollection)
+                App.haCollections.select(_this.curHoverObject);
             if (_this.curHoverObject instanceof HaRegion)
                 Common.dom.append(WindowRegion.create(_this.curHoverObject));
         });
@@ -196,6 +198,8 @@ var MainMap = (function (_super) {
         this.oldHoverObject = this.curHoverObject;
         if (this.curHoverObject = this.getHoverHaGeo(pixel))
             return;
+        if (this.curHoverObject = this.getHoverHaCollection(pixel))
+            return;
         var digDagLayerVisible = !!this.digDagLayer;
         if (digDagLayerVisible)
             digDagLayerVisible = this.digDagLayer.isVisible;
@@ -228,12 +232,22 @@ var MainMap = (function (_super) {
     MainMap.prototype.setextent = function (event) {
         this.backLayer.setExtent(this.getView().calculateExtent(this.getSize()));
     };
+    MainMap.prototype.getHoverHaCollection = function (pixel) {
+        var _this = this;
+        var collection = null;
+        this.forEachFeatureAtPixel(pixel, function (feature) {
+            collection = feature.collection;
+            return true;
+        }, null, function (layer) { return layer == _this.routeLayer; });
+        return collection;
+    };
     MainMap.prototype.getHoverHaGeo = function (pixel) {
+        var _this = this;
         var icons = [];
         this.forEachFeatureAtPixel(pixel, function (feature) {
             icons = feature instanceof Icon ? [feature] : feature.get('features');
             return true;
-        });
+        }, null, function (layer) { return layer == _this.iconLayer || layer == _this.iconLayerNonClustered; });
         if (!icons)
             return null;
         if (icons.length == 0)

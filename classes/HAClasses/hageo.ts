@@ -459,7 +459,8 @@
         if (this._title)
             App.mapTooltip.setText(this._title);
         else
-            if (this._title != '')
+            if (this._title != '') {
+                App.mapTooltip.setText('');
                 Services.get('geo',
                     {
                         schema: JSON.stringify({
@@ -473,8 +474,9 @@
                     },
                     (result) => {
                         this._title = result.data[0].title;
-                        App.mapTooltip.setText(this._title);
+                        App.mapTooltip.setText(this._title, true);
                     }
                 );
+            }
     }
 }

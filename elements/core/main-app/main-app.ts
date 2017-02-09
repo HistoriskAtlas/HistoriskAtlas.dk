@@ -169,6 +169,11 @@ class App extends polymer.Base implements polymer.Element {
             return '';
     }
 
+    canEditCollection(collection: HaCollection): boolean {
+        return App.haUsers.user.canEditCollection(collection);
+    }
+
+
     created() {
         App.passed = (<any>window).passed;
 

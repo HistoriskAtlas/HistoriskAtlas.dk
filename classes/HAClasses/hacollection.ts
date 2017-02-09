@@ -8,14 +8,20 @@
     private _distance: number;
     private _type: number;
     private _content: HaContent;
+
+    private _selected: boolean;
+
     //private maps: Array<HaGeo>;
     //private _geoIds: Array<number>;
     public tags: Array<HaTag>;
+    public features: Array<ol.Feature>;
+
     public static types: Array<string> = ['Kørsel', 'Cykling', 'Til fods']
 
     constructor(data: any) {
         this._geos = [];
         this.tags = [];
+        this.features = [];
 
         if (!data)
             return;
@@ -28,14 +34,15 @@
         this._type = data.type;
         this._userid = data.userid;
 
-//if (data.collection_geos)
-        //    for (var geoid of data.collection_geos) {
-        //        var geo = App.haGeos.geos[geoid];
-        //        if (geo)
-        //            this._geos.push(geo);
-        //        else
-        //            this._geoIds.push(geoid);
-        //    }
+        if (data.collection_geos) {
+            var collection_geos = (<Array<any>>data.collection_geos).sort((a, b) => a.ordering - b.ordering);
+
+            for (var collection_geo of collection_geos) {
+                var geo = App.haGeos.geos[collection_geo.geoid];
+                if (geo)
+                    this._geos.push(geo);
+            }
+        }
     }
 
     get id(): number {
@@ -87,6 +94,14 @@
     get userid(): number {
         return this._userid;
     }
+
+    get selected(): boolean {
+        return this._selected;
+    }
+    set selected(val: boolean) {
+        this._selected = val;
+    }
+
 
     get geos(): Array<HaGeo> {
         //if (this._geoIds.length > 0) {
@@ -143,8 +158,11 @@
                     callback();
             })
         } else {
-            data.userid = App.haUsers.user.id;
-            data.ugc = !App.haUsers.user.isPro;
+            data.userid = this._userid;
+            data.ugc = this._ugc;
+            data.online = this._online;
+            data.type = this._type;
+            data.distance = this._distance;
             Services.insert('collection', data, (result) => {
                 this._id = result.data[0].collectionid;
                 if (callback)
@@ -160,7 +178,10 @@
     public saveProp(prop: string) {
         var data = { collectionid: this._id };
         data[prop] = this['_' + prop];
-        Services.update('collection', data, (result) => { });
+        Services.update('collection', data, (result) => {
+            if (prop == 'online')
+                App.toast.show('Ruten er nu ' + (this._online ? '' : 'af') + 'publiceret');
+        });
     }
 
     public removeGeo(geo: HaGeo) {

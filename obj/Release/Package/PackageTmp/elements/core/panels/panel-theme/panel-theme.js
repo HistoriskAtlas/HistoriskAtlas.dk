@@ -69,6 +69,7 @@ var PanelTheme = (function (_super) {
     };
     PanelTheme.prototype.themeChanged = function () {
         if (this.isHoD2017(this.theme)) {
+            App.haCollections.getPublishedCollections();
             this.set('routeTopLevels', [
                 { name: 'Landsdækkende rutenet', shown: false, filter: function (collection) { return true; } },
                 { name: 'Vandrehistorier', shown: false, filter: function (collection) { return true; } }
@@ -105,9 +106,17 @@ var PanelTheme = (function (_super) {
         __metadata('design:type', Array)
     ], PanelTheme.prototype, "collections", void 0);
     __decorate([
+        property({ type: Object, notify: true }), 
+        __metadata('design:type', HaCollection)
+    ], PanelTheme.prototype, "collection", void 0);
+    __decorate([
         property({ type: Array }), 
         __metadata('design:type', Array)
     ], PanelTheme.prototype, "routeTopLevels", void 0);
+    __decorate([
+        property({ type: Boolean }), 
+        __metadata('design:type', Boolean)
+    ], PanelTheme.prototype, "show", void 0);
     __decorate([
         observe('showThemeMenu'), 
         __metadata('design:type', Function), 

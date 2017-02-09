@@ -11,7 +11,7 @@
             .content > * {
                 flex-shrink: 0;
             }
-            list-auto-suggest {
+            .geo-list {
                 flex-grow: 1;
                 flex-shrink: 1 !important;
             }
@@ -35,39 +35,55 @@
         <ha-content content="{{route.content}}"></ha-content>
         <window-basic id="windowbasic" window-title="[[route.title]]" width="400" height="650" right="10">
             <div class="toolbar">
-                <paper-menu-button id="morePaperMenuButton" dynamic-align close-on-activate no-overlap>
-                    <paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>
-                    <paper-menu class="dropdown-content">
-                        <menu-item on-tap="renameTap">Omdøb</menu-item>
-                        <menu-item on-tap="togglePublishedTap">[[togglePublishText(route.online)]]</menu-item>
-                        <menu-item on-tap="editorialTap">Redaktion</menu-item>
-                    </paper-menu>
-                </paper-menu-button>
+                <template is="dom-if" if="[[editing]]">
+                    <paper-menu-button id="morePaperMenuButton" dynamic-align close-on-activate no-overlap>
+                        <paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>
+                        <paper-menu class="dropdown-content">
+                            <menu-item on-tap="renameTap">Omdøb</menu-item>
+                            <menu-item on-tap="togglePublishedTap">[[togglePublishText(route.online)]]</menu-item>
+                            <menu-item on-tap="editorialTap">Redaktion</menu-item>
+                        </paper-menu>
+                    </paper-menu-button>
+                </template>
             </div>
 
             <div class="content">
-                <content-viewer content="{{route.content}}" editing></content-viewer>
+                <content-viewer content="{{route.content}}" editing="[[editing]]"></content-viewer>
                 <div class="info-line">
-                    <paper-menu-button id="paperMenuButtonType" horizontal-align="right">
-                        <div class="dropdown-trigger">
-                            <span>[[formatType(route.type)]]</span>
-                            <iron-icon icon="arrow-drop-down"></iron-icon>
-                        </div>
-                        <div class="dropdown-content">
-                            <template is="dom-repeat" items="[[types()]]">
-                                <div on-tap="typeTap">[[item]]</div>
-                            </template>
-                        </div>
-                    </paper-menu-button>
+                    
+                    <template is="dom-if" if="[[editing]]">
+                        <paper-menu-button id="paperMenuButtonType" horizontal-align="right">
+                            <div class="dropdown-trigger">
+                                <span>[[formatType(route.type)]]</span>
+                                <iron-icon icon="arrow-drop-down"></iron-icon>
+                            </div>
+                            <div class="dropdown-content">
+                                <template is="dom-repeat" items="[[types()]]">
+                                    <div on-tap="typeTap">[[item]]</div>
+                                </template>
+                            </div>
+                        </paper-menu-button>
+                    </template>
+                    <template is="dom-if" if="[[!editing]]">
+                        <span>[[formatType(route.type)]]</span>
+                    </template>
+
                     <span>[[formatDistance(route.distance)]]</span>
                 </div>
-                <list-auto-suggest id="geoAutosuggest" items="{{route.geos}}" autosuggest-service="geo" autosuggest-schema="[[getAutosuggestSchema(route.geos,route.geos.length)]]" name-path="title" suggest-name-path="title">
-                    <div class="list">
-                        <geo-sortable-list id="geoSortableList" items="{{route.geos}}"></geo-sortable-list>
-                    </div>
-                    <paper-fab icon="add" mini class="HAPrimColor add-button"></paper-fab>
-                    <paper-fab icon="close" mini class="HAPrimColor remove-button"></paper-fab>
-                </list-auto-suggest>
+
+                <template is="dom-if" if="[[editing]]">
+                    <list-auto-suggest id="geoAutosuggest" class="geo-list" items="{{route.geos}}" autosuggest-service="geo" autosuggest-schema="[[getAutosuggestSchema(route.geos,route.geos.length)]]" name-path="title" suggest-name-path="title">
+                        <div class="list">
+                            <geo-sortable-list id="geoSortableList" items="{{route.geos}}" editing="[[editing]]"></geo-sortable-list>
+                        </div>
+                        <paper-fab icon="add" mini class="HAPrimColor add-button"></paper-fab>
+                        <paper-fab icon="close" mini class="HAPrimColor remove-button"></paper-fab>
+                    </list-auto-suggest>
+                </template>
+                <template is="dom-if" if="[[!editing]]">
+                    <geo-list geos="[[route.geos]]" class="geo-list"></geo-list>
+                </template>
+
                 <horizontal-tag-list title="EMNER" menu="Subject" tags="[[subjects]]" editing="[[editing]]" tags-service="[[tagsService()]]"></horizontal-tag-list>
                 <template is="dom-if" if="[[showPeriodTags(periods.length,editing)]]">
                     <horizontal-tag-list title="PERIODER" menu="Period" tags="[[periods]]" editing="[[editing]]" tags-service="[[tagsService()]]"></horizontal-tag-list>

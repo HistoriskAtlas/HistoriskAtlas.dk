@@ -1,11 +1,11 @@
 ﻿@component("collection-list-item")
 class CollectionListItem extends polymer.Base implements polymer.Element {
 
-    @property({ type: Object })
+    @property({ type: Object, notify: true })
     public collection: HaTag;
 
-    //@property({ type: Boolean })
-    //public closeable: boolean;
+    @property({ type: Boolean })
+    public open: boolean;
 
     //@property({ type: Boolean })
     //public dragable: boolean;
@@ -16,6 +16,12 @@ class CollectionListItem extends polymer.Base implements polymer.Element {
 
     public formatDistance(distance: number): string {
         return HaCollection.formatDistance(distance);
+    }
+
+    checkboxTap(e: any) {
+        this.set('collection.selected', !this.collection.selected);
+        e.cancelBubble = true;
+        e.stopPropagation();
     }
 
 }

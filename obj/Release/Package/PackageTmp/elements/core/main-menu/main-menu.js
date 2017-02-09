@@ -112,6 +112,10 @@ var MainMenu = (function (_super) {
         __metadata('design:type', Array)
     ], MainMenu.prototype, "tags", void 0);
     __decorate([
+        property({ type: Array, notify: true }), 
+        __metadata('design:type', Array)
+    ], MainMenu.prototype, "tagTops", void 0);
+    __decorate([
         property({ type: Array }), 
         __metadata('design:type', Array)
     ], MainMenu.prototype, "digdags", void 0);
@@ -119,6 +123,10 @@ var MainMenu = (function (_super) {
         property({ type: Array, notify: true }), 
         __metadata('design:type', Array)
     ], MainMenu.prototype, "collections", void 0);
+    __decorate([
+        property({ type: Object, notify: true }), 
+        __metadata('design:type', HaCollection)
+    ], MainMenu.prototype, "collection", void 0);
     __decorate([
         property({ type: Number, notify: true }), 
         __metadata('design:type', Number)

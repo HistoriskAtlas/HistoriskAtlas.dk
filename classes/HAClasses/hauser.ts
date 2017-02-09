@@ -115,4 +115,10 @@
 
         //return this.geos.indexOf(geo) > -1;
     }
+
+    public canEditCollection(collection: HaCollection): boolean {
+        if (!collection)
+            return false;
+        return collection.userid == this._id; //TODO: should check for "userLayer" as above.....
+    }
 }

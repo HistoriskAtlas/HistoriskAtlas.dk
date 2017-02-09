@@ -19,9 +19,28 @@ var HaTag = (function () {
         set: function (val) {
             if (this._selected == val)
                 return;
-            if (!val)
-                HaTags.tagTop[this.category]._selected = false;
             var idsChanged = this.justSetSelected(val);
+            var tagTop = App.haTags.tagTops[this.category];
+            if (!val) {
+                if (tagTop.selected) {
+                    tagTop._selected = false;
+                    App.haTags.notifyPath('tagTops.' + this.category + '.selected', false);
+                }
+            }
+            else {
+                var allSelected = true;
+                for (var _i = 0, _a = tagTop.children; _i < _a.length; _i++) {
+                    var tag = _a[_i];
+                    if (!tag.selected) {
+                        allSelected = false;
+                        break;
+                    }
+                }
+                if (allSelected) {
+                    tagTop._selected = true;
+                    App.haTags.notifyPath('tagTops.' + this.category + '.selected', true);
+                }
+            }
             App.haGeos.updateShownGeos(idsChanged, val);
         },
         enumerable: true,

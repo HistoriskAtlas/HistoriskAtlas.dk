@@ -4,6 +4,13 @@ class MitAtlasButton extends polymer.Base implements polymer.Element {
     @property({ type: Object })
     public user: HAUser;
 
+    @property({ type: Boolean })
+    public isDevOrBeta: boolean;
+
+    ready() {
+        this.isDevOrBeta = Common.isDevOrBeta;
+    }
+
     @listen("button.tap")
     buttonTap() {
         //if (!App.isDev) {

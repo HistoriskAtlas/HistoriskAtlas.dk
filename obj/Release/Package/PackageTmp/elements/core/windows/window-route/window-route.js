@@ -97,7 +97,7 @@ var WindowRoute = (function (_super) {
         __metadata('design:type', Array)
     ], WindowRoute.prototype, "periods", void 0);
     __decorate([
-        property({ type: Boolean, value: true }), 
+        property({ type: Boolean }), 
         __metadata('design:type', Boolean)
     ], WindowRoute.prototype, "editing", void 0);
     __decorate([
@@ -133,7 +133,7 @@ var WindowRoute = (function (_super) {
         __metadata('design:returntype', void 0)
     ], WindowRoute.prototype, "geoRemoved", null);
     __decorate([
-        listen('geoSortableList.update'), 
+        listen('update'), 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', [Object]), 
         __metadata('design:returntype', void 0)

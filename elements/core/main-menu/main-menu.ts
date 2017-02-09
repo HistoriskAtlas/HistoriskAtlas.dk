@@ -27,6 +27,9 @@ class MainMenu extends polymer.Base implements polymer.Element {
     @property({ type: Array, notify: true })
     public collections: Array<HaCollection>;
 
+    @property({ type: Object, notify: true })
+    public collection: HaCollection;
+
     @property({ type: Number, notify: true })
     public regionTypeID: number;
 

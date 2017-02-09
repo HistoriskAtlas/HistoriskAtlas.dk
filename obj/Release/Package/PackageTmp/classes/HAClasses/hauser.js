@@ -123,5 +123,10 @@ var HAUser = (function () {
     HAUser.prototype.canEdit = function (geo) {
         return geo.userLayer;
     };
+    HAUser.prototype.canEditCollection = function (collection) {
+        if (!collection)
+            return false;
+        return collection.userid == this._id;
+    };
     return HAUser;
 }());

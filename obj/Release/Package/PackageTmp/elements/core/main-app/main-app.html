@@ -201,7 +201,7 @@
     <template>
         <global-app year="{{year}}" time-warp-year="{{timeWarpYear}}" time-line-active="{{timeLineActive}}" routes-active="{{routesActive}}" time-warp-active="{{timeWarpActive}}" map-rotation="{{mapRotation}}" user-creators="[[userCreators]]" prof-creators="[[profCreators]]" theme="{{theme}}" map="{{mainMap}}"></global-app>
         <ha-maps maps="{{maps}}" main-map="{{mainMap}}" time-warp-map="{{timeWarpMap}}"></ha-maps>
-        <ha-tags tags="{{tags}}"></ha-tags>
+        <ha-tags tags="{{tags}}" tag-tops="{{tagTops}}"></ha-tags>
         <ha-geos year="[[year]]" time-warp-year="[[timeWarpYear]]" time-line-active=[[timeLineActive]] user-creators="[[userCreators]]" prof-creators="[[profCreators]]" theme="[[theme]]"></ha-geos>
         <ha-regions type="[[regionTypeID]]"></ha-regions>
         <ha-users user="{{user}}"></ha-users>
@@ -236,7 +236,7 @@
                     </div>
                 </paper-toolbar>
 
-                <main-menu class$="[[mainMenuClass(theme,showMainMenu)]]" show-main-menu="{{showMainMenu}}" drawer-open="{{drawerOpen}}" tags="{{tags}}" main-map="{{mainMap}}" maps="[[maps]]" collections="{{collections}}" year="{{year}}" digdags="[[digdags]]" region-type-i-d="{{regionTypeID}}" touch-device="[[touchDevice]]" time-line-active="{{timeLineActive}}" user="[[user]]" theme="{{theme}}"></main-menu>
+                <main-menu class$="[[mainMenuClass(theme,showMainMenu)]]" show-main-menu="{{showMainMenu}}" drawer-open="{{drawerOpen}}" tags="{{tags}}" tag-tops="{{tagTops}}" main-map="{{mainMap}}" maps="[[maps]]" collections="{{collections}}" collection="{{collection}}" year="{{year}}" digdags="[[digdags]]" region-type-i-d="{{regionTypeID}}" touch-device="[[touchDevice]]" time-line-active="{{timeLineActive}}" user="[[user]]" theme="{{theme}}"></main-menu>
                 <template is="dom-if" if="[[showMainMenu]]">
                     <div class="nordea-logo-container">
                         <img src="../../images/logos/nordea-fonden-black-logo.png" />
@@ -324,7 +324,7 @@
         </template>
         
         <template is="dom-if" if="[[collection]]" restamp>
-            <window-route route="{{collection}}" subjects="[[collectionSubjects]]" periods="[[collectionPeriods]]" destinations="[[collectionDestinations]]"></window-route>
+            <window-route route="{{collection}}" subjects="[[collectionSubjects]]" periods="[[collectionPeriods]]" destinations="[[collectionDestinations]]" editing="[[canEditCollection(collection,user)]]"></window-route>
         </template>
 
     </template>

@@ -2,8 +2,8 @@
     private static mouseHover: Object;
     public digDagLayer: DigDagLayer;
     public routeLayer: RouteLayer;
-    private curHoverObject: HaRegion | HaGeo | Array<HaGeo> | string;
-    private oldHoverObject: HaRegion | HaGeo | Array<HaGeo> | string;
+    private curHoverObject: HaRegion | HaGeo | Array<HaGeo> | HaCollection | string;
+    private oldHoverObject: HaRegion | HaGeo | Array<HaGeo> | HaCollection | string;
     public backLayer: BackLayer;
     public timeWarp: TimeWarp;
     public hillshade: Hillshade;
@@ -185,6 +185,8 @@
                     //    this.showMultipleGeosToolTip(<Array<HaGeo>>this.curHoverObject);
                     if (this.curHoverObject instanceof HaRegion)
                         App.mapTooltip.setText((<HaRegion>this.curHoverObject).name);
+                    //if (this.curHoverObject instanceof HaCollection)
+                    //    alert('hover collection')
                 }
 
                 return;
@@ -254,6 +256,9 @@
                 this.centerAnim(centerGeo.coord, this.view.getResolution() / 8, true, false);
                 //this.centerAnim(coord, this.view.getResolution() / 8, true, false);
             }
+
+            if (this.curHoverObject instanceof HaCollection)
+                App.haCollections.select(<HaCollection>this.curHoverObject);
 
             if (this.curHoverObject instanceof HaRegion)
                 Common.dom.append(WindowRegion.create(<HaRegion>this.curHoverObject));
@@ -346,10 +351,15 @@
         if (this.curHoverObject = this.getHoverHaGeo(pixel))
             return;
 
+        //if (routeLayerVisible)
+        if (this.curHoverObject = this.getHoverHaCollection(pixel))
+            return;
+
         var digDagLayerVisible = !!this.digDagLayer;
         if (digDagLayerVisible)
             digDagLayerVisible = this.digDagLayer.isVisible;
         
+
         if (this.timeWarp.isVisible) {
             this.curHoverObject = this.timeWarp.getHoverInterface(pixel)
             if ((this.curHoverObject != 'move' && this.curHoverObject) || !digDagLayerVisible)
@@ -388,6 +398,16 @@
         this.backLayer.setExtent(this.getView().calculateExtent(this.getSize()));
     }
 
+    public getHoverHaCollection(pixel: ol.Pixel): HaCollection {
+        var collection: HaCollection = null;
+        this.forEachFeatureAtPixel(pixel, (feature) => {
+            collection = (<any>feature).collection;
+            return true;
+        }, null, (layer) => layer == this.routeLayer);
+        return collection;
+    }
+
+
     public getHoverHaGeo(pixel: ol.Pixel): HaGeo | Array<HaGeo> {
         var icons: Array<Icon> = [];
         this.forEachFeatureAtPixel(pixel, (feature) => {
@@ -395,7 +415,7 @@
             //icons = App.useClustering ? <Icon[]>feature.get('features') : [<Icon>feature]; //TODO: do without array
             icons = feature instanceof Icon ? [<Icon>feature] : <Icon[]>feature.get('features');
             return true;
-        });
+        }, null, (layer) => layer == this.iconLayer || layer == this.iconLayerNonClustered);
 
         if (!icons)
             return null;

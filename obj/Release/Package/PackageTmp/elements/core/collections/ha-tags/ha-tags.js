@@ -42,19 +42,21 @@ var HaTags = (function (_super) {
             this.getTagFromData(JSON.parse(LocalStorage.get('tag-' + tagID)));
         }
         LocalStorage.set('tag-ids', JSON.stringify(this.tagIdsInStorage), true);
+        var tagTops = [];
         this.tags.forEach(function (tag) {
             tag.translateRelations(_this.parentIDs[tag.id], _this.childIDs[tag.id]);
             if (tag.isTop) {
-                var topTag = HaTags.tagTop[tag.category];
+                var topTag = tagTops[tag.category];
                 if (!topTag) {
-                    HaTags.tagTop[tag.category] = new HaTag({ id: 1000000 + tag.category, category: tag.category, plurname: '' });
-                    topTag = HaTags.tagTop[tag.category];
+                    tagTops[tag.category] = new HaTag({ id: 1000000 + tag.category, category: tag.category, plurname: '' });
+                    topTag = tagTops[tag.category];
                     if (tag.category == 9)
                         topTag.selected = true;
                 }
                 topTag.children.push(tag);
             }
         });
+        this.set('tagTops', tagTops);
         this.parentIDs = null;
         this.childIDs = null;
         if (App.passed.tag)
@@ -227,12 +229,15 @@ var HaTags = (function (_super) {
         });
     };
     HaTags.tagsWithMarkers = new Array(10000);
-    HaTags.tagTop = new Array(20);
     HaTags.numberMarkers = [];
     __decorate([
         property({ type: Array, notify: true }), 
         __metadata('design:type', Array)
     ], HaTags.prototype, "tags", void 0);
+    __decorate([
+        property({ type: Array, notify: true }), 
+        __metadata('design:type', Array)
+    ], HaTags.prototype, "tagTops", void 0);
     __decorate([
         property({ type: Object, notify: true }), 
         __metadata('design:type', HaTag)

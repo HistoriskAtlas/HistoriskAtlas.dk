@@ -13,8 +13,14 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     @property({ type: Array, notify: true })
     public collections: Array<HaCollection>;
 
+    @property({ type: Object, notify: true })
+    public collection: HaCollection;
+
     @property({ type: Array })
     public routeTopLevels: Array<ICollectionTopLevel>;
+
+    @property({ type: Boolean })
+    public show: boolean;
 
     ready() {
         Services.get('theme', {
@@ -73,8 +79,10 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     @observe('theme')
     themeChanged() {
         if (this.isHoD2017(this.theme)) { //TODO: fetch using HoD2017 destination SUB tags instead
+            //App.haCollections.getCollectionsByTagId(733) not working yet......
+            App.haCollections.getPublishedCollections();
             this.set('routeTopLevels', [
-                { name: 'Landsdækkende rutenet', shown: false, filter: (collection: HaCollection) => true }, //collection.tags.indexOf() > -1
+                { name: 'Landsdækkende rutenet', shown: false, filter: (collection: HaCollection) => true }, //collection.tags.indexOf(App.haTags.byId[733]) > -1
                 { name: 'Vandrehistorier', shown: false, filter: (collection: HaCollection) => true }
             ]);
         } else
@@ -107,6 +115,13 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     //    })
 
     //}
+
+    //@observe('show')
+    //showChanged() {
+    //    if (this.show)
+    //        App.haCollections.getPublishedCollections();
+    //}
+
 }
 
 interface ITheme {

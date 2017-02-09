@@ -20,10 +20,19 @@ var CollectionListItem = (function (_super) {
     CollectionListItem.prototype.formatDistance = function (distance) {
         return HaCollection.formatDistance(distance);
     };
+    CollectionListItem.prototype.checkboxTap = function (e) {
+        this.set('collection.selected', !this.collection.selected);
+        e.cancelBubble = true;
+        e.stopPropagation();
+    };
     __decorate([
-        property({ type: Object }), 
+        property({ type: Object, notify: true }), 
         __metadata('design:type', HaTag)
     ], CollectionListItem.prototype, "collection", void 0);
+    __decorate([
+        property({ type: Boolean }), 
+        __metadata('design:type', Boolean)
+    ], CollectionListItem.prototype, "open", void 0);
     CollectionListItem = __decorate([
         component("collection-list-item"), 
         __metadata('design:paramtypes', [])

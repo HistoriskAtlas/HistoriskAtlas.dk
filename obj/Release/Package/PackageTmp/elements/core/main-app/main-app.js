@@ -89,6 +89,9 @@ var App = (function (_super) {
         else
             return '';
     };
+    App.prototype.canEditCollection = function (collection) {
+        return App.haUsers.user.canEditCollection(collection);
+    };
     App.prototype.created = function () {
         App.passed = window.passed;
         if (!App.passed.theme)

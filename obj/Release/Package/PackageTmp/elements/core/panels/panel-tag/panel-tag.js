@@ -56,15 +56,16 @@ var PanelTag = (function (_super) {
         e.cancelBubble = true;
         e.stopPropagation();
     };
-    PanelTag.prototype.buttonAllTap = function () {
-        this.toggle(true);
+    PanelTag.prototype.tagTopSelected = function (tagTops) {
+        var tag = tagTops[this.tagCategory];
+        return tag ? tag.selected : false;
     };
-    PanelTag.prototype.buttonNoneTap = function () {
-        this.toggle(false);
+    PanelTag.prototype.toggleTop = function () {
+        this.toggle();
     };
-    PanelTag.prototype.toggle = function (selected) {
+    PanelTag.prototype.toggle = function () {
         IconLayer.updateDisabled = true;
-        HaTags.tagTop[this.tagCategory].selected = selected;
+        this.set('tagTops.' + this.tagCategory + '.selected', !this.tagTopSelected(this.tagTops));
         IconLayer.updateDisabled = false;
         IconLayer.updateShown();
     };
@@ -77,17 +78,9 @@ var PanelTag = (function (_super) {
         __metadata('design:type', Number)
     ], PanelTag.prototype, "tagCategory", void 0);
     __decorate([
-        listen("buttonAll.tap"), 
-        __metadata('design:type', Function), 
-        __metadata('design:paramtypes', []), 
-        __metadata('design:returntype', void 0)
-    ], PanelTag.prototype, "buttonAllTap", null);
-    __decorate([
-        listen("buttonNone.tap"), 
-        __metadata('design:type', Function), 
-        __metadata('design:paramtypes', []), 
-        __metadata('design:returntype', void 0)
-    ], PanelTag.prototype, "buttonNoneTap", null);
+        property({ type: Array, notify: true }), 
+        __metadata('design:type', Array)
+    ], PanelTag.prototype, "tagTops", void 0);
     PanelTag = __decorate([
         component("panel-tag"), 
         __metadata('design:paramtypes', [])

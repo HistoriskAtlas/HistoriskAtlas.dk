@@ -33,7 +33,7 @@ var HaGeos = (function (_super) {
             });
     };
     HaGeos.prototype.login = function () {
-        this.processRequest({ themeTagID: this.theme.tagid, ugc: false, removeAlso: false, userLayer: true });
+        this.processRequest({ themeTagID: this.theme.tagid, ugc: !App.haUsers.user.isPro, removeAlso: false, userLayer: true });
     };
     HaGeos.prototype.logout = function () {
         this.geos.forEach(function (geo) {
@@ -135,6 +135,43 @@ var HaGeos = (function (_super) {
             if (tag.selected)
                 selectedTagIds.push(tag.id);
         }
+        var schema = {
+            geo: {
+                fields: [
+                    'id',
+                    'lat',
+                    'lng',
+                    'ptid'
+                ],
+                filters: !this.curRequest.userLayer ? [] : [
+                    {
+                        user: [{ userhierarkis1: [{ parentid: App.haUsers.user.id }] }]
+                    },
+                    {
+                        user: [{ id: App.haUsers.user.id }]
+                    }
+                ]
+            }
+        };
+        if (this.curRequest.userLayer)
+            schema.geo.fields.push('online');
+        if (App.haUsers.user.institutions)
+            if (App.haUsers.user.institutions.length > 0)
+                schema.geo.filters.push({
+                    tag_geos: [
+                        {
+                            tag: [
+                                {
+                                    institutions: [
+                                        {
+                                            id: App.haUsers.user.institutions[0].id
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                });
         this.params = {
             v: 1,
             count: '*',
@@ -142,39 +179,7 @@ var HaGeos = (function (_super) {
             tag_geos: JSON.stringify([
                 { tagid: this.curRequest.themeTagID }
             ]),
-            schema: JSON.stringify({
-                geo: {
-                    fields: [
-                        'id',
-                        'lat',
-                        'lng',
-                        'ptid'
-                    ],
-                    filters: !this.curRequest.userLayer ? [] : [
-                        {
-                            user: [{ userhierarkis1: [{ parentid: App.haUsers.user.id }] }]
-                        },
-                        {
-                            user: [{ id: App.haUsers.user.id }]
-                        },
-                        (!App.haUsers.user.institutions ? null : (App.haUsers.user.institutions.length == 0 ? null : {
-                            tag_geos: [
-                                {
-                                    tag: [
-                                        {
-                                            institutions: [
-                                                {
-                                                    id: App.haUsers.user.institutions[0].id
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        }))
-                    ]
-                }
-            })
+            schema: JSON.stringify(schema)
         };
         if (this.curRequest.userLayer)
             this.params.sid = document.sid;
@@ -196,8 +201,9 @@ var HaGeos = (function (_super) {
                 continue;
             }
             data.ugc = this.curRequest.ugc;
-            data.online = !this.curRequest.userLayer;
-            var geo = new HaGeo(data, !this.curRequest.removeAlso || HaTags.tagTop[9].selected ? true : this.curRequest.userLayer, this.curRequest.userLayer);
+            if (!this.curRequest.userLayer)
+                data.online = true;
+            var geo = new HaGeo(data, !this.curRequest.removeAlso || App.haTags.tagTops[9].selected ? true : this.curRequest.userLayer, this.curRequest.userLayer);
             tempGeos[geo.id] = geo;
             if (HaGeos.usersGeoIDs.length > 0)
                 if (HaGeos.usersGeoIDs.indexOf(geo.id) > -1)
@@ -213,7 +219,7 @@ var HaGeos = (function (_super) {
         if (userCreators === void 0) { userCreators = null; }
         if (profCreators === void 0) { profCreators = null; }
         App.loading.show(HaGeos.showingText);
-        if ((this.curRequest.userLayer && !idsChanged) || (HaTags.tagTop[9].selected && !idsChanged)) {
+        if ((this.curRequest.userLayer && !idsChanged) || (App.haTags.tagTops[9].selected && !idsChanged)) {
             this.updateShownGeosFinally(idsChanged);
             return;
         }
@@ -225,7 +231,7 @@ var HaGeos = (function (_super) {
             profCreators = this.profCreators;
         var selectedTagIds = [];
         if (idsChanged && changedTo) {
-            if (idsChanged.indexOf(HaTags.tagTop[9].id) > -1) {
+            if (idsChanged.indexOf(App.haTags.tagTops[9].id) > -1) {
                 App.haGeos.geos.forEach(function (geo) {
                     if (!geo.shown)
                         geo.show();

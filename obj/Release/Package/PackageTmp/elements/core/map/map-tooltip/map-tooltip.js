@@ -16,12 +16,18 @@ var MapTooltip = (function (_super) {
     __extends(MapTooltip, _super);
     function MapTooltip() {
         _super.apply(this, arguments);
+        this.shown = false;
     }
-    MapTooltip.prototype.setText = function (text) {
+    ;
+    MapTooltip.prototype.setText = function (text, ifShown) {
+        if (ifShown && !this.shown)
+            return;
+        this.shown = true;
         this.set('tooltipText', text);
         this.$.tooltip.show();
     };
     MapTooltip.prototype.hide = function () {
+        this.shown = false;
         this.$.tooltip.hide();
     };
     MapTooltip.prototype.setPosition = function (pixel) {
