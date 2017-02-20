@@ -56,6 +56,7 @@ namespace HistoriskAtlas5.Frontend
     }
     public class HAContent
     {
+        public int contenttypeid;
         public int ordering;
         public HAText[] texts;
     }

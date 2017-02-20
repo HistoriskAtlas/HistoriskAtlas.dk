@@ -86,7 +86,9 @@ namespace HistoriskAtlas5.Frontend
             if (this.passedGeo != null)
                 return null;
 
-            HAThemes themes = (new Service<HAThemes>()).Get("theme.json?v=1&schema={theme:[id,name,mapid,maplatitude,maplongitude,mapzoom,tagid,{content:[{texts:[headline,text1]}]}]}&id=" + deep);
+            //HAThemes themes = (new Service<HAThemes>()).Get("theme.json?v=1&schema={theme:[id,name,mapid,maplatitude,maplongitude,mapzoom,tagid]}&id=" + deep);
+            HAThemes themes = (new Service<HAThemes>()).Get("theme.json?v=1&schema={theme:[id,name,mapid,maplatitude,maplongitude,mapzoom,tagid,{content:[id,geoid,ordering,deleted,contenttypeid,{texts:[empty,id,created,{user:[firstname,lastname]},headline,text1]},{biblios:[empty,id,created,cql]},{externalcontent:[empty,id,created,externalsourceid,text,link]},{tag_contents:[{collapse:tagid}]}]}]}&id=" + deep);
+            
 
             if (themes.data.Length == 0)
                 return null;

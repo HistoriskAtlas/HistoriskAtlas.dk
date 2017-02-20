@@ -17,7 +17,7 @@ class HorizontalTagList extends polymer.Base implements polymer.Element {
     public addingTag: boolean;
 
     @property({ type: Object })
-    public tagsService: Tags;
+    public tagsService: Tags | HaGeoService;
 
     addTagTap() {
         this.addingTag = !this.addingTag;

@@ -78,9 +78,18 @@ class PanelTheme extends polymer.Base implements polymer.Element {
 
     @observe('theme')
     themeChanged() {
+        //if (this.theme.content == undefined && this.theme != Global.defaultTheme) { //If theme selected from deep link
+        //    Services.get('theme', {
+        //        id: this.theme.id,
+        //        schema: '{theme:[' + ContentViewer.contentSchema + ']}',
+        //    }, (result) => {
+        //        this.set('theme.content', (<ITheme>result.data[0]).content);
+        //    })
+        //}
+
         if (this.isHoD2017(this.theme)) { //TODO: fetch using HoD2017 destination SUB tags instead
-            //App.haCollections.getCollectionsByTagId(733) not working yet......
-            App.haCollections.getPublishedCollections();
+            App.haCollections.getCollectionsByTagId(733); //not working yet......
+            //App.haCollections.getPublishedCollections();
             this.set('routeTopLevels', [
                 { name: 'Landsdækkende rutenet', shown: false, filter: (collection: HaCollection) => true }, //collection.tags.indexOf(App.haTags.byId[733]) > -1
                 { name: 'Vandrehistorier', shown: false, filter: (collection: HaCollection) => true }

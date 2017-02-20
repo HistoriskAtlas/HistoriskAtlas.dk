@@ -172,7 +172,7 @@
     }
 
     public saveNewGeo(geo: HaGeo) {
-        Services.insert('collection_geo', { collectionid: this._id, geoid: geo.id, ordering: this.geos.indexOf(geo) }, (result) => {});
+        Services.insert('collection_geo', { collectionid: this._id, geoid: geo.id, ordering: this.geos.indexOf(geo) }, (result) => { });
     }
 
     public saveProp(prop: string) {
@@ -190,7 +190,7 @@
             geoid: geo.id,
             deletemode: 'permanent'
         };
-        Services.delete('collection_geo', data, (result) => {});
+        Services.delete('collection_geo', data, (result) => { });
     }
 
     public updateOrdering(indexStart: number, indexEnd: number) {
@@ -207,7 +207,7 @@
                 geoid: this._geos[i].id,
                 ordering: i
             };
-            Services.update('collection_geo', data, (result) => {});
+            Services.update('collection_geo', data, (result) => { });
         }
         //setTimeout(() => {
         //    for (var i = indexStart; i <= indexEnd; i++) {
@@ -218,6 +218,36 @@
 
         //Services.update('collection_geo', { collectionid: this._id, geoid: this._geos[indexStart].id, ordering: indexStart }, (result) => { });
         //Services.update('collection_geo', { collectionid: this._id, geoid: this._geos[indexEnd].id, ordering: indexEnd }, (result) => { });
+    }
+
+    public showOnMap() {
+
+        if (this.geos.length == 0)
+            return;
+
+        if (this.geos.length == 1) {
+            App.map.centerAnim(this.geos[0].coord, 10000, true);
+            return;
+        }
+
+        var minLon: number = Number.MAX_VALUE;
+        var maxLon: number = Number.MIN_VALUE;
+        var minLat: number = Number.MAX_VALUE;
+        var maxLat: number = Number.MIN_VALUE;
+
+        for (var geo of this.geos) {
+            if (geo.coord[1] < minLat)
+                minLat = geo.coord[1];
+            if (geo.coord[1] > maxLat)
+                maxLat = geo.coord[1];
+            if (geo.coord[0] < minLon)
+                minLon = geo.coord[0];
+            if (geo.coord[0] > maxLon)
+                maxLon = geo.coord[0];
+        }
+
+
+        App.map.centerAnim([(minLon + maxLon) / 2, (minLat + maxLat) / 2], Math.max((maxLon - minLon) * 1.8, (maxLat - minLat) * 1.5) / 2, true);
     }
 
 }

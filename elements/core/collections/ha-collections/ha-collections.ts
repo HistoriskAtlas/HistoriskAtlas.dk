@@ -4,6 +4,9 @@ class HaCollections extends Tags implements polymer.Element {
     @property({ type: Array, notify: true })
     public collections: Array<HaCollection> = [];
 
+    @property({ type: Array })
+    public geos: Array<HaGeo>;
+
     @property({ type: Object, notify: true })
     public collection: HaCollection;
 
@@ -11,12 +14,14 @@ class HaCollections extends Tags implements polymer.Element {
     //private drawRouteRequestCount: number = 0;
 
     public allCollectionsFetched: boolean = false;
+    private static awitingGeos: Array<() => any> = [];
 
     public getPublishedCollections() {
         if (this.allCollectionsFetched)
             return;
 
-        //TODO: wait for geos to load?...................
+        if (this.awaitGeos(() => this.getPublishedCollections()))
+            return;
 
         this.allCollectionsFetched = true;
         App.map.showRouteLayer();
@@ -27,16 +32,36 @@ class HaCollections extends Tags implements polymer.Element {
     }
 
     public getCollectionsFromUser() {
-        //TODO: wait for geos to load?...................
+        if (this.awaitGeos(() => this.getCollectionsFromUser()))
+            return;
+
         App.map.showRouteLayer();
         this.getCollections({ count: 'all', schema: '{collection:[collectionid,title,ugc,distance,type,{userid:' + App.haUsers.user.id + '},{collection_geos:[geoid,ordering]}]}', online: false });
     }
 
     public getCollectionsByTagId(tagId: number) {
-        //TODO: wait for geos to load?...................
+        if (this.awaitGeos(() => this.getCollectionsByTagId(tagId)))
+            return;
         //TODO: NOT WORKING?!?!..... whats wrong? SID? API bug?...........................................................................
         App.map.showRouteLayer();
         this.getCollections({ count: 'all', schema: '{collection:{fields:[collectionid,title,ugc,distance,type,userid,{collection_geos:[geoid,ordering]}],filters:[{content:[{tag_contents:[{id:' + tagId + '}]}]}]}}', online: true });
+    }
+
+    private awaitGeos(callback: () => any): boolean {
+        if (App.haGeos.geos.length == 0) {
+            HaCollections.awitingGeos.push(callback);
+            return true;
+        }
+        return false
+    }
+
+    @observe('geos.length')
+    geosLengthChanged(changeRecord: any) {
+        if (this.geos.length == 0 || HaCollections.awitingGeos.length == 0)
+            return;
+
+        while (HaCollections.awitingGeos.length > 0)
+            HaCollections.awitingGeos.shift()();
     }
 
 
@@ -95,6 +120,8 @@ class HaCollections extends Tags implements polymer.Element {
             this.push('collection.geos', addGeo);
             collection.saveNewGeo(addGeo);
         }
+
+        collection.showOnMap();
 
         Services.get('geo', { count: 'all', schema: '{geo:{fields:[geoid,title],filters:[{collection_geos:[{collectionid:' + collection.id + '}]}]}}' }, (result) => {
             var geos: Array<HaGeo> = [];

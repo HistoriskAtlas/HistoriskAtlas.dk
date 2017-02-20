@@ -53,8 +53,8 @@ namespace HistoriskAtlas5.Frontend
                     sb.Include("~/classes/appmode.js");
                 }
 
-                sb.Include("~/classes/HAClasses/Collections/tags.js"); //Because of class inheritance
-                sb.Include("~/classes/HAClasses/Collections/apptags.js"); //Because of class inheritance
+                //sb.Include("~/classes/HAClasses/Collections/base/tags.js"); //Because of class inheritance
+                //sb.Include("~/classes/HAClasses/Collections/apptags.js"); //Because of class inheritance
                 sb.IncludeDirectory("~/classes/HAClasses", "*.js", true);
 
                 switch(bundle)

@@ -135,7 +135,8 @@ class App extends polymer.Base implements polymer.Element {
     @observe("timeWarpMap")
     timeWarpMapChanged(newVal: HaMap, oldVal: HaMap) {
         if (App.map)
-            App.map.timeWarp.HaMap = newVal;
+            if (App.map.timeWarp)
+                App.map.timeWarp.HaMap = newVal;
         this.timeWarpYear = newVal.orgEndYear;
     }
 

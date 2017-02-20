@@ -41,7 +41,7 @@ class TimeWarp extends TileLayer {
     constructor(mainMap: MainMap, mapID: number) {
         super(mainMap, mapID);
         this.bindEvents();
-
+        
         this.setVisible(false);
         this.position = [mainMap.getSize()[0] - this.closedPositionRight, this.closedPositionTop];
         this.radius = this.closedRadius;
@@ -50,6 +50,9 @@ class TimeWarp extends TileLayer {
         this.toggleMode();
 
         $(window).resize(() => TimeWarpButton.updateTimeWarpUI());
+
+        if (App.haMaps.timeWarpMap)
+            this.HaMap = App.haMaps.timeWarpMap;
     }
 
     public toggle(show: boolean) {
