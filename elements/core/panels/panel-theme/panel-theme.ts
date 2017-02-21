@@ -74,6 +74,7 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         else
             this.theme = theme;
 
+
     }
 
     @observe('theme')
@@ -87,15 +88,26 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         //    })
         //}
 
-        if (this.isHoD2017(this.theme)) { //TODO: fetch using HoD2017 destination SUB tags instead
-            App.haCollections.getCollectionsByTagId(733); //not working yet......
+
+        //if (this.isHoD2017(this.theme)) { //TODO: fetch using HoD2017 destination SUB tags instead... and generalize
+
+        var routeTopLevels: Array<ICollectionTopLevel> = [];
+        if (this.theme.tagid && this.theme != Global.defaultTheme) {
+            App.haCollections.getCollectionsByTagId(this.theme.tagid);
             //App.haCollections.getPublishedCollections();
-            this.set('routeTopLevels', [
-                { name: 'Landsdækkende rutenet', shown: false, filter: (collection: HaCollection) => true }, //collection.tags.indexOf(App.haTags.byId[733]) > -1
-                { name: 'Vandrehistorier', shown: false, filter: (collection: HaCollection) => true }
-            ]);
-        } else
-            this.set('routeTopLevels', []);
+            for (var tag of App.haTags.byId[this.theme.tagid].children) {
+                if (tag.isPublicationDestination) //TODO: other category?
+                    routeTopLevels.push({ name: tag.singName, shown: false, selected: false, filter: (collection: HaCollection) => { return collection.tags.indexOf(App.haTags.byId[tag.id]) > -1; } });
+                                                                                                                                                        //TOOD: scope OUT?!..................................
+            }
+        }
+        this.set('routeTopLevels', routeTopLevels);
+            //this.set('routeTopLevels', [
+            //    { name: 'Landsdækkende rutenet', shown: false, filter: (collection: HaCollection) => collection.tags.indexOf(App.haTags.byId[734]) > -1 },
+            //    { name: 'Vandrehistorier', shown: false, filter: (collection: HaCollection) => collection.tags.indexOf(App.haTags.byId[735]) > -1 }
+            //]);
+        //} else
+        //    this.set('routeTopLevels', []);
     }
 
     newHaContent(content: IContent): HaContent {

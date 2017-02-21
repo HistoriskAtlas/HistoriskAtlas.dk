@@ -161,6 +161,10 @@
         return this.category == 3;
     }
 
+    get isPublicationDestination(): boolean {
+        return this.category == 8;
+    }
+
     get hasChildren(): boolean {
         return this._children.length > 0;
     }

@@ -42,9 +42,8 @@ class HaCollections extends Tags implements polymer.Element {
     public getCollectionsByTagId(tagId: number) {
         if (this.awaitGeos(() => this.getCollectionsByTagId(tagId)))
             return;
-        //TODO: NOT WORKING?!?!..... whats wrong? SID? API bug?...........................................................................
         App.map.showRouteLayer();
-        this.getCollections({ count: 'all', schema: '{collection:{fields:[collectionid,title,ugc,distance,type,userid,{collection_geos:[geoid,ordering]}],filters:[{content:[{tag_contents:[{id:' + tagId + '}]}]}]}}', online: true });
+        this.getCollections({ count: 'all', schema: '{collection:{fields:[collectionid,title,ugc,distance,type,userid,{collection_geos:[geoid,ordering]},{content:[{tag_contents:[{collapse:id}]}]}],filters:[{content:[{tag_contents:[{id:' + tagId + '}]}]}]}}', online: true });
     }
 
     private awaitGeos(callback: () => any): boolean {
@@ -65,12 +64,18 @@ class HaCollections extends Tags implements polymer.Element {
     }
 
 
-    private getCollections(sendData: any) {
+    private getCollections(sendData: any, options?: any) {
         Services.get('collection', sendData, (result) => {
             var collections: Array<HaCollection> = this.collections;
             for (var data of result.data) {
                 data.online = sendData.online;
-                collections.push(new HaCollection(data));
+
+                var collection = new HaCollection(data);
+                if (data.content)
+                    for (var tagId of data.content.tag_contents)
+                        collection.tags.push(App.haTags.byId[tagId]);
+
+                collections.push(collection);
             }
             this.set('collections', collections);
             this.notifySplices('collections', [{ index: 0, removed: [], addedCount: collections.length, object: this.collections }]);
