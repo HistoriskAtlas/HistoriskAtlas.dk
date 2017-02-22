@@ -97,8 +97,7 @@ class PanelTheme extends polymer.Base implements polymer.Element {
             //App.haCollections.getPublishedCollections();
             for (var tag of App.haTags.byId[this.theme.tagid].children) {
                 if (tag.isPublicationDestination) //TODO: other category?
-                    routeTopLevels.push({ name: tag.singName, shown: false, selected: false, filter: (collection: HaCollection) => { return collection.tags.indexOf(App.haTags.byId[tag.id]) > -1; } });
-                                                                                                                                                        //TOOD: scope OUT?!..................................
+                    routeTopLevels.push(((tagId: number) => <ICollectionTopLevel>{ name: tag.singName, shown: false, selected: false, filter: (collection: HaCollection) => { return collection.tags.indexOf(App.haTags.byId[tagId]) > -1; } })(tag.id));
             }
         }
         this.set('routeTopLevels', routeTopLevels);
