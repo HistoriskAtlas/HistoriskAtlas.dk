@@ -41,3 +41,4 @@ var HaText = (function () {
     });
     return HaText;
 }());
+//# sourceMappingURL=hatext.js.map

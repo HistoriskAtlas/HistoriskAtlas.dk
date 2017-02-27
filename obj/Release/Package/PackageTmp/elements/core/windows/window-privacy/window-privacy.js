@@ -24,3 +24,4 @@ var WindowPrivacy = (function (_super) {
     return WindowPrivacy;
 }(polymer.Base));
 WindowPrivacy.register();
+//# sourceMappingURL=window-privacy.js.map

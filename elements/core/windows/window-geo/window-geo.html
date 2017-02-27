@@ -147,7 +147,7 @@
                                 <menu-item spacer></menu-item>
                             </template>
                             <template is="dom-if" if="[[isWriter()]]">
-                                <menu-item on-tap="addToRouteTap">Tilføj til rute</menu-item>
+                                <menu-item on-tap="addToRouteTap">Tilføj til turforslag</menu-item>
                             </template>
                             <menu-item on-tap="addToFavouritesTap">Tilføj til favoritter</menu-item>
                             <template is="dom-if" if="[[editing]]">
@@ -226,7 +226,7 @@
                         <plain-text id="plainTextTitle" content="{{geo.title}}" editable="[[editing]]" placeholder="Skriv en kort titel her..." maxlength="255" class="intro-headline" enable-editor-panel></plain-text>
                         <div class="intro-under-headline">
                             <!--<div class="intro-by">af <span class$="[[byLineClass(geo.ugc)]]">[[creator(geo.user,geo.tags.*)]]</span></div>--> <!--TODO: replace geo.tags.* with institutions (from ha-geo)-->
-                            <window-geo-by-line user="[[geo.user]]" institutions="[[institutions]]"></window-geo-by-line>
+                            <by-line user="[[geo.user]]" institutions="[[institutions]]"></by-line>
                             <licens-mark licens="[[licens]]" editing="[[editing]]" class="intro-licens"></licens-mark>
                         </div>
                         <plain-text content="{{geo.intro}}" editable="[[editing]]" placeholder="Skriv en kort introduktion her..." maxlength="300" allow-linebreaks enable-editor-panel enable-read-more style="flex-shrink:0"></plain-text>

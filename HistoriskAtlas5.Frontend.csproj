@@ -85,7 +85,7 @@
     <Content Include="elements\core\content-viewer\content-viewer.html" />
     <Content Include="elements\core\windows\abouts\window-member-signup\window-member-signup.html" />
     <Content Include="elements\core\windows\window-institution\window-institution.html" />
-    <Content Include="elements\core\windows\window-geo\window-geo-by-line\window-geo-by-line.html" />
+    <Content Include="elements\core\by-line\by-line.html" />
     <Content Include="elements\editor\windows\window-editorial\panel-user-editorial\panel-user-editorial.html" />
     <Content Include="elements\editor\windows\window-editorial\panel-geo-editorial\panel-geo-editorial.html" />
     <Content Include="elements\editor\windows\window-editorial\window-editorial.html" />
@@ -104,7 +104,7 @@
     <Content Include="elements\admin\windows\window-admin\panel-admin\panel-admin.html" />
     <Content Include="elements\core\panels\panel-route\panel-route.html" />
     <Content Include="elements\core\red-ribbon\red-ribbon.html" />
-    <Content Include="elements\core\panels\panel-intro-beta\panel-intro-beta.html" />
+    <Content Include="elements\thrash\panel-intro-beta\panel-intro-beta.html" />
     <Content Include="elements\core\panels\panel-map\panel-map.html" />
     <Content Include="elements\core\panels\panel-digdag\panel-digdag.html" />
     <Content Include="elements\core\map\map-controls\map-controls.html" />
@@ -154,7 +154,7 @@
     <Content Include="elements\writer\windows\window-profile\window-profile.html" />
     <Content Include="elements\core\windows\window-image\window-image.html" />
     <Content Include="elements\core\windows\window-favourites\window-favourites.html" />
-    <Content Include="elements\core\windows\window-intro-beta\window-intro-beta.html" />
+    <Content Include="elements\thrash\window-intro-beta\window-intro-beta.html" />
     <Content Include="elements\core\windows\window-region-type\window-region-type.html" />
     <Content Include="elements\core\windows\window-region\window-region.html" />
     <Content Include="elements\core\windows\window-map\window-map.html" />
@@ -502,13 +502,13 @@
     <TypeScriptCompile Include="elements\core\content-viewer\content-viewer.ts" />
     <TypeScriptCompile Include="elements\core\red-ribbon\red-ribbon.ts" />
     <TypeScriptCompile Include="elements\core\panels\panel-digdag\panel-digdag.ts" />
-    <TypeScriptCompile Include="elements\core\panels\panel-intro-beta\panel-intro-beta.ts" />
+    <TypeScriptCompile Include="elements\thrash\panel-intro-beta\panel-intro-beta.ts" />
     <TypeScriptCompile Include="elements\core\panels\panel-tag\panel-tag.ts" />
     <TypeScriptCompile Include="elements\core\panels\panel-map\panel-map.ts" />
     <TypeScriptCompile Include="elements\core\map\map-controls\map-controls.ts" />
     <TypeScriptCompile Include="elements\core\windows\abouts\window-member-signup\window-member-signup.ts" />
     <TypeScriptCompile Include="elements\core\windows\window-institution\window-institution.ts" />
-    <TypeScriptCompile Include="elements\core\windows\window-geo\window-geo-by-line\window-geo-by-line.ts" />
+    <TypeScriptCompile Include="elements\core\by-line\by-line.ts" />
     <TypeScriptCompile Include="elements\editor\windows\window-editorial\panel-user-editorial\panel-user-editorial.ts" />
     <TypeScriptCompile Include="elements\editor\windows\window-editorial\panel-geo-editorial\panel-geo-editorial.ts" />
     <TypeScriptCompile Include="elements\editor\windows\window-editorial\window-editorial.ts" />
@@ -558,7 +558,7 @@
     <TypeScriptCompile Include="elements\core\windows\window-image\window-image.ts" />
     <TypeScriptCompile Include="elements\core\windows\window-geo\window-geo.ts" />
     <TypeScriptCompile Include="elements\core\windows\window-favourites\window-favourites.ts" />
-    <TypeScriptCompile Include="elements\core\windows\window-intro-beta\window-intro-beta.ts" />
+    <TypeScriptCompile Include="elements\thrash\window-intro-beta\window-intro-beta.ts" />
     <TypeScriptCompile Include="elements\core\windows\window-region-type\window-region-type.ts" />
     <TypeScriptCompile Include="elements\core\windows\window-region\window-region.ts" />
     <TypeScriptCompile Include="elements\core\windows\window-map\window-map.ts" />

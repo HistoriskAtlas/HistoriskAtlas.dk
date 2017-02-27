@@ -88,8 +88,9 @@ class HaCollections extends Tags implements polymer.Element {
 
         if (path.length == 3) {
             if (path[2] == 'selected') {
-                //App.map.showRouteLayer();
-                var collection: HaCollection = this.collections[path[1].substring(1)];
+
+                //var collection: HaCollection = this.collections[path[1].substring(1)];
+                var collection: HaCollection = this.get(path[0] + '.' + path[1]);
 
                 //Services.get('geo', { count: 'all', schema: '{geo:{fields:[geoid,title],filters:[{collection_geos:[{collectionid:' + collection.id + '}]}]}}', sort: '{collection_geos:[ordering]}' }, (result) => {
                 //    var geos: Array<HaGeo> = [];
@@ -116,7 +117,7 @@ class HaCollections extends Tags implements polymer.Element {
         }
     }
 
-    public select(collection: HaCollection, addGeo?: HaGeo) {
+    public select(collection: HaCollection, addGeo?: HaGeo, mapClick: boolean = false) {
         App.map.showRouteLayer();
 
         this.$.selector.select(collection);
@@ -126,7 +127,8 @@ class HaCollections extends Tags implements polymer.Element {
             collection.saveNewGeo(addGeo);
         }
 
-        collection.showOnMap();
+        if (!mapClick)
+            collection.showOnMap();
 
         Services.get('geo', { count: 'all', schema: '{geo:{fields:[geoid,title],filters:[{collection_geos:[{collectionid:' + collection.id + '}]}]}}' }, (result) => {
             var geos: Array<HaGeo> = [];
@@ -146,7 +148,7 @@ class HaCollections extends Tags implements polymer.Element {
     }
 
     public newRoute(geo?: HaGeo) {
-        Common.dom.append(DialogText.create('Angiv titel på rute', (title) => this.newCollection(title, geo)));
+        Common.dom.append(DialogText.create('Angiv titel på turforslaget', (title) => this.newCollection(title, geo)));
     }
 
     private newCollection(title: string, geo?: HaGeo)/*: HaCollection*/ {
@@ -158,6 +160,15 @@ class HaCollections extends Tags implements polymer.Element {
                 this.push('collection.geos', geo);
                 collection.saveNewGeo(geo);
             }
+
+            var content = new HaContent({ contenttypeid: 0, ordering: 0, texts: [{ headline: '', text1: '' }] });
+            this.set('collection.content', content);
+            content.insert(() => {
+                Services.update('collection', { collectionid: this.collection.id, contentid: content.id });
+                if (App.haUsers.user.isPro)
+                    this.addTag(App.haUsers.user.currentInstitution.tag, true, true);
+            });
+
         });
         //return collection;
     }
@@ -187,7 +198,11 @@ class HaCollections extends Tags implements polymer.Element {
 
         if (!this.collection.content) {
 
-            Services.get('collection', { schema: '{collection:[' + ContentViewer.contentSchema + ']}', collectionid: this.collection.id }, (result) => { //,{collection_geos:[{collapse:geoid}]}
+            Services.get('collection', { schema: '{collection:[{user:[id,firstname,lastname]},' + ContentViewer.contentSchema + ']}', collectionid: this.collection.id }, (result) => { //,{collection_geos:[{collapse:geoid}]}
+
+                if (result.data[0].user.id != App.haUsers.user.id)
+                    this.set('collection.user', new HAUser(result.data[0].user));
+
                 if (result.data[0].content) {
                     this.set('collection.content', new HaContent(result.data[0].content))
                     if (result.data[0].content.tag_contents)
@@ -195,11 +210,11 @@ class HaCollections extends Tags implements polymer.Element {
                             this.addTag(App.haTags.byId[tagid], true, false);
                 }
                 else {
-                    var content = new HaContent({ contenttypeid: 0, ordering: 0, texts: [{ headline: '', text1: '' }] });
-                    this.set('collection.content', content);
-                    content.insert(() => {
-                        Services.update('collection', { collectionid: this.collection.id, contentid: content.id });
-                    });
+                    //var content = new HaContent({ contenttypeid: 0, ordering: 0, texts: [{ headline: '', text1: '' }] });
+                    //this.set('collection.content', content);
+                    //content.insert(() => {
+                    //    Services.update('collection', { collectionid: this.collection.id, contentid: content.id });
+                    //});
                 }
             })
         }
@@ -396,6 +411,12 @@ class HaCollections extends Tags implements polymer.Element {
     //        this.drawRoute();
     //    }
     //}
+
+    public deleteRoute(route: HaCollection) {
+        route.delete();
+        this.splice('collections', this.collections.indexOf(route), 1);
+        this.eraseRoute(route);
+    }
 
     private eraseRoute(collection: HaCollection) {
         //TODO: Handling of multiple requests while waiting for callback?....................

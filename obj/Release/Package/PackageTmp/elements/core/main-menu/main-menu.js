@@ -24,6 +24,7 @@ var MainMenu = (function (_super) {
         this.panelPeriod = this.$.panelPeriod;
         this.panelRoute = this.$.panelRoute;
         this.panelDigdag = this.$.panelDigdag;
+        //this.panelTheme = this.$$('#panelTheme');
         this.menuItems = [];
         var elems = this.querySelectorAll('main-menu-item');
         for (var i = 0; i < elems.length; i++)
@@ -202,3 +203,4 @@ var MainMenu = (function (_super) {
     return MainMenu;
 }(polymer.Base));
 MainMenu.register();
+//# sourceMappingURL=main-menu.js.map

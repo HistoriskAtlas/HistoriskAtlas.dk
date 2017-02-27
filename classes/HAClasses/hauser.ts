@@ -119,6 +119,6 @@
     public canEditCollection(collection: HaCollection): boolean {
         if (!collection)
             return false;
-        return collection.userid == this._id; //TODO: should check for "userLayer" as above.....
+        return collection.user.id == this._id; //TODO: should check for "userLayer" as above.....
     }
 }

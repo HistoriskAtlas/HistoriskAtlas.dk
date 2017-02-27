@@ -195,7 +195,7 @@ class WindowGeo extends polymer.Base implements polymer.Element {
     }
 
     addToRouteTap() {
-        Common.dom.append(DialogRouteSelection.create('Tilføj til rute...', this.geo));
+        Common.dom.append(DialogRouteSelection.create('Tilføj til turforslag...', this.geo));
     }
 
     deleteGeo() { 

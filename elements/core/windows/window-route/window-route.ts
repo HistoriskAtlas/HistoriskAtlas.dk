@@ -19,15 +19,20 @@ class WindowRoute extends polymer.Base implements polymer.Element {
     @property({ type: Array, notify: true })
     public destinations: Array<HaTag>;
 
+    @property({ type: Array })
+    public institutions: Array<HaTag>;
+
     @listen('windowbasic.closed') 
     windowBasicClosed() {
-        this.route.saveProp('distance');
-        App.haCollections.deselect(this.route)
+        if (this.route) {
+            this.route.saveProp('distance');
+            App.haCollections.deselect(this.route);
+        }
         //App.map.routeLayer.clear();
     }
 
     renameTap() {
-        Common.dom.append(DialogText.create('Angiv ny titel på rute', (title) => this.set('route.title', title)));
+        Common.dom.append(DialogText.create('Angiv ny titel på turforslag', (title) => this.set('route.title', title)));
     }
 
     editorialTap() {
@@ -38,11 +43,24 @@ class WindowRoute extends polymer.Base implements polymer.Element {
     }
 
     togglePublishText(online: boolean): string {
-        return (online ? 'Afp' : 'P') + 'ublicér rute';
+        return (online ? 'Afp' : 'P') + 'ublicér turforslag';
     }
     togglePublishedTap() {
         this.set('route.online', !this.route.online);
     }
+
+    deleteTap() {
+        $(this).append(DialogConfirm.create('delete-route', 'Er du sikker på at du vil slette dette turforslag?'));
+    }
+    @listen('delete-route-confirmed')
+    deleteRouteConfirmed() {
+        var route = this.route;
+        this.set('route.selected', false);
+        App.haCollections.deselect(this.route);
+        App.haCollections.deleteRoute(route);
+        this.$.windowbasic.close();
+    }
+
 
     //@observe('route')
     //routeChanged(val: HaCollection) {
@@ -102,8 +120,8 @@ class WindowRoute extends polymer.Base implements polymer.Element {
     @listen('geoAutosuggestRemoved')
     geoRemoved(e: any) {
         var geo = App.haGeos.geos[e.detail.id];
-        this.splice('route.geos', this.route.geos.indexOf(geo), 1);
         this.route.removeGeo(geo);
+        this.splice('route.geos', this.route.geos.indexOf(geo), 1);
         //this.updateRouteLayer();
     }
 

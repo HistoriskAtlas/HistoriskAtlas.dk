@@ -56,7 +56,7 @@ var HorizontalTagList = (function (_super) {
     ], HorizontalTagList.prototype, "addingTag", void 0);
     __decorate([
         property({ type: Object }), 
-        __metadata('design:type', Tags)
+        __metadata('design:type', Object)
     ], HorizontalTagList.prototype, "tagsService", void 0);
     __decorate([
         observe('tags.length'), 
@@ -71,3 +71,4 @@ var HorizontalTagList = (function (_super) {
     return HorizontalTagList;
 }(polymer.Base));
 HorizontalTagList.register();
+//# sourceMappingURL=horizontal-tag-list.js.map

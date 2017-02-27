@@ -8,7 +8,7 @@ var HaSubContentText = (function (_super) {
     function HaSubContentText(data, content) {
         _super.call(this, data, content);
         this._text = Common.rich2html(data.text1);
-        this._headline = Common.rich2html(data.headline);
+        this._headline = Common.rich2html(data.headline); //TODO: conversion needed?
     }
     Object.defineProperty(HaSubContentText.prototype, "text", {
         get: function () {
@@ -51,3 +51,4 @@ var HaSubContentText = (function (_super) {
     };
     return HaSubContentText;
 }(HaSubContent));
+//# sourceMappingURL=hasubcontenttext.js.map

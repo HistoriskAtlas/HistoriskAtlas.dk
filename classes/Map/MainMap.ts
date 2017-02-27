@@ -258,7 +258,7 @@
             }
 
             if (this.curHoverObject instanceof HaCollection)
-                App.haCollections.select(<HaCollection>this.curHoverObject);
+                App.haCollections.select(<HaCollection>this.curHoverObject, null, true);
 
             if (this.curHoverObject instanceof HaRegion)
                 Common.dom.append(WindowRegion.create(<HaRegion>this.curHoverObject));

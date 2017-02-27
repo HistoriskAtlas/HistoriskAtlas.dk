@@ -20,8 +20,8 @@
                 font-style: italic;
                 margin: 0px 10px 20px 10px;
                 display: flex;
-                justify-content: space-between;
-                align-items: center;
+                /*justify-content: space-between;*/
+                align-items: baseline;
             }
             .dropdown-content {
                 padding: 5px 5px 3px 5px;
@@ -42,6 +42,8 @@
                             <menu-item on-tap="renameTap">Omdøb</menu-item>
                             <menu-item on-tap="togglePublishedTap">[[togglePublishText(route.online)]]</menu-item>
                             <menu-item on-tap="editorialTap">Redaktion</menu-item>
+                            <menu-item spacer></menu-item>
+                            <menu-item on-tap="deleteTap">Slet turforslag</menu-item>
                         </paper-menu>
                     </paper-menu-button>
                 </template>
@@ -49,26 +51,29 @@
 
             <div class="content">
                 <content-viewer content="{{route.content}}" editing="[[editing]]"></content-viewer>
-                <div class="info-line">
-                    
-                    <template is="dom-if" if="[[editing]]">
-                        <paper-menu-button id="paperMenuButtonType" horizontal-align="right">
-                            <div class="dropdown-trigger">
-                                <span>[[formatType(route.type)]]</span>
-                                <iron-icon icon="arrow-drop-down"></iron-icon>
-                            </div>
-                            <div class="dropdown-content">
-                                <template is="dom-repeat" items="[[types()]]">
-                                    <div on-tap="typeTap">[[item]]</div>
-                                </template>
-                            </div>
-                        </paper-menu-button>
-                    </template>
-                    <template is="dom-if" if="[[!editing]]">
-                        <span>[[formatType(route.type)]]</span>
-                    </template>
+                
+                <div style="display: flex; align-items:baseline">
+                    <by-line user="[[route.user]]" institutions="[[institutions]]"></by-line>
+                    <div class="info-line">
+                        <template is="dom-if" if="[[editing]]">
+                            <paper-menu-button id="paperMenuButtonType" horizontal-align="right">
+                                <div class="dropdown-trigger">
+                                    <span>[[formatType(route.type)]]</span>
+                                    <iron-icon icon="arrow-drop-down"></iron-icon>
+                                </div>
+                                <div class="dropdown-content">
+                                    <template is="dom-repeat" items="[[types()]]">
+                                        <div on-tap="typeTap">[[item]]</div>
+                                    </template>
+                                </div>
+                            </paper-menu-button>
+                        </template>
+                        <template is="dom-if" if="[[!editing]]">
+                            <span>[[formatType(route.type)]]</span>
+                        </template>
 
-                    <span>[[formatDistance(route.distance)]]</span>
+                        <span style="padding-left: 5px;">[[formatDistance(route.distance)]]</span>
+                    </div>
                 </div>
 
                 <template is="dom-if" if="[[editing]]">

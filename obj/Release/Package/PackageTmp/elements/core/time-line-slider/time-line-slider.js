@@ -27,6 +27,7 @@ var TimeLineSlider = (function (_super) {
             slider._x = slider._startx + dx;
             var immediateValue = slider._calcStep(slider._calcKnobPosition(slider._x / slider._w));
             slider._setImmediateValue(immediateValue);
+            // update knob's position
             var translateY = ((slider._calcRatio(immediateValue) * slider._w) - slider._knobstartx);
             slider.translate3d(translateY + 'px', 0, 0, slider.$.sliderKnob);
         };
@@ -39,12 +40,16 @@ var TimeLineSlider = (function (_super) {
             slider._setTransiting(true);
             slider._positionKnob(ratio);
             slider.debounce('expandKnob', slider._expandKnob, 60);
+            // if the ratio doesn't change, sliderKnob's animation won't start
+            // and `_knobTransitionEnd` won't be called
+            // Therefore, we need to manually update the `transiting` state
             if (prevRatio === slider.ratio) {
                 slider._setTransiting(false);
             }
             slider.async(function () {
                 slider.fire('change');
             });
+            // cancel selection
             event.preventDefault();
         };
     };
@@ -59,3 +64,4 @@ var TimeLineSlider = (function (_super) {
     return TimeLineSlider;
 }(polymer.Base));
 TimeLineSlider.register();
+//# sourceMappingURL=time-line-slider.js.map

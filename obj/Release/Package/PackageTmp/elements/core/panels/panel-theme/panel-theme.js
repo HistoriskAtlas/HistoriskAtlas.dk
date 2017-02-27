@@ -68,15 +68,32 @@ var PanelTheme = (function (_super) {
             this.theme = theme;
     };
     PanelTheme.prototype.themeChanged = function () {
-        if (this.isHoD2017(this.theme)) {
-            App.haCollections.getPublishedCollections();
-            this.set('routeTopLevels', [
-                { name: 'Landsdækkende rutenet', shown: false, filter: function (collection) { return true; } },
-                { name: 'Vandrehistorier', shown: false, filter: function (collection) { return true; } }
-            ]);
+        //if (this.theme.content == undefined && this.theme != Global.defaultTheme) { //If theme selected from deep link
+        //    Services.get('theme', {
+        //        id: this.theme.id,
+        //        schema: '{theme:[' + ContentViewer.contentSchema + ']}',
+        //    }, (result) => {
+        //        this.set('theme.content', (<ITheme>result.data[0]).content);
+        //    })
+        //}
+        //if (this.isHoD2017(this.theme)) { //TODO: fetch using HoD2017 destination SUB tags instead... and generalize
+        var routeTopLevels = [];
+        if (this.theme.tagid && this.theme != Global.defaultTheme) {
+            App.haCollections.getCollectionsByTagId(this.theme.tagid);
+            //App.haCollections.getPublishedCollections();
+            for (var _i = 0, _a = App.haTags.byId[this.theme.tagid].children; _i < _a.length; _i++) {
+                var tag = _a[_i];
+                if (tag.isPublicationDestination)
+                    routeTopLevels.push((function (tagId) { return { name: tag.singName, shown: false, selected: false, filter: function (collection) { return collection.tags.indexOf(App.haTags.byId[tagId]) > -1; } }; })(tag.id));
+            }
         }
-        else
-            this.set('routeTopLevels', []);
+        this.set('routeTopLevels', routeTopLevels);
+        //this.set('routeTopLevels', [
+        //    { name: 'Landsdækkende rutenet', shown: false, filter: (collection: HaCollection) => collection.tags.indexOf(App.haTags.byId[734]) > -1 },
+        //    { name: 'Vandrehistorier', shown: false, filter: (collection: HaCollection) => collection.tags.indexOf(App.haTags.byId[735]) > -1 }
+        //]);
+        //} else
+        //    this.set('routeTopLevels', []);
     };
     PanelTheme.prototype.newHaContent = function (content) {
         if (!content)
@@ -142,3 +159,4 @@ var PanelTheme = (function (_super) {
     return PanelTheme;
 }(polymer.Base));
 PanelTheme.register();
+//# sourceMappingURL=panel-theme.js.map

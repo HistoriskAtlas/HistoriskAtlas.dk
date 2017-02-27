@@ -17,6 +17,8 @@ var PlainText = (function (_super) {
     function PlainText() {
         _super.apply(this, arguments);
     }
+    //@property({ type: Boolean, value: false })
+    //public hasFocus: boolean;
     PlainText.prototype.ready = function () {
         this.contentChanged();
     };
@@ -25,6 +27,7 @@ var PlainText = (function (_super) {
             this.$$('#content').textarea.focus();
     };
     PlainText.prototype.focus = function () {
+        //this.hasFocus = true;
         if (!this.editable || !this.enableEditorPanel)
             return;
         $(this.$$('#editorPanel')).css('opacity', 1);
@@ -32,8 +35,9 @@ var PlainText = (function (_super) {
         $(this.$$('#editorPanel')).css('padding-top', '5px');
     };
     PlainText.prototype.blur = function () {
+        //this.hasFocus = false;
         if (this.editable) {
-            this.content = this.immediateContent;
+            this.content = this.immediateContent; //TODO: also on inactivity....?
             if (this.enableEditorPanel) {
                 $(this.$$('#editorPanel')).css('opacity', 0);
                 $(this.$$('#editorPanel')).css('pointer-events', 'none');
@@ -47,8 +51,19 @@ var PlainText = (function (_super) {
         this.immediateContent = this.content;
     };
     PlainText.prototype.immediateContentChanged = function () {
-        this.length = this.immediateContent.length + (this.immediateContent.match(/\n/g) || []).length;
+        this.length = this.immediateContent.length + (this.immediateContent.match(/\n/g) || []).length; //"hack" to correctly count newline as 2 chars
     };
+    //@observe('enableEditorPanel')
+    //@observe('hasFocus')
+    //enableEditorPanelChanged() {
+    //    this.setMarginTop();
+    //}
+    //setMarginTop() {
+    //    $(this.$$('#content')).css('margin-top', this.enableEditorPanel ? (this.hasFocus ? '25px' : '17px') : '0px');
+    //}
+    //contentStyle(enableEditorPanel: boolean, hasFocus: boolean): string {
+    //    return 'margin-top: ' + (enableEditorPanel ? (hasFocus ? '25' : '17') : '0') + 'px';
+    //}
     PlainText.prototype.keydown = function (e) {
         if (e.which === 13 && !this.allowLinebreaks)
             e.preventDefault();
@@ -133,3 +148,4 @@ var PlainText = (function (_super) {
     return PlainText;
 }(polymer.Base));
 PlainText.register();
+//# sourceMappingURL=plain-text.js.map

@@ -141,3 +141,4 @@ var WindowImage = (function (_super) {
     return WindowImage;
 }(polymer.Base));
 WindowImage.register();
+//# sourceMappingURL=window-image.js.map

@@ -5,7 +5,9 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var Icon = (function (_super) {
     __extends(Icon, _super);
+    //private static styleCache: any = {};
     function Icon(geo, coord4326) {
+        //this.coord3857 = Common.toMapCoord([geo.lng, geo.lat]);
         var point = new ol.geom.Point(Common.toMapCoord(coord4326));
         _super.call(this, {
             geometry: point,
@@ -14,15 +16,23 @@ var Icon = (function (_super) {
         this.point = point;
         this.geo = geo;
         geo.icon = this;
-        this.setId(this.geo.id);
+        this.setId(this.geo.id); //TODO: what if not sat? ie, newly created.
         this.updateStyle();
     }
     Icon.prototype.translateCoord = function (deltaX, deltaY) {
+        //this.setGeometry(new ol.geom.Point(newCoord));
         this.point.translate(deltaX, deltaY);
+        //this.coord = this.point.getCoordinates();
+        //var coord4326 = this.coord4326;
+        //this.geo.lat = coord4326[1];
+        //this.geo.lng = coord4326[0];
+        //App.map.iconLayer.changed();
+        //App.map.renderSync();
     };
     Object.defineProperty(Icon.prototype, "coord3857", {
         get: function () {
             return this.point.getCoordinates();
+            //return this.coord;
         },
         set: function (coord) {
             this.point.setCoordinates(coord);
@@ -40,7 +50,24 @@ var Icon = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    //set coord(newCoord: ol.Coordinate) {
+    //    this.point.setCoordinates(newCoord);
+    //}
+    //public highlight(): void {
+    //    var old: Icon = IconLayer.higlightedIcon;
+    //    IconLayer.higlightedIcon = this;
+    //    if (old)
+    //        old.update();
+    //    this.update();
+    //}
+    //public lowlight(): void {
+    //    IconLayer.higlightedIcon = null;
+    //    this.update();
+    //}
     Icon.prototype.updateStyle = function () {
+        //var marker = this.marker;
+        //var style: ol.style.Style = Icon.styleCache[marker + '']
+        //if (!style) {
         var style = new ol.style.Style({
             image: this.iconStyle = new ol.style.Icon({
                 anchor: [0.5, 1.0],
@@ -48,6 +75,8 @@ var Icon = (function (_super) {
                 opacity: this.geo.online || this.geo.isMoving ? 1.0 : 0.5
             })
         });
+        //    Icon.styleCache[marker] = style;
+        //}
         if (!this.geo.isMoving) {
             this.setStyle(style);
             return;
@@ -76,6 +105,15 @@ var Icon = (function (_super) {
     };
     Object.defineProperty(Icon.prototype, "marker", {
         get: function () {
+            //var hasChildrenTag: HaTag;
+            //for (var tag of this.geo.tags)
+            //    if (tag.marker) {
+            //        if (!tag.hasChildren)
+            //            return this.geo.isUGC ? tag.invertedMarker : tag.marker;
+            //        hasChildrenTag = tag;
+            //    }
+            //if (hasChildrenTag)
+            //    return this.geo.isUGC ? hasChildrenTag.invertedMarker : hasChildrenTag.marker;        
             if (this.geo.isPartOfCurrentCollection)
                 return HaTags.numberMarker(App.haCollections.collection.geos.indexOf(this.geo) + 1);
             if (this.geo.primaryTag)
@@ -88,3 +126,4 @@ var Icon = (function (_super) {
     });
     return Icon;
 }(ol.Feature));
+//# sourceMappingURL=Icon.js.map

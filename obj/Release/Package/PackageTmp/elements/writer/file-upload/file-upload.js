@@ -14,10 +14,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var FileUpload = (function (_super) {
     __extends(FileUpload, _super);
+    //@property({ type: Object, value: {} })
+    //public headers: Object;
+    //@property({ type: String, value: '' })
+    //public target: string;
+    //ready() {
+    //    if (this.auto)
+    //        this.uploadClick();
+    //}
     function FileUpload(multi, accept) {
         _super.call(this);
         this.multi = multi;
         this.accept = accept;
+        //this.target = target;
     }
     FileUpload.prototype.uploadClick = function () {
         var elem = this.$.fileInput;
@@ -36,6 +45,10 @@ var FileUpload = (function (_super) {
             var file = e.dataTransfer.files[i];
             if (!this.multi && this.files.length !== 0)
                 return;
+            //var mimeType = ((file.type !== '') ? file.type.match(/^[^\/]*\//)[0] : null);
+            //var fileType = file.name.match(/\.[^\.]*$/)[0];
+            //if (this.accept !== '' && !(this.accept.indexOf(mimeType) > -1 || this.accept.indexOf(fileType) > -1))
+            //    return;
             this.uploadFile(file);
         }
     };
@@ -81,6 +94,9 @@ var FileUpload = (function (_super) {
         };
         var url = Common.api + 'upload.json?v=1&sid=' + document.sid;
         xhr.open('post', url, true);
+        //for (var key in this.headers)
+        //    if (this.headers.hasOwnProperty(key))
+        //        xhr.setRequestHeader(key, this.headers[key]);
         xhr.onload = function (e) {
             if (xhr.status === 200) {
                 _this.fire("success", { xhr: xhr, image: file.image });
@@ -122,3 +138,4 @@ var FileUpload = (function (_super) {
     return FileUpload;
 }(polymer.Base));
 FileUpload.register();
+//# sourceMappingURL=file-upload.js.map

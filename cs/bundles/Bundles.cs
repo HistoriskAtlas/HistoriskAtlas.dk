@@ -5,7 +5,7 @@ namespace HistoriskAtlas5.Frontend
     public class Bundles
     {
         //public static string htmlComponents;
-        private static string[] GeoOnlyElements = new string[] { "windows/window-basic", "windows/window-geo", "windows/window-geo/window-geo-biblio", "lists/horizontal-tag-list", "windows/window-geo/window-geo-by-line", "windows/window-image", "input/rich-text", "input/plain-text", "collections/base", "collections/ha-geo", "collections/ha-contents", "collections/ha-image", "collections/ha-licenses", "icons/licens-mark", "icons/cc-icons", "content-viewer" };
+        private static string[] GeoOnlyElements = new string[] { "windows/window-basic", "windows/window-geo", "windows/window-geo/window-geo-biblio", "lists/horizontal-tag-list", "by-line", "windows/window-image", "input/rich-text", "input/plain-text", "collections/base", "collections/ha-geo", "collections/ha-contents", "collections/ha-image", "collections/ha-licenses", "icons/licens-mark", "icons/cc-icons", "content-viewer" };
 
         public static void Create()
         {

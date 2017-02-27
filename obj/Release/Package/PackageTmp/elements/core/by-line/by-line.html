@@ -1,0 +1,38 @@
+﻿<dom-module id="by-line">
+    <style>
+        :host {
+            display: block;
+            font-style: italic;
+            line-height: 14px;
+            flex-grow: 1;
+        }
+        :host > :before {
+            cursor: initial;
+            color: initial;
+        }
+        :host > span:not(:empty):before {
+            content: 'af ';
+        }
+        :host > .institution+template+.institution:before {
+            content: ', ';
+        }
+        .user-1001:before {
+            content: ' / ' !important;
+        }
+        .institution {
+            cursor: pointer;
+            color: #005b9c;
+        }
+    </style>
+    <template>
+        <template is="dom-repeat" items="[[institutions]]">
+            <span class="institution" on-tap="institutionTap">[[item.plurName]]</span>
+            <template is="dom-if" if="[[show1001User(item)]]">
+                <span class="user-1001">[[user.fullname]]</span>
+            </template>
+        </template>
+        <template is="dom-if" if="[[showUser(institutions,user,institutions.length)]]">
+            <span class="user">[[user.fullname]]</span>
+        </template>
+    </template>
+</dom-module>

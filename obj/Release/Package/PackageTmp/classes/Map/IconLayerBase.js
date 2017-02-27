@@ -6,6 +6,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 var IconLayerBase = (function (_super) {
     __extends(IconLayerBase, _super);
     function IconLayerBase(source, style) {
+        //this.source = source;
         _super.call(this, {
             source: source,
             style: style,
@@ -29,11 +30,18 @@ var IconLayerBase = (function (_super) {
             this.oldDragCoordinate = event.coordinate;
             return;
         }
+        //if (this.dragDirtyGeo && this.dragDirtyGeo != geo) //TODO: alert?
+        //    return;
+        //this.dragDirtyGeo = geo;
         var deltaX = event.coordinate[0] - this.oldDragCoordinate[0];
         var deltaY = event.coordinate[1] - this.oldDragCoordinate[1];
         geo.translateCoord(deltaX, deltaY);
         this.oldDragCoordinate = event.coordinate;
+        //var pixel = App.map.getPixelFromCoordinate(geo.coord3857);
+        //App.mapYesNo.left = pixel[0];
+        //App.mapYesNo.top = pixel[1];
         App.map.preventDrag(event);
     };
     return IconLayerBase;
 }(ol.layer.Vector));
+//# sourceMappingURL=IconLayerBase.js.map

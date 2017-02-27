@@ -16,12 +16,14 @@ var HaRegions = (function (_super) {
     __extends(HaRegions, _super);
     function HaRegions() {
         _super.apply(this, arguments);
+        //@property({ type: Array, notify: true })
         this.regions = [];
     }
     HaRegions.prototype.ready = function () {
         this.$.ajax.url = Common.api + 'region.json';
     };
     HaRegions.prototype.regionTypeChanged = function (regionType) {
+        //TODO: Dont load this if touch only...
         if (!regionType)
             return;
         if (regionType.regionsLoaded)
@@ -39,7 +41,12 @@ var HaRegions = (function (_super) {
         var _this = this;
         this.$.ajax.lastResponse.data.forEach(function (data) {
             var region = new HaRegion(data);
+            //if (this.regions.length - 1 < region.id)
+            //    //this.regions.length = region.id + 1;
+            //    this.set('regions.length', region.id + 1);
             _this.regions[region.id] = region;
+            //this.set('regions.' + region.id, region);
+            //this.push('regions', new HaRegion(data));
         });
     };
     __decorate([
@@ -59,3 +66,4 @@ var HaRegions = (function (_super) {
     return HaRegions;
 }(polymer.Base));
 HaRegions.register();
+//# sourceMappingURL=ha-regions.js.map

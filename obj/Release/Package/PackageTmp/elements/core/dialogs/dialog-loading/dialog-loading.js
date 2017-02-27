@@ -59,3 +59,4 @@ var DialogLoading = (function (_super) {
     return DialogLoading;
 }(polymer.Base));
 DialogLoading.register();
+//# sourceMappingURL=dialog-loading.js.map

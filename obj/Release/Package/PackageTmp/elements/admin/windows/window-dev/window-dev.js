@@ -116,3 +116,4 @@ var WindowDev = (function (_super) {
     return WindowDev;
 }(polymer.Base));
 WindowDev.register();
+//# sourceMappingURL=window-dev.js.map

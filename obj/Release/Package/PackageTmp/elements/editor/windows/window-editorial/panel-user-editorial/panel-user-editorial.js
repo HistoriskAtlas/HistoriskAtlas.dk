@@ -62,8 +62,12 @@ var PanelUserEditorial = (function (_super) {
     };
     PanelUserEditorial.prototype.updateUsers = function (newList) {
         if (newList === void 0) { newList = null; }
+        //this.set('users', (newList ? newList : this.users).sort(this.compare));
         this.$.selector.sort(null, newList);
     };
+    //itemTap(e: any) {
+    //    Common.geoClick(e.model.item.id);
+    //}
     PanelUserEditorial.prototype.institutions = function (institutions) {
         var result = [];
         for (var _i = 0, institutions_1 = institutions; _i < institutions_1.length; _i++) {
@@ -119,3 +123,4 @@ var PanelUserEditorial = (function (_super) {
     return PanelUserEditorial;
 }(polymer.Base));
 PanelUserEditorial.register();
+//# sourceMappingURL=panel-user-editorial.js.map

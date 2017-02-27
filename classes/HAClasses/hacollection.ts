@@ -4,7 +4,7 @@
     private _geos: Array<HaGeo>;
     private _online: boolean;
     private _ugc: boolean;
-    private _userid: number;
+    private _user: HAUser;
     private _distance: number;
     private _type: number;
     private _content: HaContent;
@@ -32,7 +32,13 @@
         this._ugc = data.ugc;
         this._distance = data.distance;
         this._type = data.type;
-        this._userid = data.userid;
+
+        if (data.userid == App.haUsers.user.id) {
+            this._user = App.haUsers.user;
+        } else
+            this._user = new HAUser({ id: data.userid } );
+
+        //this._userid = data.userid;
 
         if (data.collection_geos) {
             var collection_geos = (<Array<any>>data.collection_geos).sort((a, b) => a.ordering - b.ordering);
@@ -91,8 +97,11 @@
         this._type = val;
     }
 
-    get userid(): number {
-        return this._userid;
+    get user(): HAUser {
+        return this._user;
+    }
+    set user(val: HAUser) {
+        this._user = val;
     }
 
     get selected(): boolean {
@@ -158,7 +167,7 @@
                     callback();
             })
         } else {
-            data.userid = this._userid;
+            data.userid = this.user.id;
             data.ugc = this._ugc;
             data.online = this._online;
             data.type = this._type;
@@ -180,7 +189,7 @@
         data[prop] = this['_' + prop];
         Services.update('collection', data, (result) => {
             if (prop == 'online')
-                App.toast.show('Ruten er nu ' + (this._online ? '' : 'af') + 'publiceret');
+                App.toast.show('Turforslaget er nu ' + (this._online ? '' : 'af') + 'publiceret');
         });
     }
 
@@ -188,6 +197,7 @@
         var data: any = {
             collectionid: this._id,
             geoid: geo.id,
+            ordering: this.geos.indexOf(geo),
             deletemode: 'permanent'
         };
         Services.delete('collection_geo', data, (result) => { });
@@ -225,6 +235,10 @@
         if (this.geos.length == 0)
             return;
 
+        for (var geo of this.geos) {
+
+        }
+
         if (this.geos.length == 1) {
             App.map.centerAnim(this.geos[0].coord, 10000, true);
             return;
@@ -248,6 +262,12 @@
 
 
         App.map.centerAnim([(minLon + maxLon) / 2, (minLat + maxLat) / 2], Math.max((maxLon - minLon) * 1.8, (maxLat - minLat) * 1.5) / 2, true);
+    }
+
+    public delete() {
+        Services.delete('collection', { collectionid: this._id, deletemode: 'permanent' }, (result) => {
+            App.toast.show('Turforslaget er slettet.');
+        })
     }
 
 }

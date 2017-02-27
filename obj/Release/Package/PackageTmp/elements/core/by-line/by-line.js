@@ -12,32 +12,33 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var WindowGeoByLine = (function (_super) {
-    __extends(WindowGeoByLine, _super);
-    function WindowGeoByLine() {
+var ByLine = (function (_super) {
+    __extends(ByLine, _super);
+    function ByLine() {
         _super.apply(this, arguments);
     }
-    WindowGeoByLine.prototype.show1001User = function (institution) {
-        return institution.id == 731;
+    ByLine.prototype.show1001User = function (institution) {
+        return institution.id == 731; //1001 institution
     };
-    WindowGeoByLine.prototype.showUser = function (institutions) {
-        return institutions.length == 0;
+    ByLine.prototype.showUser = function (institutions, user) {
+        return institutions.length == 0 && user != null;
     };
-    WindowGeoByLine.prototype.institutionTap = function (e) {
+    ByLine.prototype.institutionTap = function (e) {
         Common.dom.append(WindowInstitution.create(e.model.item));
     };
     __decorate([
         property({ type: Array }), 
         __metadata('design:type', Array)
-    ], WindowGeoByLine.prototype, "institutions", void 0);
+    ], ByLine.prototype, "institutions", void 0);
     __decorate([
         property({ type: Object }), 
         __metadata('design:type', HAUser)
-    ], WindowGeoByLine.prototype, "user", void 0);
-    WindowGeoByLine = __decorate([
-        component("window-geo-by-line"), 
+    ], ByLine.prototype, "user", void 0);
+    ByLine = __decorate([
+        component("by-line"), 
         __metadata('design:paramtypes', [])
-    ], WindowGeoByLine);
-    return WindowGeoByLine;
+    ], ByLine);
+    return ByLine;
 }(polymer.Base));
-WindowGeoByLine.register();
+ByLine.register();
+//# sourceMappingURL=by-line.js.map

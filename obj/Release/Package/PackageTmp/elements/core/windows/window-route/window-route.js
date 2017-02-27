@@ -18,12 +18,15 @@ var WindowRoute = (function (_super) {
         _super.apply(this, arguments);
     }
     WindowRoute.prototype.windowBasicClosed = function () {
-        this.route.saveProp('distance');
-        App.haCollections.deselect(this.route);
+        if (this.route) {
+            this.route.saveProp('distance');
+            App.haCollections.deselect(this.route);
+        }
+        //App.map.routeLayer.clear();
     };
     WindowRoute.prototype.renameTap = function () {
         var _this = this;
-        Common.dom.append(DialogText.create('Angiv ny titel på rute', function (title) { return _this.set('route.title', title); }));
+        Common.dom.append(DialogText.create('Angiv ny titel på turforslag', function (title) { return _this.set('route.title', title); }));
     };
     WindowRoute.prototype.editorialTap = function () {
         this.windowEditorialShown = !this.windowEditorialShown;
@@ -32,11 +35,43 @@ var WindowRoute = (function (_super) {
         this.windowEditorialShown = false;
     };
     WindowRoute.prototype.togglePublishText = function (online) {
-        return (online ? 'Afp' : 'P') + 'ublicér rute';
+        return (online ? 'Afp' : 'P') + 'ublicér turforslag';
     };
     WindowRoute.prototype.togglePublishedTap = function () {
         this.set('route.online', !this.route.online);
     };
+    WindowRoute.prototype.deleteTap = function () {
+        $(this).append(DialogConfirm.create('delete-route', 'Er du sikker på at du vil slette dette turforslag?'));
+    };
+    WindowRoute.prototype.deleteRouteConfirmed = function () {
+        var route = this.route;
+        this.set('route.selected', false);
+        App.haCollections.deselect(this.route);
+        App.haCollections.deleteRoute(route);
+        this.$.windowbasic.close();
+    };
+    //@observe('route')
+    //routeChanged(val: HaCollection) {
+    //    App.map.showRouteLayer()
+    //    //this.updateRouteLayer();
+    //}
+    //public setRoute(route: HaCollection) {
+    //    this.route = route;
+    //    App.map.routeLayer.clear();
+    //    for (var i = 1; i < route.geos.length; i++)
+    //        App.map.routeLayer.addPath(route.geos[i].icon.coord4326, route.geos[i - 1].icon.coord4326);
+    //}
+    //public addGeo(geo: HaGeo) {
+    //    this.push('route.geos', geo);
+    //    this.route.saveNewGeo(geo)
+    //    if (this.route.geos.length > 1) {
+    //        var lastGeo: HaGeo = this.route.geos[this.route.geos.length - 2];
+    //        App.map.routeLayer.addPath(geo.icon.coord4326, lastGeo.icon.coord4326);
+    //    }
+    //}
+    //geoTap(e: any) {
+    //    Common.dom.append(WindowGeo.create(<HaGeo>e.model.geo));
+    //}
     WindowRoute.prototype.getAutosuggestSchema = function (geos) {
         var existingIds = [];
         for (var _i = 0, geos_1 = geos; _i < geos_1.length; _i++) {
@@ -52,19 +87,40 @@ var WindowRoute = (function (_super) {
         var geo = App.haGeos.geos[e.detail.id];
         geo.title = e.detail.title;
         App.map.centerAnim(geo.coord, 3000, true, true);
+        //geo.zoomUntilUnclustered
         this.push('route.geos', geo);
         this.route.saveNewGeo(geo);
+        //if (this.route.geos.length > 1) {
+        //    var lastGeo: HaGeo = this.route.geos[this.route.geos.length - 2];
+        //    App.map.routeLayer.addPath(geo.icon.coord4326, lastGeo.icon.coord4326, (distance) => {
+        //        this.route.distance += distance;
+        //    });
+        //}
     };
     WindowRoute.prototype.geoRemoved = function (e) {
         var geo = App.haGeos.geos[e.detail.id];
-        this.splice('route.geos', this.route.geos.indexOf(geo), 1);
         this.route.removeGeo(geo);
+        this.splice('route.geos', this.route.geos.indexOf(geo), 1);
+        //this.updateRouteLayer();
     };
     WindowRoute.prototype.geoSortableListUpdate = function (e) {
         if (e.detail) {
-            this.route.updateOrdering(e.detail.oldIndex, e.detail.newIndex);
+            this.route.updateOrdering(e.detail.oldIndex, e.detail.newIndex); //TODO: wait for routelayer update so distance can also be saved, same in the two above.........?
         }
     };
+    //@observe('route.geos.splices')
+    //routeGeosSplices(changeRecord: ChangeRecord<HaGeo>) {
+    //    if (!changeRecord)
+    //        return;
+    //    for (var indexSplice of changeRecord.indexSplices) {
+    //        for (var geo of indexSplice.removed)
+    //            this.route.removeGeo(geo);
+    //        for (var i = indexSplice.index; i < indexSplice.index + indexSplice.addedCount; i++)
+    //            this.route.saveNewGeo(this.route.geos[i]);
+    //        if (indexSplice.addedCount > 0)
+    //            this.route.updateOrdering();
+    //    }
+    //}
     WindowRoute.prototype.formatDistance = function (distance) {
         return HaCollection.formatDistance(distance);
     };
@@ -109,11 +165,21 @@ var WindowRoute = (function (_super) {
         __metadata('design:type', Array)
     ], WindowRoute.prototype, "destinations", void 0);
     __decorate([
+        property({ type: Array }), 
+        __metadata('design:type', Array)
+    ], WindowRoute.prototype, "institutions", void 0);
+    __decorate([
         listen('windowbasic.closed'), 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', []), 
         __metadata('design:returntype', void 0)
     ], WindowRoute.prototype, "windowBasicClosed", null);
+    __decorate([
+        listen('delete-route-confirmed'), 
+        __metadata('design:type', Function), 
+        __metadata('design:paramtypes', []), 
+        __metadata('design:returntype', void 0)
+    ], WindowRoute.prototype, "deleteRouteConfirmed", null);
     __decorate([
         listen('geoAutosuggestSelected'), 
         __metadata('design:type', Function), 
@@ -145,3 +211,4 @@ var WindowRoute = (function (_super) {
     return WindowRoute;
 }(polymer.Base));
 WindowRoute.register();
+//# sourceMappingURL=window-route.js.map

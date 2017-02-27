@@ -93,9 +93,9 @@ class HaGeos extends polymer.Base implements polymer.Element {
         if (oldVal === undefined)
             return;
         if (newVal) {
-            this.processRequest({ themeTagID: this.theme.tagid, ugc: ugc, removeAlso: false, userLayer: false });
+            this.processRequest({ themeTagID: this.theme.tagid, ugc: ugc, removeAlso: false, userLayer: false });  //Was true!??!
             if (!App.haUsers.user.isDefault)
-                this.processRequest({ themeTagID: this.theme.tagid, ugc: ugc, removeAlso: false, userLayer: false });
+                this.processRequest({ themeTagID: this.theme.tagid, ugc: ugc, removeAlso: false, userLayer: true });
         }
         else
             this.removeByCreatorType(ugc)
@@ -235,7 +235,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
         if (this.curRequest.userLayer)
             schema.geo.fields.push('online');
 
-        if (App.haUsers.user.institutions)
+        if (App.haUsers.user.institutions && this.curRequest.userLayer) //added  && this.curRequest.userLayer
             if (App.haUsers.user.institutions.length > 0)
                 schema.geo.filters.push(
                     <any>{
