@@ -180,6 +180,11 @@ class HaCollections extends Tags implements polymer.Element {
             //App.map.routeLayer.clear();
             for (var geo of oldVal.geos)
                 geo.isPartOfCurrentCollection = false;
+            var viaPoints: Array<ol.Feature> = [];
+            for (var feature of oldVal.features)
+                if ((<any>feature).loc)
+                    viaPoints.push(feature)
+            App.map.routeLayer.removeFeatures(viaPoints);
             if (!newVal)
                 App.map.routeLayer.redraw();
         }
@@ -187,7 +192,9 @@ class HaCollections extends Tags implements polymer.Element {
         if (!newVal)
             return;
 
-        App.map.routeLayer.redraw();
+        //App.map.routeLayer.redraw();
+        //this.eraseRoute(newVal);
+        this.drawRoute(newVal, App.haUsers.user.canEditCollection(newVal));
 
         this.initTags('collection', /*this.collection.id,*/ 'content');
 
@@ -290,8 +297,8 @@ class HaCollections extends Tags implements polymer.Element {
         }
 
         for (var keySplice of changeRecord.keySplices) {
-            if (keySplice.removed.length > 0 || keySplice.added.length > 0) {
-                this.drawRoute();
+            if (keySplice.removed.length > 0 || keySplice.added.length > 0) { //&& indexSplice.index == this.collection.geos.length - 1
+                this.drawRoute(this.collection, true, keySplice.added.length > 0 ? indexSplice.index : null);
                 this.updateMarkers();
             }
 
@@ -343,7 +350,7 @@ class HaCollections extends Tags implements polymer.Element {
         //}
     }
 
-    private drawRoute(collection?: HaCollection) {
+    public drawRoute(collection?: HaCollection, drawViaPoints: boolean = true, addedPointIndex?: number) {
         if (!collection)
             collection = this.collection;
 
@@ -356,7 +363,15 @@ class HaCollections extends Tags implements polymer.Element {
         //}
 
         //App.map.routeLayer.clear();
-        App.map.routeLayer.removeFeatures(collection.features);
+        if (drawViaPoints)
+            App.map.routeLayer.removeFeatures(collection.features);
+        else {
+            var nonViaPoints: ol.Feature[] = [];
+            for (var feature of collection.features)
+                if ((<any>feature).locs)
+                    nonViaPoints.push(feature);
+            App.map.routeLayer.removeFeatures(nonViaPoints);
+        }
 
         //if (!this.collection)
         //    return;
@@ -374,7 +389,7 @@ class HaCollections extends Tags implements polymer.Element {
         for (var geo of collection.geos) { //TODO: Reuse features on collection when present?................
             //this.updateIconStyle(geo);
             if (lastGeo) {
-                App.map.routeLayer.addPath(geo.icon.coord4326, lastGeo.icon.coord4326, collection, (feature, distance) => { //TODO: use addFeatureS instead......
+                var viaPoint = App.map.routeLayer.addPath(geo.icon.coord4326, lastGeo.icon.coord4326, collection, drawViaPoints && geo.id == 0, (feature, distance) => { //TODO: use addFeatureS instead......
                     collection.features.push(feature);
                     totalDistance += Math.round(distance);
                     this.waitingForCallbackCount--;
@@ -383,6 +398,12 @@ class HaCollections extends Tags implements polymer.Element {
                         //this.nextUpdateRouteLayerRequest();
                     }
                 });
+
+                if (viaPoint) {
+                    (<any>viaPoint).geo = geo;
+                    if (addedPointIndex == collection.geos.indexOf(geo))
+                        App.map.curHoverFeature = viaPoint;
+                }
             }
             lastGeo = geo;
         }

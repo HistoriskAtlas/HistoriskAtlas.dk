@@ -4,6 +4,7 @@
     public routeLayer: RouteLayer;
     private curHoverObject: HaRegion | HaGeo | Array<HaGeo> | HaCollection | string;
     private oldHoverObject: HaRegion | HaGeo | Array<HaGeo> | HaCollection | string;
+    public curHoverFeature: ol.Feature;
     public backLayer: BackLayer;
     public timeWarp: TimeWarp;
     public hillshade: Hillshade;
@@ -165,6 +166,8 @@
                 return;
 
             this.iconLayer.moveEvent(event);
+            if (this.routeLayer)
+                this.routeLayer.moveEvent(event);
             this.getHoverObject(event.coordinate, pixel);
 
             if (this.curHoverObject) {
@@ -202,6 +205,22 @@
             this._moving = true; //TODO: Not always so.....................................
             if (this.curHoverObject instanceof HaGeo)
                 this.iconLayer.dragEvent(event, <HaGeo>this.curHoverObject);
+            if (this.curHoverObject instanceof HaCollection) {
+                //var curHoverFeature: ol.Feature;
+
+                //this.forEachFeatureAtPixel(event.pixel, (feature) => {
+                //    this.curHoverFeature = feature;
+                //    return true;
+                //}, null, (layer) => layer == this.routeLayer);
+
+                //if (curHoverFeature)
+                //    this.curHoverFeature = curHoverFeature;
+
+                this.routeLayer.dragEvent(event, <HaCollection>this.curHoverObject, this.curHoverFeature);
+                //var viaPoint = this.routeLayer.dragEvent(event, <HaCollection>this.curHoverObject, this.curHoverFeature);
+                //if (viaPoint)
+                //    this.curHoverFeature = viaPoint;
+            }
         });
 
         this.on('click', (event) => {
@@ -402,6 +421,7 @@
         var collection: HaCollection = null;
         this.forEachFeatureAtPixel(pixel, (feature) => {
             collection = (<any>feature).collection;
+            this.curHoverFeature = feature;
             return true;
         }, null, (layer) => layer == this.routeLayer);
         return collection;

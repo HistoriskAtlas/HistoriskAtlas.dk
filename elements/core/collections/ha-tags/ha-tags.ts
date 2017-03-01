@@ -24,8 +24,9 @@ class HaTags extends polymer.Base implements polymer.Element {
     private childIDs: Array<Array<number>>;
     private tagIdsInStorage: Array<number>;
 
-    private static blankMarker: HTMLImageElement;
-    private static numberMarkers: Array<string> = [];
+    private static _blankMarker: HTMLImageElement;
+    private static _numberMarkers: Array<string> = [];
+    private static _viaPointMarkers: Array<string> = [];
 
     ready() {
         this.tags = [];
@@ -153,8 +154,8 @@ class HaTags extends polymer.Base implements polymer.Element {
         var context = canvas.getContext("2d");
         var x: number = 0;
         var y: number = 0;
-        HaTags.blankMarker = document.createElement("img");
-        $(HaTags.blankMarker).on('load', () => {
+        HaTags._blankMarker = document.createElement("img");
+        $(HaTags._blankMarker).on('load', () => {
             $(markers).on('load', () => {
                 while (true) {
                     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -166,7 +167,7 @@ class HaTags extends polymer.Base implements polymer.Element {
                     contextTemp.putImageData(blankImageData, 0, 0);
                     contextTemp.putImageData(blankImageData, markerSize - 1, 0);
 
-                    context.drawImage(HaTags.blankMarker, 0, 0);
+                    context.drawImage(HaTags._blankMarker, 0, 0);
                     context.drawImage(canvasTemp, delta, delta);
 
                     if (tagID) {
@@ -194,7 +195,7 @@ class HaTags extends polymer.Base implements polymer.Element {
             });
             markers.src = 'images/markers/all.png';
         });
-        HaTags.blankMarker.src = 'images/markers/marker.png';
+        HaTags._blankMarker.src = 'images/markers/marker.png';
     }
 
     private invertColors(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
@@ -208,7 +209,7 @@ class HaTags extends polymer.Base implements polymer.Element {
     }
 
     public static numberMarker(number: number): string {
-        var marker: string = this.numberMarkers[number];
+        var marker: string = this._numberMarkers[number];
         if (marker)
             return marker;
 
@@ -219,14 +220,42 @@ class HaTags extends polymer.Base implements polymer.Element {
         context.fillStyle = '#FFFFFF';
         context.font = 'bold 18px Roboto'
 
-        context.drawImage(HaTags.blankMarker, 0, 0);
+        context.drawImage(HaTags._blankMarker, 0, 0);
         this.redColors(canvas, context);
 
         var text = number.toString();
         context.fillText(text, (canvas.width - context.measureText(text).width) / 2.0, 24)
 
         marker = canvas.toDataURL()
-        this.numberMarkers[number] = marker;
+        this._numberMarkers[number] = marker;
+
+        return marker;
+    }
+
+    public static viaPointMarker(number: number): string {
+        var marker: string = this._viaPointMarkers[number];
+        if (marker)
+            return marker;
+
+        var canvas = document.createElement('canvas');
+        canvas.width = 36;
+        canvas.height = 36;
+        var context = canvas.getContext("2d");
+        context.fillStyle = '#FFFFFF';
+        context.font = 'bold 14px Roboto'
+        context.strokeStyle = '#990000';
+        context.lineWidth = 4;
+
+        context.arc(18, 18, 10, 0, Math.PI * 2);
+        context.stroke();
+        context.fill();
+
+        context.fillStyle = '#990000';
+        var text = String.fromCharCode(65 + number);
+        context.fillText(text, (canvas.width - context.measureText(text).width) / 2.0, 23)
+
+        var marker = canvas.toDataURL()
+        this._viaPointMarkers[number] = marker;
 
         return marker;
     }

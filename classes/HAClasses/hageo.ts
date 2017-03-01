@@ -285,8 +285,9 @@
     public set isPartOfCurrentCollection(val: boolean) {
         var beforeBelongs = this.belongsOnNonClusteredLayer;
         this._isPartOfCurrentCollection = val;
-        if (beforeBelongs != this.belongsOnNonClusteredLayer)
-            this.moveToLayer(val);
+        if (this.id)
+            if (beforeBelongs != this.belongsOnNonClusteredLayer)
+                this.moveToLayer(val);
     }
 
     private get belongsOnNonClusteredLayer(): boolean {

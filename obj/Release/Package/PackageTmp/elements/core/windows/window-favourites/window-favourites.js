@@ -47,4 +47,3 @@ var WindowFavourites = (function (_super) {
     return WindowFavourites;
 }(polymer.Base));
 WindowFavourites.register();
-//# sourceMappingURL=window-favourites.js.map

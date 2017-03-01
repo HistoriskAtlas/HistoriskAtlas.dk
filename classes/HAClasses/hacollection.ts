@@ -131,6 +131,28 @@
         this._geos = val;
     }
 
+    public geoOrdering(geo: HaGeo): number {
+        var i = 0;
+        for (var g of this._geos) {
+            if (g == geo)
+                return i;
+            if (g.id > 0)
+                i++;
+        }
+    }
+
+    public viaPointLocalOrdering(geo: HaGeo): number {
+        var i = 0;
+        for (var g of this._geos) {
+            if (g == geo)
+                return i;
+            if (g.id > 0)
+                i = 0;
+            else
+                i++;
+        }
+    }
+
     //public open() {
     //    //if (this._geos.length > 0 || !this._id) {
     //        App.haCollections.select(this);
@@ -181,7 +203,7 @@
     }
 
     public saveNewGeo(geo: HaGeo) {
-        Services.insert('collection_geo', { collectionid: this._id, geoid: geo.id, ordering: this.geos.indexOf(geo) }, (result) => { });
+        Services.insert('collection_geo', { collectionid: this._id, geoid: geo.id, ordering: this.geoOrdering(geo) }, (result) => { });
     }
 
     public saveProp(prop: string) {
@@ -197,7 +219,7 @@
         var data: any = {
             collectionid: this._id,
             geoid: geo.id,
-            ordering: this.geos.indexOf(geo),
+            ordering: this.geoOrdering(geo),
             deletemode: 'permanent'
         };
         Services.delete('collection_geo', data, (result) => { });
@@ -212,10 +234,13 @@
         }
 
         for (var i = indexStart; i <= indexEnd; i++) {
+            if (this._geos[i].id == 0)
+                continue;
+
             var data: any = {
                 collectionid: this._id,
                 geoid: this._geos[i].id,
-                ordering: i
+                ordering: this.geoOrdering(this._geos[i])
             };
             Services.update('collection_geo', data, (result) => { });
         }

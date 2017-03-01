@@ -13,7 +13,6 @@ var DigDagLayer = (function (_super) {
         this.source = source;
         this._type = type;
         this._year = year;
-        //this.mainMap = mainMap;
         if (!DigDagLayer.borderRegion)
             DigDagLayer.borderRegion = new HaRegion();
         this.quadTree = 0;
@@ -22,7 +21,6 @@ var DigDagLayer = (function (_super) {
             if (_this.helper.active)
                 event.context.drawImage(_this.helper.context.canvas, 0, 0);
         });
-        //TODO: only if not touch!!
         this.helper = new DigDagHelperLayer(type, year);
         App.map.getLayers().insertAt(0, this.helper);
     }
@@ -67,7 +65,7 @@ var DigDagLayer = (function (_super) {
     };
     DigDagLayer.prototype.hide = function () {
         this.helper.setVisible(false);
-        this.setVisible(false); //TODO: also hide helper layer?
+        this.setVisible(false);
         this.quadTree = 0;
         this._type = null;
         this.helper.update(0);
@@ -114,10 +112,7 @@ var DigDagLayer = (function (_super) {
             minY += (maxY - minY) / 2;
         return this.getRegionID(qt[i], coord, minX, maxX, minY, maxY);
     };
-    //TODO: rename to modifyImage.... export when compiling openlayers...
     DigDagLayer.modifyImage = function (image, tileCoord) {
-        //public static Lo(image: any, tileCoord: number[]) {
-        //TODO:For now, only one digdaglayer is supported:
         return this.instanceDigDagLayer.modifyImage(image, tileCoord);
     };
     DigDagLayer.prototype.modifyImage = function (image, tileCoord) {
@@ -126,18 +121,13 @@ var DigDagLayer = (function (_super) {
         canvas.width = DigDagLayer.tileSize;
         canvas.height = DigDagLayer.tileSize;
         var context = canvas.getContext('2d');
-        //var context = ol.dom.createCanvasContext2D(tileSize, tileSize);
         context.drawImage(image, 0, 0);
         var imageData = context.getImageData(0, 0, DigDagLayer.tileSize, DigDagLayer.tileSize);
         this.data = imageData.data;
-        //if (this.tileCoord[0] < 9)
         this.quadTree = this.createQuadTree(this.quadTree, 0);
         context.putImageData(imageData, 0, 0);
         this.data = null;
         return context.canvas;
-        //TODO: Better performance? No need to create a new canvas each time...?
-        //image.src = canvas.toDataURL("image/png");
-        //return image;
     };
     DigDagLayer.prototype.createQuadTree = function (qt, z) {
         var xs = (1 << (this.tileCoord[0] - z - 1) & this.tileCoord[1]) ? 1 : 0;
@@ -175,19 +165,16 @@ var DigDagLayer = (function (_super) {
         else {
             var i = (x + (y << 8)) << 2;
             var data = this.data;
-            //TODO: What is going on here?!
-            nqt = data[i] + (data[i + 1] << 8) + (data[i + 2] << 16); //RGBA
-            //nqt = data[i + 2] + (data[i + 1] << 8) + (data[i] << 16);  //BGRA
-            //Modify:
+            nqt = data[i] + (data[i + 1] << 8) + (data[i + 2] << 16);
             if (nqt) {
                 if (nqt == 1) {
-                    data[i + 3] = 120; //Was 120
+                    data[i + 3] = 120;
                     return 1;
                 }
                 data[i + 3] = 0;
             }
             else {
-                data[i + 3] = 40; //WAS 40
+                data[i + 3] = 40;
                 return 1;
             }
         }
@@ -203,4 +190,3 @@ var DigDagLayer = (function (_super) {
     DigDagLayer.tileSize = 256;
     return DigDagLayer;
 }(ol.layer.Tile));
-//# sourceMappingURL=DigDagLayer.js.map

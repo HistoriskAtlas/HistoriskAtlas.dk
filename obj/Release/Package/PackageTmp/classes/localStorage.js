@@ -3,7 +3,7 @@ var LocalStorage = (function () {
     }
     Object.defineProperty(LocalStorage, "showTimeWarp", {
         get: function () {
-            return localStorage.getItem('showTimeWarp') != 'false'; //default open
+            return localStorage.getItem('showTimeWarp') != 'false';
         },
         set: function (val) {
             localStorage.setItem('showTimeWarp', String(val));
@@ -43,4 +43,3 @@ var LocalStorage = (function () {
     LocalStorage.msPerHour = 1000 * 60 * 60;
     return LocalStorage;
 }());
-//# sourceMappingURL=localStorage.js.map

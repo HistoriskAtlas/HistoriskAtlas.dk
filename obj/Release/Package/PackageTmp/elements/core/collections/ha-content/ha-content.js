@@ -29,17 +29,13 @@ var HaContentService = (function (_super) {
         }
         if (props.length == 2 && property == 'splices') {
             var splice = changeRecord.value.indexSplices[0];
-            //TODO: Multiple adds??
             if (splice.addedCount > 0)
                 (splice.object[splice.index]).insert(function (propsReturned) {
                     for (var _i = 0, propsReturned_1 = propsReturned; _i < propsReturned_1.length; _i++) {
                         var propReturned = propsReturned_1[_i];
-                        //var test = props[0] + '.' + props[1].substring(1) + '.' + props[2] + '.' + splice.index + '.' + propReturned;
-                        //var value = splice.object[splice.index][propReturned];
-                        //this.notifyPath(props[0] + '.' + props[1].substring(1) + '.' + props[2] + '.' + splice.index + '.' + propReturned, splice.object[splice.index][propReturned]);
                         _this.notifyPath(props[0] + '.' + props[1] + '.' + splice.index + '.' + propReturned, splice.object[splice.index][propReturned]);
                     }
-                }); //TODO: notify changes in callback when new values are returned (created, id and user)
+                });
             for (var _i = 0, _a = splice.removed; _i < _a.length; _i++) {
                 var subcontent = _a[_i];
                 subcontent.delete();
@@ -65,4 +61,3 @@ var HaContentService = (function (_super) {
     return HaContentService;
 }(polymer.Base));
 HaContentService.register();
-//# sourceMappingURL=ha-content.js.map

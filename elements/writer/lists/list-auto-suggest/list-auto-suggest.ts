@@ -41,7 +41,7 @@ class ListAutoSuggest extends polymer.Base implements polymer.Element {
         this.confirmDelete(e.model.item);
     }
     confirmDelete(item: any) {
-        $(this).append(DialogConfirm.create('delete-listitem', 'Er du sikker på at du vil fjerne "' + this.name(item) + '" fra listen?', item));
+        $(this).append(DialogConfirm.create('delete-listitem', 'Er du sikker på at du vil fjerne ' + (this.name(item) ? '"' + this.name(item) + '"' : 'dette punkt') + ' fra listen?', item));
     }
     @listen('delete-listitem-confirmed')
     deleteListitemConfirmed(e: any) {

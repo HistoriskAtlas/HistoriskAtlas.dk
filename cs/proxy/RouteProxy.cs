@@ -46,7 +46,11 @@ namespace HistoriskAtlas5.Frontend
             HARoute haRoute = new HARoute() { distance = osrmRoute.distance, time = osrmRoute.duration, geometry = osrmRoute.geometry };
 
             string output = JsonConvert.SerializeObject(haRoute);
-            File.WriteAllText(filename, output);
+            //try
+            //{
+                File.WriteAllText(filename, output);
+            //}
+            //catch { }
 
             context.Response.Output.WriteLine(output);
         }

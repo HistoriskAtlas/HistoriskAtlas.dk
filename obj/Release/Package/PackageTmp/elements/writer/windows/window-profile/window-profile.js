@@ -42,4 +42,3 @@ var WindowProfile = (function (_super) {
     return WindowProfile;
 }(polymer.Base));
 WindowProfile.register();
-//# sourceMappingURL=window-profile.js.map

@@ -89,8 +89,6 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         //}
 
 
-        //if (this.isHoD2017(this.theme)) { //TODO: fetch using HoD2017 destination SUB tags instead... and generalize
-
         var routeTopLevels: Array<ICollectionTopLevel> = [];
         if (this.theme.tagid && this.theme != Global.defaultTheme) {
             App.haCollections.getCollectionsByTagId(this.theme.tagid);
@@ -121,6 +119,9 @@ class PanelTheme extends polymer.Base implements polymer.Element {
 
     isHoD2017(theme: ITheme): boolean {
         return theme.id == 'hod2017';
+    }
+    aboutHoD2017Tap() {
+        Common.dom.append(WindowInstitution.create(App.haTags.byId[736]));
     }
 
     //itemTap(e: any) {

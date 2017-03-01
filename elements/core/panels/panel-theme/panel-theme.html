@@ -2,6 +2,7 @@
     <style>
          :host {
             display: block;
+            font-size: 13px;
         }
         .host-container {
             margin-top:15px;
@@ -36,9 +37,9 @@
         main-menu-item[show] .header[hide-when-active] > span {
             opacity: 0;
         }
-        content-viewer {
+        /*content-viewer {
             font-size: 13px;
-        }
+        }*/
         iron-icon {
             width: 18px;
             height: 18px;
@@ -62,7 +63,8 @@
                     <collection-list top-levels="{{routeTopLevels}}" collections="{{collections}}" collection="{{collection}}"></collection-list>
 
                     <template is="dom-if" if="[[isHoD2017(item)]]">
-                        <div style="margin: 10px 0px 100px 30px; font-size: 13px;">Opret dit eget turforslag</div>
+                        <div style="margin: 10px 0px 20px 30px; font-size: 13px;">Opret dit eget turforslag</div>
+                        <div style="margin: 10px 0px 100px 30px; font-size: 13px;" on-tap="aboutHoD2017Tap">Om Historier om Danmark</div>
                     </template>
 
                 </main-menu-item>

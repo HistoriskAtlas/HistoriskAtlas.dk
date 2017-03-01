@@ -27,4 +27,3 @@ var PanelIntroBeta = (function (_super) {
     return PanelIntroBeta;
 }(polymer.Base));
 PanelIntroBeta.register();
-//# sourceMappingURL=panel-intro-beta.js.map

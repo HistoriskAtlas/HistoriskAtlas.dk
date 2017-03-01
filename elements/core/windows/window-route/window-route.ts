@@ -119,8 +119,9 @@ class WindowRoute extends polymer.Base implements polymer.Element {
 
     @listen('geoAutosuggestRemoved')
     geoRemoved(e: any) {
-        var geo = App.haGeos.geos[e.detail.id];
-        this.route.removeGeo(geo);
+        var geo = e.detail; //App.haGeos.geos[e.detail.id];
+        if (geo.id)
+            this.route.removeGeo(geo);
         this.splice('route.geos', this.route.geos.indexOf(geo), 1);
         //this.updateRouteLayer();
     }

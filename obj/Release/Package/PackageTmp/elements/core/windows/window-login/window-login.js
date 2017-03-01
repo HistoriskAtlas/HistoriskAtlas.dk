@@ -33,4 +33,3 @@ var WindowLogin = (function (_super) {
     return WindowLogin;
 }(polymer.Base));
 WindowLogin.register();
-//# sourceMappingURL=window-login.js.map

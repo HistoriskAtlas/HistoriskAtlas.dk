@@ -133,7 +133,7 @@
         //if (hasChildrenTag)
         //    return this.geo.isUGC ? hasChildrenTag.invertedMarker : hasChildrenTag.marker;        
         if (this.geo.isPartOfCurrentCollection)
-            return HaTags.numberMarker(App.haCollections.collection.geos.indexOf(this.geo) + 1);
+            return this.geo.id ? HaTags.numberMarker(App.haCollections.collection.geoOrdering(this.geo) + 1) : HaTags.viaPointMarker(App.haCollections.collection.viaPointLocalOrdering(this.geo));
 
         if (this.geo.primaryTag)
             if (this.geo.primaryTag.marker)

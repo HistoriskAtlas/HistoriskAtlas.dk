@@ -28,7 +28,6 @@ var HaTags = (function (_super) {
         this.$.ajax.url = Common.api + 'tag.json?count=all&schema=' + Common.apiSchemaTags + (this.tagIdsInStorage.length > 0 ? '&lastmodified={min:' + LocalStorage.timestampDateTime('tag-ids') + '}' : '');
     };
     HaTags.prototype.handleResponse = function () {
-        //TODO: also handle deleted tags.................................................
         var _this = this;
         for (var _i = 0, _a = this.$.ajax.lastResponse; _i < _a.length; _i++) {
             var data = _a[_i];
@@ -43,8 +42,6 @@ var HaTags = (function (_super) {
             this.getTagFromData(JSON.parse(LocalStorage.get('tag-' + tagID)));
         }
         LocalStorage.set('tag-ids', JSON.stringify(this.tagIdsInStorage), true);
-        //HaTags.tagTop[9] = new HaTag({ id: 1000000 + 9, category: 9, plurname: '' });
-        //HaTags.tagTop[9].selected = true;
         var tagTops = [];
         this.tags.forEach(function (tag) {
             tag.translateRelations(_this.parentIDs[tag.id], _this.childIDs[tag.id]);
@@ -62,12 +59,6 @@ var HaTags = (function (_super) {
         this.set('tagTops', tagTops);
         this.parentIDs = null;
         this.childIDs = null;
-        //this.push('tags', HaTags.tagUGC = new HaTag({ tagid: 10000, category: 6, plurname: 'Vis altid' }));
-        //HaTags.tagUGC.selected = true;
-        //this.byId[HaTags.tagUGC.id] = HaTags.tagUGC;
-        //this.push('tags', HaTags.tagUserLayer = new HaTag({ tagid: 10001, category: 6, plurname: 'Brugerlag' }));
-        //HaTags.tagUserLayer.selected = true;
-        //this.byId[HaTags.tagUserLayer.id] = HaTags.tagUserLayer;
         if (App.passed.tag)
             this.passedTag = this.byId[App.passed.tag.id];
         this.loadMarkers();
@@ -75,7 +66,7 @@ var HaTags = (function (_super) {
     HaTags.prototype.getTagFromData = function (data) {
         var _this = this;
         var tag;
-        this.push('tags', tag = new HaTag(data)); //TODO: should update all at once?
+        this.push('tags', tag = new HaTag(data));
         this.byId[tag.id] = tag;
         if (data.parents.length > 0) {
             this.parentIDs[tag.id] = [];
@@ -87,26 +78,6 @@ var HaTags = (function (_super) {
             });
         }
     };
-    //@observe("tags.*") //needed? performance impact?
-    //tagsChanged(changeRecord: any) { //TODO: really? any?
-    //    var props: Array<string> = (<string>changeRecord.path).split('.');
-    //    var property: string = props.pop();
-    //    if (props.length == 0) //array it self was changed
-    //        return;
-    //    if (props.length == 1) //splice or property of array changed
-    //    {
-    //        if (property == 'splices') { //TODO: Check for deleted keys?
-    //            //var tag: HaTag = this.tags[changeRecord.value.indexSplices[0].addedKeys[0].substring(1)]
-    //            var tag: HaTag = this.tags[changeRecord.value.indexSplices[0].index];
-    //            this.byId[tag.id] = tag;
-    //        }
-    //        return;
-    //    }
-    //    ////var tag: HaTag = props.reduce((obj, i) => obj[i], <any>this)
-    //    //var tag: HaTag = this.tags[props[1].substring(1)];
-    //    //if (property == 'selected')
-    //    //    tag.selectedChanged(changeRecord.value);
-    //}
     HaTags.prototype.loadMarkers = function () {
         var _this = this;
         var markerSize = 24;
@@ -116,7 +87,6 @@ var HaTags = (function (_super) {
         canvasTemp.height = markerSize;
         var contextTemp = canvasTemp.getContext("2d");
         var blankImageData = contextTemp.getImageData(0, 0, 1, 1);
-        //var blankImageData = new ImageData(1, 1); Not (yet) supported in IE
         var canvas = document.createElement('canvas');
         canvas.width = 36;
         canvas.height = 48;
@@ -124,8 +94,8 @@ var HaTags = (function (_super) {
         var context = canvas.getContext("2d");
         var x = 0;
         var y = 0;
-        HaTags.blankMarker = document.createElement("img");
-        $(HaTags.blankMarker).on('load', function () {
+        HaTags._blankMarker = document.createElement("img");
+        $(HaTags._blankMarker).on('load', function () {
             $(markers).on('load', function () {
                 while (true) {
                     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -136,7 +106,7 @@ var HaTags = (function (_super) {
                         break;
                     contextTemp.putImageData(blankImageData, 0, 0);
                     contextTemp.putImageData(blankImageData, markerSize - 1, 0);
-                    context.drawImage(HaTags.blankMarker, 0, 0);
+                    context.drawImage(HaTags._blankMarker, 0, 0);
                     context.drawImage(canvasTemp, delta, delta);
                     if (tagID) {
                         _this.byId[tagID].marker = canvas.toDataURL();
@@ -158,23 +128,23 @@ var HaTags = (function (_super) {
                         continue;
                     break;
                 }
-                document.querySelector('ha-geos').tagsLoaded(); //TODO: best place?
+                document.querySelector('ha-geos').tagsLoaded();
             });
             markers.src = 'images/markers/all.png';
         });
-        HaTags.blankMarker.src = 'images/markers/marker.png';
+        HaTags._blankMarker.src = 'images/markers/marker.png';
     };
     HaTags.prototype.invertColors = function (canvas, context) {
         var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
         for (var i = 0; i < imageData.data.length; i += 4) {
             imageData.data[i] = 255 - imageData.data[i];
-            imageData.data[i + 1] = 357 - imageData.data[i + 1]; //255 + 102
-            imageData.data[i + 2] = 408 - imageData.data[i + 2]; //255 + 153
+            imageData.data[i + 1] = 357 - imageData.data[i + 1];
+            imageData.data[i + 2] = 408 - imageData.data[i + 2];
         }
         context.putImageData(imageData, 0, 0);
     };
     HaTags.numberMarker = function (number) {
-        var marker = this.numberMarkers[number];
+        var marker = this._numberMarkers[number];
         if (marker)
             return marker;
         var canvas = document.createElement('canvas');
@@ -183,12 +153,34 @@ var HaTags = (function (_super) {
         var context = canvas.getContext("2d");
         context.fillStyle = '#FFFFFF';
         context.font = 'bold 18px Roboto';
-        context.drawImage(HaTags.blankMarker, 0, 0);
+        context.drawImage(HaTags._blankMarker, 0, 0);
         this.redColors(canvas, context);
         var text = number.toString();
         context.fillText(text, (canvas.width - context.measureText(text).width) / 2.0, 24);
         marker = canvas.toDataURL();
-        this.numberMarkers[number] = marker;
+        this._numberMarkers[number] = marker;
+        return marker;
+    };
+    HaTags.viaPointMarker = function (number) {
+        var marker = this._viaPointMarkers[number];
+        if (marker)
+            return marker;
+        var canvas = document.createElement('canvas');
+        canvas.width = 36;
+        canvas.height = 36;
+        var context = canvas.getContext("2d");
+        context.fillStyle = '#FFFFFF';
+        context.font = 'bold 14px Roboto';
+        context.strokeStyle = '#990000';
+        context.lineWidth = 4;
+        context.arc(18, 18, 10, 0, Math.PI * 2);
+        context.stroke();
+        context.fill();
+        context.fillStyle = '#990000';
+        var text = String.fromCharCode(65 + number);
+        context.fillText(text, (canvas.width - context.measureText(text).width) / 2.0, 23);
+        var marker = canvas.toDataURL();
+        this._viaPointMarkers[number] = marker;
         return marker;
     };
     HaTags.redColors = function (canvas, context) {
@@ -207,7 +199,7 @@ var HaTags = (function (_super) {
         var max = Math.max(r, g, b), min = Math.min(r, g, b);
         var h, s, l = (max + min) / 2;
         if (max == min) {
-            h = s = 0; // achromatic
+            h = s = 0;
         }
         else {
             var d = max - min;
@@ -230,7 +222,7 @@ var HaTags = (function (_super) {
     HaTags.hslToRgb = function (h, s, l) {
         var r, g, b;
         if (s == 0) {
-            r = g = b = l; // achromatic
+            r = g = b = l;
         }
         else {
             function hue2rgb(p, q, t) {
@@ -258,17 +250,15 @@ var HaTags = (function (_super) {
             b: Math.round(b * 255),
         });
     };
-    //@property({ type: Boolean })
-    //public beingIndexed: boolean;
-    //TEMP(?)
     HaTags.tagsWithMarkers = new Array(10000);
-    HaTags.numberMarkers = [];
+    HaTags._numberMarkers = [];
+    HaTags._viaPointMarkers = [];
     __decorate([
         property({ type: Array, notify: true }), 
         __metadata('design:type', Array)
     ], HaTags.prototype, "tags", void 0);
     __decorate([
-        property({ type: Array, notify: true /*, value: Array<HaTag>(20)*/ }), 
+        property({ type: Array, notify: true }), 
         __metadata('design:type', Array)
     ], HaTags.prototype, "tagTops", void 0);
     __decorate([
@@ -282,4 +272,3 @@ var HaTags = (function (_super) {
     return HaTags;
 }(polymer.Base));
 HaTags.register();
-//# sourceMappingURL=ha-tags.js.map

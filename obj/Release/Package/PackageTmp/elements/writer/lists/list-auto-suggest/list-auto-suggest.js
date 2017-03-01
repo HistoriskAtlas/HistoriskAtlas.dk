@@ -30,7 +30,7 @@ var ListAutoSuggest = (function (_super) {
         this.confirmDelete(e.model.item);
     };
     ListAutoSuggest.prototype.confirmDelete = function (item) {
-        $(this).append(DialogConfirm.create('delete-listitem', 'Er du sikker på at du vil fjerne "' + this.name(item) + '" fra listen?', item));
+        $(this).append(DialogConfirm.create('delete-listitem', 'Er du sikker på at du vil fjerne ' + (this.name(item) ? '"' + this.name(item) + '"' : 'dette punkt') + ' fra listen?', item));
     };
     ListAutoSuggest.prototype.deleteListitemConfirmed = function (e) {
         this.fire(this.id + 'Removed', e.detail);
@@ -57,11 +57,7 @@ var ListAutoSuggest = (function (_super) {
             this.setAutocompleteItems([]);
             return;
         }
-        //var existingIds: Array<number> = [];
-        //for (var item of this.items)
-        //    existingIds.push(item.institution.id) //TODO
         Services.get(this.autosuggestService, {
-            //'schema': '{institution:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},tag:{plurname:{like:' + this.input + '}}},fields:[id,{tag:[plurname]}]}}',
             'schema': this.autosuggestSchema.replace('$input', this.input),
             'count': 5
         }, function (result) {
@@ -160,4 +156,3 @@ var ListAutoSuggest = (function (_super) {
     return ListAutoSuggest;
 }(polymer.Base));
 ListAutoSuggest.register();
-//# sourceMappingURL=list-auto-suggest.js.map
