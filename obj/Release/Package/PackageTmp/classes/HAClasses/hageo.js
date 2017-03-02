@@ -175,6 +175,16 @@ var HaGeo = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(HaGeo.prototype, "primaryTagStatic", {
+        get: function () {
+            return this._primaryTagStatic;
+        },
+        set: function (value) {
+            this._primaryTagStatic = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(HaGeo.prototype, "yearStart", {
         get: function () {
             return this._yearStart;

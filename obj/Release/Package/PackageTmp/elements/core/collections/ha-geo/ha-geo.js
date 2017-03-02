@@ -26,7 +26,7 @@ var HaGeoService = (function (_super) {
         if (!this.geo.id)
             return;
         this.ignoreChanges = true;
-        var schema = 'geoid,title,intro,freetags,yearstart,yearend,latitude,longitude,online,views,deleted,{user:[id,firstname,lastname,{user_institutions:[{institution:[id,tagid]}]}]},{geo_image:[empty,ordering,{image:[imageid,text,year,yearisapprox,photographer,licensee,userid,{tag_images:[' + (typeof App == 'undefined' ? Common.apiSchemaTags : '{collapse:id}') + ']}]}]}';
+        var schema = 'geoid,title,intro,primarytagstatic,freetags,yearstart,yearend,latitude,longitude,online,views,deleted,{user:[id,firstname,lastname,{user_institutions:[{institution:[id,tagid]}]}]},{geo_image:[empty,ordering,{image:[imageid,text,year,yearisapprox,photographer,licensee,userid,{tag_images:[' + (typeof App == 'undefined' ? Common.apiSchemaTags : '{collapse:id}') + ']}]}]}';
         if (this.geo.tags.length == 0)
             schema += ',{tag_geos:[' + Common.apiSchemaTags + ']}';
         this.set('params', {
@@ -68,13 +68,35 @@ var HaGeoService = (function (_super) {
     HaGeoService.prototype.tagsArrayChanged = function (change) {
         if (this.ignoreChanges || !change)
             return;
-        var oldPrimaryTag = this.geo.primaryTag;
-        this.geo.primaryTag = this.geo.getNewPrimaryTag;
-        if (oldPrimaryTag != this.geo.primaryTag) {
-            this.geo.icon.updateStyle();
-            if (this.geo.primaryTag)
-                Services.update('geo', { primarytagid: this.geo.primaryTag.id, geoid: this.geo.id });
+        var primaryTagRemoved = false;
+        if (change.indexSplices[0].removed.length > 0)
+            if (change.indexSplices[0].removed[0] == this.geo.primaryTag) {
+                this.set('geo.primaryTagStatic', false);
+                primaryTagRemoved = true;
+            }
+        if (!this.geo.primaryTagStatic || primaryTagRemoved) {
+            var oldPrimaryTag = this.geo.primaryTag;
+            var newPrimaryTag = this.geo.getNewPrimaryTag;
+            if (oldPrimaryTag != newPrimaryTag)
+                this.set('geo.primaryTag', newPrimaryTag);
         }
+    };
+    HaGeoService.prototype.setPrimaryTag = function (tag) {
+        this.set('geo.primaryTag', tag);
+        if (!this.geo.primaryTagStatic) {
+            this.set('geo.primaryTagStatic', true);
+        }
+    };
+    HaGeoService.prototype.primaryTagChanged = function () {
+        if (this.ignoreChanges)
+            return;
+        this.geo.icon.updateStyle();
+        Services.update('geo', { primarytagid: this.geo.primaryTag ? this.geo.primaryTag.id : '\0', geoid: this.geo.id });
+    };
+    HaGeoService.prototype.primaryTagStaticChanged = function () {
+        if (this.ignoreChanges)
+            return;
+        Services.update('geo', { primarytagstatic: this.geo.primaryTagStatic, geoid: this.geo.id });
     };
     HaGeoService.prototype.handleResponse = function () {
         this.ignoreChanges = true;
@@ -84,6 +106,7 @@ var HaGeoService = (function (_super) {
         this.set('geo.title', data.title);
         this.set('geo.intro', data.intro);
         this.set('geo.user', new HAUser(data.user));
+        this.set('geo.primaryTagStatic', data.primarytagstatic);
         if (data.tag_geos)
             for (var _i = 0, _a = data.tag_geos; _i < _a.length; _i++) {
                 var tag_geo = _a[_i];
@@ -143,6 +166,18 @@ var HaGeoService = (function (_super) {
         __metadata('design:paramtypes', [ChangeRecord]), 
         __metadata('design:returntype', void 0)
     ], HaGeoService.prototype, "tagsArrayChanged", null);
+    __decorate([
+        observe("geo.primaryTag"), 
+        __metadata('design:type', Function), 
+        __metadata('design:paramtypes', []), 
+        __metadata('design:returntype', void 0)
+    ], HaGeoService.prototype, "primaryTagChanged", null);
+    __decorate([
+        observe("geo.primaryTagStatic"), 
+        __metadata('design:type', Function), 
+        __metadata('design:paramtypes', []), 
+        __metadata('design:returntype', void 0)
+    ], HaGeoService.prototype, "primaryTagStaticChanged", null);
     HaGeoService = __decorate([
         component("ha-geo"), 
         __metadata('design:paramtypes', [])

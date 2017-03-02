@@ -9,6 +9,7 @@
     private _ugc: boolean;
     private _title: string;
     private _primaryTag: HaTag;
+    private _primaryTagStatic: boolean;
     private contents: Array<HaContent>;
 
     //private selectedTagsCount: number;
@@ -348,6 +349,13 @@
     }
     set primaryTag(value: HaTag) {
         this._primaryTag = value;
+    }
+
+    get primaryTagStatic(): boolean {
+        return this._primaryTagStatic;
+    }
+    set primaryTagStatic(value: boolean) {
+        this._primaryTagStatic = value;
     }
 
     get yearStart(): number {

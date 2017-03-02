@@ -25,7 +25,7 @@ class HaGeoService extends Tags implements polymer.Element {
         if (!this.geo.id)
             return;
         this.ignoreChanges = true;
-        var schema = 'geoid,title,intro,freetags,yearstart,yearend,latitude,longitude,online,views,deleted,{user:[id,firstname,lastname,{user_institutions:[{institution:[id,tagid]}]}]},{geo_image:[empty,ordering,{image:[imageid,text,year,yearisapprox,photographer,licensee,userid,{tag_images:[' + (typeof App == 'undefined' ? Common.apiSchemaTags : '{collapse:id}') + ']}]}]}';
+        var schema = 'geoid,title,intro,primarytagstatic,freetags,yearstart,yearend,latitude,longitude,online,views,deleted,{user:[id,firstname,lastname,{user_institutions:[{institution:[id,tagid]}]}]},{geo_image:[empty,ordering,{image:[imageid,text,year,yearisapprox,photographer,licensee,userid,{tag_images:[' + (typeof App == 'undefined' ? Common.apiSchemaTags : '{collapse:id}') + ']}]}]}';
         if (this.geo.tags.length == 0) //&& typeof App == 'undefined'
             schema += ',{tag_geos:[' + Common.apiSchemaTags + ']}'; //TODO: only needed to get ids when in app mode.............................
             //schema += ',{tag_geos:[empty,{collapse:tagid}]}'
@@ -81,20 +81,48 @@ class HaGeoService extends Tags implements polymer.Element {
         if (this.ignoreChanges || !change)
             return;
 
-        var oldPrimaryTag = this.geo.primaryTag;
-        this.geo.primaryTag = this.geo.getNewPrimaryTag;
-        if (oldPrimaryTag != this.geo.primaryTag) {
-            this.geo.icon.updateStyle();
-            if (this.geo.primaryTag) //TODO: Fix bug on API... how to set value to NULL?.......................................
-                Services.update('geo', { primarytagid: this.geo.primaryTag.id, geoid: this.geo.id });
+        var primaryTagRemoved: boolean = false;
+        if (change.indexSplices[0].removed.length > 0)
+            if (change.indexSplices[0].removed[0] == this.geo.primaryTag) {
+                this.set('geo.primaryTagStatic', false);
+                primaryTagRemoved = true;
+            }
+
+        if (!this.geo.primaryTagStatic || primaryTagRemoved) {
+            var oldPrimaryTag = this.geo.primaryTag;
+            var newPrimaryTag = this.geo.getNewPrimaryTag;
+
+            if (oldPrimaryTag != newPrimaryTag)
+                this.set('geo.primaryTag', newPrimaryTag);
         }
-        
-        //for (var indexSplice of change.indexSplices) {
-        //    for (var tag of indexSplice.removed)
-        //        Services.delete('tag_geo', { tagid: tag.id, geoid: this.geo.id, deletemode: 'permanent' });
-        //    for (var i = 0; i < indexSplice.addedCount; i++)
-        //        Services.insert('tag_geo', { tagid: this.geo.tags2[indexSplice.index + i].id, geoid: this.geo.id });
+        //this.geo.primaryTag = this.geo.getNewPrimaryTag;
+        //if (oldPrimaryTag != this.geo.primaryTag) {
+        //    this.geo.icon.updateStyle();
+        //    if (this.geo.primaryTag) //TODO: Fix bug on API... how to set value to NULL?.......................................
+        //        Services.update('geo', { primarytagid: this.geo.primaryTag.id, geoid: this.geo.id });
         //}
+    }
+
+    public setPrimaryTag(tag: HaTag) {
+        this.set('geo.primaryTag', tag);
+        if (!this.geo.primaryTagStatic) {
+            this.set('geo.primaryTagStatic', true);
+        }
+    }
+    @observe("geo.primaryTag")
+    primaryTagChanged() {
+        if (this.ignoreChanges)
+            return;
+
+        this.geo.icon.updateStyle();
+        Services.update('geo', { primarytagid: this.geo.primaryTag ? this.geo.primaryTag.id : '\0', geoid: this.geo.id });
+    }
+    @observe("geo.primaryTagStatic")
+    primaryTagStaticChanged() {
+        if (this.ignoreChanges)
+            return;
+
+        Services.update('geo', { primarytagstatic: this.geo.primaryTagStatic, geoid: this.geo.id });
     }
 
     public handleResponse() {
@@ -108,6 +136,7 @@ class HaGeoService extends Tags implements polymer.Element {
         this.set('geo.title', data.title);
         this.set('geo.intro', data.intro);
         this.set('geo.user', new HAUser(data.user));
+        this.set('geo.primaryTagStatic', data.primarytagstatic);
 
         if (data.tag_geos)
             for (var tag_geo of data.tag_geos)
@@ -122,7 +151,6 @@ class HaGeoService extends Tags implements polymer.Element {
 
         this.ignoreChanges = false; //!this.editing;
     }
-
 
     //TODO: move to common element ("Tags"?)... inherit to ha-geo and (new) ha-image
 

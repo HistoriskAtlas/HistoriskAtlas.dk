@@ -29,7 +29,26 @@ var HorizontalTagList = (function (_super) {
         App.toast.show('Vælg fra listen');
     };
     HorizontalTagList.prototype.removeTagTap = function (e) {
-        this.tagsService.removeTag(e.model.dataHost.dataHost.tag);
+        this.tagsService.removeTag(this.$.tagRepeater.itemForElement(e.target));
+    };
+    HorizontalTagList.prototype.togglePrimaryTagTap = function (e) {
+        var tag = this.$.tagRepeater.itemForElement(e.target);
+        tag = this.primary(tag) ? null : tag;
+        this.tagsService.setPrimaryTag(tag);
+        this.set('localPrimaryTag', tag);
+    };
+    HorizontalTagList.prototype.showSetPrimaryTag = function () {
+        return this.tagsService instanceof HaGeoService;
+    };
+    HorizontalTagList.prototype.primary = function (tag) {
+        if (!(this.tagsService instanceof HaGeoService))
+            return false;
+        if (!this.tagsService.geo.primaryTagStatic)
+            return false;
+        return this.tagsService.geo.primaryTag == tag;
+    };
+    HorizontalTagList.prototype.togglePrimaryText = function (tag) {
+        return (this.primary(tag) ? 'Frav' : 'V') + 'ælg som primær';
     };
     HorizontalTagList.prototype.tagsLengthChanged = function () {
         this.addingTag = false;
@@ -50,6 +69,10 @@ var HorizontalTagList = (function (_super) {
         property({ type: Boolean }), 
         __metadata('design:type', Boolean)
     ], HorizontalTagList.prototype, "editing", void 0);
+    __decorate([
+        property({ type: Object, value: {} }), 
+        __metadata('design:type', HaTag)
+    ], HorizontalTagList.prototype, "localPrimaryTag", void 0);
     __decorate([
         property({ type: Boolean, value: false }), 
         __metadata('design:type', Boolean)

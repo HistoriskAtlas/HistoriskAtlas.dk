@@ -13,6 +13,7 @@
             align-self: center;
             margin-bottom: 2px;
             margin-left: 10px;
+            pointer-events: none;
         }
         .tag {
             background-color: #f2f2f2; 
@@ -27,21 +28,43 @@
         }
         .tag > span {
             flex-grow: 1;
+            pointer-events: none;
         }
-        .remove-tag-icon {
-            width:16px; 
+        .tag[primary] > span {
+            font-weight: bold;
+        }
+        paper-icon-button {
+            width: 16px;
+            height: 16px;
+            margin-left: 5px;
+            padding: 0px;
+            /*width:16px; 
             height:16px; 
             padding-left:5px; 
-            cursor:pointer            
+            cursor:pointer*/            
         }
     </style>
     <template>
         <span>[[title]]</span>
-        <template is="dom-repeat" items="[[tags]]" as="tag">
-            <div class="tag">
+        <template id="tagRepeater" is="dom-repeat" items="[[tags]]" as="tag">
+            <div class="tag" primary$="[[primary(tag,localPrimaryTag)]]">
                 <span>[[tag.plurName]]</span>
                 <template is="dom-if" if="[[editing]]">
-                    <iron-icon class="remove-tag-icon" icon="close" on-tap="removeTagTap"></iron-icon>
+                    
+                    <paper-menu-button dynamic-align close-on-activate no-overlap horizontal-align="right">
+                        <paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>
+                        <paper-menu class="dropdown-content">
+                            <menu-item on-tap="removeTagTap">Fjern</menu-item>
+                            <template is="dom-if" if="[[showSetPrimaryTag()]]">
+                                <menu-item on-tap="togglePrimaryTagTap">[[togglePrimaryText(tag,localPrimaryTag)]]</menu-item>
+                            </template>
+                        </paper-menu>
+                    </paper-menu-button>
+
+                    
+                    <!--<iron-icon class="menu-tag-icon" icon="more-vert" on-tap="menuTagTap"></iron-icon>-->
+
+
                 </template>
             </div>
         </template>

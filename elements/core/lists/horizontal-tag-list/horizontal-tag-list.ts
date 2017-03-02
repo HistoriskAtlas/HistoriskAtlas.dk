@@ -13,6 +13,9 @@ class HorizontalTagList extends polymer.Base implements polymer.Element {
     @property({ type: Boolean })
     public editing: boolean;
 
+    @property({ type: Object, value: {} })
+    public localPrimaryTag: HaTag;
+
     @property({ type: Boolean, value: false })
     public addingTag: boolean;
 
@@ -33,7 +36,31 @@ class HorizontalTagList extends polymer.Base implements polymer.Element {
     }
 
     removeTagTap(e) {
-        this.tagsService.removeTag(e.model.dataHost.dataHost.tag);
+        this.tagsService.removeTag(this.$.tagRepeater.itemForElement(e.target));
+    }
+    togglePrimaryTagTap(e) {
+        var tag = <HaTag>this.$.tagRepeater.itemForElement(e.target);
+        tag = this.primary(tag) ? null : tag;
+        (<HaGeoService>this.tagsService).setPrimaryTag(tag);
+        this.set('localPrimaryTag', tag);
+    }
+
+    showSetPrimaryTag(): boolean {
+        return this.tagsService instanceof HaGeoService;
+    }
+
+    primary(tag): boolean {
+        if (!(this.tagsService instanceof HaGeoService))
+            return false;
+
+        if (!(<HaGeoService>this.tagsService).geo.primaryTagStatic)
+            return false;
+
+        return (<HaGeoService>this.tagsService).geo.primaryTag == tag;
+    }
+
+    togglePrimaryText(tag): string {
+        return (this.primary(tag) ? 'Frav' : 'V') + 'ælg som primær';
     }
 
     @observe('tags.length')
