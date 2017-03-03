@@ -5,8 +5,19 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var MainMap = (function (_super) {
     __extends(MainMap, _super);
+    //public static defaultCoord: Array<number> = [10.0, 56.0]; 
+    //public static defaultZoom: number = 7; 
     function MainMap(coord, zoom) {
         var _this = this;
+        /*Layers:
+        -1?: DigDagHelper
+        0: Back
+        1: TimeWarp
+        2: Hillshade(?)
+        3: IconLayer
+        4: NonClustered IconLayer(?)
+        5: DigDag
+        */
         var view = new ol.View({ center: Common.toMapCoord([coord[1], coord[0]]), zoom: zoom, minZoom: MainMap.minZoom, maxZoom: MainMap.maxZoom });
         var dragPan = new ol.interaction.DragPan();
         _super.call(this, {
@@ -20,11 +31,13 @@ var MainMap = (function (_super) {
                 dragPan,
                 new ol.interaction.PinchRotate(),
                 new ol.interaction.PinchZoom(),
+                //new ol.interaction.KeyboardPan(),
+                //new ol.interaction.KeyboardZoom(),
                 new ol.interaction.MouseWheelZoom()
             ],
             loadTilesWhileAnimating: true,
             loadTilesWhileInteracting: true,
-            pixelRatio: 1.0
+            pixelRatio: 1.0 //TODO: good idea?
         });
         this.dragPan = dragPan;
         this.view = view;
@@ -36,6 +49,17 @@ var MainMap = (function (_super) {
         this.backLayer = new BackLayer(this, App.global.theme.mapid ? App.global.theme.mapid : Global.defaultTheme.mapid);
         this.addLayer(this.backLayer);
         $(document).ready(function () { return _this.ready(); });
+        //this.timeWarp = new TimeWarp({ source: new ol.source.XYZ({ url: HaMap.getTileUrlFromMapID(timeWarpMapID) }), preload: Infinity }, this, timeWarpMapID);
+        //this.iconLayer = new IconLayer();
+        //this.addLayer(this.iconLayer);
+        //this.mapEvents();
+        //this.curHaMap = App.maps()[mapID] //TODO: this instead
+        //App.maps.subscribe(() => {
+        //    App.maps().forEach((map: HaMap, i: number) => {
+        //        if (map.id == mapID)
+        //            this.HaMap = map;
+        //    })
+        //});
     }
     Object.defineProperty(MainMap.prototype, "draggable", {
         set: function (value) {
@@ -53,7 +77,7 @@ var MainMap = (function (_super) {
         this.mapEvents();
         setTimeout(function () { return _this.updateExtent(); }, 1000);
         setTimeout(function () { return _this.updateExtentTimeWarp(); }, 1100);
-        setTimeout(function () { return App.global.set('timeWarpActive', LocalStorage.showTimeWarp); }, 0);
+        setTimeout(function () { return App.global.set('timeWarpActive', LocalStorage.showTimeWarp); }, 0); //make sure the timewarp opens if it should (IE workaround).
     };
     MainMap.prototype.updateExtent = function () {
         App.haMaps.updateInView(this.view.calculateExtent(this.getSize()));
@@ -63,15 +87,36 @@ var MainMap = (function (_super) {
         App.haMaps.updateInView(this.timeWarp.extent, '.inViewTimeWarp');
         this.extentTimeWarpIsDirty = false;
     };
+    //public pointerDrag(event): void {
+    //    this.curTimeWarpLayer.pointerdrag(event);
+    //}
+    //public mouseCursor(event): void {
+    //    this.curTimeWarpLayer.mouseCursor(event)
+    //}
+    //public mouseDown(event): void {
+    //    this.curTimeWarpLayer.mouseDown(event);
+    //}
     MainMap.prototype.mapEvents = function () {
+        ////this.mapView.on('click', (event) => { this.mapView.stopAnimation(); });
+        //this.on('pointerdrag', (event) => { this.curTimeWarpLayer.pointerDrag(event); });//this.mapView.stopAnimation();
+        //this.on('pointermove', (event) => { this.curTimeWarpLayer.mouseCursor(event); this.featuresHighlight(event); this.featuresHighlight(event); }); //this.mapView.setextent(event);
+        //this.mapView.mainMapLayer.on('change', (event) => { window.setTimeout(() => { this.mapView.zoomPanMap(event.frameState, this.mapView); }, 250); });
+        //this.mapView.getView().on('change:resolution', (event) => { this.mapView.setextent(event); });
+        ////this.mapView.on('moveend', (event) => { this.mapView.setextent(event); });
         var _this = this;
         this.view.on('change:center', function (event) { return _this.change(); });
         this.view.on('change:resolution', function (event) {
+            //if (!App.useClustering) {
+            //    IconLayer.updateScale();
+            //    IconLayer.updateShown();
+            //}
             _this.change();
         });
         this.view.on('change:rotation', function (event) {
             App.global.setMapRotation(_this.view.getRotation());
         });
+        //this.view.on('propertychange', (event) => console.debug('change'));
+        //this.on('postrender', (event) => console.debug('postrender'));
         this.on('moveend', function (event) {
             _this._moving = false;
             if (_this.mousePixel)
@@ -79,6 +124,7 @@ var MainMap = (function (_super) {
         });
         this.on('pointermove', function (event) {
             var pixel = _this.getEventPixel(event.originalEvent);
+            //TODO: Only if shown?
             App.mapTooltip.setPosition([pixel[0] + $("#map").offset().left, pixel[1] + 20]);
             if (event.dragging)
                 return;
@@ -87,6 +133,8 @@ var MainMap = (function (_super) {
                 _this.routeLayer.moveEvent(event);
             _this.getHoverObject(event.coordinate, pixel);
             if (_this.curHoverObject) {
+                //if (!this.oldHoverObject)
+                //    $("#map").css("cursor", 'pointer');
                 if (_this.curHoverObject != _this.oldHoverObject) {
                     if (typeof (_this.curHoverObject) === 'string') {
                         $("#map").css("cursor", _this.curHoverObject);
@@ -95,7 +143,9 @@ var MainMap = (function (_super) {
                     }
                     $("#map").css("cursor", 'pointer');
                     if (_this.curHoverObject instanceof HaGeo)
-                        _this.curHoverObject.showToolTip();
+                        _this.curHoverObject.showToolTip(); //TODO: Cancel this, if mapTooltip is hidden......................................
+                    //if (this.curHoverObject instanceof Array)
+                    //    this.showMultipleGeosToolTip(<Array<HaGeo>>this.curHoverObject);
                     if (_this.curHoverObject instanceof HaRegion)
                         App.mapTooltip.setText(_this.curHoverObject.name);
                 }
@@ -107,10 +157,17 @@ var MainMap = (function (_super) {
             }
         });
         this.on('pointerdrag', function (event) {
-            _this._moving = true;
+            _this._moving = true; //TODO: Not always so.....................................
             if (_this.curHoverObject instanceof HaGeo)
                 _this.iconLayer.dragEvent(event, _this.curHoverObject);
             if (_this.curHoverObject instanceof HaCollection) {
+                //var curHoverFeature: ol.Feature;
+                //this.forEachFeatureAtPixel(event.pixel, (feature) => {
+                //    this.curHoverFeature = feature;
+                //    return true;
+                //}, null, (layer) => layer == this.routeLayer);
+                //if (curHoverFeature)
+                //    this.curHoverFeature = curHoverFeature;
                 _this.routeLayer.dragEvent(event, _this.curHoverObject, _this.curHoverFeature);
             }
         });
@@ -141,7 +198,7 @@ var MainMap = (function (_super) {
                 Common.dom.append(WindowGeo.create(geo));
             }
             if (_this.curHoverObject instanceof Array) {
-                var coord = [0, 0];
+                var coord = [0, 0]; //avg. center coord
                 var geos = _this.curHoverObject;
                 for (var _i = 0, geos_1 = geos; _i < geos_1.length; _i++) {
                     var geo = geos_1[_i];
@@ -151,7 +208,7 @@ var MainMap = (function (_super) {
                 coord[0] /= geos.length;
                 coord[1] /= geos.length;
                 var minDist = Number.MAX_VALUE;
-                var centerGeo;
+                var centerGeo; //geo closest to center coord
                 for (var _a = 0, geos_2 = geos; _a < geos_2.length; _a++) {
                     var geo = geos_2[_a];
                     var dist = Math.pow((geo.coord[0] - coord[0]), 2) + Math.pow((geo.coord[1] - coord[1]), 2);
@@ -167,7 +224,50 @@ var MainMap = (function (_super) {
             if (_this.curHoverObject instanceof HaRegion)
                 Common.dom.append(WindowRegion.create(_this.curHoverObject));
         });
+        //$(window).mouseup(() => { //TODO: only when accepting end poisition.... in isMoving setter
+        //    if (this.curHoverObject instanceof HaGeo) {
+        //        var geo = <HaGeo>this.curHoverObject;
+        //        if (App.haUsers.user.canEdit(geo))
+        //            geo.saveCoords();
+        //    }
+        //})
     };
+    //private showMultipleGeosToolTip(geos: Array<HaGeo>, dotDotDot: string = null) { //TODO: calls the API multiple times while waiting for response..
+    //    if (geos.length > 3) {
+    //        dotDotDot = ' og ' + (geos.length - 3) + ' andre fortællinger...';
+    //        geos = geos.slice(0, 3);
+    //    }
+    //    var missingTitleGeoIDs: Array<number> = [];
+    //    for (var geo of geos)
+    //        if (!geo.title)
+    //            missingTitleGeoIDs.push(geo.id);
+    //    if (missingTitleGeoIDs.length > 1)
+    //    {
+    //        Services.get('geo',
+    //            {
+    //                count: '*',
+    //                schema: JSON.stringify({
+    //                    geo: {
+    //                        fields: ['geoid', 'title'],
+    //                        filters: [{
+    //                            geoid: missingTitleGeoIDs
+    //                        }]
+    //                    }
+    //                })
+    //            },
+    //            (result) => {
+    //                for (var data of result.data)
+    //                    App.haGeos.geos[data.geoid].title = data.title;
+    //                this.showMultipleGeosToolTip(geos, dotDotDot);
+    //            }
+    //        );
+    //        return;
+    //    }
+    //    var titles: Array<string> = [];
+    //    for (var geo of geos)
+    //        titles.push(geo.title);
+    //    App.mapTooltip.setText(titles.join(', ') + (dotDotDot ? dotDotDot : ''));
+    //}
     MainMap.prototype.change = function () {
         var _this = this;
         if (!this.extentIsDirty) {
@@ -203,6 +303,7 @@ var MainMap = (function (_super) {
         this.oldHoverObject = this.curHoverObject;
         if (this.curHoverObject = this.getHoverHaGeo(pixel))
             return;
+        //if (routeLayerVisible)
         if (this.curHoverObject = this.getHoverHaCollection(pixel))
             return;
         var digDagLayerVisible = !!this.digDagLayer;
@@ -219,6 +320,7 @@ var MainMap = (function (_super) {
                     this.curHoverObject = this.oldHoverObject;
                 else
                     var b = 42;
+        //this.curHoverObject = null;
     };
     MainMap.prototype.showDigDagLayer = function (type) {
         if (this.digDagLayer)
@@ -233,6 +335,8 @@ var MainMap = (function (_super) {
     MainMap.prototype.showRouteLayer = function () {
         if (!this.routeLayer)
             this.getLayers().insertAt(3, this.routeLayer = new RouteLayer());
+        //else
+        //    this.routeLayer..... //todo
     };
     MainMap.prototype.setextent = function (event) {
         this.backLayer.setExtent(this.getView().calculateExtent(this.getSize()));
@@ -251,6 +355,8 @@ var MainMap = (function (_super) {
         var _this = this;
         var icons = [];
         this.forEachFeatureAtPixel(pixel, function (feature) {
+            //icons = <Icon[]>feature.get('features');
+            //icons = App.useClustering ? <Icon[]>feature.get('features') : [<Icon>feature]; //TODO: do without array
             icons = feature instanceof Icon ? [feature] : feature.get('features');
             return true;
         }, null, function (layer) { return layer == _this.iconLayer || layer == _this.iconLayerNonClustered; });
@@ -266,6 +372,7 @@ var MainMap = (function (_super) {
             geos.push(icon.geo);
         }
         return geos;
+        //return null;
     };
     Object.defineProperty(MainMap.prototype, "HaMap", {
         get: function () {
@@ -279,6 +386,30 @@ var MainMap = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    //private geoHover(icon: Icon) {
+    //    if (this.showPopup == true) {
+    //        //this.initiateGeoHover();
+    //        this.addOverlay(this.popup);
+    //        var coordinates = icon.getGeometry().getCoordinates();
+    //        var lonlat = ol.proj.transform(coordinates, 'EPSG:3857', 'EPSG:4326');
+    //        var pos = ol.proj.transform([lonlat[0], lonlat[1]], 'EPSG:4326', 'EPSG:3857')
+    //        this.popup.setPosition(pos);
+    //        this.popup.setPositioning('center-center');
+    //        this.popup.setOffset([0, -25]);
+    //        this.geoHoverTextModel = new geoHoverTextModel(icon.geo._title);
+    //        $('#popup').hide().fadeIn(250);
+    //        this.showPopup = false;
+    //    }
+    //}
+    //public initiateGeoHover() {
+    //    $('<p id="popup" class="ol-popup" data-bind="text: geoTitle"></p>').appendTo('body');
+    //    this.popup = new ol.Overlay({
+    //        element: document.getElementById('popup')
+    //    });
+    //    var pos = ol.proj.transform([10.0, 56.0], 'EPSG:4326', 'EPSG:3857')
+    //    this.popup.setPosition(pos);
+    //    this.popup.setPositioning('center-center');
+    //}
     MainMap.prototype.zoomPanMap = function (frameState, map) {
         var _this = this;
         this.runAnimation = true;
@@ -313,6 +444,13 @@ var MainMap = (function (_super) {
     };
     MainMap.prototype.stopAnimation = function () {
         this.runAnimation = false;
+        //Zoom & Center skal sættes til det punkt, hvor animationen stoppes! 
+        //getZoom & getCenter kan ikke bruges, da de ikke returnerer nuværende zoom & center
+        //var view = this.getView();
+        //var zoom = 
+        //var center = 
+        //view.setZoom(zoom);
+        //view.setCenter(center);
     };
     MainMap.prototype.zoomAnim = function (delta) {
         if (delta < 1)
@@ -359,6 +497,7 @@ var MainMap = (function (_super) {
         this.view.setCenter(coord);
         this.view.setResolution(valueIsRadius ? this.view.constrainResolution(Math.max(radiusOrResoultionValue * 2, 100) / Math.min(this.getSize()[0], this.getSize()[1])) : radiusOrResoultionValue);
         if (updateExtent) {
+            //this.renderSync();
             this.updateExtent();
         }
     };
@@ -376,3 +515,4 @@ var MainMap = (function (_super) {
     MainMap.minZoom = 2;
     return MainMap;
 }(ol.Map));
+//# sourceMappingURL=MainMap.js.map

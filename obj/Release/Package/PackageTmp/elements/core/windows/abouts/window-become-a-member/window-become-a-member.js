@@ -27,3 +27,4 @@ var WindowBecomeAMember = (function (_super) {
     return WindowBecomeAMember;
 }(polymer.Base));
 WindowBecomeAMember.register();
+//# sourceMappingURL=window-become-a-member.js.map

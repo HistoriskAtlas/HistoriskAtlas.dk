@@ -40,6 +40,7 @@ var PanelUserAdmin = (function (_super) {
         var _this = this;
         this.showDetails = false;
         Services.get('user', {
+            //Use when "and"-bug on api is fixed:  'schema': '{user:{filters:[{login:{like:' + this.filter + '}},{firstname:{like:' + firstFilter + '},lastname:{like:' + lastFilter + '}}],fields:[id,login,firstname,lastname,roleid,{user_institutions:[empty,{institution:[{tag:[plurname]}]}]}]}}',
             'schema': JSON.stringify({
                 user: {
                     filters: HaUsers.getApiFilter(this.filter),
@@ -64,6 +65,8 @@ var PanelUserAdmin = (function (_super) {
         this.$.admin.sort(null, newList);
     };
     PanelUserAdmin.prototype.itemTap = function (e) {
+        //this.$.selector.select(e.model.item);
+        //this.getInstitution();
         this.$.admin.select(e.model.item);
     };
     PanelUserAdmin.prototype.getUser = function () {
@@ -81,6 +84,12 @@ var PanelUserAdmin = (function (_super) {
             _this.isGettingUser = false;
         });
     };
+    //@observe('user.email')
+    //private emailChanged(newVal: string) {
+    //    if (this.isGettingUser || !newVal)
+    //        return;
+    //    Services.update('user', { 'userid': this.user.id, 'email': newVal }, (result) => { this.getUser(); })
+    //}
     PanelUserAdmin.prototype.institutionPropertyChanged = function (e) {
         if (this.isGettingUser)
             return;
@@ -296,3 +305,4 @@ var PanelUserAdmin = (function (_super) {
     return PanelUserAdmin;
 }(polymer.Base));
 PanelUserAdmin.register();
+//# sourceMappingURL=panel-user-admin.js.map

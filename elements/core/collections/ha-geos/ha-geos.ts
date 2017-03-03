@@ -49,6 +49,8 @@ class HaGeos extends polymer.Base implements polymer.Element {
         //this.lastGeoIdsLoaded = [];
         this.isLoading = false;
         //this.tagsIsLoaded = false;
+        HaTags.loadedCallbacks.push(() => this.tagsLoaded());
+
         this.$.ajax.url = Common.api + "geo.json";       
     }
 

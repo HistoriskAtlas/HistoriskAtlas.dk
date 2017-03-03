@@ -25,10 +25,11 @@ var DigDagHelperLayer = (function (_super) {
             if (_this.loaded != _this.oldLoaded || _this.redrawCount == 0) {
                 _this.context.canvas.width = event.context.canvas.width;
                 _this.context.canvas.height = event.context.canvas.height;
-                var imageData = event.context.getImageData(0, 0, _this.context.canvas.width, _this.context.canvas.height);
+                var imageData = event.context.getImageData(0, 0, _this.context.canvas.width, _this.context.canvas.height); //TODO: Create instead?
                 _this.data32 = new Uint32Array(imageData.data.buffer);
                 _this.generateContext();
             }
+            //console.debug('loaded: ' + this.loaded + ' | loading: ' + this.loading + ' | redrawCount: ' + this.redrawCount);
             if (_this.loaded == _this.loading && _this.redrawCount > 2)
                 _this.setVisible(false);
             else
@@ -60,7 +61,7 @@ var DigDagHelperLayer = (function (_super) {
                 return;
             this._year = newYear;
             this.setDirty();
-            this.data32PrevYear = this.data32;
+            this.data32PrevYear = this.data32; //TODO: This only works if the helper layer is currently active.... need to redraw first if not....
             this.source.setUrl(this.url);
             App.map.digDagLayer.setOpacity(0);
             this.update(null);
@@ -69,7 +70,7 @@ var DigDagHelperLayer = (function (_super) {
                 _this._active = false;
                 App.map.digDagLayer.setOpacity(1);
                 _this.update(null);
-            }, 10000);
+            }, 10000); //Was 3000
         },
         enumerable: true,
         configurable: true
@@ -100,7 +101,7 @@ var DigDagHelperLayer = (function (_super) {
         if (id == 0) {
             this._active = false;
             this.regionID = 0;
-            App.map.render();
+            App.map.render(); //Needed?
             return;
         }
         if (id == 1)
@@ -111,15 +112,38 @@ var DigDagHelperLayer = (function (_super) {
         if (this._dirty) {
             this.redrawCount = 0;
             this.setVisible(true);
-            App.map.render();
+            App.map.render(); //TODO: needed?
             this._dirty = false;
         }
         else {
             this.generateContext();
         }
     };
+    //private generateContext() {
+    //    //this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+    //    //var staticImageData = this.context.getImageData(0, 0, this.context.canvas.width, this.context.canvas.height);
+    //    var staticImageData = this.context.createImageData(this.context.canvas.width, this.context.canvas.height) //Better performance? mem use problem?
+    //    var shadowOffset = staticImageData.width * 16 + 16;
+    //    for (var i: number = 0; i < staticImageData.data.length; i += 4) {
+    //        if (this.imageData.data[i] + (this.imageData.data[i + 1] << 8) + (this.imageData.data[i + 2] << 16) == this.regionID) {
+    //            var j = i + shadowOffset;
+    //            //staticImageData.data[j] = 0;
+    //            //staticImageData.data[j + 1] = 0;
+    //            //staticImageData.data[j + 2] = 0;
+    //            staticImageData.data[j + 3] = 100;
+    //            staticImageData.data[i] = 255;
+    //            staticImageData.data[i + 1] = 255;
+    //            staticImageData.data[i + 2] = 255;
+    //            staticImageData.data[i + 3] = 180;
+    //        }
+    //    }
+    //    this.context.putImageData(staticImageData, 0, 0);
+    //    App.map.render();
+    //}
     DigDagHelperLayer.prototype.generateContext = function () {
-        var staticImageData = this.context.createImageData(this.context.canvas.width, this.context.canvas.height);
+        //this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+        //var staticImageData = this.context.getImageData(0, 0, this.context.canvas.width, this.context.canvas.height);
+        var staticImageData = this.context.createImageData(this.context.canvas.width, this.context.canvas.height); //Better performance? mem use problem?
         var shadowOffset = staticImageData.width * 4 + 4;
         var bufStatic = new ArrayBuffer(staticImageData.data.length);
         var bufStatic8 = new Uint8ClampedArray(bufStatic);
@@ -127,11 +151,13 @@ var DigDagHelperLayer = (function (_super) {
         var white = 255 | (255 << 8) | (255 << 16) | (180 << 24);
         var red0 = 255 | (127 << 24);
         var red1 = 255 | (255 << 24);
+        //var green: number = (200 << 8) | (255 << 24);
         var shadow = 100 << 24;
         var black0 = 40 << 24;
         var black1 = 120 << 24;
         var black0unmasked = (0 | (255 << 24)) >>> 0;
         var black1unmasked = (1 | (255 << 24)) >>> 0;
+        //var mask = 255 | (255 << 8) | (255 << 16);
         var regionIDunmasked = this.regionID == 0 ? 42 : (this.regionID | (255 << 24)) >>> 0;
         for (var i = 0; i < dataStatic32.length; i++) {
             if (this.data32PrevYear) {
@@ -168,3 +194,4 @@ var DigDagHelperLayer = (function (_super) {
     };
     return DigDagHelperLayer;
 }(ol.layer.Tile));
+//# sourceMappingURL=DigDagHelperLayer.js.map

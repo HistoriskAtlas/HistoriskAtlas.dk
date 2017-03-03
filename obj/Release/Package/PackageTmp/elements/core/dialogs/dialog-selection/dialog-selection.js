@@ -36,3 +36,4 @@ var DialogSelection = (function (_super) {
     return DialogSelection;
 }(polymer.Base));
 DialogSelection.register();
+//# sourceMappingURL=dialog-selection.js.map

@@ -50,6 +50,11 @@ var PanelDigDag = (function (_super) {
     PanelDigDag.prototype.showInfoButton = function (touchDevice, digdag) {
         return !touchDevice && digdag.id != 7;
     };
+    //radioTap(e: any) {
+    //    if (e.model.child.active)
+    //        return;
+    //    this.update(e.model.child);
+    //}
     PanelDigDag.prototype.classListItem = function (year, regionType) {
         return 'listitem listsubitem noselect' + ((year < regionType.periodStart || year > regionType.periodEnd) ? ' inactive' : '');
     };
@@ -60,7 +65,7 @@ var PanelDigDag = (function (_super) {
         this.digdags.forEach(function (digdag, i) {
             return digdag.regionTypes.forEach(function (regionType, j) {
                 if (regionType != activeRegionType)
-                    _this.set('digdags.' + i + '.regionTypes.' + j + '.active', false);
+                    _this.set('digdags.' + i + '.regionTypes.' + j + '.active', false); //Needed this path?
             });
         });
     };
@@ -87,3 +92,4 @@ var PanelDigDag = (function (_super) {
     return PanelDigDag;
 }(polymer.Base));
 PanelDigDag.register();
+//# sourceMappingURL=panel-digdag.js.map

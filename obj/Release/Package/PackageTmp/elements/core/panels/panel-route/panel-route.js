@@ -18,6 +18,8 @@ var PanelRoute = (function (_super) {
         _super.call(this);
         this.showingUserRouteTopLevel = false;
         this.topLevels = [
+            //{ name: 'Mine ruter', shown: false, selected: false, filter: (collection: HaCollection) => collection.userid == App.haUsers.user.id },
+            //{ name: 'spacer', shown: false, selected: false, filter: null },
             { name: 'I bil', shown: false, selected: false, filter: function (collection) { return collection.type == 0; } },
             { name: 'På cykel', shown: false, selected: false, filter: function (collection) { return collection.type == 1; } },
             { name: 'Til fods', shown: false, selected: false, filter: function (collection) { return collection.type == 2; } },
@@ -85,3 +87,4 @@ var PanelRoute = (function (_super) {
     return PanelRoute;
 }(polymer.Base));
 PanelRoute.register();
+//# sourceMappingURL=panel-route.js.map

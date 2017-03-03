@@ -44,3 +44,4 @@ var WindowGeoEditorial = (function (_super) {
     return WindowGeoEditorial;
 }(polymer.Base));
 WindowGeoEditorial.register();
+//# sourceMappingURL=window-geo-editorial.js.map

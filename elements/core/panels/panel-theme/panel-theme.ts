@@ -23,6 +23,8 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     public show: boolean;
 
     ready() {
+        HaTags.loadedCallbacks.push(() => this.themeChanged());
+
         Services.get('theme', {
             count: '*',
             schema: '{theme:[name]}',
@@ -88,6 +90,8 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         //    })
         //}
 
+        if (!App.haTags.tagsLoaded)
+            return;
 
         var routeTopLevels: Array<ICollectionTopLevel> = [];
         if (this.theme.tagid && this.theme != Global.defaultTheme) {

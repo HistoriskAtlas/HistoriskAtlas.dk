@@ -28,3 +28,4 @@ var WindowEditorial = (function (_super) {
     return WindowEditorial;
 }(polymer.Base));
 WindowEditorial.register();
+//# sourceMappingURL=window-editorial.js.map

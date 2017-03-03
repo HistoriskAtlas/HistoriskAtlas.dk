@@ -12,6 +12,8 @@ class HaTags extends polymer.Base implements polymer.Element {
     //@property({ type: Boolean })
     //public beingIndexed: boolean;
 
+    public static loadedCallbacks: Array<() => void> = [];
+
     //TEMP(?)
     public static tagsWithMarkers: Array<HaTag> = new Array<HaTag>(10000);
     //public static tagUGC: HaTag; //only needed because UGC cant add subjects yet........................................................................
@@ -38,6 +40,13 @@ class HaTags extends polymer.Base implements polymer.Element {
             this.tagIdsInStorage = [];                                                    
 
         this.$.ajax.url = Common.api + 'tag.json?count=all&schema=' + Common.apiSchemaTags + (this.tagIdsInStorage.length > 0 ? '&lastmodified={min:' + LocalStorage.timestampDateTime('tag-ids') + '}' : '');
+    }
+
+    public get tagsLoaded(): boolean {
+        if (!this.tags)
+            return false;
+
+        return this.tags.length > 0;
     }
 
     public handleResponse() {
@@ -191,7 +200,10 @@ class HaTags extends polymer.Base implements polymer.Element {
 
                     break;
                 }
-                (<HaGeos>document.querySelector('ha-geos')).tagsLoaded(); //TODO: best place?
+                //(<HaGeos>document.querySelector('ha-geos')).tagsLoaded(); //TODO: best place?
+
+                for (var callback of HaTags.loadedCallbacks)
+                    callback();
             });
             markers.src = 'images/markers/all.png';
         });

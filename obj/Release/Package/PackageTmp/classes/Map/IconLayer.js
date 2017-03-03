@@ -5,12 +5,17 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var IconLayer = (function (_super) {
     __extends(IconLayer, _super);
+    //private oldDragCoordinate: ol.Coordinate;
+    //private dragDirtyGeo: HaGeo;
+    //private pixelImageData: ImageData;
     function IconLayer() {
         var _this = this;
         IconLayer.updateDisabled = false;
         IconLayer.source = new ol.source.Vector();
+        //if (App.useClustering)
         IconLayer.clusterSource = new ol.source.Cluster({
             distance: 40,
+            //geometryFunction: this.clusterFunction,
             source: IconLayer.source,
         });
         var canvas = document.createElement('canvas');
@@ -52,7 +57,31 @@ var IconLayer = (function (_super) {
             var icons = feature.get('features');
             return icons.length == 1 ? icons[0].getStyle() : _this.getMultipleStyle(icons);
         });
+        //if (!App.useClustering)
+        //    this.on('precompose', (event: any) => {
+        //        var context: CanvasRenderingContext2D = event.context;
+        //        //if (!this.pixelImageData) {
+        //        //    this.pixelImageData = context.createImageData(1, 1);
+        //        //    var data = this.pixelImageData.data;
+        //        //    data[0] = 0;
+        //        //    data[1] = 93;
+        //        //    data[2] = 154;
+        //        //    data[3] = 1;
+        //        //}
+        //        context.fillStyle = "rgba(0,93,154,1)";
+        //        IconLayer.iconsSmall.forEach((icon: Icon) => { //TODO: only thoose in view?
+        //            var pixel = App.map.getPixelFromCoordinate(icon.coord3857);
+        //            //context.fillStyle = "rgba(255,255,255,1)";
+        //            //context.fillRect(pixel[0], pixel[1]-1, 1, 1);
+        //            //context.fillStyle = "rgba(0,93,154,1)";
+        //            context.fillRect(pixel[0] - icon.scale * 4, pixel[1] - 1 - icon.scale * 12, 1 + icon.scale * 8, 2 + icon.scale * 12); //TODO: precalc?
+        //            //context.putImageData(this.pixelImageData, pixel[0], pixel[1]);
+        //        }) 
+        //    });
     }
+    //private clusterFunction(icon: Icon) {
+    //    return icon.geo.isMoving ? null : icon.getGeometry();
+    //}
     IconLayer.prototype.getMultipleStyle = function (icons) {
         var ugcCount = 0;
         var proCount = 0;
@@ -100,18 +129,66 @@ var IconLayer = (function (_super) {
             })
         ];
     };
+    //public static updateMinDist() {
+    //    this.iconsShown.forEach((icon: Icon) => icon.updateMinDist());
+    //}
+    //public static updateMinDist() {
+    //    //this.geos.forEach((geo: HaGeo) => {
+    //    //    geo.icon.updateMinDist(); //TODO: don't
+    //    //});
+    //    var coords: Array<ol.Coordinate> = [];
+    //    IconLayer.iconsShown.forEach((icon: Icon) => {
+    //        coords.push(icon.coord3857);
+    //    });
+    //    var tree = new kdTree<ol.Coordinate>(coords);
+    //    IconLayer.iconsShown.forEach((icon: Icon) => {
+    //        icon.minDist = tree.searchNearest(icon.coord3857);
+    //    });
+    //    IconLayer.updateScale(); //TODO: in prev. loop instead?
+    //}
+    //public static updateScale() {
+    //    var res = 1 / (App.map.getView().getResolution() * 40);
+    //    var scale;
+    //    this.iconsShown.forEach((icon: Icon) => {
+    //        scale = Math.min(1, icon.minDist * res);
+    //        //icon.small = scale < 0.2;
+    //        icon.scale = scale;
+    //        (<any>icon.iconStyle).setScale(scale);
+    //    });
+    //}
     IconLayer.updateShown = function () {
         if (IconLayer.updateDisabled || !this.source)
             return;
         this.source.clear(true);
+        //if (!App.useClustering) {
+        //    this.iconsSmall = [];
         var show = [];
         for (var _i = 0, _a = this.iconsShown; _i < _a.length; _i++) {
             var icon = _a[_i];
             if (!icon.geo.isMoving)
                 show.push(icon);
         }
+        //if (icon.small)
+        //    this.iconsSmall.push(icon);
+        //else
+        //} else
+        //this.source.addFeatures(this.iconsShown);
         this.source.addFeatures(show);
     };
+    //public static addIcon(geo: HaGeo) {
+    //    var icon = new Icon(geo);
+    //    return icon;
+    //}
+    //public static findIcon(geoID: number) {
+    //    this.feature = this.source.getFeatureById(geoID);
+    //    var icon = (<Icon>this.feature);
+    //    return icon;
+    //}
+    //public static findCoordinates(icon: Icon) {
+    //    var coordinates = (<ol.geom.Point>icon.getGeometry()).getCoordinates();
+    //    var lonlat = ol.proj.transform(coordinates, 'EPSG:3857', 'EPSG:4326');
+    //    return [lonlat[0], lonlat[1]];
+    //}
     IconLayer.circleCanvas = function (isUGC) {
         var canvas = document.createElement('canvas');
         canvas.width = 32;
@@ -129,3 +206,4 @@ var IconLayer = (function (_super) {
     IconLayer.iconsSmall = [];
     return IconLayer;
 }(IconLayerBase));
+//# sourceMappingURL=IconLayer.js.map
