@@ -137,9 +137,9 @@ class MainMenu extends polymer.Base implements polymer.Element {
         Common.dom.append(WindowTermsOfUse.create());
     }
 
-    blogTap() {
-        window.open('http://blog.historiskatlas.dk/', '_blank')
-    }
+    //blogTap() {
+    //    window.open('http://blog.historiskatlas.dk/', '_blank')
+    //}
     facebookTap() {
         window.open('http://www.facebook.com/historiskatlas', '_blank')
     }

@@ -78,9 +78,9 @@ var MainMenu = (function (_super) {
     MainMenu.prototype.termsOfUseTap = function () {
         Common.dom.append(WindowTermsOfUse.create());
     };
-    MainMenu.prototype.blogTap = function () {
-        window.open('http://blog.historiskatlas.dk/', '_blank');
-    };
+    //blogTap() {
+    //    window.open('http://blog.historiskatlas.dk/', '_blank')
+    //}
     MainMenu.prototype.facebookTap = function () {
         window.open('http://www.facebook.com/historiskatlas', '_blank');
     };
