@@ -203,6 +203,7 @@
     <Content Include="images\red-ribbon\scissorsClosed.png" />
     <Content Include="images\red-ribbon\scissorsOpen1.png" />
     <Content Include="images\red-ribbon\scissorsOpen2.png" />
+    <Content Include="images\theme\HoD2017grass.png" />
     <Content Include="images\theme\HoD2017logo.png" />
     <Content Include="images\youtubePlay.png" />
     <Content Include="js\jquery\Base64.js" />
