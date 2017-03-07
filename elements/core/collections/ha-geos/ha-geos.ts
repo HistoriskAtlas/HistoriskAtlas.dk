@@ -429,7 +429,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
         var size = App.map.getSize();
         var coord = Common.fromMapCoord(App.map.getCoordinateFromPixel([size[0] - 150, 150]));
 
-        var geo = new HaGeo({ lat: coord[1], lng: coord[0], title: '', user: { id: App.haUsers.user.id }, online: false, ugc: !App.haUsers.user.isPro }, true, true); //530 = Ready for HA5...
+        var geo = new HaGeo({ lat: coord[1], lng: coord[0], title: '', user: { id: App.haUsers.user.id }, online: false, ugc: !App.haUsers.user.isPro }, true, true);
 
         geo.addTag(App.haTags.byId[530]); // ready for v.5
         geo.addTag(App.haTags.byId[427]); // HA destination
@@ -439,6 +439,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
         geo.views = 0;
         geo.intro = '';
         geo.freeTags = '';
+        geo.primaryTagStatic = false;
         geo.images = [];
         App.haUsers.user.geos.push(geo); //TODO: let HaUsers handle it, so change notification kicks in?
         //geo.user = App.haUsers.user;

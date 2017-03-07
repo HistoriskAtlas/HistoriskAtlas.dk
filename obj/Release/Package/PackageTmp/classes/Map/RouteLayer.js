@@ -41,16 +41,6 @@ var RouteLayer = (function (_super) {
                 dataProjection: 'EPSG:4326',
                 featureProjection: 'EPSG:3857'
             });
-            //var coord = Common.toMapCoord(loc2);
-            //var stop = new ol.geom.Circle(coord, 100);
-            //var featureStop = new ol.Feature(stop);
-            //featureStop.setStyle(new ol.style.Style({
-            //    zIndex: 10,
-            //    fill: new ol.style.Fill({
-            //        color: [255, 0, 0, 1]
-            //    })
-            //}))
-            //this.source.addFeature(featureStop);
             var feature = new ol.Feature({
                 geometry: route
             });
@@ -88,14 +78,10 @@ var RouteLayer = (function (_super) {
         this.source.addFeatures(newFeatures);
     };
     RouteLayer.prototype.redraw = function () {
-        //TODO: implement using changed() instead? (when new ol is compiled)
         var existingFeatures = this.source.getFeatures();
         this.source.clear();
         this.source.addFeatures(existingFeatures);
     };
-    //public clear() {
-    //    this.source.clear();
-    //}
     RouteLayer.prototype.moveEvent = function (event) {
         this.oldDragCoordinate = null;
     };
@@ -105,7 +91,6 @@ var RouteLayer = (function (_super) {
             return;
         if (!App.haUsers.user.canEditCollection(collection))
             return;
-        //var viaPoint: ol.Feature;
         var first = false;
         if (!this.oldDragCoordinate) {
             first = true;
@@ -145,8 +130,6 @@ var RouteLayer = (function (_super) {
             }
         }
         App.map.preventDrag(event);
-        //return viaPoint;
     };
     return RouteLayer;
 }(ol.layer.Vector));
-//# sourceMappingURL=RouteLayer.js.map

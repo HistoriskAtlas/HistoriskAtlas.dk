@@ -22,9 +22,7 @@ var HaGeos = (function (_super) {
         this.geos = [];
         this.requests = [];
         this.responses = [];
-        //this.lastGeoIdsLoaded = [];
         this.isLoading = false;
-        //this.tagsIsLoaded = false;
         HaTags.loadedCallbacks.push(function () { return _this.tagsLoaded(); });
         this.$.ajax.url = Common.api + "geo.json";
     };
@@ -60,7 +58,7 @@ var HaGeos = (function (_super) {
         if (oldVal === undefined)
             return;
         if (newVal) {
-            this.processRequest({ themeTagID: this.theme.tagid, ugc: ugc, removeAlso: false, userLayer: false }); //Was true!??!
+            this.processRequest({ themeTagID: this.theme.tagid, ugc: ugc, removeAlso: false, userLayer: false });
             if (!App.haUsers.user.isDefault)
                 this.processRequest({ themeTagID: this.theme.tagid, ugc: ugc, removeAlso: false, userLayer: true });
         }
@@ -87,10 +85,6 @@ var HaGeos = (function (_super) {
             this.processRequest({ themeTagID: themeTagID, ugc: false, removeAlso: removeAlso, userLayer: false });
         if (this.userCreators)
             this.processRequest({ themeTagID: themeTagID, ugc: true, removeAlso: removeAlso, userLayer: false });
-        //if (!App.haUsers.user.isDefault) {
-        //    this.processRequest({ themeTagID: themeTagID, ugc: false, removeAlso: removeAlso, userLayer: true });
-        //    this.processRequest({ themeTagID: themeTagID, ugc: true, removeAlso: removeAlso, userLayer: true });
-        //}
     };
     HaGeos.prototype.processRequest = function (request) {
         var _this = this;
@@ -104,24 +98,6 @@ var HaGeos = (function (_super) {
         if (!this.curRequest.removeAlso)
             this.getGeos();
         else {
-            //var send: any = {
-            //    count: '*',
-            //    //TODO: also include theme filter? (old theme id)
-            //    schema: JSON.stringify({
-            //        tag: {
-            //            fields: [
-            //                {
-            //                    tag_geos: [{ collapse: "geoid" }]
-            //                }
-            //            ],
-            //            filters: [
-            //                {
-            //                    tagid: this.curRequest.themeTagID
-            //                }
-            //            ]
-            //        }
-            //    })
-            //}
             var send = {
                 count: '*',
                 schema: JSON.stringify({
@@ -139,7 +115,6 @@ var HaGeos = (function (_super) {
                 send.online = true;
             Services.get('geo', send, function (result) {
                 IconLayer.updateDisabled = true;
-                //var newGeoIds = <Array<number>>result.data[0].tag_geos;
                 var newGeoIds = result.data;
                 var removeArray = [];
                 _this.geos.forEach(function (geo) {
@@ -151,7 +126,6 @@ var HaGeos = (function (_super) {
                     _this.removeGeo(geo);
                 }
                 IconLayer.updateDisabled = false;
-                //IconLayer.updateShown();
                 _this.getGeos();
             });
         }
@@ -173,10 +147,10 @@ var HaGeos = (function (_super) {
                 ],
                 filters: !this.curRequest.userLayer ? [] : [
                     {
-                        user: [{ userhierarkis1: [{ parentid: App.haUsers.user.id /*is editor for owner*/ }] }]
+                        user: [{ userhierarkis1: [{ parentid: App.haUsers.user.id }] }]
                     },
                     {
-                        user: [{ id: App.haUsers.user.id /*is owner*/ }]
+                        user: [{ id: App.haUsers.user.id }]
                     }
                 ]
             }
@@ -192,7 +166,7 @@ var HaGeos = (function (_super) {
                                 {
                                     institutions: [
                                         {
-                                            id: App.haUsers.user.institutions[0].id /*is same institution TODO: cur inst not only [0]*/
+                                            id: App.haUsers.user.institutions[0].id
                                         }
                                     ]
                                 }
@@ -221,7 +195,6 @@ var HaGeos = (function (_super) {
     };
     HaGeos.prototype.addGeosFromResponse = function (response) {
         var tempGeos = this.geos.slice();
-        //this.lastGeoIdsLoaded = [];
         for (var _i = 0, _a = response.data; _i < _a.length; _i++) {
             var data = _a[_i];
             if (this.geos[data.id]) {
@@ -229,15 +202,10 @@ var HaGeos = (function (_super) {
                     this.geos[data.id].userLayer = true;
                 continue;
             }
-            //this.lastGeoIdsLoaded.push(data.id);
             data.ugc = this.curRequest.ugc;
             if (!this.curRequest.userLayer)
                 data.online = true;
             var geo = new HaGeo(data, !this.curRequest.removeAlso || App.haTags.tagTops[9].selected ? true : this.curRequest.userLayer, this.curRequest.userLayer);
-            //if (!geo.online)
-            //    geo.addTag(HaTags.tagUserLayer);
-            //if (geo.isUGC)
-            //    geo.addTag(HaTags.tagUGC);
             tempGeos[geo.id] = geo;
             if (HaGeos.usersGeoIDs.length > 0)
                 if (HaGeos.usersGeoIDs.indexOf(geo.id) > -1)
@@ -245,10 +213,7 @@ var HaGeos = (function (_super) {
         }
         this.geos = tempGeos;
         App.loading.hide(HaGeos.loadingText);
-        //if (!App.useClustering)
-        //    IconLayer.updateMinDist();
-        //IconLayer.updateShown();
-        this.updateShownGeos(null, null, this.curRequest.themeTagID, this.userCreators, this.profCreators); //WAS true, true
+        this.updateShownGeos(null, null, this.curRequest.themeTagID, this.userCreators, this.profCreators);
     };
     HaGeos.prototype.updateShownGeos = function (idsChanged, changedTo, themeTagID, userCreators, profCreators) {
         var _this = this;
@@ -291,7 +256,6 @@ var HaGeos = (function (_super) {
         var send = {
             count: '*',
             ugc: userCreators == profCreators ? '' : userCreators,
-            //sid: (<any>document).sid,
             tag_geos: JSON.stringify([
                 { tagid: themeTagID }
             ]),
@@ -346,17 +310,17 @@ var HaGeos = (function (_super) {
     HaGeos.prototype.newGeo = function () {
         var size = App.map.getSize();
         var coord = Common.fromMapCoord(App.map.getCoordinateFromPixel([size[0] - 150, 150]));
-        var geo = new HaGeo({ lat: coord[1], lng: coord[0], title: '', user: { id: App.haUsers.user.id }, online: false, ugc: !App.haUsers.user.isPro }, true, true); //530 = Ready for HA5...
-        geo.addTag(App.haTags.byId[530]); // ready for v.5
-        geo.addTag(App.haTags.byId[427]); // HA destination
+        var geo = new HaGeo({ lat: coord[1], lng: coord[0], title: '', user: { id: App.haUsers.user.id }, online: false, ugc: !App.haUsers.user.isPro }, true, true);
+        geo.addTag(App.haTags.byId[530]);
+        geo.addTag(App.haTags.byId[427]);
         if (App.haUsers.user.isPro)
             geo.addTag(App.haTags.byId[App.haUsers.user.currentInstitution.tag.id]);
         geo.views = 0;
         geo.intro = '';
         geo.freeTags = '';
+        geo.primaryTagStatic = false;
         geo.images = [];
-        App.haUsers.user.geos.push(geo); //TODO: let HaUsers handle it, so change notification kicks in?
-        //geo.user = App.haUsers.user;
+        App.haUsers.user.geos.push(geo);
         this.push('geos', geo);
         IconLayer.updateShown();
         geo.save();
@@ -384,12 +348,10 @@ var HaGeos = (function (_super) {
             var tag = _a[_i];
             tag.geos.splice(tag.geos.indexOf(geo), 1);
         }
-        //this.splice('geos', this.geos.indexOf(geo), 1); NO GO... messes the index = id up.
-        //this.arrayDelete('geos', geo); //seems to splice also, so no go
-        delete this.geos[this.geos.indexOf(geo)]; //TODO: need to notify polymer also?
+        delete this.geos[this.geos.indexOf(geo)];
         if (App.haUsers.user.geos)
             if (App.haUsers.user.geos.indexOf(geo) > -1)
-                App.haUsers.user.geos.splice(App.haUsers.user.geos.indexOf(geo), 1); //TODO: let HaUsers handle it, so change notification kicks in?
+                App.haUsers.user.geos.splice(App.haUsers.user.geos.indexOf(geo), 1);
     };
     HaGeos.prototype.updateFirstGeoTour = function () {
         var pixel = App.map.getPixelFromCoordinate(this.firstGeoTour.geo.coord);
@@ -423,10 +385,7 @@ var HaGeos = (function (_super) {
         else
             return false;
     };
-    //private lastGeoIdsLoaded: Array<number>;
-    //private tagsIsLoaded: boolean;
-    HaGeos.pageSize = 100000; //was 500
-    //private curPage: number;
+    HaGeos.pageSize = 100000;
     HaGeos.usersGeoIDs = [];
     HaGeos.loadingText = 'Henter fortællinger';
     HaGeos.showingText = 'Viser fortællinger';
@@ -505,4 +464,3 @@ var HaGeos = (function (_super) {
     return HaGeos;
 }(polymer.Base));
 HaGeos.register();
-//# sourceMappingURL=ha-geos.js.map

@@ -25,4 +25,3 @@ var HaRegion = (function () {
     });
     return HaRegion;
 }());
-//# sourceMappingURL=haregion.js.map

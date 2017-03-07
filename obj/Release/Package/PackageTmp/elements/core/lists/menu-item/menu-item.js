@@ -35,4 +35,3 @@ var MenuItem = (function (_super) {
     return MenuItem;
 }(polymer.Base));
 MenuItem.register();
-//# sourceMappingURL=menu-item.js.map

@@ -52,4 +52,3 @@ var TimeWarpCloseButton = (function (_super) {
     return TimeWarpCloseButton;
 }(polymer.Base));
 TimeWarpCloseButton.register();
-//# sourceMappingURL=time-warp-close-button.js.map

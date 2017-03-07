@@ -24,4 +24,3 @@ var WindowMonetarySupport = (function (_super) {
     return WindowMonetarySupport;
 }(polymer.Base));
 WindowMonetarySupport.register();
-//# sourceMappingURL=window-monetary-support.js.map

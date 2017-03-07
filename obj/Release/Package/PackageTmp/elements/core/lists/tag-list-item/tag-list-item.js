@@ -17,8 +17,6 @@ var TagListItem = (function (_super) {
     function TagListItem() {
         _super.apply(this, arguments);
     }
-    //@property({ type: Boolean })
-    //public dragable: boolean;
     TagListItem.prototype.closeTap = function (e) {
         this.fire('close', this.tag);
     };
@@ -37,4 +35,3 @@ var TagListItem = (function (_super) {
     return TagListItem;
 }(polymer.Base));
 TagListItem.register();
-//# sourceMappingURL=tag-list-item.js.map

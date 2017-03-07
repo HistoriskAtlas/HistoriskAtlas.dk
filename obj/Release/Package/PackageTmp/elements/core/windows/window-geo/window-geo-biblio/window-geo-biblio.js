@@ -18,8 +18,6 @@ var WindowGeoBiblio = (function (_super) {
         _super.apply(this, arguments);
     }
     WindowGeoBiblio.prototype.cqlChanged = function () {
-        //if (!this.geo.id)
-        //    return;
         this.immediatecql = this.cql;
         this.set('params', {
             'cql': this.cql
@@ -127,4 +125,3 @@ var Biblio = (function () {
     return Biblio;
 }());
 WindowGeoBiblio.register();
-//# sourceMappingURL=window-geo-biblio.js.map

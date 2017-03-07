@@ -119,4 +119,3 @@ var DialogTour = (function (_super) {
     return DialogTour;
 }(polymer.Base));
 DialogTour.register();
-//# sourceMappingURL=dialog-tour.js.map

@@ -44,4 +44,3 @@ var DialogReport = (function (_super) {
     return DialogReport;
 }(polymer.Base));
 DialogReport.register();
-//# sourceMappingURL=dialog-report.js.map

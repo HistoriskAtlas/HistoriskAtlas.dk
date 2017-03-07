@@ -30,4 +30,3 @@ var WindowAbout = (function (_super) {
     return WindowAbout;
 }(polymer.Base));
 WindowAbout.register();
-//# sourceMappingURL=window-about.js.map

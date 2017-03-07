@@ -55,4 +55,3 @@ var ArraySortSelcetor = (function (_super) {
     return ArraySortSelcetor;
 }(polymer.Base));
 ArraySortSelcetor.register();
-//# sourceMappingURL=array-sort-selector.js.map

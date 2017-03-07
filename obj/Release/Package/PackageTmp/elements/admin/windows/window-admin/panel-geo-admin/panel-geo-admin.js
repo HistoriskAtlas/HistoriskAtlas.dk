@@ -38,7 +38,6 @@ var PanelGeoAdmin = (function (_super) {
         });
     };
     PanelGeoAdmin.prototype.updateGeos = function (newList) {
-        //this.set('geos', (newList ? newList : this.geos).sort(this.compare));
         this.$.admin.sort(null, newList);
     };
     PanelGeoAdmin.prototype.itemTap = function (e) {
@@ -56,14 +55,6 @@ var PanelGeoAdmin = (function (_super) {
                 _this.set('geo.' + attr, result.data[0][attr]);
         });
     };
-    //getAutosuggestSchema(children: any): string {
-    //    if (!children)
-    //        return;
-    //    var existingIds: Array<number> = [];
-    //    for (var item of children)
-    //        existingIds.push(item.child.id)
-    //    return '{tag:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},category:' + this.tag.category + ',plurname:{like:$input}},fields:[id,plurname]}}';
-    //}
     PanelGeoAdmin.prototype.onlineClass = function (online) {
         if (online == null)
             return '';
@@ -156,4 +147,3 @@ var PanelGeoAdmin = (function (_super) {
     return PanelGeoAdmin;
 }(polymer.Base));
 PanelGeoAdmin.register();
-//# sourceMappingURL=panel-geo-admin.js.map

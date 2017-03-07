@@ -17,35 +17,18 @@ var PanelMap = (function (_super) {
     function PanelMap() {
         _super.apply(this, arguments);
     }
-    //mapClass(main: boolean): string {
-    //    return 'map' + (main ? ' HAPrimColor' : ' HASecColor');
-    //}
-    //imageWrapperClass(itemMap: HaMap, map: HaMap): string {
-    //    return itemMap == map ? 'selectedImage' : '';
-    //}
     PanelMap.prototype.hillshadeChanged = function () {
         if (App.map)
             App.map.hillshade.update(this.hillshade);
     };
-    //@observe('extent')
-    //extentChanged() {
-    //    alert(this.extent[0])
-    //}
     PanelMap.prototype.hillshadeTextTap = function () {
         this.$.hillshadeSlider.value = this.hillshade ? 0.0 : 0.3;
     };
     PanelMap.prototype.years = function (start, end) {
         return (start ? start + ' - ' : '') + end;
     };
-    //public mapTapped(e: CustomEvent) {
-    //    var map = <HaMap>this.$.templateMaps.itemForElement(e.target);
-    //    this.set('map', map);
-    //}
-    //primary(main: boolean): string {
-    //    return main ? 'primary' : '';
-    //}
     PanelMap.prototype.backgroundStyle = function (url) {
-        return "background-image: linear-gradient(to right, rgba(255,255,255,1.0), rgba(255,255,255,0.0)), url('" + url + "')"; /*rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.0))*/
+        return "background-image: linear-gradient(to right, rgba(255,255,255,1.0), rgba(255,255,255,0.0)), url('" + url + "')";
     };
     PanelMap.prototype.active = function (item, map) {
         return item == map;
@@ -113,4 +96,3 @@ var PanelMap = (function (_super) {
     return PanelMap;
 }(polymer.Base));
 PanelMap.register();
-//# sourceMappingURL=panel-map.js.map

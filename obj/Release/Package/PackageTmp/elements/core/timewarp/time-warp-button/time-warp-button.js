@@ -16,8 +16,6 @@ var TimeWarpButton = (function (_super) {
     __extends(TimeWarpButton, _super);
     function TimeWarpButton() {
         _super.call(this);
-        //this.update();
-        //this.show();
         $(this.domHost).css('opacity', 0);
     }
     TimeWarpButton.prototype.buttonTap = function (e) {
@@ -54,8 +52,6 @@ var TimeWarpButton = (function (_super) {
         if (this.mode == TimeWarpModes.CIRCLE || (this.mode == TimeWarpModes.MORPH && this.lastMode == TimeWarpModes.SPLIT)) {
             var x = this.radian ? Common.dom.width() - (App.map.timeWarp.position[0] + 20 + Math.cos(TimeWarpButton.radian + this.radian / App.map.timeWarp.radius) * App.map.timeWarp.radius) : Common.dom.width() - (App.map.timeWarp.position[0] + dom.width() / 2);
             var y = this.radian ? App.map.timeWarp.position[1] - 20 + Math.sin(TimeWarpButton.radian + this.radian / App.map.timeWarp.radius) * App.map.timeWarp.radius : App.map.timeWarp.position[1] + App.map.timeWarp.radius - 20;
-            //dom.css('right', Math.max(x, this.maxX));
-            //dom.css('top', this.radian ? Math.max(y, this.minY) : (y > this.maxY ? this.maxYCalc : y));
             dom.css('right', x);
             dom.css('top', y);
         }
@@ -70,7 +66,6 @@ var TimeWarpButton = (function (_super) {
     });
     Object.defineProperty(TimeWarpButton.prototype, "minY", {
         get: function () {
-            //return 10 + (this.radian > 0 ? 45 : 0);
             return 10 + (this.radian + 44);
         },
         enumerable: true,
@@ -158,4 +153,3 @@ var TimeWarpButton = (function (_super) {
     return TimeWarpButton;
 }(polymer.Base));
 TimeWarpButton.register();
-//# sourceMappingURL=time-warp-button.js.map

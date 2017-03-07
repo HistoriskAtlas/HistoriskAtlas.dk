@@ -393,7 +393,8 @@
             online: this.online,
             ugc: this._ugc,
             views: this.views,
-            deleted: false //TODO: shouldnt be a required field...
+            deleted: false, //TODO: shouldnt be a required field...
+            primarytagstatic: this._primaryTagStatic
         };
 
         //if (this._id) {

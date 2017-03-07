@@ -24,4 +24,3 @@ var WindowMemberSignup = (function (_super) {
     return WindowMemberSignup;
 }(polymer.Base));
 WindowMemberSignup.register();
-//# sourceMappingURL=window-member-signup.js.map

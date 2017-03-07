@@ -69,20 +69,11 @@ var PanelTheme = (function (_super) {
             this.theme = theme;
     };
     PanelTheme.prototype.themeChanged = function () {
-        //if (this.theme.content == undefined && this.theme != Global.defaultTheme) { //If theme selected from deep link
-        //    Services.get('theme', {
-        //        id: this.theme.id,
-        //        schema: '{theme:[' + ContentViewer.contentSchema + ']}',
-        //    }, (result) => {
-        //        this.set('theme.content', (<ITheme>result.data[0]).content);
-        //    })
-        //}
         if (!App.haTags.tagsLoaded)
             return;
         var routeTopLevels = [];
         if (this.theme.tagid && this.theme != Global.defaultTheme) {
             App.haCollections.getCollectionsByTagId(this.theme.tagid);
-            //App.haCollections.getPublishedCollections();
             for (var _i = 0, _a = App.haTags.byId[this.theme.tagid].children; _i < _a.length; _i++) {
                 var tag = _a[_i];
                 if (tag.isPublicationDestination)
@@ -90,12 +81,6 @@ var PanelTheme = (function (_super) {
             }
         }
         this.set('routeTopLevels', routeTopLevels);
-        //this.set('routeTopLevels', [
-        //    { name: 'Landsdækkende rutenet', shown: false, filter: (collection: HaCollection) => collection.tags.indexOf(App.haTags.byId[734]) > -1 },
-        //    { name: 'Vandrehistorier', shown: false, filter: (collection: HaCollection) => collection.tags.indexOf(App.haTags.byId[735]) > -1 }
-        //]);
-        //} else
-        //    this.set('routeTopLevels', []);
     };
     PanelTheme.prototype.newHaContent = function (content) {
         if (!content)
@@ -164,4 +149,3 @@ var PanelTheme = (function (_super) {
     return PanelTheme;
 }(polymer.Base));
 PanelTheme.register();
-//# sourceMappingURL=panel-theme.js.map

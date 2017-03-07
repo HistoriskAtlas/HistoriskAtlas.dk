@@ -81,4 +81,3 @@ var MainSearch = (function (_super) {
     return MainSearch;
 }(polymer.Base));
 MainSearch.register();
-//# sourceMappingURL=main-search.js.map

@@ -1,5 +1,4 @@
 var kdTree = (function () {
-    //private static best: ISearchNearestResult;
     function kdTree(points, depth) {
         var _this = this;
         if (depth === void 0) { depth = 0; }
@@ -8,7 +7,7 @@ var kdTree = (function () {
             return;
         }
         this.axis = depth % 2;
-        points.sort(function (a, b) { return a[_this.axis] - b[_this.axis]; }); //TODO: presort instead?
+        points.sort(function (a, b) { return a[_this.axis] - b[_this.axis]; });
         var medianElementIndex = Math.floor(points.length / 2);
         var leftPoints = points.splice(0, medianElementIndex);
         if (leftPoints.length > 0)
@@ -19,14 +18,6 @@ var kdTree = (function () {
             this.rightChild = new kdTree(points, depth + 1);
     }
     kdTree.prototype.searchNearest = function (searchPoint) {
-        //kdTree.best = { dist: Number.MAX_VALUE, point: null };
-        //this._searchNearest(searchPoint);
-        //var test = this._searchNearest(searchPoint);
-        //if (Math.floor(Math.sqrt(test.dist)) == 282) {
-        //    alert('SP: ' + searchPoint)
-        //    alert('OTHER' + test.point)
-        //    alert('DIST: ' + Math.sqrt(test.dist))
-        //}
         return Math.sqrt(this._searchNearest(searchPoint).dist);
     };
     kdTree.prototype._searchNearest = function (searchPoint) {
@@ -53,11 +44,6 @@ var kdTree = (function () {
     };
     kdTree.prototype.distSquared = function (other) {
         var dist = Math.pow(this.point[0] - other[0], 2) + Math.pow(this.point[1] - other[1], 2);
-        //if (Math.floor(dist) == 282) {
-        //    alert('dist: ' + dist)
-        //    alert('this: ' + this.point[0] + ' - ' + this.point[1]);
-        //    alert('other: ' + other[0] + ' - ' + other[1]);
-        //}
         return dist == 0 ? Number.MAX_VALUE : dist;
     };
     return kdTree;
@@ -67,4 +53,3 @@ var ISearchNearestResult = (function () {
     }
     return ISearchNearestResult;
 }());
-//# sourceMappingURL=kDtree.js.map

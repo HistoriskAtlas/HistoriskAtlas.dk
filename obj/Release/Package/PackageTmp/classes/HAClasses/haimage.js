@@ -1,8 +1,4 @@
 var HAImage = (function () {
-    //"yearisapprox": false,
-    //"created": "2009-02-13 01:11:47.533",
-    //"deleted": "",
-    //"userid": 5
     function HAImage(data) {
         this._id = data.imageid;
         this._year = data.year;
@@ -82,4 +78,3 @@ var HAImage = (function () {
     });
     return HAImage;
 }());
-//# sourceMappingURL=haimage.js.map

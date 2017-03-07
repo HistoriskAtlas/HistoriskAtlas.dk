@@ -42,4 +42,3 @@ var DialogAlert = (function (_super) {
     return DialogAlert;
 }(polymer.Base));
 DialogAlert.register();
-//# sourceMappingURL=dialog-alert.js.map

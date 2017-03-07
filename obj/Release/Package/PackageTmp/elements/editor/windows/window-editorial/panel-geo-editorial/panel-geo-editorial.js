@@ -30,7 +30,6 @@ var PanelGeoEditorial = (function (_super) {
     };
     PanelGeoEditorial.prototype.fetchGeos = function () {
         var _this = this;
-        //this.showDetails = false;
         Services.get('geo', {
             'schema': JSON.stringify({
                 geo: {
@@ -77,7 +76,6 @@ var PanelGeoEditorial = (function (_super) {
     };
     PanelGeoEditorial.prototype.updateGeos = function (newList) {
         if (newList === void 0) { newList = null; }
-        //this.set('geos', (newList ? newList : this.geos).sort(this.compare));
         this.$.selector.sort(null, newList);
     };
     PanelGeoEditorial.prototype.formatDate = function (date) {
@@ -142,4 +140,3 @@ var PanelGeoEditorial = (function (_super) {
     return PanelGeoEditorial;
 }(polymer.Base));
 PanelGeoEditorial.register();
-//# sourceMappingURL=panel-geo-editorial.js.map

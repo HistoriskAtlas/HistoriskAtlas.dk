@@ -21,15 +21,10 @@ var MitAtlasButton = (function (_super) {
         this.isDevOrBeta = Common.isDevOrBeta;
     };
     MitAtlasButton.prototype.buttonTap = function () {
-        //if (!App.isDev) {
-        //    App.toast.show('Vi oplever i øjeblikket problemer med at logge ind. Kom tilbage igen lidt senere!');
-        //    return;
-        //}
         if (App.haUsers.user.isDefault)
             Common.dom.append(WindowLogin.create());
     };
     MitAtlasButton.prototype.buttonPaperDropdownOpen = function () {
-        //this.$.menu.selected = null;
         if (App.haUsers.user.isDefault)
             this.$.button.close();
     };
@@ -59,8 +54,6 @@ var MitAtlasButton = (function (_super) {
         Services.get('exit', {}, function (result) {
             if (result.data.status.code == 2)
                 App.haUsers.set('user', HAUser.default);
-            //else
-            //    error logging out
         });
     };
     MitAtlasButton.prototype.noAnimations = function (user) {
@@ -96,4 +89,3 @@ var MitAtlasButton = (function (_super) {
     return MitAtlasButton;
 }(polymer.Base));
 MitAtlasButton.register();
-//# sourceMappingURL=mit-atlas-button.js.map

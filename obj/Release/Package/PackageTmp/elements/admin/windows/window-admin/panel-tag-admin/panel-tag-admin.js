@@ -47,7 +47,6 @@ var PanelTagAdmin = (function (_super) {
     };
     PanelTagAdmin.prototype.updateTags = function (newList) {
         if (newList === void 0) { newList = null; }
-        //this.set('tags', (newList ? newList : this.tags).sort(this.compare));
         this.$.admin.sort(null, newList);
     };
     PanelTagAdmin.prototype.itemTap = function (e) {
@@ -133,4 +132,3 @@ var PanelTagAdmin = (function (_super) {
     return PanelTagAdmin;
 }(polymer.Base));
 PanelTagAdmin.register();
-//# sourceMappingURL=panel-tag-admin.js.map

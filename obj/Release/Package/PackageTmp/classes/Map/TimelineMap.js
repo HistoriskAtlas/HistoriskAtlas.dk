@@ -42,7 +42,7 @@ var TimelineMap = (function (_super) {
         this.view = view;
         this.timeline = timeline;
         this.extent = 20037508.34;
-        this.color = '#000000'; //timeline.main ? '#005d9a' : '#000000';
+        this.color = '#000000';
         this.fillColor = timeline.main ? '#005d9a' : '#ffcc00';
         this.textColor = timeline.main ? '#ffffff' : '#000000';
         var sourceLine = new ol.source.Vector();
@@ -50,10 +50,6 @@ var TimelineMap = (function (_super) {
             geometry: new ol.geom.LineString([[-this.extent, 0], [this.extent, 0]])
         });
         sourceLine.addFeature(line);
-        //var zeroTickmark = new ol.Feature({
-        //    geometry: new (<any>ol.geom.LineString)([[0, -10000], [0, 10000]])
-        //});
-        //sourceLine.addFeature(zeroTickmark);
         var layerLine = new ol.layer.Vector({
             source: sourceLine,
             style: new ol.style.Style({
@@ -168,7 +164,6 @@ var TimelineMap = (function (_super) {
                 $(elem).css('cursor', 'ew-resize');
         });
         this.on('click', function (event) {
-            //if (!!('ontouchstart' in window))
             _this.getHoverObject(_this.getEventPixel(event.originalEvent));
             if (_this.curHoverObject) {
                 timeline.set('year', _this.curHoverObject.year);
@@ -214,12 +209,10 @@ var TimelineMap = (function (_super) {
         });
         this.beforeRender(pan);
         this.view.setCenter([this.timeline.year * TimelineMap.yearWidth, 0]);
-        //setTimeout(() => this.getHoverObject(this.lastPixel), 510);
     };
-    TimelineMap.minYear = 1660; //WAS -1000
+    TimelineMap.minYear = 1660;
     TimelineMap.maxYear = 2016;
     TimelineMap.yearWidth = 1000;
-    TimelineMap.offsetY = 0; //TODO: not working..... scales with zoom...
+    TimelineMap.offsetY = 0;
     return TimelineMap;
 }(ol.Map));
-//# sourceMappingURL=TimelineMap.js.map
