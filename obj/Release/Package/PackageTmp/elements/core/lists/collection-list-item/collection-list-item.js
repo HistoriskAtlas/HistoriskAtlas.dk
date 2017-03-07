@@ -17,6 +17,11 @@ var CollectionListItem = (function (_super) {
     function CollectionListItem() {
         _super.apply(this, arguments);
     }
+    //@property({ type: Boolean })
+    //public dragable: boolean;
+    //closeTap(e: any) {
+    //    this.fire('close', this.tag);
+    //}
     CollectionListItem.prototype.formatDistance = function (distance) {
         return HaCollection.formatDistance(distance);
     };
@@ -40,3 +45,4 @@ var CollectionListItem = (function (_super) {
     return CollectionListItem;
 }(polymer.Base));
 CollectionListItem.register();
+//# sourceMappingURL=collection-list-item.js.map

@@ -22,6 +22,7 @@ var TileLayer = (function (_super) {
             var source = this.getSource();
             if (source.getUrls()[0] == this.HaMap.tileUrl)
                 return;
+            //source.setUrl(this.HaMap.tileUrl);
             this.setSource(this._HaMap.source);
         },
         enumerable: true,
@@ -29,3 +30,4 @@ var TileLayer = (function (_super) {
     });
     return TileLayer;
 }(ol.layer.Tile));
+//# sourceMappingURL=TileLayer.js.map

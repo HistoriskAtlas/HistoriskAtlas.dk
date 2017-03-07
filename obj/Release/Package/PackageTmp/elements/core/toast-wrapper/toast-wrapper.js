@@ -45,3 +45,4 @@ var ToastWrapper = (function (_super) {
     return ToastWrapper;
 }(polymer.Base));
 ToastWrapper.register();
+//# sourceMappingURL=toast-wrapper.js.map

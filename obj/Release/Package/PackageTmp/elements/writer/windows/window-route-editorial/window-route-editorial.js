@@ -40,3 +40,4 @@ var WindowRouteoEditorial = (function (_super) {
     return WindowRouteoEditorial;
 }(polymer.Base));
 WindowRouteoEditorial.register();
+//# sourceMappingURL=window-route-editorial.js.map

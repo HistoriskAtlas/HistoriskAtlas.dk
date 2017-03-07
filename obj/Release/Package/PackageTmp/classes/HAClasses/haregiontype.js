@@ -50,3 +50,4 @@ var HARegionType = (function () {
     });
     return HARegionType;
 }());
+//# sourceMappingURL=haregiontype.js.map

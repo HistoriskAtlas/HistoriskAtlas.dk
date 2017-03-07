@@ -22,9 +22,27 @@ var WindowRegionType = (function (_super) {
     WindowRegionType.prototype.ready = function () {
         var _this = this;
         setTimeout(function () {
+            //(<any>$(this.$.scroller)).mCustomScrollbar({
+            //    theme: "minimal-dark"
+            //})
             $(_this.$.about).load('html/RegionTypeAbouts/' + _this.regionType.id + '.html');
         }, 100);
     };
+    //@observe("regionType")
+    //regionTypeChanged() {
+    //    //if (this.regionType.....) //already loaded
+    //    //    return;
+    //    this.set('params', {
+    //        'v': 1,
+    //        'regiontypeid': this.regionType.id
+    //        //'schema': '{region:[regiontypeid,periodstart,periodend,{parents:[{region:[regionid,name,periodstart,periodend]}]},{children:[{child:[regionid,name,periodstart,periodend]}]},{region_regionsources:[{regionsource:[name]}]}]}'
+    //    });
+    //    this.$.ajax.generateRequest();
+    //}
+    //public handleResponse() {
+    //    var data = this.$.ajax.lastResponse.data[0];
+    //    //this.set('region.periodStart', data.periodstart);
+    //}
     WindowRegionType.prototype.years = function (start, end) {
         return Common.years(start, end);
     };
@@ -42,3 +60,4 @@ var WindowRegionType = (function (_super) {
     return WindowRegionType;
 }(polymer.Base));
 WindowRegionType.register();
+//# sourceMappingURL=window-region-type.js.map

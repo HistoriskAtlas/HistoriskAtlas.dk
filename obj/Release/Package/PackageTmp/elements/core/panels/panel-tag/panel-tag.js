@@ -32,6 +32,12 @@ var PanelTag = (function (_super) {
     PanelTag.prototype.sortByYear = function (tag1, tag2) {
         return tag1.yearStart - tag2.yearStart;
     };
+    //ready() {
+    //    setTimeout(() => {
+    //        this.$.selector.select(HaTags.tagTop[this.tagCategory])
+    //        //this.tagTop = HaTags.tagTop[this.tagCategory];
+    //    }, 2000);
+    //}
     PanelTag.prototype.tagTap = function (e) {
         if (this._tagTap(e.model.tag))
             return;
@@ -56,6 +62,14 @@ var PanelTag = (function (_super) {
         e.cancelBubble = true;
         e.stopPropagation();
     };
+    //@listen("buttonAll.tap")
+    //buttonAllTap() {
+    //    this.toggle(true);
+    //}
+    //@listen("buttonNone.tap")
+    //buttonNoneTap() {
+    //    this.toggle(false);
+    //}
     PanelTag.prototype.tagTopSelected = function (tagTops) {
         var tag = tagTops[this.tagCategory];
         return tag ? tag.selected : false;
@@ -65,6 +79,12 @@ var PanelTag = (function (_super) {
     };
     PanelTag.prototype.toggle = function () {
         IconLayer.updateDisabled = true;
+        //App.haTags.tags.forEach((tag: HaTag) => {
+        //    if (tag.isTop)
+        //        if (tag.category == this.tagCategory)
+        //            tag.selected = selected;
+        //});
+        //HaTags.tagTop[this.tagCategory].selected = selected;
         this.set('tagTops.' + this.tagCategory + '.selected', !this.tagTopSelected(this.tagTops));
         IconLayer.updateDisabled = false;
         IconLayer.updateShown();
@@ -88,3 +108,4 @@ var PanelTag = (function (_super) {
     return PanelTag;
 }(polymer.Base));
 PanelTag.register();
+//# sourceMappingURL=panel-tag.js.map

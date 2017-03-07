@@ -75,3 +75,4 @@ var DialogText = (function (_super) {
     return DialogText;
 }(polymer.Base));
 DialogText.register();
+//# sourceMappingURL=dialog-text.js.map

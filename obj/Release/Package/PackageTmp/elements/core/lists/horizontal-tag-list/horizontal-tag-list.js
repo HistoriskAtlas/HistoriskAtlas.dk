@@ -94,3 +94,4 @@ var HorizontalTagList = (function (_super) {
     return HorizontalTagList;
 }(polymer.Base));
 HorizontalTagList.register();
+//# sourceMappingURL=horizontal-tag-list.js.map

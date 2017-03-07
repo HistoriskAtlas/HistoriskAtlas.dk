@@ -43,3 +43,4 @@ var WindowInstitution = (function (_super) {
     return WindowInstitution;
 }(polymer.Base));
 WindowInstitution.register();
+//# sourceMappingURL=window-institution.js.map

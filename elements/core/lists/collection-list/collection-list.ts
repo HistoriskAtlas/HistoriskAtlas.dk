@@ -10,6 +10,10 @@ class CollectionList extends polymer.Base implements polymer.Element {
     @property({ type: Object, notify: true })
     public collection: HaCollection;
 
+    @property({ type: Boolean, value: false })
+    public defaultSelected: boolean;
+
+
     private static ignoreCollectionChanges: boolean = false;
     private static collectionLists: Array<CollectionList> = [];
 
@@ -66,7 +70,22 @@ class CollectionList extends polymer.Base implements polymer.Element {
     }
 
     @observe('collections.splices')
-    collectionsSplices() {
+    collectionsSplices(changeRecord: ChangeRecord<HaCollection>) {
+        //if (this.defaultSelected)
+        //    this.set('collections.' + this.collections.indexOf(collection) + '.selected', true);
+
+        if (changeRecord && this.defaultSelected)
+            if (changeRecord.indexSplices.length > 0) {
+                var splice = changeRecord.indexSplices[0];
+                for (var i = splice.index; i < splice.index + splice.addedCount; i++)
+                    for (var topLevel of this.topLevels)
+                        if (topLevel.filter(this.collections[i])) {
+                            this.set('collections.' + i + '.selected', true);
+                            break;
+                        }
+
+            }
+
         if (this.collections.length > 0)
             this.updateTopLevelSelections();
     }
@@ -81,13 +100,14 @@ class CollectionList extends polymer.Base implements polymer.Element {
             }
         }
 
-        for (var collection of this.collections)
+        for (var collection of this.collections) {
             for (var topLevel of topLevels)
                 if (topLevel.filter(collection)) {
                     (<any>topLevel).countTotal++;
                     if (collection.selected)
                         (<any>topLevel).countSelected++;
                 }
+        }
 
         for (var topLevel of topLevels)
             this.set('topLevels.' + this.topLevels.indexOf(topLevel) + '.selected', (<any>topLevel).countTotal == 0 ? false : (<any>topLevel).countSelected == (<any>topLevel).countTotal);

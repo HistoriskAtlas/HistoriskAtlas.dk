@@ -28,23 +28,35 @@
         .promo {
             min-height: 42px;
             border-bottom: 1px solid #e7eef5;
-            color: #005d9a;     
+            /*color: #005d9a;*/     
         }
         .promo > .icon {
-            width: 30px;
-            height: 30px;
-            margin-right: 15px;
+            width: 32px;
+            height: 32px;
+            margin-right: 13px;
             margin-left: -3px;
+            /* border: 1px solid rgba(0,0,0,0.2); */
+            border-radius: 16px;
+            box-shadow: 0px 0.8px 1px #000000;
         }
         .icon-1001 {
-            background-color: #ffe600;
+            background-color: #ffe600; /*#d2d200*/
             font-family: serif;
             font-size: 12px;
             display: flex;
             justify-content: center;
             align-items: center;
             color: black;
-            border-radius: 15px;
+        }
+        .icon-hod2017 {
+            background-color: #8bb300;
+            display: flex;
+            justify-content: space-around;
+            color: black;
+            align-items: center;
+            font-weight: bold;
+            font-size: 10px;
+            letter-spacing: 1px;
         }
 
     </style>
@@ -77,7 +89,8 @@
 
             <template is="dom-if" if="[[isDevOrBeta]]">
                 <paper-item class="promo" on-tap="tap1001"><div class="icon icon-1001">1001</div>1001 fortællinger om Danmark</paper-item>
-                <paper-item class="promo" on-tap="tapHOD2017"><img src="../../../images/logos/HoD2017logo.png" class="icon">Historier om Danmark 2017</paper-item>
+                <!--<paper-item class="promo" on-tap="tapHOD2017"><img src="../../../images/logos/HoD2017logo.png" class="icon">Historier om Danmark 2017</paper-item>-->
+                <paper-item class="promo" on-tap="tapHOD2017"><div class="icon icon-hod2017">HOD</div>Historier om Danmark 2017</paper-item>
             </template>
 
             <div style="height:10px"></div>
@@ -105,6 +118,7 @@
             <iron-collapse class="sub-menu" opened="[[showHelpMenu]]">
                 <paper-item on-tap="guidedTourTap">Start guidet tour</paper-item>
                 <paper-item on-tap="introVideoTap">Se introduktionsvideo</paper-item>
+                <paper-item on-tap="writerGuideTap">Vejledning til skribenter</paper-item>
             </iron-collapse>
         </iron-collapse>
     </template>

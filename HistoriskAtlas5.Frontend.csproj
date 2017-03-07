@@ -194,7 +194,6 @@
     <Content Include="html\RegionTypeAbouts\102.html" />
     <Content Include="html\RegionTypeAbouts\101.html" />
     <Content Include="images\theme\HoD2017back.jpg" />
-    <Content Include="images\logos\HoD2017logo.png" />
     <Content Include="images\logos\nordea-fonden-black-logo.png" />
     <Content Include="images\logos\nordea-fonden-white-logo.png" />
     <Content Include="images\markers\move-marker.png" />
@@ -592,6 +591,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="bowerupdate.bat" />
+    <Content Include="pdf\Vejledning til skribenter på HistoriskAtlas.pdf" />
     <None Include="Properties\PublishProfiles\beta.historiskatlas.dk.pubxml" />
     <None Include="Properties\PublishProfiles\historiskatlas.dk.pubxml" />
     <None Include="web.Debug.config">

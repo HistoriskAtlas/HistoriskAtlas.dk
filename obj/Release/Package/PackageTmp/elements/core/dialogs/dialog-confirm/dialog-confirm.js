@@ -24,6 +24,7 @@ var DialogConfirm = (function (_super) {
     DialogConfirm.prototype.dialogClosed = function (e) {
         this.fire(this.eventPrefix + (e.detail.confirmed ? '-confirmed' : '-dismissed'), this.detail);
         $(this).remove();
+        //this.closeDialog(e.detail.confirmed);
     };
     __decorate([
         property({ type: String }), 
@@ -42,3 +43,4 @@ var DialogConfirm = (function (_super) {
     return DialogConfirm;
 }(polymer.Base));
 DialogConfirm.register();
+//# sourceMappingURL=dialog-confirm.js.map

@@ -31,6 +31,7 @@ var PanelLogin = (function (_super) {
         var _this = this;
         FB.login(function (fbToken) {
             FB.api('/me', function (fbUser) {
+                //this.loginData = { provider: "facebook", utoken: JSON.stringify(fbUser) };
                 Services.get('login', { provider: "facebook", utoken: JSON.stringify(fbUser) }, function (result) { return _this.getLoginCallback(result); });
             });
         }, { scope: 'public_profile, email' });
@@ -101,3 +102,4 @@ var PanelLogin = (function (_super) {
     return PanelLogin;
 }(polymer.Base));
 PanelLogin.register();
+//# sourceMappingURL=panel-login.js.map

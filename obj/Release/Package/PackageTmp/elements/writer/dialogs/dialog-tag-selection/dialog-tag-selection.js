@@ -48,3 +48,4 @@ var DialogTagSelection = (function (_super) {
     return DialogTagSelection;
 }(polymer.Base));
 DialogTagSelection.register();
+//# sourceMappingURL=dialog-tag-selection.js.map

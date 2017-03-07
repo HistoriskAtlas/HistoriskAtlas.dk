@@ -54,3 +54,4 @@ var HaDigDag = (function (_super) {
     return HaDigDag;
 }(polymer.Base));
 HaDigDag.register();
+//# sourceMappingURL=ha-digdag.js.map

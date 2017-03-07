@@ -24,3 +24,4 @@ var WindowContact = (function (_super) {
     return WindowContact;
 }(polymer.Base));
 WindowContact.register();
+//# sourceMappingURL=window-contact.js.map
