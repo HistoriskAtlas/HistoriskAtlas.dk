@@ -28,6 +28,7 @@
             this._api = 'http://' + (this.isDevOrBeta ? 'beta.' : '') + 'api.historiskatlas.dk/hadb5' + (this.isDevOrBeta ? 'beta' : '') + '.';
 
             //this._api = 'http://beta.api.historiskatlas.dk/hadb5.';
+            //this._api = 'http://34.252.49.216/hadb5beta.'
         }
 
         return this._api;
