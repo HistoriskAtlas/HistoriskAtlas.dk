@@ -16,13 +16,6 @@ var WindowIntroBeta = (function (_super) {
     __extends(WindowIntroBeta, _super);
     function WindowIntroBeta() {
         _super.call(this);
-        //TODO: not working properly...
-        //(<any>$('.content')).niceScroll({
-        //    cursorwidth: '8px',
-        //    cursorborder: '0px',
-        //    cursorborderradius: '0px',
-        //    cursoropacitymax: 0.5
-        //});        
     }
     WindowIntroBeta.prototype.feedbackTap = function () {
         Common.dom.append(WindowFeedback.create());
@@ -34,4 +27,3 @@ var WindowIntroBeta = (function (_super) {
     return WindowIntroBeta;
 }(polymer.Base));
 WindowIntroBeta.register();
-//# sourceMappingURL=window-intro-beta.js.map

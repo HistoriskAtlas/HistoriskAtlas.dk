@@ -60,4 +60,3 @@ var PanelPublication = (function (_super) {
     return PanelPublication;
 }(polymer.Base));
 PanelPublication.register();
-//# sourceMappingURL=panel-publication.js.map

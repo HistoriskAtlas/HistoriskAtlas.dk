@@ -26,4 +26,3 @@ var HARegionTypeCategory = (function () {
     });
     return HARegionTypeCategory;
 }());
-//# sourceMappingURL=haregiontypecategory.js.map

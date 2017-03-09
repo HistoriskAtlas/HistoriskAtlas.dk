@@ -28,4 +28,3 @@ var GeoSortableList = (function (_super) {
     return GeoSortableList;
 }(polymer.Base));
 GeoSortableList.register();
-//# sourceMappingURL=geo-sortable-list.js.map

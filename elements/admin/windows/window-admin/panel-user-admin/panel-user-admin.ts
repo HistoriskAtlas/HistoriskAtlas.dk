@@ -175,7 +175,7 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
         var existingIds: Array<number> = [];
         for (var item of userhierarkis)
             existingIds.push(item.child ? item.child.id : item.parent.id);
-        return '{user:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},firstname:{like:$input}},fields:[id,login,firstname,lastname]}}';
+        return '{user:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},firstname:{like:$input}},fields:[id,login,firstname,lastname]}}'; //TODO Search more than login!
     }
     @listen('writerAutosuggestAdded')
     writerAdded(e: any) {

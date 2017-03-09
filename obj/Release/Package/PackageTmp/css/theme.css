@@ -1,12 +1,19 @@
-﻿.menu-style-theme-HoD2017 {
+﻿.menu-style-theme-hod2017 {
     background-color: #e4e7eb;
     background-image: url(../../../../images/theme/HoD2017back.jpg);
     background-size: 100%;
     background-position: bottom;
     background-repeat: no-repeat;
 }
-.logo-theme-HoD2017 {
+.menu-style-theme-hod2017 .logo-theme {
     width: 80%;
     display: block;
     margin: 50px auto 0px auto;
+}
+
+.menu-style-theme-1001 {
+    background-color: black;
+    color: white;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    letter-spacing: 1px;
 }

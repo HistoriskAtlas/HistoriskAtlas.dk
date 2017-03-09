@@ -164,10 +164,9 @@ class App extends polymer.Base implements polymer.Element {
     }
 
     mainMenuClass(theme: ITheme, showMainMenu: boolean): string {
-        if (this.theme.id == 'hod2017' && !showMainMenu)
-            return 'menu-style-theme-HoD2017'
-        else
-            return '';
+        if (!showMainMenu)
+            return 'menu-style-theme-' + theme.id;
+        return '';
     }
 
     canEditCollection(collection: HaCollection): boolean {

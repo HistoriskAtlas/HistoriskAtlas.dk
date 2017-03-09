@@ -33,4 +33,3 @@ var ContentViewer = (function (_super) {
     return ContentViewer;
 }(polymer.Base));
 ContentViewer.register();
-//# sourceMappingURL=content-viewer.js.map

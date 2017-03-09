@@ -36,8 +36,6 @@ var TimeLines = (function (_super) {
     };
     TimeLines.prototype.domChanged = function () {
         this.$.mainTimeLine.updateSize();
-        //if (this.timeWarpActive)
-        //    this.$$('#timeWarpTimeLine').updateSize();
     };
     __decorate([
         property({ type: Boolean }), 
@@ -88,4 +86,3 @@ var TimeLines = (function (_super) {
     return TimeLines;
 }(polymer.Base));
 TimeLines.register();
-//# sourceMappingURL=time-lines.js.map

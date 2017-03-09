@@ -16,10 +16,8 @@ var TimeWarpShapeButton = (function (_super) {
     __extends(TimeWarpShapeButton, _super);
     function TimeWarpShapeButton() {
         _super.call(this);
-        //this.dom = $(this);
         this.update();
     }
-    //private dom: JQuery;
     TimeWarpShapeButton.prototype.buttonTap = function () {
         App.map.timeWarp.toggleMode();
     };
@@ -53,4 +51,3 @@ var TimeWarpShapeButton = (function (_super) {
     return TimeWarpShapeButton;
 }(polymer.Base));
 TimeWarpShapeButton.register();
-//# sourceMappingURL=time-warp-shape-button.js.map

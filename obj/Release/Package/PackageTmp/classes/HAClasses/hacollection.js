@@ -16,7 +16,6 @@ var HaCollection = (function () {
         }
         else
             this._user = new HAUser({ id: data.userid });
-        //this._userid = data.userid;
         if (data.collection_geos) {
             var collection_geos = data.collection_geos.sort(function (a, b) { return a.ordering - b.ordering; });
             for (var _i = 0, collection_geos_1 = collection_geos; _i < collection_geos_1.length; _i++) {
@@ -116,17 +115,6 @@ var HaCollection = (function () {
     });
     Object.defineProperty(HaCollection.prototype, "geos", {
         get: function () {
-            //if (this._geoIds.length > 0) {
-            //    var newGeoIds: Array<number> = [];
-            //    for (var geoid of this._geoIds) {
-            //        var geo = App.haGeos.geos[geoid];
-            //        if (geo)
-            //            this._geos.push(geo)
-            //        else
-            //            newGeoIds.push(geoid)
-            //    }
-            //    this._geoIds = newGeoIds;
-            //}
             return this._geos;
         },
         set: function (val) {
@@ -145,41 +133,29 @@ var HaCollection = (function () {
                 i++;
         }
     };
-    HaCollection.prototype.viaPointLocalOrdering = function (geo) {
+    HaCollection.prototype.viaPointOrdering = function (geo) {
         var i = 0;
         for (var _i = 0, _a = this._geos; _i < _a.length; _i++) {
             var g = _a[_i];
             if (g == geo)
                 return i;
-            if (g.id > 0)
-                i = 0;
-            else
+            if (g.id == 0)
                 i++;
         }
     };
-    //public open() {
-    //    //if (this._geos.length > 0 || !this._id) {
-    //        App.haCollections.select(this);
-    //    //    return;
-    //    //}
-    //    //Services.get('geo', { count: 'all', schema: '{geo:{fields:[geoid,title],filters:[{collection_geos:[{collectionid:' + this._id + '}]}]}}', sort: '{collection_geos:[ordering]}' }, (result) => {
-    //    //    for (var data of result.data) {
-    //    //        var geo = App.haGeos.geos[data.geoid];
-    //    //        if (!geo)
-    //    //            continue;
-    //    //        geo.title = data.title;
-    //    //        this._geos.push(geo) //TODO: use notify system.............
-    //    //    }
-    //    //    App.haCollections.select(this);
-    //    //})
-    //}
-    //private openRouteWindow() {
-    //    if (App.windowRoute) {
-    //        App.windowRoute.setRoute(this);
-    //        (<WindowBasic>App.windowRoute.$.windowbasic).bringToFront();
-    //    } else
-    //        Common.dom.append(WindowRoute.create(this));
-    //}
+    Object.defineProperty(HaCollection.prototype, "viaPointCount", {
+        get: function () {
+            var i = 0;
+            for (var _i = 0, _a = this._geos; _i < _a.length; _i++) {
+                var g = _a[_i];
+                if (g.id == 0)
+                    i++;
+            }
+            return i;
+        },
+        enumerable: true,
+        configurable: true
+    });
     HaCollection.prototype.save = function (callback) {
         var _this = this;
         var data = {
@@ -242,13 +218,6 @@ var HaCollection = (function () {
             };
             Services.update('collection_geo', data, function (result) { });
         }
-        //setTimeout(() => {
-        //    for (var i = indexStart; i <= indexEnd; i++) {
-        //        App.haCollections.updateIconStyle(this._geos[i]);
-        //    }
-        //}, 10)
-        //Services.update('collection_geo', { collectionid: this._id, geoid: this._geos[indexStart].id, ordering: indexStart }, (result) => { });
-        //Services.update('collection_geo', { collectionid: this._id, geoid: this._geos[indexEnd].id, ordering: indexEnd }, (result) => { });
     };
     HaCollection.prototype.showOnMap = function () {
         if (this.geos.length == 0)
@@ -283,6 +252,6 @@ var HaCollection = (function () {
         });
     };
     HaCollection.types = ['Kørsel', 'Cykling', 'Til fods'];
+    HaCollection.iconTypes = ['maps:directions-car', 'maps:directions-bike', 'maps:directions-walk'];
     return HaCollection;
 }());
-//# sourceMappingURL=hacollection.js.map

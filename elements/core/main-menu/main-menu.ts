@@ -105,7 +105,9 @@ class MainMenu extends polymer.Base implements polymer.Element {
     }
 
     tap1001() {
-        Common.dom.append(WindowInstitution.create(App.haTags.byId[731]));
+        this.set('showMenuThemes', true);
+        this.set('theme', (<PanelTheme>this.$$('#panelTheme')).getThemeByName('1001 fortællinger om Danmark'));
+        //Common.dom.append(WindowInstitution.create(App.haTags.byId[731]));
     }
     tapHOD2017() {
         this.set('showMenuThemes', true);

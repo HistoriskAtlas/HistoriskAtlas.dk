@@ -97,7 +97,7 @@
                     //width: collection == App.haCollections.collection ? 8 : 5
                     //lineDash: collection == App.haCollections.collection ? null : [5, 15]
                 }), image: new ol.style.Icon({
-                    src: HaTags.viaPointMarker(collection.viaPointLocalOrdering((<any>feature).geo))
+                    src: HaTags.viaPointMarker(collection.viaPointOrdering((<any>feature).geo))
                 })
                 //, image: new ol.style.Circle({
                 //    radius: 10,
@@ -158,6 +158,12 @@
         }
 
         if ((<any>feature).locs && first) {
+
+            if (collection.viaPointCount == 29) {
+                App.toast.show('Der kan max være 29 via-punkter (A-Å) pr. turforslag.');
+                return;
+            }
+
             var locs: Array<ol.Coordinate> = (<any>feature).locs;
             var geos: Array<HaGeo> = [];
             for (var geo of collection.geos) {

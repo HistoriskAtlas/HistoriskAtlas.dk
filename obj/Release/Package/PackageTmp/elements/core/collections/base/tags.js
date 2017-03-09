@@ -17,9 +17,8 @@ var Tags = (function (_super) {
     function Tags() {
         _super.apply(this, arguments);
     }
-    Tags.prototype.initTags = function (tagRelationName, /*tagRelationId: number, */ subProperty) {
+    Tags.prototype.initTags = function (tagRelationName, subProperty) {
         this.tagRelationName = tagRelationName;
-        //this.tagRelationId = tagRelationId;
         this.subProperty = subProperty;
         for (var _i = 0, _a = Tags.categoryNames; _i < _a.length; _i++) {
             var categoryName = _a[_i];
@@ -59,7 +58,7 @@ var Tags = (function (_super) {
         if (Tags.categoryNames[tag.category])
             this.push(Tags.categoryNames[tag.category], tag);
         if (save)
-            Services.insert('tag_' + this.propertyName(), JSON.parse('{ "tagid": ' + tag.id + ', "' + this.propertyName() + 'id": ' + this.propertyId() + ' }')); //this.tagRelationId
+            Services.insert('tag_' + this.propertyName(), JSON.parse('{ "tagid": ' + tag.id + ', "' + this.propertyName() + 'id": ' + this.propertyId() + ' }'));
         return true;
     };
     Tags.prototype.removeTagById = function (tagId) {
@@ -75,7 +74,7 @@ var Tags = (function (_super) {
         this.splice(this.tagRelationName + '.tags', this[this.tagRelationName].tags.indexOf(tag), 1);
         if (Tags.categoryNames[tag.category])
             this.splice(Tags.categoryNames[tag.category], this[Tags.categoryNames[tag.category]].indexOf(tag), 1);
-        Services.delete('tag_' + this.propertyName(), JSON.parse('{ "tagid": ' + tag.id + ', "' + this.propertyName() + 'id": ' + this.propertyId() + ', "deletemode": "permanent" }')); //this.tagRelationId
+        Services.delete('tag_' + this.propertyName(), JSON.parse('{ "tagid": ' + tag.id + ', "' + this.propertyName() + 'id": ' + this.propertyId() + ', "deletemode": "permanent" }'));
     };
     Tags.prototype.propertyName = function () {
         return this.subProperty ? this.subProperty : this.tagRelationName;
@@ -83,7 +82,6 @@ var Tags = (function (_super) {
     Tags.prototype.propertyId = function () {
         return (this.subProperty ? this[this.tagRelationName][this.subProperty] : this[this.tagRelationName]).id;
     };
-    //public tagsById: Array<HaTag> = [];
     Tags.categoryNames = [, , , 'institutions', , , , , 'destinations', 'subjects', 'periods'];
     __decorate([
         property({ type: Array, notify: true }), 
@@ -107,4 +105,3 @@ var Tags = (function (_super) {
     ], Tags.prototype, "licens", void 0);
     return Tags;
 }(polymer.Base));
-//# sourceMappingURL=tags.js.map

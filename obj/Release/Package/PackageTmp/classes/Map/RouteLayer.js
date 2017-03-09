@@ -41,16 +41,6 @@ var RouteLayer = (function (_super) {
                 dataProjection: 'EPSG:4326',
                 featureProjection: 'EPSG:3857'
             });
-            //var coord = Common.toMapCoord(loc2);
-            //var stop = new ol.geom.Circle(coord, 100);
-            //var featureStop = new ol.Feature(stop);
-            //featureStop.setStyle(new ol.style.Style({
-            //    zIndex: 10,
-            //    fill: new ol.style.Fill({
-            //        color: [255, 0, 0, 1]
-            //    })
-            //}))
-            //this.source.addFeature(featureStop);
             var feature = new ol.Feature({
                 geometry: route
             });
@@ -71,7 +61,7 @@ var RouteLayer = (function (_super) {
                     color: collection == App.haCollections.collection ? [153, 0, 0, collection.online ? 1 : 0.5] : [0, 93, 154, collection.online ? 1 : 0.5],
                     width: 5
                 }), image: new ol.style.Icon({
-                    src: HaTags.viaPointMarker(collection.viaPointLocalOrdering(feature.geo))
+                    src: HaTags.viaPointMarker(collection.viaPointOrdering(feature.geo))
                 })
             })
         ];
@@ -88,14 +78,10 @@ var RouteLayer = (function (_super) {
         this.source.addFeatures(newFeatures);
     };
     RouteLayer.prototype.redraw = function () {
-        //TODO: implement using changed() instead? (when new ol is compiled)
         var existingFeatures = this.source.getFeatures();
         this.source.clear();
         this.source.addFeatures(existingFeatures);
     };
-    //public clear() {
-    //    this.source.clear();
-    //}
     RouteLayer.prototype.moveEvent = function (event) {
         this.oldDragCoordinate = null;
     };
@@ -105,13 +91,16 @@ var RouteLayer = (function (_super) {
             return;
         if (!App.haUsers.user.canEditCollection(collection))
             return;
-        //var viaPoint: ol.Feature;
         var first = false;
         if (!this.oldDragCoordinate) {
             first = true;
             this.oldDragCoordinate = event.coordinate;
         }
         if (feature.locs && first) {
+            if (collection.viaPointCount == 29) {
+                App.toast.show('Der kan max være 29 via-punkter (A-Å) pr. turforslag.');
+                return;
+            }
             var locs = feature.locs;
             var geos = [];
             for (var _i = 0, _a = collection.geos; _i < _a.length; _i++) {
@@ -145,8 +134,6 @@ var RouteLayer = (function (_super) {
             }
         }
         App.map.preventDrag(event);
-        //return viaPoint;
     };
     return RouteLayer;
 }(ol.layer.Vector));
-//# sourceMappingURL=RouteLayer.js.map

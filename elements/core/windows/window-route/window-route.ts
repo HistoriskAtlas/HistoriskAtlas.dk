@@ -151,16 +151,22 @@ class WindowRoute extends polymer.Base implements polymer.Element {
         return HaCollection.formatDistance(distance);
     }
 
-    public formatType(type: number): string {
-        return HaCollection.types[type];
+    //public formatType(type: number): string {
+    //    return HaCollection.types[type];
+    //}
+    public iconType(type: number): string {
+        return HaCollection.iconTypes[type];
     }
 
-    public types(): Array<string> {
-        return HaCollection.types;
+    //public types(): Array<string> {
+    //    return HaCollection.types;
+    //}
+    public iconTypes(): Array<string> {
+        return HaCollection.iconTypes;
     }
 
     typeTap(e: any) {
-        this.set('route.type', HaCollection.types.indexOf(e.model.item));
+        this.set('route.type', HaCollection.iconTypes.indexOf(e.model.item));
         this.$$('#paperMenuButtonType').close();
     }
 

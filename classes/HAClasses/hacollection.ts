@@ -17,6 +17,7 @@
     public features: Array<ol.Feature>;
 
     public static types: Array<string> = ['Kørsel', 'Cykling', 'Til fods']
+    public static iconTypes: Array<string> = ['maps:directions-car', 'maps:directions-bike', 'maps:directions-walk']
 
     constructor(data: any) {
         this._geos = [];
@@ -141,16 +142,33 @@
         }
     }
 
-    public viaPointLocalOrdering(geo: HaGeo): number {
+    //public viaPointLocalOrdering(geo: HaGeo): number {
+    //    var i = 0;
+    //    for (var g of this._geos) {
+    //        if (g == geo)
+    //            return i;
+    //        if (g.id > 0)
+    //            i = 0;
+    //        else
+    //            i++;
+    //    }
+    //}
+    public viaPointOrdering(geo: HaGeo): number {
         var i = 0;
         for (var g of this._geos) {
             if (g == geo)
                 return i;
-            if (g.id > 0)
-                i = 0;
-            else
+            if (g.id == 0)
                 i++;
         }
+    }
+
+    public get viaPointCount(): number {
+        var i = 0;
+        for (var g of this._geos)
+            if (g.id == 0)
+                i++;
+        return i;
     }
 
     //public open() {

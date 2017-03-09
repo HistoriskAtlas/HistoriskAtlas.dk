@@ -59,4 +59,3 @@ var RedRibbon = (function (_super) {
     return RedRibbon;
 }(polymer.Base));
 RedRibbon.register();
-//# sourceMappingURL=red-ribbon.js.map

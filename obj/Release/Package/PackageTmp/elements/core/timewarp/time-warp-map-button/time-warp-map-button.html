@@ -40,6 +40,7 @@
                 font-size: 12px;
                 min-height: 32px;
                 white-space: nowrap;
+                cursor: pointer;
             }
 
             </style>
@@ -49,8 +50,7 @@
                     <paper-listbox class="dropdown-content" selected="{{map}}" attr-for-selected="map">
                         <template is="dom-repeat" items="[[maps]]" as="map">
                             <template is="dom-if" if="[[map.inViewTimeWarp]]">
-                                <paper-item map="[[map]]"><span>[[map.title]]</span></paper-item>
-                                <!--<div class="years">[[years(item.orgStartYear,item.orgEndYear)]]</div>-->
+                                <paper-item map="[[map]]"><span>[[map.title]] [[years(map.orgStartYear,map.orgEndYear)]]</span></paper-item>
                             </template>
                         </template>
                     </paper-listbox>

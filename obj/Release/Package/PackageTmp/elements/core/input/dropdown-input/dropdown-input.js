@@ -32,4 +32,3 @@ var DropdownInput = (function (_super) {
     return DropdownInput;
 }(polymer.Base));
 DropdownInput.register();
-//# sourceMappingURL=dropdown-input.js.map

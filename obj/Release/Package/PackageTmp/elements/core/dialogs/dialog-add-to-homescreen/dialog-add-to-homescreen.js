@@ -38,4 +38,3 @@ var DialogAddToHomescreen = (function (_super) {
     return DialogAddToHomescreen;
 }(polymer.Base));
 DialogAddToHomescreen.register();
-//# sourceMappingURL=dialog-add-to-homescreen.js.map

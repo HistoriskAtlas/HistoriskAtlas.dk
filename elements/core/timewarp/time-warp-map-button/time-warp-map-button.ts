@@ -62,6 +62,10 @@ class TimeWarpMapButton extends polymer.Base implements polymer.Element {
     public hide() {
         (<TimeWarpButton>this.$.button).hide();
     }
+
+    years(start: number, end: number): string {
+        return (start ? start + ' - ' : '') + end;
+    }
 }
 
 TimeWarpMapButton.register();

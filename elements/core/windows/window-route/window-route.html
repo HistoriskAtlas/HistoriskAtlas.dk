@@ -15,21 +15,24 @@
                 flex-grow: 1;
                 flex-shrink: 1 !important;
             }
+            by-line {
+                margin-top: 3.5px;
+            }
             .info-line {
                 font-size: small;
                 font-style: italic;
-                margin: 0px 10px 20px 10px;
                 display: flex;
                 /*justify-content: space-between;*/
-                align-items: baseline;
+                align-items: center;
             }
             .dropdown-content {
                 padding: 5px 5px 3px 5px;
             }
-            .dropdown-content > div {
+            .dropdown-content > iron-icon {
                 padding: 4px;
                 cursor: pointer;
-                white-space: nowrap;
+                display: block;
+                /*white-space: nowrap;*/
             }
         </style>
         <ha-content content="{{route.content}}"></ha-content>
@@ -52,24 +55,27 @@
             <div class="content">
                 <content-viewer content="{{route.content}}" editing="[[editing]]"></content-viewer>
                 
-                <div style="display: flex; align-items:baseline">
+                <div style="display: flex; margin: 0px 10px 20px 10px;">
                     <by-line user="[[route.user]]" institutions="[[institutions]]"></by-line>
                     <div class="info-line">
                         <template is="dom-if" if="[[editing]]">
                             <paper-menu-button id="paperMenuButtonType" horizontal-align="right">
                                 <div class="dropdown-trigger">
-                                    <span>[[formatType(route.type)]]</span>
+                                    <!--<span>[[formatType(route.type)]]</span>-->
+                                    <iron-icon icon="[[iconType(route.type)]]"></iron-icon>
                                     <iron-icon icon="arrow-drop-down"></iron-icon>
                                 </div>
                                 <div class="dropdown-content">
-                                    <template is="dom-repeat" items="[[types()]]">
-                                        <div on-tap="typeTap">[[item]]</div>
+                                    <template is="dom-repeat" items="[[iconTypes()]]">
+                                        <!--<div on-tap="typeTap">[[item]]</div>-->
+                                        <iron-icon icon="[[item]]" on-tap="typeTap"></iron-icon>
                                     </template>
                                 </div>
                             </paper-menu-button>
                         </template>
                         <template is="dom-if" if="[[!editing]]">
-                            <span>[[formatType(route.type)]]</span>
+                            <!--<span>[[formatType(route.type)]]</span>-->
+                            <iron-icon icon="[[iconType(route.type)]]"></iron-icon>
                         </template>
 
                         <span style="padding-left: 5px;">[[formatDistance(route.distance)]]</span>

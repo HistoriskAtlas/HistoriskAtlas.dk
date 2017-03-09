@@ -55,7 +55,7 @@
                     </div>
 
                     <template is="dom-if" if="[[isHoD2017(item)]]">
-                        <img class="logo-theme-HoD2017" src="../../../../images/theme/HoD2017logo.png">
+                        <img class="logo-theme" src="../../../../images/theme/HoD2017logo.png">
                     </template>
 
                     <content-viewer content="[[newHaContent(item.content)]]"></content-viewer>
@@ -65,6 +65,10 @@
                     <template is="dom-if" if="[[isHoD2017(item)]]">
                         <div style="margin: 10px 0px 20px 30px; font-size: 13px;">Opret dit eget turforslag</div>
                         <div style="margin: 10px 0px 160px 30px; font-size: 13px;" on-tap="aboutHoD2017Tap">Om Historier om Danmark</div>
+                    </template>
+
+                    <template is="dom-if" if="[[is1001(item)]]">
+                        <div style="color:#ffe600; font-size: 13px;" on-tap="about1001Tap">OM 1001 FORTÆLLINGER</div>
                     </template>
 
                 </main-menu-item>

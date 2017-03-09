@@ -18,20 +18,17 @@ var HaGeoService = (function (_super) {
         _super.apply(this, arguments);
         this.ignoreChanges = true;
     }
-    //@property({ type: Number, notify: true })
-    //public noMissingTags: number;
     HaGeoService.prototype.ready = function () {
         this.$.ajax.url = Common.api + 'geo.json';
     };
     HaGeoService.prototype.geoChanged = function (newVal, oldVal) {
-        this.initTags('geo' /*, this.geo.id*/);
+        this.initTags('geo');
         if (!this.geo.id)
             return;
         this.ignoreChanges = true;
         var schema = 'geoid,title,intro,primarytagstatic,freetags,yearstart,yearend,latitude,longitude,online,views,deleted,{user:[id,firstname,lastname,{user_institutions:[{institution:[id,tagid]}]}]},{geo_image:[empty,ordering,{image:[imageid,text,year,yearisapprox,photographer,licensee,userid,{tag_images:[' + (typeof App == 'undefined' ? Common.apiSchemaTags : '{collapse:id}') + ']}]}]}';
         if (this.geo.tags.length == 0)
-            schema += ',{tag_geos:[' + Common.apiSchemaTags + ']}'; //TODO: only needed to get ids when in app mode.............................
-        //schema += ',{tag_geos:[empty,{collapse:tagid}]}'
+            schema += ',{tag_geos:[' + Common.apiSchemaTags + ']}';
         this.set('params', {
             'v': 1,
             'sid': document.sid,
@@ -49,7 +46,6 @@ var HaGeoService = (function (_super) {
     HaGeoService.prototype.introChanged = function (newVal) {
         if (newVal && !this.ignoreChanges)
             Services.update('geo', { id: this.geo.id, intro: this.geo.intro }, function () {
-                //App.toast.show('Introtekst gemt');
             });
     };
     HaGeoService.prototype.onlineChanged = function () {
@@ -65,10 +61,8 @@ var HaGeoService = (function (_super) {
             return;
         for (var _i = 0, _a = change.indexSplices; _i < _a.length; _i++) {
             var indexSplice = _a[_i];
-            //for (var image of indexSplice.removed)
-            //    Services.delete('geo_image', { imageid: image.id, geoid: this.geo.id });
             for (var i = 0; i < indexSplice.addedCount; i++)
-                Services.insert('geo_image', { imageid: this.geo.images[indexSplice.index + i].id, geoid: this.geo.id, ordering: 0 }); //TODO: ordering?§!
+                Services.insert('geo_image', { imageid: this.geo.images[indexSplice.index + i].id, geoid: this.geo.id, ordering: 0 });
         }
     };
     HaGeoService.prototype.tagsArrayChanged = function (change) {
@@ -86,12 +80,6 @@ var HaGeoService = (function (_super) {
             if (oldPrimaryTag != newPrimaryTag)
                 this.set('geo.primaryTag', newPrimaryTag);
         }
-        //this.geo.primaryTag = this.geo.getNewPrimaryTag;
-        //if (oldPrimaryTag != this.geo.primaryTag) {
-        //    this.geo.icon.updateStyle();
-        //    if (this.geo.primaryTag) //TODO: Fix bug on API... how to set value to NULL?.......................................
-        //        Services.update('geo', { primarytagid: this.geo.primaryTag.id, geoid: this.geo.id });
-        //}
     };
     HaGeoService.prototype.setPrimaryTag = function (tag) {
         this.set('geo.primaryTag', tag);
@@ -115,7 +103,6 @@ var HaGeoService = (function (_super) {
         var data = this.$.ajax.lastResponse.data[0];
         if (typeof App == 'undefined')
             this.set('geo.shown', true);
-        //TODO: check if already sat?
         this.set('geo.title', data.title);
         this.set('geo.intro', data.intro);
         this.set('geo.user', new HAUser(data.user));
@@ -125,12 +112,11 @@ var HaGeoService = (function (_super) {
                 var tag_geo = _a[_i];
                 this.addTag(typeof App == 'undefined' ? new HaTag(tag_geo.tag) : App.haTags.byId[tag_geo.tag.tagid], true, false);
             }
-        //this.addTagById(tagID, true, false);
         var images = [];
         for (var i = 0; i < data.geo_image.length; i++)
             images.push(new HAImage(data.geo_image[i].image));
-        this.set('geo.images', images); //data.geo_images.length == 0 ? [113798] : [data.geo_images[0].id]
-        this.ignoreChanges = false; //!this.editing;
+        this.set('geo.images', images);
+        this.ignoreChanges = false;
     };
     __decorate([
         property({ type: Object, notify: true }), 
@@ -199,4 +185,3 @@ var HaGeoService = (function (_super) {
     return HaGeoService;
 }(Tags));
 HaGeoService.register();
-//# sourceMappingURL=ha-geo.js.map

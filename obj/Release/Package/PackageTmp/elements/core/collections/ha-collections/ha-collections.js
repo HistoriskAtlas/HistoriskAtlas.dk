@@ -18,7 +18,6 @@ var HaCollections = (function (_super) {
         _super.apply(this, arguments);
         this.collections = [];
         this.waitingForCallbackCount = 0;
-        //private drawRouteRequestCount: number = 0;
         this.allCollectionsFetched = false;
     }
     HaCollections.prototype.getPublishedCollections = function () {
@@ -83,22 +82,7 @@ var HaCollections = (function (_super) {
         var path = changeRecord.path.split('.');
         if (path.length == 3) {
             if (path[2] == 'selected') {
-                //var collection: HaCollection = this.collections[path[1].substring(1)];
                 var collection = this.get(path[0] + '.' + path[1]);
-                //Services.get('geo', { count: 'all', schema: '{geo:{fields:[geoid,title],filters:[{collection_geos:[{collectionid:' + collection.id + '}]}]}}', sort: '{collection_geos:[ordering]}' }, (result) => {
-                //    var geos: Array<HaGeo> = [];
-                //    for (var data of result.data) {
-                //        var geo = App.haGeos.geos[data.geoid];
-                //        if (!geo)
-                //            continue;
-                //        geo.title = data.title;
-                //        geos.push(geo);
-                //    }
-                //    this.set('collections.' + path[1].substring(1) + '.geos', geos);
-                //    this.drawRoute(collection);
-                //    for (var geo of collection.geos)
-                //        geo.isPartOfCurrentCollection = true;
-                //})
                 if (changeRecord.value)
                     this.drawRoute(collection);
                 else
@@ -128,9 +112,6 @@ var HaCollections = (function (_super) {
                         _this.set('collection.geos.' + _this.collection.geos.indexOf(geo) + '.title', data.title);
                 }
             }
-            //TODO: needed?
-            //for (var geo of collection.geos)
-            //    geo.isPartOfCurrentCollection = true;
         });
     };
     HaCollections.prototype.deselect = function (collection) {
@@ -158,12 +139,10 @@ var HaCollections = (function (_super) {
                     _this.addTag(App.haUsers.user.currentInstitution.tag, true, true);
             });
         });
-        //return collection;
     };
     HaCollections.prototype.collectionChanged = function (newVal, oldVal) {
         var _this = this;
         if (oldVal) {
-            //App.map.routeLayer.clear();
             for (var _i = 0, _a = oldVal.geos; _i < _a.length; _i++) {
                 var geo = _a[_i];
                 geo.isPartOfCurrentCollection = false;
@@ -180,15 +159,12 @@ var HaCollections = (function (_super) {
         }
         if (!newVal)
             return;
-        //App.map.routeLayer.redraw();
-        //this.eraseRoute(newVal);
         this.drawRoute(newVal, App.haUsers.user.canEditCollection(newVal));
-        this.initTags('collection', /*this.collection.id,*/ 'content');
+        this.initTags('collection', 'content');
         for (var _d = 0, _e = newVal.geos; _d < _e.length; _d++) {
             var geo = _e[_d];
             geo.isPartOfCurrentCollection = true;
         }
-        //App.map.showRouteLayer();
         if (!this.collection.content) {
             Services.get('collection', { schema: '{collection:[{user:[id,firstname,lastname]},' + ContentViewer.contentSchema + ']}', collectionid: this.collection.id }, function (result) {
                 if (result.data[0].user.id != App.haUsers.user.id)
@@ -206,25 +182,6 @@ var HaCollections = (function (_super) {
             });
         }
         this.updateMarkers();
-        //if (this.collection.geos.length > 0 || !this.collection.id) {
-        //    this.drawRoute();
-        //    return;
-        //}
-        //Services.get('geo', { count: 'all', schema: '{geo:{fields:[geoid,title],filters:[{collection_geos:[{collectionid:' + this.collection.id + '}]}]}}', sort: '{collection_geos:[ordering]}' }, (result) => {
-        //    var geos: Array<HaGeo> = [];
-        //    for (var data of result.data) {
-        //        var geo = App.haGeos.geos[data.geoid];
-        //        if (!geo)
-        //            continue;
-        //        geo.title = data.title;
-        //        geos.push(geo);
-        //        //this.push('collection.geos', geo);
-        //    }
-        //    this.set('collection.geos', geos);
-        //    this.drawRoute();
-        //    for (var geo of this.collection.geos)
-        //        geo.isPartOfCurrentCollection = true;
-        //})
     };
     HaCollections.prototype.updateMarkers = function () {
         var _this = this;
@@ -275,42 +232,12 @@ var HaCollections = (function (_super) {
                 this.updateMarkers();
             }
         }
-        //for (var indexSplice of changeRecord.indexSplices) {
-        //    for (var geo of indexSplice.removed)
-        //        this.updateIconStyle(geo, true);
-        //    if (indexSplice.removed.length > 0)
-        //        this.updateRouteLayer();
-        //    if (indexSplice.addedCount > 0) {
-        //        for (var i = indexSplice.index; i < indexSplice.index + indexSplice.addedCount; i++)
-        //            this.updateIconStyle(indexSplice. this.collection.geos[i]);
-        //        if (indexSplice.index == this.collection.geos.length - 1) {
-        //            //for (var i = indexSplice.index; i < indexSplice.index + indexSplice.addedCount; i++) {
-        //            var geo = this.collection.geos[indexSplice.index];
-        //            //this.updateIconStyle(geo;)
-        //            if (this.collection.geos.length > 1) {
-        //                var lastGeo: HaGeo = this.collection.geos[indexSplice.index - 1];
-        //                App.map.routeLayer.addPath(geo.icon.coord4326, lastGeo.icon.coord4326, this.collection.type, (distance) => {
-        //                    this.set('collection.distance', this.collection.distance + Math.round(distance));
-        //                });
-        //            }
-        //            //}
-        //        } else
-        //            this.updateRouteLayer();
-        //    //this.route.saveNewGeo(this.route.geos[i]);
-        //    }
-        //}
     };
     HaCollections.prototype.drawRoute = function (collection, drawViaPoints, addedPointIndex) {
         var _this = this;
         if (drawViaPoints === void 0) { drawViaPoints = true; }
         if (!collection)
             collection = this.collection;
-        //TODO: Handling of multiple requests while waiting for callback?....................
-        //if (this.waitingForCallbackCount > 0) {
-        //    this.drawRouteRequestCount++;
-        //    return;
-        //}
-        //App.map.routeLayer.clear();
         if (drawViaPoints)
             App.map.routeLayer.removeFeatures(collection.features);
         else {
@@ -322,8 +249,6 @@ var HaCollections = (function (_super) {
             }
             App.map.routeLayer.removeFeatures(nonViaPoints);
         }
-        //if (!this.collection)
-        //    return;
         if (collection.geos.length < 2) {
             this.set('collections.' + this.collections.indexOf(collection) + '.distance', 0);
         }
@@ -332,7 +257,6 @@ var HaCollections = (function (_super) {
         this.waitingForCallbackCount = collection.geos.length - 1;
         for (var _b = 0, _c = collection.geos; _b < _c.length; _b++) {
             var geo = _c[_b];
-            //this.updateIconStyle(geo);
             if (lastGeo) {
                 var viaPoint = App.map.routeLayer.addPath(geo.icon.coord4326, lastGeo.icon.coord4326, collection, drawViaPoints && geo.id == 0, function (feature, distance) {
                     collection.features.push(feature);
@@ -350,34 +274,13 @@ var HaCollections = (function (_super) {
             }
             lastGeo = geo;
         }
-        //TODO: NOT ALWAYS NEEDED!..................................................... only when showing also...........
-        //setTimeout(() => {
-        //    for (var geo of collection.geos)
-        //        this.notifyPath('collection.geos.' + collection.geos.indexOf(geo) + '.icon.marker', geo.icon.marker);
-        //}, 10);
-        //setTimeout(() => {
-        //    for (var geo of collection.geos)
-        //        geo.icon.updateStyle();
-        //}, 100);
     };
-    //public updateIconStyle(geo: HaGeo, mapOnly: boolean = false) {
-    //    geo.icon.updateStyle();
-    //    if (!mapOnly)
-    //        this.notifyPath('collection.geos.' + this.collection.geos.indexOf(geo) + '.icon.marker', geo.icon.marker);
-    //}
-    //private nextUpdateRouteLayerRequest() {
-    //    if (this.drawRouteRequestCount > 0) {
-    //        this.drawRouteRequestCount--;
-    //        this.drawRoute();
-    //    }
-    //}
     HaCollections.prototype.deleteRoute = function (route) {
         route.delete();
         this.splice('collections', this.collections.indexOf(route), 1);
         this.eraseRoute(route);
     };
     HaCollections.prototype.eraseRoute = function (collection) {
-        //TODO: Handling of multiple requests while waiting for callback?....................
         App.map.routeLayer.removeFeatures(collection.features);
     };
     HaCollections.awitingGeos = [];
@@ -430,4 +333,3 @@ var HaCollections = (function (_super) {
     return HaCollections;
 }(Tags));
 HaCollections.register();
-//# sourceMappingURL=ha-collections.js.map

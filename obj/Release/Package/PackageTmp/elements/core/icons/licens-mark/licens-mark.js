@@ -81,4 +81,3 @@ var LicensMark = (function (_super) {
     return LicensMark;
 }(polymer.Base));
 LicensMark.register();
-//# sourceMappingURL=licens-mark.js.map

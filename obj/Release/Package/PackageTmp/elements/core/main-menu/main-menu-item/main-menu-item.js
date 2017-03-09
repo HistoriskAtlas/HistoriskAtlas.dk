@@ -29,11 +29,6 @@ var MainMenuItem = (function (_super) {
         if (newVal)
             this.fire('shown');
     };
-    //@observe('showMainMenu')
-    //showMainMenuChanged() {
-    //    if (this.showMainMenu)
-    //        this.show = false;
-    //}
     MainMenuItem.prototype.leftIcon = function (show) {
         return show ? 'chevron-left' : this.icon;
     };
@@ -79,4 +74,3 @@ var MainMenuItem = (function (_super) {
     return MainMenuItem;
 }(polymer.Base));
 MainMenuItem.register();
-//# sourceMappingURL=main-menu-item.js.map

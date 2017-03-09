@@ -37,4 +37,3 @@ var PanelEditorialNotes = (function (_super) {
     return PanelEditorialNotes;
 }(polymer.Base));
 PanelEditorialNotes.register();
-//# sourceMappingURL=panel-editorial-notes.js.map

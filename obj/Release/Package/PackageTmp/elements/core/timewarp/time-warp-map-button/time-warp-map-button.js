@@ -30,7 +30,7 @@ var TimeWarpMapButton = (function (_super) {
         var i = props[1].substring(1);
         var map = changeRecord.base[props[1].substring(1)];
         if (map == this.map && !changeRecord.value)
-            App.toast.show('Kortet i tidsluppen er ikke længere aktuelt. Vælg et nyt.'); //TODO: Message inside timewarp instead.
+            App.toast.show('Kortet i tidsluppen er ikke længere aktuelt. Vælg et nyt.');
     };
     TimeWarpMapButton.prototype.mapChanged = function () {
         this.update();
@@ -44,6 +44,9 @@ var TimeWarpMapButton = (function (_super) {
     };
     TimeWarpMapButton.prototype.hide = function () {
         this.$.button.hide();
+    };
+    TimeWarpMapButton.prototype.years = function (start, end) {
+        return (start ? start + ' - ' : '') + end;
     };
     __decorate([
         property({ type: Number }), 
@@ -88,4 +91,3 @@ var TimeWarpMapButton = (function (_super) {
     return TimeWarpMapButton;
 }(polymer.Base));
 TimeWarpMapButton.register();
-//# sourceMappingURL=time-warp-map-button.js.map

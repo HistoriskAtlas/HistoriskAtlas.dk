@@ -24,7 +24,6 @@ var MainMenu = (function (_super) {
         this.panelPeriod = this.$.panelPeriod;
         this.panelRoute = this.$.panelRoute;
         this.panelDigdag = this.$.panelDigdag;
-        //this.panelTheme = this.$$('#panelTheme');
         this.menuItems = [];
         var elems = this.querySelectorAll('main-menu-item');
         for (var i = 0; i < elems.length; i++)
@@ -48,7 +47,8 @@ var MainMenu = (function (_super) {
         }
     };
     MainMenu.prototype.tap1001 = function () {
-        Common.dom.append(WindowInstitution.create(App.haTags.byId[731]));
+        this.set('showMenuThemes', true);
+        this.set('theme', this.$$('#panelTheme').getThemeByName('1001 fortællinger om Danmark'));
     };
     MainMenu.prototype.tapHOD2017 = function () {
         this.set('showMenuThemes', true);
@@ -78,9 +78,6 @@ var MainMenu = (function (_super) {
     MainMenu.prototype.termsOfUseTap = function () {
         Common.dom.append(WindowTermsOfUse.create());
     };
-    //blogTap() {
-    //    window.open('http://blog.historiskatlas.dk/', '_blank')
-    //}
     MainMenu.prototype.facebookTap = function () {
         window.open('http://www.facebook.com/historiskatlas', '_blank');
     };
@@ -206,4 +203,3 @@ var MainMenu = (function (_super) {
     return MainMenu;
 }(polymer.Base));
 MainMenu.register();
-//# sourceMappingURL=main-menu.js.map

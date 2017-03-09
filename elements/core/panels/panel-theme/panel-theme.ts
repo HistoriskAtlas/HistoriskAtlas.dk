@@ -128,6 +128,13 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         Common.dom.append(WindowInstitution.create(App.haTags.byId[736]));
     }
 
+    is1001(theme: ITheme): boolean {
+        return theme.id == '1001';
+    }
+    about1001Tap() {
+        Common.dom.append(WindowInstitution.create(App.haTags.byId[731]));
+    }
+
     //itemTap(e: any) {
     //    //var map = <HaMap>e.model.item;
     //    //this.set('map', map);
