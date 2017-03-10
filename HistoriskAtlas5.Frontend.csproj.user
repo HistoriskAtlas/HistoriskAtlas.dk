@@ -2,7 +2,7 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectView>ProjectFiles</ProjectView>
-    <NameOfLastUsedPublishProfile>beta.historiskatlas.dk</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>historiskatlas.dkNY</NameOfLastUsedPublishProfile>
     <ToolsVersionPromptShown>1.8</ToolsVersionPromptShown>
     <UseIISExpress>true</UseIISExpress>
   </PropertyGroup>

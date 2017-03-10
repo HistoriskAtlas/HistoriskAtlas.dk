@@ -593,7 +593,9 @@
     </Content>
     <Content Include="bowerupdate.bat" />
     <Content Include="pdf\Vejledning til skribenter på HistoriskAtlas.pdf" />
+    <None Include="Properties\PublishProfiles\beta.historiskatlas.dkNY.pubxml" />
     <None Include="Properties\PublishProfiles\beta.historiskatlas.dk.pubxml" />
+    <None Include="Properties\PublishProfiles\historiskatlas.dkNY.pubxml" />
     <None Include="Properties\PublishProfiles\historiskatlas.dk.pubxml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
