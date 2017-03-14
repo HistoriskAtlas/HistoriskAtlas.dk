@@ -25,8 +25,7 @@
 
     public static get api(): string {
         if (!this._api) {
-            this._api = 'http://' + (this.isDevOrBeta ? 'beta.' : '') + 'api.historiskatlas.dk/hadb5' + (this.isDevOrBeta ? 'beta' : '') + '.';
-
+            this._api = location.protocol + '//' + (this.isDevOrBeta ? 'beta.' : (location.protocol == 'https:' ? 'secure' : '')) + 'api.historiskatlas.dk/api/hadb5' + (this.isDevOrBeta ? 'beta' : '') + '.';
             //this._api = 'http://beta.api.historiskatlas.dk/hadb5.';
             //this._api = 'http://34.252.49.216/hadb5beta.'
         }

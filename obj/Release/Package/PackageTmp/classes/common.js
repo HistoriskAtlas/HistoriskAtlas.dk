@@ -13,7 +13,7 @@ var Common = (function () {
     Object.defineProperty(Common, "api", {
         get: function () {
             if (!this._api) {
-                this._api = 'http://' + (this.isDevOrBeta ? 'beta.' : '') + 'api.historiskatlas.dk/hadb5' + (this.isDevOrBeta ? 'beta' : '') + '.';
+                this._api = location.protocol + '//' + (this.isDevOrBeta ? 'beta.' : (location.protocol == 'https:' ? 'secure' : '')) + 'api.historiskatlas.dk/api/hadb5' + (this.isDevOrBeta ? 'beta' : '') + '.';
             }
             return this._api;
         },
