@@ -37,10 +37,10 @@ namespace HistoriskAtlas5.Frontend
                 wc.Encoding = Encoding.UTF8;
                 string locString = string.Join(";", context.Request.QueryString.GetValues("loc"));
                 var type = Int32.Parse(context.Request.QueryString["type"]);
-                if (type == 1)
+                //if (type == 1)
                     json = wc.DownloadString("https://routes.ibikecph.dk/v5/fast/route/" + locString + "?overview=full");
-                else
-                    json = wc.DownloadString("http://router.project-osrm.org/route/v1/" + types[type] + "/" + locString + "?overview=full");
+                //else
+                //    json = wc.DownloadString("http://router.project-osrm.org/route/v1/" + types[type] + "/" + locString + "?overview=full");
             }
             OSRMRoute osrmRoute = JsonConvert.DeserializeObject<OSRMResult>(json).routes[0];
             HARoute haRoute = new HARoute() { distance = osrmRoute.distance, time = osrmRoute.duration, geometry = osrmRoute.geometry };
