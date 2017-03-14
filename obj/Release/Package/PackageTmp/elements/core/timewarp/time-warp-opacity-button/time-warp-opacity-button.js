@@ -34,6 +34,7 @@ var TimeWarpOpacityButton = (function (_super) {
             slider._x = slider._startx + dx;
             var immediateValue = slider._calcStep(slider._calcKnobPosition(slider._x / slider._w));
             slider._setImmediateValue(immediateValue);
+            // update knob's position
             var translateY = ((slider._calcRatio(immediateValue) * slider._w) - slider._knobstartx);
             slider.translate3d(translateY + 'px', 0, 0, slider.$.sliderKnob);
         };
@@ -46,12 +47,16 @@ var TimeWarpOpacityButton = (function (_super) {
             slider._setTransiting(true);
             slider._positionKnob(ratio);
             slider.debounce('expandKnob', slider._expandKnob, 60);
+            // if the ratio doesn't change, sliderKnob's animation won't start
+            // and `_knobTransitionEnd` won't be called
+            // Therefore, we need to manually update the `transiting` state
             if (prevRatio === slider.ratio) {
                 slider._setTransiting(false);
             }
             slider.async(function () {
                 slider.fire('change');
             });
+            // cancel selection
             event.preventDefault();
         };
     }
@@ -59,7 +64,7 @@ var TimeWarpOpacityButton = (function (_super) {
         var _this = this;
         if (this.dom.css('height') == this.closedHeight) {
             this.dom.css('height', this.openHeight);
-            setTimeout(function () { return $(_this.$.slider).focus(); }, 400);
+            setTimeout(function () { return $(_this.$.slider).focus(); }, 400); //Tocuh fix
         }
     };
     TimeWarpOpacityButton.prototype.valueChanged = function () {
@@ -67,6 +72,8 @@ var TimeWarpOpacityButton = (function (_super) {
     };
     TimeWarpOpacityButton.prototype.update = function () {
         this.mode = App.map.timeWarp.mode;
+        //if (App.map.timeWarp.dragMode != TimeWarpDragModes.NONE)
+        //    this.dom.css('height', this.closedHeight);
         this.$.button.update();
     };
     TimeWarpOpacityButton.prototype.show = function () {
@@ -102,3 +109,4 @@ var TimeWarpOpacityButton = (function (_super) {
     return TimeWarpOpacityButton;
 }(polymer.Base));
 TimeWarpOpacityButton.register();
+//# sourceMappingURL=time-warp-opacity-button.js.map

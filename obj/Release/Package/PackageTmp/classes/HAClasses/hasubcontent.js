@@ -1,4 +1,5 @@
 var HaSubContent = (function () {
+    //private _ordering: number; Future upgrade?
     function HaSubContent(data, content) {
         this._id = data.id;
         this._created = data.created ? new Date(data.created) : null;
@@ -13,6 +14,9 @@ var HaSubContent = (function () {
         configurable: true
     });
     Object.defineProperty(HaSubContent.prototype, "created", {
+        //set id(newValue: number) {
+        //    this._id = newValue;
+        //}
         get: function () {
             return this._created;
         },
@@ -20,6 +24,15 @@ var HaSubContent = (function () {
         configurable: true
     });
     Object.defineProperty(HaSubContent.prototype, "user", {
+        //set created(newValue: Date) {
+        //    this._created = newValue;
+        //}
+        //get createdDate(): string {
+        //    return Common.shortDate(this._created);
+        //}
+        //get createdTime(): string {
+        //    return Common.shortTime(this._created);
+        //}
         get: function () {
             return this._user;
         },
@@ -42,3 +55,4 @@ var HaSubContent = (function () {
     };
     return HaSubContent;
 }());
+//# sourceMappingURL=hasubcontent.js.map

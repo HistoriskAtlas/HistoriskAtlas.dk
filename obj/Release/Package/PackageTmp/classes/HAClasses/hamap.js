@@ -2,7 +2,7 @@ var HaMap = (function () {
     function HaMap(data) {
         this.id = data.id;
         if (data.minlat) {
-            var coord = Common.toMapCoord([data.minlon, data.minlat]);
+            var coord = Common.toMapCoord([data.minlon, data.minlat]); //TODO convert on server instead?
             this.minLon = coord[0];
             this.minLat = coord[1];
             coord = Common.toMapCoord([data.maxlon, data.maxlat]);
@@ -13,6 +13,7 @@ var HaMap = (function () {
         this.maxZ = data.maxz;
         this.inView = false;
         this.inViewTimeWarp = false;
+        //this._textID = data.textid;
         this.title = data.name;
         this.orgStartYear = data.orgproductionstartyear;
         this.orgEndYear = data.orgproductionendyear;
@@ -21,6 +22,9 @@ var HaMap = (function () {
             this._previewUrl = 'http://tile.historiskatlas.dk/' + this.id + '/' + coords[2] + '/' + coords[0] + '/' + coords[1] + '.jpg';
         }
     }
+    //public get minRes(): number {
+    //    
+    //}
     HaMap.getTileUrlFromMapID = function (id) {
         switch (id) {
             case 42000:
@@ -69,6 +73,33 @@ var HaMap = (function () {
         configurable: true
     });
     Object.defineProperty(HaMap.prototype, "previewUrl", {
+        //get centerLat(): number {
+        //    return this._centerLat;
+        //}
+        //get centerLng(): number {
+        //    return this._centerLng;
+        //}
+        //get id(): number {
+        //    return this._id;
+        //}
+        //get spanLat(): number {
+        //    return this._spanLat;
+        //}
+        //get spanLng(): number {
+        //    return this._spanLng;
+        //}
+        //get textID(): number {
+        //    return this._textID;
+        //}
+        //get title(): string {
+        //    return this._title;
+        //}
+        //get year(): number {
+        //    return this._year;
+        //}
+        //public test(): string {
+        //    return this._year.toString();
+        //}
         get: function () {
             return this._previewUrl;
         },
@@ -77,3 +108,4 @@ var HaMap = (function () {
     });
     return HaMap;
 }());
+//# sourceMappingURL=hamap.js.map

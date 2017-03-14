@@ -18,7 +18,7 @@ var CollectionList = (function (_super) {
         _super.apply(this, arguments);
     }
     CollectionList.prototype.ready = function () {
-        CollectionList.collectionLists.push(this);
+        CollectionList.collectionLists.push(this); //TODO: remove again?
     };
     CollectionList.prototype.toggleShown = function (e) {
         var topLevel = e.model.topLevel;
@@ -35,6 +35,7 @@ var CollectionList = (function (_super) {
     };
     CollectionList.prototype.checkboxTap = function (e) {
         var topLevel = e.model.topLevel;
+        //this.set('topLevels.' + this.topLevels.indexOf(topLevel) + '.selected', !topLevel.selected);
         CollectionList.ignoreCollectionChanges = true;
         for (var _i = 0, _a = this.collections; _i < _a.length; _i++) {
             var collection = _a[_i];
@@ -60,6 +61,8 @@ var CollectionList = (function (_super) {
         this.updateTopLevelSelections();
     };
     CollectionList.prototype.collectionsSplices = function (changeRecord) {
+        //if (this.defaultSelected)
+        //    this.set('collections.' + this.collections.indexOf(collection) + '.selected', true);
         if (changeRecord && this.defaultSelected)
             if (changeRecord.indexSplices.length > 0) {
                 var splice = changeRecord.indexSplices[0];
@@ -138,3 +141,4 @@ var CollectionList = (function (_super) {
     return CollectionList;
 }(polymer.Base));
 CollectionList.register();
+//# sourceMappingURL=collection-list.js.map

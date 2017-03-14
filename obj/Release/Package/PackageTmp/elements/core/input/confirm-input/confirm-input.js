@@ -35,6 +35,7 @@ var ConfirmInput = (function (_super) {
     ConfirmInput.prototype.icon = function (disabled) {
         return disabled ? 'create' : 'check';
     };
+    //@listen('paperInput.focusout')
     ConfirmInput.prototype.paperInputFocusout = function (e) {
         if (this.contains(e.relatedTarget))
             return;
@@ -99,3 +100,4 @@ var ConfirmInput = (function (_super) {
     return ConfirmInput;
 }(polymer.Base));
 ConfirmInput.register();
+//# sourceMappingURL=confirm-input.js.map

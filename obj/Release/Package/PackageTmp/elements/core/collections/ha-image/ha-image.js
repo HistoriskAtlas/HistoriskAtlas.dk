@@ -17,8 +17,11 @@ var HaImageService = (function (_super) {
     function HaImageService() {
         _super.apply(this, arguments);
     }
+    //ready() {
+    //    this.$.ajax.url = Common.api + 'geo.json';
+    //}
     HaImageService.prototype.imageChanged = function () {
-        this.initTags('image');
+        this.initTags('image' /*, this.image.id*/);
     };
     HaImageService.prototype.textChanged = function () {
         Services.update('image', { id: this.image.id, text: this.image.text });
@@ -36,7 +39,7 @@ var HaImageService = (function (_super) {
         var _this = this;
         Services.delete('image', { id: this.image.id }, function (result) {
             App.toast.show('Billedet blev slettet.');
-            _this.parentNode.windowGeo.splice('geo.images', _this.geo.images.indexOf(_this.image), 1);
+            _this.parentNode.windowGeo.splice('geo.images', _this.geo.images.indexOf(_this.image), 1); //TODO: might be easier to stop spawning windom-image dynamically
         }, function (result) {
             App.toast.show('Billedet blev IKKE slettet. Muligvis pga. manglende rettigheder.');
         });
@@ -90,3 +93,4 @@ var HaImageService = (function (_super) {
     return HaImageService;
 }(Tags));
 HaImageService.register();
+//# sourceMappingURL=ha-image.js.map

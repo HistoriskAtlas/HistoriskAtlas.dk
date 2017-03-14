@@ -61,3 +61,4 @@ var DialogTourIntro = (function (_super) {
     return DialogTourIntro;
 }(polymer.Base));
 DialogTourIntro.register();
+//# sourceMappingURL=dialog-tour-intro.js.map

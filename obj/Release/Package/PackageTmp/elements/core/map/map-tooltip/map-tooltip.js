@@ -44,3 +44,4 @@ var MapTooltip = (function (_super) {
     return MapTooltip;
 }(polymer.Base));
 MapTooltip.register();
+//# sourceMappingURL=map-tooltip.js.map

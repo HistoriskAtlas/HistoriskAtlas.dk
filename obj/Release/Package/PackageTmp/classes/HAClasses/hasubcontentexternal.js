@@ -42,8 +42,11 @@ var HaSubContentExternal = (function (_super) {
         configurable: true
     });
     HaSubContentExternal.prototype.insert = function () {
+        //TODO...
     };
     HaSubContentExternal.prototype.delete = function () {
+        //TODO...
     };
     return HaSubContentExternal;
 }(HaSubContent));
+//# sourceMappingURL=hasubcontentexternal.js.map

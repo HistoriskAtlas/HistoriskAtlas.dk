@@ -24,3 +24,4 @@ var WindowTheAssociation = (function (_super) {
     return WindowTheAssociation;
 }(polymer.Base));
 WindowTheAssociation.register();
+//# sourceMappingURL=window-the-association.js.map

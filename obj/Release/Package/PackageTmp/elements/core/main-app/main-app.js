@@ -76,6 +76,7 @@ var App = (function (_super) {
     });
     Object.defineProperty(App, "useClustering", {
         get: function () {
+            //return !this.passed.dev;
             return true;
         },
         enumerable: true,
@@ -100,7 +101,10 @@ var App = (function (_super) {
     App.prototype.ready = function () {
         if (localStorage.getItem("sessionID"))
             document.sid = localStorage.getItem("sessionID");
+        //this.beingIndexed = /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent) || App.isDev;
         this.cookieConcent = localStorage.getItem("cookieConcent") == 'true';
+        //App.instance = this;
+        //App.dom = $(document.body);
         App.global = document.querySelector('global-app');
         App.mainMenu = document.querySelector('main-menu');
         App.toast = document.querySelector('toast-wrapper');
@@ -117,6 +121,10 @@ var App = (function (_super) {
         App.timeWarpClosed = document.querySelector('time-warp-closed');
         document.querySelector('ha-digdag').getData();
         this.touchDevice = 'ontouchstart' in window || !!navigator.maxTouchPoints;
+        //if (this.touchDevice)
+        //    $('#drawer').css("overflow-y", "auto");
+        //used? main-app not present when deeplinking to geo...
+        //App.passed.geo = App.passed.geo ? new HaGeo(App.passed.geo) : null;
         if (App.passed.theme.id != 'default') {
             this.drawerOpen = true;
             App.mainMenu.showMainMenu = false;
@@ -125,24 +133,51 @@ var App = (function (_super) {
         if (App.passed.redribbon) {
             this.showRedRibbon = true;
         }
+        //if (localStorage.getItem("sessionID"))
+        //    Services.get('login', {}, (result) => {
+        //        if (result.data.user.isvalid)
+        //            App.haUsers.login(result.data.user);
+        //    });
         if (this.cookieConcent)
             AppMode.showPopup();
+        //if (LocalStorage.isBefore('user-news-shown', WindowUserNews.lastUpdate)) {
+        //    $(this).append(WindowUserNews.create());
+        //    LocalStorage.set('user-news-shown', 'true', true);
+        //}
+        //TODO: move to generel url interpreter class?
         var path = window.location.pathname;
         if (path.substr(-8) == '/welcome') {
             window.history.replaceState({}, null, window.location.href.substr(0, window.location.href.length - 8));
             this.userJustActivated = true;
         }
+        //TODO: move to generel url interpreter class?
         if (path.substr(0, 2) == '/@') {
             var atArr = path.substr(2).split(',');
             App.passed.theme.maplatitude = parseFloat(atArr[0]);
             App.passed.theme.maplongitude = parseFloat(atArr[1]);
             App.passed.theme.mapzoom = parseInt(atArr[2]);
         }
+        //else {
+        //    App.passed.initCoord = [Global.defaultTheme.maplatitude, Global.defaultTheme.maplongitude]; //TODO: what if default theme isnt selected....
+        //    App.passed.initZoom = Global.defaultTheme.mapzoom; //TODO: what if default theme isnt selected....
+        //}
+        //if ('registerElement' in document
+        //    && 'import' in document.createElement('link')
+        //    && 'content' in document.createElement('template')) {
+        //    // platform is good!
+        //    App.init();
+        //} else {
+        //    // polyfill the platform first!
+        //    var e = document.createElement('script');
+        //    e.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+        //    document.body.appendChild(e);
+        //}
+        //App.init();
     };
     App.init = function () {
         var theme = App.passed.theme;
         App.map = new MainMap([theme.maplatitude ? theme.maplatitude : Global.defaultTheme.maplatitude, theme.maplongitude ? theme.maplongitude : Global.defaultTheme.maplongitude], theme.mapzoom ? theme.mapzoom : Global.defaultTheme.mapzoom);
-        FB.init({ appId: '876939902336614', xfbml: true, version: 'v2.2' });
+        FB.init({ appId: '876939902336614', xfbml: true, version: 'v2.2' }); //TODO: move to login window?
     };
     __decorate([
         property({ type: Boolean }), 
@@ -260,3 +295,4 @@ ol.source.XYZ.prototype.setCanvasTileClass = function () {
     this.tileClass = ol.CanvasTile;
 };
 App.register();
+//# sourceMappingURL=main-app.js.map
