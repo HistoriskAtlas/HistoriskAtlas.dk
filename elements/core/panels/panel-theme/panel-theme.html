@@ -57,6 +57,9 @@
                     <template is="dom-if" if="[[isHoD2017(item)]]">
                         <img class="logo-theme" src="../../../../images/theme/HoD2017logo.png">
                     </template>
+                    <template is="dom-if" if="[[is1001(item)]]">
+                        <img class="logo-theme" src="../../../../images/theme/1001logo.jpg">
+                    </template>
 
                     <content-viewer content="[[newHaContent(item.content)]]"></content-viewer>
 
@@ -68,7 +71,7 @@
                     </template>
 
                     <template is="dom-if" if="[[is1001(item)]]">
-                        <div style="color:#ffe600; font-size: 13px;" on-tap="about1001Tap">OM 1001 FORTÆLLINGER</div>
+                        <div style="color:#ecdf39; font-size: 13px; margin-bottom: 160px" on-tap="about1001Tap">OM 1001 FORTÆLLINGER</div>
                     </template>
 
                 </main-menu-item>

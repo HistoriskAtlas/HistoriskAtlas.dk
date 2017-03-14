@@ -118,7 +118,7 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     }
 
     hideHeadline(theme: ITheme): boolean {
-        return this.isHoD2017(theme);
+        return this.isHoD2017(theme) || this.is1001(theme);
     }
 
     isHoD2017(theme: ITheme): boolean {

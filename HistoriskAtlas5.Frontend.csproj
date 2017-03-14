@@ -193,6 +193,8 @@
     <Content Include="html\RegionTypeAbouts\40.html" />
     <Content Include="html\RegionTypeAbouts\102.html" />
     <Content Include="html\RegionTypeAbouts\101.html" />
+    <Content Include="images\theme\1001back.jpg" />
+    <Content Include="images\theme\1001logo.jpg" />
     <Content Include="images\theme\HoD2017back.jpg" />
     <Content Include="images\logos\nordea-fonden-black-logo.png" />
     <Content Include="images\logos\nordea-fonden-white-logo.png" />

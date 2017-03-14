@@ -103,7 +103,7 @@ var PanelTheme = (function (_super) {
         return new HaContent(content);
     };
     PanelTheme.prototype.hideHeadline = function (theme) {
-        return this.isHoD2017(theme);
+        return this.isHoD2017(theme) || this.is1001(theme);
     };
     PanelTheme.prototype.isHoD2017 = function (theme) {
         return theme.id == 'hod2017';
