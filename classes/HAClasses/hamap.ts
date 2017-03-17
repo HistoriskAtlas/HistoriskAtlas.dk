@@ -41,7 +41,7 @@
 
         if (data.iconcoords) { //TODO: all should have?
             var coords: string[] = (<string>data.iconcoords).split('|');
-            this._previewUrl = 'http://tile.historiskatlas.dk/' + this.id + '/' + coords[2] + '/' + coords[0] + '/' + coords[1] + '.jpg'
+            this._previewUrl = location.protocol + '//tile.historiskatlas.dk/tile/' + this.id + '/' + coords[2] + '/' + coords[0] + '/' + coords[1] + '.jpg'
         }
     }
 

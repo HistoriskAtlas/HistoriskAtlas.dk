@@ -3,7 +3,7 @@
     constructor(mainMap: MainMap) {
         super({
             source: new ol.source.XYZ({
-                url: 'http://tile.historiskatlas.dk/hillshade/{z}/{x}/{y}.png',
+                url: location.protocol + '//tile.historiskatlas.dk/tile/hillshade/{z}/{x}/{y}.png',
                 crossOrigin: 'Anonymous'
             })
         });

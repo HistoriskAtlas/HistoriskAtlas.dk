@@ -67,7 +67,7 @@
     }
 
     public static getUrl(type: string, year: number) {
-        return 'http://tile.historiskatlas.dk/digdag/' + type + '/' + year + '/{z}/{x}/{y}.png';
+        return location.protocol + '//tile.historiskatlas.dk/tile/digdag/' + type + '/' + year + '/{z}/{x}/{y}.png';
     }
 
     public show(type: string) {

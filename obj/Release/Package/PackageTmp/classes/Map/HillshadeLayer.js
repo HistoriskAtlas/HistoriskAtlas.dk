@@ -8,7 +8,7 @@ var Hillshade = (function (_super) {
     function Hillshade(mainMap) {
         _super.call(this, {
             source: new ol.source.XYZ({
-                url: 'http://tile.historiskatlas.dk/hillshade/{z}/{x}/{y}.png',
+                url: location.protocol + '//tile.historiskatlas.dk/tile/hillshade/{z}/{x}/{y}.png',
                 crossOrigin: 'Anonymous'
             })
         });

@@ -19,7 +19,7 @@ var HaMap = (function () {
         this.orgEndYear = data.orgproductionendyear;
         if (data.iconcoords) {
             var coords = data.iconcoords.split('|');
-            this._previewUrl = 'http://tile.historiskatlas.dk/' + this.id + '/' + coords[2] + '/' + coords[0] + '/' + coords[1] + '.jpg';
+            this._previewUrl = location.protocol + '//tile.historiskatlas.dk/tile/' + this.id + '/' + coords[2] + '/' + coords[0] + '/' + coords[1] + '.jpg';
         }
     }
     //public get minRes(): number {

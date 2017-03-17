@@ -58,7 +58,7 @@ var DigDagLayer = (function (_super) {
         configurable: true
     });
     DigDagLayer.getUrl = function (type, year) {
-        return 'http://tile.historiskatlas.dk/digdag/' + type + '/' + year + '/{z}/{x}/{y}.png';
+        return location.protocol + '//tile.historiskatlas.dk/tile/digdag/' + type + '/' + year + '/{z}/{x}/{y}.png';
     };
     DigDagLayer.prototype.show = function (type) {
         this.type = type;
