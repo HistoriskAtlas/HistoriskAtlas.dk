@@ -90,6 +90,9 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         //    })
         //}
 
+        if (!App.haTags)
+            return;
+
         if (!App.haTags.tagsLoaded)
             return;
 

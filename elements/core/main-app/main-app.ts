@@ -163,8 +163,8 @@ class App extends polymer.Base implements polymer.Element {
         return !touchDevice || !narrow;
     }
 
-    mainMenuClass(theme: ITheme, showMainMenu: boolean): string {
-        if (!showMainMenu)
+    mainMenuClass(theme: ITheme, showMenuThemes: boolean): string {
+        if (showMenuThemes)
             return 'menu-style-theme-' + theme.id;
         return '';
     }

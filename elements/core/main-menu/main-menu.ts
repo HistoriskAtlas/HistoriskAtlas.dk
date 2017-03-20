@@ -45,7 +45,7 @@ class MainMenu extends polymer.Base implements polymer.Element {
     @property({ type: Boolean, value: true, notify: true })
     public showMainMenu: boolean;
 
-    @property({ type: Boolean, value: false })
+    @property({ type: Boolean, value: false, notify: true })
     public showMenuThemes: boolean;
 
     @property({ type: Boolean, value: false })
@@ -82,7 +82,7 @@ class MainMenu extends polymer.Base implements polymer.Element {
         //this.panelTheme = this.$$('#panelTheme');
 
         this.menuItems = [];
-        var elems = this.querySelectorAll('main-menu-item');
+        var elems = this.querySelectorAll('main-menu > main-menu-item');
         for (var i = 0; i < elems.length; i++)
             this.menuItems.push(<MainMenuItem>elems.item(i));
         for (var menuItem of this.menuItems)
@@ -106,12 +106,12 @@ class MainMenu extends polymer.Base implements polymer.Element {
 
     tap1001() {
         this.set('showMenuThemes', true);
-        this.set('theme', (<PanelTheme>this.$$('#panelTheme')).getThemeByName('1001 fortællinger om Danmark'));
+        this.set('theme', (<PanelTheme>this.$.panelTheme).getThemeByName('1001 fortællinger om Danmark'));
         //Common.dom.append(WindowInstitution.create(App.haTags.byId[731]));
     }
     tapHOD2017() {
         this.set('showMenuThemes', true);
-        this.set('theme', (<PanelTheme>this.$$('#panelTheme')).getThemeByName('Historier om Danmark 2017'));
+        this.set('theme', (<PanelTheme>this.$.panelTheme).getThemeByName('Historier om Danmark 2017'));
     }
 
     aboutTap() {

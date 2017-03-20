@@ -12,6 +12,10 @@ class MapMenu extends polymer.Base implements polymer.Element {
     @property({ type: Boolean, notify: true })
     public drawerOpen: boolean;
 
+    @property({ type: Boolean, value: true, notify: true })
+    public showMainMenu: boolean;
+
+
     //@property({ type: Number, notify: true })
     //public selected: number; //2 or 3
 
@@ -70,7 +74,8 @@ class MapMenu extends polymer.Base implements polymer.Element {
         }
 
         this.drawerOpen = true;
-        App.mainMenu.showMenuMaps = true;
+        App.mainMenu.set('showMenuMaps', true);
+        this.showMainMenu = false;
     }
 
     //@observe("selected")
