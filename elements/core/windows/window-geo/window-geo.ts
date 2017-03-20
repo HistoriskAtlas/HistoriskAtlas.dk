@@ -188,11 +188,11 @@ class WindowGeo extends polymer.Base implements polymer.Element {
         window.open('https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=http://historiskatlas.dk/_(' + this.geo.id + ')', '_blank')
     }
 
-    addToFavouritesTap() {
-        App.global.showFavourites();
-        if (App.haUsers.user.favourites.geos.indexOf(this.geo) == -1)
-            App.haUsers.push('user.favourites.geos', this.geo);
-    }
+    //addToFavouritesTap() {
+    //    App.global.showFavourites();
+    //    if (App.haUsers.user.favourites.geos.indexOf(this.geo) == -1)
+    //        App.haUsers.push('user.favourites.geos', this.geo);
+    //}
 
     addToRouteTap() {
         Common.dom.append(DialogRouteSelection.create('Tilføj til turforslag...', this.geo));

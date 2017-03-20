@@ -1,7 +1,7 @@
 ﻿class HaCollection {
     public _id: number;
     private _title: string;
-    private _geos: Array<HaGeo>;
+    private _collection_geos: Array<HaCollectionGeo>;
     private _online: boolean;
     private _ugc: boolean;
     private _user: HAUser;
@@ -20,7 +20,7 @@
     public static iconTypes: Array<string> = ['maps:directions-car', 'maps:directions-bike', 'maps:directions-walk']
 
     constructor(data: any) {
-        this._geos = [];
+        this._collection_geos = [];
         this.tags = [];
         this.features = [];
 
@@ -45,9 +45,10 @@
             var collection_geos = (<Array<any>>data.collection_geos).sort((a, b) => a.ordering - b.ordering);
 
             for (var collection_geo of collection_geos) {
-                var geo = App.haGeos.geos[collection_geo.geoid];
-                if (geo)
-                    this._geos.push(geo);
+                this._collection_geos.push(new HaCollectionGeo(collection_geo))
+                //var geo = App.haGeos.geos[collection_geo.geoid];
+                //if (geo)
+                //    this._geos.push(geo);
             }
         }
     }
@@ -113,7 +114,7 @@
     }
 
 
-    get geos(): Array<HaGeo> {
+    get collection_geos(): Array<HaCollectionGeo> {
         //if (this._geoIds.length > 0) {
         //    var newGeoIds: Array<number> = [];
         //    for (var geoid of this._geoIds) {
@@ -126,18 +127,18 @@
         //    this._geoIds = newGeoIds;
         //}
 
-        return this._geos;
+        return this._collection_geos;
     }
-    set geos(val: Array<HaGeo>) {
-        this._geos = val;
-    }
+    //set geos(val: Array<HaCollectionGeo>) {
+    //    this.collection_geos = val;
+    //}
 
-    public geoOrdering(geo: HaGeo): number {
+    public collectionGeoOrdering(geo: HaGeo): number {
         var i = 0;
-        for (var g of this._geos) {
-            if (g == geo)
+        for (var cg of this._collection_geos) {
+            if (cg.geo == geo)
                 return i;
-            if (g.id > 0)
+            if (!cg.isViaPoint)
                 i++;
         }
     }
@@ -155,18 +156,19 @@
     //}
     public viaPointOrdering(geo: HaGeo): number {
         var i = 0;
-        for (var g of this._geos) {
-            if (g == geo)
+        for (var cg of this._collection_geos) {
+            if (cg.geo == geo)
                 return i;
-            if (g.id == 0)
+            if (cg.isViaPoint)
                 i++;
         }
+        return 0;
     }
 
     public get viaPointCount(): number {
         var i = 0;
-        for (var g of this._geos)
-            if (g.id == 0)
+        for (var cg of this._collection_geos)
+            if (!cg.geo)
                 i++;
         return i;
     }
@@ -220,8 +222,8 @@
         }
     }
 
-    public saveNewGeo(geo: HaGeo) {
-        Services.insert('collection_geo', { collectionid: this._id, geoid: geo.id, ordering: this.geoOrdering(geo) }, (result) => { });
+    public saveNewCollectionGeo(collection_geo: HaCollectionGeo) {
+        Services.insert('collection_geo', { collectionid: this._id, geoid: collection_geo.geo ? collection_geo.geo.id : null, ordering: this._collection_geos.indexOf(collection_geo) }, (result) => { });
     }
 
     public saveProp(prop: string) {
@@ -233,11 +235,11 @@
         });
     }
 
-    public removeGeo(geo: HaGeo) {
+    public removeCollectionGeo(collection_geo: HaCollectionGeo) {
         var data: any = {
             collectionid: this._id,
-            geoid: geo.id,
-            ordering: this.geoOrdering(geo),
+            //geoid: collectionGeo.geo ? collectionGeo.geo.id : null,
+            ordering: this._collection_geos.indexOf(collection_geo),
             deletemode: 'permanent'
         };
         Services.delete('collection_geo', data, (result) => { });
@@ -252,13 +254,13 @@
         }
 
         for (var i = indexStart; i <= indexEnd; i++) {
-            if (this._geos[i].id == 0)
-                continue;
+            //if (this._collection_geos[i].geo.id == 0)
+            //    continue;
 
             var data: any = {
                 collectionid: this._id,
-                geoid: this._geos[i].id,
-                ordering: this.geoOrdering(this._geos[i])
+                //geoid: this._collection_geos[i].geo.id,
+                ordering: this._collection_geos.indexOf(this.collection_geos[i])
             };
             Services.update('collection_geo', data, (result) => { });
         }
@@ -275,15 +277,15 @@
 
     public showOnMap() {
 
-        if (this.geos.length == 0)
+        if (this._collection_geos.length == 0)
             return;
 
-        for (var geo of this.geos) {
+        //for (var geo of this.geos) {
 
-        }
+        //}
 
-        if (this.geos.length == 1) {
-            App.map.centerAnim(this.geos[0].coord, 10000, true);
+        if (this._collection_geos.length == 1) {
+            App.map.centerAnim(this.collection_geos[0].coord, 10000, true);
             return;
         }
 
@@ -292,17 +294,16 @@
         var minLat: number = Number.MAX_VALUE;
         var maxLat: number = Number.MIN_VALUE;
 
-        for (var geo of this.geos) {
-            if (geo.coord[1] < minLat)
-                minLat = geo.coord[1];
-            if (geo.coord[1] > maxLat)
-                maxLat = geo.coord[1];
-            if (geo.coord[0] < minLon)
-                minLon = geo.coord[0];
-            if (geo.coord[0] > maxLon)
-                maxLon = geo.coord[0];
+        for (var cg of this._collection_geos) {
+            if (cg.coord[1] < minLat)
+                minLat = cg.coord[1];
+            if (cg.coord[1] > maxLat)
+                maxLat = cg.coord[1];
+            if (cg.coord[0] < minLon)
+                minLon = cg.coord[0];
+            if (cg.coord[0] > maxLon)
+                maxLon = cg.coord[0];
         }
-
 
         App.map.centerAnim([(minLon + maxLon) / 2, (minLat + maxLat) / 2], Math.max((maxLon - minLon) * 1.8, (maxLat - minLat) * 1.5) / 2, true);
     }

@@ -8,6 +8,7 @@
     private _institutions: Array<HAInstitution> = [];
     private _isActive: boolean;
     private _role: number;
+    private _about: string;
 
     private _favourites: HaCollection;
     private _created: Date;
@@ -32,6 +33,7 @@
         this._email = data.email;
         this._isActive = data.isactive;
         this._role = data.role;
+        this._about = data.about;
 
         this._created = data.created;
         this._favourites = new HaCollection(data.favourites);
@@ -100,6 +102,7 @@
     get isDefault(): boolean { return this._isDefault; }
     get isPro(): boolean { return this.institutions.length > 0; }
     get fullname(): string { return this._firstname + ' ' + this._lastname; }
+    get fullnameAndAbout(): string { return this.fullname + (this._about ? ', ' + this._about : ''); }
     get isWriter(): boolean { return this._role >= 1; }
     get isEditor(): boolean { return this._role >= 2; }
     get isAdmin(): boolean { return this._role >= 4; }

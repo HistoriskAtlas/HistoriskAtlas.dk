@@ -2,11 +2,11 @@
 class WindowFavourites extends polymer.Base implements polymer.Element {
 
     @property({ type: Array })
-    public geos: Array<HaGeo>;
+    public collection_geos: Array<HaCollectionGeo>;
 
     constructor() {
         super();
-        this.geos = App.haUsers.user.favourites.geos;
+        this.collection_geos = App.haUsers.user.favourites.collection_geos;
         App.haUsers.addEventListener('userFavouritesGeosChanged', () => this.$.templateGeos.render())
     }
     
@@ -21,7 +21,7 @@ class WindowFavourites extends polymer.Base implements polymer.Element {
 
     geoTapRemove(e: any) {
         e.cancelBubble = true;
-        this.splice('geos', this.geos.indexOf(e.model.geo), 1)
+        this.splice('collection_geos', this.collection_geos.indexOf(e.model.geo), 1)
     }
 }
 

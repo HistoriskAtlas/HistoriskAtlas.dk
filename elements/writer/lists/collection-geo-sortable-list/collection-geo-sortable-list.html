@@ -1,4 +1,4 @@
-﻿<dom-module id="geo-sortable-list">
+﻿<dom-module id="collection-geo-sortable-list">
     <style>
         
     </style>
@@ -6,7 +6,7 @@
         <sortable-js animation="150" handle=".drag-handle">
             <template is="dom-repeat" items="{{items}}">
                 <div>
-                    <geo-list-item geo="[[item]]" closeable dragable></geo-list-item>
+                    <collection-geo-list-item collection-geo="[[item]]" closeable dragable></collection-geo-list-item>
                 </div>
             </template>
         </sortable-js>

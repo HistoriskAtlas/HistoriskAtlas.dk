@@ -89,10 +89,10 @@ class WindowRoute extends polymer.Base implements polymer.Element {
     //    Common.dom.append(WindowGeo.create(<HaGeo>e.model.geo));
     //}
 
-    getAutosuggestSchema(geos: Array<HaGeo>): string {
+    getAutosuggestSchema(collection_geos: Array<HaCollectionGeo>): string {
         var existingIds: Array<number> = [];
-        for (var geo of geos)
-            existingIds.push(geo.id)
+        for (var cg of collection_geos)
+            existingIds.push(cg.geo.id)
         return '{geo:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},title:{like:$input}},fields:[id,title]}}';
     }
 
@@ -107,8 +107,10 @@ class WindowRoute extends polymer.Base implements polymer.Element {
         geo.title = e.detail.title;
         App.map.centerAnim(geo.coord, 3000, true, true);
         //geo.zoomUntilUnclustered
-        this.push('route.geos', geo);
-        this.route.saveNewGeo(geo)
+        var collection_geo = new HaCollectionGeo({});
+        collection_geo.geo = geo;
+        this.push('route.collection_geos', collection_geo);
+        this.route.saveNewCollectionGeo(collection_geo);
         //if (this.route.geos.length > 1) {
         //    var lastGeo: HaGeo = this.route.geos[this.route.geos.length - 2];
         //    App.map.routeLayer.addPath(geo.icon.coord4326, lastGeo.icon.coord4326, (distance) => {
@@ -119,10 +121,9 @@ class WindowRoute extends polymer.Base implements polymer.Element {
 
     @listen('geoAutosuggestRemoved')
     geoRemoved(e: any) {
-        var geo = e.detail; //App.haGeos.geos[e.detail.id];
-        if (geo.id)
-            this.route.removeGeo(geo);
-        this.splice('route.geos', this.route.geos.indexOf(geo), 1);
+        var collection_geo = e.detail; //App.haGeos.geos[e.detail.id];
+        this.route.removeCollectionGeo(collection_geo);
+        this.splice('route.collection_geos', this.route.collection_geos.indexOf(collection_geo), 1);
         //this.updateRouteLayer();
     }
 

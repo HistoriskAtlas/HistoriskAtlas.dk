@@ -1,0 +1,14 @@
+﻿<dom-module id="collection-geo-list">
+    <style>
+
+    </style>
+    <template>
+        <template is="dom-repeat" items="[[collectionGeos]]" as="cg">
+            <collection-geo-list-item collection-geo="[[cg]]" on-tap="cgTap"></collection-geo-list-item>
+            <!--<div class="listitem light-grey-border" on-tap="geoTap">
+                <span class="icon"><img src="[[geo.icon.marker]]"></span>
+                <span>[[geo.title]]</span>
+            </div>-->
+        </template>
+    </template>
+</dom-module>

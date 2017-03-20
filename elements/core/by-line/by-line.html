@@ -28,11 +28,11 @@
         <template is="dom-repeat" items="[[institutions]]">
             <span class="institution" on-tap="institutionTap">[[item.plurName]]</span>
             <template is="dom-if" if="[[show1001User(item)]]">
-                <span class="user-1001">[[user.fullname]]</span>
+                <span class="user-1001">[[user.fullnameAndAbout]]</span>
             </template>
         </template>
         <template is="dom-if" if="[[showUser(institutions,user,institutions.length)]]">
-            <span class="user">[[user.fullname]]</span>
+            <span class="user">[[user.fullnameAndAbout]]</span>
         </template>
     </template>
 </dom-module>
