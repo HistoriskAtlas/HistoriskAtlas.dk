@@ -262,16 +262,17 @@ class HaTags extends polymer.Base implements polymer.Element {
         context.stroke();
         context.fill();
 
-        context.fillStyle = '#990000';
-        var text: string;
-        switch (number) {
-            case 26: text = String.fromCharCode(198); break;
-            case 27: text = String.fromCharCode(216); break;
-            case 28: text = String.fromCharCode(197); break;
-            default: text = String.fromCharCode(65 + number); break;
+        if (number > -1) {
+            context.fillStyle = '#990000';
+            var text: string;
+            switch (number) {
+                case 26: text = String.fromCharCode(198); break;
+                case 27: text = String.fromCharCode(216); break;
+                case 28: text = String.fromCharCode(197); break;
+                default: text = String.fromCharCode(65 + number); break;
+            }
+            context.fillText(text, (canvas.width - context.measureText(text).width) / 2.0, 23)
         }
-        context.fillText(text, (canvas.width - context.measureText(text).width) / 2.0, 23)
-
         var marker = canvas.toDataURL()
         this._viaPointMarkers[number] = marker;
 

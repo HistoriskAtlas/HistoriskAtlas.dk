@@ -17,7 +17,7 @@ var WindowUserNews = (function (_super) {
     function WindowUserNews() {
         _super.apply(this, arguments);
     }
-    WindowUserNews.lastUpdate = new Date(2017, 2, 3, 14, 0); //remember: zero based month index
+    WindowUserNews.lastUpdate = new Date(2017, 2, 3, 14, 0);
     WindowUserNews = __decorate([
         component("window-user-news"), 
         __metadata('design:paramtypes', [])
@@ -25,4 +25,3 @@ var WindowUserNews = (function (_super) {
     return WindowUserNews;
 }(polymer.Base));
 WindowUserNews.register();
-//# sourceMappingURL=window-user-news.js.map

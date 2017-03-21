@@ -1,13 +1,4 @@
 var HAUser = (function () {
-    //private _deleted: boolean;
-    //private institutionid: number;
-    //private licensename: string;
-    //private geoid: number;
-    //private rolelevel: string;
-    //private passwordvalidto: string;
-    //private updatepassrequired: boolean;
-    //private location: string;
-    //private profiletext: string;
     function HAUser(data) {
         this._institutions = [];
         this._id = data.id;
@@ -17,25 +8,15 @@ var HAUser = (function () {
         this._email = data.email;
         this._isActive = data.isactive;
         this._role = data.role;
+        this._about = data.about;
         this._created = data.created;
         this._favourites = new HaCollection(data.favourites);
-        this._isDefault = !this._id; //TODO: not always so...
+        this._isDefault = !this._id;
         if (data.user_institutions)
             for (var _i = 0, _a = data.user_institutions; _i < _a.length; _i++) {
                 var user_institution = _a[_i];
                 this._institutions.push(new HAInstitution(user_institution.institution));
             }
-        //this._deleted = data.deleted;
-        //this.institutionid = data.institutionid;
-        //this.licensename = data.licensename;
-        //this.geoid = data.geoid;
-        //this.rolelevel = data.rolelevel;
-        //this.passwordvalidto = data.passwordvalidto;
-        //this.updatepassrequired = data.updatepassrequired;
-        //this.isactive = data.isactive;
-        ////added
-        //this.location = data.location;
-        //this.profiletext = data.profiletext;
     }
     Object.defineProperty(HAUser, "default", {
         get: function () {
@@ -57,14 +38,11 @@ var HAUser = (function () {
         configurable: true
     });
     Object.defineProperty(HAUser.prototype, "isActive", {
-        //get password(): string { return this._password; }
-        //set password(newVal: string) { this._password = newVal; }
         get: function () { return this._isActive; },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(HAUser.prototype, "firstname", {
-        //get role(): number { return this._role; }
         get: function () { return this._firstname; },
         set: function (newVal) { this._firstname = newVal; },
         enumerable: true,
@@ -128,6 +106,11 @@ var HAUser = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(HAUser.prototype, "fullnameAndAbout", {
+        get: function () { return this.fullname + (this._about ? ', ' + this._about : ''); },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(HAUser.prototype, "isWriter", {
         get: function () { return this._role >= 1; },
         enumerable: true,
@@ -145,18 +128,11 @@ var HAUser = (function () {
     });
     HAUser.prototype.canEdit = function (geo) {
         return geo.userLayer;
-        //for (var institution of this._institutions)
-        //    if (geo.institutionTags.indexOf(institution.tag) > -1)
-        //        return true;
-        //if (!this.geos)
-        //    return false;
-        //return this.geos.indexOf(geo) > -1;
     };
     HAUser.prototype.canEditCollection = function (collection) {
         if (!collection)
             return false;
-        return collection.user.id == this._id; //TODO: should check for "userLayer" as above.....
+        return collection.user.id == this._id;
     };
     return HAUser;
 }());
-//# sourceMappingURL=hauser.js.map

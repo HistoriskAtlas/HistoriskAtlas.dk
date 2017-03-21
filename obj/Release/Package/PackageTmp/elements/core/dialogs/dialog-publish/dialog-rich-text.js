@@ -54,4 +54,3 @@ var DialogRichText = (function (_super) {
     return DialogRichText;
 }(polymer.Base));
 DialogRichText.register();
-//# sourceMappingURL=dialog-rich-text.js.map

@@ -86,4 +86,3 @@ var HaGeoSearch = (function (_super) {
     return HaGeoSearch;
 }(polymer.Base));
 HaGeoSearch.register();
-//# sourceMappingURL=ha-geos-search.js.map

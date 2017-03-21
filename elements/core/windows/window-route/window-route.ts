@@ -107,8 +107,7 @@ class WindowRoute extends polymer.Base implements polymer.Element {
         geo.title = e.detail.title;
         App.map.centerAnim(geo.coord, 3000, true, true);
         //geo.zoomUntilUnclustered
-        var collection_geo = new HaCollectionGeo({});
-        collection_geo.geo = geo;
+        var collection_geo = new HaCollectionGeo({ geoid: geo.id, ordering: this.route.collection_geos[this.route.collection_geos.length - 1].ordering + HaCollectionGeo.orderingGap });
         this.push('route.collection_geos', collection_geo);
         this.route.saveNewCollectionGeo(collection_geo);
         //if (this.route.geos.length > 1) {
@@ -130,7 +129,7 @@ class WindowRoute extends polymer.Base implements polymer.Element {
     @listen('update')  //geoSortableList.update....
     geoSortableListUpdate(e: any) {
         if (e.detail) {
-            this.route.updateOrdering(e.detail.oldIndex, e.detail.newIndex); //TODO: wait for routelayer update so distance can also be saved, same in the two above.........?
+            this.route.updateOrdering(e.detail.newIndex);
         }
     }
 

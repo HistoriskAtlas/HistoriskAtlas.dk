@@ -1,7 +1,7 @@
 ﻿@component("collection-geo-list-item")
 class CollectionGeoListItem extends polymer.Base implements polymer.Element {
 
-    @property({ type: Object })
+    @property({ type: Object, notify: true })
     public collectionGeo: HaCollectionGeo;
 
     @property({ type: Boolean })

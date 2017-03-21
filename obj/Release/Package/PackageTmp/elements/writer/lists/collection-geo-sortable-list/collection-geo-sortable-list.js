@@ -12,20 +12,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var GeoSortableList = (function (_super) {
-    __extends(GeoSortableList, _super);
-    function GeoSortableList() {
+var CollectionGeoSortableList = (function (_super) {
+    __extends(CollectionGeoSortableList, _super);
+    function CollectionGeoSortableList() {
         _super.apply(this, arguments);
     }
     __decorate([
         property({ type: Array, notify: true }), 
         __metadata('design:type', Array)
-    ], GeoSortableList.prototype, "items", void 0);
-    GeoSortableList = __decorate([
-        component("geo-sortable-list"), 
+    ], CollectionGeoSortableList.prototype, "items", void 0);
+    CollectionGeoSortableList = __decorate([
+        component("collection-geo-sortable-list"), 
         __metadata('design:paramtypes', [])
-    ], GeoSortableList);
-    return GeoSortableList;
+    ], CollectionGeoSortableList);
+    return CollectionGeoSortableList;
 }(polymer.Base));
-GeoSortableList.register();
-//# sourceMappingURL=geo-sortable-list.js.map
+CollectionGeoSortableList.register();

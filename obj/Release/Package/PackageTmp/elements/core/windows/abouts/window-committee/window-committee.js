@@ -24,4 +24,3 @@ var WindowCommittee = (function (_super) {
     return WindowCommittee;
 }(polymer.Base));
 WindowCommittee.register();
-//# sourceMappingURL=window-committee.js.map

@@ -39,4 +39,3 @@ var GeoListItem = (function (_super) {
     return GeoListItem;
 }(polymer.Base));
 GeoListItem.register();
-//# sourceMappingURL=geo-list-item.js.map

@@ -24,7 +24,7 @@
         this.source = source;
     }
 
-    public addPath(loc1: ol.Coordinate, loc2: ol.Coordinate, collection: HaCollection, drawViaPoint: boolean, straight: boolean, callback: (feature: ol.Feature, distance: number) => void): ol.Feature {
+    public addPath(loc1: ol.Coordinate, loc2: ol.Coordinate, collection: HaCollection, drawViaPoint: boolean, calcRoute: boolean, callback: (feature: ol.Feature, distance: number) => void): ol.Feature {
 
         var viaPoint;
         if (drawViaPoint) {
@@ -46,7 +46,7 @@
         }
         
 
-        var cacheIndex = (loc1.toString() + 'x' + loc2.toString() + 't' + collection.type + 's' + straight).replace(/\./g, 'd').replace(/,/g, 'c');
+        var cacheIndex = (loc1.toString() + 'x' + loc2.toString() + 't' + collection.type + 'c' + calcRoute).replace(/\./g, 'd').replace(/,/g, 'c');
         if (this.cache[cacheIndex]) {
             var feature: ol.Feature = this.cache[cacheIndex];
             callback(feature, (<any>feature).distance);
@@ -54,16 +54,21 @@
             return viaPoint;
         }
 
-        straight = true;
-
-        if (straight) {
+        if (!calcRoute) {
             var geom = new (<any>ol.geom.LineString)([Common.toMapCoord(loc1), Common.toMapCoord(loc2)]);
             var feature = new ol.Feature({
                 geometry: geom
             });
 
             var length = 0;
-            //var wgs84Sphere = new ol.Sphere(6378137); TODO!!!! Compile new version of OL with this or LineString.getLength() support..................
+
+
+
+            //TODO:...................................................................................................................................................................
+
+
+
+            //var wgs84Sphere = new ol.Sphere(6378137); TODO!!!! Compile new version of OL with this or LineString.getLength() support.................. or use generic formual
             //length = wgs84Sphere.haversineDistance(loc1, loc2);
 
             this.addFeature(feature, length, collection, loc1, loc2, cacheIndex, callback);
@@ -213,11 +218,15 @@
 
 
             var coord = Common.fromMapCoord(event.coordinate);
-            var geo = new HaGeo({ id: 0, lng: coord[0], lat: coord[1] }, false, false)
-            geo.isPartOfCurrentCollection = true;
-            var collection_geo = new HaCollectionGeo({});
-            collection_geo.geo = geo;
+            //var geo = new HaGeo({ id: 0, lng: coord[0], lat: coord[1] }, false, false)
+            //geo.isPartOfCurrentCollection = true;
+            var collection_geo = new HaCollectionGeo({ ordering: Math.round((cgs[0].ordering + cgs[1].ordering) / 2), latitude: coord[1], longitude: coord[0] });
+            //collection_geo.geo = geo;
+            collection_geo.geo.isPartOfCurrentCollection = true;
             App.haCollections.splice('collection.collection_geos', index + 1, 0, collection_geo);
+
+            collection.saveNewCollectionGeo(collection_geo);
+            
 
             //this.addPath(locs[0], coord, collection, false, (feature, distance) => {
             //    collection.features.push(feature);
@@ -232,7 +241,8 @@
         if ((<any>feature).loc) { //via point
             var deltaX = event.coordinate[0] - this.oldDragCoordinate[0];
             var deltaY = event.coordinate[1] - this.oldDragCoordinate[1];
-            (<HaCollectionGeo>(<any>feature).collection_geo).geo.icon.translateCoord(deltaX, deltaY);
+            var collection_geo = <HaCollectionGeo>(<any>feature).collection_geo;
+            collection_geo.geo.icon.translateCoord(deltaX, deltaY);
             (<any>feature.getGeometry()).translate(deltaX, deltaY);
             this.oldDragCoordinate = event.coordinate
 
@@ -240,6 +250,7 @@
                 setTimeout(() => {
                     if (this.viaPointDragDirty) {
                         App.haCollections.drawRoute(collection, false);
+                        collection_geo.saveCoords();
                         this.viaPointDragDirty = false;
                     }
                 }, 1000)

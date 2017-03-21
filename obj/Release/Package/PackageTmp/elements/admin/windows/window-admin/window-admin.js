@@ -28,4 +28,3 @@ var WindowAdmin = (function (_super) {
     return WindowAdmin;
 }(polymer.Base));
 WindowAdmin.register();
-//# sourceMappingURL=window-admin.js.map

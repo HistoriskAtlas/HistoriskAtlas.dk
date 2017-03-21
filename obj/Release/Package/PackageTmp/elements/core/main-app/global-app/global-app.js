@@ -32,23 +32,6 @@ var Global = (function (_super) {
         App.map.center(this.theme.maplatitude ? [this.theme.maplongitude, this.theme.maplatitude] : [Global.defaultTheme.maplongitude, Global.defaultTheme.maplatitude], MainMap.getResolutionFromZoom(this.theme.mapzoom ? this.theme.mapzoom : Global.defaultTheme.mapzoom), false, false);
         this.map = this.theme.mapid ? App.haMaps.byId[this.theme.mapid] : HaMaps.defaultMap;
     };
-    //public showRoutes() {
-    //    App.map.showRouteLayer();
-    //    if (App.windowRoutes)
-    //        (<WindowBasic>App.windowRoutes.$.windowbasic).bringToFront();
-    //    else
-    //        Common.dom.append(<WindowRoutes>WindowRoutes.create());
-    //}
-    //public hideRoutes() {
-    //    if (App.windowRoutes) {
-    //        (<WindowBasic>App.windowRoutes.$.windowbasic).close();
-    //        App.windowRoutes = null;
-    //    }
-    //    if (App.windowRoute) {
-    //        (<WindowBasic>App.windowRoute.$.windowbasic).close();
-    //        App.windowRoute = null;
-    //    }
-    //}
     Global.prototype.setMapRotation = function (rotation) {
         this.mapRotation = rotation;
     };
@@ -111,4 +94,3 @@ var Global = (function (_super) {
     return Global;
 }(polymer.Base));
 Global.register();
-//# sourceMappingURL=global-app.js.map

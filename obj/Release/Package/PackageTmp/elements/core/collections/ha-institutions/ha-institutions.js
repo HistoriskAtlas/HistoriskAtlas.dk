@@ -18,23 +18,11 @@ var HaInstitutions = (function (_super) {
         _super.apply(this, arguments);
         this.institutions = [];
     }
-    //Needed?
-    //public byId: Array<HaTag> = []; //Needed because polymer dosnt suppert asigning to array, ie. tags[id] = tag
     HaInstitutions.prototype.ready = function () {
         this.$.ajax.url = Common.api + 'tag.json';
     };
     HaInstitutions.prototype.getAll = function () {
-        //TODO!
-        //this.parameters = {
-        //    v: 1,
-        //    sid: 
-        //}
     };
-    //public add(institution: HAInstitution) {
-    //    if (this.institutions[institution.id]) //TODO: update instead?
-    //        return;
-    //    this.set('institutions.' + institution.id, institution); //TODO: works?
-    //}
     HaInstitutions.prototype.handleResponse = function () {
         for (var _i = 0, _a = this.$.ajax.lastResponse; _i < _a.length; _i++) {
             var data = _a[_i];
@@ -55,4 +43,3 @@ var HaInstitutions = (function (_super) {
     return HaInstitutions;
 }(polymer.Base));
 HaInstitutions.register();
-//# sourceMappingURL=ha-institutions.js.map

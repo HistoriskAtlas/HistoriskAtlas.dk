@@ -18,7 +18,7 @@ var ByLine = (function (_super) {
         _super.apply(this, arguments);
     }
     ByLine.prototype.show1001User = function (institution) {
-        return institution.id == 731; //1001 institution
+        return institution.id == 731;
     };
     ByLine.prototype.showUser = function (institutions, user) {
         return institutions.length == 0 && user != null;
@@ -41,4 +41,3 @@ var ByLine = (function (_super) {
     return ByLine;
 }(polymer.Base));
 ByLine.register();
-//# sourceMappingURL=by-line.js.map

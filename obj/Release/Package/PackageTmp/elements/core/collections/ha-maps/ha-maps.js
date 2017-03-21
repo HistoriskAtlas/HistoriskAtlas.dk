@@ -28,12 +28,6 @@ var HaMaps = (function (_super) {
         var newMap;
         this.$.ajax.lastResponse.data.forEach(function (data) {
             newMap = new HaMap(data);
-            //if (newMap.id == Global.defaultTheme.mapid)
-            //    HaMaps.defaultMap = newMap;
-            //if (newMap.id == App.global.theme.mapid ? App.global.theme.mapid : Global.defaultTheme.mapid)
-            //    this.mainMap = newMap;
-            //if (newMap.id == HaMaps.initTimeWarpMapId)
-            //    this.timeWarpMap = newMap;
             newMaps.push(newMap);
             _this.byId[newMap.id] = newMap;
         });
@@ -41,7 +35,6 @@ var HaMaps = (function (_super) {
         this.mainMap = this.byId[App.global.theme.mapid ? App.global.theme.mapid : Global.defaultTheme.mapid];
         this.timeWarpMap = this.byId[HaMaps.initTimeWarpMapId];
         if (App.isDev) {
-            //newMaps.push(new HaMap({ id: 42000, name: 'Mapquest OSM', orgproductionendyear: 2016}))
             newMaps.push(new HaMap({ id: 42001, name: 'Stamen Watercolor', orgproductionendyear: 2016 }));
             newMaps.push(new HaMap({ id: 42002, name: 'CartoDB Light', orgproductionendyear: 2016 }));
             newMaps.push(new HaMap({ id: 42003, name: 'CartoDB Dark', orgproductionendyear: 2016 }));
@@ -57,7 +50,6 @@ var HaMaps = (function (_super) {
     HaMaps.prototype.updateInView = function (extent, param) {
         var _this = this;
         if (param === void 0) { param = '.inView'; }
-        //var zoom2 = App.map.getView().getZoom();
         var res = App.map.getView().getResolution();
         var w = (20037508.34 * 2) / 256;
         var zoom = Math.log(w / res) / Math.LN2;
@@ -69,7 +61,6 @@ var HaMaps = (function (_super) {
                 _this.set(prop, zoom < map.maxZ && zoom > map.minZ);
         });
     };
-    //public static initMainMapId: number = 161; //Was 51
     HaMaps.initTimeWarpMapId = 80;
     __decorate([
         property({ type: Array, notify: true }), 
@@ -90,4 +81,3 @@ var HaMaps = (function (_super) {
     return HaMaps;
 }(polymer.Base));
 HaMaps.register();
-//# sourceMappingURL=ha-maps.js.map

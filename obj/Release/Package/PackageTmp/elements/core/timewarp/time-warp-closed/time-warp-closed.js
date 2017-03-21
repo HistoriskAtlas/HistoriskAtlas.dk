@@ -42,4 +42,3 @@ var TimeWarpClosed = (function (_super) {
     return TimeWarpClosed;
 }(polymer.Base));
 TimeWarpClosed.register();
-//# sourceMappingURL=time-warp-closed.js.map

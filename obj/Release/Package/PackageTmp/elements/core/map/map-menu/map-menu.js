@@ -17,62 +17,20 @@ var MapMenu = (function (_super) {
     function MapMenu() {
         _super.apply(this, arguments);
     }
-    //@property({ type: Number, value: 0 })
-    //public mode: TimeWarpModes & number;
-    //private cssClassButton: string = this.main ? 'HAPrimColor' : 'HASecColor';
-    //private cssClassSpacer: string = 'spacer' + (this.main ? ' HAInvertedPrimColor' : ' HAInvertedSecColor');
-    //private cssClassWrapper: string = 'wrapper ' + (this.main ? 'wrapperLeft HAPrimColor' : 'wrapperRight HASecColor');
-    //ready() {
-    //    //this.raised = !this.main;
-    //    this.raised = true;
-    //}
-    //@listen("button.mouseover")
-    //buttonMouseover() {
-    //    if (this.main)
-    //        this.raised = true;
-    //}
-    //@listen("button.mouseout")
-    //buttonMouseout() {
-    //    if (this.main)
-    //        this.raised = false;
-    //}
-    //@listen("button.tap")
-    //tap() {
-    //    //$('body').append(WindowMap.create(this));
-    //}
-    //@listen("buttonSubject.tap")
-    //tapSubject() {
-    //    $('body').append(WindowSubject.create(this));
-    //}
-    //@observe("active")
-    //activeChanged(newVal: boolean) {
-    //    this.selected = newVal ? '3' : null;
-    //}
     MapMenu.prototype.buttonTap = function () {
-        //this.selected = this.active ? (this.main ? 2 : 3) : null;
-        //this.selected = this.active ? 0 : null;
         if (this.drawerOpen && App.mainMenu.showMenuMaps) {
             this.drawerOpen = false;
             return;
         }
         this.drawerOpen = true;
-        App.mainMenu.showMenuMaps = true;
+        App.mainMenu.set('showMenuMaps', true);
+        this.showMainMenu = false;
     };
-    //@observe("selected")
-    //selectedChanged(newVal: boolean) {
-    //    //this.active = this.selected == (this.main ? 2 : 3);
-    //    this.active = this.selected == 0;
-    //}
     MapMenu.prototype.cssClass = function (lift, drawerOpen) {
-        //return (main ? 'primary HAPrimColor' : 'HASecColor') + (lift ? ' lift' : '') + (drawerOpen ? ' responsive-nudge' : '') + (!main && mode == TimeWarpModes.SPLIT ? ' fix' : '');
         return 'primary ' + (lift ? ' lift' : '') + (drawerOpen ? ' responsive-nudge' : '');
     };
-    //public setMap(haMap: HaMap) {
-    //    this.set('map', haMap);
-    //}
     MapMenu.prototype.year = function (startYear, endYear) {
         return Common.years(startYear, endYear);
-        //return (startYear ? startYear + ' - ' : '') + endYear;
     };
     __decorate([
         property({ type: Object, notify: true }), 
@@ -86,6 +44,10 @@ var MapMenu = (function (_super) {
         property({ type: Boolean, notify: true }), 
         __metadata('design:type', Boolean)
     ], MapMenu.prototype, "drawerOpen", void 0);
+    __decorate([
+        property({ type: Boolean, value: true, notify: true }), 
+        __metadata('design:type', Boolean)
+    ], MapMenu.prototype, "showMainMenu", void 0);
     __decorate([
         property({ type: Boolean, value: true }), 
         __metadata('design:type', Boolean)
@@ -103,4 +65,3 @@ var MapMenu = (function (_super) {
     return MapMenu;
 }(polymer.Base));
 MapMenu.register();
-//# sourceMappingURL=map-menu.js.map

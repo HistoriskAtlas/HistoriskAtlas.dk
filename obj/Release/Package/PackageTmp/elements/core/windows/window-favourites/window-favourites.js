@@ -17,7 +17,7 @@ var WindowFavourites = (function (_super) {
     function WindowFavourites() {
         var _this = this;
         _super.call(this);
-        this.geos = App.haUsers.user.favourites.geos;
+        this.collection_geos = App.haUsers.user.favourites.collection_geos;
         App.haUsers.addEventListener('userFavouritesGeosChanged', function () { return _this.$.templateGeos.render(); });
     }
     WindowFavourites.prototype.windowBasicClosed = function () {
@@ -28,12 +28,12 @@ var WindowFavourites = (function (_super) {
     };
     WindowFavourites.prototype.geoTapRemove = function (e) {
         e.cancelBubble = true;
-        this.splice('geos', this.geos.indexOf(e.model.geo), 1);
+        this.splice('collection_geos', this.collection_geos.indexOf(e.model.geo), 1);
     };
     __decorate([
         property({ type: Array }), 
         __metadata('design:type', Array)
-    ], WindowFavourites.prototype, "geos", void 0);
+    ], WindowFavourites.prototype, "collection_geos", void 0);
     __decorate([
         listen('windowbasic.closed'), 
         __metadata('design:type', Function), 
@@ -47,4 +47,3 @@ var WindowFavourites = (function (_super) {
     return WindowFavourites;
 }(polymer.Base));
 WindowFavourites.register();
-//# sourceMappingURL=window-favourites.js.map

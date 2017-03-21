@@ -15,7 +15,7 @@ var RouteLayer = (function (_super) {
         this.cache = {};
         this.source = source;
     }
-    RouteLayer.prototype.addPath = function (loc1, loc2, collection, drawViaPoint, callback) {
+    RouteLayer.prototype.addPath = function (loc1, loc2, collection, drawViaPoint, calcRoute, callback) {
         var _this = this;
         var viaPoint;
         if (drawViaPoint) {
@@ -27,11 +27,20 @@ var RouteLayer = (function (_super) {
             this.source.addFeature(viaPoint);
             collection.features.push(viaPoint);
         }
-        var cacheIndex = (loc1.toString() + 'x' + loc2.toString() + 't' + collection.type).replace(/\./g, 'd').replace(/,/g, 'c');
+        var cacheIndex = (loc1.toString() + 'x' + loc2.toString() + 't' + collection.type + 'c' + calcRoute).replace(/\./g, 'd').replace(/,/g, 'c');
         if (this.cache[cacheIndex]) {
             var feature = this.cache[cacheIndex];
             callback(feature, feature.distance);
             this.source.addFeature(feature);
+            return viaPoint;
+        }
+        if (!calcRoute) {
+            var geom = new ol.geom.LineString([Common.toMapCoord(loc1), Common.toMapCoord(loc2)]);
+            var feature = new ol.Feature({
+                geometry: geom
+            });
+            var length = 0;
+            this.addFeature(feature, length, collection, loc1, loc2, cacheIndex, callback);
             return viaPoint;
         }
         $.getJSON("proxy/route.json?type=" + collection.type + "&loc=" + loc1[0] + "," + loc1[1] + "&loc=" + loc2[0] + "," + loc2[1], function (data) {
@@ -41,40 +50,40 @@ var RouteLayer = (function (_super) {
                 dataProjection: 'EPSG:4326',
                 featureProjection: 'EPSG:3857'
             });
-            //var coord = Common.toMapCoord(loc2);
-            //var stop = new ol.geom.Circle(coord, 100);
-            //var featureStop = new ol.Feature(stop);
-            //featureStop.setStyle(new ol.style.Style({
-            //    zIndex: 10,
-            //    fill: new ol.style.Fill({
-            //        color: [255, 0, 0, 1]
-            //    })
-            //}))
-            //this.source.addFeature(featureStop);
             var feature = new ol.Feature({
                 geometry: route
             });
-            feature.distance = data.distance;
-            feature.collection = collection;
-            feature.locs = [loc1, loc2];
-            _this.source.addFeature(feature);
-            _this.cache[cacheIndex] = feature;
-            callback(feature, data.distance);
+            _this.addFeature(feature, data.distance, collection, loc1, loc2, cacheIndex, callback);
         });
         return viaPoint;
     };
+    RouteLayer.prototype.addFeature = function (feature, distance, collection, loc1, loc2, cacheIndex, callback) {
+        feature.distance = distance;
+        feature.collection = collection;
+        feature.locs = [loc1, loc2];
+        this.source.addFeature(feature);
+        this.cache[cacheIndex] = feature;
+        callback(feature, distance);
+    };
     RouteLayer.styleFunction = function (feature, res) {
         var collection = feature.collection;
-        return [
-            new ol.style.Style({
-                stroke: new ol.style.Stroke({
-                    color: collection == App.haCollections.collection ? [153, 0, 0, collection.online ? 1 : 0.5] : [0, 93, 154, collection.online ? 1 : 0.5],
-                    width: 5
-                }), image: new ol.style.Icon({
-                    src: HaTags.viaPointMarker(collection.viaPointOrdering(feature.geo))
+        if (feature.loc)
+            return [
+                new ol.style.Style({
+                    image: new ol.style.Icon({
+                        src: HaTags.viaPointMarker(collection.viaPointOrdering(feature.collection_geo.geo))
+                    })
                 })
-            })
-        ];
+            ];
+        else
+            return [
+                new ol.style.Style({
+                    stroke: new ol.style.Stroke({
+                        color: collection == App.haCollections.collection ? [153, 0, 0, collection.online ? 1 : 0.5] : [0, 93, 154, collection.online ? 1 : 0.5],
+                        width: 5
+                    })
+                })
+            ];
     };
     RouteLayer.prototype.removeFeatures = function (features) {
         var existingFeatures = this.source.getFeatures();
@@ -88,14 +97,10 @@ var RouteLayer = (function (_super) {
         this.source.addFeatures(newFeatures);
     };
     RouteLayer.prototype.redraw = function () {
-        //TODO: implement using changed() instead? (when new ol is compiled)
         var existingFeatures = this.source.getFeatures();
         this.source.clear();
         this.source.addFeatures(existingFeatures);
     };
-    //public clear() {
-    //    this.source.clear();
-    //}
     RouteLayer.prototype.moveEvent = function (event) {
         this.oldDragCoordinate = null;
     };
@@ -105,7 +110,6 @@ var RouteLayer = (function (_super) {
             return;
         if (!App.haUsers.user.canEditCollection(collection))
             return;
-        //var viaPoint: ol.Feature;
         var first = false;
         if (!this.oldDragCoordinate) {
             first = true;
@@ -117,31 +121,34 @@ var RouteLayer = (function (_super) {
                 return;
             }
             var locs = feature.locs;
-            var geos = [];
-            for (var _i = 0, _a = collection.geos; _i < _a.length; _i++) {
-                var geo = _a[_i];
+            var cgs = [];
+            for (var _i = 0, _a = collection.collection_geos; _i < _a.length; _i++) {
+                var cg = _a[_i];
                 for (var i = 0; i < 2; i++)
-                    if (geo.icon.coord4326[0] == locs[i][0] && geo.icon.coord4326[1] == locs[i][1])
-                        geos[i] = geo;
+                    if (cg.geo.icon.coord4326[0] == locs[i][0] && cg.geo.icon.coord4326[1] == locs[i][1])
+                        cgs[i] = cg;
             }
-            var index = Math.min(collection.geos.indexOf(geos[0]), collection.geos.indexOf(geos[1]));
+            var index = Math.min(collection.collection_geos.indexOf(cgs[0]), collection.collection_geos.indexOf(cgs[1]));
             this.removeFeatures([feature]);
             collection.features.splice(collection.features.indexOf(feature), 1);
             var coord = Common.fromMapCoord(event.coordinate);
-            var geo = new HaGeo({ id: 0, lng: coord[0], lat: coord[1] }, false, false);
-            geo.isPartOfCurrentCollection = true;
-            App.haCollections.splice('collection.geos', index + 1, 0, geo);
+            var collection_geo = new HaCollectionGeo({ ordering: Math.round((cgs[0].ordering + cgs[1].ordering) / 2), latitude: coord[1], longitude: coord[0] });
+            collection_geo.geo.isPartOfCurrentCollection = true;
+            App.haCollections.splice('collection.collection_geos', index + 1, 0, collection_geo);
+            collection.saveNewCollectionGeo(collection_geo);
         }
         if (feature.loc) {
             var deltaX = event.coordinate[0] - this.oldDragCoordinate[0];
             var deltaY = event.coordinate[1] - this.oldDragCoordinate[1];
-            feature.geo.icon.translateCoord(deltaX, deltaY);
+            var collection_geo = feature.collection_geo;
+            collection_geo.geo.icon.translateCoord(deltaX, deltaY);
             feature.getGeometry().translate(deltaX, deltaY);
             this.oldDragCoordinate = event.coordinate;
             if (!this.viaPointDragDirty) {
                 setTimeout(function () {
                     if (_this.viaPointDragDirty) {
                         App.haCollections.drawRoute(collection, false);
+                        collection_geo.saveCoords();
                         _this.viaPointDragDirty = false;
                     }
                 }, 1000);
@@ -149,8 +156,6 @@ var RouteLayer = (function (_super) {
             }
         }
         App.map.preventDrag(event);
-        //return viaPoint;
     };
     return RouteLayer;
 }(ol.layer.Vector));
-//# sourceMappingURL=RouteLayer.js.map

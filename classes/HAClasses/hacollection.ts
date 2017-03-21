@@ -157,12 +157,12 @@
     public viaPointOrdering(geo: HaGeo): number {
         var i = 0;
         for (var cg of this._collection_geos) {
-            if (cg.geo == geo)
-                return i;
-            if (cg.isViaPoint)
+            if (cg.geo == geo) {
+                return cg.showOnMap ? i : -1;
+            }
+            if (cg.isViaPoint && cg.showOnMap)
                 i++;
         }
-        return 0;
     }
 
     public get viaPointCount(): number {
@@ -223,7 +223,13 @@
     }
 
     public saveNewCollectionGeo(collection_geo: HaCollectionGeo) {
-        Services.insert('collection_geo', { collectionid: this._id, geoid: collection_geo.geo ? collection_geo.geo.id : null, ordering: this._collection_geos.indexOf(collection_geo) }, (result) => { });
+        var coord = Common.fromMapCoord(collection_geo.coord);
+        var send: any = { collectionid: this._id, ordering: collection_geo.ordering, showonmap: collection_geo.showOnMap, calcroute: collection_geo.calcRoute, latitude: coord[1], longitude: coord[0] };
+        if (!collection_geo.isViaPoint)
+            send.geoid = collection_geo.geo.id;
+        Services.insert('collection_geo', send, (result) => {
+            collection_geo.id = result.data[0].collectiongeoid;
+        });
     }
 
     public saveProp(prop: string) {
@@ -237,42 +243,55 @@
 
     public removeCollectionGeo(collection_geo: HaCollectionGeo) {
         var data: any = {
-            collectionid: this._id,
-            //geoid: collectionGeo.geo ? collectionGeo.geo.id : null,
-            ordering: this._collection_geos.indexOf(collection_geo),
+            collectiongeoid: collection_geo.id,
             deletemode: 'permanent'
         };
         Services.delete('collection_geo', data, (result) => { });
     }
 
-    public updateOrdering(indexStart: number, indexEnd: number) {
+    //public updateOrdering(indexStart: number, indexEnd: number) {
 
-        if (indexStart > indexEnd) {
-            var temp = indexStart;
-            indexStart = indexEnd;
-            indexEnd = temp;
+    //    if (indexStart > indexEnd) {
+    //        var temp = indexStart;
+    //        indexStart = indexEnd;
+    //        indexEnd = temp;
+    //    }
+
+    //    for (var i = indexStart; i <= indexEnd; i++) {
+    //        //if (this._collection_geos[i].geo.id == 0)
+    //        //    continue;
+
+    //        var data: any = {
+    //            collectionid: this._id,
+    //            //geoid: this._collection_geos[i].geo.id,
+    //            ordering: this._collection_geos.indexOf(this.collection_geos[i])
+    //        };
+    //        Services.update('collection_geo', data, (result) => { });
+    //    }
+    //    //setTimeout(() => {
+    //    //    for (var i = indexStart; i <= indexEnd; i++) {
+    //    //        App.haCollections.updateIconStyle(this._geos[i]);
+    //    //    }
+    //    //}, 10)
+
+
+    //    //Services.update('collection_geo', { collectionid: this._id, geoid: this._geos[indexStart].id, ordering: indexStart }, (result) => { });
+    //    //Services.update('collection_geo', { collectionid: this._id, geoid: this._geos[indexEnd].id, ordering: indexEnd }, (result) => { });
+    //}
+
+    public updateOrdering(indexEnd: number) {
+        var collection_Geo = this.collection_geos[indexEnd];
+
+        if (indexEnd == 0) {
+            collection_Geo.ordering = Math.round(this.collection_geos[1].ordering / 2);
+        } else {
+            if (indexEnd == this.collection_geos.length - 1)
+                collection_Geo.ordering = this.collection_geos[this.collection_geos.length - 1].ordering + Math.round(HaCollectionGeo.orderingGap / 2);
+            else
+                collection_Geo.ordering = Math.round((this.collection_geos[indexEnd - 1].ordering + this.collection_geos[indexEnd + 1].ordering) / 2);
         }
 
-        for (var i = indexStart; i <= indexEnd; i++) {
-            //if (this._collection_geos[i].geo.id == 0)
-            //    continue;
-
-            var data: any = {
-                collectionid: this._id,
-                //geoid: this._collection_geos[i].geo.id,
-                ordering: this._collection_geos.indexOf(this.collection_geos[i])
-            };
-            Services.update('collection_geo', data, (result) => { });
-        }
-        //setTimeout(() => {
-        //    for (var i = indexStart; i <= indexEnd; i++) {
-        //        App.haCollections.updateIconStyle(this._geos[i]);
-        //    }
-        //}, 10)
-
-
-        //Services.update('collection_geo', { collectionid: this._id, geoid: this._geos[indexStart].id, ordering: indexStart }, (result) => { });
-        //Services.update('collection_geo', { collectionid: this._id, geoid: this._geos[indexEnd].id, ordering: indexEnd }, (result) => { });
+        Services.update('collection_geo', { id: collection_Geo.id, ordering: collection_Geo.ordering }, (result) => { });
     }
 
     public showOnMap() {

@@ -39,12 +39,9 @@ var PanelInstitutionAdmin = (function (_super) {
         });
     };
     PanelInstitutionAdmin.prototype.updateInstitutions = function (newList) {
-        //this.set('institutions', (newList ? newList : this.institutions).sort(this.compare));
         this.$.admin.sort(null, newList);
     };
     PanelInstitutionAdmin.prototype.itemTap = function (e) {
-        //this.$.selector.select(e.model.item);
-        //this.getInstitution();
         this.$.admin.select(e.model.item);
     };
     PanelInstitutionAdmin.prototype.getInstitution = function () {
@@ -176,4 +173,3 @@ var PanelInstitutionAdmin = (function (_super) {
     return PanelInstitutionAdmin;
 }(polymer.Base));
 PanelInstitutionAdmin.register();
-//# sourceMappingURL=panel-institution-admin.js.map

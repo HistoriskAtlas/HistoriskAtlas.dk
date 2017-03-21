@@ -83,16 +83,22 @@
                 </div>
 
                 <template is="dom-if" if="[[editing]]">
-                    <list-auto-suggest id="geoAutosuggest" class="geo-list" items="{{route.geos}}" autosuggest-service="geo" autosuggest-schema="[[getAutosuggestSchema(route.geos,route.geos.length)]]" name-path="title" suggest-name-path="title">
+                    <list-auto-suggest id="geoAutosuggest" class="geo-list" items="{{route.collection_geos}}" autosuggest-service="geo" autosuggest-schema="[[getAutosuggestSchema(route.collection_geos,route.collection_geos.length)]]" name-path="title" suggest-name-path="title">
                         <div class="list">
-                            <geo-sortable-list id="geoSortableList" items="{{route.geos}}" editing="[[editing]]"></geo-sortable-list>
+                            <collection-geo-sortable-list id="geoSortableList" items="{{route.collection_geos}}" editing></collection-geo-sortable-list>
                         </div>
                         <paper-fab icon="add" mini class="HAPrimColor add-button"></paper-fab>
                         <paper-fab icon="close" mini class="HAPrimColor remove-button"></paper-fab>
+                        <!--<paper-menu-button id="paperMenuButtonGeoMenu" horizontal-align="right">
+                            <paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>
+                            <div class="dropdown-content">
+                                <menu-item>Slet</menu-item>
+                            </div>
+                        </paper-menu-button>-->
                     </list-auto-suggest>
                 </template>
                 <template is="dom-if" if="[[!editing]]">
-                    <geo-list geos="[[route.geos]]" class="geo-list"></geo-list>
+                    <collection-geo-list collection-geos="[[route.collection_geos]]" class="geo-list"></collection-geo-list>
                 </template>
 
                 <horizontal-tag-list title="EMNER" menu="Subject" tags="[[subjects]]" editing="[[editing]]" tags-service="[[tagsService()]]"></horizontal-tag-list>

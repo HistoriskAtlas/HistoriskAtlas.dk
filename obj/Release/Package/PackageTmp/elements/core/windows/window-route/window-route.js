@@ -22,7 +22,6 @@ var WindowRoute = (function (_super) {
             this.route.saveProp('distance');
             App.haCollections.deselect(this.route);
         }
-        //App.map.routeLayer.clear();
     };
     WindowRoute.prototype.renameTap = function () {
         var _this = this;
@@ -50,33 +49,11 @@ var WindowRoute = (function (_super) {
         App.haCollections.deleteRoute(route);
         this.$.windowbasic.close();
     };
-    //@observe('route')
-    //routeChanged(val: HaCollection) {
-    //    App.map.showRouteLayer()
-    //    //this.updateRouteLayer();
-    //}
-    //public setRoute(route: HaCollection) {
-    //    this.route = route;
-    //    App.map.routeLayer.clear();
-    //    for (var i = 1; i < route.geos.length; i++)
-    //        App.map.routeLayer.addPath(route.geos[i].icon.coord4326, route.geos[i - 1].icon.coord4326);
-    //}
-    //public addGeo(geo: HaGeo) {
-    //    this.push('route.geos', geo);
-    //    this.route.saveNewGeo(geo)
-    //    if (this.route.geos.length > 1) {
-    //        var lastGeo: HaGeo = this.route.geos[this.route.geos.length - 2];
-    //        App.map.routeLayer.addPath(geo.icon.coord4326, lastGeo.icon.coord4326);
-    //    }
-    //}
-    //geoTap(e: any) {
-    //    Common.dom.append(WindowGeo.create(<HaGeo>e.model.geo));
-    //}
-    WindowRoute.prototype.getAutosuggestSchema = function (geos) {
+    WindowRoute.prototype.getAutosuggestSchema = function (collection_geos) {
         var existingIds = [];
-        for (var _i = 0, geos_1 = geos; _i < geos_1.length; _i++) {
-            var geo = geos_1[_i];
-            existingIds.push(geo.id);
+        for (var _i = 0, collection_geos_1 = collection_geos; _i < collection_geos_1.length; _i++) {
+            var cg = collection_geos_1[_i];
+            existingIds.push(cg.geo.id);
         }
         return '{geo:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},title:{like:$input}},fields:[id,title]}}';
     };
@@ -87,53 +64,26 @@ var WindowRoute = (function (_super) {
         var geo = App.haGeos.geos[e.detail.id];
         geo.title = e.detail.title;
         App.map.centerAnim(geo.coord, 3000, true, true);
-        //geo.zoomUntilUnclustered
-        this.push('route.geos', geo);
-        this.route.saveNewGeo(geo);
-        //if (this.route.geos.length > 1) {
-        //    var lastGeo: HaGeo = this.route.geos[this.route.geos.length - 2];
-        //    App.map.routeLayer.addPath(geo.icon.coord4326, lastGeo.icon.coord4326, (distance) => {
-        //        this.route.distance += distance;
-        //    });
-        //}
+        var collection_geo = new HaCollectionGeo({ geoid: geo.id, ordering: this.route.collection_geos[this.route.collection_geos.length - 1].ordering + HaCollectionGeo.orderingGap });
+        this.push('route.collection_geos', collection_geo);
+        this.route.saveNewCollectionGeo(collection_geo);
     };
     WindowRoute.prototype.geoRemoved = function (e) {
-        var geo = e.detail; //App.haGeos.geos[e.detail.id];
-        if (geo.id)
-            this.route.removeGeo(geo);
-        this.splice('route.geos', this.route.geos.indexOf(geo), 1);
-        //this.updateRouteLayer();
+        var collection_geo = e.detail;
+        this.route.removeCollectionGeo(collection_geo);
+        this.splice('route.collection_geos', this.route.collection_geos.indexOf(collection_geo), 1);
     };
     WindowRoute.prototype.geoSortableListUpdate = function (e) {
         if (e.detail) {
-            this.route.updateOrdering(e.detail.oldIndex, e.detail.newIndex); //TODO: wait for routelayer update so distance can also be saved, same in the two above.........?
+            this.route.updateOrdering(e.detail.newIndex);
         }
     };
-    //@observe('route.geos.splices')
-    //routeGeosSplices(changeRecord: ChangeRecord<HaGeo>) {
-    //    if (!changeRecord)
-    //        return;
-    //    for (var indexSplice of changeRecord.indexSplices) {
-    //        for (var geo of indexSplice.removed)
-    //            this.route.removeGeo(geo);
-    //        for (var i = indexSplice.index; i < indexSplice.index + indexSplice.addedCount; i++)
-    //            this.route.saveNewGeo(this.route.geos[i]);
-    //        if (indexSplice.addedCount > 0)
-    //            this.route.updateOrdering();
-    //    }
-    //}
     WindowRoute.prototype.formatDistance = function (distance) {
         return HaCollection.formatDistance(distance);
     };
-    //public formatType(type: number): string {
-    //    return HaCollection.types[type];
-    //}
     WindowRoute.prototype.iconType = function (type) {
         return HaCollection.iconTypes[type];
     };
-    //public types(): Array<string> {
-    //    return HaCollection.types;
-    //}
     WindowRoute.prototype.iconTypes = function () {
         return HaCollection.iconTypes;
     };
@@ -218,4 +168,3 @@ var WindowRoute = (function (_super) {
     return WindowRoute;
 }(polymer.Base));
 WindowRoute.register();
-//# sourceMappingURL=window-route.js.map
