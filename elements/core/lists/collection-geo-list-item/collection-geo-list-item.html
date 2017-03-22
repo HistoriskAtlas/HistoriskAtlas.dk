@@ -3,8 +3,8 @@
         .listitem {
             display: flex;
             align-items: center;
-            border-bottom: solid 1px;
-            border-bottom-color: #ececec;
+            border-top: solid 1px;
+            border-top-color: #ececec;
             font-size: 13px;
             height: 32px;
             cursor: pointer;
@@ -49,7 +49,7 @@
             flex-shrink: 0;
         }
         .content {
-            margin: 0px 0px 10px 30px;
+            margin: 0px 0px 10px 25px;
         }
         .content-top {
             display: flex;
@@ -60,8 +60,16 @@
             font-size: 13px;
         }
         .content-top > paper-button > span {
-            margin-right: 5px;
+            margin-right: 4px;
             margin-bottom: 3px;
+            white-space: nowrap;
+            color: grey;
+        }
+        .content-top > paper-button[active] > span {
+            margin-right: 4px;
+            margin-bottom: 3px;
+            white-space: nowrap;
+            color: var(--primary-color);
         }
         .content-top > paper-button > paper-toggle-button {
             pointer-events: none;
@@ -77,6 +85,8 @@
         }
     </style>
     <template>
+        <ha-content content="{{collectionGeo.content}}"></ha-content>
+
         <div class="listitem light-grey-border">
             <paper-icon-button icon="arrow-drop-down" class="arrow" toggles active="{{collectionGeo.uiOpen}}" noink></paper-icon-button>
             <span class$="icon via-point-[[collectionGeo.isViaPoint]]"><img src="[[collectionGeo.geo.icon.marker]]"></span>
@@ -99,7 +109,14 @@
                         <span>Synligt punkt</span>
                         <paper-toggle-button noink checked="[[collectionGeo.showOnMap]]"></paper-toggle-button>
                     </paper-button>
+                    <paper-button toggles noink active="{{collectionGeo.showText}}">
+                        <span>Tekst</span>
+                        <paper-toggle-button noink checked="[[collectionGeo.showText]]"></paper-toggle-button>
+                    </paper-button>
                 </div>
+            </template>
+            <template is="dom-if" if="[[collectionGeo.content]]">
+                <content-viewer content="{{collectionGeo.content}}" editing="[[closeable]]"></content-viewer>
             </template>
         </div>
     </template>

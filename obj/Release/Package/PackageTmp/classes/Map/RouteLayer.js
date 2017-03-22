@@ -39,8 +39,7 @@ var RouteLayer = (function (_super) {
             var feature = new ol.Feature({
                 geometry: geom
             });
-            var length = 0;
-            this.addFeature(feature, length, collection, loc1, loc2, cacheIndex, callback);
+            this.addFeature(feature, Common.sphericalDistance(loc1, loc2), collection, loc1, loc2, cacheIndex, callback);
             return viaPoint;
         }
         $.getJSON("proxy/route.json?type=" + collection.type + "&loc=" + loc1[0] + "," + loc1[1] + "&loc=" + loc2[0] + "," + loc2[1], function (data) {

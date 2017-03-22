@@ -5,16 +5,22 @@
     private _calcRoute: boolean;
     private _showOnMap: boolean;
     private _ordering: number;
+    private _contentID: number;
+    private _content: HaContent;
 
     public static orderingGap = 21000000;
 
     public uiOpen: boolean = false;
+    public showText: boolean;
 
     constructor(data: any) {
         this._id = data.id;
         this._ordering = data.ordering;
+        this._contentID = data.contentid;
         this._calcRoute = data.calcroute == null ? true : data.calcroute;
         this._showOnMap = data.showonmap == null ? true : data.showonmap;
+
+        this.showText = !!this._contentID;
 
         if (data.geoid)
             this._geo = App.haGeos.geos[data.geoid];
@@ -63,6 +69,20 @@
     }
     set ordering(val: number) {
         this._ordering = val;
+    }
+
+    get contentID(): number {
+        return this._contentID;
+    }
+    set contentID(val: number) {
+        this._contentID = val;
+    }
+
+    get content(): HaContent {
+        return this._content;
+    }
+    set content(val: HaContent) {
+        this._content = val;
     }
 
     public saveCoords() {

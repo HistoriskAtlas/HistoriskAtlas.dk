@@ -115,6 +115,16 @@ var HaCollections = (function (_super) {
                 }
             }
         });
+        Services.get('content', { count: 'all', schema: ContentViewer.contentSchema, collection_geos: '[{collection:[{collectionid:' + collection.id + '}]}]' }, function (result) {
+            for (var _i = 0, _a = result.data; _i < _a.length; _i++) {
+                var data = _a[_i];
+                for (var _b = 0, _c = collection.collection_geos; _b < _c.length; _b++) {
+                    var cg = _c[_b];
+                    if (cg.contentID == data.id)
+                        _this.set('collection.collection_geos.' + _this.collection.collection_geos.indexOf(cg) + '.content', new HaContent(data));
+                }
+            }
+        });
     };
     HaCollections.prototype.deselect = function (collection) {
         this.$.selector.deselect(collection);
@@ -202,12 +212,14 @@ var HaCollections = (function (_super) {
         }, 100);
     };
     HaCollections.prototype.collectionPropChanged = function (changeRecord) {
+        var _this = this;
         if (!this.collection)
             return;
         var path = changeRecord.path.split('.');
         var prop = path[path.length - 1];
         if (path.length == 4 && path[1] == 'collection_geos') {
-            var collection_geo = this.get(path[0] + '.' + path[1] + '.' + path[2]);
+            var cgPath = path[0] + '.' + path[1] + '.' + path[2];
+            var collection_geo = this.get(cgPath);
             if (prop == 'calcRoute') {
                 this.drawRoute();
                 Services.update('collection_geo', { id: collection_geo.id, calcroute: collection_geo.calcRoute }, function () { });
@@ -216,6 +228,21 @@ var HaCollections = (function (_super) {
                 this.drawRoute();
                 this.updateMarkers();
                 Services.update('collection_geo', { id: collection_geo.id, showonmap: collection_geo.showOnMap }, function () { });
+            }
+            if (prop == 'showText') {
+                if (this.get(changeRecord.path)) {
+                    if (!collection_geo.content) {
+                        var content = new HaContent({ contenttypeid: 0, ordering: 0, texts: [{ headline: '', text1: '' }] });
+                        this.set(cgPath + '.content', content);
+                        content.insert(function () {
+                            Services.update('collection_geo', { id: collection_geo.id, contentid: content.id });
+                            _this.set(cgPath + '.contentID', content.id);
+                        });
+                    }
+                }
+                else {
+                    $(this).append(DialogConfirm.create('delete-cg-text', 'Er du sikker på at du vil slette denne tekst?', cgPath));
+                }
             }
         }
         if (path.length != 2)
@@ -226,6 +253,17 @@ var HaCollections = (function (_super) {
             App.map.routeLayer.redraw();
         if (prop == 'title' || prop == 'online' || prop == 'type')
             this.collection.saveProp(prop);
+    };
+    HaCollections.prototype.deleteCGTextConfirmed = function (e) {
+        var _this = this;
+        var collection_geo = this.get(e.detail);
+        Services.delete('content', { id: collection_geo.id, contentid: collection_geo.content.id }, function () {
+            _this.set(e.detail + '.content', null);
+            _this.set(e.detail + '.contentID', null);
+        });
+    };
+    HaCollections.prototype.deleteCGTextDismissed = function (e) {
+        this.set(e.detail + '.showText', true);
     };
     HaCollections.prototype.routeGeosSplices = function (changeRecord) {
         if (!changeRecord)
@@ -301,7 +339,7 @@ var HaCollections = (function (_super) {
         App.map.routeLayer.removeFeatures(collection.features);
     };
     HaCollections.awitingGeos = [];
-    HaCollections.collectionGeosAPISchema = '{collection_geos:[id,geoid,ordering,showonmap,calcroute,longitude,latitude]}';
+    HaCollections.collectionGeosAPISchema = '{collection_geos:[id,geoid,ordering,showonmap,calcroute,contentid,longitude,latitude]}';
     __decorate([
         property({ type: Array, notify: true }), 
         __metadata('design:type', Array)
@@ -338,6 +376,18 @@ var HaCollections = (function (_super) {
         __metadata('design:paramtypes', [Object]), 
         __metadata('design:returntype', void 0)
     ], HaCollections.prototype, "collectionPropChanged", null);
+    __decorate([
+        listen('delete-cg-text-confirmed'), 
+        __metadata('design:type', Function), 
+        __metadata('design:paramtypes', [Object]), 
+        __metadata('design:returntype', void 0)
+    ], HaCollections.prototype, "deleteCGTextConfirmed", null);
+    __decorate([
+        listen('delete-cg-text-dismissed'), 
+        __metadata('design:type', Function), 
+        __metadata('design:paramtypes', [Object]), 
+        __metadata('design:returntype', void 0)
+    ], HaCollections.prototype, "deleteCGTextDismissed", null);
     __decorate([
         observe('collection.collection_geos.splices'), 
         __metadata('design:type', Function), 

@@ -3,8 +3,10 @@ var HaCollectionGeo = (function () {
         this.uiOpen = false;
         this._id = data.id;
         this._ordering = data.ordering;
+        this._contentID = data.contentid;
         this._calcRoute = data.calcroute == null ? true : data.calcroute;
         this._showOnMap = data.showonmap == null ? true : data.showonmap;
+        this.showText = !!this._contentID;
         if (data.geoid)
             this._geo = App.haGeos.geos[data.geoid];
         else
@@ -70,6 +72,26 @@ var HaCollectionGeo = (function () {
         },
         set: function (val) {
             this._ordering = val;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(HaCollectionGeo.prototype, "contentID", {
+        get: function () {
+            return this._contentID;
+        },
+        set: function (val) {
+            this._contentID = val;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(HaCollectionGeo.prototype, "content", {
+        get: function () {
+            return this._content;
+        },
+        set: function (val) {
+            this._content = val;
         },
         enumerable: true,
         configurable: true

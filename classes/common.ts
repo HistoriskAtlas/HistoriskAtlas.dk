@@ -65,6 +65,17 @@
         return ol.proj.transform(coord, 'EPSG:3857', 'EPSG:4326');
     }
 
+    public static sphericalDistance(coord1: ol.Coordinate, coord2: ol.Coordinate) {
+
+        var R = 6371000; // m
+        var dLon = this.toRad(coord2[0] - coord1[0]), //lon2 - lon1
+            lat1 = this.toRad(coord1[1]),
+            lat2 = this.toRad(coord2[1]);
+
+        return Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(dLon)) * R;
+    }
+    private static toRad(x): number { return x * Math.PI / 180; }
+
     public static years(start: number, end: number): string {
         return (start ? start + ' - ' : '') + (end == 2050 ? 'nu' : end);
     }

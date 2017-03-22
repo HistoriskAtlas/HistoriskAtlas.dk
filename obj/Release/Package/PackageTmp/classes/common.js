@@ -45,6 +45,12 @@ var Common = (function () {
     Common.fromMapCoord = function (coord) {
         return ol.proj.transform(coord, 'EPSG:3857', 'EPSG:4326');
     };
+    Common.sphericalDistance = function (coord1, coord2) {
+        var R = 6371000;
+        var dLon = this.toRad(coord2[0] - coord1[0]), lat1 = this.toRad(coord1[1]), lat2 = this.toRad(coord2[1]);
+        return Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(dLon)) * R;
+    };
+    Common.toRad = function (x) { return x * Math.PI / 180; };
     Common.years = function (start, end) {
         return (start ? start + ' - ' : '') + (end == 2050 ? 'nu' : end);
     };

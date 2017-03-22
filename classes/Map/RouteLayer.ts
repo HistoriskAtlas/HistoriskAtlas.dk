@@ -60,18 +60,7 @@
                 geometry: geom
             });
 
-            var length = 0;
-
-
-
-            //TODO:...................................................................................................................................................................
-
-
-
-            //var wgs84Sphere = new ol.Sphere(6378137); TODO!!!! Compile new version of OL with this or LineString.getLength() support.................. or use generic formual
-            //length = wgs84Sphere.haversineDistance(loc1, loc2);
-
-            this.addFeature(feature, length, collection, loc1, loc2, cacheIndex, callback);
+            this.addFeature(feature, Common.sphericalDistance(loc1, loc2), collection, loc1, loc2, cacheIndex, callback);
             return viaPoint;
         }
 

@@ -15,7 +15,7 @@ class HaCollections extends Tags implements polymer.Element {
 
     public allCollectionsFetched: boolean = false;
     private static awitingGeos: Array<() => any> = [];
-    private static collectionGeosAPISchema = '{collection_geos:[id,geoid,ordering,showonmap,calcroute,longitude,latitude]}';
+    private static collectionGeosAPISchema = '{collection_geos:[id,geoid,ordering,showonmap,calcroute,contentid,longitude,latitude]}';
 
     public getPublishedCollections() {
         if (this.allCollectionsFetched)
@@ -140,11 +140,18 @@ class HaCollections extends Tags implements polymer.Element {
                 for (var cg of collection.collection_geos)
                     if (cg.geo.id == data.geoid)
                         this.set('collection.collection_geos.' + this.collection.collection_geos.indexOf(cg) + '.geo.title', data.title);
+
             //TODO: needed?
             //for (var geo of collection.geos)
             //    geo.isPartOfCurrentCollection = true;
         })
 
+        Services.get('content', { count: 'all', schema: ContentViewer.contentSchema, collection_geos: '[{collection:[{collectionid:' + collection.id + '}]}]' }, (result) => {
+            for (var data of result.data)
+                for (var cg of collection.collection_geos)
+                    if (cg.contentID == data.id)
+                        this.set('collection.collection_geos.' + this.collection.collection_geos.indexOf(cg) + '.content', new HaContent(data));
+        })
     }
 
     public deselect(collection: HaCollection) {
@@ -279,7 +286,8 @@ class HaCollections extends Tags implements polymer.Element {
         var prop = path[path.length - 1];
 
         if (path.length == 4 && path[1] == 'collection_geos') {
-            var collection_geo: HaCollectionGeo = this.get(path[0] + '.' + path[1] + '.' + path[2]);
+            var cgPath = path[0] + '.' + path[1] + '.' + path[2];
+            var collection_geo: HaCollectionGeo = this.get(cgPath);
             if (prop == 'calcRoute') { 
                 this.drawRoute();
                 Services.update('collection_geo', { id: collection_geo.id, calcroute: collection_geo.calcRoute }, () => { });
@@ -288,6 +296,20 @@ class HaCollections extends Tags implements polymer.Element {
                 this.drawRoute();
                 this.updateMarkers();
                 Services.update('collection_geo', { id: collection_geo.id, showonmap: collection_geo.showOnMap }, () => { });
+            }
+            if (prop == 'showText') {
+                if (this.get(changeRecord.path)) {
+                    if (!collection_geo.content) {
+                        var content = new HaContent({ contenttypeid: 0, ordering: 0, texts: [{ headline: '', text1: '' }] });
+                        this.set(cgPath + '.content', content);
+                        content.insert(() => {
+                            Services.update('collection_geo', { id: collection_geo.id, contentid: content.id });
+                            this.set(cgPath + '.contentID', content.id);
+                        });
+                    }
+                } else {
+                    $(this).append(DialogConfirm.create('delete-cg-text', 'Er du sikker på at du vil slette denne tekst?', cgPath));
+                }
             }
         }
 
@@ -301,6 +323,22 @@ class HaCollections extends Tags implements polymer.Element {
         if (prop == 'title' || prop == 'online' || prop == 'type')
             this.collection.saveProp(prop);
     }
+
+    @listen('delete-cg-text-confirmed')
+    deleteCGTextConfirmed(e) {
+        var collection_geo: HaCollectionGeo = this.get(e.detail);
+        Services.delete('content', { id: collection_geo.id, contentid: collection_geo.content.id }, () => {
+            this.set(e.detail + '.content', null);
+            this.set(e.detail + '.contentID', null);
+        });
+
+    }
+
+    @listen('delete-cg-text-dismissed')
+    deleteCGTextDismissed(e) {
+        this.set(e.detail + '.showText', true);
+    }
+    
 
     @observe('collection.collection_geos.splices')
     routeGeosSplices(changeRecord: ChangeRecord<HaCollectionGeo>) {
