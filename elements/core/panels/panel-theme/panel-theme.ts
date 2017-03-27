@@ -22,15 +22,24 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     @property({ type: Boolean })
     public show: boolean;
 
+    @property({ type: Boolean })
+    public isDevOrBeta: boolean;
+
     ready() {
+        this.isDevOrBeta = Common.isDevOrBeta;
+
         HaTags.loadedCallbacks.push(() => this.themeChanged());
 
-        Services.get('theme', {
+        var send: any = {
             count: '*',
             schema: '{theme:[name]}',
             order: 'name'
-        }, (result) => {
+        }
 
+        if (!Common.isDevOrBeta)
+            send.id = '1001'
+
+        Services.get('theme', send, (result) => {
             if (this.theme.id != 'default') {
                 this.showThemeMenu = false;
                 for (var theme of result.data)

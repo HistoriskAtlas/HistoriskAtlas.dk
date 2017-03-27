@@ -67,7 +67,7 @@
 
                     <template is="dom-if" if="[[isHoD2017(item)]]">
                         <div style="margin: 10px 0px 20px 30px; font-size: 13px;">Opret dit eget turforslag</div>
-                        <div style="margin: 10px 0px 160px 30px; font-size: 13px;" on-tap="aboutHoD2017Tap">Om Historier om Danmark</div>
+                        <div style="margin: 10px 0px 180px 30px; font-size: 13px;" on-tap="aboutHoD2017Tap">Om Historier om Danmark</div>
                     </template>
 
                     <template is="dom-if" if="[[is1001(item)]]">
@@ -76,6 +76,9 @@
 
                 </main-menu-item>
             </template>
+            <div hidden$="[[!showThemeMenu]]" style="margin-top: 40px; font-style: italic; text-align: center;">
+                Flere temaer på vej...
+            </div>
         </div>
     </template>
 </dom-module>

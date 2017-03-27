@@ -119,8 +119,6 @@ class TimeWarpButton extends polymer.Base implements polymer.Element {
         if (this._allTimeWarpButtons)
             return this._allTimeWarpButtons;
 
-        var test = document.querySelector('time-warp-shape-button');
-
         if (!document.querySelector('time-warp-shape-button'))
             return null;
 

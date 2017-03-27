@@ -44,18 +44,23 @@ class MitAtlasButton extends polymer.Base implements polymer.Element {
     }
 
     profileTap() {
-        $(this).append(WindowProfile.create());
+        //$(this).append(WindowProfile.create());
+        Common.dom.append(WindowProfile.create());
     }
 
     newsTap() {
-        $(this).append(WindowUserNews.create());
+        //$(this).append(WindowUserNews.create());
+        Common.dom.append(WindowUserNews.create());
     }
 
     adminTap() {
-        $(this).append(WindowAdmin.create());
+        //$(this).append(WindowAdmin.create());
+        Common.dom.append(WindowAdmin.create());
     }
     editorialTap() {
-        $(this).append(WindowEditorial.create());
+        //$(this).append(WindowEditorial.create());
+        Common.dom.append(WindowEditorial.create());
+
     }
 
     logOutTap() {

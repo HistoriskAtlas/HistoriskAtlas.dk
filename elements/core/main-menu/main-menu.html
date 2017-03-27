@@ -78,7 +78,7 @@
         <main-menu-item show="{{showMenuRoutes}}" show-main-menu="{{showMainMenu}}" title="Turforslag" icon="ha:route" hidden$="[[!isDevOrBeta]]">
             <panel-route id="panelRoute" class="panel" collections="{{collections}}" collection="{{collection}}" drawer-open="{{drawerOpen}}" show="[[showMenuRoutes]]" user="[[user]]"></panel-route>
         </main-menu-item>
-        <main-menu-item show="{{showMenuThemes}}" show-main-menu="{{showMainMenu}}" title="Temaer" icon="ha:map" hidden$="[[!isDevOrBeta]]">
+        <main-menu-item show="{{showMenuThemes}}" show-main-menu="{{showMainMenu}}" title="Temaer" icon="ha:map">
             <panel-theme id="panelTheme" class="panel" theme="{{theme}}" collections="{{collections}}" collection="{{collection}}" show="[[showMenuThemes]]"></panel-theme>
         </main-menu-item>
 
@@ -87,8 +87,8 @@
         </main-menu-item>-->
         <iron-collapse opened="[[showMainMenu]]">
 
+            <paper-item class="promo" on-tap="tap1001"><div class="icon icon-1001">1001</div>1001 fortællinger om Danmark</paper-item>
             <template is="dom-if" if="[[isDevOrBeta]]">
-                <paper-item class="promo" on-tap="tap1001"><div class="icon icon-1001">1001</div>1001 fortællinger om Danmark</paper-item>
                 <paper-item class="promo" on-tap="tapHOD2017"><div class="icon icon-hod2017">H o D</div>Historier om Danmark 2017</paper-item>
             </template>
 

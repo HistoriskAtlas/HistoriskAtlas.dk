@@ -13,11 +13,13 @@ class TimeWarpOpacityButton extends polymer.Base implements polymer.Element {
 
     @listen("button.buttonOnlyTap")
     buttonOnlyTap() {
-        if (this.dom.css('height') == this.closedHeight)
-        {
+        if (this.dom.css('height') == this.closedHeight) {
             this.dom.css('height', this.openHeight);
-            setTimeout(() => $(this.$.slider).focus(), 400); //Tocuh fix
-        }
+            $(document).one('mousedown touchstart', (e) => this.blurSimulator(e));
+
+            //setTimeout(() => $(this.$.slider).focus(), 400); //Tocuh fix
+        } else
+            this.close();
     }
 
     @observe("value")
@@ -31,9 +33,9 @@ class TimeWarpOpacityButton extends polymer.Base implements polymer.Element {
         this.update();
         this.dom.css('height', this.closedHeight);
 
-        $(this.$.slider).blur(() => {
-            this.dom.css('height', this.closedHeight);
-        })
+        //$(this.$.slider).blur(() => {
+        //    this.dom.css('height', this.closedHeight);
+        //})
 
         this.$.slider._trackX = function (e) {
             var slider = this;
@@ -99,6 +101,17 @@ class TimeWarpOpacityButton extends polymer.Base implements polymer.Element {
 
     public hide() {
         (<TimeWarpButton>this.$.button).hide();
+    }
+
+    private close() {
+        this.dom.css('height', this.closedHeight);
+    }
+
+    private blurSimulator(e: JQueryEventObject) {
+        if (!$(event.target).closest(this).length)
+            this.close();
+        else
+            $(document).one('mousedown touchstart', (e) => this.blurSimulator(e));
     }
 }
 
