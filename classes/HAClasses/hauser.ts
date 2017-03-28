@@ -107,6 +107,12 @@
     get isEditor(): boolean { return this._role >= 2; }
     get isAdmin(): boolean { return this._role >= 4; }
 
+    get canAccessHoD2017(): boolean {
+        if (this.isAdmin)
+            return true;
+        return this.currentInstitution ? this.currentInstitution.id == 233 : false; //Historier om Danmark
+    }
+
     public canEdit(geo: HaGeo): boolean {
         return geo.userLayer;
         //for (var institution of this._institutions)

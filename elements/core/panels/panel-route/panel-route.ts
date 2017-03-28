@@ -19,19 +19,23 @@ class PanelRoute extends polymer.Base implements polymer.Element {
     @property({ type: Object })
     public user: HAUser;
 
+    @property({ type: Boolean })
+    public userCreators: boolean;
+
+    @property({ type: Boolean })
+    public profCreators: boolean;
+
     private showingUserRouteTopLevel: boolean = false;
 
     constructor() {
         super();
         this.topLevels = [
-            //{ name: 'Mine ruter', shown: false, selected: false, filter: (collection: HaCollection) => collection.userid == App.haUsers.user.id },
-            //{ name: 'spacer', shown: false, selected: false, filter: null },
-            { name: 'I bil', shown: false, selected: false, filter: (collection: HaCollection) => collection.type == 0 },
-            { name: 'På cykel', shown: false, selected: false, filter: (collection: HaCollection) => collection.type == 1 },
-            { name: 'Til fods', shown: false, selected: false, filter: (collection: HaCollection) => collection.type == 2 },
-            { name: 'spacer', shown: false, selected: false, filter: null },
-            { name: 'Under 10 km', shown: false, selected: false, filter: (collection: HaCollection) => collection.distance < 10000 },
-            { name: 'Over 10 km', shown: false, selected: false, filter: (collection: HaCollection) => collection.distance >= 10000 }
+            { name: 'I bil', shown: false, selected: false, filter: (collection: HaCollection) => collection.type == 0, ignoreCreators: false },
+            { name: 'På cykel', shown: false, selected: false, filter: (collection: HaCollection) => collection.type == 1, ignoreCreators: false },
+            { name: 'Til fods', shown: false, selected: false, filter: (collection: HaCollection) => collection.type == 2, ignoreCreators: false },
+            { name: 'spacer', shown: false, selected: false, filter: null, ignoreCreators: false },
+            { name: 'Under 10 km', shown: false, selected: false, filter: (collection: HaCollection) => collection.distance < 10000, ignoreCreators: false },
+            { name: 'Over 10 km', shown: false, selected: false, filter: (collection: HaCollection) => collection.distance >= 10000, ignoreCreators: false }
         ]
     }
 
@@ -44,8 +48,8 @@ class PanelRoute extends polymer.Base implements polymer.Element {
     @observe('user')
     userChanged() {
         if (!this.user.isDefault && !this.showingUserRouteTopLevel) {
-            this.unshift('topLevels', { name: 'spacer', shown: false, selected: false, filter: null })
-            this.unshift('topLevels', { name: 'Mine turforslag', shown: false, selected: false, filter: (collection: HaCollection) => collection.user.id == App.haUsers.user.id })
+            this.unshift('topLevels', { name: 'spacer', shown: false, selected: false, filter: null, ignoreCreators: false })
+            this.unshift('topLevels', { name: 'Mine turforslag', shown: false, selected: false, filter: (collection: HaCollection) => collection.user.id == App.haUsers.user.id, ignoreCreators: true })
             this.showingUserRouteTopLevel = true;
         }
         if (this.user.isDefault && this.showingUserRouteTopLevel) {

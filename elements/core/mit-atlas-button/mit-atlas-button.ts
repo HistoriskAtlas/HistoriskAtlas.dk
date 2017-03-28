@@ -29,6 +29,12 @@ class MitAtlasButton extends polymer.Base implements polymer.Element {
         if (App.haUsers.user.isDefault)
             this.$.button.close();
     }
+
+    userCanCreateRoute(isDevOrBeta: boolean, user: HAUser): boolean {
+        if (isDevOrBeta)
+            return true;
+        return user.canAccessHoD2017;
+    }
     
     newGeoTap() {
         if (!App.haUsers.user.isActive) {

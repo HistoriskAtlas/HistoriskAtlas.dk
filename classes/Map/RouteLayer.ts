@@ -200,7 +200,10 @@
                         cgs[i] = cg;
             }
 
-            var index = Math.min(collection.collection_geos.indexOf(cgs[0]), collection.collection_geos.indexOf(cgs[1]))
+            var index0 = collection.collection_geos.indexOf(cgs[0]);
+            var index1 = collection.collection_geos.indexOf(cgs[1]);
+
+            var index = Math.abs(index0 - index1) == collection.collection_geos.length - 1 ? collection.collection_geos.length - 1 : Math.min(index0, index1);
 
             this.removeFeatures([feature]);
             collection.features.splice(collection.features.indexOf(feature), 1);

@@ -4,6 +4,7 @@
     private _collection_geos: Array<HaCollectionGeo>;
     private _online: boolean;
     private _ugc: boolean;
+    private _cyclic: boolean;
     private _user: HAUser;
     private _distance: number;
     private _type: number;
@@ -31,6 +32,7 @@
         this._title = data.title;
         this._online = data.online;
         this._ugc = data.ugc;
+        this._cyclic = data.cyclic;
         this._distance = data.distance;
         this._type = data.type;
 
@@ -75,6 +77,13 @@
         return this._ugc;
     }
 
+    get cyclic(): boolean {
+        return this._cyclic;
+    }
+    set cyclic(val: boolean) {
+        this._cyclic = val;
+    }
+
     get distance(): number {
         return this._distance;
     }
@@ -113,6 +122,9 @@
         this._selected = val;
     }
 
+    public get isUGC(): boolean {
+        return this._ugc;
+    }
 
     get collection_geos(): Array<HaCollectionGeo> {
         //if (this._geoIds.length > 0) {

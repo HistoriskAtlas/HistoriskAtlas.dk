@@ -48,7 +48,7 @@
     <template>
         <div class="host-container">
             <template id="themeRepeater" is="dom-repeat" items="{{themes}}">
-                <main-menu-item show$="[[active(item,theme)]]" show-main-menu="{{showThemeMenu}}">
+                <main-menu-item show$="[[active(item,theme)]]" show-main-menu="{{showThemeMenu}}" hidden$="[[!showMenuItem(item,user)]]">
                     <div class="header" hide-when-active$="[[hideHeadline(item)]]">
                         <span>[[item.name]]</span>
                         <iron-icon icon="close" hidden$="[[!active(item,theme)]]"></iron-icon>

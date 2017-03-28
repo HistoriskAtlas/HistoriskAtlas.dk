@@ -77,7 +77,7 @@
             <paper-menu id="menu" class="dropdown-content">
                 <paper-item on-tap="newGeoTap">Opret fortælling</paper-item>
                 
-                <template is="dom-if" if="[[isDevOrBeta]]">
+                <template is="dom-if" if="[[userCanCreateRoute(isDevOrBeta,user)]]">
                     <paper-item on-tap="newRouteTap">Opret turforslag</paper-item>
                 </template>
 

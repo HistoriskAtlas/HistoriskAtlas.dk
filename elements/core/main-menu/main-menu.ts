@@ -72,6 +72,12 @@ class MainMenu extends polymer.Base implements polymer.Element {
     @property({ type: Boolean })
     public isDevOrBeta: boolean;
 
+    @property({ type: Boolean })
+    public userCreators: boolean;
+
+    @property({ type: Boolean })
+    public profCreators: boolean;
+
     ready() {
         this.isDevOrBeta = Common.isDevOrBeta;
         this.panelMap = this.$.panelMap;
@@ -102,6 +108,12 @@ class MainMenu extends polymer.Base implements polymer.Element {
         for (var menuItem of this.menuItems)
             if (e.currentTarget != menuItem)
                 menuItem.show = false;
+    }
+
+    showHOD2017(isDevOrBeta: boolean, user: HAUser): boolean {
+        if (isDevOrBeta)
+            return true;
+        return user.canAccessHoD2017;
     }
 
     tap1001() {

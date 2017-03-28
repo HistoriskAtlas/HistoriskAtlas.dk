@@ -49,6 +49,11 @@ class WindowRoute extends polymer.Base implements polymer.Element {
         this.set('route.online', !this.route.online);
     }
 
+    toggleCyclicTap(e: Event) {
+        this.set('route.cyclic', !this.route.cyclic);
+        e.cancelBubble = true;
+    }
+
     deleteTap() {
         $(this).append(DialogConfirm.create('delete-route', 'Er du sikker på at du vil slette dette turforslag?'));
     }

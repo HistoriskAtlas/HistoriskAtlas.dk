@@ -25,6 +25,9 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     @property({ type: Boolean })
     public isDevOrBeta: boolean;
 
+    @property({ type: Object })
+    public user: HAUser;
+
     ready() {
         this.isDevOrBeta = Common.isDevOrBeta;
 
@@ -37,7 +40,7 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         }
 
         if (!Common.isDevOrBeta)
-            send.id = '1001'
+            send.id = '{in:["1001","hod2017"]}'
 
         Services.get('theme', send, (result) => {
             if (this.theme.id != 'default') {
@@ -55,6 +58,16 @@ class PanelTheme extends polymer.Base implements polymer.Element {
 
     active(item: ITheme, theme: ITheme): boolean {
         return item.name == theme.name;
+    }
+
+    showMenuItem(item: ITheme, user: HAUser): boolean {
+        //if (this.isDevOrBeta)
+        //    return true;
+
+        if (this.isHoD2017(item))
+            return user ? user.canAccessHoD2017 : false;
+
+        return true;
     }
 
     public getThemeByName(name: string): ITheme {
@@ -134,7 +147,7 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     }
 
     isHoD2017(theme: ITheme): boolean {
-        return theme.id == 'hod2017';
+        return theme.id == 'hod2017' || theme.name == 'Historier om Danmark 2017';
     }
     aboutHoD2017Tap() {
         Common.dom.append(WindowInstitution.create(App.haTags.byId[736]));

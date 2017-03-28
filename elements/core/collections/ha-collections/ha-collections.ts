@@ -10,6 +10,12 @@ class HaCollections extends Tags implements polymer.Element {
     @property({ type: Object, notify: true })
     public collection: HaCollection;
 
+    @property({ type: Boolean })
+    public userCreators: boolean;
+
+    @property({ type: Boolean })
+    public profCreators: boolean;
+
     private waitingForCallbackCount: number = 0;
     //private drawRouteRequestCount: number = 0;
 
@@ -26,7 +32,7 @@ class HaCollections extends Tags implements polymer.Element {
 
         this.allCollectionsFetched = true;
         App.map.showRouteLayer();
-        this.getCollections({ count: 'all', schema: '{collection:[collectionid,title,ugc,distance,type,userid,' + HaCollections.collectionGeosAPISchema + ']}', online: true });
+        this.getCollections({ count: 'all', schema: '{collection:[collectionid,title,ugc,cyclic,distance,type,userid,' + HaCollections.collectionGeosAPISchema + ']}', online: true });
 
         if (!App.haUsers.user.isDefault)
             this.getCollectionsFromUser();
@@ -37,14 +43,14 @@ class HaCollections extends Tags implements polymer.Element {
             return;
 
         App.map.showRouteLayer();
-        this.getCollections({ count: 'all', schema: '{collection:[collectionid,title,ugc,distance,type,{userid:' + App.haUsers.user.id + '},' + HaCollections.collectionGeosAPISchema + ']}', online: false });
+        this.getCollections({ count: 'all', schema: '{collection:[collectionid,title,ugc,cyclic,distance,type,{userid:' + App.haUsers.user.id + '},' + HaCollections.collectionGeosAPISchema + ']}', online: false });
     }
 
     public getCollectionsByTagId(tagId: number) {
         if (this.awaitGeos(() => this.getCollectionsByTagId(tagId)))
             return;
         App.map.showRouteLayer();
-        this.getCollections({ count: 'all', schema: '{collection:{fields:[collectionid,title,ugc,distance,type,userid,' + HaCollections.collectionGeosAPISchema + ',{content:[{tag_contents:[{collapse:id}]}]}],filters:[{content:[{tag_contents:[{id:' + tagId + '}]}]}]}}', online: true });
+        this.getCollections({ count: 'all', schema: '{collection:{fields:[collectionid,title,ugc,cyclic,distance,type,userid,' + HaCollections.collectionGeosAPISchema + ',{content:[{tag_contents:[{collapse:id}]}]}],filters:[{content:[{tag_contents:[{id:' + tagId + '}]}]}]}}', online: true });
     }
 
     private awaitGeos(callback: () => any): boolean {
@@ -81,6 +87,25 @@ class HaCollections extends Tags implements polymer.Element {
             this.set('collections', collections);
             this.notifySplices('collections', [{ index: 0, removed: [], addedCount: collections.length, object: this.collections }]);
         })
+    }
+
+    @observe('userCreators')
+    userCreatorsChanged() {
+        if (this.userCreators || !this.collections)
+            return;
+
+        for (var i = 0; i < this.collections.length; i++)
+            if (this.collections[i].ugc)
+                this.set('collections.' + i + '.selected', false);
+    }
+    @observe('profCreators')
+    profCreatorsChanged() {
+        if (this.profCreators || !this.collections)
+            return;
+
+        for (var i = 0; i < this.collections.length; i++)
+            if (!this.collections[i].ugc)
+                this.set('collections.' + i + '.selected', false);
     }
 
     @observe('collections.*')
@@ -316,11 +341,11 @@ class HaCollections extends Tags implements polymer.Element {
         if (path.length != 2)
             return
 
-        if (prop == 'type')
+        if (prop == 'type' || prop == 'cyclic')
             this.drawRoute();
         if (prop == 'online')
             App.map.routeLayer.redraw();
-        if (prop == 'title' || prop == 'online' || prop == 'type')
+        if (prop == 'title' || prop == 'online' || prop == 'type' || prop == 'cyclic')
             this.collection.saveProp(prop);
     }
 
@@ -441,7 +466,7 @@ class HaCollections extends Tags implements polymer.Element {
             //this.nextUpdateRouteLayerRequest();
         }
 
-        var lastCG: HaCollectionGeo;
+        var lastCG: HaCollectionGeo = collection.cyclic ? collection.collection_geos[collection.collection_geos.length - 1] : null;
         var totalDistance: number = 0;
         this.waitingForCallbackCount = collection.collection_geos.length - 1;
         var canEdit: boolean = App.haUsers.user.canEditCollection(collection);

@@ -13,6 +13,11 @@ class CollectionList extends polymer.Base implements polymer.Element {
     @property({ type: Boolean, value: false })
     public defaultSelected: boolean;
 
+    @property({ type: Boolean })
+    public userCreators: boolean;
+
+    @property({ type: Boolean })
+    public profCreators: boolean;
 
     private static ignoreCollectionChanges: boolean = false;
     private static collectionLists: Array<CollectionList> = [];
@@ -113,6 +118,16 @@ class CollectionList extends polymer.Base implements polymer.Element {
             this.set('topLevels.' + this.topLevels.indexOf(topLevel) + '.selected', (<any>topLevel).countTotal == 0 ? false : (<any>topLevel).countSelected == (<any>topLevel).countTotal);
     }
 
+    public filter(topLevelFilter: (collection: HaCollection) => boolean, ignoreCreators: boolean): (collection: HaCollection) => boolean {
+        return (collection: HaCollection) => {
+            if (this.profCreators != null && this.userCreators != null && !ignoreCreators)
+                if ((!this.profCreators && !collection.ugc) || (!this.userCreators && collection.ugc))
+                    return false;
+
+            return topLevelFilter(collection);
+        };
+    }
+
 }
 
 interface ICollectionTopLevel {
@@ -120,6 +135,7 @@ interface ICollectionTopLevel {
     shown: boolean;
     selected: boolean;
     filter: (collection) => boolean;
+    ignoreCreators: boolean;
 }
 
 CollectionList.register();

@@ -34,6 +34,11 @@
                 display: block;
                 /*white-space: nowrap;*/
             }
+            .cyclic-toggle {
+                pointer-events: none;
+                margin-left: auto;
+            }
+
         </style>
         <ha-content content="{{route.content}}"></ha-content>
         <window-basic id="windowbasic" window-title="[[route.title]]" width="400" height="650" right="10">
@@ -44,6 +49,10 @@
                         <paper-menu class="dropdown-content">
                             <menu-item on-tap="renameTap">Omdøb</menu-item>
                             <menu-item on-tap="togglePublishedTap">[[togglePublishText(route.online)]]</menu-item>
+                            <menu-item on-tap="toggleCyclicTap">
+                                Cyklisk
+                                <paper-toggle-button no-ink checked="[[route.cyclic]]" class="cyclic-toggle"></paper-toggle-button>
+                            </menu-item>
                             <menu-item on-tap="editorialTap">Redaktion</menu-item>
                             <menu-item spacer></menu-item>
                             <menu-item on-tap="deleteTap">Slet turforslag</menu-item>
