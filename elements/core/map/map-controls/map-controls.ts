@@ -27,14 +27,8 @@ class MapControls extends polymer.Base implements polymer.Element {
 
     @listen("myLocation.tap")
     myLocationTap() {
-        App.toast.show("Finder din position...");
-        navigator.geolocation.getCurrentPosition((pos) => {
-            App.toast.show("Din position blev fundet.");
-            App.map.centerAnim([pos.coords.longitude, pos.coords.latitude], Math.max(pos.coords.accuracy, 200));
-            this.timeWarpActive = false;
-        }, (error) => {
-            App.toast.show("Din position blev IKKE fundet. Har du husket at give tilladelse til, at vi må bruge din position?");
-        });
+        this.timeWarpActive = false;
+        App.map.iconLayerNonClustered.toggleYouAreHere();
     }
 
     @listen("zoomIn.tap")

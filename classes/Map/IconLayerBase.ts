@@ -51,4 +51,8 @@
 
         App.map.preventDrag(event);
     }
+
+    public set visible(val: boolean) {
+        (<any>this).o(val); // o = setVisible
+    }
 }

@@ -1,16 +1,52 @@
 ﻿<dom-module id="window-institution">
     <style>
-
+        .content {
+            margin: 0px 0px 17px 0px; 
+            font-size: 14px;
+        }
+        .top {
+            padding: 0px 17px 0px 17px; 
+        }
+        a {
+            text-decoration: none;
+        }
+        .content.institution-228 > .top { /*1001 fortællinger*/
+            padding-bottom: 280px; 
+            background-color: black;
+            background-image: url(../../../../images/theme/1001back.jpg);
+            background-size: 100%;
+            background-position: bottom;
+            background-repeat: no-repeat;
+            color: white;
+        }
+        .content.institution-228 a { /*1001 fortællinger*/
+            color: #ecdf39;
+        }
+        .content.institution-233 > .top { /*HoD 2017*/
+            padding-bottom: 280px; 
+            background-color: black;
+            background-image: url(../../../../images/institution/HoD2017about.jpg);
+            background-size: 100%;
+            background-position: bottom;
+            background-repeat: no-repeat;
+            color: white;
+        }
+        .stories {
+            margin: 20px 17px 0px 17px; 
+        }
     </style>
     <template>
         <ha-geos-search tag="[[institution.tag]]" geos="{{geos}}"></ha-geos-search>
-        <window-basic id="windowbasic" window-title="[[institution.name]]" width="660" height="510" toolbar-mode="waterfall">
-            <div style="margin: 0px 17px 17px 17px; font-size:14px">
-                <content-viewer content="[[institution.content]]"></content-viewer>
-                <div><a href="[[formatUrl(institution.url)]]" target="_blank">website</a></div>
-                <br><br>
-                <b>Fortællinger</b><br>
-                <geo-list geos="{{geos}}" compare-function="sortByTitle"></geo-list>
+        <window-basic id="windowbasic" window-title="[[institution.name]]" width="400" height="650" toolbar-mode="waterfall">
+            <div class$="content [[classFromInstitution(institution)]]">
+                <div class="top">
+                    <content-viewer content="[[institution.content]]"></content-viewer>
+                    <div><a href="[[formatUrl(institution.url)]]" target="_blank">Besøg [[institution.name]] på nettet</a></div>
+                </div>
+                <div class="stories">
+                    <b>Fortællinger</b><br>
+                    <geo-list geos="{{geos}}" compare-function="sortByTitle"></geo-list>
+                </div>
             </div>
         </window-basic>
     </template>

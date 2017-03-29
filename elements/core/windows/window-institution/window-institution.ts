@@ -24,6 +24,10 @@ class WindowInstitution extends polymer.Base implements polymer.Element {
         return url;
     }
 
+    classFromInstitution(institution: HAInstitution): string {
+        return "institution-" + institution.id;
+    }
+
 }
 
 WindowInstitution.register();

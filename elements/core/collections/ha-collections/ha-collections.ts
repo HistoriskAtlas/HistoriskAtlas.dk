@@ -133,8 +133,6 @@ class HaCollections extends Tags implements polymer.Element {
                 //        geo.isPartOfCurrentCollection = true;
                 //})
 
-
-
                 if (changeRecord.value)
                     this.drawRoute(collection)
                 else
@@ -144,6 +142,9 @@ class HaCollections extends Tags implements polymer.Element {
     }
 
     public select(collection: HaCollection, addGeo?: HaGeo, mapClick: boolean = false) {
+        if (!App.haUsers.user.isWriter)
+            App.map.iconLayer.visible = false;
+
         App.map.showRouteLayer();
 
         this.$.selector.select(collection);
@@ -181,6 +182,7 @@ class HaCollections extends Tags implements polymer.Element {
 
     public deselect(collection: HaCollection) {
         this.$.selector.deselect(collection);
+        App.map.iconLayer.visible = true;
     }
 
     public newRoute(geo?: HaGeo) {

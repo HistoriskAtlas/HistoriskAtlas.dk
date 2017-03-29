@@ -12,10 +12,12 @@ class HaTags extends polymer.Base implements polymer.Element {
     //@property({ type: Boolean })
     //public beingIndexed: boolean;
 
+    
     public static loadedCallbacks: Array<() => void> = [];
 
     //TEMP(?)
     public static tagsWithMarkers: Array<HaTag> = new Array<HaTag>(10000);
+    private static _crossHairMarker: string;
     //public static tagUGC: HaTag; //only needed because UGC cant add subjects yet........................................................................
     //public static tagUserLayer: HaTag; //TODO: create as seperate map layer instead....................................................................
     //public static tagTop: Array<HaTag> = new Array<HaTag>(20);
@@ -40,6 +42,7 @@ class HaTags extends polymer.Base implements polymer.Element {
             this.tagIdsInStorage = [];                                                    
 
         this.$.ajax.url = Common.api + 'tag.json?count=all&schema=' + Common.apiSchemaTags + (this.tagIdsInStorage.length > 0 ? '&lastmodified={min:' + LocalStorage.timestampDateTime('tag-ids') + '}' : '');
+        HaTags.createCrossHairMarker();
     }
 
     public get tagsLoaded(): boolean {
@@ -279,6 +282,32 @@ class HaTags extends polymer.Base implements polymer.Element {
         return marker;
     }
 
+    public static get crossHairMarker(): string {
+        return this._crossHairMarker;
+    }
+    private static createCrossHairMarker() {
+        var canvas = document.createElement('canvas');
+        canvas.width = 100;
+        canvas.height = 100;
+        var context = canvas.getContext("2d");
+
+        var svg = new Blob(['<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"><g><path fill="#990000" d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z" /></g></svg>'], { type: "image/svg+xml;charset=utf-8" }),
+            domURL = self.URL || (<any>self).webkitURL || self,
+            url = domURL.createObjectURL(svg),
+            img = new Image;
+
+        img.onload = () => {
+            context.fillStyle = 'rgba(255,255,255,0.5)';
+            context.arc(canvas.width / 2, canvas.height / 2, canvas.width / 3, 0, Math.PI * 2);
+            context.fill();
+            context.drawImage(img, 0, 0, canvas.width, canvas.height);
+            domURL.revokeObjectURL(url);
+            this._crossHairMarker = canvas.toDataURL();
+        };
+
+        img.src = url;
+    }
+
     private static redColors(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
         var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
         for (var i = 0; i < imageData.data.length; i += 4) {
@@ -290,28 +319,25 @@ class HaTags extends polymer.Base implements polymer.Element {
         }
         context.putImageData(imageData, 0, 0);
     }
-
-
-
-
+    
     private static rgbToHsl(r, g, b) {
-    r /= 255, g /= 255, b /= 255;
-    var max = Math.max(r, g, b), min = Math.min(r, g, b);
-    var h, s, l = (max + min) / 2;
-    if (max == min) {
-        h = s = 0; // achromatic
-    } else {
-        var d = max - min;
-        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-        switch (max) {
-            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-            case g: h = (b - r) / d + 2; break;
-            case b: h = (r - g) / d + 4; break;
+        r /= 255, g /= 255, b /= 255;
+        var max = Math.max(r, g, b), min = Math.min(r, g, b);
+        var h, s, l = (max + min) / 2;
+        if (max == min) {
+            h = s = 0; // achromatic
+        } else {
+            var d = max - min;
+            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+            switch (max) {
+                case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                case g: h = (b - r) / d + 2; break;
+                case b: h = (r - g) / d + 4; break;
+            }
+            h /= 6;
         }
-        h /= 6;
+        return ({ h: h, s: s, l: l });
     }
-    return ({ h: h, s: s, l: l });
-}
 
     private static hslToRgb(h, s, l) {
     var r, g, b;
