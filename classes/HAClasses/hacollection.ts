@@ -19,6 +19,7 @@
 
     public static types: Array<string> = ['Kørsel', 'Cykling', 'Til fods']
     public static iconTypes: Array<string> = ['maps:directions-car', 'maps:directions-bike', 'maps:directions-walk']
+    public static googleMapsTypes: Array<string> = ['d', 'b', 'w']
 
     constructor(data: any) {
         this._collection_geos = [];
@@ -184,6 +185,7 @@
                 i++;
         return i;
     }
+
 
     //public open() {
     //    //if (this._geos.length > 0 || !this._id) {

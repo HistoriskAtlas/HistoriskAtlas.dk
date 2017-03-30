@@ -41,7 +41,7 @@ class WindowGeoBiblio extends polymer.Base implements polymer.Element {
         }
         this._closingItem = false;
         if (!this.url)
-            this.url = 'http://' + (Common.isDevOrBeta ? 'beta.' : '') + 'historiskatlas.dk/proxy/biblio.json'
+            this.url = location.protocol + '//' + (Common.isDevOrBeta ? 'beta.' : '') + 'historiskatlas.dk/proxy/biblio.json'
         this.$.ajax.generateRequest();
     }
 

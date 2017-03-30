@@ -85,7 +85,7 @@ class PanelTheme extends polymer.Base implements polymer.Element {
 
     @listen('shown')
     shown(e) {
-        var theme = <ITheme>this.$.themeRepeater.modelForElement(e.srcElement).item;
+        var theme = <ITheme>this.$.themeRepeater.modelForElement(e.target).item;
         if (!theme.id) {
             Services.get('theme', {
                 name: theme.name,

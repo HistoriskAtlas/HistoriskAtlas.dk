@@ -43,6 +43,13 @@
         <ha-content content="{{route.content}}"></ha-content>
         <window-basic id="windowbasic" window-title="[[route.title]]" width="400" height="650" right="10">
             <div class="toolbar">
+                <paper-menu-button dynamic-align close-on-activate no-overlap>
+                    <paper-icon-button icon="social:share" class="dropdown-trigger"></paper-icon-button>
+                    <paper-menu class="dropdown-content">
+                        <menu-item on-tap="shareGoogleMaps">Del til Google Maps</menu-item>
+                        <menu-item on-tap="shareKML">Hent som KML-fil</menu-item>
+                    </paper-menu>
+                </paper-menu-button>
                 <template is="dom-if" if="[[editing]]">
                     <paper-menu-button id="morePaperMenuButton" dynamic-align close-on-activate no-overlap>
                         <paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>

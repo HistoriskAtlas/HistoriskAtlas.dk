@@ -31,6 +31,47 @@ class WindowRoute extends polymer.Base implements polymer.Element {
         //App.map.routeLayer.clear();
     }
 
+    shareGoogleMaps() {
+        var coords: Array<string> = [];
+        var via: Array<number> = [];
+        for (var cg of this.route.collection_geos) {
+            var coord = Common.fromMapCoord(cg.coord);
+            coords.push(coord[1].toFixed(7) + ',' + coord[0].toFixed(7));
+            if (cg.isViaPoint)
+                via.push(this.route.collection_geos.indexOf(cg) + 1);
+        }
+
+        window.open('https://www.google.dk/maps/dir/?saddr=My+Location&daddr=' + coords.join('+to:') + (via.length > 0 ? '&via=' + via.join(',') : '') + '&dirflg=' + HaCollection.googleMapsTypes[this.route.type], '_blank')
+    }
+
+    shareKML() {
+        var coords: Array<string> = [];
+        for (var cg of this.route.collection_geos) {
+            var coord = Common.fromMapCoord(cg.coord);
+            coords.push(coord[0].toFixed(7) + ',' + coord[1].toFixed(7));
+        }
+
+        var kml = '<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Document><Placemark><name>' + this.route.title + '</name>'; /*<description>test Desc< /description>*/
+        kml += '<Style id="route"><LineStyle><color>ff9a5d00</color><width>10</width></LineStyle></Style><LineString><coordinates>';
+        kml += coords.join(' ');
+        kml += '</coordinates></LineString></Placemark></Document></kml>';
+
+        var filename = encodeURIComponent('HistoriskAtlas.dk-' + this.route.title.replace(new RegExp(' ', 'g'), '-') + '.kml');
+        var blob = new Blob([kml], { type: 'application/vnd.google-earth.kml+xml' });
+        if (window.navigator.msSaveOrOpenBlob)
+            window.navigator.msSaveBlob(blob, filename);
+        else {
+            var elem = window.document.createElement('a');
+            elem.href = window.URL.createObjectURL(blob);
+            elem.setAttribute('download', filename);
+            document.body.appendChild(elem);
+            elem.click();
+            document.body.removeChild(elem);
+            window.URL.revokeObjectURL(elem.href);
+        }
+    }
+
+
     renameTap() {
         Common.dom.append(DialogText.create('Angiv ny titel på turforslag', (title) => this.set('route.title', title)));
     }
