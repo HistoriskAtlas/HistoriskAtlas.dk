@@ -74,7 +74,7 @@
         <main-menu-item show="{{showMenuDigDag}}" show-main-menu="{{showMainMenu}}" title="Grænser" icon="ha:digdag">
             <panel-digdag id="panelDigdag" class="panel" digdags="[[digdags]]" type="{{regionTypeID}}" year="[[year]]" touch-device="[[touchDevice]]"></panel-digdag>
         </main-menu-item>
-        <main-menu-item show="{{showMenuRoutes}}" show-main-menu="{{showMainMenu}}" title="Turforslag" icon="ha:route" hidden$="[[!isDevOrBeta]]">
+        <main-menu-item show="{{showMenuRoutes}}" show-main-menu="{{showMainMenu}}" title="Turforslag" icon="ha:route" hidden$="[[!showHOD2017(isDevOrBeta,user)]]">
             <panel-route id="panelRoute" class="panel" collections="{{collections}}" collection="{{collection}}" user-creators="[[userCreators]]" prof-creators="[[profCreators]]" drawer-open="{{drawerOpen}}" show="[[showMenuRoutes]]" user="[[user]]"></panel-route>
         </main-menu-item>
         <main-menu-item show="{{showMenuThemes}}" show-main-menu="{{showMainMenu}}" title="Temaer" icon="ha:map">
