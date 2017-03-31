@@ -42,7 +42,7 @@ class HaTags extends polymer.Base implements polymer.Element {
             this.tagIdsInStorage = [];                                                    
 
         this.$.ajax.url = Common.api + 'tag.json?count=all&schema=' + Common.apiSchemaTags + (this.tagIdsInStorage.length > 0 ? '&lastmodified={min:' + LocalStorage.timestampDateTime('tag-ids') + '}' : '');
-        HaTags.createCrossHairMarker();
+        //HaTags.createCrossHairMarker();
     }
 
     public get tagsLoaded(): boolean {
@@ -283,30 +283,50 @@ class HaTags extends polymer.Base implements polymer.Element {
     }
 
     public static get crossHairMarker(): string {
+        if (!this._crossHairMarker) {
+            var canvas = document.createElement('canvas');
+            canvas.width = 30;
+            canvas.height = 30;
+            var context = canvas.getContext("2d");
+            context.fillStyle = '#990000';
+            context.strokeStyle = '#FFFFFF';
+            context.lineWidth = 4;
+            context.save();
+            context.arc(15, 15, 12.5, 0, Math.PI * 2);
+            context.stroke();
+            context.fill();
+            context.beginPath();
+            context.lineWidth = 9;
+            context.arc(15, 15, 6, 0, Math.PI * 2);
+            context.stroke();
+            context.fill();
+            this._crossHairMarker = canvas.toDataURL()
+        }
+
         return this._crossHairMarker;
     }
-    private static createCrossHairMarker() {
-        var canvas = document.createElement('canvas');
-        canvas.width = 100;
-        canvas.height = 100;
-        var context = canvas.getContext("2d");
+    //private static createCrossHairMarker() {
+    //    var canvas = document.createElement('canvas');
+    //    canvas.width = 100;
+    //    canvas.height = 100;
+    //    var context = canvas.getContext("2d");
 
-        var svg = new Blob(['<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"><g><path fill="#990000" d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z" /></g></svg>'], { type: "image/svg+xml;charset=utf-8" }),
-            domURL = self.URL || (<any>self).webkitURL || self,
-            url = domURL.createObjectURL(svg),
-            img = new Image;
+    //    var svg = new Blob(['<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"><g><path fill="#990000" d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z" /></g></svg>'], { type: "image/svg+xml;charset=utf-8" }),
+    //        domURL = self.URL || (<any>self).webkitURL || self,
+    //        url = domURL.createObjectURL(svg),
+    //        img = new Image;
 
-        img.onload = () => {
-            context.fillStyle = 'rgba(255,255,255,0.5)';
-            context.arc(canvas.width / 2, canvas.height / 2, canvas.width / 3, 0, Math.PI * 2);
-            context.fill();
-            context.drawImage(img, 0, 0, canvas.width, canvas.height);
-            domURL.revokeObjectURL(url);
-            this._crossHairMarker = canvas.toDataURL();
-        };
+    //    img.onload = () => {
+    //        context.fillStyle = 'rgba(255,255,255,0.5)';
+    //        context.arc(canvas.width / 2, canvas.height / 2, canvas.width / 3, 0, Math.PI * 2);
+    //        context.fill();
+    //        context.drawImage(img, 0, 0, canvas.width, canvas.height);
+    //        domURL.revokeObjectURL(url);
+    //        this._crossHairMarker = canvas.toDataURL();
+    //    };
 
-        img.src = url;
-    }
+    //    img.src = url;
+    //}
 
     private static redColors(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
         var imageData = context.getImageData(0, 0, canvas.width, canvas.height);

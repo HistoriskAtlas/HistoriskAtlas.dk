@@ -228,6 +228,7 @@
             data.online = this._online;
             data.type = this._type;
             data.distance = this._distance;
+            data.cyclic = this._cyclic;
             Services.insert('collection', data, (result) => {
                 this._id = result.data[0].collectionid;
                 if (callback)

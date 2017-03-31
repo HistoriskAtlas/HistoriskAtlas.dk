@@ -44,16 +44,22 @@
         if (this._youAreHereShown)
             return;
 
-        if (!this._youAreHereIcon)
+        if (!this._youAreHereIcon) {
             this._youAreHereIcon = new ol.Feature(this._youAreHerePoint = new ol.geom.Point(Common.toMapCoord(coord)));
+            this._youAreHereIcon.setStyle(new ol.style.Style({
+                image: new ol.style.Icon({
+                    src: HaTags.crossHairMarker
+                })
+            }))
+        }
 
-        this.setYouAreHereStyle(accuracy);
+        //this.setYouAreHereStyle(accuracy);
         this.source.addFeature(this._youAreHereIcon);
         this._youAreHereShown = true;
 
         this._watchId = navigator.geolocation.watchPosition((pos) => {
             this._youAreHerePoint.setCoordinates(Common.toMapCoord([pos.coords.longitude, pos.coords.latitude]));
-            this.setYouAreHereStyle(pos.coords.accuracy);
+            //this.setYouAreHereStyle(pos.coords.accuracy);
         }, (error) => {
             navigator.geolocation.clearWatch(this._watchId);
             //App.toast.show("Kunne ikke følge ");
@@ -68,14 +74,14 @@
         }
     }
 
-    private setYouAreHereStyle(accuracy: number) {
-        this._youAreHereIcon.setStyle((res: number) =>
-            new ol.style.Style({
-                image: new ol.style.Icon({
-                    src: HaTags.crossHairMarker,
-                    opacity: Math.min(Math.max((10 - accuracy + 10) / 10, 0.3), 1),
-                    scale: Math.max(accuracy / (res * 50), 1 / window.devicePixelRatio) /*50 = pixel size of bitmap / 2 */
-                })
-        }));
-    }
+    //private setYouAreHereStyle(accuracy: number) {
+    //    this._youAreHereIcon.setStyle((res: number) =>
+    //        new ol.style.Style({
+    //            image: new ol.style.Icon({
+    //                src: HaTags.crossHairMarker,
+    //                opacity: Math.min(Math.max((10 - accuracy + 10) / 10, 0.3), 1),
+    //                scale: Math.max(accuracy / (res * 50), 1 / window.devicePixelRatio) /*50 = pixel size of bitmap / 2 */
+    //            })
+    //    }));
+    //}
 }

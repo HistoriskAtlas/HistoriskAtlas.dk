@@ -190,7 +190,7 @@ class HaCollections extends Tags implements polymer.Element {
     }
 
     private newCollection(title: string, geo?: HaGeo)/*: HaCollection*/ {
-        var collection = new HaCollection({ title: title, userid: App.haUsers.user.id, ugc: !App.haUsers.user.isPro, online: false, distance: 0, type: 0 });
+        var collection = new HaCollection({ title: title, userid: App.haUsers.user.id, ugc: !App.haUsers.user.isPro, online: false, distance: 0, type: 0, cyclic: false });
         collection.save(() => {
             this.push('collections', collection);
             this.select(collection);
