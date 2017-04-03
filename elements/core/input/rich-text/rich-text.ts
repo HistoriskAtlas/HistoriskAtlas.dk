@@ -39,7 +39,7 @@ class RichText extends polymer.Base implements polymer.Element {
     }
     blur() {
         if (this.editable)
-            this.content = this.immediateContent; //TODO: also on inactivity....?
+            this.set('content', this.immediateContent); //TODO: also on inactivity....?
     }
 
     focusButton() {
@@ -54,8 +54,13 @@ class RichText extends polymer.Base implements polymer.Element {
 
     input() {
         var elem = <HTMLDivElement>this.$.content;
-        this.immediateContent = elem.innerHTML;
+        this.set('immediateContent', elem.innerHTML);
         //this.length = elem.innerText.length;
+    }
+
+    keyup() { //Needed in IE10+?
+        var elem = <HTMLDivElement>this.$.content;
+        this.set('immediateContent', elem.innerHTML);
     }
 
     paste(e: ClipboardEvent) {
@@ -94,7 +99,7 @@ class RichText extends polymer.Base implements polymer.Element {
         else
             content = this.content;
 
-        this.immediateContent = content;
+        this.set('immediateContent', content);
     }
 
     @observe('immediateContent')
@@ -108,7 +113,7 @@ class RichText extends polymer.Base implements polymer.Element {
             element.innerHTML = this.immediateContent
 
         if (element.innerText.trim() == '')
-            this.immediateContent = '';
+            this.set('immediateContent', '');
 
         this.length = element.innerText.length;
     }

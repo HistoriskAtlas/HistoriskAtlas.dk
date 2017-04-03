@@ -21,7 +21,7 @@ class WindowRoute extends polymer.Base implements polymer.Element {
 
     @property({ type: Array })
     public institutions: Array<HaTag>;
-
+    
     @listen('windowbasic.closed') 
     windowBasicClosed() {
         if (this.route) {

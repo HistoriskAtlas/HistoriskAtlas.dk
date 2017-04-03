@@ -8,7 +8,6 @@ class ContentViewer extends polymer.Base implements polymer.Element {
 
     @property({ type: Boolean, value: false })
     public editing: boolean;
-
 }
 
 ContentViewer.register();

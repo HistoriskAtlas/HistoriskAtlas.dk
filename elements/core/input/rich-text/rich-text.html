@@ -61,7 +61,7 @@
     </style>
     <template>
 
-        <div id="content" contenteditable$="[[editable]]" on-blur="blur" on-focus="focus" on-input="input" on-keypress="keypress" on-paste="paste"></div>
+        <div id="content" contenteditable$="[[editable]]" on-blur="blur" on-focus="focus" on-input="input" on-keyup="keyup" on-keypress="keypress" on-paste="paste"></div>
 
         <template is="dom-if" if="[[editable]]">
             <div id="placeholder">[[placeholder]]</div>
