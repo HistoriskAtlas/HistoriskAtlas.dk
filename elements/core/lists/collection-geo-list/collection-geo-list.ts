@@ -6,8 +6,15 @@ class CollectionGeoList extends polymer.Base implements polymer.Element {
 
     cgTap(e: any) {
         var collection_geo = <HaCollectionGeo>e.model.cg;
+
+        if (collection_geo.isViaPoint)
+            return;
+
+        if (!App.haGeos.geos[collection_geo.geo.id])
+            return;
+
         Common.dom.append(WindowGeo.create(collection_geo.geo));
-        App.map.centerAnim(collection_geo.geo.coord, 1000, true)
+        App.map.centerAnim(collection_geo.geo.coord, 1000, true);
     }
 
 }

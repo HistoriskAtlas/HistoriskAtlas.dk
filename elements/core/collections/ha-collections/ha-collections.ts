@@ -237,8 +237,11 @@ class HaCollections extends Tags implements polymer.Element {
 
         this.initTags('collection', /*this.collection.id,*/ 'content');
 
-        for (var cg of newVal.collection_geos)
+        for (var cg of newVal.collection_geos) {
+            if (App.haGeos.geos[cg.geo.id])
+                cg.geo = App.haGeos.geos[cg.geo.id];
             cg.geo.isPartOfCurrentCollection = true;
+        }
 
         //App.map.showRouteLayer();
 

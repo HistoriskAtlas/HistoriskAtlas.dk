@@ -4,7 +4,7 @@ class CollectionGeoListItem extends polymer.Base implements polymer.Element {
     @property({ type: Object, notify: true })
     public collectionGeo: HaCollectionGeo;
 
-    @property({ type: Boolean })
+    @property({ type: Boolean, value: false })
     public closeable: boolean;
 
     @property({ type: Boolean })
@@ -19,6 +19,13 @@ class CollectionGeoListItem extends polymer.Base implements polymer.Element {
     //    Common.dom.append(WindowGeo.create(geo));
     //    App.map.centerAnim(geo.coord, 1000, true)
     //}
+    hideArrow(closeable: boolean, showText: boolean): boolean {
+        return closeable ? false : !showText;
+    }
+
+    arrowTap(e: Event) {
+        e.cancelBubble = true;
+    }
 
 }
 

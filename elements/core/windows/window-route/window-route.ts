@@ -40,8 +40,12 @@ class WindowRoute extends polymer.Base implements polymer.Element {
             if (cg.isViaPoint)
                 via.push(this.route.collection_geos.indexOf(cg) + 1);
         }
+        if (this.route.cyclic)
+            coords.push(coords[0]);
 
-        window.open('https://www.google.dk/maps/dir/?saddr=My+Location&daddr=' + coords.join('+to:') + (via.length > 0 ? '&via=' + via.join(',') : '') + '&dirflg=' + HaCollection.googleMapsTypes[this.route.type], '_blank')
+        var startCoord = coords.shift();
+
+        window.open('https://www.google.dk/maps/dir/?saddr=' + startCoord + '&daddr=' + coords.join('+to:') + (via.length > 0 ? '&via=' + via.join(',') : '') + '&dirflg=' + HaCollection.googleMapsTypes[this.route.type], '_blank')
     }
 
     shareKML() {
@@ -50,6 +54,8 @@ class WindowRoute extends polymer.Base implements polymer.Element {
             var coord = Common.fromMapCoord(cg.coord);
             coords.push(coord[0].toFixed(7) + ',' + coord[1].toFixed(7));
         }
+        if (this.route.cyclic)
+            coords.push(coords[0]);
 
         var kml = '<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Document><Placemark><name>' + this.route.title + '</name>'; /*<description>test Desc< /description>*/
         kml += '<Style id="route"><LineStyle><color>ff9a5d00</color><width>10</width></LineStyle></Style><LineString><coordinates>';

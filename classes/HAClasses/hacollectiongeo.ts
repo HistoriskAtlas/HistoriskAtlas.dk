@@ -23,9 +23,11 @@
         this.showText = !!this._contentID;
 
         if (data.geoid)
-            this._geo = App.haGeos.geos[data.geoid];
-        else
-            this._geo = new HaGeo({ id: 0, lng: data.longitude, lat: data.latitude }, false, false)
+            if (App.haGeos.geos[data.geoid])
+                this._geo = App.haGeos.geos[data.geoid];
+
+        if (!this._geo)
+            this._geo = new HaGeo({ id: data.geoid ? data.geoid : 0, lng: data.longitude, lat: data.latitude }, false, false)
     }
 
     get id(): number {
