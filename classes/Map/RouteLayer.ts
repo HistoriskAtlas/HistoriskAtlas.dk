@@ -203,7 +203,9 @@
             var index0 = collection.collection_geos.indexOf(cgs[0]);
             var index1 = collection.collection_geos.indexOf(cgs[1]);
 
-            var index = Math.abs(index0 - index1) == collection.collection_geos.length - 1 ? collection.collection_geos.length - 1 : Math.min(index0, index1);
+            var cyclicLeg = index0 < index1;
+
+            var index = cyclicLeg ? collection.collection_geos.length - 1 : Math.min(index0, index1);
 
             this.removeFeatures([feature]);
             collection.features.splice(collection.features.indexOf(feature), 1);
@@ -212,7 +214,7 @@
             var coord = Common.fromMapCoord(event.coordinate);
             //var geo = new HaGeo({ id: 0, lng: coord[0], lat: coord[1] }, false, false)
             //geo.isPartOfCurrentCollection = true;
-            var collection_geo = new HaCollectionGeo({ ordering: Math.round((cgs[0].ordering + cgs[1].ordering) / 2), latitude: coord[1], longitude: coord[0] });
+            var collection_geo = new HaCollectionGeo({ ordering: cyclicLeg ? cgs[1].ordering + HaCollectionGeo.orderingGap : Math.round((cgs[0].ordering + cgs[1].ordering) / 2), latitude: coord[1], longitude: coord[0] });
             //collection_geo.geo = geo;
             collection_geo.geo.isPartOfCurrentCollection = true;
             App.haCollections.splice('collection.collection_geos', index + 1, 0, collection_geo);
