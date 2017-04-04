@@ -27,7 +27,7 @@
                 this._geo = App.haGeos.geos[data.geoid];
 
         if (!this._geo)
-            this._geo = new HaGeo({ id: data.geoid ? data.geoid : 0, lng: data.longitude, lat: data.latitude }, false, false)
+            this._geo = new HaGeo({ id: data.geoid ? data.geoid : 0, lng: data.longitude, lat: data.latitude, title: '' }, false, false)
     }
 
     get id(): number {

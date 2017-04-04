@@ -233,7 +233,7 @@ class HaCollections extends Tags implements polymer.Element {
 
         //App.map.routeLayer.redraw();
         //this.eraseRoute(newVal);
-        this.drawRoute(newVal, App.haUsers.user.canEditCollection(newVal));
+        this.drawRoute(newVal); //, App.haUsers.user.canEditCollection(newVal)
 
         this.initTags('collection', /*this.collection.id,*/ 'content');
 
@@ -387,7 +387,7 @@ class HaCollections extends Tags implements polymer.Element {
 
         for (var keySplice of changeRecord.keySplices) {
             if (keySplice.removed.length > 0 || keySplice.added.length > 0) { //&& indexSplice.index == this.collection.geos.length - 1
-                this.drawRoute(this.collection, true, keySplice.added.length > 0 ? indexSplice.index : null);
+                this.drawRoute(this.collection, keySplice.added.length > 0 ? indexSplice.index : null);
                 this.updateMarkers();
             }
 
@@ -439,20 +439,12 @@ class HaCollections extends Tags implements polymer.Element {
         //}
     }
 
-    public drawRoute(collection?: HaCollection, drawViaPoints: boolean = true, addedPointIndex?: number) {
+    public drawRoute(collection?: HaCollection, addedPointIndex?: number, onlyRedrawViaPoints: boolean = false) { //drawViaPoints: boolean = true, 
         if (!collection)
             collection = this.collection;
 
 
-        //TODO: Handling of multiple requests while waiting for callback?....................
-
-        //if (this.waitingForCallbackCount > 0) {
-        //    this.drawRouteRequestCount++;
-        //    return;
-        //}
-
-        //App.map.routeLayer.clear();
-        if (drawViaPoints)
+        if (!onlyRedrawViaPoints)
             App.map.routeLayer.removeFeatures(collection.features);
         else {
             var nonViaPoints: ol.Feature[] = [];
@@ -462,8 +454,6 @@ class HaCollections extends Tags implements polymer.Element {
             App.map.routeLayer.removeFeatures(nonViaPoints);
         }
 
-        //if (!this.collection)
-        //    return;
 
 
         if (collection.collection_geos.length < 2) {
@@ -479,7 +469,8 @@ class HaCollections extends Tags implements polymer.Element {
         for (var cg of collection.collection_geos) { //TODO: Reuse features on collection when present?................
             //this.updateIconStyle(geo);
             if (lastCG) {
-                var viaPoint = App.map.routeLayer.addPath(cg.geo.icon.coord4326, lastCG.geo.icon.coord4326, collection, drawViaPoints && cg.isViaPoint && (canEdit || cg.showOnMap), lastCG.calcRoute, (feature, distance) => { //TODO: use addFeatureS instead......
+                var drawViaPoint = onlyRedrawViaPoints ? false : (cg.isViaPoint && (canEdit || cg.showOnMap))
+                var viaPoint = App.map.routeLayer.addPath(cg.geo.icon.coord4326, lastCG.geo.icon.coord4326, collection, drawViaPoint, lastCG.calcRoute, (feature, distance) => { //TODO: use addFeatureS instead......
                     collection.features.push(feature);
                     totalDistance += Math.round(distance);
                     this.waitingForCallbackCount--;

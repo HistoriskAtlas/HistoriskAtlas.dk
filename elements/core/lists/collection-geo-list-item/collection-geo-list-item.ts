@@ -27,6 +27,18 @@ class CollectionGeoListItem extends polymer.Base implements polymer.Element {
         e.cancelBubble = true;
     }
 
+    headline(title: string, showText: boolean, uiOpen: boolean): string {
+        if (title)
+            return title;
+
+        if (uiOpen)
+            return '';
+
+        if (showText && this.collectionGeo.content)
+            return $('<span>' + this.collectionGeo.content.texts[0].text + '</span>').text();
+
+        return '';
+    }
 }
 
 CollectionGeoListItem.register();

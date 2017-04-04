@@ -26,6 +26,7 @@
             display: flex;
             justify-content: center;
             color: #005D9A;
+            flex-shrink: 0;
         }
         span.icon > img {
             height: 32px;
@@ -83,14 +84,22 @@
         #arrowContainer {
             width: 30px;
             height: 30px;
+            flex-shrink: 0;
         }
         paper-button[disabled] {
             background: white !important;
             color: #a8a8a8 !important;
         }
-        /*paper-button[disabled] > span {
-            color: #a8a8a8 !important;
-        }*/
+        content-viewer {
+            font-size: 12px;
+            line-height: 16px;
+        }
+        #headline {
+            flex-grow: 1;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
     </style>
     <template>
         <ha-content content="{{collectionGeo.content}}"></ha-content>
@@ -100,12 +109,12 @@
                 <paper-icon-button icon="arrow-drop-down" class="arrow" toggles active="{{collectionGeo.uiOpen}}" noink on-tap="arrowTap" hidden$="[[hideArrow(closeable,collectionGeo.showText)]]"></paper-icon-button>
             </div>
             <span class$="icon via-point-[[collectionGeo.isViaPoint]]"><img src="[[collectionGeo.geo.icon.marker]]"></span>
-            <span style="flex-grow:1">[[collectionGeo.geo.title]]</span>
+            <span id="headline">[[headline(collectionGeo.geo.title,collectionGeo.showText,collectionGeo.uiOpen,collectionGeo.*)]]</span>
             <template is="dom-if" if="[[dragable]]">
-                <iron-icon icon="editor:drag-handle" class="drag-handle"></iron-icon>
+                <iron-icon icon="editor:drag-handle" class="drag-handle" style="flex-shrink:0"></iron-icon>
             </template>
             <template is="dom-if" if="[[closeable]]">
-                <paper-icon-button icon="close" on-tap="closeTap"></paper-icon-button>
+                <paper-icon-button icon="close" on-tap="closeTap" style="flex-shrink:0"></paper-icon-button>
             </template>
         </div>
         <div class="content" hidden$="[[!collectionGeo.uiOpen]]">

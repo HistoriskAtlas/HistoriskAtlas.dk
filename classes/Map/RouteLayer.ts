@@ -241,7 +241,7 @@
             if (!this.viaPointDragDirty) {
                 setTimeout(() => {
                     if (this.viaPointDragDirty) {
-                        App.haCollections.drawRoute(collection, false);
+                        App.haCollections.drawRoute(collection, null, true); //, false
                         collection_geo.saveCoords();
                         this.viaPointDragDirty = false;
                     }
