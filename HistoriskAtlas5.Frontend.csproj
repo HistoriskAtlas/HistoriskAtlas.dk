@@ -27,6 +27,8 @@
   <ItemGroup>
     <Content Include="activate.html" />
     <Content Include="bin\Antlr3.Runtime.dll" />
+    <Content Include="bin\itextsharp.dll" />
+    <Content Include="bin\itextsharp.xmlworker.dll" />
     <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
     <Content Include="bin\Newtonsoft.Json.dll" />
     <Content Include="bin\Svg.dll" />
@@ -612,6 +614,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="cs\bundles\Bundles.cs" />
+    <Compile Include="cs\proxy\GeoPDFProxy.cs" />
     <Compile Include="cs\proxy\BiblioProxy.cs" />
     <Compile Include="cs\proxy\EncodeIDProxy.cs" />
     <Compile Include="cs\proxy\RouteProxy.cs" />
@@ -652,6 +655,14 @@
   <ItemGroup>
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.11.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xmlworker, Version=5.5.11.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\itextsharp.xmlworker.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>

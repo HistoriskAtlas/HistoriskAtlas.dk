@@ -15,6 +15,7 @@ namespace HistoriskAtlas5.Frontend
             RouteTable.Routes.Add(new Route("robots.txt", new RobotsTxt()));
             RouteTable.Routes.Add(new Route("proxy/route.json", new RouteProxy()));
             RouteTable.Routes.Add(new Route("proxy/biblio.json", new BiblioProxy()));
+            RouteTable.Routes.Add(new Route("{title}_({geoid}).pdf", new GeoPDFProxy()));
             RouteTable.Routes.MapPageRoute("Default", "{*url}", "~/Default.aspx");
         }
 
