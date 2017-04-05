@@ -57,7 +57,7 @@
                     <paper-checkbox noink checked="[[topLevel.selected]]" on-tap="checkboxTap"></paper-checkbox>
                 </div>
                 <template is="dom-if" if="[[topLevel.shown]]">
-                    <template id="templateCollections" is="dom-repeat" items="{{collections}}" filter="[[filter(topLevel.filter,topLevel.ignoreCreators,userCreators,profCreators)]]" observe="type,distance">
+                    <template id="templateCollections" is="dom-repeat" items="{{collections}}" filter="[[filter(topLevel.filter,topLevel.ignoreCreators,userCreators,profCreators)]]" observe="type,distance" sort="sort">
                         <collection-list-item collection="{{item}}" open="[[isOpen(collection,item)]]" on-tap="collectionTap"></collection-list-item>
                     </template>
                 </template>

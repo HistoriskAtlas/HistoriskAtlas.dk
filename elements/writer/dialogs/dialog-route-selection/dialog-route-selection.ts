@@ -25,6 +25,14 @@ class DialogRouteSelection extends polymer.Base implements polymer.Element {
         App.haCollections.select(<HaCollection>e.model.collection, this.geo)
     }
 
+    userCanEdit(collection: HaCollection): boolean {
+        return App.haUsers.user.canEditCollection(collection);
+    }
+
+    sort(collection1: HaCollection, collection2: HaCollection): number {
+        return collection1.title.localeCompare(collection2.title);
+    }
+
     @listen('dialog.iron-activate')
     @listen('dialog.iron-overlay-closed')
     close() {

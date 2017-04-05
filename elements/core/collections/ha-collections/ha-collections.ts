@@ -34,8 +34,8 @@ class HaCollections extends Tags implements polymer.Element {
         App.map.showRouteLayer();
         this.getCollections({ count: 'all', schema: '{collection:[collectionid,title,ugc,cyclic,distance,type,userid,' + HaCollections.collectionGeosAPISchema + ']}', online: true });
 
-        if (!App.haUsers.user.isDefault)
-            this.getCollectionsFromUser();
+        //if (!App.haUsers.user.isDefault)
+        //    this.getCollectionsFromUser();
     }
 
     public getCollectionsFromUser() {
@@ -70,11 +70,21 @@ class HaCollections extends Tags implements polymer.Element {
             HaCollections.awitingGeos.shift()();
     }
 
+    public get allCollectionIDs(): Array<number> {
+        var result = [];
+        for (var collection of this.collections)
+            result.push(collection.id)
+        return result;
+    }
 
     private getCollections(sendData: any, options?: any) {
         Services.get('collection', sendData, (result) => {
             var collections: Array<HaCollection> = this.collections;
+            var allCollectionIDs = this.allCollectionIDs;
             for (var data of result.data) {
+                if (allCollectionIDs.indexOf(data.collectionid) > -1)
+                    continue;
+
                 data.online = sendData.online;
 
                 var collection = new HaCollection(data);

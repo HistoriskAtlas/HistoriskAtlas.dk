@@ -128,6 +128,9 @@ class CollectionList extends polymer.Base implements polymer.Element {
         };
     }
 
+    sort(collection1: HaCollection, collection2: HaCollection): number {
+        return collection1.title.localeCompare(collection2.title);
+    }
 }
 
 interface ICollectionTopLevel {

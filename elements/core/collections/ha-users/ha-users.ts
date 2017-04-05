@@ -67,7 +67,7 @@ class HaUsers extends polymer.Base implements polymer.Element {
             //IconLayer.updateShown();
             App.haGeos.login();
 
-            if (App.haCollections.allCollectionsFetched)
+            //if (App.haCollections.allCollectionsFetched)
                 App.haCollections.getCollectionsFromUser();
 
             this._loggingIn = false;

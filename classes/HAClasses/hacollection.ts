@@ -1,5 +1,5 @@
 ﻿class HaCollection {
-    public _id: number;
+    private _id: number;
     private _title: string;
     private _collection_geos: Array<HaCollectionGeo>;
     private _online: boolean;

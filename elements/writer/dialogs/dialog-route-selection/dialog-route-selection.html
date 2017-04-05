@@ -17,7 +17,7 @@
             <paper-dialog-scrollable>
                 <paper-menu>
                     <paper-item on-tap="newRouteTap">Nyt turforslag...</paper-item>
-                    <template is="dom-repeat" items="[[collections]]" as="collection">
+                    <template is="dom-repeat" items="[[collections]]" as="collection" filter="userCanEdit" sort="sort">
                         <paper-item on-tap="existingRouteTap">[[collection.title]]</paper-item>
                     </template>
                 </paper-menu>
