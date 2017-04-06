@@ -51,6 +51,7 @@
                     <paper-menu class="dropdown-content">
                         <menu-item on-tap="shareGoogleMaps">Send til Google Maps (print eller afvikling)</menu-item>
                         <menu-item on-tap="shareKML">Hent som KML-fil (GPS eller Google Earth)</menu-item>
+                        <menu-item on-tap="shareLink">Del med link</menu-item>
                     </paper-menu>
                 </paper-menu-button>
                 <template is="dom-if" if="[[editing]]">
@@ -126,6 +127,8 @@
                 </template>
             </div>
         </window-basic>
+
+        <dialog-share-link id="shareLinkDialog" link="[[route.link]]"></dialog-share-link>
 
         <template is="dom-if" if="[[windowEditorialShown]]" restamp>
             <window-route-editorial destinations="{{destinations}}" tags-service="[[tagsService()]]" on-closed="windowEditorialClosed"></window-route-editorial>

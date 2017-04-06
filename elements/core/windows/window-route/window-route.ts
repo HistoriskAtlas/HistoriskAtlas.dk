@@ -77,6 +77,9 @@ class WindowRoute extends polymer.Base implements polymer.Element {
         }
     }
 
+    shareLink() {
+        this.$.shareLinkDialog.open();
+    }
 
     renameTap() {
         Common.dom.append(DialogText.create('Angiv ny titel på turforslag', (title) => this.set('route.title', title)));

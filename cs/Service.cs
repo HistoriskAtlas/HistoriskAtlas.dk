@@ -78,8 +78,8 @@ namespace HistoriskAtlas5.Frontend
         public bool showonmap;
         public bool calcroute;
         public int? contentid;
-        public decimal longitude;
-        public decimal latitude;
+        public decimal? longitude;
+        public decimal? latitude;
     }
     //var collectionGeosAPISchema = "{collection_geos:[id,geoid,ordering,showonmap,calcroute,contentid,longitude,latitude]}'";
     //string schema = "{collection:[collectionid,title,ugc,cyclic,distance,type,userid," + collectionGeosAPISchema + "]}";

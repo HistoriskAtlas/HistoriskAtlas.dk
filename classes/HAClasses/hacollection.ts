@@ -142,6 +142,10 @@
 
         return this._collection_geos;
     }
+
+    public get link(): string {
+        return location.protocol + '//historiskatlas.dk/' + (this._title ? this._title.replace(new RegExp(' ', 'g'), '_') : '') + '_(r' + this._id + ')';
+    }
     //set geos(val: Array<HaCollectionGeo>) {
     //    this.collection_geos = val;
     //}
