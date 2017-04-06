@@ -258,8 +258,8 @@
 
     public removeCollectionGeo(collection_geo: HaCollectionGeo) {
         var data: any = {
-            collectiongeoid: collection_geo.id,
-            deletemode: 'permanent'
+            collectiongeoid: collection_geo.id
+            //deletemode: 'permanent'
         };
         Services.delete('collection_geo', data, (result) => { });
     }
@@ -343,7 +343,7 @@
     }
 
     public delete() {
-        Services.delete('collection', { collectionid: this._id, deletemode: 'permanent' }, (result) => {
+        Services.delete('collection', { collectionid: this._id/*, deletemode: 'permanent'*/ }, (result) => {
             App.toast.show('Turforslaget er slettet.');
         })
     }
