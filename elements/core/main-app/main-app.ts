@@ -213,6 +213,7 @@ class App extends polymer.Base implements polymer.Element {
 
         //used? main-app not present when deeplinking to geo...
         //App.passed.geo = App.passed.geo ? new HaGeo(App.passed.geo) : null;
+
         if (App.passed.theme.id != 'default') {
             this.drawerOpen = true;
             App.mainMenu.showMainMenu = false;
@@ -269,6 +270,7 @@ class App extends polymer.Base implements polymer.Element {
         //}
 
         //App.init();
+
     }
 
     public static init() {
@@ -280,6 +282,7 @@ class App extends polymer.Base implements polymer.Element {
 
 interface IPassed {
     geo: any,
+    collection: any,
     tag: any,
     theme: ITheme,
     dev: boolean,

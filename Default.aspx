@@ -178,6 +178,7 @@
     <script>
         window.passed = { 
             geo: <%=(passedGeo == null ? "null" : json(passedGeo) )%>, 
+            collection: <%=(passedCollection == null ? "null" : json(passedCollection) )%>,
             tag: <%=(passedTag == null ? "null" : json(passedTag) )%>,
             theme: <%=(passedTheme == null ? "null" : json(passedTheme) )%>,
             dev: <%=(dev ? "true": "false")%>,

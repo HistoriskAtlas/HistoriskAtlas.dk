@@ -12,6 +12,7 @@ namespace HistoriskAtlas5.Frontend
     {
         public bool dev, crawler;
         public HAGeo passedGeo;
+        public HACollection passedCollection;
         public HATag passedTag;
         public HATheme passedTheme;
 
@@ -20,10 +21,13 @@ namespace HistoriskAtlas5.Frontend
             string deep = GetDeep();
             dev = (Request.QueryString["dev"] != null ? (Request.QueryString["dev"] != "false") : !Request.Url.Host.Contains("historiskatlas.dk"));
             crawler = Regex.IsMatch(Request.UserAgent, @"bot|crawler", RegexOptions.IgnoreCase);
+
             passedGeo = GetGeo(deep);
             if (passedGeo != null)
                 if ("/" + passedGeo.urlPath != Server.UrlDecode(HttpContext.Current.Request.Url.AbsolutePath)) //TODO: only if direct deep link is detected.
                     HttpContext.Current.Response.Redirect(passedGeo.absUrlPath, true);
+
+            passedCollection = GetCollection(deep);
 
             passedTag = GetTag(deep);
             passedTheme = GetTheme(deep);
@@ -60,6 +64,27 @@ namespace HistoriskAtlas5.Frontend
                 return null;
 
             return geos.data[0];
+        }
+
+        private HACollection GetCollection(string deep)
+        {
+            if (deep == "")
+                return null;
+
+            Match match = new Regex(@"_\(r([0-9]+)\)($|\?)").Match(deep);
+            if (!match.Success)
+                return null;
+
+            int collectionID = int.Parse(match.Groups[1].Value);
+
+            var collectionGeosAPISchema = "{collection_geos:[id,geoid,ordering,showonmap,calcroute,contentid,longitude,latitude]}";
+            string schema = "{collection:[collectionid,title,ugc,cyclic,distance,type,userid," + collectionGeosAPISchema + "]}";
+            HACollections collections = (new Service<HACollections>()).Get("collection.json?v=1&schema=" + schema + "&collectionid=" + collectionID + "&online=true");
+
+            if (collections.data.Length == 0)
+                return null;
+
+            return collections.data[0];
         }
 
         private HATag GetTag(string deep)

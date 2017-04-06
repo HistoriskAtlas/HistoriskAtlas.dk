@@ -1,8 +1,8 @@
 ﻿@component("ha-collections")
 class HaCollections extends Tags implements polymer.Element {
 
-    @property({ type: Array, notify: true })
-    public collections: Array<HaCollection> = [];
+    @property({ type: Array, notify: true, value: [] })
+    public collections: Array<HaCollection>;
 
     @property({ type: Array })
     public geos: Array<HaGeo>;
@@ -21,7 +21,16 @@ class HaCollections extends Tags implements polymer.Element {
 
     public allCollectionsFetched: boolean = false;
     private static awitingGeos: Array<() => any> = [];
-    private static collectionGeosAPISchema = '{collection_geos:[id,geoid,ordering,showonmap,calcroute,contentid,longitude,latitude]}';
+    private static collectionGeosAPISchema = '{collection_geos:[id,geoid,ordering,showonmap,calcroute,contentid,longitude,latitude]}'; //Remeber to apply changes to default.aspx.cs also
+
+    ready() {
+        if (App.passed.collection)
+            HaCollections.awitingGeos.push(() => {
+                var collection = this.getCollectionFromData(this.allCollectionIDs, App.passed.collection, true);
+                this.push('collections', collection);
+                this.select(collection);
+            });
+    }
 
     public getPublishedCollections() {
         if (this.allCollectionsFetched)
@@ -32,7 +41,7 @@ class HaCollections extends Tags implements polymer.Element {
 
         this.allCollectionsFetched = true;
         App.map.showRouteLayer();
-        this.getCollections({ count: 'all', schema: '{collection:[collectionid,title,ugc,cyclic,distance,type,userid,' + HaCollections.collectionGeosAPISchema + ']}', online: true });
+        this.getCollections({ count: 'all', schema: '{collection:[collectionid,title,ugc,cyclic,distance,type,userid,' + HaCollections.collectionGeosAPISchema + ']}', online: true }); //Remeber to apply changes to default.aspx.cs also
 
         //if (!App.haUsers.user.isDefault)
         //    this.getCollectionsFromUser();
@@ -82,21 +91,27 @@ class HaCollections extends Tags implements polymer.Element {
             var collections: Array<HaCollection> = this.collections;
             var allCollectionIDs = this.allCollectionIDs;
             for (var data of result.data) {
-                if (allCollectionIDs.indexOf(data.collectionid) > -1)
-                    continue;
-
-                data.online = sendData.online;
-
-                var collection = new HaCollection(data);
-                if (data.content)
-                    for (var tagId of data.content.tag_contents)
-                        collection.tags.push(App.haTags.byId[tagId]);
-
-                collections.push(collection);
+                var collection = this.getCollectionFromData(allCollectionIDs, data, sendData.online)
+                if (collection)
+                    collections.push(collection);
             }
             this.set('collections', collections);
             this.notifySplices('collections', [{ index: 0, removed: [], addedCount: collections.length, object: this.collections }]);
         })
+    }
+
+    private getCollectionFromData(allCollectionIDs: Array<number>, data: any, online: boolean): HaCollection {
+        if (allCollectionIDs.indexOf(data.collectionid) > -1)
+            return null;
+
+        data.online = online;
+
+        var collection = new HaCollection(data);
+        if (data.content)
+            for (var tagId of data.content.tag_contents)
+                collection.tags.push(App.haTags.byId[tagId]);
+
+        return collection;
     }
 
     @observe('userCreators')

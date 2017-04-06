@@ -54,6 +54,36 @@ namespace HistoriskAtlas5.Frontend
             }
         }
     }
+
+    public class HACollections
+    {
+        public HACollection[] data;
+    }
+    public class HACollection
+    {
+        public int collectionid;
+        public string title;
+        public bool ugc;
+        public bool cyclic;
+        public int distance;
+        public int type;
+        public int userid;
+        public HACollectionGeo[] collection_geos;
+    }
+    public class HACollectionGeo
+    {
+        public int id;
+        public int? geoid;
+        public int ordering;
+        public bool showonmap;
+        public bool calcroute;
+        public int? contentid;
+        public decimal longitude;
+        public decimal latitude;
+    }
+    //var collectionGeosAPISchema = "{collection_geos:[id,geoid,ordering,showonmap,calcroute,contentid,longitude,latitude]}'";
+    //string schema = "{collection:[collectionid,title,ugc,cyclic,distance,type,userid," + collectionGeosAPISchema + "]}";
+
     public class HAContent
     {
         public int contenttypeid;
