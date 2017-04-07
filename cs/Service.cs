@@ -57,6 +57,7 @@ namespace HistoriskAtlas5.Frontend
 
     public class HACollections
     {
+        public static string schema = "{collection:[collectionid,title,ugc,cyclic,distance,type,userid,{collection_geos:[id,geoid,ordering,showonmap,calcroute,contentid,longitude,latitude]}]}";
         public HACollection[] data;
     }
     public class HACollection

@@ -198,6 +198,7 @@
     <Content Include="html\RegionTypeAbouts\102.html" />
     <Content Include="html\RegionTypeAbouts\101.html" />
     <Content Include="images\institution\HoD2017about.jpg" />
+    <Content Include="images\pdfHeader.jpg" />
     <Content Include="images\theme\1001back.jpg" />
     <Content Include="images\theme\1001logo.jpg" />
     <Content Include="images\theme\HoD2017back.jpg" />
@@ -614,6 +615,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="cs\bundles\Bundles.cs" />
+    <Compile Include="cs\proxy\CollectionPDFProxy.cs" />
+    <Compile Include="cs\proxy\PDFProxy.cs" />
     <Compile Include="cs\proxy\GeoPDFProxy.cs" />
     <Compile Include="cs\proxy\BiblioProxy.cs" />
     <Compile Include="cs\proxy\EncodeIDProxy.cs" />

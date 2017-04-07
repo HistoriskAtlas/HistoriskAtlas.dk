@@ -144,7 +144,7 @@
     }
 
     public get link(): string {
-        return location.protocol + '//historiskatlas.dk/' + (this._title ? this._title.replace(new RegExp(' ', 'g'), '_') : '') + '_(r' + this._id + ')';
+        return location.protocol + '//' + location.hostname + (location.port == '80' ? '' : ':' + location.port) + '/' + (this._title ? this._title.replace(new RegExp(' ', 'g'), '_') : '') + '_(r' + this._id + ')';
     }
     //set geos(val: Array<HaCollectionGeo>) {
     //    this.collection_geos = val;
@@ -313,7 +313,7 @@
         Services.update('collection_geo', { id: collection_Geo.id, ordering: collection_Geo.ordering }, (result) => { });
     }
 
-    public showOnMap() {
+    public showOnMap(anim: boolean = true) {
 
         if (this._collection_geos.length == 0)
             return;
@@ -343,7 +343,13 @@
                 maxLon = cg.coord[0];
         }
 
-        App.map.centerAnim([(minLon + maxLon) / 2, (minLat + maxLat) / 2], Math.max((maxLon - minLon) * 1.8, (maxLat - minLat) * 1.5) / 2, true);
+        var coord = [(minLon + maxLon) / 2, (minLat + maxLat) / 2];
+        var radius = Math.max((maxLon - minLon) * 1.8, (maxLat - minLat) * 1.5) / 2;
+
+        if (anim)
+            App.map.centerAnim(coord, radius, true);
+        else
+            App.map.center(coord, radius, true);
     }
 
     public delete() {

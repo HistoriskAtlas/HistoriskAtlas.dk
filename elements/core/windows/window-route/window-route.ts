@@ -64,17 +64,16 @@ class WindowRoute extends polymer.Base implements polymer.Element {
 
         var filename = encodeURIComponent('HistoriskAtlas.dk-' + this.route.title.replace(new RegExp(' ', 'g'), '-') + '.kml');
         var blob = new Blob([kml], { type: 'application/vnd.google-earth.kml+xml' });
-        if (window.navigator.msSaveOrOpenBlob)
-            window.navigator.msSaveBlob(blob, filename);
-        else {
-            var elem = window.document.createElement('a');
-            elem.href = window.URL.createObjectURL(blob);
-            elem.setAttribute('download', filename);
-            document.body.appendChild(elem);
-            elem.click();
-            document.body.removeChild(elem);
-            window.URL.revokeObjectURL(elem.href);
-        }
+        Common.saveBlob(blob, filename);
+    }
+
+    shareImage() {
+        this.route.showOnMap(false);
+        App.map.saveAsPng();
+    }
+
+    sharePDF() {
+        window.open(this.route.link + '.pdf');
     }
 
     shareLink() {

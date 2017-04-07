@@ -77,9 +77,7 @@ namespace HistoriskAtlas5.Frontend
 
             int collectionID = int.Parse(match.Groups[1].Value);
 
-            var collectionGeosAPISchema = "{collection_geos:[id,geoid,ordering,showonmap,calcroute,contentid,longitude,latitude]}";
-            string schema = "{collection:[collectionid,title,ugc,cyclic,distance,type,userid," + collectionGeosAPISchema + "]}";
-            HACollections collections = (new Service<HACollections>()).Get("collection.json?v=1&schema=" + schema + "&collectionid=" + collectionID + "&online=true");
+            HACollections collections = (new Service<HACollections>()).Get("collection.json?v=1&schema=" + HACollections.schema + "&collectionid=" + collectionID + "&online=true");
 
             if (collections.data.Length == 0)
                 return null;
