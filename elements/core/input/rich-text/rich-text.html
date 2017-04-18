@@ -41,11 +41,10 @@
             color: red;
             display: none;
         }
-
+        
         #content:empty:not(:focus) ~ #placeholder {
             display: block !important;
         }
-
         #content:focus {
             padding-top: 25px !important;
         }
@@ -58,6 +57,10 @@
             padding-top: 5px;
         }
 
+        font {
+            font-size:20px;
+        }
+
     </style>
     <template>
 
@@ -68,14 +71,14 @@
             <div id="editorPanel">
 
                 <template is="dom-if" if="[[isIE]]">
-                    <button on-tap="boldTap" on-focus="focusButton" style="font-weight:bold; padding:0px; width:20px; height:20px">B</button>
-                    <button on-tap="italicTap" on-focus="focusButton" style="font-style:italic; padding:0px; width:20px; height:20px">I</button>
-                    <button on-tap="linkTap" on-focus="focusButton" style="padding:0px 2px; height:20px">link</button>
+                    <button on-tap="boldTap" on-focus="focusButton" style="font-weight:bold; padding:0px; width:20px; height:20px" unselectable="on">B</button>
+                    <button on-tap="italicTap" on-focus="focusButton" style="font-style:italic; padding:0px; width:20px; height:20px" unselectable="on">I</button>
+                    <button on-tap="linkTap" on-focus="focusButton" style="padding:0px 2px; height:20px" unselectable="on">link</button>
                 </template>        
                 <template is="dom-if" if="[[!isIE]]">
-                    <paper-icon-button on-tap="boldTap" on-focus="focusButton" icon="ha:boldDK"></paper-icon-button>
-                    <paper-icon-button on-tap="italicTap" on-focus="focusButton" icon="ha:italicDK"></paper-icon-button>
-                    <paper-icon-button on-tap="linkTap" on-focus="focusButton" icon="link"></paper-icon-button>
+                    <paper-icon-button on-tap="boldTap" on-focus="focusButton" icon="ha:boldDK" unselectable="on"></paper-icon-button>
+                    <paper-icon-button on-tap="italicTap" on-focus="focusButton" icon="ha:italicDK" unselectable="on"></paper-icon-button>
+                    <paper-icon-button on-tap="linkTap" on-focus="focusButton" icon="link" unselectable="on"></paper-icon-button>
                 </template>
                 
                 <paper-icon-button on-tap="undoTap" on-focus="focusButton" icon="undo"></paper-icon-button>

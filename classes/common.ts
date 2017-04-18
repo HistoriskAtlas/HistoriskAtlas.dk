@@ -6,8 +6,10 @@
     private static r2hLinebreak: RegExp = new RegExp("\\n", 'gi')
     private static r2hA: RegExp = new RegExp("\\[(https?:\\/\\/.*?) (.*?)\\]", 'gi')
 
-    private static h2rItalic: RegExp = new RegExp('<i>(.*?)<\/i>', 'gi')
-    private static h2rBold: RegExp = new RegExp('<b>(.*?)<\/b>', 'gi')
+    //private static h2rItalic: RegExp = new RegExp('<i>(.*?)<\/i>', 'gi')
+    private static h2rItalic: RegExp = new RegExp('<(?:i|em)>(.*?)<\/(?:i|em)>', 'gi')    
+    //private static h2rBold: RegExp = new RegExp('<b>(.*?)<\/b>', 'gi')
+    private static h2rBold: RegExp = new RegExp('<(?:b|strong)>(.*?)<\/(?:b|strong)>', 'gi')
     private static h2rSpace: RegExp = new RegExp("&nbsp;", 'gi')
     private static h2rLinebreak: RegExp = new RegExp("<br>", 'gi')
     private static h2rDiv: RegExp = new RegExp("<div>(.*?)<\/div>", 'gi')

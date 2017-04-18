@@ -34,7 +34,8 @@ class RichText extends polymer.Base implements polymer.Element {
 
     focus() {
         if (this.editable) {
-            this.focusButton();
+            //this.focusButton();
+            $(this.$.content).focus(); //TODO: needed?
         }
     }
     blur() {
@@ -42,8 +43,9 @@ class RichText extends polymer.Base implements polymer.Element {
             this.set('content', this.immediateContent); //TODO: also on inactivity....?
     }
 
-    focusButton() {
-        $(this.$.content).focus();
+    focusButton(e: Event) {
+        //$(this.$.content).focus();
+        e.preventDefault ? e.preventDefault() : (e.returnValue = false);
     }
 
     keypress(e: any) {
@@ -54,13 +56,16 @@ class RichText extends polymer.Base implements polymer.Element {
 
     input() {
         var elem = <HTMLDivElement>this.$.content;
+
         this.set('immediateContent', elem.innerHTML);
+
         //this.length = elem.innerText.length;
     }
 
     keyup() { //Needed in IE10+?
         var elem = <HTMLDivElement>this.$.content;
-        this.set('immediateContent', elem.innerHTML);
+        //this.set('immediateContent', elem.innerHTML);
+        this.set('immediateContent', this.isIE ? elem.innerHTML.replace(/<\s*font[^>]*>(.*?)<\s*\/\s*font\s*>/gi, '$1') : elem.innerHTML); //IE hack to remove weird font tags...
     }
 
     paste(e: ClipboardEvent) {
@@ -153,9 +158,14 @@ class RichText extends polymer.Base implements polymer.Element {
         //}
 
         //var test = document.getSelection().getRangeAt(0);
-
-
+        //alert(document.getSelection().getRangeAt(0));
+        //if (this.isIE) {
+        //    (<any>document.getSelection().getRangeAt(0)).execCommand(com, false, opts);
+            
+        //}
+        //else
         document.execCommand(com, false, opts);
+        this.input();
     }
 
     @listen('link-url-confirmed')
