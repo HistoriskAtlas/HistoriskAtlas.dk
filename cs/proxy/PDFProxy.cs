@@ -70,13 +70,14 @@ namespace HistoriskAtlas5.Frontend
 
             foreach (HAGeoImage geoimage in geo.geo_images)
             {
-                writeImage("https://secureapi.historiskatlas.dk/api/hadb5.image/" + geoimage.image.id + "?action=scale&amp;size={640:10000}&amp;scalemode=inner");
                 var licens = getLicens(geoimage.image.tags);
-                writeHtml(geoimage.image.text + (licens == null ? "" : (" - " + licens)));
+                var text = geoimage.image.text + (licens == null ? "" : (" - " + licens));
+                writeImage("https://secureapi.historiskatlas.dk/api/hadb5.image/" + geoimage.image.id + "?action=scale&amp;size={640:10000}&amp;scalemode=inner", text);
+                //writeHtml(geoimage.image.text + (licens == null ? "" : (" - " + licens)));
 
 
 
-                //TODO: add year, photographer and licensee also!.........................................................................
+                //TODO: add year, photographer and licensee also!......................................................................... 
 
             }
         }
@@ -116,7 +117,7 @@ namespace HistoriskAtlas5.Frontend
             using (var sr = new StringReader("<div>" + html + "</div>"))
                 XMLWorkerHelper.GetInstance().ParseXHtml(writer, doc, sr);
         }
-        protected void writeImage(string url)
+        protected void writeImage(string url, string text = null)
         {
             //Image image = Image.GetInstance(new Uri(url));
             Image image;
@@ -128,10 +129,20 @@ namespace HistoriskAtlas5.Frontend
                         image = Image.GetInstance(ms.ToArray());
                     }
 
-            var width = (doc.PageSize.Width - doc.LeftMargin - doc.RightMargin);
-            var height = width * (image.Height / image.Width);
-            image.ScaleAbsolute(width, height);
-            doc.Add(image);
+            if (text == null) {
+                var width = (doc.PageSize.Width - doc.LeftMargin - doc.RightMargin);
+                var height = width * (image.Height / image.Width);
+                image.ScaleAbsolute(width, height);
+                doc.Add(image);
+            } else {
+                PdfPTable table = new PdfPTable(1) { KeepTogether = true,  };
+                PdfPCell cell = new PdfPCell(image, true) { Border = Rectangle.NO_BORDER };
+                table.AddCell(cell);
+                PdfPCell textCell = new PdfPCell() { Border = Rectangle.NO_BORDER };
+                textCell.AddElement(new Paragraph(12, text, new Font(Font.FontFamily.HELVETICA, 10, 2)) { SpacingAfter = 15 });
+                table.AddCell(textCell);
+                doc.Add(table);
+            }
         }
         protected void writeHeadline(string text) {
             Chunk c = new Chunk(text, new Font(Font.FontFamily.HELVETICA, 15, 1));

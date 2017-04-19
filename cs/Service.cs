@@ -41,6 +41,7 @@ namespace HistoriskAtlas5.Frontend
         public HAGeoImage[] geo_images;
         public HATagGeo[] tag_geos;
 
+        [JsonIgnore]
         public string urlPath
         {
             get
@@ -48,6 +49,8 @@ namespace HistoriskAtlas5.Frontend
                 return title.Replace(' ', '_').Replace(':', '_').Replace('/', '_') + "_(" + id + ")";
             }
         }
+
+        [JsonIgnore]
         public string absUrlPath
         {
             get
@@ -55,6 +58,8 @@ namespace HistoriskAtlas5.Frontend
                 return HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/" + this.urlPath;
             }
         }
+
+        [JsonIgnore]
         public List<HATag> tags
         {
             get
@@ -79,6 +84,7 @@ namespace HistoriskAtlas5.Frontend
         public string lastname;
         public string about;
 
+        [JsonIgnore]
         public string fullnameAndAbout
         {
             get {
@@ -118,6 +124,8 @@ namespace HistoriskAtlas5.Frontend
         public int ordering;
         public HAText[] texts;
         public HATagContent[] tag_contents;
+
+        [JsonIgnore]
         public List<HATag> tags
         {
             get
@@ -158,6 +166,7 @@ namespace HistoriskAtlas5.Frontend
         public string text;
         public HATagImage[] tag_images;
 
+        [JsonIgnore]
         public List<HATag> tags
         {
             get
@@ -182,6 +191,7 @@ namespace HistoriskAtlas5.Frontend
         public string plurName;
         public int category;
 
+        [JsonIgnore]
         public string urlPath
         {
             get
