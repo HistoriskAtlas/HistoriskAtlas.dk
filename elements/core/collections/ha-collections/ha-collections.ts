@@ -487,32 +487,34 @@ class HaCollections extends Tags implements polymer.Element {
             //this.nextUpdateRouteLayerRequest();
         }
 
-        var lastCG: HaCollectionGeo = collection.cyclic ? collection.collection_geos[collection.collection_geos.length - 1] : null;
+        //var lastCG: HaCollectionGeo = collection.cyclic ? collection.collection_geos[collection.collection_geos.length - 1] : null;
+        var lastCG: HaCollectionGeo = collection.collection_geos[collection.collection_geos.length - 1];
+        var drawPath: boolean = collection.cyclic;
         var totalDistance: number = 0;
         this.waitingForCallbackCount = collection.collection_geos.length - 1;
         var canEdit: boolean = App.haUsers.user.canEditCollection(collection);
 
         for (var cg of collection.collection_geos) { //TODO: Reuse features on collection when present?................
-            //this.updateIconStyle(geo);
-            if (lastCG) {
-                var drawViaPoint = onlyRedrawViaPoints ? false : (cg.isViaPoint && (canEdit || cg.showOnMap))
-                var viaPoint = App.map.routeLayer.addPath(cg.geo.icon.coord4326, lastCG.geo.icon.coord4326, collection, drawViaPoint, lastCG.calcRoute, (feature, distance) => { //TODO: use addFeatureS instead......
-                    collection.features.push(feature);
-                    totalDistance += Math.round(distance);
-                    this.waitingForCallbackCount--;
-                    if (this.waitingForCallbackCount == 0) {
-                        this.set('collections.' + this.collections.indexOf(collection) + '.distance', totalDistance);
-                        //this.nextUpdateRouteLayerRequest();
-                    }
-                });
-
-                if (viaPoint) {
-                    (<any>viaPoint).collection_geo = cg;
-                    if (addedPointIndex == collection.collection_geos.indexOf(cg))
-                        App.map.curHoverFeature = viaPoint;
+            //if (lastCG) {
+            var drawViaPoint = onlyRedrawViaPoints ? false : (cg.isViaPoint && collection == this.collection && (canEdit || cg.showOnMap))
+            var viaPoint = App.map.routeLayer.addPath(cg.geo.icon.coord4326, lastCG.geo.icon.coord4326, collection, drawViaPoint, drawPath, lastCG.calcRoute, (feature, distance) => { //TODO: use addFeatureS instead......
+                collection.features.push(feature);
+                totalDistance += Math.round(distance);
+                this.waitingForCallbackCount--;
+                if (this.waitingForCallbackCount == 0) {
+                    this.set('collections.' + this.collections.indexOf(collection) + '.distance', totalDistance);
+                    //this.nextUpdateRouteLayerRequest();
                 }
+            });
+
+            if (viaPoint) {
+                (<any>viaPoint).collection_geo = cg;
+                if (addedPointIndex == collection.collection_geos.indexOf(cg))
+                    App.map.curHoverFeature = viaPoint;
             }
+            //}
             lastCG = cg;
+            drawPath = true;
         }
 
 

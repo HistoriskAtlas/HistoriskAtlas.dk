@@ -24,7 +24,7 @@
         this.source = source;
     }
 
-    public addPath(loc1: ol.Coordinate, loc2: ol.Coordinate, collection: HaCollection, drawViaPoint: boolean, calcRoute: boolean, callback: (feature: ol.Feature, distance: number) => void): ol.Feature {
+    public addPath(loc1: ol.Coordinate, loc2: ol.Coordinate, collection: HaCollection, drawViaPoint: boolean, drawPath: boolean, calcRoute: boolean, callback: (feature: ol.Feature, distance: number) => void): ol.Feature {
 
         var viaPoint;
         if (drawViaPoint) {
@@ -44,7 +44,9 @@
             this.source.addFeature(viaPoint);
             collection.features.push(viaPoint);
         }
-        
+
+        if (!drawPath)
+            return viaPoint;        
 
         var cacheIndex = (loc1.toString() + 'x' + loc2.toString() + 't' + collection.type + 'c' + calcRoute).replace(/\./g, 'd').replace(/,/g, 'c');
         if (this.cache[cacheIndex]) {

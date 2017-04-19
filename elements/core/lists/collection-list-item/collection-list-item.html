@@ -15,6 +15,7 @@
             display: flex;
             justify-content: center;
             color: #005D9A;
+            flex-shrink: 0;
 
             padding-left:20px;
         }
@@ -30,9 +31,10 @@
         span.title {
             flex-grow: 1;
         }
-        span.distance {
+        /*span.distance {
             padding-right: 8px;
-        }
+            white-space: nowrap;
+        }*/
         paper-checkbox {
             /*pointer-events: none;*/
             --paper-checkbox-unchecked-color: var(--light-gray-color);
@@ -46,7 +48,7 @@
         <div class="listitem light-gray-border" offline$="[[!collection.online]]" open$="[[open]]">
             <span class="icon"><iron-icon icon="timeline"></span>
             <span class="title">[[collection.title]]</span>
-            <span class="distance">[[formatDistance(collection.distance)]]</span>
+            <!--<span class="distance">[[formatDistance(collection.distance)]]</span>-->
             <paper-checkbox noink checked="[[collection.selected]]" on-tap="checkboxTap"></paper-checkbox>
         </div>
     </template>

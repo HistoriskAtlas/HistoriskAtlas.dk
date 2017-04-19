@@ -28,6 +28,12 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     @property({ type: Object })
     public user: HAUser;
 
+    @property({ type: Boolean })
+    public userCreators: boolean;
+
+    @property({ type: Boolean })
+    public profCreators: boolean;
+
     ready() {
         this.isDevOrBeta = Common.isDevOrBeta;
 
@@ -124,7 +130,11 @@ class PanelTheme extends polymer.Base implements polymer.Element {
             //App.haCollections.getPublishedCollections();
             for (var tag of App.haTags.byId[this.theme.tagid].children) {
                 if (tag.isPublicationDestination) //TODO: other category?
-                    routeTopLevels.push(((tagId: number) => <ICollectionTopLevel>{ name: tag.singName, shown: false, selected: false, filter: (collection: HaCollection) => { return collection.tags.indexOf(App.haTags.byId[tagId]) > -1; } })(tag.id));
+                    routeTopLevels.push(((tag: HaTag) => <ICollectionTopLevel>{
+                        name: tag.singName, shown: false, selected: false, ignoreCreators: true, filter: (collection: HaCollection) => {
+                            return collection.tags.indexOf(tag) > -1;
+                        }
+                    })(tag));
             }
         }
         this.set('routeTopLevels', routeTopLevels);
