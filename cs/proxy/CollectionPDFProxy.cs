@@ -22,7 +22,7 @@ namespace HistoriskAtlas5.Frontend
         public override void ProcessRequest(HttpContext context)
         {
             this.context = context;
-            HACollectionsPDF collections = (new Service<HACollectionsPDF>()).Get("collection.json?v=1&count=1&schema=" + HACollectionsPDF.schema  + "&online=true&collectionid=" + routeData.Values["collectionid"] );
+            HACollectionsPDF collections = (new Service<HACollectionsPDF>()).Get("collection.json?v=1&count=1&schema=" + HACollectionsPDF.schema + "&online=true&collectionid=" + routeData.Values["collectionid"] );
             if (collections.data.Length == 0)
                 return;
             HACollectionPDF collection = collections.data[0];
@@ -30,6 +30,10 @@ namespace HistoriskAtlas5.Frontend
             StartRequest();
 
             writeParagraph(collection.title, 20, 1, 20, 10);
+
+
+            writeByLine(collection.content == null ? new List<HATag>() : collection.content.tags, collection.user);
+
             if (collection.content != null)
                 if (collection.content.texts.Length > 0)
                     writeHtml(collection.content.texts[0].text1);
@@ -48,6 +52,9 @@ namespace HistoriskAtlas5.Frontend
 
             foreach (HACollectionGeoPDF cg in collection.collection_geos)
             {
+                if (!cg.showonmap)
+                    continue;
+
                 newPage();
 
                 writeHeadline(cg.headline);
@@ -75,7 +82,8 @@ namespace HistoriskAtlas5.Frontend
 
     public class HACollectionsPDF
     {
-        public static string schema = "{collection:[collectionid,title,ugc,cyclic,distance,type,userid,{content:[{texts:[headline,text1]}]},{collection_geos:[id," + GeoPDFProxyHandler.schema + ",ordering,showonmap,calcroute,{content:[{texts:[headline,text1]}]},longitude,latitude]}]}";
+        //public static string schema = "{collection:[collectionid,title,ugc,cyclic,distance,type,{user:[firstname,lastname,about]},{content:[{texts:[headline,text1]}]},{collection_geos:[id," + GeoPDFProxyHandler.schema + ",ordering,showonmap,calcroute,{content:[{texts:[headline,text1]}]},longitude,latitude]}]}";
+        public static string schema = "{collection:[collectionid,title,ugc,cyclic,distance,type,{user:[firstname,lastname,about]},{content:[{texts:[headline,text1]},{tag_contents:[{tag:[id,plurname,category]}]}]},{collection_geos:[id,{geo:[id,title,intro,lat,lng,{contents:[{texts:[headline,text1]}]},{geo_images:[{image:[id,text]}]},{tag_geos:[{tag:[id,plurname,category]}]},{user:[firstname,lastname,about]}]},ordering,showonmap,calcroute,{content:[{texts:[headline,text1]}]},longitude,latitude]}]}";
         public HACollectionPDF[] data;
     }
     public class HACollectionPDF
@@ -86,7 +94,7 @@ namespace HistoriskAtlas5.Frontend
         public bool cyclic;
         public int distance;
         public int type;
-        public int userid;
+        public HAUser user;
         public HAContent content;
         public HACollectionGeoPDF[] collection_geos;
     }

@@ -44,8 +44,11 @@ class RichText extends polymer.Base implements polymer.Element {
     }
 
     focusButton(e: Event) {
-        //$(this.$.content).focus();
-        e.preventDefault ? e.preventDefault() : (e.returnValue = false);
+        if (e.preventDefault)
+            e.preventDefault();
+
+        $(this.$.content).focus();
+        e.returnValue = false;
     }
 
     keypress(e: any) {

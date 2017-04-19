@@ -17,7 +17,7 @@ namespace HistoriskAtlas5.Frontend
     }
     public class GeoPDFProxyHandler : PDFProxyHandler
     {
-        public static string schema = "{geo:[id,title,intro,lat,lng,{contents:[{texts:[headline,text1]}]},{geo_images:[{image:[id,text]}]}]}";
+        public static string schema = "{geo:[id,title,intro,lat,lng,{contents:[{texts:[headline,text1]}]},{geo_images:[{image:[id,text,{tag_images:[{tag:[id,plurname,category]}]}]}]},{tag_geos:[{tag:[id,plurname,category]}]},{user:[firstname,lastname,about]}]}";
 
         public GeoPDFProxyHandler(RouteData routeData) : base(routeData)
         {

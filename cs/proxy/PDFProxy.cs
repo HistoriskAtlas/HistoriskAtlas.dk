@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Web;
+using System.Net;
 using System.Web.Routing;
 using System.Collections.Generic;
 using iTextSharp.text;
@@ -57,7 +58,8 @@ namespace HistoriskAtlas5.Frontend
         }
 
         protected void writeGeoWithoutTitle(HAGeo geo) {
-            writeHtml(geo.intro);
+            writeByLine(geo.tags, geo.user);
+            writeHtml(geo.intro);            
 
             foreach (HAContent content in geo.contents)
                 if (content.texts.Length > 0)
@@ -69,7 +71,13 @@ namespace HistoriskAtlas5.Frontend
             foreach (HAGeoImage geoimage in geo.geo_images)
             {
                 writeImage("https://secureapi.historiskatlas.dk/api/hadb5.image/" + geoimage.image.id + "?action=scale&amp;size={640:10000}&amp;scalemode=inner");
-                writeHtml(geoimage.image.text);
+                var licens = getLicens(geoimage.image.tags);
+                writeHtml(geoimage.image.text + (licens == null ? "" : (" - " + licens)));
+
+
+
+                //TODO: add year, photographer and licensee also!.........................................................................
+
             }
         }
 
@@ -82,13 +90,44 @@ namespace HistoriskAtlas5.Frontend
             doc.Add(p);
             return p;
         }
+
+        protected void writeByLine(List<HATag> tags, HAUser user) {
+            List<string> institutions = new List<string>();
+            foreach (HATag tag in tags)
+                if (tag.category == 3)
+                    institutions.Add(tag.plurName + (tag.id == 731 ? " / " + user.fullnameAndAbout : ""));
+
+            var byline = institutions.Count == 0 ? user.fullnameAndAbout : string.Join(", ", institutions);
+
+            var licens = getLicens(tags);
+            if (licens != null)
+                byline += " - " + licens;
+            
+            writeParagraph("af " + byline, 11, 2, null, 10);
+        }
+        protected string getLicens(List<HATag> tags)
+        {
+            foreach (HATag tag in tags)
+                if (tag.category == 4)
+                    return tag.plurName;
+            return null;
+        }
         protected void writeHtml(string html) {
             using (var sr = new StringReader("<div>" + html + "</div>"))
                 XMLWorkerHelper.GetInstance().ParseXHtml(writer, doc, sr);
         }
         protected void writeImage(string url)
         {
-            Image image = Image.GetInstance(new Uri(url));
+            //Image image = Image.GetInstance(new Uri(url));
+            Image image;
+            using (WebClient wc = new WebClient())
+                using (Stream stream = wc.OpenRead(url))
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        stream.CopyTo(ms);
+                        image = Image.GetInstance(ms.ToArray());
+                    }
+
             var width = (doc.PageSize.Width - doc.LeftMargin - doc.RightMargin);
             var height = width * (image.Height / image.Width);
             image.ScaleAbsolute(width, height);

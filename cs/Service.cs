@@ -1,9 +1,9 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Net;
 using System.Text;
 using System.Web;
+using System.Collections.Generic;
 
 namespace HistoriskAtlas5.Frontend
 {
@@ -36,8 +36,10 @@ namespace HistoriskAtlas5.Frontend
         public string intro;
         public decimal lat;
         public decimal lng;
+        public HAUser user;
         public HAContent[] contents;
         public HAGeoImage[] geo_images;
+        public HATagGeo[] tag_geos;
 
         public string urlPath
         {
@@ -53,12 +55,37 @@ namespace HistoriskAtlas5.Frontend
                 return HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/" + this.urlPath;
             }
         }
+        public List<HATag> tags
+        {
+            get
+            {
+                var result = new List<HATag>();
+                foreach (HATagGeo tag_geo in tag_geos)
+                    result.Add(tag_geo.tag);
+
+                return result;                    
+            }
+        }
     }
 
     public class HACollections
     {
         public static string schema = "{collection:[collectionid,title,ugc,cyclic,distance,type,userid,{collection_geos:[id,geoid,ordering,showonmap,calcroute,contentid,longitude,latitude]}]}";
         public HACollection[] data;
+    }
+    public class HAUser
+    {
+        public string firstname;
+        public string lastname;
+        public string about;
+
+        public string fullnameAndAbout
+        {
+            get {
+                return firstname + " " + lastname + (about == null ? "" : ", " + about);
+            }
+        }
+
     }
     public class HACollection
     {
@@ -90,6 +117,18 @@ namespace HistoriskAtlas5.Frontend
         public int contenttypeid;
         public int ordering;
         public HAText[] texts;
+        public HATagContent[] tag_contents;
+        public List<HATag> tags
+        {
+            get
+            {
+                var result = new List<HATag>();
+                foreach (HATagContent tag_content in tag_contents)
+                    result.Add(tag_content.tag);
+
+                return result;
+            }
+        }
     }
     public class HAText
     {
@@ -101,10 +140,35 @@ namespace HistoriskAtlas5.Frontend
         public int ordering;
         public HAImage image;
     }
+    public class HATagGeo
+    {
+        public HATag tag;
+    }
+    public class HATagContent
+    {
+        public HATag tag;
+    }
+    public class HATagImage
+    {
+        public HATag tag;
+    }
     public class HAImage
     {
         public int id;
         public string text;
+        public HATagImage[] tag_images;
+
+        public List<HATag> tags
+        {
+            get
+            {
+                var result = new List<HATag>();
+                foreach (HATagImage tag_image in tag_images)
+                    result.Add(tag_image.tag);
+
+                return result;
+            }
+        }
     }
 
 
@@ -116,6 +180,7 @@ namespace HistoriskAtlas5.Frontend
     {
         public int id;
         public string plurName;
+        public int category;
 
         public string urlPath
         {
