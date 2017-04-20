@@ -33,6 +33,7 @@
     }
     .responsive-nudge {
         margin-left: 316px !important; /*300 + 16 WAS 256 + 16*/
+        max-width: calc(100vw - 380px) !important; /* 380 = 300 + 80 */ 
     }
     .responsive-nudge-timelines {
         margin-left: 300px !important;

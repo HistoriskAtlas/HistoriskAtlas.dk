@@ -100,13 +100,13 @@
         this.addLayer(this.iconLayerNonClustered = new IconLayerNonClustered());
 
         this.mapEvents();
-        setTimeout(() => this.updateExtent(), 1000);
-        setTimeout(() => this.updateExtentTimeWarp(), 1100);
+        //setTimeout(() => this.updateExtent(), 1000);
+        //setTimeout(() => this.updateExtentTimeWarp(), 1100);
 
         setTimeout(() => App.global.set('timeWarpActive', LocalStorage.showTimeWarp), 0); //make sure the timewarp opens if it should (IE workaround).
     }
 
-    private updateExtent() {
+    public updateExtent() {
         App.haMaps.updateInView(this.view.calculateExtent(this.getSize()));
         this.extentIsDirty = false;
     }

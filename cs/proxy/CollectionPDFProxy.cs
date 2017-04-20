@@ -83,7 +83,7 @@ namespace HistoriskAtlas5.Frontend
     public class HACollectionsPDF
     {
         //public static string schema = "{collection:[collectionid,title,ugc,cyclic,distance,type,{user:[firstname,lastname,about]},{content:[{texts:[headline,text1]}]},{collection_geos:[id," + GeoPDFProxyHandler.schema + ",ordering,showonmap,calcroute,{content:[{texts:[headline,text1]}]},longitude,latitude]}]}";
-        public static string schema = "{collection:[collectionid,title,ugc,cyclic,distance,type,{user:[firstname,lastname,about]},{content:[{texts:[headline,text1]},{tag_contents:[{tag:[id,plurname,category]}]}]},{collection_geos:[id,{geo:[id,title,intro,lat,lng,{contents:[{texts:[headline,text1]}]},{geo_images:[{image:[id,text]}]},{tag_geos:[{tag:[id,plurname,category]}]},{user:[firstname,lastname,about]}]},ordering,showonmap,calcroute,{content:[{texts:[headline,text1]}]},longitude,latitude]}]}";
+        public static string schema = "{collection:[collectionid,title,ugc,cyclic,distance,type,{user:[firstname,lastname,about]},{content:[{texts:[headline,text1]},{tag_contents:[{tag:[id,plurname,category]}]}]},{collection_geos:[id,{geo:[id,title,intro,lat,lng,{contents:[{texts:[headline,text1]}]},{geo_images:[{image:[id,text,year,photographer,licensee,{tag_images:[{tag:[id,plurname,category]}]}]}]},{tag_geos:[{tag:[id,plurname,category]}]},{user:[firstname,lastname,about]}]},ordering,showonmap,calcroute,{content:[{texts:[headline,text1]}]},longitude,latitude]}]}";
         public HACollectionPDF[] data;
     }
     public class HACollectionPDF

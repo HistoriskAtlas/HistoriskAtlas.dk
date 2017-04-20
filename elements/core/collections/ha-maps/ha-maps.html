@@ -5,9 +5,11 @@
                 display: none;
             }
         </style>
-        <iron-ajax id="ajax"
+        <!--<iron-ajax id="ajax"
                    auto
                    handle-as="json"
-                   on-response="handleResponse"></iron-ajax>
+                   on-response="handleResponse"></iron-ajax>-->
+        <array-selector id="selectorMain" items="{{maps}}" selected="{{mainMap}}"></array-selector>
+        <array-selector id="selectorTimeWarp" items="{{maps}}" selected="{{timeWarpMap}}"></array-selector>
     </template>
 </dom-module>

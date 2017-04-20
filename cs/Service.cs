@@ -164,6 +164,9 @@ namespace HistoriskAtlas5.Frontend
     {
         public int id;
         public string text;
+        public int? year;
+        public string photographer;
+        public string licensee;
         public HATagImage[] tag_images;
 
         [JsonIgnore]
@@ -172,6 +175,9 @@ namespace HistoriskAtlas5.Frontend
             get
             {
                 var result = new List<HATag>();
+                if (tag_images == null)
+                    return result;
+
                 foreach (HATagImage tag_image in tag_images)
                     result.Add(tag_image.tag);
 

@@ -87,7 +87,7 @@ class MapMenu extends polymer.Base implements polymer.Element {
 
     cssClass(lift: boolean, drawerOpen: boolean): string {
         //return (main ? 'primary HAPrimColor' : 'HASecColor') + (lift ? ' lift' : '') + (drawerOpen ? ' responsive-nudge' : '') + (!main && mode == TimeWarpModes.SPLIT ? ' fix' : '');
-        return 'primary ' + (lift ? ' lift' : '') + (drawerOpen ? ' responsive-nudge' : '');
+        return 'main ' + (lift ? ' lift' : '') + (drawerOpen ? ' responsive-nudge' : '');
     }
 
     //public setMap(haMap: HaMap) {
@@ -98,6 +98,17 @@ class MapMenu extends polymer.Base implements polymer.Element {
         return Common.years(startYear, endYear)
         //return (startYear ? startYear + ' - ' : '') + endYear;
     }
+
+    //text(map: HaMap, licensee: string, orgSource: string, about: string): string {
+    //    var result = [];
+    //    if (map.licens)
+    //        result.push('Licens: ' + map.licens.plurName + (licensee ? ' ' + licensee : ''))
+    //    if (orgSource)
+    //        result.push('Kilde: ' + orgSource)
+    //    if (about)
+    //        result.push(about)
+    //    return result.join(' - ');
+    //}
 }
 
 MapMenu.register();

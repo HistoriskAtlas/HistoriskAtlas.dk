@@ -10,8 +10,16 @@
     public title: string;
     public orgStartYear: number;
     public orgEndYear: number;
+
+    private _licens: HaTag;
+    private _licensee: string;
+    private _orgSource: string;
+    private _about: string;
+
     private _previewUrl: string;
     private _source: ol.source.XYZ;
+
+    private extendedDataRequested: boolean;
 
     public inView: boolean;
     public inViewTimeWarp: boolean;
@@ -20,7 +28,7 @@
         this.id = data.id;
 
         if (data.minlat) {
-            var coord = Common.toMapCoord([data.minlon, data.minlat]); //TODO convert on server instead?
+            var coord = Common.toMapCoord([data.minlon, data.minlat]);
             this.minLon = coord[0];
             this.minLat = coord[1];
             coord = Common.toMapCoord([data.maxlon, data.maxlat]);
@@ -33,6 +41,7 @@
 
         this.inView = false;
         this.inViewTimeWarp = false;
+        this.extendedDataRequested = false;
 
         //this._textID = data.textid;
         this.title = data.name;
@@ -44,10 +53,6 @@
             this._previewUrl = location.protocol + '//tile.historiskatlas.dk/tile/' + this.id + '/' + coords[2] + '/' + coords[0] + '/' + coords[1] + '.jpg'
         }
     }
-
-    //public get minRes(): number {
-    //    
-    //}
 
     public static getTileUrlFromMapID(id: number) {
         switch (id) {
@@ -95,24 +100,8 @@
         return HaMap.getTileUrlFromMapID(this.id);
     }
 
-    //get centerLat(): number {
-    //    return this._centerLat;
-    //}
-
-    //get centerLng(): number {
-    //    return this._centerLng;
-    //}
-
     //get id(): number {
     //    return this._id;
-    //}
-
-    //get spanLat(): number {
-    //    return this._spanLat;
-    //}
-
-    //get spanLng(): number {
-    //    return this._spanLng;
     //}
 
     //get textID(): number {
@@ -127,9 +116,55 @@
     //    return this._year;
     //}
 
-    //public test(): string {
-    //    return this._year.toString();
-    //}
+    public get licens(): HaTag {
+        this.requestExtendedData();
+        return this._licens;
+    }
+    public set licens(val: HaTag) {
+        this._licens = val;
+    }
+
+    public get licensee(): string {
+        this.requestExtendedData();
+        return this._licensee;
+    }
+    public set licensee(val: string) {
+        this._licensee = val;
+    }
+
+    public get orgSource(): string {
+        this.requestExtendedData();
+        return this._orgSource;
+    }
+    public set orgSource(val: string) {
+        this._orgSource = val;
+    }
+
+    public get about(): string {
+        this.requestExtendedData();
+        return this._about;
+    }
+    public set about(val: string) {
+        this._about = val;
+    }
+
+    public get tagline(): string {
+        var result = [];
+        if (this.licens)
+            result.push('Licens: ' + this.licens.plurName + (this.licensee ? ' ' + this.licensee : ''))
+        if (this.orgSource)
+            result.push('Kilde: ' + this.orgSource)
+        if (this.about)
+            result.push(this.about)
+        return result.join(' - ');
+    }
+
+    private requestExtendedData() {
+        if (!this.extendedDataRequested) {
+            App.haMaps.loadExtendedData(this);
+            this.extendedDataRequested = true;
+        }
+    }
 
     get previewUrl(): string {
         return this._previewUrl;

@@ -174,6 +174,10 @@ class WindowGeo extends polymer.Base implements polymer.Element {
         setTimeout(() => this.selectedTab = parseInt(<any>this.selectedTab) + delta, 0);
     }
 
+    downloadPDF() {
+        window.open(this.geo.link + '.pdf');
+    }
+
     shareLink() {
         this.$$('#shareLinkDialog').open();
     }

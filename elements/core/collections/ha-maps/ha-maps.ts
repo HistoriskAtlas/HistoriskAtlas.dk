@@ -1,13 +1,13 @@
 ﻿@component("ha-maps")
 class HaMaps extends polymer.Base implements polymer.Element {
-    @property({ type: Array, notify: true })
+    @property({ type: Array, notify: true, value: [] })
     public maps: Array<HaMap>;
 
     @property({ type: Object, notify: true })
-    public mainMap: HaMap & Object;
+    public mainMap: HaMap;
 
     @property({ type: Object, notify: true })
-    public timeWarpMap: HaMap & Object;
+    public timeWarpMap: HaMap;
 
     //public static initMainMapId: number = 161; //Was 51
     public static initTimeWarpMapId: number = 80;
@@ -15,15 +15,19 @@ class HaMaps extends polymer.Base implements polymer.Element {
     public byId: Array<HaMap>;
 
     ready() {
-        this.maps = [];
+        //this.maps = [];
         this.byId = [];
-        this.$.ajax.url = Common.api + 'map.json?ispublic=true&sort={orgproductionendyear:asc}&count=all&v=1&schema={map:[id,name,orgproductionstartyear,orgproductionendyear,ispublic,minlat,maxlat,minlon,maxlon,minz,maxz,iconcoords]}'
+        HaTags.loadedCallbacks.push(() =>
+            Services.get('map', { count: 'all', sort:'{orgproductionendyear:asc}', schema: '{map:[id,name,orgproductionstartyear,orgproductionendyear,minlat,maxlat,minlon,maxlon,minz,maxz,iconcoords]}', online: true }, (result) => this.handleResponse(result.data))
+            //this.$.ajax.url = Common.api + 'map.json?ispublic=true&sort={orgproductionendyear:asc}&count=all&v=1&schema={map:[id,name,orgproductionstartyear,orgproductionendyear,minlat,maxlat,minlon,maxlon,minz,maxz,iconcoords]}'
+        )
     }
 
-    public handleResponse() {
+    public handleResponse(result: any) {
         var newMaps: Array<HaMap> = [];
         var newMap: HaMap;
-        this.$.ajax.lastResponse.data.forEach(data => {
+        //this.$.ajax.lastResponse.data.forEach(data => {
+        for (var data of result) {
             newMap = new HaMap(data);
             //if (newMap.id == Global.defaultTheme.mapid)
             //    HaMaps.defaultMap = newMap;
@@ -33,11 +37,8 @@ class HaMaps extends polymer.Base implements polymer.Element {
             //    this.timeWarpMap = newMap;
             newMaps.push(newMap);
             this.byId[newMap.id] = newMap;
-        });
-
-        HaMaps.defaultMap = this.byId[Global.defaultTheme.mapid];
-        this.mainMap = this.byId[App.global.theme.mapid ? App.global.theme.mapid : Global.defaultTheme.mapid];
-        this.timeWarpMap = this.byId[HaMaps.initTimeWarpMapId];
+        }
+        //});
 
         if (App.isDev) {
             //newMaps.push(new HaMap({ id: 42000, name: 'Mapquest OSM', orgproductionendyear: 2016}))
@@ -52,7 +53,27 @@ class HaMaps extends polymer.Base implements polymer.Element {
             newMaps.push(new HaMap({ id: 42009, name: 'HERE aerial', orgproductionendyear: 2016 }))
         }
 
-        this.maps = newMaps;
+        HaMaps.defaultMap = this.byId[Global.defaultTheme.mapid];
+
+        this.set('maps', newMaps);
+        this.mainMap = this.byId[App.global.theme.mapid ? App.global.theme.mapid : Global.defaultTheme.mapid];
+        this.timeWarpMap = this.byId[HaMaps.initTimeWarpMapId];
+
+        //this.$.selectorMain.select(this.byId[App.global.theme.mapid ? App.global.theme.mapid : Global.defaultTheme.mapid]);
+        //this.$.selectorTimeWarp.select(this.byId[HaMaps.initTimeWarpMapId]);
+
+        App.map.updateExtent();
+        App.map.updateExtentTimeWarp();
+    }
+
+    @observe('mainMap')
+    mainMapChanged(newVal: HaMap) {
+        this.$.selectorMain.select(newVal);
+    }
+
+    @observe('timeWarpMap')
+    timeWarpMapChanged(newVal: HaMap) {
+        this.$.selectorTimeWarp.select(newVal);
     }
 
     public updateInView(extent: ol.Extent, param: string = '.inView') {
@@ -66,6 +87,23 @@ class HaMaps extends polymer.Base implements polymer.Element {
                 this.set(prop, false)
             else 
                 this.set(prop, zoom < map.maxZ && zoom > map.minZ)
+        })
+    }
+
+    public loadExtendedData(map: HaMap) {
+        Services.get('map', { count: 1, schema: '{map:[licenstagid,licensee,source,about]}', id: map.id }, (result) => {
+            var data = result.data[0];
+            var i = this.maps.indexOf(map);
+            if (data.licenstagid)
+                this.set(['maps', i, 'licens'], App.haTags.byId[data.licenstagid]);
+            if (data.licensee)
+                this.set(['maps', i, 'licensee'], data.licensee);
+            if (data.source)
+                this.set(['maps', i, 'orgSource'], data.source);
+            if (data.about)
+                this.set(['maps', i, 'about'], data.about);
+
+            this.notifyPath('maps.' + i + '.tagline', map.tagline);
         })
     }
 }

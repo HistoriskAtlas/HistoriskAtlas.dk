@@ -4,10 +4,12 @@ using System.Web;
 using System.Net;
 using System.Web.Routing;
 using System.Collections.Generic;
+using System.Globalization;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.tool.xml;
 using iTextSharp.text.pdf.draw;
+
 
 namespace HistoriskAtlas5.Frontend
 {
@@ -19,7 +21,7 @@ namespace HistoriskAtlas5.Frontend
         private MemoryStream ms;
         protected PageEvent pageEventHandler;
         protected HttpContext context;
-
+        
         public PDFProxyHandler(RouteData routeData) {
             this.routeData = routeData;
         }
@@ -68,17 +70,17 @@ namespace HistoriskAtlas5.Frontend
                     writeHtml(content.texts[0].text1);
                 }
 
+            newPage();
+
             foreach (HAGeoImage geoimage in geo.geo_images)
             {
                 var licens = getLicens(geoimage.image.tags);
-                var text = geoimage.image.text + (licens == null ? "" : (" - " + licens));
+                var text = geoimage.image.text;
+                text += geoimage.image.year.HasValue ? (geoimage.image.year.Value == 0 ? "" : " - Årstal: ") + geoimage.image.year : "";
+                text += " - Fotograf: " + (string.IsNullOrEmpty(geoimage.image.photographer) ? "Ikke angivet" : geoimage.image.photographer);
+                text += string.IsNullOrEmpty(licens) ? "" : (" - " + licens);
+                text += string.IsNullOrEmpty(geoimage.image.licensee) ? "" : " " + geoimage.image.licensee;
                 writeImage("https://secureapi.historiskatlas.dk/api/hadb5.image/" + geoimage.image.id + "?action=scale&amp;size={640:10000}&amp;scalemode=inner", text);
-                //writeHtml(geoimage.image.text + (licens == null ? "" : (" - " + licens)));
-
-
-
-                //TODO: add year, photographer and licensee also!......................................................................... 
-
             }
         }
 
@@ -179,12 +181,14 @@ namespace HistoriskAtlas5.Frontend
         public PdfTemplate templatePageCount;
         BaseFont bf = null;
         DateTime PrintTime = DateTime.Now;
+        CultureInfo culture;
 
         public Dictionary<string, PdfTemplate> tocTemplates = new Dictionary<string, PdfTemplate>();
         public Dictionary<String, int> toc = new Dictionary<string, int>();
 
         public override void OnOpenDocument(PdfWriter writer, Document document)
         {
+            culture = new CultureInfo("da-DK");
             PrintTime = DateTime.Now;
             bf = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
             cb = writer.DirectContent;
@@ -249,7 +253,7 @@ namespace HistoriskAtlas5.Frontend
 
             cb.BeginText();
             cb.SetFontAndSize(bf, 8);
-            cb.ShowTextAligned(PdfContentByte.ALIGN_RIGHT, PrintTime.ToString(), pageSize.GetRight(40), pageSize.GetBottom(30), 0);
+            cb.ShowTextAligned(PdfContentByte.ALIGN_RIGHT, PrintTime.ToString(culture.DateTimeFormat.LongDatePattern, culture), pageSize.GetRight(40), pageSize.GetBottom(30), 0);
             cb.EndText();
         }
         public override void OnCloseDocument(PdfWriter writer, Document document)

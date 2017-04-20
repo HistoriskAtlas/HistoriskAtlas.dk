@@ -1,12 +1,20 @@
 ﻿<dom-module id="map-menu">
     <template>
         <style>
-            .primary {
+
+            .main {
                 position: fixed;
                 left: 0px;
                 bottom: 0px;
                 margin: 0px 16px 15px 16px;
+                font-size: 12px;
+                display: flex;
+                align-items: center;
+                transition: margin-bottom 0.4s, margin-left ease-in-out 0.3s, max-width ease-in-out 0.3s !important;
+                pointer-events: none;
+                max-width: calc(100vw - 80px);
             }
+
             /*.secondary {
                 right: 0px;
             }*/
@@ -18,9 +26,6 @@
                 right: 60px;
                 bottom: 0px;
             }*/
-            .responsiveNudge {
-                margin-left: 272px; /*256 + 16*/
-            }
             .label {
                 margin-left: 5px;
                 font-weight: bold;
@@ -40,21 +45,37 @@
             }*/
             paper-button {
                 /*max-width: 50%;*/
-                transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1), margin-bottom 0.4s, margin-left ease-in-out 0.3s !important;
-                font-size: 12px;
+                transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1), ease-in-out 0.3s !important;
                 display: flex; 
                 align-items: center;
-                margin-bottom: 15px;
                 text-transform:none;
                 padding: 3.5px 6px;
+                margin-left: 0px;
+                margin-right: 10px;
                 border-radius: 15.5px;
                 background-color: white;
+                pointer-events: all;
+                white-space: nowrap;
+                flex-shrink: 0;
+                align-self: flex-end;
             }
 
             paper-button[elevation="4"] {
                 box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2) !important;
             }
 
+            .text {
+                background-color: #fff;
+                padding: 5px 10px 5px 16px;
+                margin-left: -20px;
+                border-radius: 12px;
+                box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+                font-weight: lighter;
+                font-size: 11px;
+            }
+            .text:empty {
+                display: none;
+            }
 
 
 
@@ -70,12 +91,17 @@
         </style>
         <!--<paper-material elevation="2" class$="[[cssClassWrapper(main,lift)]]" style="display:flex; flex-direction:column; max-width:180px">-->
             <!--<div class$="[[cssClassWrapper(shown)]]" style="display:flex; flex-direction:column; width:200px">-->
-                <paper-button id="button" class$="[[cssClass(lift,drawerOpen)]]" raised="[[raised]]"> <!--toggles active="{{active}}"-->
-                    <span class="label">KORT</span>
-                    <span class="map-title">[[map.title]]</span>
-                    <span class="map-year">[[year(map.orgStartYear,map.orgEndYear)]]</span>
-                    <iron-icon icon="paper-dropdown-menu:arrow-drop-down"></iron-icon>
-                </paper-button>
+
+        <div class$="[[cssClass(lift,drawerOpen)]]">
+            <paper-button id="button" raised="[[raised]]">
+                <!--toggles active="{{active}}"-->
+                <span class="label">KORT</span>
+                <span class="map-title">[[map.title]]</span>
+                <span class="map-year">[[year(map.orgStartYear,map.orgEndYear)]]</span>
+                <iron-icon icon="paper-dropdown-menu:arrow-drop-down"></iron-icon>
+            </paper-button>
+            <div class="text">[[map.tagline]]</div>
+        </div>
                 <!--<div class$="[[cssClassSpacer]]"></div>
                 <paper-button id="buttonSubject" class$="[[cssClassButton]]">
                     <span class="buttonTitle">Emne</span>
