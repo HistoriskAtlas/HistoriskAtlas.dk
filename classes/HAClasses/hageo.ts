@@ -207,7 +207,7 @@
     public get link(): string {
         //var id = this.online ? this._id : TODO: ????? secret key;
         var id = this._id;
-        return location.protocol + '//' + location.hostname + (location.port == '80' ? '' : ':' + location.port) + '/' + (this._title ? this._title.replace(new RegExp(' ', 'g'), '_') : '') + '_(' + id + ')';
+        return location.protocol + '//' + location.hostname + (!location.port ? '' : (':' + location.port)) + '/' + (this._title ? this._title.replace(new RegExp(' ', 'g'), '_') : '') + '_(' + id + ')';
     }
 
     public get institutionTags(): Array<HaTag> {

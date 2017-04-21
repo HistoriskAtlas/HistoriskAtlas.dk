@@ -28,14 +28,14 @@ namespace HistoriskAtlas5.Frontend
 
         public abstract void ProcessRequest(HttpContext context);
 
-        protected void StartRequest() {
+        protected void StartRequest(string urlPath) {
             context.Response.ContentType = "application/PDF";
 
-            doc = new Document();
+            doc = new Document(PageSize.A4, 36f, 36f, 36f, 72f);
             ms = new MemoryStream();
             writer = PdfWriter.GetInstance(doc, ms);
 
-            pageEventHandler = new PageEvent();
+            pageEventHandler = new PageEvent(urlPath);
             writer.PageEvent = pageEventHandler;
 
             doc.Open();
@@ -70,7 +70,8 @@ namespace HistoriskAtlas5.Frontend
                     writeHtml(content.texts[0].text1);
                 }
 
-            newPage();
+            //newPage();
+            writeHtml("<br/><br/>");
 
             foreach (HAGeoImage geoimage in geo.geo_images)
             {
@@ -182,9 +183,14 @@ namespace HistoriskAtlas5.Frontend
         BaseFont bf = null;
         DateTime PrintTime = DateTime.Now;
         CultureInfo culture;
+        string urlPath;
 
         public Dictionary<string, PdfTemplate> tocTemplates = new Dictionary<string, PdfTemplate>();
         public Dictionary<String, int> toc = new Dictionary<string, int>();
+
+        public PageEvent(string urlPath): base() {
+            this.urlPath = urlPath;
+        }
 
         public override void OnOpenDocument(PdfWriter writer, Document document)
         {
@@ -253,7 +259,7 @@ namespace HistoriskAtlas5.Frontend
 
             cb.BeginText();
             cb.SetFontAndSize(bf, 8);
-            cb.ShowTextAligned(PdfContentByte.ALIGN_RIGHT, PrintTime.ToString(culture.DateTimeFormat.LongDatePattern, culture), pageSize.GetRight(40), pageSize.GetBottom(30), 0);
+            cb.ShowTextAligned(PdfContentByte.ALIGN_RIGHT, "Downloaded fra HistoriskAtlas.dk/" + urlPath + " d. " + PrintTime.ToString(culture.DateTimeFormat.LongDatePattern, culture), pageSize.GetRight(40), pageSize.GetBottom(30), 0);
             cb.EndText();
         }
         public override void OnCloseDocument(PdfWriter writer, Document document)

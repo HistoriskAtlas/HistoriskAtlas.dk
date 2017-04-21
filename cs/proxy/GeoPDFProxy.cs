@@ -31,7 +31,7 @@ namespace HistoriskAtlas5.Frontend
                 return;
             HAGeo geo = geos.data[0];
 
-            StartRequest();
+            StartRequest(geo.urlPath);
 
             writeParagraph(geo.title, 20, 1, 20);
             writeGeoWithoutTitle(geo);

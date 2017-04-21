@@ -27,7 +27,7 @@ namespace HistoriskAtlas5.Frontend
                 return;
             HACollectionPDF collection = collections.data[0];
 
-            StartRequest();
+            StartRequest(collection.urlPath);
 
             writeParagraph(collection.title, 20, 1, 20, 10);
 
@@ -97,6 +97,14 @@ namespace HistoriskAtlas5.Frontend
         public HAUser user;
         public HAContent content;
         public HACollectionGeoPDF[] collection_geos;
+
+        public string urlPath
+        {
+            get
+            {
+                return title.Replace(' ', '_').Replace(':', '_').Replace('/', '_') + "_(r" + collectionid + ")";
+            }
+        }
     }
     public class HACollectionGeoPDF
     {

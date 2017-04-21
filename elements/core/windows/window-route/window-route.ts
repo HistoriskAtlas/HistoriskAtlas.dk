@@ -69,11 +69,16 @@ class WindowRoute extends polymer.Base implements polymer.Element {
 
     shareImage() {
         this.route.showOnMap(false);
-        App.map.saveAsPng();
+        App.map.saveAsPng(this.route.title + " - " + this.route.link);
     }
 
     sharePDF() {
         window.open(this.route.link + '.pdf');
+        $(this).append(DialogConfirm.create('get-image', 'Vil du hente et kortudsnit også?'));
+    }
+    @listen('get-image-confirmed')
+    getImageConfirmed() {
+        this.shareImage();
     }
 
     shareLink() {

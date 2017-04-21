@@ -601,7 +601,7 @@
         this.view.setRotation(0);
     }
 
-    public saveAsPng() {
+    public saveAsPng(text: string = null) {
 
         //polyfill for IE and Safari
         if (!HTMLCanvasElement.prototype.toBlob) {
@@ -622,13 +622,20 @@
         }
 
         this.once('postcompose', (event: any) => {
-            var canvas = event.context.canvas;
+            var ctx = <CanvasRenderingContext2D>event.context;
+            var canvas = ctx.canvas;
+            var fulltext = "HistoriskAtlas.dk" + (text ? " - " + text : "");
 
-            //TODO: Draw logo first?................................................
+            ctx.font = "12px Arial";
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillRect(0, canvas.height - 15, canvas.width, 15);
+            ctx.fillStyle = "#000000";
+            ctx.fillText(fulltext, 2, canvas.height - 3, canvas.width - 4);
 
-            var toBlob = canvas.msToBlob ? canvas.msToBlob : canvas.toBlob;
-            canvas.toBlob((blob) => Common.saveBlob(blob, "HistoriskAtlas.dk_kortudsnit.png"));            
+            //var toBlob = canvas.msToBlob ? canvas.msToBlob : canvas.toBlob;
+            (<any>canvas).toBlob((blob) => Common.saveBlob(blob, "HistoriskAtlas.dk_kortudsnit.png"));
         });
+        this.renderSync();
         this.renderSync();
     }
 }

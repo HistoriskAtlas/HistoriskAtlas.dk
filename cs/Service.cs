@@ -103,6 +103,15 @@ namespace HistoriskAtlas5.Frontend
         public int type;
         public int userid;
         public HACollectionGeo[] collection_geos;
+
+        [JsonIgnore]
+        public string urlPath
+        {
+            get
+            {
+                return title.Replace(' ', '_').Replace(':', '_').Replace('/', '_') + "_(r" + collectionid + ")";
+            }
+        }
     }
     public class HACollectionGeo
     {
