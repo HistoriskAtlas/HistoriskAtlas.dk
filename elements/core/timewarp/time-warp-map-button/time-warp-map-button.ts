@@ -10,15 +10,17 @@ class TimeWarpMapButton extends polymer.Base implements polymer.Element {
     @property({ type: Array })
     public maps: Array<HaMap>;
 
-    @property({ type: Number, notify: true })
-    public selected: number;
+    //@property({ type: Number, notify: true })
+    //public selected: number;
 
-    @property({ type: Number })
-    public selectedIndex: number;
+    //@property({ type: Number })
+    //public selectedIndex: number;
 
-    @property({ type: String })
-    public placeholder: string;
+    //@property({ type: String })
+    //public placeholder: string;
 
+    @property({ type: Boolean })
+    public lift: boolean;
 
     constructor() {
         super();
@@ -48,6 +50,16 @@ class TimeWarpMapButton extends polymer.Base implements polymer.Element {
     @observe("map")
     mapChanged() {
         this.update();
+    }
+
+    @observe("map.tagline")
+    mapTaglineChanged() {
+        this.update();
+    }
+
+    @listen("map-select")
+    DialogMapSelect() {
+        this.$.mapSelect.open();
     }
 
     public update() {

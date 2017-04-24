@@ -5,7 +5,7 @@
                 position: absolute;
                 display: block;
             }
-            paper-material {
+            /*paper-material {
                 border-radius: 15px;
                 height: 31px;
             }
@@ -41,22 +41,26 @@
                 min-height: 32px;
                 white-space: nowrap;
                 cursor: pointer;
-            }
+            }*/
 
-            </style>
-        <time-warp-button id="button" lift="[[lift]]">
-            <paper-material elevation="1" class="HASecColor empty">
+        </style>
+        <time-warp-button id="button">
+            <!--<paper-material elevation="1" class="HASecColor empty">
                 <paper-dropdown-menu no-label-float vertical-align="bottom" horizontal-align="left" placeholder="[[placeholder]]">
                     <paper-listbox class="dropdown-content" selected="{{map}}" attr-for-selected="map">
                         <template is="dom-repeat" items="[[maps]]" as="map">
                             <template is="dom-if" if="[[map.inViewTimeWarp]]">
-                                <paper-item map="[[map]]"><span>[[map.title]] [[years(map.orgStartYear,map.orgEndYear)]]</span></paper-item>
+                                <paper-item map="[[map]]">
+                                    <span>[[map.title]] [[years(map.orgStartYear,map.orgEndYear)]]</span>
+                                </paper-item>
                             </template>
                         </template>
                     </paper-listbox>
                 </paper-dropdown-menu>
-            </paper-material>
-            <!--<map-menu map="{{map}}" class="empty" lift="[[lift]]" mode="[[mode]]" selected="{{selected}}"></map-menu>-->
+                <div>[[map.tagline]]</div>
+            </paper-material>-->
+            <map-menu map="{{map}}" class="empty" lift="[[lift]]"></map-menu> <!--drawer-open="false"-->
         </time-warp-button>
+        <dialog-map-select id="mapSelect" maps="[[maps]]" map="{{map}}"></dialog-map-select>
     </template>
 </dom-module>

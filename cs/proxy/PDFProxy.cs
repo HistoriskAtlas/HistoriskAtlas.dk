@@ -159,7 +159,10 @@ namespace HistoriskAtlas5.Frontend
         protected void writeTOCentry(string text) {
             var cb = writer.DirectContent;
             var template = cb.CreateTemplate(50, 50);
-            var paragraph = new Paragraph(text, new Font(Font.FontFamily.HELVETICA));
+
+            var tocText = text.Length > 70 ? text.Substring(0, 64) + " [...]" : text;
+            var paragraph = new Paragraph(tocText, new Font(Font.FontFamily.HELVETICA));
+
             paragraph.Add(new Chunk(new DottedLineSeparator()));
             doc.Add(paragraph);
             cb.AddTemplate(template, doc.PageSize.Width - doc.RightMargin - 50, writer.GetVerticalPosition(false) - 2);
@@ -239,7 +242,8 @@ namespace HistoriskAtlas5.Frontend
         }
 
         public override void OnGenericTag(PdfWriter writer, Document document, Rectangle rect, string text) {
-            toc.Add(text, writer.CurrentPageNumber);
+            if (!toc.ContainsKey(text))
+                toc.Add(text, writer.CurrentPageNumber);
         }
 
         public override void OnEndPage(PdfWriter writer, Document document)

@@ -2,22 +2,22 @@
     <template>
         <style>
 
+            .content {
+                font-size: 12px;
+                max-width: calc(50vw - 25px);
+            }
+
             .main {
                 position: fixed;
                 left: 0px;
                 bottom: 0px;
                 margin: 0px 16px 15px 16px;
-                font-size: 12px;
                 /*display: flex;*/
                 /*align-items: center;*/
                 transition: margin-bottom 0.4s, margin-left ease-in-out 0.3s, max-width ease-in-out 0.3s !important;
                 pointer-events: none;
-                max-width: calc(100vw - 80px);
             }
 
-            /*.secondary {
-                right: 0px;
-            }*/
             .lift {
                 margin-bottom: 79px !important; /*64 + 15*/
             }
@@ -36,6 +36,7 @@
             .map-year {
                 margin-left: 5px;
                 margin-right: 5px;
+                flex-grow: 1;
             }
             /*.spacer {
                 height:1px; 
@@ -56,9 +57,10 @@
                 border-radius: 15.5px;
                 background-color: white;
                 pointer-events: all;
-                white-space: nowrap;
+                /*white-space: nowrap;*/
                 /*flex-shrink: 0;*/
                 /*align-self: flex-end;*/
+                align-items: stretch;
             }
 
             paper-button[elevation="4"] {
@@ -74,9 +76,17 @@
                 font-weight: lighter;
                 font-size: 11px;
             }*/
-            text {
+            .info {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                white-space: nowrap;            
+            }
+
+            .text {
+                margin: 0px 5px 2px 5px;
                 white-space: normal;
-                margin: -3px 3px 3px 3px;
+                /*margin: -3px 3px 3px 3px;*/
                 font-size: 11px;
                 font-weight: lighter;
             }
@@ -99,16 +109,16 @@
         <!--<paper-material elevation="2" class$="[[cssClassWrapper(main,lift)]]" style="display:flex; flex-direction:column; max-width:180px">-->
             <!--<div class$="[[cssClassWrapper(shown)]]" style="display:flex; flex-direction:column; width:200px">-->
 
-        <div class$="[[cssClass(lift,drawerOpen)]]">
-            <paper-button id="button" raised="[[raised]]">
+        <div class$="content [[cssClass(main,lift,drawerOpen)]]">
+            <paper-button id="button" raised="[[raised]]" class$="[[buttonClass(main)]]">
                 <!--toggles active="{{active}}"-->
-                <div>
+                <div class="info">
                     <span class="label">KORT</span>
                     <span class="map-title">[[map.title]]</span>
                     <span class="map-year">[[year(map.orgStartYear,map.orgEndYear)]]</span>
                     <iron-icon icon="paper-dropdown-menu:arrow-drop-down"></iron-icon>
                 </div>
-                <div class="text">[[map.tagline]]</div>
+                <!--<div class="text">[[map.tagline]]</div>-->
             </paper-button>
         </div>
                 <!--<div class$="[[cssClassSpacer]]"></div>

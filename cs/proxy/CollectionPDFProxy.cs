@@ -45,8 +45,19 @@ namespace HistoriskAtlas5.Frontend
             foreach (HACollectionGeoPDF cg in collection.collection_geos) {
                 if (!cg.showonmap)
                     continue;
-                cg.headline = cg.geo == null ? (Char.ConvertFromUtf32(++j + 64) + ". " + (cg.content == null ? "" : cg.content.texts[0].text1)) : ((++i).ToString() + ". " + cg.geo.title);
-                writeTOCentry(cg.headline);                
+
+                if (cg.geo == null)
+                {
+                    cg.headline = (Char.ConvertFromUtf32(++j + 64) + ". " + (cg.content == null ? "" : cg.content.texts[0].text1));
+                    var split = new List<string>(cg.headline.Split(new string[] { "\n" }, StringSplitOptions.None));
+                    cg.headline = split[0];
+                    split.RemoveAt(0);
+                    cg.text = split.Count > 0 ? string.Join("\n", split.ToArray()) : "";
+                }
+                else
+                    cg.headline = (++i).ToString() + ". " + cg.geo.title;
+
+                writeTOCentry(cg.headline);
             }
 
 
@@ -60,6 +71,11 @@ namespace HistoriskAtlas5.Frontend
                 writeHeadline(cg.headline);
                 if (cg.geo != null)
                     writeGeoWithoutTitle(cg.geo);
+                else {
+                    writeHtml("<br/>");
+                    writeHtml(cg.text);
+                }
+
             }
 
 
@@ -118,6 +134,7 @@ namespace HistoriskAtlas5.Frontend
         public HAContent content;
 
         public string headline;
+        public string text;
     }
 
 

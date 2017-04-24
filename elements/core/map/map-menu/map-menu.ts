@@ -1,7 +1,8 @@
 ﻿@component("map-menu")
 class MapMenu extends polymer.Base implements polymer.Element {
-    //@property({ type: Boolean, value: false })
-    //public main: boolean;
+
+    @property({ type: Boolean, value: false })
+    public main: boolean;
 
     @property({ type: Object, notify:true })
     public map: HaMap & Object;
@@ -68,6 +69,13 @@ class MapMenu extends polymer.Base implements polymer.Element {
     buttonTap() {
         //this.selected = this.active ? (this.main ? 2 : 3) : null;
         //this.selected = this.active ? 0 : null;
+
+        if (!this.main)
+        {
+            this.fire('map-select');
+            return;
+        }
+
         if (this.drawerOpen && App.mainMenu.showMenuMaps) {
             this.drawerOpen = false;
             return;
@@ -85,9 +93,13 @@ class MapMenu extends polymer.Base implements polymer.Element {
     //}
 
 
-    cssClass(lift: boolean, drawerOpen: boolean): string {
+    cssClass(main: boolean, lift: boolean, drawerOpen: boolean): string {
         //return (main ? 'primary HAPrimColor' : 'HASecColor') + (lift ? ' lift' : '') + (drawerOpen ? ' responsive-nudge' : '') + (!main && mode == TimeWarpModes.SPLIT ? ' fix' : '');
-        return 'main ' + (lift ? ' lift' : '') + (drawerOpen ? ' responsive-nudge' : '');
+        return (main ? 'main' : 'warp') + (lift ? ' lift' : '') + ((drawerOpen && main) ? ' responsive-nudge' : '');
+    }
+
+    buttonClass(main: boolean) {
+        return main ? "" : "HASecColor";
     }
 
     //public setMap(haMap: HaMap) {

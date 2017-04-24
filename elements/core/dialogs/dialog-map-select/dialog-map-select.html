@@ -1,0 +1,40 @@
+﻿<dom-module id="dialog-map-select">
+    <template>
+        <style>
+            paper-item {
+                font-size: 12px;
+                min-height: 32px;
+                white-space: nowrap;
+                cursor: pointer;
+                display:flex;
+                justify-content: space-between;
+            }
+            paper-item > div:nth-child(1) {
+                margin-right: 10px;
+            }
+
+            paper-dialog-scrollable {
+                --paper-dialog-scrollable: {
+                    box-sizing: border-box;
+                    /*max-width: 360px;*/
+                    max-height: 70vh;
+                }
+            }
+        </style>
+        <paper-dialog id="dialog">
+            <h2>Vælg kort til tidslup</h2>
+            <paper-dialog-scrollable>
+                <paper-listbox class="dropdown-content" selected="{{map}}" attr-for-selected="map">
+                    <template is="dom-repeat" items="[[maps]]" as="map">
+                        <template is="dom-if" if="[[map.inViewTimeWarp]]">
+                            <paper-item map="[[map]]">
+                                <div>[[map.title]]</div>
+                                <div>[[years(map.orgStartYear,map.orgEndYear)]]</div>
+                            </paper-item>
+                        </template>
+                    </template>
+                </paper-listbox>
+            </paper-dialog-scrollable>
+        </paper-dialog>
+    </template>
+</dom-module>
