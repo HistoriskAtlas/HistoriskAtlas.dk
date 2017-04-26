@@ -106,7 +106,7 @@
 
         <div class="listitem light-grey-border">
             <div id="arrowContainer">
-                <paper-icon-button icon="arrow-drop-down" class="arrow" toggles active="{{collectionGeo.uiOpen}}" noink on-tap="arrowTap" hidden$="[[hideArrow(closeable,collectionGeo.showText)]]"></paper-icon-button>
+                <paper-icon-button icon="arrow-drop-down" class="arrow" toggles active="{{collectionGeo.uiOpen}}" noink on-tap="arrowTap" hidden$="[[hideArrow(closeable,collectionGeo.showText,collectionGeo.uiOpen,domChangeCounter)]]"></paper-icon-button>
             </div>
             <span class$="icon via-point-[[collectionGeo.isViaPoint]]"><img src="[[collectionGeo.geo.icon.marker]]"></span>
             <span id="headline">[[headline(collectionGeo.geo.title,collectionGeo.showText,collectionGeo.uiOpen,collectionGeo.*)]]</span>

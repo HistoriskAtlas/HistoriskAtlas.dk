@@ -601,7 +601,20 @@
         this.view.setRotation(0);
     }
 
-    public saveAsPng(text: string = null) {
+
+    public getAsBase64Png(callback: (base64png: string) => void, text: string = null) {
+        this.getCanvas((canvas) => {
+            callback(canvas.toDataURL());
+        }, text);
+    }
+
+    public saveAsPng(text: string = null, filename: string = "HistoriskAtlas.dk - kortudsnit.png") {
+        this.getCanvas((canvas) => {
+            (<any>canvas).toBlob((blob) => Common.saveBlob(blob, filename));
+        }, text);
+    }
+
+    private getCanvas(callback: (canvas: HTMLCanvasElement) => void, text: string) {
 
         //polyfill for IE and Safari
         if (!HTMLCanvasElement.prototype.toBlob) {
@@ -632,8 +645,7 @@
             ctx.fillStyle = "#000000";
             ctx.fillText(fulltext, 2, canvas.height - 3, canvas.width - 4);
 
-            //var toBlob = canvas.msToBlob ? canvas.msToBlob : canvas.toBlob;
-            (<any>canvas).toBlob((blob) => Common.saveBlob(blob, "HistoriskAtlas.dk_kortudsnit.png"));
+            callback(canvas);
         });
         this.renderSync();
         this.renderSync();

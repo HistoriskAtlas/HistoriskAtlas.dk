@@ -305,7 +305,7 @@
             collection_Geo.ordering = Math.round(this.collection_geos[1].ordering / 2);
         } else {
             if (indexEnd == this.collection_geos.length - 1)
-                collection_Geo.ordering = this.collection_geos[this.collection_geos.length - 1].ordering + Math.round(HaCollectionGeo.orderingGap / 2);
+                collection_Geo.ordering = this.collection_geos[this.collection_geos.length - 2].ordering + Math.round(HaCollectionGeo.orderingGap);
             else
                 collection_Geo.ordering = Math.round((this.collection_geos[indexEnd - 1].ordering + this.collection_geos[indexEnd + 1].ordering) / 2);
         }

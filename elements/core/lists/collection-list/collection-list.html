@@ -54,6 +54,7 @@
                 <div class="listitem light-gray-border" on-tap="toggleShown">
                     <paper-icon-button icon="arrow-drop-down" toggles active="[[topLevel.shown]]" noink></paper-icon-button>
                     <span>[[topLevel.name]]</span>
+                    <!--<span>[[topLevel.count]]</span> TODO? -->
                     <paper-checkbox noink checked="[[topLevel.selected]]" on-tap="checkboxTap"></paper-checkbox>
                 </div>
                 <template is="dom-if" if="[[topLevel.shown]]">

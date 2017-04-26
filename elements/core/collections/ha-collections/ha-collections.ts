@@ -72,6 +72,11 @@ class HaCollections extends Tags implements polymer.Element {
 
     @observe('geos.length')
     geosLengthChanged(changeRecord: any) {
+
+
+        //TODO: this causes the routes to fail to load when no geos is included in the theme.... like HoD................................... 
+
+
         if (this.geos.length == 0 || HaCollections.awitingGeos.length == 0)
             return;
 

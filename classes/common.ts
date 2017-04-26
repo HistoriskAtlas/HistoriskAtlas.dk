@@ -7,7 +7,7 @@
     private static r2hA: RegExp = new RegExp("\\[(https?:\\/\\/.*?) (.*?)\\]", 'gi')
 
     //private static h2rItalic: RegExp = new RegExp('<i>(.*?)<\/i>', 'gi')
-    private static h2rItalic: RegExp = new RegExp('<(?:i|em)>(.*?)<\/(?:i|em)>', 'gi')    
+    private static h2rItalic: RegExp = new RegExp('<(?:i|em)>(.*?)<\/(?:i|em)>', 'gi')
     //private static h2rBold: RegExp = new RegExp('<b>(.*?)<\/b>', 'gi')
     private static h2rBold: RegExp = new RegExp('<(?:b|strong)>(.*?)<\/(?:b|strong)>', 'gi')
     private static h2rSpace: RegExp = new RegExp("&nbsp;", 'gi')
@@ -97,7 +97,7 @@
         return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
     }
     public static formatDate(stringDate: string): string {
-         return this.shortDate(new Date(stringDate));
+        return this.shortDate(new Date(stringDate));
     }
     public static shortDate(date: Date): string {
         return date ? date.getDate() + '/' + (date.getMonth() + 1) + '-' + date.getFullYear() : '';
@@ -144,17 +144,45 @@
         document.head.appendChild(link);
     }
 
-    public static saveBlob(blob: Blob, filename: string) {
+    public static get isIE(): boolean {
+        return window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
+    }
+
+    public static savePDF(url: string, title: string, method: string = 'GET', data: string = null) {
+        var loadingText = "Henter PDF";
+        App.loading.show(loadingText)
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                App.loading.hide(loadingText);
+                Common.saveBlob(xhr.response, title); //, false
+            }
+        }
+        xhr.open(method, url, true);
+        xhr.responseType = 'blob';
+        if (method == 'POST') {
+            xhr.setRequestHeader("Content-type", "multipart/form-data");
+            xhr.send(data);
+        }
+        else
+            xhr.send(); 
+    }
+
+    public static saveBlob(blob: Blob, filename: string, forceDownload: boolean = true) {
         if (window.navigator.msSaveOrOpenBlob)
-            window.navigator.msSaveBlob(blob, filename);
+            window.navigator.msSaveOrOpenBlob(blob, filename);
         else {
+            var url = window.URL || (<any>window).webkitURL;
             var elem = window.document.createElement('a');
-            elem.href = window.URL.createObjectURL(blob);
-            elem.setAttribute('download', filename);
+            elem.href = url.createObjectURL(blob);
+            if (forceDownload)
+                elem.setAttribute('download', filename);
+            else
+                elem.target = '_new';
             document.body.appendChild(elem);
             elem.click();
             document.body.removeChild(elem);
-            window.URL.revokeObjectURL(elem.href);
+            url.revokeObjectURL(elem.href);
         }
     }
 }

@@ -10,17 +10,30 @@ class CollectionGeoListItem extends polymer.Base implements polymer.Element {
     @property({ type: Boolean })
     public dragable: boolean;
 
+    @property({ type: Number, value: 0 })
+    public domChangeCounter: number;
+
     closeTap(e: any) {
         this.fire('close', this.collectionGeo);
     }
 
+    @observe('collectionGeo.content.texts.0.text') 
+    textChanged()
+    {
+        this.set('domChangeCounter', this.domChangeCounter + 1);
+    }
     //geoTap(e: any) {
     //    var geo = <HaGeo>e.model.geo;
     //    Common.dom.append(WindowGeo.create(geo));
     //    App.map.centerAnim(geo.coord, 1000, true)
     //}
-    hideArrow(closeable: boolean, showText: boolean): boolean {
-        return closeable ? false : !showText;
+    hideArrow(closeable: boolean, showText: boolean, uiOpen: boolean): boolean {
+        //return closeable ? false : !showText;
+
+        if (uiOpen || closeable)
+            return false;
+
+        return $(this.$.headline).outerWidth() >= this.$.headline.scrollWidth;
     }
 
     arrowTap(e: Event) {

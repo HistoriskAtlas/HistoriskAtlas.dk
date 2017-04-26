@@ -22,7 +22,7 @@ namespace HistoriskAtlas5.Frontend
         public override void ProcessRequest(HttpContext context)
         {
             this.context = context;
-            HACollectionsPDF collections = (new Service<HACollectionsPDF>()).Get("collection.json?v=1&count=1&schema=" + HACollectionsPDF.schema + "&online=true&collectionid=" + routeData.Values["collectionid"] );
+            HACollectionsPDF collections = (new Service<HACollectionsPDF>()).Get("collection.json?v=1&count=1&schema=" + HACollectionsPDF.schema + "&online=true&collectionid=" + routeData.Values["collectionid"]);
             if (collections.data.Length == 0)
                 return;
             HACollectionPDF collection = collections.data[0];
@@ -31,8 +31,31 @@ namespace HistoriskAtlas5.Frontend
 
             writeParagraph(collection.title, 20, 1, 20, 10);
 
-
             writeByLine(collection.content == null ? new List<HATag>() : collection.content.tags, collection.user);
+
+            //var base64png = context.Request.Form["base64png"].Split(new char[] { ',' })[1];
+            //if (base64png != "")
+            //{
+                if (context.Request.Form["download"] == "true")
+                    context.Response.AddHeader("content-disposition", @"attachment; filename=" + collection.urlPath + ".pdf");
+            //byte[] data = Convert.FromBase64String(base64png);
+            
+
+
+            MemoryStream memstream = new MemoryStream();
+            context.Request.InputStream.CopyTo(memstream);
+            memstream.Position = 0;
+            string base64png = null;
+            using (StreamReader reader = new StreamReader(memstream))
+            {
+                base64png = reader.ReadToEnd().Split(new char[] { ',' })[1];
+            }
+            byte[] data = Convert.FromBase64String(base64png);
+
+            writeImage(data);
+            //}
+
+            newPage();
 
             if (collection.content != null)
                 if (collection.content.texts.Length > 0)

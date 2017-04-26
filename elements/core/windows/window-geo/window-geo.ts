@@ -175,7 +175,9 @@ class WindowGeo extends polymer.Base implements polymer.Element {
     }
 
     downloadPDF() {
-        window.open(this.geo.link + '.pdf');
+        //window.open(this.geo.link + '.pdf');
+
+        Common.savePDF(this.geo.link + '.pdf', this.geo.title + " - HistoriskAtlas.dk.pdf");
     }
 
     shareLink() {

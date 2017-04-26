@@ -131,14 +131,23 @@ namespace HistoriskAtlas5.Frontend
                         stream.CopyTo(ms);
                         image = Image.GetInstance(ms.ToArray());
                     }
-
-            if (text == null) {
+            writeImage(image, text);
+        }
+        protected void writeImage(byte[] data, string text = null)
+        {
+            writeImage(Image.GetInstance(data), text);
+        }
+        private void writeImage(Image image, string text) {
+            if (text == null)
+            {
                 var width = (doc.PageSize.Width - doc.LeftMargin - doc.RightMargin);
                 var height = width * (image.Height / image.Width);
                 image.ScaleAbsolute(width, height);
                 doc.Add(image);
-            } else {
-                PdfPTable table = new PdfPTable(1) { KeepTogether = true,  };
+            }
+            else
+            {
+                PdfPTable table = new PdfPTable(1) { KeepTogether = true, };
                 PdfPCell cell = new PdfPCell(image, true) { Border = Rectangle.NO_BORDER };
                 table.AddCell(cell);
                 PdfPCell textCell = new PdfPCell() { Border = Rectangle.NO_BORDER };
@@ -147,6 +156,7 @@ namespace HistoriskAtlas5.Frontend
                 doc.Add(table);
             }
         }
+
         protected void writeHeadline(string text) {
             Chunk c = new Chunk(text, new Font(Font.FontFamily.HELVETICA, 15, 1));
             c.SetGenericTag(text);

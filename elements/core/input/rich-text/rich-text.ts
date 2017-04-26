@@ -29,7 +29,7 @@ class RichText extends polymer.Base implements polymer.Element {
 
     ready() {
         //this.contentChanged();
-        this.isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
+        this.isIE = Common.isIE;
     }
 
     focus() {

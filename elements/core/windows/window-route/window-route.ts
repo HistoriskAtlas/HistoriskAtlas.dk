@@ -69,17 +69,94 @@ class WindowRoute extends polymer.Base implements polymer.Element {
 
     shareImage() {
         this.route.showOnMap(false);
-        App.map.saveAsPng(this.route.title + " - " + this.route.link);
+        App.map.saveAsPng(this.route.title + " - " + this.route.link, this.route.title + " - HistoriskAtlas.dk.png");
     }
 
     sharePDF() {
-        window.open(this.route.link + '.pdf');
-        $(this).append(DialogConfirm.create('get-image', 'Vil du hente et kortudsnit også?'));
+        //window.open(this.route.link + '.pdf');
+        //var loadingText = "Henter PDF"; 
+
+        //App.loading.show(loadingText)
+
+        App.map.getAsBase64Png((base64png) => {
+
+            Common.savePDF(this.route.link + '.pdf', this.route.title + " - HistoriskAtlas.dk.pdf", 'POST', base64png);
+
+            //var xhr = new XMLHttpRequest();
+            //xhr.onreadystatechange = () => {
+            //    if (xhr.readyState == 4 && xhr.status == 200) {
+            //        App.loading.hide(loadingText);
+            //        Common.saveBlob(xhr.response, this.route.title + " - HistoriskAtlas.dk.pdf"); //, false
+            //    }
+            //}
+            //xhr.open('POST', this.route.link + '.pdf', true);
+            //xhr.setRequestHeader("Content-type", "multipart/form-data");
+            //xhr.responseType = 'blob';
+            //xhr.send(base64png);
+
+
+            //var win = window.open("", "PDFwindow");
+
+            //if (win) {
+                //$.post(this.route.link + '.pdf', { base64png: base64png }, function (data) {
+                //    //win.document.write(data);
+                //    var file = window.URL.createObjectURL(new Blob([data]));
+                //    var a = document.createElement("a");
+                //    a.href = file;
+                //    a.target = '_new'
+                //    //a.download = this.response.name || "detailPDF";
+                //    document.body.appendChild(a);
+                //    a.click();
+                //    document.body.removeChild(a);
+                //    window.URL.revokeObjectURL(a.href);
+
+                //});
+            //} else {
+            //    //    //alert('You must allow popups for this map to work.');
+            //}
+
+
+
+            //var pdfForm = document.createElement("form");
+            //if (!Common.isIE)
+            //    pdfForm.target = "PDFwindow";
+            //pdfForm.method = "POST";
+            //pdfForm.action = this.route.link + '.pdf';
+
+            //var pdfInput = document.createElement("input");
+            //pdfInput.name = "base64png";
+            //pdfInput.value = base64png;
+            //pdfForm.appendChild(pdfInput);
+
+            ////if (Common.isIE) {
+            ////    var downloadInput = document.createElement("input");
+            ////    downloadInput.name = "download";
+            ////    downloadInput.value = "true";
+            ////    pdfForm.appendChild(downloadInput);
+            ////}
+
+            //document.body.appendChild(pdfForm);
+
+            //if (Common.isIE)
+            //    pdfForm.submit();
+            //else {
+            //    var win = window.open("", "PDFwindow");
+
+            //    if (win) {
+            //        pdfForm.submit();
+            //    } else {
+            //        //    //alert('You must allow popups for this map to work.');
+            //    }
+            //}
+
+        }, this.route.title + " - " + this.route.link)
+
+        //$(this).append(DialogConfirm.create('get-image', 'Vil du hente et kortudsnit også?'));
     }
-    @listen('get-image-confirmed')
-    getImageConfirmed() {
-        this.shareImage();
-    }
+    //@listen('get-image-confirmed')
+    //getImageConfirmed() {
+    //    this.shareImage();
+    //}
 
     shareLink() {
         this.$.shareLinkDialog.open();
