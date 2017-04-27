@@ -18,7 +18,7 @@ class HaMaps extends polymer.Base implements polymer.Element {
         //this.maps = [];
         this.byId = [];
         HaTags.loadedCallbacks.push(() =>
-            Services.get('map', { count: 'all', sort:'{orgproductionendyear:asc}', schema: '{map:[id,name,orgproductionstartyear,orgproductionendyear,minlat,maxlat,minlon,maxlon,minz,maxz,iconcoords]}', online: true }, (result) => this.handleResponse(result.data))
+            Services.get('map', { count: 'all', sort:'{orgproductionendyear:asc}', schema: '{map:[id,name,orgproductionstartyear,orgproductionendyear,minlat,maxlat,minlon,maxlon,minz,maxz,iconcoords]}', ispublic: true }, (result) => this.handleResponse(result.data))
             //this.$.ajax.url = Common.api + 'map.json?ispublic=true&sort={orgproductionendyear:asc}&count=all&v=1&schema={map:[id,name,orgproductionstartyear,orgproductionendyear,minlat,maxlat,minlon,maxlon,minz,maxz,iconcoords]}'
         )
     }
