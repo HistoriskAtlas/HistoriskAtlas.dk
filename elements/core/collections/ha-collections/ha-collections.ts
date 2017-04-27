@@ -92,7 +92,7 @@ class HaCollections extends Tags implements polymer.Element {
         return result;
     }
 
-    private getCollections(sendData: any, options?: any) {
+    private getCollections(sendData: any) {
         Services.get('collection', sendData, (result) => {
             var collections: Array<HaCollection> = this.collections.slice();
             var allCollectionIDs = this.allCollectionIDs;

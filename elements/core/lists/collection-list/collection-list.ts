@@ -74,26 +74,47 @@ class CollectionList extends polymer.Base implements polymer.Element {
         this.updateTopLevelSelections();
     }
 
-    @observe('collections.splices')
-    collectionsSplices(changeRecord: ChangeRecord<HaCollection>) {
-        //if (this.defaultSelected)
-        //    this.set('collections.' + this.collections.indexOf(collection) + '.selected', true);
+    @observe('collections')
+    collectionsItselfChanged() {
 
-        if (changeRecord && this.defaultSelected)
-            if (changeRecord.indexSplices.length > 0) {
-                var splice = changeRecord.indexSplices[0];
-                for (var i = splice.index; i < splice.index + splice.addedCount; i++)
-                    for (var topLevel of this.topLevels)
-                        if (topLevel.filter(this.collections[i])) {
-                            this.set('collections.' + i + '.selected', true);
-                            break;
+        if (this.collections && this.defaultSelected) {
+            var change = false;
+            CollectionList.ignoreCollectionChanges = true;
+            for (var collection of this.collections)
+                for (var topLevel of this.topLevels)
+                    if (topLevel.filter(collection)) {
+                        if (!collection.selected) {
+                            this.set('collections.' + this.collections.indexOf(collection) + '.selected', true);
+                            change = true;
                         }
-
-            }
-
-        if (this.collections.length > 0)
-            this.updateTopLevelSelections();
+                        break;
+                    }
+            CollectionList.ignoreCollectionChanges = false;
+            if (change)
+                this.updateTopLevelSelections();
+        }
     }
+
+    //@observe('collections.splices')
+    //collectionsSplices(changeRecord: ChangeRecord<HaCollection>) {
+    //    //if (this.defaultSelected)
+    //    //    this.set('collections.' + this.collections.indexOf(collection) + '.selected', true);
+
+    //    if (changeRecord && this.defaultSelected)
+    //        if (changeRecord.indexSplices.length > 0) {
+    //            var splice = changeRecord.indexSplices[0];
+    //            for (var i = splice.index; i < splice.index + splice.addedCount; i++)
+    //                for (var topLevel of this.topLevels)
+    //                    if (topLevel.filter(this.collections[i])) {
+    //                        this.set('collections.' + i + '.selected', true);
+    //                        break;
+    //                    }
+
+    //        }
+
+    //    if (this.collections.length > 0)
+    //        this.updateTopLevelSelections();
+    //}
 
     public updateTopLevelSelections() {
         var topLevels: Array<ICollectionTopLevel> = [];
