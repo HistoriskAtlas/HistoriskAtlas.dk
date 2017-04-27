@@ -1,5 +1,5 @@
 ﻿class IconLayerNonClustered extends IconLayerBase {
-    private source: ol.source.Vector;
+    public source: ol.source.Vector;
 
     private _youAreHerePoint: ol.geom.Point;
     private _youAreHereIcon: ol.Feature;
@@ -22,6 +22,10 @@
     public removeIcon(icon: Icon) {
         this.source.removeFeature(icon);
     }
+
+    //public hasIcon(icon: Icon) {
+    //    (<any>this.source).getFeatures()
+    //}
 
     public toggleYouAreHere() {
         if (this._youAreHereShown) {

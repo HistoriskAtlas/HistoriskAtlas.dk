@@ -1,6 +1,8 @@
 ﻿class HaCollectionGeo {
 
     private _id;
+    private geoid: number;
+    private geoIsPlaceholder: boolean;
     private _geo: HaGeo;
     private _calcRoute: boolean;
     private _showOnMap: boolean;
@@ -22,12 +24,18 @@
 
         this.showText = !!this._contentID;
 
-        if (data.geoid)
-            if (App.haGeos.geos[data.geoid])
+        if (data.geoid) {
+            this.geoid = data.geoid;
+            if (App.haGeos.geos[data.geoid]) {
                 this._geo = App.haGeos.geos[data.geoid];
+                this.geoIsPlaceholder = false;
+            }
+        }
 
-        if (!this._geo)
+        if (!this._geo) {
             this._geo = new HaGeo({ id: data.geoid ? data.geoid : 0, lng: data.longitude, lat: data.latitude, title: '' }, false, false)
+            this.geoIsPlaceholder = true;
+        }
     }
 
     get id(): number {
@@ -38,10 +46,20 @@
     }
 
     get geo(): HaGeo {
+        if (this.geoIsPlaceholder && this.geoid)
+            if (App.haGeos.geos[this.geoid]) {
+                var icon = this._geo.icon;
+                this._geo = App.haGeos.geos[this.geoid];
+                this._geo.icon = icon;
+                icon.geo = this._geo;
+                this.geoIsPlaceholder = false;
+            }
+
         return this._geo;
     }
     set geo(geo: HaGeo) {
         this._geo = geo;
+        this.geoIsPlaceholder = false;
     }
 
     get coord(): ol.Coordinate {

@@ -124,10 +124,11 @@ class CollectionList extends polymer.Base implements polymer.Element {
                 if ((!this.profCreators && !collection.ugc) || (!this.userCreators && collection.ugc))
                     return false;
 
-            var test = topLevelFilter(collection);
-            if (test && this.topLevels.length != 8)
-                var test42 = 42;
-            return test;
+            //var test = topLevelFilter(collection);
+            //if (test && this.topLevels.length != 8)
+            //    var test42 = 42;
+            //return test;
+            return topLevelFilter(collection)
         };
     }
 

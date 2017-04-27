@@ -17,6 +17,7 @@
     public shown: boolean;
     private _isMoving: boolean;
     private _isPartOfCurrentCollection: boolean;
+    private _wasOnPrimaryLayer: boolean;
     public userLayer: boolean;
 
     public icon: Icon;
@@ -83,8 +84,10 @@
         //    if (this.showByCreatorType || this.isByCurrentUser)
         //        this.show();
 
-        if (this.isByCurrentUser)
+        if (this.isByCurrentUser) {
             this.isMoving = true;
+            this._wasOnPrimaryLayer = true;
+        }
 
     }
 
@@ -297,14 +300,19 @@
 
     private moveToLayer(val: boolean) {
         if (val) {
-            if ((<any>IconLayer.source).getFeatures().indexOf(this.icon) > -1)
+            if ((<any>IconLayer.source).getFeatures().indexOf(this.icon) > -1) {
                 IconLayer.source.removeFeature(this.icon);
+                this._wasOnPrimaryLayer = true;
+            }
             this.icon.updateStyle();
             App.map.iconLayerNonClustered.addIcon(this.icon);
         } else {
-            App.map.iconLayerNonClustered.removeIcon(this.icon);
+            var test = (<any>App.map.iconLayerNonClustered.source).getFeatures();
+            if ((<any>App.map.iconLayerNonClustered.source).getFeatures().indexOf(this.icon) > -1)
+                App.map.iconLayerNonClustered.removeIcon(this.icon);
             this.icon.updateStyle();
-            IconLayer.source.addFeature(this.icon);
+            if (this._wasOnPrimaryLayer)
+                IconLayer.source.addFeature(this.icon);
         }
     }
 
