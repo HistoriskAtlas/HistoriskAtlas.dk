@@ -300,6 +300,15 @@
 
     private moveToLayer(val: boolean) {
         if (val) {
+            //var test = <Array<Icon>>(<any>IconLayer.source).getFeatures();
+
+            //var id1 = this._id;
+            //for (var icon of test)
+            //    if (icon.geo === this) {
+            //        var sameIcon = this.icon === icon;
+            //        alert('found!');
+            //    }
+
             if ((<any>IconLayer.source).getFeatures().indexOf(this.icon) > -1) {
                 IconLayer.source.removeFeature(this.icon);
                 this._wasOnPrimaryLayer = true;
@@ -307,7 +316,6 @@
             this.icon.updateStyle();
             App.map.iconLayerNonClustered.addIcon(this.icon);
         } else {
-            var test = (<any>App.map.iconLayerNonClustered.source).getFeatures();
             if ((<any>App.map.iconLayerNonClustered.source).getFeatures().indexOf(this.icon) > -1)
                 App.map.iconLayerNonClustered.removeIcon(this.icon);
             this.icon.updateStyle();
@@ -446,9 +454,38 @@
 
     public delete() {
         //this.hide();
-        Services.delete('geo', { geoid: this._id }, (result) => {
+        var loadText = 'Sletter fortælling';
+        App.loading.show(loadText)
+        Services.get('collection_geo', { geoid: this._id, count: 'all' }, (resultCG) => {
+
+            //TODO: create ALERT... this story is part of some route.... are you sure you wish to.........
+
+            Services.delete('geo', { geoid: this._id }, (result) => {
+
+                this.insertCollectionGeosOnGeoDelete(resultCG.data, loadText);
+
+                App.toast.show('Fortællingen er slettet.');
+                App.loading.hide(loadText)
+            })
+        });
+    }
+    private insertCollectionGeosOnGeoDelete(data: Array<any>, loadText: string) {
+        if (data.length == 0) {
             App.toast.show('Fortællingen er slettet.');
-        })
+            App.loading.hide(loadText)
+            return;
+        }
+
+        var cg = data.pop();
+        delete cg.collectiongeoid;
+        delete cg.created;
+        delete cg.deleted;
+        if (!cg.contentid)
+            delete cg.contentid;
+
+        Services.insert('collection_geo', cg, (result) => {
+            this.insertCollectionGeosOnGeoDelete(data, loadText);
+        });
     }
 
     public zoomUntilUnclustered() {
