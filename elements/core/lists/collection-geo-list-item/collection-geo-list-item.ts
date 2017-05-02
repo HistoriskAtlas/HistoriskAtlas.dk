@@ -47,8 +47,9 @@ class CollectionGeoListItem extends polymer.Base implements polymer.Element {
         if (uiOpen)
             return '';
 
-        if (showText && this.collectionGeo.content)
-            return $('<span>' + this.collectionGeo.content.texts[0].text + '</span>').text();
+        if (showText && this.collectionGeo.content) {
+            return $('<span>' + this.collectionGeo.content.texts[0].text.replace('<br>', ' - ') + '</span>').text();
+        }
 
         return '';
     }

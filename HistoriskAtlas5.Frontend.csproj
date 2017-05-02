@@ -617,6 +617,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="cs\bundles\Bundles.cs" />
+    <Compile Include="cs\Common.cs" />
     <Compile Include="cs\proxy\CollectionPDFProxy.cs" />
     <Compile Include="cs\proxy\PDFProxy.cs" />
     <Compile Include="cs\proxy\GeoPDFProxy.cs" />

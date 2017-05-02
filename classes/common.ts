@@ -40,6 +40,8 @@
 
     public static rich2html(rich: string): string {
         var result: string = rich;
+
+        //reflect changes to this to Common.cs!
         result = result.replace(Common.r2hLinebreak, '<br>'); //Need to be first(?)
         result = result.replace(Common.r2hItalic, '<i>$1</i>');
         result = result.replace(Common.r2hBold, '<b>$1</b>');

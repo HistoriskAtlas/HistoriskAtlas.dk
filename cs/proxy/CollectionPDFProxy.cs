@@ -53,13 +53,17 @@ namespace HistoriskAtlas5.Frontend
             byte[] data = Convert.FromBase64String(base64png);
 
             writeImage(data);
-            //}
+
+            writeParagraph("Rutens længde: " + (collection.distance >= 1000 ? ((float)collection.distance / 1000f).ToString("#.#") + " km" : collection.distance + " m"), 11, 2);
 
             newPage();
 
             if (collection.content != null)
                 if (collection.content.texts.Length > 0)
-                    writeHtml(collection.content.texts[0].text1);
+                {
+                    writeParagraph("Indledning", 12, 1, 20);
+                    writeHtml(Common.RichToHtml(collection.content.texts[0].text1));
+                }
 
             Array.Sort<HACollectionGeoPDF>(collection.collection_geos, (cg1, cg2) => cg1.ordering - cg2.ordering);
             writeParagraph("Punkter på ruten", 12, 1, 20);
@@ -80,23 +84,26 @@ namespace HistoriskAtlas5.Frontend
                 else
                     cg.headline = (++i).ToString() + ". " + cg.geo.title;
 
+                cg.headline = cg.headline.Replace("'", "");
+
                 writeTOCentry(cg.headline);
             }
 
+            newPage();
 
             foreach (HACollectionGeoPDF cg in collection.collection_geos)
             {
                 if (!cg.showonmap)
                     continue;
 
-                newPage();
+                //newPage();
 
                 writeHeadline(cg.headline);
                 if (cg.geo != null)
                     writeGeoWithoutTitle(cg.geo);
                 else {
                     writeHtml("<br/>");
-                    writeHtml(cg.text);
+                    writeHtml(Common.RichToHtml(cg.text) + "<br/><br/>");
                 }
 
             }
