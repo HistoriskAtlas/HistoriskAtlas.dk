@@ -51,7 +51,7 @@
                     <paper-menu class="dropdown-content">
                         <menu-item on-tap="shareKML">Hent som KML-fil (GPS eller Google Earth)</menu-item>
                         <menu-item on-tap="shareImage">Hent som kortudsnit</menu-item>
-                        <menu-item on-tap="sharePDF">Hent rutebeskrivelse (PDF)</menu-item>
+                        <menu-item on-tap="sharePDF" hidden$="[[!route.online]]">Hent rutebeskrivelse (PDF)</menu-item>
                     </paper-menu>
                 </paper-menu-button>
                 <paper-menu-button dynamic-align close-on-activate no-overlap>

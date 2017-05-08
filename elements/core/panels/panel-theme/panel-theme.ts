@@ -22,6 +22,12 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     @property({ type: Boolean })
     public show: boolean;
 
+    @property({ type: Boolean, notify: true })
+    public showMenuRoutes: boolean;
+
+    @property({ type: Boolean, notify: true })
+    public showMainMenu: boolean;
+
     @property({ type: Boolean })
     public isDevOrBeta: boolean;
 
@@ -161,6 +167,12 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     }
     aboutHoD2017Tap() {
         Common.dom.append(WindowInstitution.create(App.haTags.byId[736]));
+    }
+    createNewRouteTap() {
+        this.theme = Global.defaultTheme;
+        this.set('showMenuRoutes', true);
+        this.set('showMainMenu', false);
+        App.haCollections.newRoute();
     }
 
     is1001(theme: ITheme): boolean {

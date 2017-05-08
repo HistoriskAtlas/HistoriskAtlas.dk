@@ -25,7 +25,7 @@ class WindowRoute extends polymer.Base implements polymer.Element {
     @listen('windowbasic.closed') 
     windowBasicClosed() {
         if (this.route) {
-            this.route.saveProp('distance');
+            //this.route.saveProp('distance');
             App.haCollections.deselect(this.route);
         }
         //App.map.routeLayer.clear();

@@ -384,7 +384,7 @@ class HaCollections extends Tags implements polymer.Element {
             this.drawRoute();
         if (prop == 'online')
             App.map.routeLayer.redraw();
-        if (prop == 'title' || prop == 'online' || prop == 'type' || prop == 'cyclic')
+        if ((prop == 'title' || prop == 'online' || prop == 'type' || prop == 'cyclic' || prop == 'distance') && App.haUsers.user.canEditCollection(this.collection))
             this.collection.saveProp(prop);
     }
 
