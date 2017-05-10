@@ -187,6 +187,48 @@
             url.revokeObjectURL(elem.href);
         }
     }
+
+    public static truncateHtml(html: string, reqCount: number) {
+        return this.truncateHtmlInner($('<div>' + html + '</div>').unwrap()[0], reqCount);
+    }
+    private static truncateHtmlInner(elem: HTMLElement, reqCount: number) {
+        var grabText = '', missCount = reqCount, done = false;
+        $(elem).contents().each((i, subElem) => {
+            switch (subElem.nodeType) {
+                case Node.TEXT_NODE:
+
+                    if (subElem.nodeValue.indexOf('.') > -1) {
+                        var sentences = subElem.nodeValue.split('.');
+                        for (var sentence of sentences) {
+                            var text = sentence + (sentences.indexOf(sentence) < sentences.length - 1 ? '.' : '');
+                            grabText += text;
+                            missCount -= text.length;
+                            if (missCount <= 0) {
+                                done = true;
+                                break;
+                            }
+                        }
+                    } else {
+                        grabText += subElem.nodeValue;
+                        missCount -= subElem.nodeValue.length;
+                    }
+                    break;
+                case Node.ELEMENT_NODE:
+                    var childPart = this.truncateHtmlInner(<HTMLElement>subElem, missCount);
+                    grabText += childPart.html;
+                    missCount -= childPart.count;
+                    done = childPart.done;
+                    break;
+            }
+            if (done)
+                return false;
+        });
+        return {
+            html: elem.outerHTML.match(/^<[^>]+>/m)[0] + (grabText.length > 0 ? grabText + '</' + elem.localName + '>' : ''),
+            count: reqCount - missCount,
+            done: done
+        };
+    }
 }
 
 class ChangeRecord<T> {

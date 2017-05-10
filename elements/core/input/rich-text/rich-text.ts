@@ -18,6 +18,15 @@ class RichText extends polymer.Base implements polymer.Element {
     @property({ type: String })
     public placeholder: string;
 
+    @property({ type: Number })
+    public truncateTextAt: number;
+
+    @property({ type: Boolean, value: false })
+    public textIsTruncated: boolean;
+
+    @property({ type: Boolean, value: true })
+    public truncatedTextHidden: boolean;
+
     //@property({ type: Boolean })
     //public showPlaceholder: boolean;
 
@@ -98,7 +107,7 @@ class RichText extends polymer.Base implements polymer.Element {
         if (this.content == null)
             return;
 
-        var content;
+        var content: string;
 
         if ((<any>window).App)
             content = this.content.replace(RichText.matchGeoLink, (g1, g2, g3, g4, g5) => { //TODO: function not needed... use $3 in a string instead?
@@ -111,19 +120,39 @@ class RichText extends polymer.Base implements polymer.Element {
     }
 
     @observe('immediateContent')
-    immediateContentChanged(newVal: string, oldVal: string) {
+    immediateContentChanged() {
         var element = <HTMLDivElement>this.$.content;
 
         //if (this.placeholder && this.editable && !oldVal)
         //    this.showPlaceholder = this.immediateContent == '';
 
-        if (element.innerHTML != this.immediateContent)
-            element.innerHTML = this.immediateContent
+        if (element.innerHTML != this.immediateContent) {
+            if (!this.editable && this.truncateTextAt)
+                this.setTruncatedHtml()
+            else
+                element.innerHTML = this.immediateContent
+        }
 
         if (element.innerText.trim() == '')
             this.set('immediateContent', '');
 
         this.length = element.innerText.length;
+    }
+
+    setTruncatedHtml() {
+        var element = <HTMLDivElement>this.$.content;
+        var truncatedHtml = Common.truncateHtml(this.immediateContent, this.truncateTextAt);
+        this.textIsTruncated = truncatedHtml.html.length < this.immediateContent.length;
+        element.innerHTML = (this.textIsTruncated && this.truncatedTextHidden) ? truncatedHtml.html : this.immediateContent;
+    }
+
+    toggleTruncation() {
+        this.truncatedTextHidden = !this.truncatedTextHidden
+        this.setTruncatedHtml();
+    }
+
+    readmoreText(truncatedTextHidden: boolean): string {
+        return truncatedTextHidden ? 'læs mere' : 'luk';
     }
 
     //@observe('editable')

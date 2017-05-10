@@ -51,7 +51,7 @@
                     <paper-menu class="dropdown-content">
                         <menu-item on-tap="shareKML">Hent som KML-fil (GPS eller Google Earth)</menu-item>
                         <menu-item on-tap="shareImage">Hent som kortudsnit</menu-item>
-                        <menu-item on-tap="sharePDF" hidden$="[[!route.online]]">Hent rutebeskrivelse (PDF)</menu-item>
+                        <menu-item on-tap="sharePDF" hidden$="[[!route.online]]">Hent som PDF</menu-item>
                     </paper-menu>
                 </paper-menu-button>
                 <paper-menu-button dynamic-align close-on-activate no-overlap>
@@ -80,9 +80,9 @@
             </div>
 
             <div class="content">
-                <content-viewer content="{{route.content}}" editing="[[editing]]"></content-viewer>
+                <content-viewer content="{{route.content}}" editing="[[editing]]" truncate-text-at="300"></content-viewer>
                 
-                <div style="display: flex; margin: 0px 10px 20px 10px;">
+                <div style="display: flex; margin: 10px 10px 20px 10px;">
                     <by-line user="[[route.user]]" institutions="[[institutions]]"></by-line>
                     <div class="info-line">
                         <template is="dom-if" if="[[editing]]">

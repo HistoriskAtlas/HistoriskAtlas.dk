@@ -61,10 +61,17 @@
             font-size:20px;
         }
 
+        #readmore {
+            cursor: pointer; 
+            margin-top: 10px;
+            align-self: flex-end;
+        }
+
     </style>
     <template>
 
         <div id="content" contenteditable$="[[editable]]" on-blur="blur" on-focus="focus" on-input="input" on-keyup="keyup" on-keypress="keypress" on-paste="paste"></div>
+        <a id="readmore" hidden$="[[!textIsTruncated]]" on-tap="toggleTruncation">[[readmoreText(truncatedTextHidden)]]</a>
 
         <template is="dom-if" if="[[editable]]">
             <div id="placeholder">[[placeholder]]</div>
