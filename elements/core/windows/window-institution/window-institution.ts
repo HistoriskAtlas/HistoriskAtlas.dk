@@ -28,6 +28,11 @@ class WindowInstitution extends polymer.Base implements polymer.Element {
         return "institution-" + institution.id;
     }
 
+    hideStories(geos: Array<any>): boolean {
+        return geos.length == 0;
+    }
+
+
 }
 
 WindowInstitution.register();

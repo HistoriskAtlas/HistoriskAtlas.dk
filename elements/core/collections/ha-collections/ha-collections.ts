@@ -504,6 +504,9 @@ class HaCollections extends Tags implements polymer.Element {
             //if (lastCG) {
             var drawViaPoint = onlyRedrawViaPoints ? false : (cg.isViaPoint && collection == this.collection && (canEdit || cg.showOnMap))
             var viaPoint = App.map.routeLayer.addPath(cg.geo.icon.coord4326, lastCG.geo.icon.coord4326, collection, drawViaPoint, drawPath, lastCG.calcRoute, (feature, distance) => { //TODO: use addFeatureS instead......
+
+                //TODO: calc extent of the whole collection: ..... console.log(feature.getGeometry().getExtent());
+
                 collection.features.push(feature);
                 totalDistance += Math.round(distance);
                 this.waitingForCallbackCount--;

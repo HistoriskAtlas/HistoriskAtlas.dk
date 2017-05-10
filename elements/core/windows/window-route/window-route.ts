@@ -68,7 +68,7 @@ class WindowRoute extends polymer.Base implements polymer.Element {
     }
 
     shareImage() {
-        this.route.showOnMap(false);
+        this.route.showOnMap(false, true);
         App.map.saveAsPng(this.route.title + " - " + this.route.link, this.route.title + " - HistoriskAtlas.dk.png");
     }
 
@@ -77,7 +77,7 @@ class WindowRoute extends polymer.Base implements polymer.Element {
         //var loadingText = "Henter PDF"; 
 
         //App.loading.show(loadingText)
-        this.route.showOnMap(false);
+        this.route.showOnMap(false, true);
         App.map.getAsBase64Png((base64png) => {
 
             Common.savePDF(this.route.link + '.pdf', this.route.title + " - HistoriskAtlas.dk.pdf", 'POST', base64png);

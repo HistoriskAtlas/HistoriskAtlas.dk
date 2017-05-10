@@ -313,7 +313,7 @@
         Services.update('collection_geo', { id: collection_Geo.id, ordering: collection_Geo.ordering }, (result) => { });
     }
 
-    public showOnMap(anim: boolean = true) {
+    public showOnMap(anim: boolean = true, forSave: boolean = false) {
 
         if (this._collection_geos.length == 0)
             return;
@@ -344,12 +344,13 @@
         }
 
         var coord = [(minLon + maxLon) / 2, (minLat + maxLat) / 2];
-        var radius = Math.max((maxLon - minLon) * 1.8, (maxLat - minLat) * 1.5) / 2;
+        var size = App.map.getSize();
+        var val = forSave ? Math.max((maxLon - minLon) / size[0], (maxLat - minLat) / size[1]) * 1.1 : Math.max((maxLon - minLon) * 1.8, (maxLat - minLat) * 1.5) / 2;
 
         if (anim)
-            App.map.centerAnim(coord, radius, true);
+            App.map.centerAnim(coord, val, true, !forSave);
         else
-            App.map.center(coord, radius, true);
+            App.map.center(coord, val, true, !forSave);
     }
 
     public delete() {

@@ -22,8 +22,13 @@
         .content.institution-228 a { /*1001 fortællinger*/
             color: #ecdf39;
         }
-        .content.institution-233 > .top { /*HoD 2017*/
-            padding-bottom: 280px; 
+
+        .content.institution-233 { /*HoD 2017*/
+            margin: 0px;
+        }
+        .content.institution-233 > .top {
+            /*padding-bottom: 280px;*/ 
+            min-height: 586px;
             background-color: black;
             background-image: url(../../../../images/institution/HoD2017about.jpg);
             background-size: 100%;
@@ -31,6 +36,7 @@
             background-repeat: no-repeat;
             color: white;
         }
+
         .stories {
             margin: 20px 17px 0px 17px; 
         }
@@ -43,7 +49,7 @@
                     <content-viewer content="[[institution.content]]"></content-viewer>
                     <div><a href="[[formatUrl(institution.url)]]" target="_blank">Besøg [[institution.name]] på nettet</a></div>
                 </div>
-                <div class="stories">
+                <div class="stories" hidden$="[[hideStories(geos)]]">
                     <b>Fortællinger</b><br>
                     <geo-list geos="{{geos}}" compare-function="sortByTitle"></geo-list>
                 </div>
