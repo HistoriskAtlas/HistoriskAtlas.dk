@@ -27,7 +27,12 @@ namespace HistoriskAtlas5.Frontend
                 return;
             HACollectionPDF collection = collections.data[0];
 
-            StartRequest(collection.urlPath);
+            var isHoD = collection.content == null ? false : collection.content.tagIDs.Contains(736);
+
+            StartRequest(collection.urlPath, !isHoD);
+
+            if (isHoD)
+                this.writeImage("/images/theme/HoD2017logo.png", null, false, 200f);
 
             writeParagraph(collection.title, 20, 1, 20, 10);
 
@@ -39,20 +44,19 @@ namespace HistoriskAtlas5.Frontend
                 if (context.Request.Form["download"] == "true")
                     context.Response.AddHeader("content-disposition", @"attachment; filename=" + collection.urlPath + ".pdf");
             //byte[] data = Convert.FromBase64String(base64png);
+
             
+            if (context.Request.InputStream.Length > 0) { 
+                MemoryStream memstream = new MemoryStream();
+                context.Request.InputStream.CopyTo(memstream);
+                memstream.Position = 0;
+                string base64png = null;
+                using (StreamReader reader = new StreamReader(memstream))
+                    base64png = reader.ReadToEnd().Split(new char[] { ',' })[1];
+                byte[] data = Convert.FromBase64String(base64png);
 
-
-            MemoryStream memstream = new MemoryStream();
-            context.Request.InputStream.CopyTo(memstream);
-            memstream.Position = 0;
-            string base64png = null;
-            using (StreamReader reader = new StreamReader(memstream))
-            {
-                base64png = reader.ReadToEnd().Split(new char[] { ',' })[1];
+                writeImage(data);
             }
-            byte[] data = Convert.FromBase64String(base64png);
-
-            writeImage(data);
 
             writeParagraph("Rutens længde: " + (collection.distance >= 1000 ? ((float)collection.distance / 1000f).ToString("#.#") + " km" : collection.distance + " m"), 11, 2);
 

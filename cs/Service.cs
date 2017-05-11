@@ -146,6 +146,19 @@ namespace HistoriskAtlas5.Frontend
                 return result;
             }
         }
+
+        [JsonIgnore]
+        public List<int> tagIDs
+        {
+            get
+            {
+                var result = new List<int>();
+                foreach (HATagContent tag_content in tag_contents)
+                    result.Add(tag_content.tag.id);
+
+                return result;
+            }
+        }
     }
     public class HAText
     {

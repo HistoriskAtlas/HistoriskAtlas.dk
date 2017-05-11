@@ -28,7 +28,7 @@ namespace HistoriskAtlas5.Frontend
 
         public abstract void ProcessRequest(HttpContext context);
 
-        protected void StartRequest(string urlPath) {
+        protected void StartRequest(string urlPath, bool defaultHeader = true) {
             context.Response.ContentType = "application/PDF";
 
             doc = new Document(PageSize.A4, 36f, 36f, 36f, 72f);
@@ -40,10 +40,8 @@ namespace HistoriskAtlas5.Frontend
 
             doc.Open();
 
-            var url = HttpContext.Current.Request.Url;
-            var port = url.Port != 80 ? (":" + url.Port) : String.Empty;
-            var absUrl = String.Format("{0}://{1}{2}{3}", url.Scheme, url.Host, port, VirtualPathUtility.ToAbsolute("/images/pdfHeader.jpg"));
-            this.writeImage(absUrl);
+            if (defaultHeader)
+                this.writeImage("/images/pdfHeader.jpg", null, false);
         }
 
         protected void EndRequest()
@@ -120,8 +118,14 @@ namespace HistoriskAtlas5.Frontend
             using (var sr = new StringReader("<div>" + html + "</div>"))
                 XMLWorkerHelper.GetInstance().ParseXHtml(writer, doc, sr);
         }
-        protected void writeImage(string url, string text = null)
+        protected void writeImage(string url, string text = null, bool absUrl = true, float width = 0)
         {
+            if (!absUrl) { 
+                var curUrl = HttpContext.Current.Request.Url;
+                var port = curUrl.Port != 80 ? (":" + curUrl.Port) : String.Empty;
+                url = String.Format("{0}://{1}{2}{3}", curUrl.Scheme, curUrl.Host, port, VirtualPathUtility.ToAbsolute(url));
+            }
+
             //Image image = Image.GetInstance(new Uri(url));
             Image image;
             using (WebClient wc = new WebClient())
@@ -131,18 +135,20 @@ namespace HistoriskAtlas5.Frontend
                         stream.CopyTo(ms);
                         image = Image.GetInstance(ms.ToArray());
                     }
-            writeImage(image, text);
+            writeImage(image, text, width);
         }
         protected void writeImage(byte[] data, string text = null)
         {
-            writeImage(Image.GetInstance(data), text);
+            writeImage(Image.GetInstance(data), text, 0);
         }
-        private void writeImage(Image image, string text) {
+        private void writeImage(Image image, string text, float w) {
             if (text == null)
             {
-                var width = (doc.PageSize.Width - doc.LeftMargin - doc.RightMargin);
+                var width = ((w == 0 ? doc.PageSize.Width : w) - doc.LeftMargin - doc.RightMargin);
                 var height = width * (image.Height / image.Width);
                 image.ScaleAbsolute(width, height);
+                if (w > 0)
+                    image.Alignment = Image.ALIGN_CENTER;
                 doc.Add(image);
             }
             else
