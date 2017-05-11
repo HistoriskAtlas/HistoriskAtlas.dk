@@ -243,7 +243,7 @@ class WindowRoute extends polymer.Base implements polymer.Element {
         geo.title = e.detail.title;
         App.map.centerAnim(geo.coord, 3000, true, true);
         //geo.zoomUntilUnclustered
-        var collection_geo = new HaCollectionGeo({ geoid: geo.id, ordering: this.route.collection_geos[this.route.collection_geos.length - 1].ordering + HaCollectionGeo.orderingGap });
+        var collection_geo = new HaCollectionGeo({ geoid: geo.id, ordering: (this.route.collection_geos.length > 0 ? this.route.collection_geos[this.route.collection_geos.length - 1].ordering : 0) + HaCollectionGeo.orderingGap });
         this.push('route.collection_geos', collection_geo);
         this.route.saveNewCollectionGeo(collection_geo);
         //if (this.route.geos.length > 1) {

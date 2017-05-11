@@ -13,6 +13,7 @@
     private static h2rSpace: RegExp = new RegExp("&nbsp;", 'gi')
     private static h2rLinebreak: RegExp = new RegExp("<br>", 'gi')
     private static h2rDiv: RegExp = new RegExp("<div>(.*?)<\/div>", 'gi')
+    private static h2rP: RegExp = new RegExp("<p>(.*?)<\/p>", 'gi')
     private static h2rA: RegExp = new RegExp("<a href=[\"'](https?:\\/\\/.*?)[\"']>(.*?)<\\/a>", 'gi')
 
     public static dom = $(document.body);
@@ -56,6 +57,7 @@
         result = result.replace(Common.h2rBold, "''$1''");
         result = result.replace(Common.h2rSpace, " ");
         result = result.replace(Common.h2rDiv, "\n$1");
+        result = result.replace(Common.h2rP, "$1\n");
         result = result.replace(Common.h2rA, "[$1 $2]");
         result = result.replace(Common.h2rLinebreak, "\n"); //Needs to be last
         return result;

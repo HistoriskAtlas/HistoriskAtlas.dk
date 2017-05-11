@@ -79,7 +79,7 @@ namespace HistoriskAtlas5.Frontend
                     var split = new List<string>(cg.headline.Split(new string[] { "\n" }, StringSplitOptions.None));
                     cg.headline = split[0];
                     split.RemoveAt(0);
-                    cg.text = split.Count > 0 ? string.Join("\n", split.ToArray()) : "";
+                    cg.text = split.Count > 0 ? string.Join("\n", split.ToArray()).Replace("'''", "").Replace("''", "") : "";
                 }
                 else
                     cg.headline = (++i).ToString() + ". " + cg.geo.title;
