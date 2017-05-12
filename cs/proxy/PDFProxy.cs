@@ -16,7 +16,7 @@ namespace HistoriskAtlas5.Frontend
     public abstract class PDFProxyHandler : IHttpHandler
     {
         protected RouteData routeData;
-        private Document doc;
+        protected Document doc;
         private PdfWriter writer;
         private MemoryStream ms;
         protected PageEvent pageEventHandler;
@@ -31,7 +31,7 @@ namespace HistoriskAtlas5.Frontend
         protected void StartRequest(string urlPath, bool defaultHeader = true) {
             context.Response.ContentType = "application/PDF";
 
-            doc = new Document(PageSize.A4, 36f, 36f, 36f, 72f);
+            doc = new Document(PageSize.A4, 36f, 36f, 36f, defaultHeader ? 72f : 150f);
             ms = new MemoryStream();
             writer = PdfWriter.GetInstance(doc, ms);
 
@@ -107,6 +107,23 @@ namespace HistoriskAtlas5.Frontend
             
             writeParagraph("af " + byline, 11, 2, null, 10);
         }
+
+        protected void writeHoDLines() {
+            PdfContentByte cb = writer.DirectContent;
+            cb.SetLineWidth(0.5f);
+            cb.SetRGBColorStroke(0, 0, 0);
+
+            cb.MoveTo(doc.PageSize.Width / 3f, doc.PageSize.Height);
+            cb.LineTo(doc.PageSize.Width / 3f, doc.PageSize.Height * (3f / 4f));
+            cb.LineTo(0, doc.PageSize.Height * (3f / 4f) - (doc.PageSize.Width / 3f) * 0.4f);
+
+            cb.MoveTo(doc.PageSize.Width * (2f / 3f), 0);
+            cb.LineTo(doc.PageSize.Width * (2f / 3f), doc.PageSize.Height * (1f / 4f));
+            cb.LineTo(doc.PageSize.Width, doc.PageSize.Height * (1f / 4f) + (doc.PageSize.Width / 3f) * 0.4f);
+
+            cb.Stroke();
+        }
+
         protected string getLicens(List<HATag> tags)
         {
             foreach (HATag tag in tags)
@@ -118,7 +135,7 @@ namespace HistoriskAtlas5.Frontend
             using (var sr = new StringReader("<div>" + html + "</div>"))
                 XMLWorkerHelper.GetInstance().ParseXHtml(writer, doc, sr);
         }
-        protected void writeImage(string url, string text = null, bool absUrl = true, float width = 0)
+        protected void writeImage(string url, string text = null, bool absUrl = true, float width = 0, float left = 0, float bottom = 0)
         {
             if (!absUrl) { 
                 var curUrl = HttpContext.Current.Request.Url;
@@ -135,20 +152,20 @@ namespace HistoriskAtlas5.Frontend
                         stream.CopyTo(ms);
                         image = Image.GetInstance(ms.ToArray());
                     }
-            writeImage(image, text, width);
+            writeImage(image, text, width, left, bottom);
         }
         protected void writeImage(byte[] data, string text = null)
         {
-            writeImage(Image.GetInstance(data), text, 0);
+            writeImage(Image.GetInstance(data), text, 0, 0, 0);
         }
-        private void writeImage(Image image, string text, float w) {
+        private void writeImage(Image image, string text, float w, float left, float bottom) {
             if (text == null)
             {
-                var width = ((w == 0 ? doc.PageSize.Width : w) - doc.LeftMargin - doc.RightMargin);
+                var width = w == 0 ? doc.PageSize.Width - doc.LeftMargin - doc.RightMargin : w;
                 var height = width * (image.Height / image.Width);
                 image.ScaleAbsolute(width, height);
                 if (w > 0)
-                    image.Alignment = Image.ALIGN_CENTER;
+                    image.SetAbsolutePosition(left, bottom);
                 doc.Add(image);
             }
             else

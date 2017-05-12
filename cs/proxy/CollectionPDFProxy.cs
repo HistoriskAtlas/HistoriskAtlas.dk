@@ -29,23 +29,31 @@ namespace HistoriskAtlas5.Frontend
 
             var isHoD = collection.content == null ? false : collection.content.tagIDs.Contains(736);
 
+            if (context.Request.Form["download"] == "true")
+                context.Response.AddHeader("content-disposition", @"attachment; filename=" + collection.urlPath + ".pdf");
+
             StartRequest(collection.urlPath, !isHoD);
 
-            if (isHoD)
-                this.writeImage("/images/theme/HoD2017logo.png", null, false, 200f);
+            if (isHoD) {
+                this.writeImage("/images/theme/HoD2017logo.png", null, false, 140f, (doc.PageSize.Width - 140f) / 2f, doc.PageSize.Height - 110f);
+                this.writeImage("/images/logos/nordea-fonden-black-logo.png", null, false, 110f, doc.PageSize.Width - doc.RightMargin - 110f, 70f);
+                this.writeImage("/images/pdfHeader.jpg", null, false, 180f, doc.LeftMargin, 70f);
+                this.writeHoDLines();
+                doc.SetMargins(doc.LeftMargin, doc.RightMargin, doc.TopMargin, 72f);                
+            }
 
-            writeParagraph(collection.title, 20, 1, 20, 10);
-
+            writeParagraph(collection.title, 25, 1, isHoD ? 130 : 20, 0);
             writeByLine(collection.content == null ? new List<HATag>() : collection.content.tags, collection.user);
 
-            //var base64png = context.Request.Form["base64png"].Split(new char[] { ',' })[1];
-            //if (base64png != "")
-            //{
-                if (context.Request.Form["download"] == "true")
-                    context.Response.AddHeader("content-disposition", @"attachment; filename=" + collection.urlPath + ".pdf");
-            //byte[] data = Convert.FromBase64String(base64png);
+            if (collection.content != null)
+                if (collection.content.texts.Length > 0)
+                {
+                    writeParagraph("Indledning", 12, 1, 45);
+                    writeHtml(Common.RichToHtml(collection.content.texts[0].text1));
+                }
 
-            
+            newPage();
+
             if (context.Request.InputStream.Length > 0) { 
                 MemoryStream memstream = new MemoryStream();
                 context.Request.InputStream.CopyTo(memstream);
@@ -57,17 +65,8 @@ namespace HistoriskAtlas5.Frontend
 
                 writeImage(data);
             }
-
             writeParagraph("Rutens længde: " + (collection.distance >= 1000 ? ((float)collection.distance / 1000f).ToString("#.#") + " km" : collection.distance + " m"), 11, 2);
 
-            newPage();
-
-            if (collection.content != null)
-                if (collection.content.texts.Length > 0)
-                {
-                    writeParagraph("Indledning", 12, 1, 20);
-                    writeHtml(Common.RichToHtml(collection.content.texts[0].text1));
-                }
 
             Array.Sort<HACollectionGeoPDF>(collection.collection_geos, (cg1, cg2) => cg1.ordering - cg2.ordering);
             writeParagraph("Punkter på ruten", 12, 1, 20);
