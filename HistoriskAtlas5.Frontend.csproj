@@ -605,7 +605,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="bowerupdate.bat" />
-    <Content Include="pdf\Vejledning til skribenter på HistoriskAtlas.pdf" />
+    <Content Include="pdf\gammel Vejledning til skribenter på HistoriskAtlas.pdf" />
     <None Include="Properties\PublishProfiles\beta.historiskatlas.dkNY.pubxml" />
     <None Include="Properties\PublishProfiles\historiskatlas.dkNY.pubxml" />
     <None Include="web.Debug.config">

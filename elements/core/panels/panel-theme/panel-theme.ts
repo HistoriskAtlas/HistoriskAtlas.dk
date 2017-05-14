@@ -169,10 +169,19 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         Common.dom.append(WindowInstitution.create(App.haTags.byId[736]));
     }
     createNewRouteTap() {
+        if (App.haUsers.user.isDefault) {
+            $(this).append(DialogConfirm.create('log-in', 'Du skal være logget ind for at kunne oprette et turforslag. Vil du logge ind nu?'));
+            return;
+        }
+
         this.theme = Global.defaultTheme;
         this.set('showMenuRoutes', true);
         this.set('showMainMenu', false);
         App.haCollections.newRoute();
+    }
+    @listen('log-in-confirmed')
+    deleteContentConfirmed(e: any) {
+        Common.dom.append(WindowLogin.create());
     }
 
     is1001(theme: ITheme): boolean {

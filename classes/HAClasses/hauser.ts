@@ -110,7 +110,8 @@
     get canAccessHoD2017(): boolean {
         if (this.isAdmin)
             return true;
-        return this.currentInstitution ? this.currentInstitution.id == 233 : false; //Historier om Danmark
+        //return this.currentInstitution ? this.currentInstitution.id == 233 : false; //Historier om Danmark
+        return this.isPro;
     }
 
     public canEdit(geo: HaGeo): boolean {
