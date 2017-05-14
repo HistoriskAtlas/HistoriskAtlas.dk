@@ -184,6 +184,10 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         Common.dom.append(WindowLogin.create());
     }
 
+    guideRouteTap() {
+        window.open('../../../pdf/Vejledning til at lave turforslag på HistoriskAtlas.dk.pdf', '_blank')
+    }
+
     is1001(theme: ITheme): boolean {
         return theme.id == '1001';
     }
