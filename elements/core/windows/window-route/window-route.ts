@@ -36,10 +36,10 @@ class WindowRoute extends polymer.Base implements polymer.Element {
         var via: Array<number> = [];
         for (var cg of this.route.collection_geos) {
             var coord = Common.fromMapCoord(cg.coord);
-            coords.push(coord[1].toFixed(7) + ',' + coord[0].toFixed(7));
-            if (cg.isViaPoint)
-                via.push(this.route.collection_geos.indexOf(cg) + 1);
-        }
+            if (!cg.isViaPoint || cg.showOnMap)
+                //via.push(this.route.collection_geos.indexOf(cg) + 1);
+            //else
+                coords.push(coord[1].toFixed(7) + ',' + coord[0].toFixed(7));}
         if (this.route.cyclic)
             coords.push(coords[0]);
 
