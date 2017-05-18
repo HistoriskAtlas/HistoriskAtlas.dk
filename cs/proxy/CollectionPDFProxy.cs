@@ -83,9 +83,10 @@ namespace HistoriskAtlas5.Frontend
                     cg.headline = split[0];
                     split.RemoveAt(0);
                     cg.text = split.Count > 0 ? string.Join("\n", split.ToArray()).Replace("'''", "").Replace("''", "") : "";
-                }
-                else
+                } else { 
                     cg.headline = (++i).ToString() + ". " + cg.geo.title;
+                    cg.text = (cg.content == null ? "" : cg.content.texts[0].text1);
+                }
 
                 cg.headline = cg.headline.Replace("'", "");
 
@@ -103,7 +104,14 @@ namespace HistoriskAtlas5.Frontend
 
                 writeHeadline(cg.headline);
                 if (cg.geo != null)
+                {
+                    if (cg.text.Length > 0) { 
+                        writeHtml(Common.RichToHtml(cg.text) + "<br/><br/>");
+                        writeParagraph(cg.geo.title, 12, 1);
+                    }
+
                     writeGeoWithoutTitle(cg.geo);
+                }
                 else {
                     writeHtml("<br/>");
                     writeHtml(Common.RichToHtml(cg.text) + "<br/><br/>");

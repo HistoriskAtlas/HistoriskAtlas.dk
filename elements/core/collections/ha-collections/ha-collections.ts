@@ -26,7 +26,7 @@ class HaCollections extends Tags implements polymer.Element {
     ready() {
         if (App.passed.collection) {
             //HaCollections.awitingGeos.push(() => {
-            var collection = this.getCollectionFromData(this.allCollectionIDs, App.passed.collection, true);
+            var collection = this.getCollectionFromData(App.passed.collection, true); //this.allCollectionIDs, 
             this.push('collections', collection);
             this.select(collection);
             //});
@@ -97,7 +97,13 @@ class HaCollections extends Tags implements polymer.Element {
             var collections: Array<HaCollection> = this.collections.slice();
             var allCollectionIDs = this.allCollectionIDs;
             for (var data of result.data) {
-                var collection = this.getCollectionFromData(allCollectionIDs, data, sendData.online)
+                if (allCollectionIDs.indexOf(data.collectionid) > -1)
+                    for (var collection of this.collections)
+                        if (collection.id == data.collectionid) {
+                            collections.splice(collections.indexOf(collection), 1);
+                            break;
+                        }                    
+                var collection = this.getCollectionFromData(data, sendData.online) //allCollectionIDs, 
                 if (collection)
                     collections.push(collection);
             }
@@ -106,10 +112,10 @@ class HaCollections extends Tags implements polymer.Element {
         })
     }
 
-    private getCollectionFromData(allCollectionIDs: Array<number>, data: any, online: boolean): HaCollection {
-        if (allCollectionIDs.indexOf(data.collectionid) > -1) {
-            return null;
-        }
+    private getCollectionFromData(data: any, online: boolean): HaCollection { //allCollectionIDs: Array<number>, 
+        //if (allCollectionIDs.indexOf(data.collectionid) > -1) {
+        //    return null;
+        //}
 
         data.online = online;
 
