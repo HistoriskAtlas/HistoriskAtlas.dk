@@ -318,39 +318,43 @@
         if (this._collection_geos.length == 0)
             return;
 
-        //for (var geo of this.geos) {
-
-        //}
-
         if (this._collection_geos.length == 1) {
-            App.map.centerAnim(this.collection_geos[0].coord, 10000, true);
+            App.map.center(this.collection_geos[0].coord, 10000, true, true, true, anim);
             return;
         }
 
-        var minLon: number = Number.MAX_VALUE;
-        var maxLon: number = Number.MIN_VALUE;
-        var minLat: number = Number.MAX_VALUE;
-        var maxLat: number = Number.MIN_VALUE;
+        var extent = ol.extent.createEmpty();
+        for (var feature of this.features)
+            ol.extent.extend(extent, feature.getGeometry().getExtent());
 
-        for (var cg of this._collection_geos) {
-            if (cg.coord[1] < minLat)
-                minLat = cg.coord[1];
-            if (cg.coord[1] > maxLat)
-                maxLat = cg.coord[1];
-            if (cg.coord[0] < minLon)
-                minLon = cg.coord[0];
-            if (cg.coord[0] > maxLon)
-                maxLon = cg.coord[0];
-        }
+
+        //var minLon: number = Number.MAX_VALUE;
+        //var maxLon: number = Number.MIN_VALUE;
+        //var minLat: number = Number.MAX_VALUE;
+        //var maxLat: number = Number.MIN_VALUE;
+
+        //for (var cg of this._collection_geos) {
+        //    if (cg.coord[1] < minLat)
+        //        minLat = cg.coord[1];
+        //    if (cg.coord[1] > maxLat)
+        //        maxLat = cg.coord[1];
+        //    if (cg.coord[0] < minLon)
+        //        minLon = cg.coord[0];
+        //    if (cg.coord[0] > maxLon)
+        //        maxLon = cg.coord[0];
+        //}
+
+        var minLon = extent[0];
+        var minLat = extent[1];
+        var maxLon = extent[2];
+        var maxLat = extent[3];
+
 
         var coord = [(minLon + maxLon) / 2, (minLat + maxLat) / 2];
         var size = App.map.getSize();
         var val = forSave ? Math.max((maxLon - minLon) / size[0], (maxLat - minLat) / size[1]) * 1.1 : Math.max((maxLon - minLon) * 1.8, (maxLat - minLat) * 1.5) / 2;
 
-        if (anim)
-            App.map.centerAnim(coord, val, true, !forSave);
-        else
-            App.map.center(coord, val, true, !forSave);
+        App.map.center(coord, val, true, !forSave, true, anim);
     }
 
     public delete() {

@@ -528,14 +528,6 @@
 
     public stopAnimation() {
         this.runAnimation = false;
-        //Zoom & Center skal sættes til det punkt, hvor animationen stoppes! 
-        //getZoom & getCenter kan ikke bruges, da de ikke returnerer nuværende zoom & center
-
-        //var view = this.getView();
-        //var zoom = 
-        //var center = 
-        //view.setZoom(zoom);
-        //view.setCenter(center);
     }
 
     public zoomAnim(delta: number) {
@@ -579,7 +571,12 @@
         setTimeout(() => { this.updateExtent(); this.updateExtentTimeWarp(); }, 2100);
     }
 
-    public center(coord: ol.Coordinate, radiusOrResoultionValue: number, inMapCoords: boolean = false, valueIsRadius = true, updateExtent = true) {
+    public center(coord: ol.Coordinate, radiusOrResoultionValue: number, inMapCoords: boolean = false, valueIsRadius = true, updateExtent = true, anim: boolean = false) {
+        if (anim) {
+            this.centerAnim(coord, radiusOrResoultionValue, inMapCoords, valueIsRadius);
+            return;
+        }
+
         coord = inMapCoords ? coord : Common.toMapCoord(coord);
         this.view.setCenter(coord);
         this.view.setResolution(valueIsRadius ? this.view.constrainResolution(Math.max(radiusOrResoultionValue * 2, 100) / Math.min(this.getSize()[0], this.getSize()[1])) : radiusOrResoultionValue);

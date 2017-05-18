@@ -137,13 +137,15 @@ class PanelTheme extends polymer.Base implements polymer.Element {
             for (var tag of App.haTags.byId[this.theme.tagid].children) {
                 if (tag.isPublicationDestination) //TODO: other category?
                     routeTopLevels.push(((tag: HaTag) => <ICollectionTopLevel>{
-                        name: tag.singName, shown: false, selected: false, ignoreCreators: true, filter: (collection: HaCollection) => {
+                        name: tag.singName, shown: false, selected: true, ignoreCreators: true, filter: (collection: HaCollection) => {
                             return collection.tags.indexOf(tag) > -1;
                         }
                     })(tag));
             }
         }
         this.set('routeTopLevels', routeTopLevels);
+
+
             //this.set('routeTopLevels', [
             //    { name: 'Landsdækkende rutenet', shown: false, filter: (collection: HaCollection) => collection.tags.indexOf(App.haTags.byId[734]) > -1 },
             //    { name: 'Vandrehistorier', shown: false, filter: (collection: HaCollection) => collection.tags.indexOf(App.haTags.byId[735]) > -1 }

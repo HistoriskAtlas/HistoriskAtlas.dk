@@ -23,6 +23,8 @@ class HaCollections extends Tags implements polymer.Element {
     //private static awitingGeos: Array<() => any> = [];
     private static collectionGeosAPISchema = '{collection_geos:[id,geoid,ordering,showonmap,calcroute,contentid,longitude,latitude]}'; //Remeber to apply changes to default.aspx.cs also
 
+    private static routeDrawingDisabled: boolean = false;
+
     ready() {
         if (App.passed.collection) {
             //HaCollections.awitingGeos.push(() => {
@@ -69,20 +71,6 @@ class HaCollections extends Tags implements polymer.Element {
     //        return true;
     //    }
     //    return false
-    //}
-
-    //@observe('geos.length')
-    //geosLengthChanged(changeRecord: any) {
-
-
-    //    //TODO: this causes the routes to fail to load when no geos is included in the theme.... like HoD................................... 
-
-
-    //    if (this.geos.length == 0 || HaCollections.awitingGeos.length == 0)
-    //        return;
-
-    //    while (HaCollections.awitingGeos.length > 0)
-    //        HaCollections.awitingGeos.shift()();
     //}
 
     public get allCollectionIDs(): Array<number> {
@@ -171,9 +159,12 @@ class HaCollections extends Tags implements polymer.Element {
                 //        geo.isPartOfCurrentCollection = true;
                 //})
 
-                if (changeRecord.value)
-                    this.drawRoute(collection)
-                else
+                if (changeRecord.value) {
+                    this.drawRoute(collection);
+                    //this.drawRoute(collection, null, false, (collection == this.collection) ? () => {
+                    //    collection.showOnMap(); //TODO: will zoom to map every time the selected collection becomes active..................... good idea?........................................
+                    //} : null);
+                } else
                     this.eraseRoute(collection);
             }
         }
@@ -185,9 +176,6 @@ class HaCollections extends Tags implements polymer.Element {
 
         App.map.showRouteLayer();
 
-        this.$.selector.select(collection);
-        this.set('collection.selected', true);
-
         if (addGeo) {
             var ordering = collection.collection_geos.length == 0 ? HaCollectionGeo.orderingGap : collection.collection_geos[collection.collection_geos.length - 1].ordering + HaCollectionGeo.orderingGap;
             var collection_geo = new HaCollectionGeo({ geoid: addGeo.id, ordering: ordering });
@@ -195,8 +183,18 @@ class HaCollections extends Tags implements polymer.Element {
             collection.saveNewCollectionGeo(collection_geo);
         }
 
-        if (!mapClick)
-            collection.showOnMap();
+        this.$.selector.select(collection);
+
+        if (!collection.selected) {
+            HaCollections.routeDrawingDisabled = true;
+            this.set('collection.selected', true);
+            HaCollections.routeDrawingDisabled = false;
+        }
+        this.drawRoute(collection, null, false, () => {
+            if (!mapClick)
+                collection.showOnMap();
+        });
+
 
         Services.get('geo', { count: 'all', schema: '{geo:{fields:[geoid,title],filters:[{collection_geos:[{collectionid:' + collection.id + '}]}]}}' }, (result) => {
             var geos: Array<HaGeo> = [];
@@ -269,9 +267,7 @@ class HaCollections extends Tags implements polymer.Element {
         if (!newVal)
             return;
 
-        //App.map.routeLayer.redraw();
-        //this.eraseRoute(newVal);
-        this.drawRoute(newVal); //, App.haUsers.user.canEditCollection(newVal)
+        //this.drawRoute(newVal);
 
         this.initTags('collection', /*this.collection.id,*/ 'content');
 
@@ -480,7 +476,10 @@ class HaCollections extends Tags implements polymer.Element {
         //}
     }
 
-    public drawRoute(collection?: HaCollection, addedPointIndex?: number, onlyRedrawViaPoints: boolean = false) { //drawViaPoints: boolean = true, 
+    public drawRoute(collection?: HaCollection, addedPointIndex?: number, onlyRedrawViaPoints: boolean = false, callback: () => void = null) { //drawViaPoints: boolean = true, 
+        if (HaCollections.routeDrawingDisabled)
+            return;
+
         if (!collection)
             collection = this.collection;
         
@@ -518,6 +517,8 @@ class HaCollections extends Tags implements polymer.Element {
                 this.waitingForCallbackCount--;
                 if (this.waitingForCallbackCount == 0) {
                     this.set('collections.' + this.collections.indexOf(collection) + '.distance', totalDistance);
+                    if (callback)
+                        callback();
                     //this.nextUpdateRouteLayerRequest();
                 }
             });

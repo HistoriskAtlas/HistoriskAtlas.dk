@@ -2,7 +2,7 @@
 class CollectionListItem extends polymer.Base implements polymer.Element {
 
     @property({ type: Object, notify: true })
-    public collection: HaTag;
+    public collection: HaCollection;
 
     @property({ type: Boolean })
     public open: boolean;

@@ -63,7 +63,7 @@
 
                     <content-viewer content="[[newHaContent(item.content)]]"></content-viewer>
 
-                    <collection-list top-levels="{{routeTopLevels}}" collections="{{collections}}" collection="{{collection}}" user-creators="[[userCreators]]" prof-creators="[[profCreators]]" default-selected></collection-list>
+                    <collection-list top-levels="[[routeTopLevels]]" collections="{{collections}}" collection="{{collection}}" user-creators="[[userCreators]]" prof-creators="[[profCreators]]" default-selected></collection-list>
 
                     <template is="dom-if" if="[[isHoD2017(item)]]">
                         <div style="margin: 10px 0px 20px 30px; font-size: 13px;" on-tap="createNewRouteTap">Opret dit eget turforslag</div>

@@ -82,13 +82,14 @@ class CollectionList extends polymer.Base implements polymer.Element {
             CollectionList.ignoreCollectionChanges = true;
             for (var collection of this.collections)
                 for (var topLevel of this.topLevels)
-                    if (topLevel.filter(collection)) {
-                        if (!collection.selected) {
-                            this.set('collections.' + this.collections.indexOf(collection) + '.selected', true);
-                            change = true;
+                    if (topLevel.filter)
+                        if (topLevel.filter(collection)) {
+                            if (!collection.selected) {
+                                this.set('collections.' + this.collections.indexOf(collection) + '.selected', true);
+                                change = true;
+                            }
+                            break;
                         }
-                        break;
-                    }
             CollectionList.ignoreCollectionChanges = false;
             if (change)
                 this.updateTopLevelSelections();
@@ -135,8 +136,10 @@ class CollectionList extends polymer.Base implements polymer.Element {
                 }
         }
 
-        for (var topLevel of topLevels)
+        for (var topLevel of topLevels) {
             this.set('topLevels.' + this.topLevels.indexOf(topLevel) + '.selected', (<any>topLevel).countTotal == 0 ? false : (<any>topLevel).countSelected == (<any>topLevel).countTotal);
+            //this.notifyPath('topLevels.#' + 1 + '.selected', true);
+        }
     }
 
     public filter(topLevelFilter: (collection: HaCollection) => boolean, ignoreCreators: boolean): (collection: HaCollection) => boolean {
