@@ -165,14 +165,17 @@ class WindowBasic extends polymer.Base implements polymer.Element {
             case 'start':
                 this.elevation = 4;
                 break;
-            case 'track': 
+            case 'track':
                 this.set('left', this.left + e.detail.ddx);
                 this.set('top', this.top + e.detail.ddy);
                 break;
             case 'end':
+                this.set('left', Math.min(Math.max(this.left, -this.width + 64), document.documentElement.clientWidth - 64));
+                this.set('top', Math.min(Math.max(this.top, 0), document.documentElement.clientHeight - 64));
                 this.elevation = 2;
                 break;
         }
+        e.preventDefault();
     }
 }
 
