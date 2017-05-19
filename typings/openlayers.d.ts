@@ -3446,7 +3446,7 @@ declare module ol {
         class WMTS {
         }
 
-        class XYZ { //TODO: Not complete
+        class XYZ extends ol.Object { //TODO: Not complete
             constructor(options: any) //TODO: Replace with real options
 
             /**

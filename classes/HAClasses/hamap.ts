@@ -89,11 +89,15 @@
     }
 
     public static getNewSource(tileUrl: string): ol.source.XYZ {
-        return new ol.source.XYZ({
+        var src = new ol.source.XYZ({
             url: tileUrl,
             crossOrigin: 'Anonymous'
             //tilePixelRatio: window.devicePixelRatio ???
         });
+        src.on('tileloadstart', MainMap.tileLoadStarted);
+        src.on('tileloadend', MainMap.tileLoadEnded);
+        src.on('tileloaderror', MainMap.tileLoadEnded);
+        return src;
     }
 
     public get tileUrl(): string {

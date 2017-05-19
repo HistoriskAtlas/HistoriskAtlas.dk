@@ -69,15 +69,14 @@ class WindowRoute extends polymer.Base implements polymer.Element {
 
     shareImage() {
         this.route.showOnMap(false, true);
-        App.map.saveAsPng(this.route.title + " - " + this.route.link, this.route.title + " - HistoriskAtlas.dk.png");
+        setTimeout(() => App.map.saveAsPng(this.route.title + " - " + this.route.link, this.route.title + " - HistoriskAtlas.dk.png"), 1);
     }
 
     sharePDF() {
         this.route.showOnMap(false, true);
-        App.map.getAsBase64Png((base64png) => {
+        setTimeout(() => App.map.getAsBase64Png((base64png) => {
             Common.savePDF(this.route.link + '.pdf', this.route.title + " - HistoriskAtlas.dk.pdf", 'POST', base64png);
-        }, this.route.title + " - " + this.route.link)
-
+        }, this.route.title + " - " + this.route.link), 1);
     }
 
     shareLink() {

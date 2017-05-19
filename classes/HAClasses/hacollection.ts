@@ -355,6 +355,8 @@
         var val = forSave ? Math.max((maxLon - minLon) / size[0], (maxLat - minLat) / size[1]) * 1.1 : Math.max((maxLon - minLon) * 1.8, (maxLat - minLat) * 1.5) / 2;
 
         App.map.center(coord, val, true, !forSave, true, anim);
+        if (forSave)
+            App.map.renderSync();
     }
 
     public delete() {

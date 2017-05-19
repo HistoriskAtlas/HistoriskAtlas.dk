@@ -29,6 +29,9 @@
     private dragPan: ol.interaction.DragPan;
     //public static defaultCoord: Array<number> = [10.0, 56.0]; 
     //public static defaultZoom: number = 7; 
+    private static tilesLoaded: number = 0;
+    private static tilesRequested: number = 0;
+    public static loadingDoneCallbacks: Array<() => void> = [];
 
     constructor(coord: ol.Coordinate, zoom: number) { //TODO: Create as element instead... so events like change:rotation can fire directly to the DOM
         /*Layers: 
@@ -606,13 +609,6 @@
     }
 
     public saveAsPng(text: string = null, filename: string = "HistoriskAtlas.dk - kortudsnit.png") {
-        this.getCanvas((canvas) => {
-            (<any>canvas).toBlob((blob) => Common.saveBlob(blob, filename));
-        }, text);
-    }
-
-    private getCanvas(callback: (canvas: HTMLCanvasElement) => void, text: string) {
-
         //polyfill for IE and Safari
         if (!HTMLCanvasElement.prototype.toBlob) {
             Object.defineProperty(HTMLCanvasElement.prototype, 'toBlob', {
@@ -631,20 +627,48 @@
             });
         }
 
-        this.once('postcompose', (event: any) => {
-            var ctx = <CanvasRenderingContext2D>event.context;
-            var canvas = ctx.canvas;
-            var fulltext = "HistoriskAtlas.dk" + (text ? " - " + text : "");
+        this.getCanvas((canvas) => {
+            (<any>canvas).toBlob((blob) => Common.saveBlob(blob, filename));
+        }, text);
+    }
 
-            ctx.font = "12px Arial";
-            ctx.fillStyle = "#FFFFFF";
-            ctx.fillRect(0, canvas.height - 15, canvas.width, 15);
-            ctx.fillStyle = "#000000";
-            ctx.fillText(fulltext, 2, canvas.height - 3, canvas.width - 4);
+    private getCanvas(callback: (canvas: HTMLCanvasElement) => void, text: string) {
+        MainMap.loadingDone(() => {
+            this.once('postcompose', (event: any) => {
+                var ctx = <CanvasRenderingContext2D>event.context;
+                var canvas = ctx.canvas;
+                var fulltext = "HistoriskAtlas.dk" + (text ? " - " + text : "");
 
-            callback(canvas);
+                ctx.font = "12px Arial";
+                ctx.fillStyle = "#FFFFFF";
+                ctx.fillRect(0, canvas.height - 15, canvas.width, 15);
+                ctx.fillStyle = "#000000";
+                ctx.fillText(fulltext, 2, canvas.height - 3, canvas.width - 4);
+
+                callback(canvas);
+            });
+            this.renderSync();
+            this.renderSync();
         });
-        this.renderSync();
-        this.renderSync();
+    }
+
+    public static tileLoadStarted(): void {
+        MainMap.tilesRequested++;
+        //TODO: implement loading indicator...
+        //console.log('requested: ' + MainMap.tilesRequested + ' , loaded: ' + MainMap.tilesLoaded);
+    }
+    public static tileLoadEnded(): void {
+        MainMap.tilesLoaded++;
+        if (MainMap.tilesRequested == MainMap.tilesLoaded)
+            while (MainMap.loadingDoneCallbacks.length > 0)
+                MainMap.loadingDoneCallbacks.pop()();
+        //TODO: implement loading indicator...
+        //console.log('requested: ' + MainMap.tilesRequested + ' , loaded: ' + MainMap.tilesLoaded);
+    }
+    public static loadingDone(callback: () => void): void {
+        if (MainMap.tilesRequested == MainMap.tilesLoaded)
+            callback();
+        else
+            MainMap.loadingDoneCallbacks.push(callback);
     }
 }
