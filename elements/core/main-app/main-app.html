@@ -283,6 +283,7 @@
                     <map-tooltip></map-tooltip>
                     <map-menu main map="{{mainMap}}" lift="[[timeLineActive]]" drawer-open="{{drawerOpen}}" selected="{{selectedLeftPanel}}" show-main-menu="{{showMainMenu}}"></map-menu>
                     <map-controls lift="[[timeLineActive]]" map-rotation="[[mapRotation]]" time-warp-active="{{timeWarpActive}}"></map-controls>
+                    <map-about map=[[mainMap]] time-warp-active="[[timeWarpActive]]"></map-about>
                     <time-lines active="[[timeLineActive]]" time-warp-active="[[timeWarpActive]]" nudge="[[drawerOpen]]" touch-device="[[touchDevice]]" year="{{year}}" time-warp-year="{{timeWarpYear}}"></time-lines>
                 </div>
                 <toast-wrapper></toast-wrapper>

@@ -52,10 +52,10 @@ class TimeWarpMapButton extends polymer.Base implements polymer.Element {
         this.update();
     }
 
-    @observe("map.tagline")
-    mapTaglineChanged() {
-        this.update();
-    }
+    //@observe("map.tagline")
+    //mapTaglineChanged() {
+    //    this.update();
+    //}
 
     @listen("map-select")
     DialogMapSelect() {
