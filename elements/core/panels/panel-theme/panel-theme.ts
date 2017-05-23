@@ -19,6 +19,9 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     @property({ type: Array })
     public routeTopLevels: Array<ICollectionTopLevel>;
 
+    @property({ type: Array })
+    public userTopLevels: Array<ICollectionTopLevel>;
+
     @property({ type: Boolean })
     public show: boolean;
 
@@ -109,8 +112,6 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         }
         else
             this.theme = theme;
-
-
     }
 
     @observe('theme')
@@ -145,6 +146,11 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         }
         this.set('routeTopLevels', routeTopLevels);
 
+        this.set('userTopLevels', [{ name: 'Mine turforslag', shown: false, selected: false, filter: (collection: HaCollection) => collection.user.id == App.haUsers.user.id, ignoreCreators: true }]);
+
+        var userCollectionList = this.$$('#userCollectionList');
+        if (userCollectionList)
+            (<CollectionList>userCollectionList).updateTopLevelSelections();
 
             //this.set('routeTopLevels', [
             //    { name: 'Landsdækkende rutenet', shown: false, filter: (collection: HaCollection) => collection.tags.indexOf(App.haTags.byId[734]) > -1 },
@@ -170,6 +176,10 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     aboutHoD2017Tap() {
         Common.dom.append(WindowInstitution.create(App.haTags.byId[736]));
     }
+    aboutHATap() {
+        Common.dom.append(WindowTheAssociation.create());
+    }
+
     createNewRouteTap() {
         if (App.haUsers.user.isDefault) {
             $(this).append(DialogConfirm.create('log-in', 'Du skal være logget ind for at kunne oprette et turforslag. Vil du logge ind nu?'));

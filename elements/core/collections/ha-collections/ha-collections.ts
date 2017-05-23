@@ -84,16 +84,21 @@ class HaCollections extends Tags implements polymer.Element {
         Services.get('collection', sendData, (result) => {
             var collections: Array<HaCollection> = this.collections.slice();
             var allCollectionIDs = this.allCollectionIDs;
+            var tempFeatures: ol.Feature[];
             for (var data of result.data) {
                 if (allCollectionIDs.indexOf(data.collectionid) > -1)
                     for (var collection of this.collections)
                         if (collection.id == data.collectionid) {
+                            tempFeatures = collection.features;
                             collections.splice(collections.indexOf(collection), 1);
                             break;
                         }                    
                 var collection = this.getCollectionFromData(data, sendData.online) //allCollectionIDs, 
-                if (collection)
+                if (collection) {
+                    if (tempFeatures)
+                        collection.features = tempFeatures;
                     collections.push(collection);
+                }
             }
             this.set('collections', collections);
             //this.notifySplices('collections', [{ index: 0, removed: [], addedCount: collections.length, object: this.collections }]);

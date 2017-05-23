@@ -144,6 +144,9 @@
     }
 
     public removeFeatures(features: Array<ol.Feature>) {
+        if (features.length == 0)
+            return;
+
         var existingFeatures = (<any>this.source).getFeatures()
 
         var newFeatures: Array<ol.Feature> = [];
