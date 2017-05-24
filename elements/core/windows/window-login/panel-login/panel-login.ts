@@ -32,10 +32,10 @@ class PanelLogin extends polymer.Base implements polymer.Element {
     @listen("loginG.tap")
     loginG() { //TODO: user Polymer google sign in instead?
         var params = {
-            client_id: "364350662015-nssk0tgtoh9d7d0r7brt78mr0utvoi0d.apps.googleusercontent.com",
+            client_id: "232489990938-2m96hqlhfm75bqvqtr8i4ukvnuhrc7n4.apps.googleusercontent.com", //"364350662015-nssk0tgtoh9d7d0r7brt78mr0utvoi0d.apps.googleusercontent.com",
             immediate: false,
             response_type: "token",
-            scope: "https://www.googleapis.com/auth/plus.login"
+            scope: "email"//"https://www.googleapis.com/auth/plus.login"
         };
         gapi.auth.authorize(params, (UToken) => {
             gapi.client.load('plus', 'v1', () => {
