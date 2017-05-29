@@ -1,11 +1,11 @@
-﻿.menu-style-theme-hod2017 {
+﻿.menu-style-theme-hod {
     background-color: #e4e7eb;
     background-image: url(../../../../images/theme/HoD2017back.jpg);
     background-size: 100%;
     background-position: bottom;
     background-repeat: no-repeat;
 }
-.menu-style-theme-hod2017 .logo-theme {
+.menu-style-theme-hod .logo-theme {
     max-width: 80%;
     min-width: 70%;
     display: block;

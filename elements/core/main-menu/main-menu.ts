@@ -123,7 +123,7 @@ class MainMenu extends polymer.Base implements polymer.Element {
     }
     tapHOD2017() {
         this.set('showMenuThemes', true);
-        this.set('theme', (<PanelTheme>this.$.panelTheme).getThemeByName('Historier om Danmark 2017'));
+        this.set('theme', (<PanelTheme>this.$.panelTheme).getThemeByName('Historier om Danmark'));
     }
 
     aboutTap() {

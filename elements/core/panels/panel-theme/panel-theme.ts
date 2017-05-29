@@ -55,7 +55,7 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         }
 
         if (!Common.isDevOrBeta)
-            send.id = '{in:["1001","hod2017"]}'
+            send.id = '{in:["1001","hod"]}'
 
         Services.get('theme', send, (result) => {
             if (this.theme.id != 'default') {
@@ -171,7 +171,7 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     }
 
     isHoD2017(theme: ITheme): boolean {
-        return theme.id == 'hod2017' || theme.name == 'Historier om Danmark 2017';
+        return theme.id == 'hod' || theme.name == 'Historier om Danmark';
     }
     aboutHoD2017Tap() {
         Common.dom.append(WindowInstitution.create(App.haTags.byId[736]));
