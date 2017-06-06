@@ -4,6 +4,9 @@ class Global extends polymer.Base implements polymer.Element {
     @property({ type: Boolean, notify: true })
     public timeWarpActive: boolean;
 
+    @property({ type: Number, notify: true })
+    public timeWarpMode: TimeWarpModes;
+
     @property({ type: Boolean, notify: true })
     public timeLineActive: boolean;
 
@@ -44,6 +47,10 @@ class Global extends polymer.Base implements polymer.Element {
 
     ready() {
         this.theme = App.passed.theme ? App.passed.theme : Global.defaultTheme;
+    }
+
+    setTimeWarpMode(mode: TimeWarpModes) {
+        this.set('timeWarpMode', mode);
     }
 
     public showFavourites() {

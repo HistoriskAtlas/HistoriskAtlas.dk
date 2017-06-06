@@ -4,12 +4,17 @@ class MapAbout extends polymer.Base implements polymer.Element {
     @property({ type: Object})
     public map: HaMap;
 
-    @property({ type: Boolean })
-    public timeWarpActive: boolean;
+    @property({ type: Number })
+    public timeWarpMode: TimeWarpModes;
 
-    hide(tagline: string) {
-        return !tagline;
+    hide(tagline: string, timeWarpMode: number) {
+        return !tagline || (!(timeWarpMode == TimeWarpModes.SPLIT));
     }
+
+    //@observe('timeWarpMode') 
+    //timeWarpModeChanged() {
+    //    alert(this.timeWarpMode)
+    //}
 }
 
 MapAbout.register();

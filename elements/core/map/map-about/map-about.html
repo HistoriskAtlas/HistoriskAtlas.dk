@@ -1,28 +1,32 @@
 ﻿<dom-module id="map-about">
     <template>
         <style>
-            :host {
+            #container {
                 display: flex;
-                flex-direction: column;
+                justify-content: space-between;
+                flex-direction: row-reverse;
                 position: fixed;
                 bottom: 0px;
                 left: 0px;
                 right: 0px;
                 pointer-events: none;
             }
-            div {
+            #container > div {
                 height: 13px;
                 background-color: rgba(255,255,255,0.8);
                 font-size: 10px;
                 padding: 0px 3px;
             }
-            .timeWarpActivetrue {
-                align-self: flex-start;
+            .timeWarpMode2 {
+                flex-direction: row !important
             }
-            .timeWarpActivefalse {
-                align-self: flex-end;
+            .hidetrue {
+                visibility: hidden;
             }
         </style>
-        <div hidden$="[[hide(map.tagline)]]" class$="timeWarpActive[[timeWarpActive]]">[[map.tagline]]</div>
+        <div id="container" class$="timeWarpMode[[timeWarpMode]]">
+            <div class$="hide[[hide(map.tagline,2)]]">[[map.tagline]]</div>
+            <div class$="hide[[hide(timeWarpMap.tagline,timeWarpMode)]]">[[timeWarpMap.tagline]]</div>
+        </div>
     </template>
 </dom-module>

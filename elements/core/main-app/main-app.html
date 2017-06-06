@@ -203,7 +203,7 @@
         }
     </style>
     <template>
-        <global-app year="{{year}}" time-warp-year="{{timeWarpYear}}" time-line-active="{{timeLineActive}}" routes-active="{{routesActive}}" time-warp-active="{{timeWarpActive}}" map-rotation="{{mapRotation}}" user-creators="[[userCreators]]" prof-creators="[[profCreators]]" theme="{{theme}}" map="{{mainMap}}"></global-app>
+        <global-app year="{{year}}" time-warp-year="{{timeWarpYear}}" time-line-active="{{timeLineActive}}" routes-active="{{routesActive}}" time-warp-active="{{timeWarpActive}}" time-warp-mode="{{timeWarpMode}}" map-rotation="{{mapRotation}}" user-creators="[[userCreators]]" prof-creators="[[profCreators]]" theme="{{theme}}" map="{{mainMap}}"></global-app>
         <ha-maps maps="{{maps}}" main-map="{{mainMap}}" time-warp-map="{{timeWarpMap}}"></ha-maps>
         <ha-tags tags="{{tags}}" tag-tops="{{tagTops}}"></ha-tags>
         <ha-geos geos="{{geos}}" year="[[year]]" time-warp-year="[[timeWarpYear]]" time-line-active=[[timeLineActive]] user-creators="[[userCreators]]" prof-creators="[[profCreators]]" theme="[[theme]]"></ha-geos>
@@ -283,7 +283,7 @@
                     <map-tooltip></map-tooltip>
                     <map-menu main map="{{mainMap}}" lift="[[timeLineActive]]" drawer-open="{{drawerOpen}}" selected="{{selectedLeftPanel}}" show-main-menu="{{showMainMenu}}"></map-menu>
                     <map-controls lift="[[timeLineActive]]" map-rotation="[[mapRotation]]" time-warp-active="{{timeWarpActive}}"></map-controls>
-                    <map-about map=[[mainMap]] time-warp-active="[[timeWarpActive]]"></map-about>
+                    <map-about map=[[mainMap]] time-warp-map="[[timeWarpMap]]" time-warp-mode="[[timeWarpMode]]"></map-about>
                     <time-lines active="[[timeLineActive]]" time-warp-active="[[timeWarpActive]]" nudge="[[drawerOpen]]" touch-device="[[touchDevice]]" year="{{year}}" time-warp-year="{{timeWarpYear}}"></time-lines>
                 </div>
                 <toast-wrapper></toast-wrapper>

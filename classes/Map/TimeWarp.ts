@@ -72,8 +72,8 @@ class TimeWarp extends TileLayer {
     public trackOpen(e) {
         if (this.mode == TimeWarpModes.CIRCLE)
             return;
-        
-        this.mode = TimeWarpModes.CIRCLE;
+
+        this.setMode(TimeWarpModes.CIRCLE);
 
         if (this.timerID)
             clearInterval(this.timerID);
@@ -103,7 +103,7 @@ class TimeWarp extends TileLayer {
     }
 
     private show(mainMap: MainMap) {
-        this.mode = TimeWarpModes.OPENING;
+        this.setMode(TimeWarpModes.OPENING);
         var size = mainMap.getSize();
         this.positionOpen = [size[0] / 2, size[1] / 2];
         this.radiusOpen = Math.min(size[0], size[1]) * 0.3;
@@ -145,12 +145,12 @@ class TimeWarp extends TileLayer {
 
     private hide() {
         if (this.mode == TimeWarpModes.SPLIT) {
-            this.mode = TimeWarpModes.CLOSING_FROM_SPLIT;
+            this.setMode(TimeWarpModes.CLOSING_FROM_SPLIT);
             var size = App.map.getSize();
             this.togglingPosition = [size[0] / 2, size[1] / 2];
             this.togglingRadius = (Math.min(size[0], size[1]) * 0.3);
         } else {
-            this.mode = TimeWarpModes.CLOSING_FROM_CIRCLE;
+            this.setMode(TimeWarpModes.CLOSING_FROM_CIRCLE);
             this.togglingPosition = this.position;            
             this.togglingRadius = this.radius;
         }
@@ -241,7 +241,7 @@ class TimeWarp extends TileLayer {
             clearInterval(this.timerID);
         if (this.mode == TimeWarpModes.CIRCLE) {
             //this.morph = 0.0;
-            this.mode = TimeWarpModes.MORPH;
+            this.setMode(TimeWarpModes.MORPH);
             //this.splitIndex = Math.floor((event.pageX * 2.0) / App.map.getSize()[0]);
             //this.splitIndex = 1;
             this.rectWidth = App.map.getSize()[0] / 2.0 + this.lineWidth / 2.0;
@@ -252,7 +252,7 @@ class TimeWarp extends TileLayer {
             }, 1000 / 60);
         } else {
             //this.morph = 1.0;
-            this.mode = TimeWarpModes.MORPH;
+            this.setMode(TimeWarpModes.MORPH);
             this.timerID = setInterval(() => {
                 this.timerMorphToCircle();
             }, 1000 / 60);
@@ -267,7 +267,7 @@ class TimeWarp extends TileLayer {
             this.morph = 1.0;
             clearInterval(this.timerID);
             this.timerID = 0;
-            this.mode = TimeWarpModes.SPLIT;
+            this.setMode(TimeWarpModes.SPLIT);
             App.map.renderSync();
             TimeWarpButton.updateTimeWarpUI();
         }
@@ -280,7 +280,7 @@ class TimeWarp extends TileLayer {
             this.morph = 0.0;
             clearInterval(this.timerID);
             this.timerID = 0;
-            this.mode = TimeWarpModes.CIRCLE;
+            this.setMode(TimeWarpModes.CIRCLE);
             App.map.renderSync();
             TimeWarpButton.updateTimeWarpUI();
         }
@@ -302,7 +302,7 @@ class TimeWarp extends TileLayer {
             this.morph = 0.0;
             clearInterval(this.timerID);
             this.timerID = 0;
-            this.mode = TimeWarpModes.CIRCLE;
+            this.setMode(TimeWarpModes.CIRCLE);
             App.map.renderSync();
             TimeWarpButton.updateTimeWarpUI();
             TimeWarpButton.showTimeWarpUI();
@@ -575,6 +575,11 @@ class TimeWarp extends TileLayer {
         //    coords.push(App.map.getCoordinateFromPixel([this.position[0] + this.radius, this.position[1] + this.radius]));
         //}
         return ol.extent.boundingExtent([App.map.getCoordinateFromPixel(pixel1), App.map.getCoordinateFromPixel(pixel2)]);
+    }
+
+    public setMode(mode: TimeWarpModes) {
+        this.mode = mode;
+        App.global.setTimeWarpMode(mode);
     }
 
     //public mouseCursor(event) {
