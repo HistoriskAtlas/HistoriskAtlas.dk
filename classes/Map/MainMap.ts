@@ -26,6 +26,7 @@
     private extentTimeWarpIsDirty: boolean;
     private _moving: boolean;
     private mousePixel: ol.Pixel;
+    private oldClickCoord: ol.Coordinate;
     private dragPan: ol.interaction.DragPan;
     //public static defaultCoord: Array<number> = [10.0, 56.0]; 
     //public static defaultZoom: number = 7; 
@@ -232,8 +233,10 @@
                 this.getHoverObject(event.coordinate, eventPixel);
 
             if (App.haUsers.user.isAdmin) {
-                console.log(Common.fromMapCoord(event.coordinate)[0].toLocaleString('da', { minimumFractionDigits: 8 }));
-                console.log(Common.fromMapCoord(event.coordinate)[1].toLocaleString('da', { minimumFractionDigits: 8 }));
+                var clickCoord = Common.fromMapCoord(event.coordinate);
+                if (this.oldClickCoord)
+                    console.log(this.oldClickCoord[1].toLocaleString('da', { minimumFractionDigits: 8 }) + '\t' + clickCoord[1].toLocaleString('da', { minimumFractionDigits: 8 }) + '\t' + this.oldClickCoord[0].toLocaleString('da', { minimumFractionDigits: 8 }) + '\t' + clickCoord[0].toLocaleString('da', { minimumFractionDigits: 8 }));
+                this.oldClickCoord = clickCoord;
             }
 
             App.mapTooltip.hide();
