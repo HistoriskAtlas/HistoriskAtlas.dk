@@ -231,6 +231,11 @@
             if (!!('ontouchstart' in window))
                 this.getHoverObject(event.coordinate, eventPixel);
 
+            if (App.haUsers.user.isAdmin) {
+                console.log(Common.fromMapCoord(event.coordinate)[0].toLocaleString('da', { minimumFractionDigits: 8 }));
+                console.log(Common.fromMapCoord(event.coordinate)[1].toLocaleString('da', { minimumFractionDigits: 8 }));
+            }
+
             App.mapTooltip.hide();
 
             if (this.curHoverObject instanceof HaGeo) {
