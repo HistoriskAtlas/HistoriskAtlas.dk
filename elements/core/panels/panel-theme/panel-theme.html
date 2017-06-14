@@ -66,10 +66,11 @@
                     <collection-list top-levels="[[routeTopLevels]]" collections="{{collections}}" collection="{{collection}}" user-creators="[[userCreators]]" prof-creators="[[profCreators]]" default-selected></collection-list>
 
                     <template is="dom-if" if="[[isHoD2017(item)]]">
+                        <div style="margin: 10px 0px 20px 30px; font-size: 13px;" on-tap="showAllRoutesTap">Se alle historiske ture</div>
                         <collection-list id="userCollectionList" top-levels="[[userTopLevels]]" collections="{{collections}}" collection="{{collection}}" user-creators="[[userCreators]]" prof-creators="[[profCreators]]"></collection-list>
                         <div style="margin: 10px 0px 20px 30px; font-size: 13px;" on-tap="createNewRouteTap">Opret dit eget turforslag</div>
-                        <div style="margin: 10px 0px 20px 30px; font-size: 13px;" on-tap="guideRouteTap">Vejledning til at oprette turforslag</div>
-                        <div style="margin: 10px 0px 20px 30px; font-size: 13px;" on-tap="aboutHoD2017Tap">Om Historier om Danmark</div>
+                        <div style="margin: 10px 0px 10px 30px; font-size: 13px;" on-tap="guideRouteTap">Vejledning til at oprette turforslag</div>
+                        <div style="margin: 10px 0px 10px 30px; font-size: 13px;" on-tap="aboutHoD2017Tap">Om Historier om Danmark</div>
                         <div style="margin: 10px 0px 180px 30px; font-size: 13px;" on-tap="aboutHATap">Om HistoriskAtlas.dk</div>
                     </template>
 

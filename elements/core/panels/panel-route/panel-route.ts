@@ -59,6 +59,9 @@ class PanelRoute extends polymer.Base implements polymer.Element {
         }
     }
 
+    public selectAll() {
+        (<CollectionList>this.$.list).selectAll();
+    }
 }
 
 PanelRoute.register();

@@ -72,10 +72,10 @@ class MainMenu extends polymer.Base implements polymer.Element {
     @property({ type: Boolean })
     public isDevOrBeta: boolean;
 
-    @property({ type: Boolean })
+    @property({ type: Boolean, notify: true })
     public userCreators: boolean;
 
-    @property({ type: Boolean })
+    @property({ type: Boolean, notify: true })
     public profCreators: boolean;
 
     ready() {

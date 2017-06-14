@@ -76,24 +76,26 @@ class CollectionList extends polymer.Base implements polymer.Element {
 
     @observe('collections')
     collectionsItselfChanged() {
+        if (this.collections && this.defaultSelected)
+            this.selectAll();
+    }
 
-        if (this.collections && this.defaultSelected) {
-            var change = false;
-            CollectionList.ignoreCollectionChanges = true;
-            for (var collection of this.collections)
-                for (var topLevel of this.topLevels)
-                    if (topLevel.filter)
-                        if (topLevel.filter(collection)) {
-                            if (!collection.selected) {
-                                this.set('collections.' + this.collections.indexOf(collection) + '.selected', true);
-                                change = true;
-                            }
-                            break;
+    public selectAll() {
+        var change = false;
+        CollectionList.ignoreCollectionChanges = true;
+        for (var collection of this.collections)
+            for (var topLevel of this.topLevels)
+                if (topLevel.filter)
+                    if (topLevel.filter(collection)) {
+                        if (!collection.selected) {
+                            this.set('collections.' + this.collections.indexOf(collection) + '.selected', true);
+                            change = true;
                         }
-            CollectionList.ignoreCollectionChanges = false;
-            if (change)
-                this.updateTopLevelSelections();
-        }
+                        break;
+                    }
+        CollectionList.ignoreCollectionChanges = false;
+        if (change)
+            this.updateTopLevelSelections();
     }
 
     //@observe('collections.splices')

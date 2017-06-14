@@ -125,6 +125,12 @@ class HaTags extends polymer.Base implements polymer.Element {
         }
     }
 
+    public setSelectedByCategory(tagCategory: number, value: boolean) {
+        IconLayer.updateDisabled = true;
+        this.set('tagTops.' + tagCategory + '.selected', value);
+        IconLayer.updateDisabled = false;
+        IconLayer.updateShown();
+    }
    
     //@observe("tags.*") //needed? performance impact?
     //tagsChanged(changeRecord: any) { //TODO: really? any?
