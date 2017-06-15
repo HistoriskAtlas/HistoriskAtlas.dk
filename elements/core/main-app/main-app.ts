@@ -256,6 +256,7 @@ class App extends polymer.Base implements polymer.Element {
             App.passed.theme.maplongitude = parseFloat(atArr[1]);
             App.passed.theme.mapzoom = parseInt(atArr[2]);
         }
+
         //else {
         //    App.passed.initCoord = [Global.defaultTheme.maplatitude, Global.defaultTheme.maplongitude]; //TODO: what if default theme isnt selected....
         //    App.passed.initZoom = Global.defaultTheme.mapzoom; //TODO: what if default theme isnt selected....
@@ -281,6 +282,12 @@ class App extends polymer.Base implements polymer.Element {
         var theme = App.passed.theme
         App.map = new MainMap([theme.maplatitude ? theme.maplatitude : Global.defaultTheme.maplatitude, theme.maplongitude ? theme.maplongitude : Global.defaultTheme.maplongitude], theme.mapzoom ? theme.mapzoom : Global.defaultTheme.mapzoom);
         FB.init({ appId: '876939902336614', xfbml: true, version: 'v2.2' }); //TODO: move to login window?
+
+        $(document).ready(() => {
+            App.map.ready();
+            if (App.passed.collection)
+                App.haCollections.addPassedColection(App.passed.collection);
+        });
     }
 }
 

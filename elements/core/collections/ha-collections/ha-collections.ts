@@ -16,7 +16,7 @@ class HaCollections extends Tags implements polymer.Element {
     @property({ type: Boolean })
     public profCreators: boolean;
 
-    private waitingForCallbackCount: number = 0;
+    private waitingForCallbackCount: number;
     //private drawRouteRequestCount: number = 0;
 
     public allCollectionsFetched: boolean = false;
@@ -25,14 +25,20 @@ class HaCollections extends Tags implements polymer.Element {
 
     private static routeDrawingDisabled: boolean = false;
 
-    ready() {
-        if (App.passed.collection) {
-            //HaCollections.awitingGeos.push(() => {
-            var collection = this.getCollectionFromData(App.passed.collection, true); //this.allCollectionIDs, 
-            this.push('collections', collection);
-            this.select(collection);
-            //});
-        }
+    //ready() {
+    //    if (App.passed.collection) {
+    //        //HaCollections.awitingGeos.push(() => {
+    //        var collection = this.getCollectionFromData(App.passed.collection, true); //this.allCollectionIDs, 
+    //        this.push('collections', collection);
+    //        this.select(collection);
+    //        //});
+    //    }
+    //}
+
+    public addPassedColection(data: any) {
+        var collection = this.getCollectionFromData(data, true);
+        this.push('collections', collection);
+        this.select(collection);
     }
 
     public getPublishedCollections() {
@@ -85,18 +91,28 @@ class HaCollections extends Tags implements polymer.Element {
             var collections: Array<HaCollection> = this.collections.slice();
             var allCollectionIDs = this.allCollectionIDs;
             var tempFeatures: ol.Feature[];
+            var tempSelected: boolean;
             for (var data of result.data) {
-                if (allCollectionIDs.indexOf(data.collectionid) > -1)
+                if (allCollectionIDs.indexOf(data.collectionid) > -1) {
                     for (var collection of this.collections)
                         if (collection.id == data.collectionid) {
                             tempFeatures = collection.features;
+                            tempSelected = collection.selected;
                             collections.splice(collections.indexOf(collection), 1);
                             break;
-                        }                    
+                        }
+                }
                 var collection = this.getCollectionFromData(data, sendData.online) //allCollectionIDs, 
                 if (collection) {
-                    if (tempFeatures)
+                    if (tempFeatures) {
                         collection.features = tempFeatures;
+                        tempFeatures = null;
+                    }
+                    if (tempSelected) {
+                        collection.selected = tempSelected;
+                        tempSelected = null;
+                    }
+
                     collections.push(collection);
                 }
             }

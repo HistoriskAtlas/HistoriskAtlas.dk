@@ -81,6 +81,9 @@ class CollectionList extends polymer.Base implements polymer.Element {
     }
 
     public selectAll() {
+        if (!this.topLevels)
+            return;
+
         var change = false;
         CollectionList.ignoreCollectionChanges = true;
         for (var collection of this.collections)
@@ -120,6 +123,9 @@ class CollectionList extends polymer.Base implements polymer.Element {
     //}
 
     public updateTopLevelSelections() {
+        if (!this.topLevels)
+            return;
+
         var topLevels: Array<ICollectionTopLevel> = [];
         for (var topLevel of this.topLevels) {
             if (topLevel.filter) {

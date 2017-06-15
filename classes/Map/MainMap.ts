@@ -76,8 +76,6 @@
         this.backLayer = new BackLayer(this, App.global.theme.mapid ? App.global.theme.mapid : Global.defaultTheme.mapid);
         this.addLayer(this.backLayer);
 
-        $(document).ready(() => this.ready());
-
         //this.timeWarp = new TimeWarp({ source: new ol.source.XYZ({ url: HaMap.getTileUrlFromMapID(timeWarpMapID) }), preload: Infinity }, this, timeWarpMapID);
         //this.iconLayer = new IconLayer();
         //this.addLayer(this.iconLayer);
@@ -97,7 +95,7 @@
         (<any>this.dragPan).setActive(value);
     }
 
-    private ready() {
+    public ready() {
         this.timeWarp = new TimeWarp(this, HaMaps.initTimeWarpMapId);
         this.hillshade = new Hillshade(this);
         this.addLayer(this.iconLayer = new IconLayer());
