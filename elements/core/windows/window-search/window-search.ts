@@ -15,7 +15,7 @@ class WindowSearch extends polymer.Base implements polymer.Element {
     
     doSearch() {
         this.addresses = [];
-        $.getJSON("http://nominatim.openstreetmap.org/search?q=" + this.search + "&format=json&addressdetails=1&countrycodes=dk&email=it@historiskatlas.dk", (data) => {
+        $.getJSON(location.protocol + "//nominatim.openstreetmap.org/search?q=" + this.search + "&format=json&addressdetails=1&countrycodes=dk&email=it@historiskatlas.dk", (data) => {
             for (var place of data) {
                 if (place.address) {
                     var address = new Address();
