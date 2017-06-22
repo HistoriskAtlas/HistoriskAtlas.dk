@@ -4,6 +4,11 @@ class PanelLogin extends polymer.Base implements polymer.Element {
     @property({ type: Boolean, value: false })
     private remember: boolean;
 
+    ready() {
+        Common.loadJS('facebook-jssdk', '//connect.facebook.com/da_DK/sdk.js');
+        Common.loadJS('google-jssdk', '//apis.google.com/js/client:platform.js');
+    }
+
     @listen("username.keyup")
     @listen("password.keyup")
     keyup(e: KeyboardEvent) {
@@ -21,9 +26,9 @@ class PanelLogin extends polymer.Base implements polymer.Element {
 
     @listen("loginFB.tap")
     loginFB() {
+        FB.init({ appId: '876939902336614', xfbml: true, version: 'v2.9' });
         FB.login((fbToken) => {
-            FB.api('/me', (fbUser) => {
-                //this.loginData = { provider: "facebook", utoken: JSON.stringify(fbUser) };
+            FB.api('/me?fields=name,first_name,last_name,email,link', (fbUser) => {
                 Services.get('login', { provider: "facebook", utoken: JSON.stringify(fbUser) }, (result) => this.getLoginCallback(result));
             });
         }, { scope: 'public_profile, email' });
@@ -35,7 +40,7 @@ class PanelLogin extends polymer.Base implements polymer.Element {
             client_id: "232489990938-2m96hqlhfm75bqvqtr8i4ukvnuhrc7n4.apps.googleusercontent.com", //"364350662015-nssk0tgtoh9d7d0r7brt78mr0utvoi0d.apps.googleusercontent.com",
             immediate: false,
             response_type: "token",
-            scope: "email"//"https://www.googleapis.com/auth/plus.login"
+            scope: "email"
         };
         gapi.auth.authorize(params, (UToken) => {
             gapi.client.load('plus', 'v1', () => {

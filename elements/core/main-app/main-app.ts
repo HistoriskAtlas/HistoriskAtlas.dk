@@ -281,7 +281,7 @@ class App extends polymer.Base implements polymer.Element {
     public static init() {
         var theme = App.passed.theme
         App.map = new MainMap([theme.maplatitude ? theme.maplatitude : Global.defaultTheme.maplatitude, theme.maplongitude ? theme.maplongitude : Global.defaultTheme.maplongitude], theme.mapzoom ? theme.mapzoom : Global.defaultTheme.mapzoom);
-        FB.init({ appId: '876939902336614', xfbml: true, version: 'v2.2' }); //TODO: move to login window?
+        //FB.init({ appId: '876939902336614', xfbml: true, version: 'v2.2' }); //moved to login window
 
         $(document).ready(() => {
             App.map.ready();

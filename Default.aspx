@@ -132,8 +132,8 @@
     <script type="text/javascript">
         document.sid = '<%=(Request.Cookies["ASP.NET_SessionId"] != null ? Request.Cookies["ASP.NET_SessionId"].Value : "")%>';
     </script>
-    <script src="//connect.facebook.com/da_DK/sdk.js" type="text/javascript" id="facebook-jssdk"></script><%--Possibly IE bug here?--%>
-    <script src="https://apis.google.com/js/client:platform.js" type="text/javascript"></script> <%--TODO: use polymerversion instead?--%> 
+    <%--<script src="//connect.facebook.com/da_DK/sdk.js" type="text/javascript" id="facebook-jssdk"></script>--%>
+    <%--<script src="https://apis.google.com/js/client:platform.js" type="text/javascript"></script>--%>
     <%:System.Web.Optimization.Scripts.Render("~/bundles/jquery") %>
     <%:System.Web.Optimization.Scripts.Render("~/bundles/jquery-extent") %>
     <script src="./js/ol/ol-custom.js" type="text/javascript"></script>
@@ -141,13 +141,11 @@
     <%--:System.Web.Optimization.Scripts.Render("~/bundles/ha_core") --%>
     <link rel="import" href="elements/ha_core<%=(passedGeo == null ? "" : "_geo_only")%>.aspx"> <!-- Workaround for webcomponents polyfill browsers -->
     
-    <style>
     <% if (passedGeo != null) { %>
-        body {
-            background-color: grey;
-        }
-    <% } %>
+    <style>
+        body { background-color: grey; }
     </style>
+    <% } %>
 </head>
 <body<%=(crawler && passedGeo != null ? " style=\"overflow:auto\"" : "")%>>
     <% foreach (HistoriskAtlas5.Frontend.HATag tag in sitemapTags.data) { %>
