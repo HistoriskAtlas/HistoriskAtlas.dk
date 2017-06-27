@@ -443,7 +443,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
         geo.images = [];
         App.haUsers.user.geos.push(geo); //TODO: let HaUsers handle it, so change notification kicks in?
         //geo.user = App.haUsers.user;
-        this.push('geos', geo);
+        //this.push('geos', geo); //Moved to geo.save()
         IconLayer.updateShown();
 
         geo.save();

@@ -419,6 +419,7 @@
         //} else
         Services.insert('geo', data, (result) => {
             this._id = result.data[0].geoid;
+            App.haGeos.geos[this._id] = this;
             for (var tag of this.tags)
                 //if (tag != HaTags.tagUserLayer) //tag != HaTags.tagUGC && 
                     Services.insert('tag_geo', { tagid: tag.id, geoid: this._id }, (result) => {
