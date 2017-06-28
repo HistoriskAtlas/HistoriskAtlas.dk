@@ -250,21 +250,32 @@ class HaCollections extends Tags implements polymer.Element {
         var collection = new HaCollection({ title: title, userid: App.haUsers.user.id, ugc: !App.haUsers.user.isPro, online: false, distance: 0, type: 0, cyclic: false });
         collection.save(() => {
             this.push('collections', collection);
-            this.select(collection);
-            if (geo) {
-                var collection_geo = new HaCollectionGeo({ geoid: geo.id, ordering: HaCollectionGeo.orderingGap });
-                this.push('collection.collection_geos', collection_geo);
-                collection.saveNewCollectionGeo(collection_geo);
-            }
 
             var content = new HaContent({ contenttypeid: 0, ordering: 0, texts: [{ headline: '', text1: '' }] });
-            this.set('collection.content', content);
+            //this.set('collection.content', content);
+            collection.content = content;
+            this.select(collection);
+
             content.insert(() => {
                 Services.update('collection', { collectionid: this.collection.id, contentid: content.id });
                 if (App.haUsers.user.isPro)
                     this.addTag(App.haUsers.user.currentInstitution.tag, true, true);
             });
 
+
+            if (geo) {
+                var collection_geo = new HaCollectionGeo({ geoid: geo.id, ordering: HaCollectionGeo.orderingGap });
+                this.push('collection.collection_geos', collection_geo);
+                collection.saveNewCollectionGeo(collection_geo);
+            }
+
+            //var content = new HaContent({ contenttypeid: 0, ordering: 0, texts: [{ headline: '', text1: '' }] });
+            //this.set('collection.content', content);
+            //content.insert(() => {
+            //    Services.update('collection', { collectionid: this.collection.id, contentid: content.id });
+            //    if (App.haUsers.user.isPro)
+            //        this.addTag(App.haUsers.user.currentInstitution.tag, true, true);
+            //});
         });
         //return collection;
     }

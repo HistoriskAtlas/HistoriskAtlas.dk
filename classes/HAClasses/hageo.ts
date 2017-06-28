@@ -463,14 +463,14 @@
 
             Services.delete('geo', { geoid: this._id }, (result) => {
 
-                this.insertCollectionGeosOnGeoDelete(resultCG.data, loadText);
+                this.insertCollectionGeosOnGeoDelete(resultCG.data, loadText, this._id);
 
-                App.toast.show('Fortællingen er slettet.');
-                App.loading.hide(loadText)
+                //App.toast.show('Fortællingen er slettet.');
+                //App.loading.hide(loadText)
             })
         });
     }
-    private insertCollectionGeosOnGeoDelete(data: Array<any>, loadText: string) {
+    private insertCollectionGeosOnGeoDelete(data: Array<any>, loadText: string, geoid: number) {
         if (data.length == 0) {
             App.toast.show('Fortællingen er slettet.');
             App.loading.hide(loadText)
@@ -478,6 +478,12 @@
         }
 
         var cg = data.pop();
+
+        if (cg.geoid != geoid) { //safety meassaure... if API returns faulty data...
+            this.insertCollectionGeosOnGeoDelete(data, loadText, geoid);
+            return;
+        }
+
         delete cg.collectiongeoid;
         delete cg.created;
         delete cg.deleted;
@@ -485,7 +491,7 @@
             delete cg.contentid;
 
         Services.insert('collection_geo', cg, (result) => {
-            this.insertCollectionGeosOnGeoDelete(data, loadText);
+            this.insertCollectionGeosOnGeoDelete(data, loadText, geoid);
         });
     }
 
