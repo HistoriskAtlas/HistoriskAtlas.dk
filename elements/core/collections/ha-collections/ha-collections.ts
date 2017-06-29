@@ -99,6 +99,7 @@ class HaCollections extends Tags implements polymer.Element {
                             tempFeatures = collection.features;
                             tempSelected = collection.selected;
                             collections.splice(collections.indexOf(collection), 1);
+                            //this.splice('collections', this.collections.indexOf(collection), 1);
                             break;
                         }
                 }
@@ -114,10 +115,16 @@ class HaCollections extends Tags implements polymer.Element {
                     }
 
                     collections.push(collection);
+                    //this.push('collections', collection);
                 }
             }
+            var curCollection = this.collection;
+
             this.set('collections', collections);
-            //this.notifySplices('collections', [{ index: 0, removed: [], addedCount: collections.length, object: this.collections }]);
+            //this.notifyPath('collections', this.collections);
+
+            if (curCollection)
+                this.select(curCollection);
         })
     }
 

@@ -33,6 +33,9 @@ class HaTags extends polymer.Base implements polymer.Element {
     private static _viaPointMarkers: Array<string> = [];
 
     ready() {
+        HaTags._blankMarker = document.createElement("img");
+        HaTags._blankMarker.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAwCAYAAAB5R9gVAAAFbklEQVRYw82YfUzVZRTHv+c8v3tBXvRegQlXE8UBOlkp+Iav+cKcyJxZrXyZKGo4m3O1WjVRyv6o1h9t5NaLpZGZW6Vzy0pD1EQF+sOcoolWKgjmgosgiHh/z3P6I/AlU3m9t++/z9n5ffZ9fs/ZOYfQQYlIEoBpAMb6jCSRyEAQqdZDLUQXHUynAJQCKCSiUx3JT+2ECAaQaRtZbTENF0BOVnnN8coade5KA3zaAAAcihHfrzdGDozSSR43E0C2kTKL6X0A+UTU0mUgEXlSG9momKL3l1eb/KNn+dsTF1F3/cG5+4YGYc5jsViSmmimJMSwNnJZMa0iol2dAhKRPsbgI2Y8U1herV/6ulgdr6xFZ5QSG4l3nxqnpyZ4lDHYzoyVRNTQbiARGezTZt9N28RmbzuktpX+hu7Q4nEJ+GDhRO2w+LyDOY2ILjwUSETitJGjVxqaI6a/t9s68+dVdKeGe9zY98JsOyqsV61iSiWi8/cFEhG3T5tfahtvDBj79i5V4W1ET2hQRDhKX5urI0KDLyqmZCKqbzvjOwNtLZ/5tHlkZt73PQYDABdqr2FW3g/Kp80gW8vmO8/4DncWWYrmrNh6iE9c8qKndayiBiu3FbGlaJ6IzL/rykQkxNamcu/pS+6MjXsIftTeNekybain1mIeSETNbQ4tU0x9X935s19hAOCVnaWkiCIBZN26Mp8xq388XSVl1V5/8+B4ZS0Kz1SLz5jVAMAiMsrBHP/J4TN+d6dNm4+Uk4M5UURGMIBZtjGy51RloHiw++RF2NoIgHQWkTEnLnmlscUXMKBrN3woq64TAKPZZ2T4ySovI8Aqq/byTW2SWBFFVV1tCjQPqq42gYF+zISQphY74EDXbvigFPdiI7geFuQIOFBYkAPGSDNrkbqIsKCAA0WGBUOLeJlBlYMjwiXQQHGR4aKYKthSVDQxPsZYHLiH5lCM8UOijSI6zABKejmUSh4YGTCgUbFRCHYoBaCEAezVRuqXTxwaMKAVk4ZCG6kHUMBE1KyYti4YM0T3Dnb6HcYV4sSzo4doxZR/Z/uxsZfTwtr0kX4HyklPRrDDEgAbb7UfRFTORHkvpj1qEvu5/AYzNNqFNdOTDAF5RHTu3z31GxCp/WZlmg4NsvxSCHesTNMEqgGw4Z6emojqLcXzhnvcsiXzcVHcc+2RYsLnWVPNsBi3UUzz7jt1ENFhAp5/OiUO25dPF6fV/bXJaTG+em6GPDFiEBGwioiOtGdyzTQin/507jIt2XKQu2skio0IQ/7SqXpyfIwQkEVEWzsy28/QRr5ssbX75R0l1qaiM7e2HJ2pxNmTh+GdeWN1kKVqFdMCIirs8PZDRKIE+JiAuRXeRv3md8dUfvHZdoM5FCMzNQG5GSn2AHeoJSI7iSibiGq6uh8ar0VeV0Rp2V8U4eOiX9sFlD15GD5cOAlapEAR5RJRcbcsrG6N2sYUXKlvnhq3drtqsfUDY4MshQtvzbf7hYfsZ6aZ7f1Gh56RIlrvcYWorAmJD41dNjER0b1DLCLkduQbHQIiomItUpiTnqyDLPVAd3LSk20RFBBRSY8Btbq0zuMKUUvGJ9w3Zun4RMT06bg7nQJqdWn/utnJ+r8Kp9NirM9ItgXY156fuMtAbS71d4WqzNR7XVqS2uoOsL4zuTsFRERHtciB3IyUu1xyWozcjBRb/tlPF/sNqNWlnP6uULV43G2XMlMT4HF13p0uyzbmQKW30Xau2iTOVZukqq7JZ0QKu5KzS42PIsoZ4A49vGhsPAgEjyvEArAuoPOUbcyR3/9q8P1R03DTGCkK+MQpIlPktibg/yCfbQ7Zxhzsjlzd0jxbijYA6JZx/G+qy0TEoXIVyQAAAABJRU5ErkJggg==';
+
         this.tags = [];
         this.byId = [];
         this.parentIDs = [];
@@ -172,8 +175,8 @@ class HaTags extends polymer.Base implements polymer.Element {
         var context = canvas.getContext("2d");
         var x: number = 0;
         var y: number = 0;
-        HaTags._blankMarker = document.createElement("img");
-        $(HaTags._blankMarker).on('load', () => {
+        //HaTags._blankMarker = document.createElement("img");
+        //$(HaTags._blankMarker).on('load', () => {
             $(markers).on('load', () => {
                 while (true) {
                     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -215,8 +218,8 @@ class HaTags extends polymer.Base implements polymer.Element {
                     callback();
             });
             markers.src = 'images/markers/all.png';
-        });
-        HaTags._blankMarker.src = 'images/markers/marker.png';
+        //});
+        //HaTags._blankMarker.src = 'images/markers/marker.png';
     }
 
     private invertColors(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
@@ -239,7 +242,7 @@ class HaTags extends polymer.Base implements polymer.Element {
         canvas.height = 48;
         var context = canvas.getContext("2d");
         context.fillStyle = '#FFFFFF';
-        context.font = 'bold 18px Roboto'
+        context.font = 'bold 18px Arial' //Roboto
 
         context.drawImage(HaTags._blankMarker, 0, 0);
         this.redColors(canvas, context);

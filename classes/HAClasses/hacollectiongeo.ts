@@ -48,10 +48,10 @@
     get geo(): HaGeo {
         if (this._geoIsPlaceholder && this.geoid)
             if (App.haGeos.geos[this.geoid]) {
-                //var icon = this._geo.icon;
+                var icon = this._geo.icon;
                 this._geo = App.haGeos.geos[this.geoid];
-                //this._geo.icon = icon;
-                //icon.geo = this._geo;
+                this._geo.icon = icon;
+                icon.geo = this._geo;
                 this._geoIsPlaceholder = false;
             }
 
