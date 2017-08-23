@@ -533,7 +533,8 @@ class HaCollections extends Tags implements polymer.Element {
         }
         
         if (collection.collection_geos.length < 2) {
-            this.set('collections.' + this.collections.indexOf(collection) + '.distance', 0);
+            this.setDistance(collection, 0);
+            //this.set('collections.' + this.collections.indexOf(collection) + '.distance', 0);
             //this.nextUpdateRouteLayerRequest();
         }
 
@@ -555,7 +556,8 @@ class HaCollections extends Tags implements polymer.Element {
                 totalDistance += Math.round(distance);
                 this.waitingForCallbackCount--;
                 if (this.waitingForCallbackCount == 0) {
-                    this.set('collections.' + this.collections.indexOf(collection) + '.distance', totalDistance);
+                    this.setDistance(collection, totalDistance);
+                    //this.set('collections.' + this.collections.indexOf(collection) + '.distance', totalDistance);
                     if (callback)
                         callback();
                     //this.nextUpdateRouteLayerRequest();
@@ -582,6 +584,11 @@ class HaCollections extends Tags implements polymer.Element {
         //    for (var geo of collection.geos)
         //        geo.icon.updateStyle();
         //}, 100);
+    }
+
+    private setDistance(collection: HaCollection, distance: number) {
+        if (distance != collection.distance)
+            this.set('collections.' + this.collections.indexOf(collection) + '.distance', distance);
     }
 
     //public updateIconStyle(geo: HaGeo, mapOnly: boolean = false) {

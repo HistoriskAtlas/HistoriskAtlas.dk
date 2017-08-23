@@ -8,6 +8,7 @@ class MainMenu extends polymer.Base implements polymer.Element {
     public panelDigdag: PanelDigDag;
     //public panelTheme: PanelTheme;
     private menuItems: Array<MainMenuItem>;
+    private dialogTour: DialogTour;
 
     @property({ type: Boolean, notify: true })
     public drawerOpen: boolean;
@@ -102,6 +103,18 @@ class MainMenu extends polymer.Base implements polymer.Element {
     @observe('drawerOpen')
     drawerOpenChanged() {
         this.timeLineActive = this.showMenuDigDag && this.drawerOpen;
+
+        if (this.drawerOpen && !this.dialogTour) { // && !LocalStorage.get('firstMenuOpenTourDone')
+            this.dialogTour = <DialogTour>DialogTour.create('Kulturinstitutionslaget og borgerlaget', 'Her kan du vælge hvad der vises på kortet. Vil du kun vil se professionelt indhold fra arkiver, biblioteker og museer så lad kun kulturinstitutionslaget været slået til. Vil du også se borgerskabt indhold, kan du slå borgerlaget til.', -40, null, null, null, 5, null, -15, null, true, 'firstMenuOpenTourDone');
+            $(this).before(this.dialogTour);
+            this.dialogTour.setCSS('position', 'fixed');
+            this.dialogTour.setCSS('top', 'initial');
+            $(this.dialogTour).css('margin-top', '-10px');
+            $(this.dialogTour).css('z-index', 1000);
+            //dialogTour.width = 366;
+
+            LocalStorage.set('firstMenuOpenTourDone', 'true');
+        }
     }
 
     menuItemShown(e: any) {

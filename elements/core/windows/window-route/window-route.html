@@ -12,8 +12,12 @@
                 flex-shrink: 0;
             }
             .geo-list {
-                flex-grow: 1;
+                /*flex-grow: 1;*/
                 /*flex-shrink: 1 !important;*/
+            }
+            #byAndInfoLine {
+                display: flex; 
+                margin: 10px 10px 20px 10px;
             }
             by-line {
                 margin-top: 3.5px;
@@ -72,6 +76,7 @@
                                 <paper-toggle-button no-ink checked="[[route.cyclic]]" class="cyclic-toggle"></paper-toggle-button>
                             </menu-item>
                             <menu-item on-tap="editorialTap">Redaktion</menu-item>
+                            <menu-item on-tap="helpTap">Hjælp</menu-item>
                             <menu-item spacer></menu-item>
                             <menu-item on-tap="deleteTap">Slet turforslag</menu-item>
                         </paper-menu>
@@ -79,12 +84,12 @@
                 </template>
             </div>
 
-            <div class="content">
-                <content-viewer content="{{route.content}}" editing="[[editing]]" truncate-text-at="300"></content-viewer>
+            <div id="content" class="content">
+                <content-viewer id="introContentViewer" content="{{route.content}}" editing="[[editing]]" truncate-text-at="300"></content-viewer>
                 
-                <div style="display: flex; margin: 10px 10px 20px 10px;">
+                <div id="byAndInfoLine">
                     <by-line user="[[route.user]]" institutions="[[institutions]]"></by-line>
-                    <div class="info-line">
+                    <div id="infoLine" class="info-line">
                         <template is="dom-if" if="[[editing]]">
                             <paper-menu-button id="paperMenuButtonType" horizontal-align="right">
                                 <div class="dropdown-trigger">
@@ -128,10 +133,17 @@
                     <collection-geo-list collection-geos="[[route.collection_geos]]" class="geo-list"></collection-geo-list>
                 </template>
 
-                <horizontal-tag-list title="EMNER" menu="Subject" tags="[[subjects]]" editing="[[editing]]" tags-service="[[tagsService()]]"></horizontal-tag-list>
+                <div style="flex-grow:1"></div>
+
+                <horizontal-tag-list id="subjects" title="EMNER" menu="Subject" tags="[[subjects]]" editing="[[editing]]" tags-service="[[tagsService()]]"></horizontal-tag-list>
                 <template is="dom-if" if="[[showPeriodTags(periods.length,editing)]]">
                     <horizontal-tag-list title="PERIODER" menu="Period" tags="[[periods]]" editing="[[editing]]" tags-service="[[tagsService()]]"></horizontal-tag-list>
                 </template>
+
+                <template is="dom-if" if="[[editing]]">
+                    <window-route-contest route="[[route]]"></window-route-contest>
+                </template>
+
             </div>
         </window-basic>
 

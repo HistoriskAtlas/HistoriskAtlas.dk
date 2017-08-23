@@ -117,6 +117,8 @@ class RichText extends polymer.Base implements polymer.Element {
             content = this.content;
 
         this.set('immediateContent', content);
+
+        this.fire('contentChanged');
     }
 
     @observe('immediateContent')

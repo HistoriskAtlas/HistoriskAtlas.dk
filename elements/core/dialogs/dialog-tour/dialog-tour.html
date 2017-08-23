@@ -1,7 +1,7 @@
 ﻿<dom-module id="dialog-tour">
     <template>
         <style>
-            #container {
+            :host {
                 position: absolute;
             }
             #dialog {
@@ -12,6 +12,9 @@
                 left:0px !important;
                 right: initial !important;
             }
+            /*.dialog-left > .buttons {
+                box-shadow: -2px 2px rgba(0,0,0,0.1);
+            }*/
             .dialog-right {
                 right:0px !important;
                 left: initial !important;
@@ -34,7 +37,7 @@
                 transform: rotate(45deg);
             }
         </style>
-        <div id="container">
+        <!--<div id="container">-->
             <paper-dialog id="dialog" opened="[[opened]]" no-cancel-on-outside-click no-cancel-on-esc-key>
                 <div id="arrow"></div>
                 <div>
@@ -46,6 +49,6 @@
                     <paper-button dialog-confirm on-tap="nextTap">[[nextText(buttonOK)]]</paper-button>
                 </div>
             </paper-dialog>
-        </div>
+        <!--</div>-->
     </template>
 </dom-module>
