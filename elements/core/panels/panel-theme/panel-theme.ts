@@ -207,7 +207,7 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         }, 500);        
     }
     guideRouteTap() {
-        window.open('../../../pdf/Vejledning til at lave turforslag på HistoriskAtlas.dk.pdf', '_blank')
+        window.open('../../../pdf/Vejledning til at lave turforslag på HistoriskAtlas.dk' + (App.haUsers.user.isPro ? ' for kulturinstitutioner' : '') + '.pdf', '_blank')
     }
 
     is1001(theme: ITheme): boolean {

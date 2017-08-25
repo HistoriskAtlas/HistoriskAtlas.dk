@@ -26,6 +26,10 @@
         return localStorage.setItem(key, data);
     }
 
+    public static delete(key: string) {
+        localStorage.removeItem(key);
+    }
+
     public static isBefore(key: string, date: Date): boolean {
         return this.timestamp(key) < date.getTime();
     }
