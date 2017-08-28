@@ -33,6 +33,9 @@ class DialogTour extends polymer.Base implements polymer.Element {
         if (bottom != null)
             this.bottom = bottom;
 
+        if (!arrowLeft && !arrowRight && !arrowTop && !arrowBottom)
+            $(this.$.arrow).css('display', 'none')
+
         if (arrowLeft != null) {
             $(this.$.arrow).css('left', arrowLeft)
             if (arrowLeft < 0)

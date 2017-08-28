@@ -28,7 +28,7 @@ class WindowRoute extends polymer.Base implements polymer.Element {
     @observe('editing')
     editingChanged() {
         if (this.editing) { //!LocalStorage.get('firstRouteTourDone') && 
-            this.spawnDialogTour('introContentViewer', 0, 'Du har netop oprettet et turforslag!', 'Du kan altid finde hjælp i denne menu. Skal vi hjælpe dig med de næste skridt nu?', null, 43, -15, null, true, false);
+            this.spawnDialogTour('introContentViewer', 40, 'Du har oprettet et turforslag', 'Du kan altid finde hjælp ⋮ menuen øverst. Skal vi hjælpe dig med de næste skridt nu?', null, null, null, null, true);
             this.curTourStep = 1;
         } else
             this.curTourStep = 0;
@@ -60,13 +60,13 @@ class WindowRoute extends polymer.Base implements polymer.Element {
             this.dialogTour.remove();
 
         switch (this.curTourStep) {
-            case 2: this.spawnDialogTour('introContentViewer', -10, 'Giv dit turforslag en kort beskrivelse', 'Klik her og skriv en kort tekst der beskriver og introducerer dit turforslag. Klik på NÆSTE når du er færdig.', 6, null, -15, null); break;
-            case 3: this.spawnDialogTour('byAndInfoLine', -20, 'Vælg typen af dit turforslag', 'Klik på pilen og vælg om dit turforslag er bedst at opleve i bil, på cykel eller til fods. Klik på NÆSTE når du er færdig.', null, 56, -15, null); break;
-            case 4: this.spawnDialogTour('subjects', -225, 'Tilføj emner og perioder', 'Klik på plus\'et for at tilføje et emne eller en periode som dit turforslag omhandler. Tilføj gerne flere emner og perioder. Klik på NÆSTE når du er færdig.', 16, null, null, -15, false, false); break;
-            case 5: this.spawnDialogTour('geoAutosuggest', 10, 'Tilføj fortællinger til dit turforslag', 'Klik på plus-knappen for at søge efter, og tilføje, fortællinger til turforslaget. Du kan også tilføje fortællinger ved at åbne dem og vælge "Tilføj til turforslag" i menuen.' + (this.route.collection_geos.length == 0 ? ' Guiden fortsætter, når du har gjort dette.' : ' Klik på NÆSTE når du er færdig.'), null, 6, -15, null, this.route.collection_geos.length == 0); break;
-            case 6: this.spawnDialogTour('geoAutosuggest', -40, 'Fold fortællingen ud ved at klikke på pilen', 'Herunder kan du vælge om ruten mellem denne og den næste fortælling skal beregnes som den hutigste vej, eller om det blot skal være en fugleflugtslinie. Slå også "Tekst" til, hvis du ønsker at give fortællingen en beskrivelse der er specifik for dette turforslag. Klik på NÆSTE når du er færdig.', 6, null, -15, null); break;
-            case 7: this.spawnDialogTour('geoAutosuggest', 10, 'Tilføj mere end én fortælling', 'Et turforslag skal indeholde mere end én fortælling. Tilføj en eller flere fortællinger. Guiden fortsætter, når du har gjort dette.', null, 6, -15, null, true); break;
-            case 8: this.spawnDialogTour('geoAutosuggest', -40, 'Via-punkter', 'Hvis ruten ikke helt følger den vej du ønsker, kan du indsætte via-punkter ved at trække i selve ruten på kortet. Denne guide er nu slut. Start den evt. igen ved at vælge "Hjælp" i menuen øverst. Du kan også finde en vejledning i menuen under "Brug for hjælp?"', -15, null, 6, null, true); break;
+            case 2: this.spawnDialogTour('introContentViewer', -10, 'Giv dit turforslag en kort beskrivelse', 'Klik her og skriv en kort tekst, der beskriver og introducerer dit turforslag. Klik på NÆSTE når du er færdig.', 6, null, -15, null); break;
+            case 3: this.spawnDialogTour('byAndInfoLine', -20, 'Er dit turforslag en bil-, cykel- eller gåtur?', 'Klik på pilen og vælg om dit turforslag er bedst at opleve i bil, på cykel eller til fods. Klik på NÆSTE når du er færdig.', null, 56, -15, null); break;
+            case 4: this.spawnDialogTour('subjects', -225, 'Tilføj emner og perioder', 'Klik på plus-knappen for at tilføje et emne eller en periode, der karakteriserer dit turforslag. Gentag for at tilføje flere emner og perioder. Klik på NÆSTE når du er færdig.', 16, null, null, -15, false, false); break;
+            case 5: this.spawnDialogTour('geoAutosuggest', 10, 'Tilføj fortællinger til dit turforslag', 'Klik på plus-knappen for at fremsøge og tilføje fortællinger til turforslaget. Du kan også tilføje fortællinger ved at åbne dem på kortet og vælge "Tilføj til turforslag" i fortællingens menu. Guiden fortsætter, når du har gjort dette.' + (this.route.collection_geos.length == 0 ? ' Guiden fortsætter, når du har gjort dette.' : ' Klik på NÆSTE når du er færdig.'), null, 6, -15, null, this.route.collection_geos.length == 0); break;
+            case 6: this.spawnDialogTour('geoAutosuggest', -40, 'Fold fortællingen ud ved at klikke på pilen', 'Herunder kan du vælge om ruten mellem denne og den næste fortælling skal beregnes som den hurtigste vej, eller om det skal være en fugleflugtslinie. Slå "Tekst" til, hvis du ønsker at give rutepunktet en beskrivelse, der er specifik for dit turforslag. Klik på NÆSTE når du er færdig.', 6, null, -15, null); break;
+            case 7: this.spawnDialogTour('geoAutosuggest', 10, 'Tilføj mere end én fortælling', 'Et turforslag skal indeholde mere end én fortælling. Tilføj derfor flere fortællinger. Guiden fortsætter, når du har gjort dette.', null, 6, -15, null, true); break;
+            case 8: this.spawnDialogTour('geoAutosuggest', -40, 'Via-punkter', 'Hvis ruten ikke helt følger den vej, du ønsker at den skal gå, kan du indsætte via-punkter ved at “trække i” selve ruten på kortet med musen. Denne guide er nu slut. Start den evt. igen ved at vælge "Hjælp" i menuen øverst. Du kan også finde en vejledning i menuen under "Hjælp og vejledning"', -15, null, 6, null, true); break;
             case 9: this.curTourStep = 0; break;
         }
 

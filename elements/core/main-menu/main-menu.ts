@@ -105,7 +105,7 @@ class MainMenu extends polymer.Base implements polymer.Element {
         this.timeLineActive = this.showMenuDigDag && this.drawerOpen;
 
         if (this.drawerOpen && !this.$$('mainMenudialogTour') && !LocalStorage.get('firstMenuOpenTourDone')) {
-            var dialogTour = <DialogTour>DialogTour.create('Kulturinstitutionslaget og borgerlaget', 'Her kan du vælge hvad der vises på kortet. Vil du kun vil se professionelt indhold fra arkiver, biblioteker og museer så lad kun kulturinstitutionslaget været slået til. Vil du også se borgerskabt indhold, kan du slå borgerlaget til.', -40, null, null, null, 5, null, -15, null, true, 'firstMenuOpenTourDone');
+            var dialogTour = <DialogTour>DialogTour.create('Kulturinstitutionslaget og borgerlaget', 'Her kan du vælge, hvad der vises på kortet. Vil du kun se professionelt indhold fra arkiver, biblioteker og museer, så aktiver kun kulturinstitutionslaget. Vil du også se borgerskabte fortællinger og ruter, så aktiver borgerlaget.', -40, null, null, null, 5, null, -15, null, true, 'firstMenuOpenTourDone');
             dialogTour.id = 'mainMenudialogTour';
             $(this).before(dialogTour);
             dialogTour.setCSS('position', 'fixed');
@@ -185,7 +185,7 @@ class MainMenu extends polymer.Base implements polymer.Element {
         Common.dom.append(DialogVideoIntro.create());
     }
     writerGuideTap() {
-        window.open('../../../pdf/Vejledning til skribenter på HistoriskAtlas' + (App.haUsers.user.isPro ? ' for kulturinstitutioner' : '') + '.pdf', '_blank')
+        window.open('../../../pdf/Vejledning til skribenter på HistoriskAtlas.dk' + (App.haUsers.user.isPro ? ' for kulturinstitutioner' : '') + '.pdf', '_blank')
     }
 
     profGuidelinesTap() {
