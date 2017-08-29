@@ -92,12 +92,12 @@
             </template>
 
             <div style="height:10px"></div>
-            <template is="dom-if" if="[[user.isPro]]">
+            <!--<template is="dom-if" if="[[user.isPro]]">
                 <paper-item toggles active="{{showProfMenu}}" class="prof-menu">For kulturinstitutioner</paper-item>
                 <iron-collapse class="sub-menu prof-menu" opened="[[showProfMenu]]">
                     <paper-item on-tap="profGuidelinesTap">Retningslinjer for formidling</paper-item>
                 </iron-collapse>
-            </template>
+            </template>-->
             <paper-item toggles active="{{showAboutMenu}}">Om HistoriskAtlas.dk</paper-item>
             <iron-collapse class="sub-menu" opened="[[showAboutMenu]]">
                 <paper-item on-tap="theAssociationTap">Foreningen HistoriskAtlas.dk</paper-item>
@@ -117,6 +117,9 @@
                 <paper-item on-tap="guidedTourTap">Start guidet tour</paper-item>
                 <paper-item on-tap="introVideoTap">Se introduktionsvideo</paper-item>
                 <paper-item on-tap="writerGuideTap">Vejledning til skribenter</paper-item>
+                <template is="dom-if" if="[[user.isPro]]">
+                    <paper-item on-tap="profGuidelinesTap">Retningslinjer for formidling</paper-item>
+                </template>
             </iron-collapse>
         </iron-collapse>
     </template>

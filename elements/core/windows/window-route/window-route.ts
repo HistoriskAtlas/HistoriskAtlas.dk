@@ -27,8 +27,8 @@ class WindowRoute extends polymer.Base implements polymer.Element {
 
     @observe('editing')
     editingChanged() {
-        if (this.editing) { //!LocalStorage.get('firstRouteTourDone') && 
-            this.spawnDialogTour('introContentViewer', 40, 'Du har oprettet et turforslag', 'Du kan altid finde hjælp ⋮ menuen øverst. Skal vi hjælpe dig med de næste skridt nu?', null, null, null, null, true);
+        if (!LocalStorage.get('firstRouteTourDone') && this.editing) {
+            this.spawnDialogTour('introContentViewer', 40, 'Du har oprettet et turforslag', 'Du kan altid finde hjælp i menuen (⋮) øverst. Skal vi hjælpe dig med de næste skridt nu?', null, null, null, null, true);
             this.curTourStep = 1;
         } else
             this.curTourStep = 0;

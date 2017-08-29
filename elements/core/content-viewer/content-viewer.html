@@ -8,12 +8,24 @@
     <template>
 
         <!-- TODO: Add ordering to Text and other tables, so it would be possible to have multiple Texts and Images? in one content-viewer -->
-
-        <template is="dom-if" if="[[content.isText]]">
+        <!--<template is="dom-if" if="[[content.isText]]">
             <rich-text ordering$="[[content.ordering]]" content="{{content.texts.0.text}}" editable="[[editing]]" placeholder="Skriv din tekst her..." style="min-height:0px; width:100%" truncate-text-at="[[truncateTextAt]]"></rich-text>
         </template>
         <template is="dom-if" if="[[content.isBiblio]]">
             <window-geo-biblio ordering$="[[content.ordering]]" cql="{{content.biblios.0.cql}}" editing="[[editing]]"></window-geo-biblio>
+        </template>-->
+
+
+        <template is="dom-repeat" items="{{content.texts}}" as="text">
+            <rich-text content="{{text.text}}" editable="[[editing]]" placeholder="Skriv din tekst her..." style="min-height:0px; width:100%" truncate-text-at="[[truncateTextAt]]"></rich-text> <!--ordering$="[[content.ordering]]" and use flex-box order attribute to set order! -->
         </template>
+        <template is="dom-repeat" items="{{content.biblios}}" as="biblio">
+            <window-geo-biblio cql="{{biblio.cql}}" editing="[[editing]]"></window-geo-biblio> <!--ordering$="[[content.ordering]]" and use flex-box order attribute to set order! -->
+        </template>
+
+
+        <!--TODO: Migrate PDF data from hadb3... implement same as Biblio.... with ContentID.........................................................................................................-->
+
+
     </template>
 </dom-module>

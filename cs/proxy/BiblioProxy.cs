@@ -42,9 +42,11 @@ namespace HistoriskAtlas5.Frontend
             try
             {
                 XmlDocument doc = new XmlDocument();
-                //doc.Load(@"http://oss-services.dbc.dk/opensearch/?action=search&query=" + HttpUtility.UrlEncode(CQL) + @"&agency=100200&profile=test&start=1&stepValue=50&collectionType=work-1");
-                doc.Load(@"http://opensearch.addi.dk/b3.0_4.3/?action=search&query=" + HttpUtility.UrlEncode(CQL) + @"&start=1&stepValue=50&collectionType=work-1"); //WAS version 4.0
                 //doc.Load("http://localhost/cs/proxy/test.xml");
+                //doc.Load(@"http://oss-services.dbc.dk/opensearch/?action=search&query=" + HttpUtility.UrlEncode(CQL) + @"&agency=100200&profile=test&start=1&stepValue=50&collectionType=work-1");
+                //doc.Load(@"http://opensearch.addi.dk/b3.0_4.3/?action=search&query=" + HttpUtility.UrlEncode(CQL) + @"&start=1&stepValue=50&collectionType=work-1");
+                doc.Load(@"https://opensearch.addi.dk/b3.5_4.5/?action=search&query=" + HttpUtility.UrlEncode(CQL) + @"&start=1&stepValue=50&collectionType=work-1");
+                
                 XmlNamespaceManager xmlnsManager = new XmlNamespaceManager(doc.NameTable);
                 xmlnsManager.AddNamespace("x", "http://oss.dbc.dk/ns/opensearch");
                 xmlnsManager.AddNamespace("SOAP-ENV", "http://schemas.xmlsoap.org/soap/envelope/");
