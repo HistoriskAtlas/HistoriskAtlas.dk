@@ -3,10 +3,11 @@
     protected _created: Date;
     protected _user: Object;
     protected _content: HaContent;
-    //private _ordering: number; Future upgrade?
+    private _ordering: number;
 
     constructor(data: any, content: HaContent) {
         this._id = data.id;
+        this._ordering = data.ordering;
         this._created = data.created ? new Date(data.created) : null;
         this._user = data.user;
         this._content = content;
@@ -18,6 +19,13 @@
     //set id(newValue: number) {
     //    this._id = newValue;
     //}
+
+    get ordering(): number {
+        return this._ordering;
+    }
+    set ordering(newValue: number) {
+        this._ordering = newValue;
+    }
 
     get created(): Date {
         return this._created;

@@ -6,6 +6,7 @@
 
     public texts: Array<HaSubContentText> = [];
     public biblios: Array<HaSubContentBiblio> = [];
+    public pdfs: Array<HaSubContentPDF> = [];
     public externals: Array<HaSubContentExternal> = [];
 
     constructor(data: any) {
@@ -21,6 +22,10 @@
         if (data.biblios)
             for (var biblio of data.biblios)
                 this.biblios.push(new HaSubContentBiblio(biblio, this));
+
+        if (data.pdfs)
+            for (var pdf of data.pdfs)
+                this.pdfs.push(new HaSubContentPDF(pdf, this));
 
         if (data.externalcontent)
             for (var external of data.externalcontent)
@@ -43,6 +48,10 @@
             case 0:
                 if (this.texts.length > 0)
                     return this.texts[0].headline;
+                else {
+                    if (this.pdfs.length > 0)
+                        return 'Dokumenter'
+                }
                 break;
             case 1: return 'Litteratur';
         }

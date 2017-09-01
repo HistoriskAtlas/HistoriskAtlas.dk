@@ -2,6 +2,7 @@
     <style>
         :host {
             display: flex;
+            flex-direction: column;
             padding-bottom: 17px; 
         }
     </style>
@@ -22,9 +23,11 @@
         <template is="dom-repeat" items="{{content.biblios}}" as="biblio">
             <window-geo-biblio cql="{{biblio.cql}}" editing="[[editing]]"></window-geo-biblio> <!--ordering$="[[content.ordering]]" and use flex-box order attribute to set order! -->
         </template>
+        <template is="dom-repeat" items="{{content.pdfs}}" as="pdf">
+            <content-viewer-pdf pdf="{{pdf}}" editing="[[editing]]"></content-viewer-pdf> <!--ordering$="[[content.ordering]]" and use flex-box order attribute to set order! -->
+        </template>
 
-
-        <!--TODO: Migrate PDF data from hadb3... implement same as Biblio.... with ContentID.........................................................................................................-->
+                
 
 
     </template>
