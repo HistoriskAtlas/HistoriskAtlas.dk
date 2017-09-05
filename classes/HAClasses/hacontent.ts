@@ -1,5 +1,6 @@
 ﻿class HaContent {
     private _id: number;
+    private _headline: string;
     private _geoid: number;
     private _contenttypeid: number;
     private _ordering: number;
@@ -10,7 +11,8 @@
     public externals: Array<HaSubContentExternal> = [];
 
     constructor(data: any) {
-        this._id = data.id
+        this._id = data.id;
+        this._headline = data.headline;
         this._geoid = data.geoid;
         this._contenttypeid = data.contenttypeid;
         this._ordering = data.ordering;
@@ -45,21 +47,22 @@
 
     get headline(): string {
         switch (this._contenttypeid) {
-            case 0:
-                if (this.texts.length > 0)
-                    return this.texts[0].headline;
-                else {
-                    if (this.pdfs.length > 0)
-                        return 'Dokumenter'
-                }
-                break;
+        //    case 0:
+        //        if (this.texts.length > 0)
+        //            return this.texts[0].headline;
+        //        else {
+        //            if (this.pdfs.length > 0)
+        //                return 'Dokumenter'
+        //        }
+        //        break;
             case 1: return 'Litteratur';
         }
 
-        return '';
+        //return '';
+        return this._headline;
     }
     set headline(value: string) {
-        //See ha-content
+        this._headline = value;
     }
 
     public get isText(): boolean {
@@ -123,6 +126,8 @@
         switch (property) {
             case 'ordering':
                 Services.update('content', { id: this._id, ordering: this._ordering }, (result) => { }); break;
+            case 'headline':
+                Services.update('content', { id: this._id, headline: this._headline }, (result) => { }); break;
         }
     }
 

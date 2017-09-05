@@ -10,9 +10,9 @@ class HaContentService extends polymer.Base implements polymer.Element {
         var property: string = props.pop();
 
         if (props.length == 1) {
-            if (property == 'headline')
-                this.set('content.texts.0.headline', changeRecord.value)
-            else
+            //if (property == 'headline')
+            //    this.set('content.texts.0.headline', changeRecord.value)
+            //else
                 this.content.update(property);
         }
 
