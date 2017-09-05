@@ -239,7 +239,7 @@
                     </div>
                     <template id="templateContents" is="dom-repeat" items="{{contents}}" as="content">  <!--sort="sortContents" observe="ordering"-->
                         <template is="dom-if" if="[[content.showAsTab]]">
-                            <content-viewer ordering$="[[content.ordering]]" content="{{content}}" editing="[[editing]]"></content-viewer>
+                            <content-viewer ordering$="[[content.ordering]]" content="{{content}}" editing="[[editing]]" adjustable></content-viewer>
                             <!--<template is="dom-if" if="[[content.isText]]">
                                 <rich-text ordering$="[[content.ordering]]" content="{{content.texts.0.text}}" editable="[[editing]]" placeholder="Skriv din tekst her..." style="min-height:0px; width:100%"></rich-text>
                             </template>

@@ -16,19 +16,21 @@
             <window-geo-biblio ordering$="[[content.ordering]]" cql="{{content.biblios.0.cql}}" editing="[[editing]]"></window-geo-biblio>
         </template>-->
 
-
         <template is="dom-repeat" items="{{content.texts}}" as="text">
-            <rich-text content="{{text.text}}" editable="[[editing]]" placeholder="Skriv din tekst her..." style="min-height:0px; width:100%" truncate-text-at="[[truncateTextAt]]"></rich-text> <!--ordering$="[[content.ordering]]" and use flex-box order attribute to set order! -->
+            <subcontent-viewer items="{{content.texts}}" item="[[text]]" editing="[[editing]]" adjustable="[[adjustable]]" type="tekst"> <!--ordering$="[[content.ordering]]" and use flex-box order attribute to set order! -->
+                <rich-text content="{{text.text}}" editable="[[editing]]" placeholder="Skriv din tekst her..." truncate-text-at="[[truncateTextAt]]"></rich-text>
+            </subcontent-viewer>
         </template>
         <template is="dom-repeat" items="{{content.biblios}}" as="biblio">
-            <window-geo-biblio cql="{{biblio.cql}}" editing="[[editing]]"></window-geo-biblio> <!--ordering$="[[content.ordering]]" and use flex-box order attribute to set order! -->
+            <subcontent-viewer items="{{content.biblios}}" item="[[biblio]]" editing="[[editing]]" adjustable="[[adjustable]]" type="litteraturreference">
+                <window-geo-biblio cql="{{biblio.cql}}" editing="[[editing]]"></window-geo-biblio>
+            </subcontent-viewer>
         </template>
         <template is="dom-repeat" items="{{content.pdfs}}" as="pdf">
-            <content-viewer-pdf pdf="{{pdf}}" editing="[[editing]]"></content-viewer-pdf> <!--ordering$="[[content.ordering]]" and use flex-box order attribute to set order! -->
+            <subcontent-viewer items="{{content.pdfs}}" item="[[pdf]]" editing="[[editing]]" adjustable="[[adjustable]]" type="PDF">
+                <content-viewer-pdf pdf="{{pdf}}" editing="[[editing]]"></content-viewer-pdf>
+            </subcontent-viewer>
         </template>
-
-                
-
 
     </template>
 </dom-module>

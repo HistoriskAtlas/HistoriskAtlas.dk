@@ -27,9 +27,6 @@
         <div class="listitem" on-tap="pdfTap">
             <iron-icon icon="ha:pdf"></iron-icon>
             <div id="title">[[pdf.title]]</div>
-            <template is="dom-if" if="[[editing]]">
-                <paper-icon-button class="close" icon="close" on-tap="closeTap"></paper-icon-button> <!--TODO: Should be moved to genereic sub content menu?-->
-            </template>
         </div>
     </template>
 </dom-module>

@@ -10,11 +10,6 @@ class ContentViewerPdf extends polymer.Base implements polymer.Element {
     pdfTap(e: any) {
         Common.savePDF(Common.api + 'pdf/' + this.pdf.id + '.pdf', this.pdf.filename);
     }
-
-    closeTap(e: any) {
-        e.stopPropagation();
-        //TODO
-    }
 }
 
 ContentViewerPdf.register();

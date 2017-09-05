@@ -9,6 +9,9 @@ class ContentViewer extends polymer.Base implements polymer.Element {
     @property({ type: Boolean, value: false })
     public editing: boolean;
 
+    @property({ type: Boolean, value: false })
+    public adjustable: boolean;
+
     @property({ type: Number })
     public truncateTextAt: number;
 }

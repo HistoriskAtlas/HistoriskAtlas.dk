@@ -1,0 +1,35 @@
+﻿<dom-module id="subcontent-viewer">
+    <style>
+        :host {
+            display: block;
+            width: 100%;
+            min-height: 0px;
+        }
+        paper-menu-button {
+            position: absolute;
+            right: 5px;
+            margin-top: 5px;
+            color: grey;
+        }
+        paper-icon-button {
+            width: 20px;
+            height: 20px;
+            padding: 0px;
+        }
+    </style>
+    <template>
+        <template is="dom-if" if="[[showMenu(editing,adjustable)]]">
+
+            <paper-menu-button id="morePaperMenuButton" dynamic-align close-on-activate no-overlap>
+                <paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>
+                <paper-menu class="dropdown-content">
+                    <menu-item on-tap="deleteTap">Slet [[type]]</menu-item>
+                    <menu-item on-tap="moveUpTap">Flyt op</menu-item>
+                    <menu-item on-tap="moveDownTap">Flyt ned</menu-item>
+                </paper-menu>
+            </paper-menu-button>
+
+        </template>
+        <content></content>
+    </template>
+</dom-module>
