@@ -38,6 +38,8 @@
             case 'text':
                 var test = Common.html2rich(this._text);
                 Services.update('text', { id: this._id, text1: Common.html2rich(this._text) }, (result) => { }); break;
+            default:
+                super.update('text', property); break;
         }
     }
 

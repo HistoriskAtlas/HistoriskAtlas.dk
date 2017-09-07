@@ -186,6 +186,7 @@
                                 <menu-item on-tap="renameContent" disabled="[[!curContent.isText]]">Omdøb fane</menu-item>
                                 <menu-item on-tap="moveLeftContent" disabled="[[contentIsFirst(curContent.ordering)]]">Flyt til venstre</menu-item>
                                 <menu-item on-tap="moveRightContent" disabled="[[contentIsLast(curContent.ordering)]]">Flyt til højre</menu-item>
+                                <menu-item on-tap="toggleAddSubContentSubmenu" disabled="[[!curContent.isText]]">Tilføj indhold...</menu-item>
                             </paper-menu>
                         </paper-dialog>
                     </template>
@@ -272,6 +273,11 @@
                 <template is="dom-if" if="[[isProUser()]]">
                     <menu-item on-tap="addBiblioContentTap">Tilføj litteraturfane</menu-item>
                 </template>
+            </dialog-selection>
+
+            <dialog-selection id="addSubContentDialog">
+                <menu-item on-tap="addTextSubContentTap">Tilføj tekstfelt</menu-item>
+                <menu-item on-tap="addPDFSubContentTap">Tilføj PDF</menu-item>
             </dialog-selection>
         </template>
 

@@ -1,13 +1,15 @@
 ﻿<dom-module id="subcontent-viewer">
     <style>
         :host {
+            position: relative;
             display: block;
             width: 100%;
             min-height: 0px;
         }
         paper-menu-button {
             position: absolute;
-            right: 5px;
+            top: 0px;
+            right: -13px;
             margin-top: 5px;
             color: grey;
         }
@@ -16,20 +18,33 @@
             height: 20px;
             padding: 0px;
         }
+        paper-menu-button:hover ~ .highlight {
+            background-color: rgba(0,93,154,0.1);
+            top: 0px;
+            left: 0px;
+            bottom: 0px;
+            right: 0px;
+            position: absolute;
+            margin-left: -17px;
+            margin-right: -17px;
+            pointer-events: none;
+        }
     </style>
     <template>
-        <template is="dom-if" if="[[showMenu(editing,adjustable)]]">
 
+        <content></content>
+
+        <template is="dom-if" if="[[showMenu(editing,adjustable)]]">
             <paper-menu-button id="morePaperMenuButton" dynamic-align close-on-activate no-overlap>
                 <paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>
                 <paper-menu class="dropdown-content">
                     <menu-item on-tap="deleteTap">Slet [[type]]</menu-item>
-                    <menu-item on-tap="moveUpTap">Flyt op</menu-item>
-                    <menu-item on-tap="moveDownTap">Flyt ned</menu-item>
+                    <menu-item on-tap="moveUpTap" disabled="[[first(item.ordering)]]">Flyt op</menu-item>
+                    <menu-item on-tap="moveDownTap" disabled="[[last(item.ordering,items.length)]]">Flyt ned</menu-item>
                 </paper-menu>
             </paper-menu-button>
-
+            <div class="highlight"></div>
         </template>
-        <content></content>
+
     </template>
 </dom-module>

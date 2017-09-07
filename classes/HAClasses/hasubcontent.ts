@@ -21,7 +21,7 @@
     //}
 
     get ordering(): number {
-        return this._ordering;
+        return this._ordering == null ? 0 : this._ordering;
     }
     set ordering(newValue: number) {
         this._ordering = newValue;
@@ -54,6 +54,14 @@
                 callback(['id', 'created', 'user']);
         })
     }
+
+    public update(table: string, property: string) {
+        switch (property) {
+            case 'ordering':
+                Services.update(table, { id: this._id, ordering: this._ordering }, (result) => { }); break;
+        }
+    }
+
 
     protected delete(table: string) {
         Services.delete(table, { id: this._id, deletemode: 'permanent' }, (result) => { })

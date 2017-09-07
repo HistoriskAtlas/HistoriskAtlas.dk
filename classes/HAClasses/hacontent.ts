@@ -45,6 +45,10 @@
         this._ordering = value;
     }
 
+    get count(): number {
+        return this.texts.length + this.biblios.length + this.pdfs.length + this.externals.length;
+    }
+
     get headline(): string {
         switch (this._contenttypeid) {
         //    case 0:
@@ -84,6 +88,7 @@
     public insert(callback?: () => void) {
         var data: any = {
             geoid: this._geoid,
+            headline: this._headline,
             ordering: this._ordering,
             userid: App.haUsers.user.id,
             contenttypeid: this._contenttypeid
@@ -125,7 +130,7 @@
     public update(property: string) {
         switch (property) {
             case 'ordering':
-                Services.update('content', { id: this._id, ordering: this._ordering }, (result) => { }); break;
+                Services.update('content', { id: this._id, ordering: this._ordering }, (result) => { }); break; //TODO: Add Ordering to PDF and Biblio tables...............................................
             case 'headline':
                 Services.update('content', { id: this._id, headline: this._headline }, (result) => { }); break;
         }

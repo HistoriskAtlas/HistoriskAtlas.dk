@@ -25,6 +25,8 @@
         switch (property) {
             case 'cql':
                 Services.update('biblio', { id: this._id, cql: this._cql }, (result) => { }); break;
+            default:
+                super.update('biblio', property); break;
         }
     }
     public delete() {

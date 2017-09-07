@@ -37,6 +37,8 @@
                 Services.update('pdf', { id: this._id, cql: this._title }, (result) => { }); break;
             //case 'filename':
             //    Services.update('pdf', { id: this._id, cql: this._filename }, (result) => { }); break;
+            default:
+                super.update('pdf', property); break;
         }
     }
 

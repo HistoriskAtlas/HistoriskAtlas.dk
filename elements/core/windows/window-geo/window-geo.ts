@@ -106,19 +106,29 @@ class WindowGeo extends polymer.Base implements polymer.Element {
     @listen('content-title-confirmed')
     contentTitleConfirmed(e: any) {
         var ordering = this.contents.length == 0 ? 1 : Math.max.apply(Math, this.contents.map((o) => { return o.ordering; })) + 1;
-        var content = new HaContent({ geoid: this.geo.id, ordering: ordering, contenttypeid: 0, texts: [{ headline: e.detail, text1: '' }] });
+        var content = new HaContent({ geoid: this.geo.id, headline: e.detail, ordering: ordering, contenttypeid: 0, texts: [{ text1: '', ordering: 0 }] });
         this.push('contents', content);
         this.selectedTab = ordering; //this.contents.length;
     }
     addBiblioContentTap() {
         var ordering = this.contents.length == 0 ? 1 : Math.max.apply(Math, this.contents.map((o) => { return o.ordering; })) + 1; //TODO: same as above?
-        var content = new HaContent({ geoid: this.geo.id, ordering: ordering, contenttypeid: 1, biblios: [{ cql: this.geo.title }] });
+        var content = new HaContent({ geoid: this.geo.id, ordering: ordering, contenttypeid: 1, biblios: [{ cql: this.geo.title, ordering: 0 }] });
         this.push('contents', content);
         this.selectedTab = ordering; //this.contents.length;
     }
 
+    addTextSubContentTap() {
+        this.push('contents.' + this.contents.indexOf(this.curContent) + '.texts', new HaSubContentText({ text1: '', ordering: this.curContent.count }, this.curContent));
+    }
+    addPDFSubContentTap() {
+        //TODO.......................................................................................................................................................................
+    }
+
     toggleAddContentSubmenu(e) {
         this.$$('#addContentDialog').open();
+    }
+    toggleAddSubContentSubmenu(e) {
+        this.$$('#addSubContentDialog').open();
     }
 
     editorialTap() {
