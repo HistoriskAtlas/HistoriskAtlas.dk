@@ -29,6 +29,9 @@ class WindowGeo extends polymer.Base implements polymer.Element {
     public dev: boolean;
 
     @property({ type: Boolean })
+    public devOrBeta: boolean;
+
+    @property({ type: Boolean })
     public editing: boolean;
 
     @property({ type: Boolean, value: false })
@@ -330,6 +333,7 @@ class WindowGeo extends polymer.Base implements polymer.Element {
 
         this.standalone = !geo;
         this.dev = this.standalone ? (<any>window).passed.dev : App.isDev;
+        this.devOrBeta = Common.isDevOrBeta;
         this.geo = this.standalone ? new HaGeo((<any>window).passed.geo, false, false) : geo;
         this.editing = typeof App == 'undefined' ? false : App.haUsers.user.canEdit(this.geo);
         this.touchDevice = 'ontouchstart' in window || !!navigator.maxTouchPoints; //bind from MainApp instead, when converting from dynamically creating elements.

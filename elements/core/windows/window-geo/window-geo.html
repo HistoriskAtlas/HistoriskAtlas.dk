@@ -186,7 +186,7 @@
                                 <menu-item on-tap="renameContent" disabled="[[!curContent.isText]]">Omdøb fane</menu-item>
                                 <menu-item on-tap="moveLeftContent" disabled="[[contentIsFirst(curContent.ordering)]]">Flyt til venstre</menu-item>
                                 <menu-item on-tap="moveRightContent" disabled="[[contentIsLast(curContent.ordering)]]">Flyt til højre</menu-item>
-                                <menu-item on-tap="toggleAddSubContentSubmenu" disabled="[[!curContent.isText]]">Tilføj indhold...</menu-item>
+                                <menu-item on-tap="toggleAddSubContentSubmenu" disabled="[[!curContent.isText]]" hidden$="[[!devOrBeta]]">Tilføj indhold...</menu-item>
                             </paper-menu>
                         </paper-dialog>
                     </template>
@@ -240,7 +240,7 @@
                     </div>
                     <template id="templateContents" is="dom-repeat" items="{{contents}}" as="content">  <!--sort="sortContents" observe="ordering"-->
                         <template is="dom-if" if="[[content.showAsTab]]">
-                            <content-viewer ordering$="[[content.ordering]]" content="{{content}}" editing="[[editing]]" adjustable></content-viewer>
+                            <content-viewer ordering$="[[content.ordering]]" content="{{content}}" editing="[[editing]]" adjustable="[[devOrBeta]]"></content-viewer>
                             <!--<template is="dom-if" if="[[content.isText]]">
                                 <rich-text ordering$="[[content.ordering]]" content="{{content.texts.0.text}}" editable="[[editing]]" placeholder="Skriv din tekst her..." style="min-height:0px; width:100%"></rich-text>
                             </template>

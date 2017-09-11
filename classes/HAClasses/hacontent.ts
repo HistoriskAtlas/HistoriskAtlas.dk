@@ -129,8 +129,8 @@
 
     public update(property: string) {
         switch (property) {
-            case 'ordering':
-                Services.update('content', { id: this._id, ordering: this._ordering }, (result) => { }); break; //TODO: Add Ordering to PDF and Biblio tables...............................................
+            case 'ordering': //TODO: Add Ordering to PDF and Biblio tables................................................................................................
+                Services.update('content', { id: this._id, ordering: this._ordering }, (result) => { }); break; 
             case 'headline':
                 Services.update('content', { id: this._id, headline: this._headline }, (result) => { }); break;
         }
