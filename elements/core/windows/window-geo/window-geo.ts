@@ -124,7 +124,7 @@ class WindowGeo extends polymer.Base implements polymer.Element {
         this.push('contents.' + this.contents.indexOf(this.curContent) + '.texts', new HaSubContentText({ text1: '', ordering: this.curContent.count }, this.curContent));
     }
     addPDFSubContentTap() {
-        //TODO.......................................................................................................................................................................
+        this.push('contents.' + this.contents.indexOf(this.curContent) + '.pdfs', new HaSubContentPDF({ title: '', filename: '', ordering: this.curContent.count }, this.curContent));
     }
 
     toggleAddContentSubmenu(e) {

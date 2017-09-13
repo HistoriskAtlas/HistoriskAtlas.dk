@@ -36,7 +36,8 @@ class HaContentService extends polymer.Base implements polymer.Element {
         }
 
         if (props.length == 3)
-            this.content[props[1]][props[2].substring(1)].update(property);
+            this.get(props.join('.')).update(property);
+            //this.content[props[1]][props[2].substring(1)].update(property);
     }
 
 }

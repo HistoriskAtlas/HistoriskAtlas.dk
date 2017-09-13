@@ -36,7 +36,7 @@ class SubcontentViewer extends polymer.Base implements polymer.Element {
             if (this.items[otherIndex].ordering == otherOrdering)
                 break;
 
-        this.set('items.' + otherIndex + '.ordering', this.item.ordering);
+        this.set('items.' + otherIndex + '.ordering', this.item.ordering); //SAME..............................................................................................
         this.set('items.' + this.items.indexOf(this.item) + '.ordering', otherOrdering);
     }
 
@@ -52,7 +52,7 @@ class SubcontentViewer extends polymer.Base implements polymer.Element {
     first(ordering) {
         return ordering == 0;
     }
-    last(ordering, length) {
+    last(ordering, length) { //TODO; not working since length is only length of current item type............................................................................................
         return ordering == length - 1;
     }
 }

@@ -74,15 +74,16 @@ class FileUpload extends polymer.Base implements polymer.Element {
         var fileType: string = file.name.split('.').pop().toLowerCase();
 
         if (fileType == 'pdf') {
-            //Services.insert('') TODO: this
+            this.insertedPDF(file, fileType);
         }
         else {
             Services.insert('image', { 'userid': App.haUsers.user.id, 'text': '' }, (data) => this.insertedImage(file, fileType, data))
         }
     }
 
-    private insertedPDF(file: File, fileType: string, data: any) {
-        (<any>file).path = 'Pdf\\' + file.name;
+    private insertedPDF(file: File, fileType: string) {
+        (<any>file).newName = (Math.floor(Math.random() * 9000000) + 1000000) + file.name;
+        (<any>file).path = 'Pdf\\' + (<any>file).newName;
         this.inserted(file)
     }
 
@@ -111,7 +112,7 @@ class FileUpload extends polymer.Base implements polymer.Element {
 
         xhr.onload = (e) => {
             if (xhr.status === 200) {
-                this.fire("success", { xhr: xhr, image: (<any>file).image });
+                this.fire("success", { xhr: xhr, image: (<any>file).image, file: file });
                 this.set(prefix + ".complete", true);
                 this.splice("files", this.files.indexOf(file), 1);
             } else {
