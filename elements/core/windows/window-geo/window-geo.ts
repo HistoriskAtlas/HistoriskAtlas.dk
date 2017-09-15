@@ -100,7 +100,7 @@ class WindowGeo extends polymer.Base implements polymer.Element {
     private insertEditorialText(text: string) {
         if (!this.editorialContent)
             this.push('contents', new HaContent({ geoid: this.geo.id, ordering: 0, contenttypeid: 3 }));
-        this.push('editorialContent.texts', new HaSubContentText({ headline: '', text1: Common.html2rich(text) }, this.editorialContent));
+        this.push('editorialContent.subContents', new HaSubContentText({ headline: '', text1: Common.html2rich(text) }, this.editorialContent));
     }
 
     addTextContentTap() {
@@ -121,10 +121,10 @@ class WindowGeo extends polymer.Base implements polymer.Element {
     }
 
     addTextSubContentTap() {
-        this.push('contents.' + this.contents.indexOf(this.curContent) + '.texts', new HaSubContentText({ text1: '', ordering: this.curContent.count }, this.curContent));
+        this.push('contents.' + this.contents.indexOf(this.curContent) + '.subContents', new HaSubContentText({ text1: '', ordering: this.curContent.subContents.length }, this.curContent));
     }
     addPDFSubContentTap() {
-        this.push('contents.' + this.contents.indexOf(this.curContent) + '.pdfs', new HaSubContentPDF({ title: '', filename: '', ordering: this.curContent.count }, this.curContent));
+        this.push('contents.' + this.contents.indexOf(this.curContent) + '.subContents', new HaSubContentPDF({ title: '', filename: '', ordering: this.curContent.subContents.length }, this.curContent));
     }
 
     toggleAddContentSubmenu(e) {
@@ -266,7 +266,7 @@ class WindowGeo extends polymer.Base implements polymer.Element {
     }
     youTubeThumbnailUrl(contents: Array<HaContent>): string {
         var content = this.externalContent(contents)
-        return content ? content.externals[0].thumbnailUrl : null;
+        return content ? (<HaSubContentExternal>content.subContents[0]).thumbnailUrl : null;
     }
     
     @listen("windowbasic.closing")

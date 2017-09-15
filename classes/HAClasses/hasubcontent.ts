@@ -46,6 +46,7 @@
 
     protected insert(callback: (props: Array<string>) => void, table: string, data: any) {
         data.contentid = this._content.id,
+        data.ordering = this._ordering,
         Services.insert(table, data, (result) => {
             this._id = result.data[0].id;
             this._created = new Date(result.data[0].created);
@@ -61,9 +62,10 @@
                 Services.update(table, { id: this._id, ordering: this._ordering }, (result) => { }); break;
         }
     }
+    
+    abstract delete() 
 
-
-    protected delete(table: string) {
+    protected deleteSuper(table: string) {
         Services.delete(table, { id: this._id, deletemode: 'permanent' }, (result) => { })
     }
 }

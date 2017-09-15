@@ -8,6 +8,11 @@
         //this._headline = Common.rich2html(data.headline); //TODO: conversion needed?
     }
 
+    get isText(): boolean {
+        return true;
+    }
+
+
     get text(): string {
         return this._text;
     }
@@ -44,6 +49,6 @@
     }
 
     public delete() {
-        super.delete('text')
+        this.deleteSuper('text')
     }
 }

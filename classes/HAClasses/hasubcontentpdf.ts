@@ -8,6 +8,10 @@
         this._filename = data.filename;
     }
 
+    get isPDF(): boolean {
+        return true;
+    }
+
     get title(): string {
         return this._title;
     }
@@ -26,8 +30,7 @@
         super.insert(null, 'pdf',
             {
                 title: this._title,
-                filename: this._filename,
-                ordering: this.ordering
+                filename: this._filename
             }
         )
     }
@@ -44,6 +47,6 @@
     }
 
     public delete() {
-        super.delete('pdf')
+        this.deleteSuper('pdf')
     }
 }

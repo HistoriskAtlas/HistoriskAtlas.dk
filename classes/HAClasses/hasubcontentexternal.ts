@@ -9,6 +9,11 @@
         this._link = data.link;
     }
 
+    get isExternal(): boolean {
+        return true;
+    }
+
+
     get text(): string {
         return this._text;
     }

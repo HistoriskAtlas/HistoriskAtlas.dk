@@ -19,19 +19,33 @@
             <window-geo-biblio ordering$="[[content.ordering]]" cql="{{content.biblios.0.cql}}" editing="[[editing]]"></window-geo-biblio>
         </template>-->
 
-        <template is="dom-repeat" items="{{content.texts}}" as="text">
-            <subcontent-viewer items="{{content.texts}}" item="[[text]]" editing="[[editing]]" adjustable="[[adjustable]]" type="tekst"> <!--ordering$="[[content.ordering]]" and use flex-box order attribute to set order! -->
+        <!--<template is="dom-repeat" items="{{content.texts}}" as="text">
+            <subcontent-viewer content="[[content]]" item="{{text}}" editing="[[editing]]" adjustable="[[adjustable]]" type="tekst">
                 <rich-text content="{{text.text}}" editable="[[editing]]" placeholder="Skriv din tekst her..." truncate-text-at="[[truncateTextAt]]"></rich-text>
             </subcontent-viewer>
         </template>
         <template is="dom-repeat" items="{{content.biblios}}" as="biblio">
-            <subcontent-viewer items="{{content.biblios}}" item="[[biblio]]" editing="[[editing]]" adjustable="[[adjustable]]" type="litteraturreference">
+            <subcontent-viewer content="[[content]]" item="{{biblio}}" editing="[[editing]]" adjustable="[[adjustable]]" type="litteraturreference">
                 <window-geo-biblio cql="{{biblio.cql}}" editing="[[editing]]"></window-geo-biblio>
             </subcontent-viewer>
         </template>
         <template is="dom-repeat" items="{{content.pdfs}}" as="pdf">
-            <subcontent-viewer items="{{content.pdfs}}" item="[[pdf]]" editing="[[editing]]" adjustable="[[adjustable]]" type="PDF">
+            <subcontent-viewer content="[[content]]" item="{{pdf}}" editing="[[editing]]" adjustable="[[adjustable]]" type="PDF">
                 <content-viewer-pdf pdf="{{pdf}}" editing="[[editing]]"></content-viewer-pdf>
+            </subcontent-viewer>
+        </template>-->
+
+        <template is="dom-repeat" items="{{content.subContents}}" as="subContent">
+            <subcontent-viewer content="{{content}}" sub-content="{{subContent}}" editing="[[editing]]" adjustable="[[adjustable]]">
+                <template is="dom-if" if="[[subContent.isText]]">
+                    <rich-text content="{{subContent.text}}" editable="[[editing]]" placeholder="Skriv din tekst her..." truncate-text-at="[[truncateTextAt]]"></rich-text>
+                </template>
+                <template is="dom-if" if="[[subContent.isBiblio]]">
+                    <window-geo-biblio cql="{{subContent.cql}}" editing="[[editing]]"></window-geo-biblio>
+                </template>
+                <template is="dom-if" if="[[subContent.isPDF]]">
+                    <content-viewer-pdf pdf="{{subContent}}" editing="[[editing]]"></content-viewer-pdf>
+                </template>
             </subcontent-viewer>
         </template>
 

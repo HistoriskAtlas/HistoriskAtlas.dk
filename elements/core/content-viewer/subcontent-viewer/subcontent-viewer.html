@@ -39,8 +39,8 @@
                 <paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>
                 <paper-menu class="dropdown-content">
                     <menu-item on-tap="deleteTap">Slet [[type]]</menu-item>
-                    <menu-item on-tap="moveUpTap" disabled="[[first(item.ordering)]]">Flyt op</menu-item>
-                    <menu-item on-tap="moveDownTap" disabled="[[last(item.ordering,items.length)]]">Flyt ned</menu-item>
+                    <menu-item on-tap="moveUpTap" disabled="[[first(subContent.ordering)]]">Flyt op</menu-item>
+                    <menu-item on-tap="moveDownTap" disabled="[[last(subContent.ordering,content.subContents.length)]]">Flyt ned</menu-item>
                 </paper-menu>
             </paper-menu-button>
             <div class="highlight"></div>

@@ -6,6 +6,10 @@
         this._cql = data.cql;
     }
 
+    get isBiblio(): boolean {
+        return true;
+    }
+
     get cql(): string {
         return this._cql;
     }
@@ -30,6 +34,6 @@
         }
     }
     public delete() {
-        super.delete('biblio')
+        this.deleteSuper('biblio')
     }
 }

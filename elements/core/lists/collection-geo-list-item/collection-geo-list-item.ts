@@ -17,7 +17,7 @@ class CollectionGeoListItem extends polymer.Base implements polymer.Element {
         this.fire('close', this.collectionGeo);
     }
 
-    @observe('collectionGeo.content.texts.0.text') 
+    @observe('collectionGeo.content.subContents.0.text') 
     textChanged()
     {
         this.set('domChangeCounter', this.domChangeCounter + 1);
@@ -48,7 +48,7 @@ class CollectionGeoListItem extends polymer.Base implements polymer.Element {
             return '';
 
         if (showText && this.collectionGeo.content) {
-            return $('<span>' + this.collectionGeo.content.texts[0].text.replace('<br>', ' - ') + '</span>').text();
+            return $('<span>' + (<HaSubContentText>this.collectionGeo.content.subContents[0]).text.replace('<br>', ' - ') + '</span>').text();
         }
 
         return '';

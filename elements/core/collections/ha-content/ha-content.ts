@@ -33,6 +33,8 @@ class HaContentService extends polymer.Base implements polymer.Element {
 
             for (var subcontent of splice.removed)
                 subcontent.delete();
+
+            //this.notifyPath('content.count', this.content.count);
         }
 
         if (props.length == 3)

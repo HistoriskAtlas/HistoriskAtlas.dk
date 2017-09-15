@@ -78,7 +78,7 @@ class WindowImage extends polymer.Base implements polymer.Element {
     }
     youTubeEmbedUrl(contents: Array<HaContent>): string {
         var content = this.externalContent(contents)
-        return content ? content.externals[0].embedUrl : null;
+        return content ? (<HaSubContentExternal>content.subContents[0]).embedUrl : null;
     }
 
     isFirstImage(image: HAImage): boolean {

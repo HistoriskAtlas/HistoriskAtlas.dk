@@ -5,10 +5,11 @@
     private _contenttypeid: number;
     private _ordering: number;
 
-    public texts: Array<HaSubContentText> = [];
-    public biblios: Array<HaSubContentBiblio> = [];
-    public pdfs: Array<HaSubContentPDF> = [];
-    public externals: Array<HaSubContentExternal> = [];
+    //public texts: Array<HaSubContentText> = [];
+    //public biblios: Array<HaSubContentBiblio> = [];
+    //public pdfs: Array<HaSubContentPDF> = [];
+    //public externals: Array<HaSubContentExternal> = [];
+    public subContents: Array<HaSubContent> = [];
 
     constructor(data: any) {
         this._id = data.id;
@@ -19,19 +20,19 @@
 
         if (data.texts)
             for (var text of data.texts)
-                this.texts.push(new HaSubContentText(text, this));
+                this.subContents.push(new HaSubContentText(text, this));
 
         if (data.biblios)
             for (var biblio of data.biblios)
-                this.biblios.push(new HaSubContentBiblio(biblio, this));
+                this.subContents.push(new HaSubContentBiblio(biblio, this));
 
         if (data.pdfs)
             for (var pdf of data.pdfs)
-                this.pdfs.push(new HaSubContentPDF(pdf, this));
+                this.subContents.push(new HaSubContentPDF(pdf, this));
 
         if (data.externalcontent)
             for (var external of data.externalcontent)
-                this.externals.push(new HaSubContentExternal(external, this));
+                this.subContents.push(new HaSubContentExternal(external, this));
     }
 
     get id(): number {
@@ -45,9 +46,9 @@
         this._ordering = value;
     }
 
-    get count(): number {
-        return this.texts.length + this.biblios.length + this.pdfs.length + this.externals.length;
-    }
+    //get count(): number {
+    //    return this.texts.length + this.biblios.length + this.pdfs.length + this.externals.length;
+    //}
 
     get headline(): string {
         switch (this._contenttypeid) {
@@ -96,12 +97,20 @@
         Services.insert('content', data, (result) => {
             this._id = result.data[0].id;
 
-            for (var text of this.texts)
-                text.insert(null); //TODO callbacks needed?
-            for (var biblio of this.biblios)
-                biblio.insert();
-            for (var external of this.externals)
-                external.insert();
+            //for (var text of this.texts)
+            //    text.insert(null); //TODO callbacks needed?
+            //for (var biblio of this.biblios)
+            //    biblio.insert();
+            //for (var external of this.externals)
+            //    external.insert();
+            for (var subContent of this.subContents) {
+                if (subContent instanceof HaSubContentText)
+                    (<HaSubContentText>subContent).insert(null);
+                if (subContent instanceof HaSubContentBiblio)
+                    (<HaSubContentBiblio>subContent).insert();
+                if (subContent instanceof HaSubContentExternal)
+                    (<HaSubContentExternal>subContent).insert();
+            }
 
             if (callback)
                 callback();
@@ -141,12 +150,15 @@
 
         //TODO wait for below to finish first?
 
-        for (var text of this.texts)
-            text.delete();
-        for (var biblio of this.biblios)
-            biblio.delete();
-        for (var external of this.externals)
-            external.delete();
+        //for (var text of this.texts)
+        //    text.delete();
+        //for (var biblio of this.biblios)
+        //    biblio.delete();
+        //for (var external of this.externals)
+        //    external.delete();
+
+        for (var subContent of this.subContents)
+            subContent.delete();
 
 
         //switch (this._type) {
