@@ -203,6 +203,9 @@
     <Content Include="html\RegionTypeAbouts\102.html" />
     <Content Include="html\RegionTypeAbouts\101.html" />
     <Content Include="images\institution\HoD2017about.jpg" />
+    <Content Include="images\lang\daFlag.png" />
+    <Content Include="images\lang\deFlag.png" />
+    <Content Include="images\lang\enFlag.png" />
     <Content Include="images\pdfHeader.jpg" />
     <Content Include="images\theme\1001back.jpg" />
     <Content Include="images\theme\1001logo.jpg" />
@@ -596,6 +599,7 @@
     <TypeScriptCompile Include="typings\base64.d.ts" />
     <TypeScriptCompile Include="typings\jQuery\jquery.md5.d.ts" />
     <TypeScriptCompile Include="typings\jQuery\jquery.d.ts" />
+    <Content Include="LangSelect.aspx" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -670,6 +674,10 @@
     </Compile>
     <Compile Include="cs\bundles\HTMLBundle.cs" />
     <Compile Include="cs\bundles\HTMLBundleTransform.cs" />
+    <Compile Include="LangSelect.aspx.cs">
+      <DependentUpon>LangSelect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime">
