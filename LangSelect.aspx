@@ -57,7 +57,6 @@
             if (qs[lang + "Title"] == null && qs[lang + "GeoID"] == null)
                 continue;
 
-            var test = qs[lang + "GeoID"];
             int geoid = qs[lang + "GeoID"] == null ? 0 : Int32.Parse(qs[lang + "GeoID"]);
             HistoriskAtlas5.Frontend.HAGeo geo = GetGeo(geoid);
             string title = Request.QueryString[lang + "Title"] == null ? geo.title : HttpUtility.UrlDecode(Request.QueryString[lang + "Title"]);

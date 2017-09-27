@@ -96,7 +96,7 @@ namespace HistoriskAtlas5.Frontend
 
             public void ProcessRequest(HttpContext context)
             {
-                context.Response.Redirect("https://historiskatlas.dk/langselect.aspx?daGeoID=" + geoID + "&enGeoID=" + languageMapping[geoID].Item1 + "&deGeoID=" + languageMapping[geoID].Item2 + "&daURL=_(" + geoID + ")", true);
+                context.Response.Redirect("https://historiskatlas.dk/langselect.aspx?daGeoID=" + geoID + "&enGeoID=" + languageMapping[geoID].Item1 + "&deGeoID=" + languageMapping[geoID].Item2 + "&daUrl=_(" + geoID + ")%3Fredirected=true", true);
             }
 
             public bool IsReusable { get { return false; } }
@@ -104,9 +104,9 @@ namespace HistoriskAtlas5.Frontend
     }
 
     public class GeoIDConstraint : IRouteConstraint  {
-        public bool Match(HttpContextBase httpContent, Route route, String parameterName, RouteValueDictionary values, RouteDirection routeDirection)
+        public bool Match(HttpContextBase httpContext, Route route, String parameterName, RouteValueDictionary values, RouteDirection routeDirection)
         {
-            return Global.languageMapping.ContainsKey(Int32.Parse(values[parameterName].ToString()));
+            return Global.languageMapping.ContainsKey(Int32.Parse(values[parameterName].ToString())) && httpContext.Request.QueryString["redirected"] == null;
         }
     }
 }

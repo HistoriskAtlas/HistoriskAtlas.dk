@@ -25,7 +25,7 @@ namespace HistoriskAtlas5.Frontend
             passedGeo = GetGeo(deep);
             if (passedGeo != null)
                 if ("/" + passedGeo.urlPath != Server.UrlDecode(HttpContext.Current.Request.Url.AbsolutePath)) //TODO: only if direct deep link is detected.
-                    HttpContext.Current.Response.Redirect(passedGeo.absUrlPath, true);
+                    HttpContext.Current.Response.Redirect(passedGeo.absUrlPath + HttpContext.Current.Request.Url.Query, true);
 
             passedCollection = GetCollection(deep);
 
