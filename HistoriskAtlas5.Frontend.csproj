@@ -203,6 +203,7 @@
     <Content Include="html\RegionTypeAbouts\102.html" />
     <Content Include="html\RegionTypeAbouts\101.html" />
     <Content Include="images\institution\HoD2017about.jpg" />
+    <Content Include="images\Kontingentsatser2016.png" />
     <Content Include="images\lang\daFlag.png" />
     <Content Include="images\lang\deFlag.png" />
     <Content Include="images\lang\enFlag.png" />
