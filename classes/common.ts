@@ -148,10 +148,16 @@
         document.head.appendChild(link);
     }
 
-    public static loadJS(id: string, src: string) {
+    public static loadJS(id: string, src: string, callback: (e: Event) => void = null) {
         (function (d) {
-            var js; if (d.getElementById(id)) { return; }
+            var js; if (d.getElementById(id)) {
+                if (callback)
+                    callback(null);
+                return;
+            }
             js = d.createElement('script'); js.id = id; js.async = true;
+            if (callback)
+                js.onload = callback;
             js.src = src;
             d.getElementsByTagName('head')[0].appendChild(js);
         } (document));

@@ -46,7 +46,8 @@ namespace HistoriskAtlas5.Frontend
                 //doc.Load(@"http://oss-services.dbc.dk/opensearch/?action=search&query=" + HttpUtility.UrlEncode(CQL) + @"&agency=100200&profile=test&start=1&stepValue=50&collectionType=work-1");
                 //doc.Load(@"http://opensearch.addi.dk/b3.0_4.3/?action=search&query=" + HttpUtility.UrlEncode(CQL) + @"&start=1&stepValue=50&collectionType=work-1");
                 doc.Load(@"https://opensearch.addi.dk/b3.5_4.5/?action=search&query=" + HttpUtility.UrlEncode(CQL) + @"&start=1&stepValue=50&collectionType=work-1");
-                
+                //doc.Load(@"https://oss-services.dbc.dk/opensearch/5.0/?action=search&query=" + HttpUtility.UrlEncode(CQL) + @"&start=1&stepValue=50&collectionType=work-1");
+
                 XmlNamespaceManager xmlnsManager = new XmlNamespaceManager(doc.NameTable);
                 xmlnsManager.AddNamespace("x", "http://oss.dbc.dk/ns/opensearch");
                 xmlnsManager.AddNamespace("SOAP-ENV", "http://schemas.xmlsoap.org/soap/envelope/");
@@ -61,7 +62,7 @@ namespace HistoriskAtlas5.Frontend
                 XmlNode result = doc.SelectSingleNode(@"SOAP-ENV:Envelope/SOAP-ENV:Body/x:searchResponse/x:result", xmlnsManager);
 
                 if (result == null)
-                    return new HABiblioSearchResult(0);
+                    return new HABiblioSearchResult(0); /*, doc.InnerXml*/
 
                 HABiblioSearchResult HABiblioSearchResult = new HABiblioSearchResult(Int32.Parse(result.SelectSingleNode("x:collectionCount", xmlnsManager).InnerText));
 
@@ -99,7 +100,6 @@ namespace HistoriskAtlas5.Frontend
                 }
 
                 return HABiblioSearchResult;
-
             }
             catch
             {

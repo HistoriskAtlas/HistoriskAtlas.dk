@@ -18,10 +18,15 @@
         li {
             margin-bottom: 5px;
         }
+        .news {
+            flex-shrink: 0;
+            margin: 17px;
+            font-size: 14px;
+        }
     </style>
     <template>
         <window-basic id="windowbasic" window-title="Nyheder" width="660" height="510" toolbar-mode="waterfall" right="10" top="74">
-            <div style="margin:17px; font-size:14px">
+            <div class="news">
                 <div class="date">3. marts 2017</div>
                 <div class="headline">Primære emner på fortællinger, mv.</div>
                 <div class="content">
@@ -33,7 +38,7 @@
                     </ul>
                 </div>
             </div>
-            <div style="margin:17px; font-size:14px">
+            <div class="news">
                 <div class="date">19. december 2016</div>
                 <div class="headline">Fejlrettelser og forbedringer</div>
                 <div class="content">
@@ -45,7 +50,7 @@
                     </ul>
                 </div>
             </div>
-            <div style="margin:17px; font-size:14px">
+            <div class="news">
                 <div class="date">7. september 2016</div>
                 <div class="headline">Nye muligheder for skribenter og redaktører</div>
                 <div class="content">
