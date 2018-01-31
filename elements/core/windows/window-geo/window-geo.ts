@@ -225,6 +225,8 @@ class WindowGeo extends polymer.Base implements polymer.Element {
     }
     @listen('delete-geo-confirmed')
     deleteGeoConfirmed() {
+        if (!this.geo.title)
+            this.geo.title = ' '; //fix to make the window closeable
         this.$.windowbasic.close();
         App.haGeos.deleteGeo(this.geo);
     }

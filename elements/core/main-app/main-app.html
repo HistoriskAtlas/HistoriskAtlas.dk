@@ -219,14 +219,14 @@
             <red-ribbon show="{{showRedRibbon}}"></red-ribbon>
         </template>
         
-        <paper-drawer-panel id="leftPanel" selected="{{panelSelected}}" force-narrow disable-swipe="[[disableLeftPanelSwipe(touchDevice,narrow)]]" drawer-width="300px" dragging="{{leftPanelDragging}}">
+        <paper-drawer-panel id="leftPanel" selected="{{panelSelected}}" force-narrow disable-swipe="[[disableLeftPanelSwipe(touchDevice,narrow)]]" drawer-width="300px" dragging="{{leftPanelDragging}}" drawer-focus-selector=""> <!--drawer-focus-selector="" fixes focus steal from time-line -->
             <paper-header-panel drawer mode="waterfall" id="drawer">
 
                 <paper-toolbar class="medium-tall">
                     <div style="display:flex; display: flex; align-items: center; justify-content: space-between; width: 100%;">
                         <span class="hide-narrow"><iron-icon icon="ha:logo" style="width:32px; height:32px; margin-right: 5px"></iron-icon>MENU</span>
                         <iron-icon class="widelogo hide-wide" icon="ha:widelogo"></iron-icon>
-                        <paper-icon-button icon="close" paper-drawer-toggle></paper-icon-button>
+                        <paper-icon-button icon="close" paper-drawer-toggle tabindex="-1"></paper-icon-button>
                     </div>
                     <div class="bottom fit creator-filter">
                         <paper-button toggles noink active="{{profCreators}}" style="margin-right: 1px;">
