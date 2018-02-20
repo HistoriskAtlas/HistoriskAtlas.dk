@@ -84,6 +84,7 @@
     <Content Include="elements\core\lists\tag-list-item\tag-list-item.html" />
     <Content Include="elements\core\lists\menu-item\menu-item.html" />
     <Content Include="elements\core\map\map-about\map-about.html" />
+    <Content Include="elements\writer\dialogs\dialog-user-selection\dialog-user-selection.html" />
     <Content Include="elements\writer\windows\window-route-contest\window-route-contest.html" />
     <Content Include="elements\writer\dialogs\dialog-tag-selection\dialog-tag-selection.html" />
     <Content Include="elements\writer\dialogs\dialog-route-selection\dialog-route-selection.html" />
@@ -510,6 +511,7 @@
     <TypeScriptCompile Include="elements\core\lists\tag-list-item\tag-list-item.ts" />
     <TypeScriptCompile Include="elements\core\lists\menu-item\menu-item.ts" />
     <TypeScriptCompile Include="elements\core\map\map-about\map-about.ts" />
+    <TypeScriptCompile Include="elements\writer\dialogs\dialog-user-selection\dialog-user-selection.ts" />
     <TypeScriptCompile Include="elements\writer\windows\window-route-contest\window-route-contest.ts" />
     <TypeScriptCompile Include="elements\writer\dialogs\dialog-tag-selection\dialog-tag-selection.ts" />
     <TypeScriptCompile Include="elements\writer\dialogs\dialog-route-selection\dialog-route-selection.ts" />

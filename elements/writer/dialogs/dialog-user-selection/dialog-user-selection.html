@@ -1,0 +1,26 @@
+﻿<dom-module id="dialog-user-selection">
+    <template>
+        <style>
+            paper-dialog paper-dialog-scrollable {
+                --paper-dialog-scrollable: {
+                    box-sizing: border-box;
+                    max-width: 360px;
+                    max-height: 500px;
+                }
+            }
+            paper-item {
+                cursor: pointer;
+            }
+        </style>
+        <paper-dialog id="dialog" opened>
+            <H2>[[title]]</H2>
+            <paper-dialog-scrollable>
+                <paper-menu>
+                    <template is="dom-repeat" items="[[users]]">
+                        <paper-item on-tap="userTap">[[item.firstname]]</paper-item>
+                    </template>
+                </paper-menu>
+            </paper-dialog-scrollable>
+        </paper-dialog>
+    </template>
+</dom-module>

@@ -22,9 +22,13 @@ class ListAutoSuggest extends polymer.Base implements polymer.Element {
     @property({ type: Array })
     public autocompleteItems: Array<any>;
 
+    @property({ type: Array })
+    public allAutocompleteItems: Array<any>;
+
     @property({ type: Boolean, value: false })
     public autocompleteIsOpen: boolean;
 
+    private static maxSuggestions: number = 5;
     private pendingRequests: number = 0;
 
     ready() {
@@ -49,7 +53,7 @@ class ListAutoSuggest extends polymer.Base implements polymer.Element {
     }
 
     toggleAutocomplete() {
-        this.autocompleteIsOpen = !this.autocompleteIsOpen; 
+        this.autocompleteIsOpen = !this.autocompleteIsOpen;
     }
     @observe('autocompleteIsOpen')
     autocompleteIsOpenChanged() {
@@ -62,7 +66,7 @@ class ListAutoSuggest extends polymer.Base implements polymer.Element {
     @observe('input')
     inputChanged() {
         if (this.pendingRequests > 0)
-            return;        
+            return;
 
         this.requestAutocompleteItems();
     }
@@ -79,8 +83,8 @@ class ListAutoSuggest extends polymer.Base implements polymer.Element {
 
         Services.get(this.autosuggestService, {
             //'schema': '{institution:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},tag:{plurname:{like:' + this.input + '}}},fields:[id,{tag:[plurname]}]}}',
-            'schema': this.autosuggestSchema.replace('$input', this.input),
-            'count': 5
+            'schema': this.autosuggestSchema.replace(/\$input/g, this.input),
+            'count': ListAutoSuggest.maxSuggestions + 1
         }, (result) => {
             this.setAutocompleteItems(result.data);
         })
@@ -91,7 +95,7 @@ class ListAutoSuggest extends polymer.Base implements polymer.Element {
         if (this.pendingRequests > 1) {
             this.pendingRequests = 0;
             this.requestAutocompleteItems();
-        } else 
+        } else
             this.pendingRequests = 0;
     }
 
@@ -108,6 +112,8 @@ class ListAutoSuggest extends polymer.Base implements polymer.Element {
     }
     private add(item: any) {
         this.autocompleteIsOpen = false;
+        this.$.suggestionDialog.close();
+        this.allAutocompleteItems = [];
         this.fire(this.id + 'Added', item);
     }
 
@@ -118,7 +124,23 @@ class ListAutoSuggest extends polymer.Base implements polymer.Element {
     suggestName(item: Object): string {
         return Common.objPathsString(item, this.suggestNamePath);
     }
-
+    showSuggestItem(index: number): boolean {
+        return index < ListAutoSuggest.maxSuggestions;
+    }
+    showMore() {
+        Services.get(this.autosuggestService, {
+            'schema': this.autosuggestSchema.replace(/\$input/g, this.input),
+            'count': 'all',
+        }, (result) => {
+            (<Array<any>>result.data).sort((a: any, b: any) => { return this.suggestName(a).localeCompare(this.suggestName(b)) });
+            this.allAutocompleteItems = result.data,
+                this.$.suggestionDialog.open();
+        })
+    }
+    @listen('suggestionDialog.iron-overlay-closed')
+    suggestionDialogClosed() {
+        this.allAutocompleteItems = [];
+    }
 
 }
 

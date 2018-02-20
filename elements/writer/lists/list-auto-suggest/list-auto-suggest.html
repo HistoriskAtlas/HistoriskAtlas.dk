@@ -14,6 +14,9 @@
             .selectable {
                 cursor: pointer;
             }
+            .more {
+                align-self: flex-end;
+            }
             :host > .selectable:first-child {
                 font-weight: bold;
             }
@@ -32,6 +35,17 @@
                 --paper-input-container-underline-focus: {
                     border-bottom: 1px solid black;
                 }
+            }
+            paper-dialog paper-dialog-scrollable {
+                --paper-dialog-scrollable: {
+                    box-sizing: border-box;
+                    max-width: 360px;
+                    max-height: 500px;
+                }
+            }
+            paper-item {
+                cursor: pointer;
+                font-weight: normal !important;
             }
         </style>
         <content select=".list">
@@ -64,10 +78,21 @@
             </div>
         </div>
         <template is="dom-repeat" items="[[autocompleteItems]]">
-            <div class="item selectable">
+            <div class="item selectable" hidden$="[[!showSuggestItem(index)]]">
                 <div on-tap="addTap">[[suggestName(item)]]</div>
             </div>
         </template>
+        <div class="item selectable more" on-tap="showMore" hidden$="[[showSuggestItem(autocompleteItems.length)]]">vis flere...</div>
 
+        <paper-dialog id="suggestionDialog">
+            <!--<H2>[[title]]</H2>-->
+            <paper-dialog-scrollable>
+                <paper-menu>
+                    <template is="dom-repeat" items="[[allAutocompleteItems]]">
+                        <paper-item on-tap="addTap">[[suggestName(item)]]</paper-item>
+                    </template>
+                </paper-menu>
+            </paper-dialog-scrollable>
+        </paper-dialog>
     </template>
 </dom-module>
