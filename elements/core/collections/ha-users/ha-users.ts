@@ -145,13 +145,14 @@ class HaUsers extends polymer.Base implements polymer.Element {
         var filters: Array<string> = filter.split(' ', 2);
         return (filters[0] == '' ? '' : (filters.length == 1 ?
             [
-                { login: { like: filter } },
-                { firstname: { like: filter } },
-                { lastname: { like: filter } },
+                { login: { like: filter }, deleted: null },
+                { firstname: { like: filter }, deleted: null },
+                { lastname: { like: filter }, deleted: null }
             ] :
             {
                 firstname: { is: filters[0] },
-                lastname: { like: filters[1] }
+                lastname: { like: filters[1] },
+                deleted: null
             }
         ))
     }
