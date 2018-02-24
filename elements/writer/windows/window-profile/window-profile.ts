@@ -17,6 +17,18 @@ class WindowProfile extends polymer.Base implements polymer.Element {
         App.haUsers.notifyPath(e.path, e.value);
     }
 
+    changePassword() {
+        this.$.passwordDialog.open();
+    }
+
+    @listen('password-confirmed')
+    passwordConfirmed(e: any) {
+        Services.update('user', JSON.parse('{ "id": ' + this.user.id + ', "password": "' + $.md5(e.detail) + '" }'), (data) => {
+            Common.dom.append(DialogAlert.create('Din adgangskode er nu ændret!'));
+        }, (data) => {
+            Common.dom.append(DialogAlert.create('Der opstod en fejl ved forsøg på at ændre din adgangskode!'));
+        });
+    }
 }
 
 WindowProfile.register();

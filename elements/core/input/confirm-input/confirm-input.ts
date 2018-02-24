@@ -16,6 +16,9 @@ class ConfirmInput extends polymer.Base implements polymer.Element {
     @property({ type: Boolean, value: false })
     public multiline: boolean;
 
+    @property({ type: Boolean, value: false })
+    public locked: boolean;
+
     iconTap() {
         this.disabled = !this.disabled;
         if (!this.disabled)

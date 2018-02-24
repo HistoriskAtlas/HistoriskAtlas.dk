@@ -68,14 +68,14 @@
 
         <template is="dom-if" if="[[!multiline]]">
             <paper-input id="paperInput" label="[[label]]" value="{{immediateValue}}" always-float-label disabled="[[disabled]]" on-focusout="paperInputFocusout">
-                <paper-icon-button suffix icon="[[icon(disabled)]]" on-tap="iconTap"></paper-icon-button>
+                <paper-icon-button suffix icon="[[icon(disabled)]]" on-tap="iconTap" hidden$="[[locked]]"></paper-icon-button>
             </paper-input>
         </template>
 
         <template is="dom-if" if="[[multiline]]">
             <div style="display:flex">
                 <paper-textarea id="paperInput" label="[[label]]" value="{{immediateValue}}" always-float-label disabled="[[disabled]]" on-focusout="paperInputFocusout"></paper-textarea>
-                <paper-icon-button suffix icon="[[icon(disabled)]]" on-tap="iconTap" style="margin-top:31px"></paper-icon-button>
+                <paper-icon-button suffix icon="[[icon(disabled)]]" on-tap="iconTap" hidden$="[[locked]]" style="margin-top:31px"></paper-icon-button>
             </div>
         </template>
     

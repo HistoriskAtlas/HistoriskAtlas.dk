@@ -4,10 +4,10 @@
         </style>
         <paper-dialog id="dialog" always-on-top>
             <h2>[[text]]</h2>
-            <paper-input autofocus value="{{input}}" on-keydown="checkForEnter"></paper-input>
+            <paper-input id="dialogInput" autofocus value="{{input}}" on-keydown="checkForEnter" type="[[type]]" required="[[required]]" minlength="[[minlength]]" error-message="[[errorMessage]]" auto-validate="[[autoValidate]]"></paper-input>
             <div class="buttons">
-                <paper-button dialog-dismiss>Annullér</paper-button>
-                <paper-button dialog-confirm>OK</paper-button>
+                <paper-button on-tap="dismiss">Annullér</paper-button>
+                <paper-button on-tap="confirm">OK</paper-button>
             </div>
         </paper-dialog>
     </template>

@@ -13,6 +13,21 @@ class DialogText extends polymer.Base implements polymer.Element {
     @property({ type: String })
     public text: string;
 
+    @property({ type: String })
+    public type: string;
+
+    @property({ type: Boolean, value: false })
+    public required: boolean;
+
+    @property({ type: Number })
+    public minlength: number;
+
+    @property({ type: String })
+    public errorMessage: string;
+
+    @property({ type: Boolean, value: false })
+    public autoValidate: boolean;    
+
     private confirmCallbackFunction: (string) => void;
 
     constructor(text: string, confirmCallbackFunction: (string) => void, prefilled: string = null) {
@@ -39,11 +54,22 @@ class DialogText extends polymer.Base implements polymer.Element {
 
     checkForEnter(e: any) {
         if (e.which === 13) {
-            this.$.dialog.close();
             this.closeDialog(true);
         }
     }
+    dismiss() {
+        this.closeDialog(false);
+    }
+    confirm() {
+        this.closeDialog(true);
+    }
+
     private closeDialog(confirmed: boolean) {
+        if (!this.$.dialogInput.validate() && confirmed)
+            return;
+
+        this.$.dialog.close();
+
         if (confirmed) {
             if (this.confirmCallback) 
                 this.fire(this.confirmCallback, this.input);

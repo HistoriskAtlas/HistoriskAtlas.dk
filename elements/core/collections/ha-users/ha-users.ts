@@ -121,6 +121,7 @@ class HaUsers extends polymer.Base implements polymer.Element {
             case 'firstname':
             case 'lastname':
             case 'email':
+            case 'password':
                 this.updateUserProperty(property);
         }
     }
