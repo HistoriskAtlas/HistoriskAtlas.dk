@@ -4,9 +4,23 @@ class PanelLogin extends polymer.Base implements polymer.Element {
     @property({ type: Boolean, value: false })
     private remember: boolean;
 
+    @property({ type: String })
+    public password1: string;
+
+    @property({ type: String })
+    public password2: string;
+
+    @property({ type: String })
+    public email: string;
+
+
     ready() {
         Common.loadJS('facebook-jssdk', '//connect.facebook.com/da_DK/sdk.js');
         Common.loadJS('google-jssdk', '//apis.google.com/js/client:platform.js');
+    }
+
+    resetPassword() {
+        this.$.dialog.open();
     }
 
     @listen("username.keyup")
@@ -66,6 +80,48 @@ class PanelLogin extends polymer.Base implements polymer.Element {
         }
 
         App.toast.show('Forkert brugernavn eller adgangskode');
+    }
+
+    public resetPasswordConfirm() {
+        if (!(this.$.inputEmail.validate() && this.validatePassword('new', 'old'))) {
+            App.toast.show('Ikke alle felter er udfyldt korrekt');
+            return;
+        }
+
+        Services.get('auth', { send_reset_password_mail_to: this.email, new_password: $.md5(this.password1) }, (result) => {
+            Common.dom.append(DialogAlert.create("Der vil nu blive sendt en email til den adresse du har angivet. Følg instruktionerne i emailen, for at fortsætte."));
+        });
+        this.$.dialog.close();
+    }
+    resetPasswordDismiss() {
+        this.$.dialog.close();
+    }
+
+    public passwordErrorMessage(password: string): string {
+        if (password.length == 0)
+            return 'Adgangskoden skal udfyldes';
+
+        if (password.length < 6)
+            return 'Minimumslængde på 6 tegn';
+
+        return 'Adgangskoderne er ikke ens';
+    }
+
+    @observe('password1')
+    @observe('password2')
+    validatePassword(newValue: string, oldValue: string): boolean {
+        if (oldValue == undefined)
+            return false;
+
+        if (!this.$.inputPassword1.validate() || !this.$.inputPassword2.validate())
+            return false;
+
+        if (this.password1 != this.password2) {
+            this.$.inputPassword2.invalid = true;
+            return false;
+        }
+
+        return true;
     }
 }
 

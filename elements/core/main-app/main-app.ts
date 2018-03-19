@@ -72,6 +72,9 @@ class App extends polymer.Base implements polymer.Element {
     @property({ type: Boolean })
     public userJustActivated: boolean;
 
+    @property({ type: Boolean })
+    public userJustResetPassword: boolean;
+
     @property({ type: Boolean, value: false })
     public userCreators: boolean;
 
@@ -248,6 +251,11 @@ class App extends polymer.Base implements polymer.Element {
         if (path.substr(-8) == '/welcome') {
             window.history.replaceState({}, null, window.location.href.substr(0, window.location.href.length - 8));
             this.userJustActivated = true;
+        }
+        //TODO: move to generel url interpreter class?
+        if (path.substr(-13) == '/new_password') {
+            window.history.replaceState({}, null, window.location.href.substr(0, window.location.href.length - 13));
+            this.userJustResetPassword = true;
         }
         //TODO: move to generel url interpreter class?
         if (path.substr(0, 2) == '/@') {

@@ -327,6 +327,17 @@
                 </div>
             </paper-dialog>
         </template>
+
+        <template is="dom-if" if="[[userJustResetPassword]]">
+            <paper-dialog opened modal>
+                <div>
+                    <b>Du har fået tildelt den nye adgangskode.</b>
+                </div>
+                <div class="buttons">
+                    <paper-button dialog-confirm on-tap="openLoginWindow">OK, log ind!</paper-button>
+                </div>
+            </paper-dialog>
+        </template>
         
         <template is="dom-if" if="[[collection]]" restamp>
             <window-route route="{{collection}}" subjects="[[collectionSubjects]]" periods="[[collectionPeriods]]" destinations="[[collectionDestinations]]" institutions="[[collectionInstitutions]]" editing="[[canEditCollection(collection,user)]]"></window-route>

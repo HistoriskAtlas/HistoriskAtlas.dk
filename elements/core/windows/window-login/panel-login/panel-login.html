@@ -16,7 +16,13 @@
             .remember {
                 text-align: center;
                 font-size: small;
-                margin-top:30px;
+                margin-top:10px;
+            }
+            .reset {
+                text-align: center;
+                font-size: small;
+                margin-top:10px;
+                cursor: pointer;
             }
             .or {
                 font-style: italic;
@@ -30,6 +36,12 @@
                 text-transform: none !important;
                 flex-grow: 1;
             }
+            #dialog {
+                width: 360px;
+                height: 510px;
+                display: flex;
+                flex-direction: column;
+            }
         </style>
         <div style="text-align:center; margin:0px 5px">
             <H2><span style="font-weight:lighter">Mit</span>Atlas</H2><br>
@@ -38,6 +50,9 @@
         <div style="width:80%; align-self:center; display: flex">
             <paper-input id="username" label="Brugernavn" required autofocus error-message="Brugernavn skal udfyldes" style="min-width:100px"></paper-input>
             <paper-input id="password" label="Adgangskode" type="password" required auto-validate error-message="Adgangskode skal udfyldes" style="min-width:100px"></paper-input>
+        </div>
+        <div class="reset HAInvertedPrimColor" on-tap="resetPassword">
+            Har du glemt din adgangskode? klik her.
         </div>
         <div class="remember">
             <paper-checkbox checked="{{remember}}">Husk mit login (dette er ikke en delt computer)</paper-checkbox>
@@ -50,5 +65,20 @@
             <paper-button id="loginFB" class="HAPrimColor">Log ind med Facebook</paper-button>
             <paper-button id="loginG" class="HAPrimColor">Log ind med Google-konto</paper-button>
         </div>
+
+        <paper-dialog id="dialog" always-on-top>
+            <h2>Ny adgangskode</h2>
+            <div style="flex-grow:1"></div>
+            <div>Skriv den emailadresse du brugte da du oprettede din bruger, samt den nye adgangskode 2 gange. Herefter vil der blive sendt en mail til dig, som du skal åbne og klikke på linket i, før den nye adgangskode bliver aktiveret.</div>
+            <div style="flex-grow:1"></div>
+            <paper-input id="inputEmail" label="Email" required error-message="Skal udfyldes" value="{{email}}"></paper-input>
+            <paper-input id="inputPassword1" label="Ny adgangskode" required minlength="6" error-message="[[passwordErrorMessage(password1)]]" value="{{password1}}" type="password"></paper-input>
+            <paper-input id="inputPassword2" label="Gentag ny adgangskode" required minlength="6" error-message="[[passwordErrorMessage(password2)]]" value="{{password2}}" type="password"></paper-input>
+            <div style="flex-grow:1"></div>
+            <div class="buttons">
+                <paper-button on-tap="resetPasswordDismiss">Annullér</paper-button>
+                <paper-button on-tap="resetPasswordConfirm">OK</paper-button>
+            </div>
+        </paper-dialog>
     </template>
 </dom-module>
