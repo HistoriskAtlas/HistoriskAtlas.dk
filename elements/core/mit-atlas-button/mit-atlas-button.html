@@ -82,10 +82,10 @@
                 </template>
 
                 <paper-item on-tap="newsTap">Nyheder</paper-item>
-                <template is="dom-if" if="[[user.isEditor]]">
+                <!--<template is="dom-if" if="[[user.isEditor]]">-->
                     <paper-item disabled class="spacer"><div></div></paper-item>
                     <paper-item on-tap="editorialTap">Redaktion</paper-item>
-                </template>
+                <!--</template>-->
                 <template is="dom-if" if="[[user.isAdmin]]">
                     <paper-item on-tap="adminTap">Administration</paper-item>
                 </template>

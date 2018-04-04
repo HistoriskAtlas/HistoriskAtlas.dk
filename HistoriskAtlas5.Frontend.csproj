@@ -96,9 +96,9 @@
     <Content Include="elements\core\windows\abouts\window-member-signup\window-member-signup.html" />
     <Content Include="elements\core\windows\window-institution\window-institution.html" />
     <Content Include="elements\core\by-line\by-line.html" />
-    <Content Include="elements\editor\windows\window-editorial\panel-user-editorial\panel-user-editorial.html" />
-    <Content Include="elements\editor\windows\window-editorial\panel-geo-editorial\panel-geo-editorial.html" />
-    <Content Include="elements\editor\windows\window-editorial\window-editorial.html" />
+    <Content Include="elements\writer\windows\window-editorial\panel-user-editorial\panel-user-editorial.html" />
+    <Content Include="elements\writer\windows\window-editorial\panel-geo-editorial\panel-geo-editorial.html" />
+    <Content Include="elements\writer\windows\window-editorial\window-editorial.html" />
     <Content Include="elements\ha_writer.aspx" />
     <Content Include="elements\ha_editor.aspx" />
     <Content Include="elements\ha_admin.aspx" />
@@ -537,9 +537,9 @@
     <TypeScriptCompile Include="elements\core\windows\abouts\window-member-signup\window-member-signup.ts" />
     <TypeScriptCompile Include="elements\core\windows\window-institution\window-institution.ts" />
     <TypeScriptCompile Include="elements\core\by-line\by-line.ts" />
-    <TypeScriptCompile Include="elements\editor\windows\window-editorial\panel-user-editorial\panel-user-editorial.ts" />
-    <TypeScriptCompile Include="elements\editor\windows\window-editorial\panel-geo-editorial\panel-geo-editorial.ts" />
-    <TypeScriptCompile Include="elements\editor\windows\window-editorial\window-editorial.ts" />
+    <TypeScriptCompile Include="elements\writer\windows\window-editorial\panel-user-editorial\panel-user-editorial.ts" />
+    <TypeScriptCompile Include="elements\writer\windows\window-editorial\panel-geo-editorial\panel-geo-editorial.ts" />
+    <TypeScriptCompile Include="elements\writer\windows\window-editorial\window-editorial.ts" />
     <TypeScriptCompile Include="elements\core\dialogs\dialog-publish\dialog-rich-text.ts" />
     <TypeScriptCompile Include="elements\writer\file-upload\file-upload.ts" />
     <TypeScriptCompile Include="elements\core\input\plain-text\plain-text.ts" />
@@ -720,6 +720,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="elements\editor\windows\" />
     <Folder Include="typings\closure-library\" />
   </ItemGroup>
   <PropertyGroup>
