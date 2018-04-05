@@ -106,7 +106,10 @@ namespace HistoriskAtlas5.Frontend
     public class GeoIDConstraint : IRouteConstraint  {
         public bool Match(HttpContextBase httpContext, Route route, String parameterName, RouteValueDictionary values, RouteDirection routeDirection)
         {
-            return Global.languageMapping.ContainsKey(Int32.Parse(values[parameterName].ToString())) && httpContext.Request.QueryString["redirected"] == null;
+            int geoid;
+            if (!Int32.TryParse(values[parameterName].ToString(), out geoid))
+                return false;
+            return Global.languageMapping.ContainsKey(geoid) && httpContext.Request.QueryString["redirected"] == null;
         }
     }
 }
