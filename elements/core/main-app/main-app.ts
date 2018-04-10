@@ -221,6 +221,13 @@ class App extends polymer.Base implements polymer.Element {
         //used? main-app not present when deeplinking to geo...
         //App.passed.geo = App.passed.geo ? new HaGeo(App.passed.geo) : null;
 
+        if (App.passed.geo) { //when in fullapp mode
+            var geo = new HaGeo(App.passed.geo, false, false);
+            if (geo.isUGC)
+                setTimeout(() => this.set('userCreators', true), 1000);
+            Common.dom.append(WindowGeo.create(geo));
+        }
+
         if (App.passed.theme.id != 'default') {
             this.drawerOpen = true;
             App.mainMenu.showMainMenu = false;
@@ -288,7 +295,9 @@ class App extends polymer.Base implements polymer.Element {
 
     public static init() {
         var theme = App.passed.theme
-        App.map = new MainMap([theme.maplatitude ? theme.maplatitude : Global.defaultTheme.maplatitude, theme.maplongitude ? theme.maplongitude : Global.defaultTheme.maplongitude], theme.mapzoom ? theme.mapzoom : Global.defaultTheme.mapzoom);
+        var coord = App.passed.geo ? [App.passed.geo.lat, App.passed.geo.lng] : ([theme.maplatitude ? theme.maplatitude : Global.defaultTheme.maplatitude, theme.maplongitude ? theme.maplongitude : Global.defaultTheme.maplongitude]);
+        var zoom = App.passed.geo ? 16 : (theme.mapzoom ? theme.mapzoom : Global.defaultTheme.mapzoom);
+        App.map = new MainMap(coord, zoom);
         //FB.init({ appId: '876939902336614', xfbml: true, version: 'v2.2' }); //moved to login window
 
         $(document).ready(() => {

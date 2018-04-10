@@ -34,6 +34,7 @@ namespace HistoriskAtlas5.Frontend
         public int id;
         public string title;
         public string intro;
+        public bool ugc;
         public decimal lat;
         public decimal lng;
         public HAUser user;

@@ -111,7 +111,7 @@
     <link rel="import" href="bower_components/gold-email-input/gold-email-input.html">    
     <link rel="import" href="bower_components/polymer-sortablejs/polymer-sortablejs.html">
     
-    <%=string.Format("<link rel=\"import\" href=\"{0}\">", System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/bundles/ha_core_" + (passedGeo == null ? "" : "geo_only_")  + "html"))%>
+    <%=string.Format("<link rel=\"import\" href=\"{0}\">", System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/bundles/ha_core_" + (fullapp ? "" : "geo_only_")  + "html"))%>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold&lang=da" type="text/css" /> <%--,italic,thin,light,bolditalic,black,medium--%>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" /> <%--TODO: needed?--%>
@@ -139,13 +139,13 @@
     <script src="./js/ol/ol-custom.js" type="text/javascript"></script>
     
     <%--:System.Web.Optimization.Scripts.Render("~/bundles/ha_core") --%>
-    <link rel="import" href="elements/ha_core<%=(passedGeo == null ? "" : "_geo_only")%>.aspx"> <!-- Workaround for webcomponents polyfill browsers -->
+    <link rel="import" href="elements/ha_core<%=(fullapp ? "" : "_geo_only")%>.aspx"> <!-- Workaround for webcomponents polyfill browsers -->
     
-    <% if (passedGeo != null) { %>
+<%--    <% if (passedGeo != null) { %>
     <style>
         body { background-color: grey; }
     </style>
-    <% } %>
+    <% } %>--%>
 </head>
 <body<%=(crawler && passedGeo != null ? " style=\"overflow:auto\"" : "")%>>
     <% foreach (HistoriskAtlas5.Frontend.HATag tag in sitemapTags.data) { %>
@@ -180,10 +180,11 @@
             tag: <%=(passedTag == null ? "null" : json(passedTag) )%>,
             theme: <%=(passedTheme == null ? "null" : json(passedTheme) )%>,
             dev: <%=(dev ? "true": "false")%>,
-            redribbon: <%=(Request.QueryString["redribbon"] != null ? (Request.QueryString["redribbon"] == "false" ? "false" : "true") : "false")%>
+            redribbon: <%=(Request.QueryString["redribbon"] != null ? (Request.QueryString["redribbon"] == "false" ? "false" : "true") : "false")%>,
+            crawler: <%=(crawler ? "true" : "false")%>
         };
     </script>
-    <% if (passedGeo == null) { %>
+    <% if (fullapp) { %>
         <main-app></main-app>
     <% } else { %>
         <window-geo></window-geo>

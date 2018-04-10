@@ -340,6 +340,18 @@ class WindowGeo extends polymer.Base implements polymer.Element {
         this.dev = this.standalone ? (<any>window).passed.dev : App.isDev;
         this.devOrBeta = Common.isDevOrBeta;
         this.geo = this.standalone ? new HaGeo((<any>window).passed.geo, false, false) : geo;
+
+        if (this.standalone && !(<any>window).passed.crawler)
+            if (!window.matchMedia('(max-width: 639px)').matches) {
+                $('body').css('display', 'none');
+                //var form = $('<form action="' + this.geo.link + '" method="post"><input type="hidden" name="fullapp" value="true" /></form>');
+                //$('body').append(form);
+                //form.submit();
+                document.cookie = "fullapp=true";
+                location.href = this.geo.link;
+                return;
+            }
+
         this.editing = typeof App == 'undefined' ? false : App.haUsers.user.canEdit(this.geo);
         this.touchDevice = 'ontouchstart' in window || !!navigator.maxTouchPoints; //bind from MainApp instead, when converting from dynamically creating elements.
 

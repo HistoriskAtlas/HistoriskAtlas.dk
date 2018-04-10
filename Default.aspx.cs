@@ -10,7 +10,7 @@ namespace HistoriskAtlas5.Frontend
 {
     public partial class Default : Page
     {
-        public bool dev, crawler;
+        public bool dev, crawler, fullapp;
         public HAGeo passedGeo;
         public HACollection passedCollection;
         public HATag passedTag;
@@ -23,7 +23,9 @@ namespace HistoriskAtlas5.Frontend
             crawler = Regex.IsMatch(Request.UserAgent, @"bot|crawler", RegexOptions.IgnoreCase);
 
             passedGeo = GetGeo(deep);
-            if (passedGeo != null)
+            fullapp = Request.Cookies["fullapp"] != null ? Request.Cookies["fullapp"].Value != "false" : passedGeo == null;
+
+            if (passedGeo != null && !fullapp)
                 if ("/" + passedGeo.urlPath != Server.UrlDecode(HttpContext.Current.Request.Url.AbsolutePath)) //TODO: only if direct deep link is detected.
                     HttpContext.Current.Response.Redirect(passedGeo.absUrlPath + HttpContext.Current.Request.Url.Query, true);
 
@@ -57,7 +59,7 @@ namespace HistoriskAtlas5.Frontend
             int geoID = int.Parse(match.Groups[1].Value);
 
 
-            string schema = crawler ? "{geo:[id,title,intro,lat,lng,{contents:[{texts:[headline,text1]}]},{geo_images:[{image:[id,text]}]}]}" : "{geo:[id,title,intro,lat,lng]}";
+            string schema = crawler ? "{geo:[id,title,intro,lat,lng,{contents:[{texts:[headline,text1]}]},{geo_images:[{image:[id,text]}]}]}" : "{geo:[id,title,intro,lat,lng,ugc]}";
             HAGeos geos = (new Service<HAGeos>()).Get("geo.json?v=1&schema=" + schema + "&geoid=" + geoID + "&online=true");
 
             if (geos.data.Length == 0)
