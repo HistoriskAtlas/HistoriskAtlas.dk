@@ -4,6 +4,15 @@ class WindowSearch extends polymer.Base implements polymer.Element {
     @property({ type: String })
     public search: string;
 
+    @property({ type: String, value: '' })
+    public didYouMean: string;
+
+    @property({ type: String, value: false })
+    public noResults: boolean;
+
+    @property({ type: Array })
+    public googleResults: Array<GoogleResult>;
+
     @property({ type: Array })
     public addresses: Array<Address>;
 
@@ -11,10 +20,44 @@ class WindowSearch extends polymer.Base implements polymer.Element {
         super();
         this.search = search;
         this.doSearch();
+
+        //Can do paging by setting num = 10 and start = 11.......
+
     }
     
     doSearch() {
+        this.googleResults = [];
         this.addresses = [];
+        this.didYouMean = '';
+        this.noResults = false;
+        $.getJSON("https://www.googleapis.com/customsearch/v1?q=" + this.search + "&key=AIzaSyAghy4ufGMclOCsaEPsLLF_lk_rALYezds&cx=015044497176521657010:pfssikn7wii&fields=items(link,htmlTitle,htmlSnippet),searchInformation/totalResults,spelling/correctedQuery&num=10", (data) => {
+
+            if (data.spelling)
+                this.didYouMean = data.spelling.correctedQuery;
+                        
+            if (data.items) {
+                var reSnippet = /<br>/g;
+                for (var item of data.items) {
+
+                    var matches = /_\((\d+)\)/g.exec(item.link)
+                    if (!matches)
+                        continue;
+
+                    var result = new GoogleResult();
+                    result.geoid = parseInt(matches[1]);
+                    result.title = item.htmlTitle.replace(' | Historisk Atlas', '');
+                    result.snippet = item.htmlSnippet.replace(reSnippet, '');
+
+                    this.push('googleResults', result);
+                }
+            } else
+                this.noResults = true;
+
+            this.doSearchAddress();
+        });
+    }
+
+    doSearchAddress() {
         $.getJSON(location.protocol + "//nominatim.openstreetmap.org/search?q=" + this.search + "&format=json&addressdetails=1&countrycodes=dk&email=it@historiskatlas.dk", (data) => {
             for (var place of data) {
                 if (place.address) {
@@ -40,7 +83,7 @@ class WindowSearch extends polymer.Base implements polymer.Element {
                             address.title = '';
                             break;
                         }
-                            
+
                     if (address.title.length == 0)
                         continue;
 
@@ -61,12 +104,27 @@ class WindowSearch extends polymer.Base implements polymer.Element {
         App.map.centerAnim([address.lng, address.lat], 1000);
         (<WindowBasic>this.$.windowbasic).close();
     }
+
+    didYouMeanTap() {
+        this.search = this.didYouMean;
+        this.doSearch();
+    }
+
+    showDidYouMean(didYouMean: string): boolean {
+        return !!didYouMean;
+    }
 }
 
 class Address {
     title: string;
     lat: number;
     lng: number;
+}
+
+class GoogleResult {
+    title: string;
+    snippet: string;
+    geoid: number;
 }
 
 WindowSearch.register();

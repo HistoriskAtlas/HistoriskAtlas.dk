@@ -11,31 +11,48 @@
             border-bottom: solid 1px;
             border-bottom-color: #ececec; /*TODO: How to make generic reference in dynamically created component?*/
             font-size: 13px;
-            height: 32px; /*was 25px*/
+            /*height: 32px;*/
             cursor: pointer;
+            padding: 8px 0px;
         }
-        /*img {
-            height: 25px;
-        }*/
         span.icon {
-            width: 25px;
+            /*width: 25px;*/
             margin-right: 10px;
             display: flex;
             justify-content: center;
             color: #005D9A;
         }
+        #didYouMeanDiv {
+            font-size: 13px;
+            cursor: pointer;
+            text-align: center;
+            padding: 15px;
+        }
+        .box {
+            font-size: 13px;
+            text-align: center;
+            padding: 15px;
+        }
+
     </style>
     <template>
-        <ha-geos-search search="[[search]]" geos="{{geos}}"></ha-geos-search>
-        <window-basic id="windowbasic" window-title="Søgeresultater for '[[search]]'">
+        <!--<ha-geos-search search="[[search]]" geos="{{geos}}"></ha-geos-search>-->
+        <window-basic id="windowbasic" window-title="Søgeresultater for '[[search]]'" toolbar-mode="waterfall">
             <div id="wrapper">
+                <div id="noResultsDiv" class="box" hidden$="[[!noResults]]">
+                    Der blev ikke fundet fortællinger indeholdende <span class="HAInvertedPrimColor">[[search]]</span>.
+                </div>
+
+                <div id="didYouMeanDiv" class="box" hidden$="[[!showDidYouMean(didYouMean)]]" on-tap="didYouMeanTap">
+                    Mente du <span class="HAInvertedPrimColor">[[didYouMean]]</span>?
+                </div>
+
+                <template is="dom-repeat" items="[[googleResults]]" as="result">
+                    <window-search-result result="[[result]]"></window-search-result>
+                </template>
+
                 <geo-list geos="{{geos}}"></geo-list>
-                <!--<template is="dom-repeat" items="[[geos]]" as="geo">
-                    <div class="listitem light-grey-border" on-tap="geoTap">
-                        <span class="icon"><img src="[[geo.icon.marker]]"></span>
-                        <span>[[geo.title]]</span>
-                    </div>
-                </template>-->
+
                 <template is="dom-repeat" items="[[addresses]]" as="address">
                     <div class="listitem light-grey-border" on-tap="addressTap">
                         <span class="icon"><iron-icon icon="maps:my-location"></iron-icon></span>

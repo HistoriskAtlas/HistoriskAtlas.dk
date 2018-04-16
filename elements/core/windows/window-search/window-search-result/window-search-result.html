@@ -1,0 +1,43 @@
+﻿<dom-module id="window-search-result">
+    <style>
+        .listitem {
+            display: flex;
+            align-items: center;
+            border-bottom: solid 1px;
+            border-bottom-color: #ececec; /*TODO: How to make generic reference in dynamically created component?*/
+            font-size: 13px;
+            /*height: 32px;*/
+            cursor: pointer;
+            align-items: flex-start;
+            padding: 8px 0px;
+        }
+        img {
+            height: 32px;
+        }
+        span.icon {
+            /*width: 25px;*/
+            margin-right: 10px;
+            display: flex;
+            justify-content: center;
+            color: #005D9A;
+        }
+        .text {
+            display: flex;
+            flex-direction: column;
+            padding: 2px 0px;
+        }
+        #title {
+            font-size: 15px;
+            font-weight: 500;
+        }
+    </style>
+    <template>
+        <div class="listitem light-grey-border" on-tap="resultTap">
+            <span class="icon"><img src="[[defaultMarker]]"></span>
+            <div class="text">
+                <span id="title" class="HAInvertedPrimColor"></span>
+                <span id="snippet"></span>
+            </div>                        
+        </div>
+    </template>
+</dom-module>
