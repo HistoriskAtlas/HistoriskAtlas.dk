@@ -36,7 +36,9 @@
 
     </style>
     <template>
-        <!--<ha-geos-search search="[[search]]" geos="{{geos}}"></ha-geos-search>-->
+        
+        <ha-geos-search search="[[fallbackSearch]]" geos="{{geos}}"></ha-geos-search>
+        
         <window-basic id="windowbasic" window-title="Søgeresultater for '[[search]]'" toolbar-mode="waterfall">
             <div id="wrapper">
                 <div id="noResultsDiv" class="box" hidden$="[[!noResults]]">

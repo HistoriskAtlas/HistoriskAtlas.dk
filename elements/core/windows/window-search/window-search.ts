@@ -4,6 +4,9 @@ class WindowSearch extends polymer.Base implements polymer.Element {
     @property({ type: String })
     public search: string;
 
+    @property({ type: String })
+    public fallbackSearch: string;
+
     @property({ type: String, value: '' })
     public didYouMean: string;
 
@@ -51,7 +54,11 @@ class WindowSearch extends polymer.Base implements polymer.Element {
                     this.push('googleResults', result);
                 }
             } else
-                this.noResults = true;
+                if (!data.error)
+                    this.noResults = true;
+
+            if (data.error)
+                this.fallbackSearch = this.search;
 
             this.doSearchAddress();
         });
