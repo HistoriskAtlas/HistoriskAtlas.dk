@@ -54,12 +54,17 @@ class WindowSearch extends polymer.Base implements polymer.Element {
                     this.push('googleResults', result);
                 }
             } else
-                if (!data.error)
+                //if (!data.error)
                     this.noResults = true;
 
-            if (data.error)
-                this.fallbackSearch = this.search;
+            //if (data.error)
+            //    this.fallbackSearch = this.search;
 
+            
+        }).fail(() => {
+            this.noResults = false;
+            this.fallbackSearch = this.search;
+        }).always(() => {
             this.doSearchAddress();
         });
     }
