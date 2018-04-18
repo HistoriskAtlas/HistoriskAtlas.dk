@@ -257,6 +257,7 @@
     <TypeScriptCompile Include="classes\Map\IconLayerBase.ts" />
     <TypeScriptCompile Include="classes\Map\TimelineMap.ts" />
     <TypeScriptCompile Include="classes\Map\kDtree.ts" />
+    <TypeScriptCompile Include="classes\analytics.ts" />
     <TypeScriptCompile Include="classes\services.ts" />
     <TypeScriptCompile Include="classes\Map\DigDagHelperLayer.ts" />
     <TypeScriptCompile Include="classes\Map\RouteLayer.ts" />
@@ -597,6 +598,7 @@
     <TypeScriptCompile Include="elements\core\windows\window-basic\window-basic.ts" />
     <TypeScriptCompile Include="elements\core\map\map-menu\map-menu.ts" />
     <TypeScriptCompile Include="elements\core\main-app\main-app.ts" />
+    <TypeScriptCompile Include="typings\ga.d.ts" />
     <TypeScriptCompile Include="typings\jQuery\jqueryui.d.ts" />
     <TypeScriptCompile Include="typings\openlayers.d.ts" />
     <TypeScriptCompile Include="typings\facebook.d.ts" />

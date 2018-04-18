@@ -43,6 +43,7 @@ namespace HistoriskAtlas5.Frontend
                 sb.Include("~/classes/common.js");
                 sb.Include("~/classes/services.js");
                 sb.Include("~/classes/localStorage.js");
+                sb.Include("~/classes/analytics.js");
                 sb.Include("~/classes/Map/Icon.js");
 
                 if (bundle != "ha_core_geo_only")

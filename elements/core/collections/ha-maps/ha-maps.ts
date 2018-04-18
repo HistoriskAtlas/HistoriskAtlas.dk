@@ -14,6 +14,9 @@ class HaMaps extends polymer.Base implements polymer.Element {
     public static defaultMap: HaMap;
     public byId: Array<HaMap>;
 
+    private firstMainMapShowIgnored = false;
+    private firstTimeWarpMapShowIgnored = false;
+
     ready() {
         //this.maps = [];
         this.byId = [];
@@ -69,11 +72,23 @@ class HaMaps extends polymer.Base implements polymer.Element {
     @observe('mainMap')
     mainMapChanged(newVal: HaMap) {
         this.$.selectorMain.select(newVal);
+        if (newVal) {
+            if (this.firstMainMapShowIgnored)
+                Analytics.mapShow(newVal);
+            else
+                this.firstMainMapShowIgnored = true;
+        }
     }
 
     @observe('timeWarpMap')
     timeWarpMapChanged(newVal: HaMap) {
         this.$.selectorTimeWarp.select(newVal);
+        if (newVal) {
+            if (this.firstTimeWarpMapShowIgnored)
+                Analytics.mapShow(newVal);
+            else
+                this.firstTimeWarpMapShowIgnored = true;
+        }
     }
 
     public updateInView(extent: ol.Extent, param: string = '.inView') {

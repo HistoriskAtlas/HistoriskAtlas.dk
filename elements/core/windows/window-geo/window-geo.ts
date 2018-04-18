@@ -44,6 +44,7 @@ class WindowGeo extends polymer.Base implements polymer.Element {
     public curContent: HaContent;
 
     private fileUpload: FileUpload;
+    private geoShowSend: boolean = false;
     //private contentToDelete: HaContent;
 
     //@observe("geo.*")
@@ -331,6 +332,14 @@ class WindowGeo extends polymer.Base implements polymer.Element {
     readMoreTapped() {
         if (this.contents.length > 0)
             this.selectedTab = 1;
+    }
+
+    @observe('geo.title')
+    geoTitleChanged(newValue: string) {
+        if (newValue && !this.geoShowSend) {
+            Analytics.geoShow(this.geo);
+            this.geoShowSend = true;
+        }
     }
 
     constructor(geo: HaGeo) {
