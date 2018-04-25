@@ -25,6 +25,10 @@ class WindowRoute extends polymer.Base implements polymer.Element {
     private dialogTour: DialogTour;
     private curTourStep: number;
 
+    ready() {
+        Analytics.collectionShow(this.route);
+    }
+
     @observe('editing')
     editingChanged() {
         if (!LocalStorage.get('firstRouteTourDone') && this.editing) {

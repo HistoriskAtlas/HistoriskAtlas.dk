@@ -15,4 +15,20 @@
             eventLabel: map.id
         });
     }
+    public static collectionShow(collection: HaCollection) {
+        (<any>window).analytics('ha.send', {
+            hitType: 'event',
+            eventCategory: 'collection_show',
+            eventAction: collection.title,
+            eventLabel: collection.id
+        });
+    }
+    public static regionTypeShow(regionType: HARegionType) {
+        (<any>window).analytics('ha.send', {
+            hitType: 'event',
+            eventCategory: 'region_type_show',
+            eventAction: regionType.name,
+            eventLabel: regionType.id
+        });
+    }
 }

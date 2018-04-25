@@ -22,6 +22,8 @@ class HaRegions extends polymer.Base implements polymer.Element {
         if (regionType.regionsLoaded)
             return;
 
+        Analytics.regionTypeShow(regionType);
+
         regionType.regionsLoaded = true;
 
         this.set('params', {
