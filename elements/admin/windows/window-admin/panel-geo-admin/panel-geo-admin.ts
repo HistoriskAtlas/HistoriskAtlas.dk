@@ -10,6 +10,12 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
     @property({ type: String, value: '' })
     public filter: string;
 
+    @property({ type: String, value: 'id' })
+    public sort: string;
+
+    @property({ type: String, value: 'asc' })
+    public sortDir: string;
+
     @property({ type: Boolean })
     public selected: boolean;
 
@@ -17,7 +23,7 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
     selectedChanged() {
         if (this.selected && !this.geos) {
             this.geos = [];
-            this.sortOnTitle();
+            //this.sortOnTitle();
             this.fetchGeos();
         }
     }
@@ -29,15 +35,17 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
 
     public fetchGeos() {
         Services.get('geo', {
-            'schema': '{geo:{' + (this.filter ? 'filters:{title:{like:' + this.filter + '}},' : '') + 'fields:[id,title,created,{tag_geos:[{tag:[plurname,{category:3}]}]},{user:[login,firstname,lastname]}]}}',  //{title:{like:' + this.filter + '}}
-            'count': '100'
+            'schema': '{geo:{' + (this.filter ? 'filters:{title:{like:' + this.filter + '}},' : '') + 'fields:[id,title,created,views,{tag_geos:[{tag:[plurname,{category:3}]}]},{user:[login,firstname,lastname]}]}}',  //{title:{like:' + this.filter + '}}
+            'count': '100',
+            'sort': '{' + this.sort + ':' + this.sortDir + '}'
         }, (result) => {
             this.updateGeos(result.data);
         })
     }
     public updateGeos(newList: Array<any>) {
-        //this.set('geos', (newList ? newList : this.geos).sort(this.compare));
-        this.$.admin.sort(null, newList);
+        ////this.set('geos', (newList ? newList : this.geos).sort(this.compare));
+        this.set('geos', newList);
+        //this.$.admin.sort(null, newList);
     }
 
     itemTap(e: any) {
@@ -92,42 +100,61 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
     }
     
     sortOnId() {
-        this.$.admin.sort(this.compareId);
+        //this.$.admin.sort(this.compareId);
+        this.changeSort('id');
     }
-    compareId(a: any, b: any): number {
-        return a.id - b.id;
-    }
+    //compareId(a: any, b: any): number {
+    //    return a.id - b.id;
+    //}
 
     sortOnTitle() {
-        this.$.admin.sort(this.compareTitle);
+        //this.$.admin.sort(this.compareTitle);
+        this.changeSort('title');
     }
-    compareTitle(a: any, b: any): number {
-        return a.title.localeCompare(b.title);
-    }
+    //compareTitle(a: any, b: any): number {
+    //    return a.title.localeCompare(b.title);
+    //}
 
     sortOnUser() {
-        this.$.admin.sort(this.compareUser);
+        //this.$.admin.sort(this.compareUser);
     }
-    compareUser(a: any, b: any): number {
-        return (a.user.firstname + a.user.lastname).localeCompare(b.user.firstname + b.user.lastname);
-    }
+    //compareUser(a: any, b: any): number {
+    //    return (a.user.firstname + a.user.lastname).localeCompare(b.user.firstname + b.user.lastname);
+    //}
 
     sortOnDate() {
-        this.$.admin.sort(this.compareDate);
+        //this.$.admin.sort(this.compareDate);
+        this.changeSort('created');
     }
-    compareDate(a: any, b: any): number {
-        return new Date(a.created).getTime() - new Date(b.created).getTime();
-    }
+    //compareDate(a: any, b: any): number {
+    //    return new Date(a.created).getTime() - new Date(b.created).getTime();
+    //}
 
     sortOnInstitution() {
-        this.$.admin.sort(this.compareInstitution);
+        //this.$.admin.sort(this.compareInstitution);
     }
-    compareInstitution(a: any, b: any): number {
-        var objA = a.tag_geos.find((obj) => obj.tag.category == 3);
-        var objB = b.tag_geos.find((obj) => obj.tag.category == 3);
-        var aName = objA ? objA.tag.plurname : '';
-        var bName = objB ? objB.tag.plurname : '';
-        return aName.localeCompare(bName);
+    //compareInstitution(a: any, b: any): number {
+    //    var objA = a.tag_geos.find((obj) => obj.tag.category == 3);
+    //    var objB = b.tag_geos.find((obj) => obj.tag.category == 3);
+    //    var aName = objA ? objA.tag.plurname : '';
+    //    var bName = objB ? objB.tag.plurname : '';
+    //    return aName.localeCompare(bName);
+    //}
+
+    sortOnViews() {
+        //this.$.admin.sort(this.compareViews);
+        this.changeSort('views');
+    }
+    //compareViews(a: any, b: any): number {
+    //    return a.views - b.views;
+    //}
+
+    private changeSort(col: string) {
+        if (this.sort == col)
+            this.sortDir = this.sortDir == 'asc' ? 'desc' : 'asc';
+        else
+            this.sort = col;
+        this.fetchGeos();        
     }
 }
 

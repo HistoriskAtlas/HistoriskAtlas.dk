@@ -40,7 +40,12 @@
                 max-width: 80px;
             }
             .item > span:nth-child(3) {
-                width: 50%;
+                width: 45%;
+            }
+            .item > span:nth-child(4) {
+                width: 10%;
+                max-width: 100px;
+                text-align: right;
             }
             .headline {
                 font-weight: bold;
@@ -74,6 +79,7 @@
                     <span on-tap="sortOnName">Navn</span>
                     <span on-tap="sortOnType">Type</span>
                     <span on-tap="sortOnUsers">Brugere</span>
+                    <span on-tap="sortOnViews">Visninger</span>
                 </div>
                 <iron-list items="{{institutions}}" max-physical-count="50">
                     <template>
@@ -81,6 +87,7 @@
                             <span>[[item.tag.plurname]]</span>
                             <span>[[instType(item.type)]]</span>
                             <span>[[userNames(item.user_institutions)]]</span>
+                            <span>[[item.geoviews]]</span>
                         </div>
                     </template>
                 </iron-list>
@@ -90,6 +97,7 @@
                 <template is="dom-if" if="[[institution]]">
                     <div style="font-weight: bold; font-size:16px">[[institution.tag.plurname]]</div>
                     <div>[[instType(institution.type)]]</div>
+                    <div>[[institution.geoviews]] fortællingsvisninger (siden 19/4 2018)</div>
                     <confirm-input label="navn" value="{{institution.tag.plurname}}"></confirm-input>
                     <confirm-input label="website" value="{{institution.url}}"></confirm-input>
                     <confirm-input label="email" value="{{institution.email}}"></confirm-input>

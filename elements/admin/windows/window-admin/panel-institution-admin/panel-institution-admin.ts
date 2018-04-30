@@ -31,7 +31,7 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
 
     public fetchInstitutions() {
         Services.get('institution', {
-            'schema': '{institution:{' + (this.filter ? 'filters:[{tag:[{plurname:{like:' + this.filter + '}}]}],' : '') + 'fields:[id,type,{user_institutions:[{user:[firstname,lastname]}]},{tag:[plurname]}]}}',
+            'schema': '{institution:{' + (this.filter ? 'filters:[{tag:[{plurname:{like:' + this.filter + '}}]}],' : '') + 'fields:[id,type,geoviews,{user_institutions:[{user:[firstname,lastname]}]},{tag:[plurname]}]}}',
             'count': 'all'
         }, (result) => {
             this.updateInstitutions(result.data);
@@ -129,6 +129,13 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
         var aName = a.user_institutions.length == 0 ? '' : a.user_institutions[0].user.firstname + a.user_institutions[0].user.lastname
         var bName = b.user_institutions.length == 0 ? '' : b.user_institutions[0].user.firstname + b.user_institutions[0].user.lastname
         return aName.localeCompare(bName);
+    }
+
+    sortOnViews() {
+        this.$.admin.sort(this.compareViews);
+    }
+    compareViews(a: any, b: any): number {
+        return a.geoviews - b.geoviews;
     }
 }
 

@@ -40,18 +40,23 @@
                 text-align: right;
             }
             .item > span:nth-child(2) {
-                width: 25%;
+                width: 24%;
                 font-weight: bold;
                 /*max-width: 150px;*/
             }
             .item > span:nth-child(3) {
-                width: 22%;
+                width: 19%;
             }
             .item > span:nth-child(4) {
-                width: 14%;
+                width: 11%;
             }
             .item > span:nth-child(5) {
-                width: 23%;
+                width: 20%;
+            }
+            .item > span:nth-child(6) {
+                width: 10%;
+                max-width: 100px;
+                text-align: right;
             }
             .headline {
                 font-weight: bold;
@@ -111,6 +116,7 @@
                     <span on-tap="sortOnUser">Forfatter</span>
                     <span on-tap="sortOnDate">Dato</span>
                     <span on-tap="sortOnInstitution">Institution</span>
+                    <span on-tap="sortOnViews">Visninger</span>
                 </div>
                 <iron-list items="{{geos}}" max-physical-count="50">
                     <template>
@@ -120,6 +126,7 @@
                             <span>[[item.user.firstname]] [[item.user.lastname]] ([[item.user.login]])</span>
                             <span>[[formatDate(item.created)]]</span>
                             <span>[[formatInstitutions(item.tag_geos)]]</span>
+                            <span>[[item.views]]</span>
                         </div>
                     </template>
                 </iron-list>
@@ -143,6 +150,8 @@
                             <div>[[item.tag.plurname]]</div>
                         </template>
                     </template>
+                    
+                    <div style="margin-top: 10px"><b>Visninger (siden 19/4 2018):</b> [[geo.views]]</div>
 
                     <div style="margin-top: 10px"><b>Alle tags</b></div>
                     <template is="dom-repeat" items="[[geo.tag_geos]]">
