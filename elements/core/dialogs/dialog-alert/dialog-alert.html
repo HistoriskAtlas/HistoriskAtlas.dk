@@ -1,9 +1,9 @@
 ﻿<dom-module id="dialog-alert">
     <template>
-        <paper-dialog id="dialog" opened>
+        <paper-dialog id="dialog" opened modal="[[modal]]">
             <div>[[text]]</div>
             <div class="buttons">
-                <paper-button dialog-confirm>OK</paper-button>
+                <paper-button dialog-confirm>[[buttonText]]</paper-button>
             </div>
         </paper-dialog>
     </template>

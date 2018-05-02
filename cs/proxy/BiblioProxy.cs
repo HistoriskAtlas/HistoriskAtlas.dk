@@ -22,14 +22,14 @@ namespace HistoriskAtlas5.Frontend
             context.Response.AddHeader("Access-Control-Allow-Origin", "*");
 
             string CQL = context.Request.QueryString["cql"]; 
-            CQL = CQL.Replace("dc.title", "dkcclterm.ti");
-            CQL = CQL.Replace("dc.subject", "dkcclterm.em");
-            CQL = CQL.Replace("dc.creator", "dkcclterm.fo");
-            CQL = CQL.Replace("dc.date", "dkcclterm.år");
-            CQL = CQL.Replace("dc.type", "dkcclterm.ma");
+            CQL = CQL.Replace("dc.title", "term.title");
+            CQL = CQL.Replace("dc.subject", "facet.subject");
+            CQL = CQL.Replace("dc.creator", "term.creator");
+            CQL = CQL.Replace("dc.date", "facet.date");
+            CQL = CQL.Replace("dc.type", "facet.type");
             CQL = CQL.Replace("dc.serverChoice", "cql.serverChoice");
             CQL = CQL.Replace("bath.notes", "term.description");
-            CQL = CQL.Replace("bath.possessingInstitution", "dkcclterm.ln");
+            CQL = CQL.Replace("bath.possessingInstitution", "holdingsitem.agencyId");
             //rec.id should still work
 
 
@@ -45,8 +45,9 @@ namespace HistoriskAtlas5.Frontend
                 //doc.Load("http://localhost/cs/proxy/test.xml");
                 //doc.Load(@"http://oss-services.dbc.dk/opensearch/?action=search&query=" + HttpUtility.UrlEncode(CQL) + @"&agency=100200&profile=test&start=1&stepValue=50&collectionType=work-1");
                 //doc.Load(@"http://opensearch.addi.dk/b3.0_4.3/?action=search&query=" + HttpUtility.UrlEncode(CQL) + @"&start=1&stepValue=50&collectionType=work-1");
-                doc.Load(@"https://opensearch.addi.dk/b3.5_4.5/?action=search&query=" + HttpUtility.UrlEncode(CQL) + @"&start=1&stepValue=50&collectionType=work-1");
-                //doc.Load(@"https://oss-services.dbc.dk/opensearch/5.0/?action=search&query=" + HttpUtility.UrlEncode(CQL) + @"&start=1&stepValue=50&collectionType=work-1");
+                //doc.Load(@"https://opensearch.addi.dk/b3.5_4.5/?action=search&query=" + HttpUtility.UrlEncode(CQL) + @"&start=1&stepValue=50&collectionType=work-1");
+                doc.Load(@"https://oss-services.dbc.dk/opensearch/5.0/?action=search&query=" + HttpUtility.UrlEncode(CQL) + @"&start=1&stepValue=50&collectionType=work-1");
+                
 
                 XmlNamespaceManager xmlnsManager = new XmlNamespaceManager(doc.NameTable);
                 xmlnsManager.AddNamespace("x", "http://oss.dbc.dk/ns/opensearch");

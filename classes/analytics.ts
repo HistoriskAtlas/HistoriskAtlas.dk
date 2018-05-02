@@ -31,4 +31,12 @@
             eventLabel: regionType.id
         });
     }
+    public static apiError(error: string, userID: number) {
+        (<any>window).analytics('ha.send', {
+            hitType: 'event',
+            eventCategory: 'api_error',
+            eventAction: error,
+            eventLabel: userID
+        });
+    }
 }
