@@ -43,16 +43,21 @@
             }
             .item > span:nth-child(1) {
                 font-weight: bold;
-                width: 45%;
+                width: 40%;
             }
             .item > span:nth-child(2) {
-                width: 20%;
+                width: 19%;
             }
             .item > span:nth-child(3) {
-                width: 15%;
+                width: 13%;
             }
             .item > span:nth-child(4) {
-                width: 15%;
+                width: 13%;
+            }
+            .item > span:nth-child(5) {
+                width: 10%;
+                max-width: 100px;
+                text-align: right;
             }
 
             .headline {
@@ -111,8 +116,9 @@
             <div class="item headline">
                 <span on-tap="sortOnTitle">Titel</span>
                 <span on-tap="sortOnUser">Oprettet af</span>
-                <span on-tap="sortOnDate">Oprettet dato</span>
+                <span on-tap="sortOnDate">Oprettet d.</span>
                 <span on-tap="sortOnStatus">Status</span>
+                <span on-tap="sortOnViews">Visninger</span>
             </div>
             <iron-list id="list" items="{{geos}}" max-physical-count="50">
                 <template>
@@ -121,6 +127,7 @@
                         <span>[[item.user.firstname]] [[item.user.lastname]]</span>
                         <span>[[formatDate(item.created)]]</span>
                         <span class$="status [[statusClass(item.online,item.tag_geos)]]"></span>
+                        <span>[[numberWithSeparaters(item.views)]]</span>
                     </div>
                 </template>
             </iron-list>

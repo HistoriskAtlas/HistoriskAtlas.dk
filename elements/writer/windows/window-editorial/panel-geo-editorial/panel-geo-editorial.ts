@@ -46,6 +46,7 @@ class PanelGeoEditorial extends polymer.Base implements polymer.Element {
                             'title',
                             'online',
                             'created',
+                            'views',
                             {
                                 user: [
                                     'firstname',
@@ -173,6 +174,16 @@ class PanelGeoEditorial extends polymer.Base implements polymer.Element {
         return valA - valB;
     }
 
+    sortOnViews() {
+        this.$.selector.sort(this.compareViews);
+    }
+    compareViews(a: any, b: any): number {
+        return a.views - b.views;
+    }
+
+    numberWithSeparaters(n: number): string {
+        return Common.numberWithSeparaters(n);
+    }
 }
 
 PanelGeoEditorial.register();

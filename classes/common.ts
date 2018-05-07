@@ -39,6 +39,10 @@
         return this._api;
     }
 
+    public static numberWithSeparaters(n: number): string {
+        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
     public static rich2html(rich: string): string {
         var result: string = rich;
 

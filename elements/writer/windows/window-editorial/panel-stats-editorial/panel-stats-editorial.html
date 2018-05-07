@@ -1,0 +1,40 @@
+﻿<dom-module id="panel-stats-editorial">
+    <template>
+        <style>
+            :host {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+            .top {
+                display: flex;
+                flex-shrink: 0;
+            }
+            .top > * {
+                margin-left: 10px;
+                margin-right: 10px
+            }
+            .stat {
+                text-align: center;
+                padding: 40px;
+                font-size: 16px;
+            }
+        </style>
+
+        <div class="top">
+            <!--<paper-dropdown-menu no-label-float>
+                <paper-listbox class="dropdown-content" selected="{{kind}}">
+                    <paper-item>Oprettet af dig</paper-item>
+                    <paper-item hidden$="[[!hasWriters()]]">Oprettet af dine skribenter</paper-item>
+                    <paper-item hidden$="[[!isPro()]]">Tilhørende [[institution()]]</paper-item>
+                </paper-listbox>
+            </paper-dropdown-menu>
+            <paper-input no-label-float autofocus tabindex="0" value="{{filter}}" on-keydown="filterCheckForEnter" placeholder="filter"></paper-input>-->
+        </div>
+
+        <div class="stat">
+            Fortællinger fra <b>[[institution()]]</b> er blevet vist <b>[[numberWithSeparaters(totalGeoViews)]]</b> gange siden d. 19/4 2018.
+        </div>
+
+    </template>
+</dom-module>

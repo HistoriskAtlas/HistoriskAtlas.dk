@@ -137,6 +137,10 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
     compareViews(a: any, b: any): number {
         return a.geoviews - b.geoviews;
     }
+
+    numberWithSeparaters(n: number): string {
+        return Common.numberWithSeparaters(n);
+    }
 }
 
 PanelInstitutionAdmin.register();

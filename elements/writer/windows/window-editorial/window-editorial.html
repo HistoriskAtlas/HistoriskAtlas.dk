@@ -22,6 +22,7 @@
                 <template is="dom-if" if="[[hasWriters()]]">
                     <paper-tab>Skribenter</paper-tab>
                 </template>
+                <paper-tab>Statistik</paper-tab>
             </paper-tabs>
 
             <iron-pages selected="[[selectedTab]]" selected-attribute="selected">
@@ -29,6 +30,7 @@
                 <template is="dom-if" if="[[hasWriters()]]">
                     <panel-user-editorial></panel-user-editorial>
                 </template>
+                <panel-stats-editorial></panel-stats-editorial>
             </iron-pages>
         </window-basic>
     </template>

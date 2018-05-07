@@ -156,6 +156,10 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
             this.sort = col;
         this.fetchGeos();        
     }
+
+    numberWithSeparaters(n: number): string {
+        return Common.numberWithSeparaters(n);
+    }
 }
 
 PanelGeoAdmin.register();
