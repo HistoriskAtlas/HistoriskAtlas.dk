@@ -15,9 +15,12 @@ class MapControls extends polymer.Base implements polymer.Element {
         $(this).css('margin-bottom', newVal ? '79px' : '15px'); /*64 + 15*/
     }
 
-    @observe("mapRotation")
-    mapRotationChanged(newVal: number) {
-        $(this.$.compass).css('display', Math.abs(newVal) < 0.05 ? 'none' : 'initial');
+    //@observe("mapRotation")
+    //mapRotationChanged(newVal: number) {
+    //    $(this.$.compass).css('display', Math.abs(newVal) < 0.05 ? 'none' : 'initial');
+    //}
+    hideCompass(rotation: number): boolean {
+        return Math.abs(rotation) < 0.05;
     }
 
     @listen("compass.tap")

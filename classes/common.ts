@@ -84,7 +84,7 @@
 
         return Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(dLon)) * R;
     }
-    private static toRad(x): number { return x * Math.PI / 180; }
+    public static toRad(x): number { return x * Math.PI / 180; }
 
     public static years(start: number, end: number): string {
         return (start ? start + ' - ' : '') + (end == 2050 ? 'nu' : end);

@@ -18,7 +18,7 @@
                 background-color: white;
             }
         </style>
-        <paper-button id="compass" raised style="margin-bottom: 5px; display:none"><iron-icon icon="cached"></iron-icon></paper-button>
+        <paper-button id="compass" raised style="margin-bottom: 5px" hidden$="[[hideCompass(mapRotation)]]"><iron-icon icon="cached"></iron-icon></paper-button>
         <paper-button id="myLocation" raised><iron-icon icon="maps:my-location"></iron-icon></paper-button>
         <div style="height:5px" class="hide-when-narrow"></div>
         <paper-button id="zoomIn" raised class="hide-when-narrow" style="border-bottom-left-radius:0px; border-bottom-right-radius:0px"><iron-icon icon="add"></iron-icon></paper-button>

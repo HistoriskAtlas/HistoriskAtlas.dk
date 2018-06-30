@@ -287,10 +287,8 @@ class WindowGeo extends polymer.Base implements polymer.Element {
 
     @listen("windowbasic.closed")
     windowClosed() {
-        if (this.standalone) {
-            var coord = Common.fromMapCoord(this.geo.coord);
-            location.href = location.href.replace(/[^\/]*_\(([0-9]+)\)/g, '') + '@' + coord[1].toFixed(6) + ',' + coord[0].toFixed(6) + ',16z';
-        }
+        if (this.standalone)
+            UrlState.ReloadOnGeo(this.geo)
     }
 
     @listen("imageContainer.tap")

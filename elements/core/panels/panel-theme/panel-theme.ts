@@ -245,6 +245,7 @@ interface ITheme {
     maplatitude: number;
     maplongitude: number;
     mapzoom: number;
+    maprotation: number;
     tagid: number;
     content: IContent;
 }

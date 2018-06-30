@@ -259,6 +259,7 @@
     <TypeScriptCompile Include="classes\Map\TimelineMap.ts" />
     <TypeScriptCompile Include="classes\Map\kDtree.ts" />
     <TypeScriptCompile Include="classes\analytics.ts" />
+    <TypeScriptCompile Include="classes\urlState.ts" />
     <TypeScriptCompile Include="classes\services.ts" />
     <TypeScriptCompile Include="classes\Map\DigDagHelperLayer.ts" />
     <TypeScriptCompile Include="classes\Map\RouteLayer.ts" />

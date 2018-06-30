@@ -34,10 +34,17 @@ class Global extends polymer.Base implements polymer.Element {
     @property({ type: Object, notify: true })
     public map: HaMap;
 
+    @property({ type: Boolean, notify: true })
+    public userJustActivated: boolean;
+
+    @property({ type: Boolean, notify: true })
+    public userJustResetPassword: boolean;
+
     public static defaultTheme: ITheme = {
         id: 'default',
         name: 'default',
         mapzoom: 7,
+        maprotation: 0.0,
         mapid: 161,
         maplatitude: 56.0,
         maplongitude: 10.0,

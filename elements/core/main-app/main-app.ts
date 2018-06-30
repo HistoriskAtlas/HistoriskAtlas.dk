@@ -253,24 +253,7 @@ class App extends polymer.Base implements polymer.Element {
         //}
 
 
-        //TODO: move to generel url interpreter class?
-        var path = window.location.pathname
-        if (path.substr(-8) == '/welcome') {
-            window.history.replaceState({}, null, window.location.href.substr(0, window.location.href.length - 8));
-            this.userJustActivated = true;
-        }
-        //TODO: move to generel url interpreter class?
-        if (path.substr(-13) == '/new_password') {
-            window.history.replaceState({}, null, window.location.href.substr(0, window.location.href.length - 13));
-            this.userJustResetPassword = true;
-        }
-        //TODO: move to generel url interpreter class?
-        if (path.substr(0, 2) == '/@') {
-            var atArr = path.substr(2).split(',');
-            App.passed.theme.maplatitude = parseFloat(atArr[0]);
-            App.passed.theme.maplongitude = parseFloat(atArr[1]);
-            App.passed.theme.mapzoom = parseInt(atArr[2]);
-        }
+        UrlState.ReadFromUrl();
 
         //else {
         //    App.passed.initCoord = [Global.defaultTheme.maplatitude, Global.defaultTheme.maplongitude]; //TODO: what if default theme isnt selected....
@@ -297,7 +280,9 @@ class App extends polymer.Base implements polymer.Element {
         var theme = App.passed.theme
         var coord = App.passed.geo ? [App.passed.geo.lat, App.passed.geo.lng] : ([theme.maplatitude ? theme.maplatitude : Global.defaultTheme.maplatitude, theme.maplongitude ? theme.maplongitude : Global.defaultTheme.maplongitude]);
         var zoom = App.passed.geo ? 16 : (theme.mapzoom ? theme.mapzoom : Global.defaultTheme.mapzoom);
-        App.map = new MainMap(coord, zoom);
+        var rotation = theme.maprotation ? theme.maprotation : Global.defaultTheme.maprotation;
+        App.map = new MainMap(coord, zoom, rotation);
+        App.global.setMapRotation(rotation);
         //FB.init({ appId: '876939902336614', xfbml: true, version: 'v2.2' }); //moved to login window
 
         $(document).ready(() => {

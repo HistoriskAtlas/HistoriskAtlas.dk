@@ -34,7 +34,7 @@
     private static tilesRequested: number = 0;
     public static loadingDoneCallbacks: Array<() => void> = [];
 
-    constructor(coord: ol.Coordinate, zoom: number) { //TODO: Create as element instead... so events like change:rotation can fire directly to the DOM
+    constructor(coord: ol.Coordinate, zoom: number, rotation: number) { //TODO: Create as element instead... so events like change:rotation can fire directly to the DOM
         /*Layers: 
         -1?: DigDagHelper
         0: Back
@@ -44,7 +44,7 @@
         4: NonClustered IconLayer(?)
         5: DigDag
         */
-        var view = new ol.View({ center: Common.toMapCoord([coord[1], coord[0]]), zoom: zoom, minZoom: MainMap.minZoom, maxZoom: MainMap.maxZoom });
+        var view = new ol.View({ center: Common.toMapCoord([coord[1], coord[0]]), zoom: zoom, minZoom: MainMap.minZoom, maxZoom: MainMap.maxZoom, rotation: rotation });
         var dragPan = new ol.interaction.DragPan();
         super({
             target: document.getElementById('map'),
@@ -156,6 +156,8 @@
             this._moving = false;
             if (this.mousePixel)
                 this.getHoverObject(this.getCoordinateFromPixel(this.mousePixel), this.mousePixel);
+
+            UrlState.WriteToUrl();
         });
 
         this.on('pointermove', (event) => {
@@ -398,8 +400,8 @@
             if (this.digDagLayer.isVisible)
                 if ((this.curHoverObject = this.digDagLayer.getRegion(coord)) == DigDagLayer.borderRegion)
                     this.curHoverObject = this.oldHoverObject;
-                else
-                    var b = 42;
+                //else
+                //    var b = 42;
 
         //this.curHoverObject = null;
     }
@@ -676,5 +678,10 @@
             callback();
         else
             MainMap.loadingDoneCallbacks.push(callback);
+    }
+
+    public get rotationInDegrees(): number {
+        var r = (((this.getView().getRotation() + Math.PI * 3.0) % (Math.PI * 2.0)) / Math.PI) * 180.0 - 180.0;
+        return r == -180.0 ? 180.0 : r;
     }
 }
