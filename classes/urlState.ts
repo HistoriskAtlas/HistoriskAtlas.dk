@@ -2,8 +2,8 @@
 
     private static prevStateUrl: string;
     private static timeoutHandler: number;
-    private static stateObject: any;
-    private static stateObjectString: string;
+    private static stateObject: any = {};
+    private static stateObjectString: string = '';
 
     public static ReadFromUrl() {
         var path = window.location.pathname;
@@ -19,7 +19,6 @@
         }
 
         //TODO: error handling on wrong inputs..............
-        this.stateObject = {};
         if (path.substr(0, 2) == '/@') {
             var atArr = path.substr(2).split(',');
             App.passed.theme.maplatitude = parseFloat(atArr[0]);
