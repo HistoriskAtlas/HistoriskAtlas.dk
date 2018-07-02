@@ -19,6 +19,7 @@
     private zoom: number;
     private static maxZoom: number = 19;
     private static minZoom: number = 2;
+    private static resConst: number = (2 * Math.PI * 6378137.0) / 256.0;
     public runAnimation: boolean;
     public dom: JQuery;
     private view: ol.View;
@@ -600,6 +601,9 @@
     public static getResolutionFromZoom(zoom: number): number {
         var size = App.map.getSize();
         return ((800 / (size[0] > size[1] ? size[1] : size[0])) * 800 * 256) / Math.pow(2, zoom);
+    }
+    public get fractialZoom(): number {
+        return Math.log(MainMap.resConst / this.view.getResolution()) * Math.LOG2E;
     }
 
     public toggleRotation() {

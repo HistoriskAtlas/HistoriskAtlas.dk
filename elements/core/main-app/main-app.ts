@@ -135,6 +135,7 @@ class App extends polymer.Base implements polymer.Element {
         if (App.map)
             App.map.HaMap = newVal;
         this.year = newVal.orgEndYear;
+        UrlState.mapChanged();
     }
 
     @observe("timeWarpMap")
@@ -185,7 +186,7 @@ class App extends polymer.Base implements polymer.Element {
         App.passed = (<any>window).passed;
 
         if (!App.passed.theme)
-            App.passed.theme = Global.defaultTheme;
+            App.passed.theme = $.extend({}, Global.defaultTheme);
     }
 
     ready() {

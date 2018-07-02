@@ -1,5 +1,10 @@
 ﻿class UrlState {
 
+    private static prevStateUrl: string;
+    private static timeoutHandler: number;
+    private static stateObject: any;
+    private static stateObjectString: string;
+
     public static ReadFromUrl() {
         var path = window.location.pathname;
 
@@ -13,6 +18,8 @@
             App.global.userJustResetPassword = true;
         }
 
+        //TODO: error handling on wrong inputs..............
+        this.stateObject = {};
         if (path.substr(0, 2) == '/@') {
             var atArr = path.substr(2).split(',');
             App.passed.theme.maplatitude = parseFloat(atArr[0]);
@@ -20,16 +27,50 @@
             App.passed.theme.mapzoom = parseFloat(atArr[2]);
             if (atArr.length > 3)
                 App.passed.theme.maprotation = Common.toRad(parseFloat(atArr[3]));
+
+            var params = window.location.href.split('?')
+            if (params.length > 1)
+            {
+                this.stateObject = JSON.parse(atob(params[1]))
+                this.RefeshStateObjectString(false)
+                if (this.stateObject.m)
+                    App.passed.theme.mapid = this.stateObject.m;
+            }
         }
     }
 
     public static WriteToUrl() {
+        this.prevStateUrl = this.stateUrl;
 
-        //TODO: Throttle output to url..... (settimeout and check if same?)............................................
+        if (this.timeoutHandler)
+            clearTimeout(this.timeoutHandler);
 
-        var view = App.map.getView();
-        //var test = (<any>view).getZoomForResolution(view.getResolution())
-        window.history.replaceState({}, null, this.GetMapStateString(Common.fromMapCoord(view.getCenter()), view.getZoom(), App.map.rotationInDegrees)); //TODO: view.getZoom is undefined at fractional zoom levels.... fixed in OL 3.18...................
+        this.timeoutHandler = setTimeout(() => {
+            var stateUrl = UrlState.stateUrl;
+            if (stateUrl == UrlState.prevStateUrl)
+                window.history.replaceState({}, null, stateUrl); //window.location.href.split('/')[0] + '/' + 
+        }, 500);
+        
+    }
+    private static get stateUrl(): string {
+        return this.GetMapStateString(Common.fromMapCoord(App.map.getView().getCenter()), App.map.fractialZoom, App.map.rotationInDegrees) + (this.stateObjectString == '' ? '' : '?' + this.stateObjectString); //TODO: cache map state also?
+    }
+
+    public static mapChanged() {
+
+        console.log(Global.defaultTheme.mapid);
+
+        if (App.map.HaMap.id != Global.defaultTheme.mapid)
+            this.stateObject.m = App.map.HaMap.id;
+        else
+            delete this.stateObject.m;
+
+        this.RefeshStateObjectString();
+    }
+    private static RefeshStateObjectString(write: boolean = true) {
+        this.stateObjectString = ($.isEmptyObject(this.stateObject) ? '' : btoa(JSON.stringify(this.stateObject)));
+        if (write)
+            this.WriteToUrl();
     }
 
     public static ReloadOnGeo(geo: HaGeo) {
@@ -38,6 +79,9 @@
     }
 
     private static GetMapStateString(coord: ol.Coordinate, zoom: number, rotation: number = 0): string {
+
+        //TODO: if equal to default theme, then return empty.....................
+
         return '@' + coord[1].toFixed(7) + ',' + coord[0].toFixed(7) + ',' + zoom.toFixed(2).replace(/[.,]00$/, "") + 'z' + (rotation == 0 ? '' : ',' + rotation.toFixed(2) + 'r');
     }
 }
