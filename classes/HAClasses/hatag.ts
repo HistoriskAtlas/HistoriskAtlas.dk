@@ -122,6 +122,9 @@
             idsChanged = idsChanged.concat(tag.justSetSelected(val));
             App.haTags.notifyPath("tags." + App.haTags.tags.indexOf(this) + ".children." + this.children.indexOf(tag) + ".selected", this._selected);
         });
+
+        UrlState.tagSelectedChanged();
+
         return idsChanged;
     }
 

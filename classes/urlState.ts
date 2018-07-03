@@ -30,7 +30,12 @@
             var params = window.location.href.split('?')
             if (params.length > 1)
             {
-                this.stateObject = JSON.parse(atob(params[1]))
+                //this.stateObject = JSON.parse(atob(params[1]))
+                for (var param of params[1].split('+')) {
+                    var kvp = param.split('!');
+                    this.stateObject[kvp[0]] = kvp[1];
+                }
+
                 this.RefeshStateObjectString(false)
                 if (this.stateObject.m)
                     App.passed.theme.mapid = this.stateObject.m;
@@ -56,9 +61,6 @@
     }
 
     public static mapChanged() {
-
-        console.log(Global.defaultTheme.mapid);
-
         if (App.map.HaMap.id != Global.defaultTheme.mapid)
             this.stateObject.m = App.map.HaMap.id;
         else
@@ -66,8 +68,18 @@
 
         this.RefeshStateObjectString();
     }
+    public static tagSelectedChanged() {
+        this.stateObject.t = App.haTags.getSelectionState(); //TODO: delete if "empty" ie all selected
+        this.RefeshStateObjectString();
+    }
     private static RefeshStateObjectString(write: boolean = true) {
-        this.stateObjectString = ($.isEmptyObject(this.stateObject) ? '' : btoa(JSON.stringify(this.stateObject)));
+        var params = [];
+        for (var p in this.stateObject) //TODO: sort?
+            params.push(p + '!' + this.stateObject[p]);
+
+        this.stateObjectString = params.join('+');
+        
+        //this.stateObjectString = ($.isEmptyObject(this.stateObject) ? '' : btoa(JSON.stringify(this.stateObject)));
         if (write)
             this.WriteToUrl();
     }
@@ -79,7 +91,8 @@
 
     private static GetMapStateString(coord: ol.Coordinate, zoom: number, rotation: number = 0): string {
 
-        //TODO: if equal to default theme, then return empty.....................
+        if (coord[1] == Global.defaultTheme.maplatitude && coord[0] == Global.defaultTheme.maplongitude && zoom.toPrecision(4) == Global.defaultTheme.mapzoom.toPrecision(4) && rotation == 0 && this.stateObjectString == '')
+            return '';
 
         return '@' + coord[1].toFixed(7) + ',' + coord[0].toFixed(7) + ',' + zoom.toFixed(2).replace(/[.,]00$/, "") + 'z' + (rotation == 0 ? '' : ',' + rotation.toFixed(2) + 'r');
     }

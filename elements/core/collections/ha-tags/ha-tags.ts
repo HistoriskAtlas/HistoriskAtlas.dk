@@ -27,11 +27,12 @@ class HaTags extends polymer.Base implements polymer.Element {
     private parentIDs: Array<Array<number>>;
     private childIDs: Array<Array<number>>;
     private tagIdsInStorage: Array<number>;
+    private RLEregex: RegExp = /(.)\1{3,9}/g;
 
     private static _blankMarker: HTMLImageElement;
     private static _numberMarkers: Array<string> = [];
     private static _viaPointMarkers: Array<string> = [];
-
+        
     ready() {
         HaTags._blankMarker = document.createElement("img");
         HaTags._blankMarker.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAwCAYAAAB5R9gVAAAFbklEQVRYw82YfUzVZRTHv+c8v3tBXvRegQlXE8UBOlkp+Iav+cKcyJxZrXyZKGo4m3O1WjVRyv6o1h9t5NaLpZGZW6Vzy0pD1EQF+sOcoolWKgjmgosgiHh/z3P6I/AlU3m9t++/z9n5ffZ9fs/ZOYfQQYlIEoBpAMb6jCSRyEAQqdZDLUQXHUynAJQCKCSiUx3JT+2ECAaQaRtZbTENF0BOVnnN8coade5KA3zaAAAcihHfrzdGDozSSR43E0C2kTKL6X0A+UTU0mUgEXlSG9momKL3l1eb/KNn+dsTF1F3/cG5+4YGYc5jsViSmmimJMSwNnJZMa0iol2dAhKRPsbgI2Y8U1herV/6ulgdr6xFZ5QSG4l3nxqnpyZ4lDHYzoyVRNTQbiARGezTZt9N28RmbzuktpX+hu7Q4nEJ+GDhRO2w+LyDOY2ILjwUSETitJGjVxqaI6a/t9s68+dVdKeGe9zY98JsOyqsV61iSiWi8/cFEhG3T5tfahtvDBj79i5V4W1ET2hQRDhKX5urI0KDLyqmZCKqbzvjOwNtLZ/5tHlkZt73PQYDABdqr2FW3g/Kp80gW8vmO8/4DncWWYrmrNh6iE9c8qKndayiBiu3FbGlaJ6IzL/rykQkxNamcu/pS+6MjXsIftTeNekybain1mIeSETNbQ4tU0x9X935s19hAOCVnaWkiCIBZN26Mp8xq388XSVl1V5/8+B4ZS0Kz1SLz5jVAMAiMsrBHP/J4TN+d6dNm4+Uk4M5UURGMIBZtjGy51RloHiw++RF2NoIgHQWkTEnLnmlscUXMKBrN3woq64TAKPZZ2T4ySovI8Aqq/byTW2SWBFFVV1tCjQPqq42gYF+zISQphY74EDXbvigFPdiI7geFuQIOFBYkAPGSDNrkbqIsKCAA0WGBUOLeJlBlYMjwiXQQHGR4aKYKthSVDQxPsZYHLiH5lCM8UOijSI6zABKejmUSh4YGTCgUbFRCHYoBaCEAezVRuqXTxwaMKAVk4ZCG6kHUMBE1KyYti4YM0T3Dnb6HcYV4sSzo4doxZR/Z/uxsZfTwtr0kX4HyklPRrDDEgAbb7UfRFTORHkvpj1qEvu5/AYzNNqFNdOTDAF5RHTu3z31GxCp/WZlmg4NsvxSCHesTNMEqgGw4Z6emojqLcXzhnvcsiXzcVHcc+2RYsLnWVPNsBi3UUzz7jt1ENFhAp5/OiUO25dPF6fV/bXJaTG+em6GPDFiEBGwioiOtGdyzTQin/507jIt2XKQu2skio0IQ/7SqXpyfIwQkEVEWzsy28/QRr5ssbX75R0l1qaiM7e2HJ2pxNmTh+GdeWN1kKVqFdMCIirs8PZDRKIE+JiAuRXeRv3md8dUfvHZdoM5FCMzNQG5GSn2AHeoJSI7iSibiGq6uh8ar0VeV0Rp2V8U4eOiX9sFlD15GD5cOAlapEAR5RJRcbcsrG6N2sYUXKlvnhq3drtqsfUDY4MshQtvzbf7hYfsZ6aZ7f1Gh56RIlrvcYWorAmJD41dNjER0b1DLCLkduQbHQIiomItUpiTnqyDLPVAd3LSk20RFBBRSY8Btbq0zuMKUUvGJ9w3Zun4RMT06bg7nQJqdWn/utnJ+r8Kp9NirM9ItgXY156fuMtAbS71d4WqzNR7XVqS2uoOsL4zuTsFRERHtciB3IyUu1xyWozcjBRb/tlPF/sNqNWlnP6uULV43G2XMlMT4HF13p0uyzbmQKW30Xau2iTOVZukqq7JZ0QKu5KzS42PIsoZ4A49vGhsPAgEjyvEArAuoPOUbcyR3/9q8P1R03DTGCkK+MQpIlPktibg/yCfbQ7Zxhzsjlzd0jxbijYA6JZx/G+qy0TEoXIVyQAAAABJRU5ErkJggg==';
@@ -369,33 +370,50 @@ class HaTags extends polymer.Base implements polymer.Element {
     }
 
     private static hslToRgb(h, s, l) {
-    var r, g, b;
-    if (s == 0) {
-        r = g = b = l; // achromatic
-    } else {
-        function hue2rgb(p, q, t) {
-            if (t < 0) t += 1;
-            if (t > 1) t -= 1;
-            if (t < 1 / 6) return p + (q - p) * 6 * t;
-            if (t < 1 / 2) return q;
-            if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-            return p;
+        var r, g, b;
+        if (s == 0) {
+            r = g = b = l; // achromatic
+        } else {
+            function hue2rgb(p, q, t) {
+                if (t < 0) t += 1;
+                if (t > 1) t -= 1;
+                if (t < 1 / 6) return p + (q - p) * 6 * t;
+                if (t < 1 / 2) return q;
+                if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+                return p;
+            }
+            var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+            var p = 2 * l - q;
+            r = hue2rgb(p, q, h + 1 / 3);
+            g = hue2rgb(p, q, h);
+            b = hue2rgb(p, q, h - 1 / 3);
         }
-        var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-        var p = 2 * l - q;
-        r = hue2rgb(p, q, h + 1 / 3);
-        g = hue2rgb(p, q, h);
-        b = hue2rgb(p, q, h - 1 / 3);
+        return ({
+            r: Math.round(r * 255),
+            g: Math.round(g * 255),
+            b: Math.round(b * 255),
+        });
     }
-    return ({
-        r: Math.round(r * 255),
-        g: Math.round(g * 255),
-        b: Math.round(b * 255),
-    });
-}
+
+    public getSelectionState(): string {
+
+        var bytes = new Uint8Array(Math.floor((this.tags.length + 7) / 8));
+        for (var i = 0; i < this.tags.length; i++)
+            if (this.tags[i].selected)
+                bytes[Math.floor(i / 8)] |= 1 << (i % 8); //(7 - i % 8)
+
+        var binstr = Array.prototype.map.call(bytes, function (ch) {
+            return String.fromCharCode(ch);
+        }).join('');
+
+        var b64 = btoa(binstr);
 
 
 
+        return b64.replace(this.RLEregex, (substring: string) => '-' + substring[0] + substring.length); //TODO: RLE using other than number 3 to 10..... maybe upper case or base64 char set!...................
+
+        //TODO: how many times is this called? should be only once per change (also on multiple children changing)
+    }
 
     //public includeInSitemap(tag: HaTag): boolean {
     //    return this.passedTag ? tag.isChildOf(this.passedTag) : (tag.isTop && tag.category == 9); //only subjects for now
