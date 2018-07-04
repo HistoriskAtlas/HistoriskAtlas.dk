@@ -1,8 +1,9 @@
 ﻿class UrlState {
 
     private static prevStateUrl: string;
-    private static timeoutHandler: number;
-    private static stateObject: any = {};
+    private static writeToUrlTimeoutHandler: number;
+    private static tagSelectedChangedTimeoutHandler: number;
+    public static stateObject: any = {};
     private static stateObjectString: string = '';
 
     public static ReadFromUrl() {
@@ -46,10 +47,10 @@
     public static WriteToUrl() {
         this.prevStateUrl = this.stateUrl;
 
-        if (this.timeoutHandler)
-            clearTimeout(this.timeoutHandler);
+        if (this.writeToUrlTimeoutHandler)
+            clearTimeout(this.writeToUrlTimeoutHandler);
 
-        this.timeoutHandler = setTimeout(() => {
+        this.writeToUrlTimeoutHandler = setTimeout(() => {
             var stateUrl = UrlState.stateUrl;
             if (stateUrl == UrlState.prevStateUrl)
                 window.history.replaceState({}, null, stateUrl); //window.location.href.split('/')[0] + '/' + 
@@ -69,8 +70,13 @@
         this.RefeshStateObjectString();
     }
     public static tagSelectedChanged() {
-        this.stateObject.t = App.haTags.getSelectionState(); //TODO: delete if "empty" ie all selected
-        this.RefeshStateObjectString();
+        if (this.tagSelectedChangedTimeoutHandler)
+            clearTimeout(this.tagSelectedChangedTimeoutHandler);
+
+        this.tagSelectedChangedTimeoutHandler = setTimeout(() => {
+            this.stateObject.t = App.haTags.getSelectionState(); //TODO: delete if "empty" ie all category 9 selected?
+            this.RefeshStateObjectString();
+        }, 100);
     }
     private static RefeshStateObjectString(write: boolean = true) {
         var params = [];

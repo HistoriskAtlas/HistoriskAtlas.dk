@@ -27,7 +27,7 @@ class HaTags extends polymer.Base implements polymer.Element {
     private parentIDs: Array<Array<number>>;
     private childIDs: Array<Array<number>>;
     private tagIdsInStorage: Array<number>;
-    private RLEregex: RegExp = /(.)\1{3,9}/g;
+    private RLEregex: RegExp = /(.)\1{3,60}/g;
 
     private static _blankMarker: HTMLImageElement;
     private static _numberMarkers: Array<string> = [];
@@ -61,7 +61,10 @@ class HaTags extends polymer.Base implements polymer.Element {
         //TODO: also handle deleted tags.................................................
 
 
+        var selections = this.getSelectionArray(UrlState.stateObject.t);
+
         for (var data of this.$.ajax.lastResponse) {
+            data.selected = selections ? selections[data.tagid] : data.category == 9;
             this.getTagFromData(data)
             LocalStorage.set('tag-' + data.tagid, JSON.stringify(data));
             this.tagIdsInStorage.push(data.tagid);
@@ -71,14 +74,15 @@ class HaTags extends polymer.Base implements polymer.Element {
             if (this.byId[tagID])
                 continue;
 
-            this.getTagFromData(JSON.parse(LocalStorage.get('tag-' + tagID)));
+            var data = JSON.parse(LocalStorage.get('tag-' + tagID));
+            data.selected = selections ? selections[data.tagid] : data.category == 9;
+            this.getTagFromData(data);
         }
         LocalStorage.set('tag-ids', JSON.stringify(this.tagIdsInStorage), true);
-
         //HaTags.tagTop[9] = new HaTag({ id: 1000000 + 9, category: 9, plurname: '' });
         //HaTags.tagTop[9].selected = true;
 
-        var tagTops = [];
+        var tagTops: Array<HaTag> = [];
 
         this.tags.forEach((tag: HaTag) => {
             tag.translateRelations(this.parentIDs[tag.id], this.childIDs[tag.id])
@@ -87,18 +91,19 @@ class HaTags extends polymer.Base implements polymer.Element {
                 if (!topTag) {
                     tagTops[tag.category] = new HaTag({ id: 1000000 + tag.category, category: tag.category, plurname: '' });
                     topTag = tagTops[tag.category];
-                    if (tag.category == 9)
-                        topTag.selected = true;
+                    //if (tag.category == 9 && !selections)
+                    //    topTag.selected = true;
                 }
                 topTag.children.push(tag);
             }
         });
+
+        for (var tagTop of tagTops)
+            (<any>tagTop)._selected = selections ? tagTop.allChildrenSelected : tagTop.category == 9;
+
         this.set('tagTops', tagTops)
         this.parentIDs = null;
         this.childIDs = null;
-
-        
-        
 
         //this.push('tags', HaTags.tagUGC = new HaTag({ tagid: 10000, category: 6, plurname: 'Vis altid' }));
         //HaTags.tagUGC.selected = true;
@@ -396,23 +401,37 @@ class HaTags extends polymer.Base implements polymer.Element {
     }
 
     public getSelectionState(): string {
-
-        var bytes = new Uint8Array(Math.floor((this.tags.length + 7) / 8));
-        for (var i = 0; i < this.tags.length; i++)
-            if (this.tags[i].selected)
-                bytes[Math.floor(i / 8)] |= 1 << (i % 8); //(7 - i % 8)
+        var bytes = new Uint8Array(Math.floor((this.byId.length + 7) / 8));
+        for (var i = 0; i < this.byId.length; i++) {
+            if (this.byId[i])
+                if (this.byId[i].selected) //{
+                    bytes[Math.floor(i / 8)] |= 1 << (i % 8); //(7 - i % 8)
+        }
 
         var binstr = Array.prototype.map.call(bytes, function (ch) {
             return String.fromCharCode(ch);
         }).join('');
 
-        var b64 = btoa(binstr);
+        var b64 = btoa(binstr).replace(/=/g, '');
+        var rle = b64.replace(this.RLEregex, (substring: string) => '-' + substring[0] + Common.base64chars.charAt(substring.length));
+        return rle.replace(/\//g, '_').replace(/\+/g, '--');
+    }
 
+    private getSelectionArray(state: string): Array<boolean> {
+        if (!state)
+            return null;
 
-
-        return b64.replace(this.RLEregex, (substring: string) => '-' + substring[0] + substring.length); //TODO: RLE using other than number 3 to 10..... maybe upper case or base64 char set!...................
-
-        //TODO: how many times is this called? should be only once per change (also on multiple children changing)
+        var decodedRLE = state.replace(/_/g, '/').replace(/--/g, '+');
+        var decodedB64 = decodedRLE.replace(/-(..)/g, (substring: string) => Array(Common.base64chars.indexOf(substring[2]) + 1).join(substring[1]));
+        var decodedBINSTR = atob(decodedB64);
+        var decodedBYTES = new Uint8Array(decodedBINSTR.length);
+        var result: Array<boolean> = [];
+        for (var i = 0; i < decodedBINSTR.length; i++) {
+            var byte = decodedBINSTR.charCodeAt(i);
+            for (var b = 0; b < 8; b++)
+                result[i * 8 + b] = !!(byte >> b & 1);
+        }
+        return result;
     }
 
     //public includeInSitemap(tag: HaTag): boolean {

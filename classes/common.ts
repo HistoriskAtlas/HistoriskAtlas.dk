@@ -19,6 +19,7 @@
     public static dom = $(document.body);
     private static _api: string;
     public static apiSchemaTags = '{tag:[tagid,plurname,singname,category,yearstart,yearend,{parents:[empty,{collapse:{parent:id}}]}]}'
+    public static base64chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
     public static get isDevOrBeta(): boolean {
         if (this.standalone)

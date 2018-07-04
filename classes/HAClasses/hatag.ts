@@ -25,7 +25,8 @@
         this.yearEnd = data.yearend;
         this.yearStart = data.yearstart;
         //this.parentIDs = data.taghierarkis1;
-        this._selected = data.category == 9;//false;
+        //this._selected = data.category == 9;//false;
+        this._selected = data.selected;//false;
         this.showChildren = false;
 
         this.geos = [];
@@ -154,6 +155,13 @@
         //    this._subTags.push(App.haTags.byId[hierarki.tagid]);
         //});
         //return this._subTags;
+    }
+
+    public get allChildrenSelected(): boolean {
+        for (var child of this.children)
+            if (!child.selected)
+                return false;
+        return true;
     }
 
     get isSubject(): boolean {
