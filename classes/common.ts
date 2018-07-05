@@ -24,7 +24,7 @@
     public static get isDevOrBeta(): boolean {
         if (this.standalone)
             return document.location.hostname.indexOf('beta') == 0 || document.location.hostname.indexOf('localhost') == 0;
-        return App.isDev || document.location.hostname.indexOf('beta') == 0;
+        return App.isDev() || document.location.hostname.indexOf('beta') == 0;
     }
 
     //beta.api | betasecure.api
@@ -117,6 +117,9 @@
 
     public static get standalone(): boolean {
         return typeof App == 'undefined';
+    }
+    public static get embed(): boolean {
+        return $('embed-app').length == 1;
     }
 
     public static objPath(obj: Object, path: string): any {

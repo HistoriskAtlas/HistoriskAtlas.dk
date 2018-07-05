@@ -183,7 +183,7 @@
         };
     </script>
     <% if (fullapp) { %>
-        <main-app></main-app>
+        <embed-app></embed-app>
     <% } else { %>
         <window-geo></window-geo>
     <% } %>

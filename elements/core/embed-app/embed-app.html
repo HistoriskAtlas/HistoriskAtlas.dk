@@ -1,0 +1,49 @@
+﻿<dom-module id="embed-app">
+    <style>
+        :root {
+            --primary-color: #005d9a !important;
+            --primary-contrast-color: #ffffff !important;
+            --primary-color-light: #0f64a6 !important;
+            --secondary-color: #ffcc00 !important;
+            --secondary-contrast-color: #000000 !important;
+            --light-gray-color: #ececec !important;
+            --dark-gray-color: #777777 !important;
+            --white-color: #ffffff !important;
+            --paper-grey-400: #bdbdbd !important;
+        }
+
+        #map {
+            touch-action:none; /*TEMP! Fix for dragpan on Chrome 55+ (seems to breake resizing of time warp using touch) */
+        }
+    </style>
+    <template>
+        <global-app year="{{year}}" time-warp-year="{{timeWarpYear}}" time-line-active="{{timeLineActive}}" routes-active="{{routesActive}}" time-warp-active="{{timeWarpActive}}" time-warp-mode="{{timeWarpMode}}" map-rotation="{{mapRotation}}" user-creators="[[userCreators]]" prof-creators="[[profCreators]]" theme="{{theme}}" map="{{mainMap}}" user-just-activated="{{userJustActivated}}" user-just-reset-password="{{userJustResetPassword}}"></global-app>
+        <ha-maps maps="{{maps}}" main-map="{{mainMap}}" time-warp-map="{{timeWarpMap}}"></ha-maps>
+        <ha-tags tags="{{tags}}" tag-tops="{{tagTops}}"></ha-tags>
+        <ha-geos geos="{{geos}}" year="[[year]]" time-warp-year="[[timeWarpYear]]" time-line-active=[[timeLineActive]] user-creators="[[userCreators]]" prof-creators="[[profCreators]]" theme="[[theme]]"></ha-geos>
+        <ha-regions type="[[regionTypeID]]"></ha-regions>
+        <ha-users user="{{user}}"></ha-users>
+        <ha-digdag digdags="{{digdags}}"></ha-digdag>
+        <ha-collections collections="{{collections}}" collection="{{collection}}" geos="[[geos]]" subjects="{{collectionSubjects}}" periods="{{collectionPeriods}}" institutions="{{collectionInstitutions}}" destinations="{{collectionDestinations}}" licens="{{collectionLicens}}" prof-creators="[[profCreators]]" user-creators="[[userCreators]]"></ha-collections>
+        <ha-licenses></ha-licenses>
+
+
+
+
+        <div main id="mainDiv" style="left: 0px; bottom: 0px; top: 0px; right: 0px; position: absolute; overflow:hidden">
+            <div id="map"></div>
+            <map-tooltip></map-tooltip>
+
+            <img class="nordeaLogo" src="../../images/logos/nordea-fonden-white-logo.png"/>
+            
+            <!--<map-menu main map="{{mainMap}}" lift="[[timeLineActive]]" drawer-open="{{drawerOpen}}" selected="{{selectedLeftPanel}}" show-main-menu="{{showMainMenu}}"></map-menu>-->
+            <map-controls lift="[[timeLineActive]]" map-rotation="[[mapRotation]]" time-warp-active="{{timeWarpActive}}"></map-controls>
+            <!--<map-about map=[[mainMap]] time-warp-map="[[timeWarpMap]]" time-warp-mode="[[timeWarpMode]]"></map-about>-->
+        </div>
+        <toast-wrapper></toast-wrapper>
+        <dialog-loading></dialog-loading>
+
+
+
+    </template>
+</dom-module>

@@ -83,6 +83,7 @@
     <Content Include="elements\core\lists\collection-geo-list-item\collection-geo-list-item.html" />
     <Content Include="elements\core\lists\tag-list-item\tag-list-item.html" />
     <Content Include="elements\core\lists\menu-item\menu-item.html" />
+    <Content Include="elements\core\embed-app\embed-app.html" />
     <Content Include="elements\core\map\map-about\map-about.html" />
     <Content Include="elements\core\windows\window-search\window-search-result\window-search-result.html" />
     <Content Include="elements\writer\dialogs\dialog-user-selection\dialog-user-selection.html" />
@@ -259,6 +260,7 @@
     <TypeScriptCompile Include="classes\Map\TimelineMap.ts" />
     <TypeScriptCompile Include="classes\Map\kDtree.ts" />
     <TypeScriptCompile Include="classes\analytics.ts" />
+    <TypeScriptCompile Include="classes\baseApp.ts" />
     <TypeScriptCompile Include="classes\urlState.ts" />
     <TypeScriptCompile Include="classes\services.ts" />
     <TypeScriptCompile Include="classes\Map\DigDagHelperLayer.ts" />
@@ -514,6 +516,7 @@
     <TypeScriptCompile Include="elements\core\lists\collection-geo-list-item\collection-geo-list-item.ts" />
     <TypeScriptCompile Include="elements\core\lists\tag-list-item\tag-list-item.ts" />
     <TypeScriptCompile Include="elements\core\lists\menu-item\menu-item.ts" />
+    <TypeScriptCompile Include="elements\core\embed-app\embed-app.ts" />
     <TypeScriptCompile Include="elements\core\map\map-about\map-about.ts" />
     <TypeScriptCompile Include="elements\core\windows\window-search\window-search-result\window-search-result.ts" />
     <TypeScriptCompile Include="elements\writer\dialogs\dialog-user-selection\dialog-user-selection.ts" />
@@ -783,6 +786,15 @@
     <TypeScriptSourceMap>false</TypeScriptSourceMap>
     <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
     <PublishDatabases>false</PublishDatabases>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets')" />
 </Project>
