@@ -86,6 +86,7 @@
     <Content Include="elements\core\embed-app\embed-app.html" />
     <Content Include="elements\core\map\map-about\map-about.html" />
     <Content Include="elements\core\windows\window-search\window-search-result\window-search-result.html" />
+    <Content Include="elements\writer\dialogs\dialog-embed\dialog-embed.html" />
     <Content Include="elements\writer\dialogs\dialog-user-selection\dialog-user-selection.html" />
     <Content Include="elements\writer\windows\window-editorial\panel-stats-editorial\panel-stats-editorial.html" />
     <Content Include="elements\writer\windows\window-route-contest\window-route-contest.html" />
@@ -519,6 +520,7 @@
     <TypeScriptCompile Include="elements\core\embed-app\embed-app.ts" />
     <TypeScriptCompile Include="elements\core\map\map-about\map-about.ts" />
     <TypeScriptCompile Include="elements\core\windows\window-search\window-search-result\window-search-result.ts" />
+    <TypeScriptCompile Include="elements\writer\dialogs\dialog-embed\dialog-embed.ts" />
     <TypeScriptCompile Include="elements\writer\dialogs\dialog-user-selection\dialog-user-selection.ts" />
     <TypeScriptCompile Include="elements\writer\windows\window-editorial\panel-stats-editorial\panel-stats-editorial.ts" />
     <TypeScriptCompile Include="elements\writer\windows\window-route-contest\window-route-contest.ts" />
@@ -612,6 +614,7 @@
     <TypeScriptCompile Include="typings\base64.d.ts" />
     <TypeScriptCompile Include="typings\jQuery\jquery.md5.d.ts" />
     <TypeScriptCompile Include="typings\jQuery\jquery.d.ts" />
+    <Content Include="EmbedTest.aspx" />
     <Content Include="LangSelect.aspx" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
@@ -687,6 +690,10 @@
     </Compile>
     <Compile Include="cs\bundles\HTMLBundle.cs" />
     <Compile Include="cs\bundles\HTMLBundleTransform.cs" />
+    <Compile Include="EmbedTest.aspx.cs">
+      <DependentUpon>EmbedTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="LangSelect.aspx.cs">
       <DependentUpon>LangSelect.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

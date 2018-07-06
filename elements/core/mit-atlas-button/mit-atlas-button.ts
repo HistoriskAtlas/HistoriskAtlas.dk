@@ -7,6 +7,9 @@ class MitAtlasButton extends polymer.Base implements polymer.Element {
     @property({ type: Boolean })
     public isDevOrBeta: boolean;
 
+    @property({ type: Boolean })
+    public showEmbed: boolean;
+
     ready() {
         this.isDevOrBeta = Common.isDevOrBeta;
     }
@@ -47,6 +50,13 @@ class MitAtlasButton extends polymer.Base implements polymer.Element {
 
     newRouteTap() {
         App.haCollections.newRoute();
+    }
+
+    userCanCreateEmbed(user: HAUser) {
+        return user.isPro;
+    }
+    newEmbedTap() {
+        this.showEmbed = true;
     }
 
     profileTap() {

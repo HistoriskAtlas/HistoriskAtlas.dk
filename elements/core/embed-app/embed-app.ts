@@ -7,8 +7,6 @@ class EmbedApp extends App implements polymer.Element {
 
     ready() {
         super.ready();
-
-        //alert(Common.embed);
     }
 }
 

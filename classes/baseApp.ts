@@ -212,7 +212,8 @@ interface IPassed {
     tag: any,
     theme: ITheme,
     dev: boolean,
-    redribbon: boolean
+    redribbon: boolean,
+    embed: boolean
 }
 
 (<any>ol.source.XYZ.prototype).setCanvasTileClass = function () {

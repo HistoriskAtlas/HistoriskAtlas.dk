@@ -48,7 +48,7 @@
 </head>
 <body style="text-align:center; background-color:#e4e4e4; font-family:Arial; font-size:18px; color:#808080">
     <br>
-    <img src="images/splash/logo.png" style="width:250px; border:0px" /><br>
+    <img src="images/appicons/favicon-96x96.png" style="border:0px" /><br>    
     <br>
     <b>vælg sprog</b> / select language<br>
     <% 

@@ -1,0 +1,83 @@
+﻿<dom-module id="dialog-embed">
+    <template>
+        <style>
+            /*paper-item {
+                cursor: pointer;
+            }*/
+
+            .container {
+                /*display:flex;*/
+                padding: 0 24px;
+            }
+            .container > *:first-child {
+                display: flex;
+                flex-direction: column;
+            }
+            .container > *:first-child > * {
+                width: 200px;
+                display: flex;
+                justify-content: space-between;
+                padding-right: 20px;
+            }
+            .container > *:first-child > * > *:first-child {
+                flex-grow: 1;
+            }
+            .buttons > paper-input {
+                flex-grow: 1;
+            }
+            paper-checkbox {
+                --paper-checkbox-unchecked-color: var(--light-gray-color);
+                --paper-checkbox-unchecked-background-color: var(--light-gray-color);
+                --paper-checkbox-checked-color: var(--primary-color);
+                --paper-checkbox-size: 14px;
+            }
+            paper-dropdown-menu {
+                --paper-input-container-input: {
+                    font-size: 14px;
+                };
+            }
+            paper-item {
+                font-size: 14px;
+            }
+            paper-input {
+                margin-top: 3px;
+                --paper-input-container-input: {
+                    font-size: 14px;
+                };
+            }
+        </style>
+        <paper-dialog id="dialog" opened modal>
+            <H2>Integrér på website</H2>
+            <div class="container">
+                <div>
+                    <div><b>Størrelse</b></div>
+                    <div>
+                        <paper-dropdown-menu no-label-float>
+                            <paper-listbox class="dropdown-content" selected="{{size}}">
+                                <paper-item>Lille (400x300)</paper-item>
+                                <paper-item>Mellem (600x450)</paper-item>
+                                <paper-item>Stor (800x600)</paper-item>
+                                <paper-item>Tilpasset</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                    </div>
+                    
+                    <div>
+                        <!--TODO: create fields for custom size.........................................................................................................-->
+                    </div>
+
+                    <div style="margin-top: 10px;"><b>Indstillinger</b></div>
+                    <div><span>Kortet kan navigeres</span><paper-checkbox noink></paper-checkbox></div>
+                    <div><span>Fortællinger åbner i ny fane</span><paper-checkbox noink></paper-checkbox></div>
+                    <div><span>Kant</span><paper-checkbox noink></paper-checkbox></div>
+                </div>
+                <iframe id="embedIframe" src$="[[src]]" width$="[[embedWidth]]" height$="[[embedHeight]]" frameborder="0" style="border:0"></iframe>
+            </div>
+            <div class="buttons">
+                <paper-input readonly no-label-float value="[[html(src)]]"></paper-input>
+                <paper-button>Kopiér HTML</paper-button>
+                <paper-button dialog-confirm>Luk</paper-button>
+            </div>
+        </paper-dialog>
+    </template>
+</dom-module>

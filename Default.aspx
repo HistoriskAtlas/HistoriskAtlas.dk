@@ -179,11 +179,16 @@
             theme: <%=(passedTheme == null ? "null" : json(passedTheme) )%>,
             dev: <%=(dev ? "true": "false")%>,
             redribbon: <%=(Request.QueryString["redribbon"] != null ? (Request.QueryString["redribbon"] == "false" ? "false" : "true") : "false")%>,
-            crawler: <%=(crawler ? "true" : "false")%>
+            crawler: <%=(crawler ? "true" : "false")%>,
+            embed:  <%=(embed ? "true" : "false")%>
         };
     </script>
     <% if (fullapp) { %>
-        <embed-app></embed-app>
+        <% if (embed) { %>
+            <embed-app></embed-app>
+        <% } else { %>
+            <main-app></main-app>
+        <% } %>
     <% } else { %>
         <window-geo></window-geo>
     <% } %>

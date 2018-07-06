@@ -10,7 +10,7 @@ namespace HistoriskAtlas5.Frontend
 {
     public partial class Default : Page
     {
-        public bool dev, crawler, fullapp;
+        public bool dev, crawler, fullapp, embed;
         public HAGeo passedGeo;
         public HACollection passedCollection;
         public HATag passedTag;
@@ -19,8 +19,10 @@ namespace HistoriskAtlas5.Frontend
         protected void Page_Load(object sender, EventArgs e)
         {
             string deep = GetDeep();
+            var keylessParameters = GetKeylessParameters();
             dev = (Request.QueryString["dev"] != null ? (Request.QueryString["dev"] != "false") : !Request.Url.Host.Contains("historiskatlas.dk"));
             crawler = Regex.IsMatch(Request.UserAgent, @"bot|crawler", RegexOptions.IgnoreCase);
+            embed = keylessParameters.Contains("embed");
 
             passedGeo = GetGeo(deep);
             fullapp = Request.Cookies["fullapp"] != null ? Request.Cookies["fullapp"].Value != "false" : passedGeo == null;
@@ -33,6 +35,12 @@ namespace HistoriskAtlas5.Frontend
 
             passedTag = GetTag(deep);
             passedTheme = GetTheme(deep);
+        }
+
+        private List<string> GetKeylessParameters()
+        {
+            var keyless = Request.QueryString.GetValues(null);
+            return keyless == null ? new List<string>() : new List<string>(keyless);
         }
 
         private string GetDeep()

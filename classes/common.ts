@@ -119,7 +119,7 @@
         return typeof App == 'undefined';
     }
     public static get embed(): boolean {
-        return $('embed-app').length == 1;
+        return App.passed.embed;
     }
 
     public static objPath(obj: Object, path: string): any {

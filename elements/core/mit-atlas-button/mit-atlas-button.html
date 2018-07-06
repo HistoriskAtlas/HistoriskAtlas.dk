@@ -89,11 +89,17 @@
                 <template is="dom-if" if="[[user.isAdmin]]">
                     <paper-item on-tap="adminTap">Administration</paper-item>
                 </template>
+                <template is="dom-if" if="[[userCanCreateEmbed(user)]]">
+                    <paper-item on-tap="newEmbedTap">Integrér på website</paper-item>
+                </template>
                 <paper-item on-tap="profileTap">Min profil</paper-item>
                 <paper-item disabled class="spacer"><div></div></paper-item>
                 <paper-item on-tap="logOutTap">Log ud</paper-item>
             </paper-menu>
         </paper-menu-button>
-
+        
+        <template is="dom-if" if="[[showEmbed]]" restamp>
+            <dialog-embed show="{{showEmbed}}"></dialog-embed>
+        </template>
     </template>
 </dom-module>

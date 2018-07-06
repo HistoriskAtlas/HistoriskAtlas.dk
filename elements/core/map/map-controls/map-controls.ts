@@ -10,6 +10,13 @@ class MapControls extends polymer.Base implements polymer.Element {
     @property({ type: Boolean, notify: true })
     public timeWarpActive: boolean;
 
+    @property({ type: String })
+    public hideClass: string;
+
+    ready() {
+        this.hideClass = Common.embed ? '' : 'hide-when-narrow';
+    }
+
     @observe("lift")
     liftChanged(newVal: boolean) {
         $(this).css('margin-bottom', newVal ? '79px' : '15px'); /*64 + 15*/

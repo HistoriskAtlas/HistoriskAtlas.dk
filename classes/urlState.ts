@@ -32,7 +32,7 @@
             if (params.length > 1)
             {
                 //this.stateObject = JSON.parse(atob(params[1]))
-                for (var param of params[1].split('+')) {
+                for (var param of params[1].split('&')[0].split('+')) {
                     var kvp = param.split('!');
                     this.stateObject[kvp[0]] = kvp[1];
                 }
@@ -52,12 +52,16 @@
 
         this.writeToUrlTimeoutHandler = setTimeout(() => {
             var stateUrl = UrlState.stateUrl;
-            if (stateUrl == UrlState.prevStateUrl)
-                window.history.replaceState({}, null, stateUrl); //window.location.href.split('/')[0] + '/' + 
+            if (stateUrl == UrlState.prevStateUrl) {
+                var newUrl = stateUrl + (Common.embed ? (this.stateObjectString == '' ? '?' : '&') + 'embed' : '');
+                window.history.replaceState({}, null, newUrl);
+                if (window.parent)
+                    window.parent.postMessage({ event: 'urlChanged', url: newUrl }, '*');
+            }
         }, 500);
         
     }
-    private static get stateUrl(): string {
+    public static get stateUrl(): string {
         return this.GetMapStateString(Common.fromMapCoord(App.map.getView().getCenter()), App.map.fractialZoom, App.map.rotationInDegrees) + (this.stateObjectString == '' ? '' : '?' + this.stateObjectString); //TODO: cache map state also?
     }
 
