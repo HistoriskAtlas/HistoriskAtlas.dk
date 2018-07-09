@@ -23,9 +23,15 @@
             .hidetrue {
                 visibility: hidden;
             }
+            #haLink {
+                text-decoration: underline;
+                pointer-events: all;
+                cursor: pointer;
+                user-select: none;
+            }
         </style>
         <div id="container" class$="timeWarpMode[[timeWarpMode]]">
-            <div hidden$="[[!embed]]"><b>KORT</b> [[map.title]] [[year(map.orgStartYear,map.orgEndYear)]]</div>
+            <div hidden$="[[!embed]]">Leveret af <span id="haLink">HistoriskAtlas.dk</span> - <b>KORT</b> [[map.title]] [[year(map.orgStartYear,map.orgEndYear)]]</div>
             <div class$="hide[[hide(map.tagline,2)]]">[[map.tagline]]</div>
             <div class$="hide[[hide(timeWarpMap.tagline,timeWarpMode)]]">[[timeWarpMap.tagline]]</div>
         </div>

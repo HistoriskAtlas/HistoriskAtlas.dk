@@ -67,14 +67,13 @@
                     </div>
 
                     <div style="margin-top: 10px;"><b>Indstillinger</b></div>
-                    <div><span>Kortet kan navigeres</span><paper-checkbox noink></paper-checkbox></div>
                     <div><span>Fortællinger åbner i ny fane</span><paper-checkbox noink></paper-checkbox></div>
-                    <div><span>Kant</span><paper-checkbox noink></paper-checkbox></div>
+                    <div><span>Sort kant</span><paper-checkbox noink></paper-checkbox></div>
                 </div>
-                <iframe id="embedIframe" src$="[[src]]" width$="[[embedWidth]]" height$="[[embedHeight]]" frameborder="0" style="border:0"></iframe>
+                <iframe id="embedIframe" src$="[[initialSrc]]" width$="[[embedWidth]]" height$="[[embedHeight]]" frameborder="0" style="border:0"></iframe>
             </div>
             <div class="buttons">
-                <paper-input readonly no-label-float value="[[html(src)]]"></paper-input>
+                <paper-input readonly no-label-float value="[[html(src, embedWidth, embedHeight)]]"></paper-input>
                 <paper-button>Kopiér HTML</paper-button>
                 <paper-button dialog-confirm>Luk</paper-button>
             </div>

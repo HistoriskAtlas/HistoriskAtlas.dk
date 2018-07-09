@@ -12,6 +12,9 @@ class MapAbout extends polymer.Base implements polymer.Element {
 
     ready() {
         this.embed = Common.embed;
+        $(this.$.haLink).click(() => {
+            window.open('https://historiskatlas.dk', '_new');
+        });
     }
 
     hide(tagline: string, timeWarpMode: number) {
@@ -22,10 +25,6 @@ class MapAbout extends polymer.Base implements polymer.Element {
         return Common.years(startYear, endYear)
     }
 
-    //@observe('timeWarpMode') 
-    //timeWarpModeChanged() {
-    //    alert(this.timeWarpMode)
-    //}
 }
 
 MapAbout.register();
