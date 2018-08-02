@@ -21,6 +21,8 @@
     public static apiSchemaTags = '{tag:[tagid,plurname,singname,category,yearstart,yearend,{parents:[empty,{collapse:{parent:id}}]}]}'
     public static base64chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
+    public static openGeoWindowInNewTab: boolean;
+
     public static get isDevOrBeta(): boolean {
         if (this.standalone)
             return document.location.hostname.indexOf('beta') == 0 || document.location.hostname.indexOf('localhost') == 0;
@@ -38,6 +40,10 @@
         }
 
         return this._api;
+    }
+
+    public static get baseUrl(): string {
+        return location.protocol + '//' + location.host;
     }
 
     public static numberWithSeparaters(n: number): string {
@@ -97,8 +103,13 @@
             App.toast.show('Lokaliteten er ikke tilgængelig')
             return;
         }
-
-        Common.dom.append(WindowGeo.create(geo));
+        this.directGeoClick(geo);
+    }
+    public static directGeoClick(geo: HaGeo) {
+        if (this.openGeoWindowInNewTab)
+            window.open(geo.link, '_new');
+        else
+            Common.dom.append(WindowGeo.create(geo));
     }
 
     public static dateTimeStringFromMs(ms: number): string {

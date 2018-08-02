@@ -28,18 +28,25 @@
             if (atArr.length > 3)
                 App.passed.theme.maprotation = Common.toRad(parseFloat(atArr[3]));
 
-            var params = window.location.href.split('?')
-            if (params.length > 1)
+            var split = window.location.href.split('?')
+            if (split.length > 1)
             {
                 //this.stateObject = JSON.parse(atob(params[1]))
-                for (var param of params[1].split('&')[0].split('+')) {
-                    var kvp = param.split('!');
-                    this.stateObject[kvp[0]] = kvp[1];
-                }
+                var params = split[1].split('&');
+                if (params[0] == 'embed')
+                    params.shift();
+
+                if (params.length > 0)
+                    for (var param of params[0].split('+')) {
+                        var kvp = param.split('!');
+                        this.stateObject[kvp[0]] = kvp[1];
+                    }
 
                 this.RefeshStateObjectString(false)
                 if (this.stateObject.m)
                     App.passed.theme.mapid = this.stateObject.m;
+                if (this.stateObject.hasOwnProperty('ogwint'))
+                    Common.openGeoWindowInNewTab = !!this.stateObject.ogwint;
             }
         }
     }
@@ -64,7 +71,19 @@
     public static get stateUrl(): string {
         return this.GetMapStateString(Common.fromMapCoord(App.map.getView().getCenter()), App.map.fractialZoom, App.map.rotationInDegrees) + (this.stateObjectString == '' ? '' : '?' + this.stateObjectString); //TODO: cache map state also?
     }
+    public static get embedStateUrl(): string {
+        var url = this.stateUrl;
+        return url + (url.indexOf('?') == -1 ? '?' : '&') + 'embed';
+    }
 
+    public static openGeoWindowInNewTabChanged() {
+        if (!Common.openGeoWindowInNewTab && Common.embed)
+            this.stateObject.ogwint = 0;
+        else
+            delete this.stateObject.ogwint;
+
+        this.RefeshStateObjectString();
+    }
     public static mapChanged() {
         if (App.map.HaMap.id != Global.defaultTheme.mapid)
             this.stateObject.m = App.map.HaMap.id;

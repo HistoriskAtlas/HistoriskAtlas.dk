@@ -25,6 +25,21 @@
             .buttons > paper-input {
                 flex-grow: 1;
             }
+            .buttons > *:first-child {
+                margin-right: 20px;
+            }
+
+            #customSizeContainer {
+                display: flex;
+                flex-direction: row;
+            }
+            #customSizeContainer > * {
+                flex-grow: 1;
+            }
+            #customSizeContainer > *:first-child {
+                margin-right: 10px;
+            }
+            
             paper-checkbox {
                 --paper-checkbox-unchecked-color: var(--light-gray-color);
                 --paper-checkbox-unchecked-background-color: var(--light-gray-color);
@@ -57,23 +72,25 @@
                                 <paper-item>Lille (400x300)</paper-item>
                                 <paper-item>Mellem (600x450)</paper-item>
                                 <paper-item>Stor (800x600)</paper-item>
-                                <paper-item>Tilpasset</paper-item>
+                                <paper-item>Valgfrit (i pixels)</paper-item>
+                                <paper-item>Responsiv (auto)</paper-item>
                             </paper-listbox>
                         </paper-dropdown-menu>
                     </div>
                     
-                    <div>
-                        <!--TODO: create fields for custom size.........................................................................................................-->
+                    <div id="customSizeContainer" hidden$="[[!showCustomSizeFields(size)]]">
+                        <paper-input value="{{embedWidth}}" label="Bredde" type="number" min="300" max="1000"></paper-input>
+                        <paper-input value="{{embedHeight}}" label="Højde" type="number" min="300" max="1000"></paper-input>
                     </div>
 
                     <div style="margin-top: 10px;"><b>Indstillinger</b></div>
-                    <div><span>Fortællinger åbner i ny fane</span><paper-checkbox noink></paper-checkbox></div>
-                    <div><span>Sort kant</span><paper-checkbox noink></paper-checkbox></div>
+                    <div><span>Fortællinger åbner i ny fane</span><paper-checkbox noink checked="{{optionOpenGeoWindowInNewTab}}"></paper-checkbox></div>
+                    <div><span>Sort kant</span><paper-checkbox noink checked="{{optionBorder}}"></paper-checkbox></div>
                 </div>
-                <iframe id="embedIframe" src$="[[initialSrc]]" width$="[[embedWidth]]" height$="[[embedHeight]]" frameborder="0" style="border:0"></iframe>
+                <iframe id="embedIframe" src$="[[initialSrc]]" width$="[[restrictDimension(embedWidth)]]" height$="[[restrictDimension(embedHeight)]]" frameborder="0" style$="[[iframeBorder(optionBorder)]]"></iframe>
             </div>
             <div class="buttons">
-                <paper-input readonly no-label-float value="[[html(src, embedWidth, embedHeight)]]"></paper-input>
+                <paper-input readonly no-label-float value="[[html(src, embedWidth, embedHeight, size, optionBorder)]]"></paper-input>
                 <paper-button>Kopiér HTML</paper-button>
                 <paper-button dialog-confirm>Luk</paper-button>
             </div>

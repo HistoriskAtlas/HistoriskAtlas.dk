@@ -151,6 +151,8 @@
             this.showRedRibbon = true;
         }
 
+        Common.openGeoWindowInNewTab = Common.embed;
+
         //if (localStorage.getItem("sessionID"))
         //    Services.get('login', {}, (result) => {
         //        if (result.data.user.isvalid)
@@ -187,6 +189,12 @@
 
         //App.init();
 
+        window.addEventListener('message', (e) => {
+            if (e.data.event == 'openGeoWindowInNewTab') {
+                Common.openGeoWindowInNewTab = e.data.value;
+                UrlState.openGeoWindowInNewTabChanged();
+            }
+        });
     }
 
     public static init() {

@@ -41,7 +41,8 @@ namespace HistoriskAtlas5.Frontend
 
                 //sb.Include("~/classes/Logon/socialLoginSDK.js"); //TODO: This file should be moved somewhere else
                 sb.Include("~/classes/common.js");
-                sb.Include("~/classes/baseApp.js");
+                if (bundle != "ha_core_geo_only")
+                    sb.Include("~/classes/baseApp.js");
                 sb.Include("~/classes/services.js");
                 sb.Include("~/classes/localStorage.js");
                 sb.Include("~/classes/urlState.js");

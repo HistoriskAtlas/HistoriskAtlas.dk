@@ -261,7 +261,8 @@
                     App.toast.show('Godkend eller afvis placeringen først.');
                     return;
                 }
-                Common.dom.append(WindowGeo.create(geo));
+                Common.directGeoClick(geo);
+                //Common.dom.append(WindowGeo.create(geo));
             }
 
             if (this.curHoverObject instanceof Array) { //assumes Array<HaGeo>

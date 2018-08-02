@@ -19,18 +19,39 @@ class DialogEmbed extends polymer.Base implements polymer.Element {
     @property({ type: Number, value: 450 })
     public embedHeight: number;
 
-    ready() {
-        window.addEventListener("message", (e) => { //TODO: post messages and change settings that way..................
-            if (e.data.event == 'urlChanged') {
-                this.src = e.data.url; 
-            }
-        });
+    @property({ type: Boolean, value: true })
+    public optionBorder: boolean;
 
-        this.initialSrc = this.src = UrlState.stateUrl + '&embed'; 
+    @property({ type: Boolean, value: true })
+    public optionOpenGeoWindowInNewTab: boolean;
+
+    private messageEventListener: (e: any) => void;
+
+    ready() {
+        this.messageEventListener = (e) => { //TODO: post messages and change settings that way..................
+            if (e.data.event == 'urlChanged') {
+                this.src = e.data.url;
+            }
+        }
+        window.addEventListener('message', this.messageEventListener);
+
+        this.initialSrc = this.src = UrlState.embedStateUrl; 
     }
 
-    private html(src: string, width: number, height: number): string {
-        return '<iframe src="' + src + '" width="' + width + '" height="' + height + '" frameborder="0" style="border:0"></iframe>';
+    private html(src: string, width: number, height: number, size: number, optionBorder: boolean): string {
+        return '<iframe src="' + Common.baseUrl + '/' + src + '" ' + (size == 4 ? '' : 'width="' + this.restrictDimension(width) + '" height="' + this.restrictDimension(height) + '" ') + 'frameborder="0" style="' + this.iframeBorder(optionBorder) + '"></iframe>';
+    }
+
+    iframeBorder(optionBorder: boolean): string {
+        return 'border:' + (optionBorder ? '1px solid black; appearance:none; -moz-appearance: none; -webkit-appearance:none; outline: none;' : '0');
+    }
+
+    showCustomSizeFields(size: number): boolean {
+        return size == 3;
+    }
+
+    restrictDimension(value: number): number {
+        return Math.max(Math.min(value, 2000), 300);
     }
 
     @observe('size') 
@@ -42,11 +63,25 @@ class DialogEmbed extends polymer.Base implements polymer.Element {
         }
     }
 
+    @observe('embedWidth')
+    @observe('embedHeight')
+    @observe('optionBorder')
+    embedDimensionChanged() {
+        this.$.dialog.notifyResize();
+    }
+
+    @observe('optionOpenGeoWindowInNewTab')
+    optionOpenGeoWindowInNewTabChanged() {
+        if (this.$.embedIframe.contentWindow)
+            this.$.embedIframe.contentWindow.postMessage({ event: 'openGeoWindowInNewTab', value: this.optionOpenGeoWindowInNewTab }, '*');
+    }    
+
     @listen('dialog.iron-overlay-closed')
     dialogClosed(e: any) {
-        if (e.target == this.$.dialog)
+        if (e.target == this.$.dialog) {
             this.show = false;
-        //TODO: unregister eventlistener for "message"..................................................
+            window.removeEventListener('message', this.messageEventListener);
+        }
     }
 
 
