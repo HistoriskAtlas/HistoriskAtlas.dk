@@ -101,6 +101,15 @@
             this.RefeshStateObjectString();
         }, 100);
     }
+    public static themeChanged() {
+        if (App.global.theme.id != Global.defaultTheme.id)
+            this.stateObject.th = App.global.theme.id;
+        else
+            delete this.stateObject.th;
+
+        this.RefeshStateObjectString();
+    }
+
     private static RefeshStateObjectString(write: boolean = true) {
         var params = [];
         for (var p in this.stateObject) //TODO: sort?

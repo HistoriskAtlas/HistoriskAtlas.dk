@@ -180,7 +180,7 @@
             dev: <%=(dev ? "true": "false")%>,
             redribbon: <%=(Request.QueryString["redribbon"] != null ? (Request.QueryString["redribbon"] == "false" ? "false" : "true") : "false")%>,
             crawler: <%=(crawler ? "true" : "false")%>,
-            embed:  <%=(embed ? "true" : "false")%>
+            embed: <%=(embed ? "true" : "false")%>
         };
     </script>
     <% if (fullapp) { %>

@@ -141,7 +141,7 @@
             Common.dom.append(WindowGeo.create(geo));
         }
 
-        if (App.passed.theme.id != 'default') {
+        if (App.passed.theme.id != 'default' && !Common.embed) {
             this.drawerOpen = true;
             App.mainMenu.showMainMenu = false;
             App.mainMenu.showMenuThemes = true;

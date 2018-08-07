@@ -131,6 +131,8 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         if (!App.haTags.tagsLoaded)
             return;
 
+        UrlState.themeChanged();
+
         var routeTopLevels: Array<ICollectionTopLevel> = [];
         if (this.theme.tagid && this.theme != Global.defaultTheme) {
             App.haCollections.getCollectionsByTagId(this.theme.tagid);

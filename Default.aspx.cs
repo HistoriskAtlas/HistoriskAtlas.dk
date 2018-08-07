@@ -15,14 +15,26 @@ namespace HistoriskAtlas5.Frontend
         public HACollection passedCollection;
         public HATag passedTag;
         public HATheme passedTheme;
+        public Dictionary<string, string> stateObject;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             string deep = GetDeep();
             var keylessParameters = GetKeylessParameters();
+            
             dev = (Request.QueryString["dev"] != null ? (Request.QueryString["dev"] != "false") : !Request.Url.Host.Contains("historiskatlas.dk"));
             crawler = Regex.IsMatch(Request.UserAgent, @"bot|crawler", RegexOptions.IgnoreCase);
             embed = keylessParameters.Contains("embed");
+
+            stateObject = new Dictionary<string, string>();
+            if (keylessParameters.Count > 0) {
+                if (keylessParameters[0].Contains("!")) {
+                    foreach (var param in keylessParameters[0].Split(new char[] { ' ' })) {
+                        var kvp = param.Split(new char[] { '!' });
+                        stateObject.Add(kvp[0], kvp[1]);
+                    }
+                }
+            }
 
             passedGeo = GetGeo(deep);
             fullapp = Request.Cookies["fullapp"] != null ? Request.Cookies["fullapp"].Value != "false" : passedGeo == null;
@@ -118,11 +130,10 @@ namespace HistoriskAtlas5.Frontend
 
             if (this.passedGeo != null)
                 return null;
-
-            //HAThemes themes = (new Service<HAThemes>()).Get("theme.json?v=1&schema={theme:[id,name,mapid,maplatitude,maplongitude,mapzoom,tagid]}&id=" + deep);
-            HAThemes themes = (new Service<HAThemes>()).Get("theme.json?v=1&schema={theme:[id,name,mapid,maplatitude,maplongitude,mapzoom,tagid,{content:[id,geoid,ordering,deleted,contenttypeid,{texts:[empty,id,created,{user:[firstname,lastname]},headline,text1]},{biblios:[empty,id,created,cql]},{externalcontent:[empty,id,created,externalsourceid,text,link]},{tag_contents:[{collapse:tagid}]}]}]}&id=" + deep);
             
-
+            //HAThemes themes = (new Service<HAThemes>()).Get("theme.json?v=1&schema={theme:[id,name,mapid,maplatitude,maplongitude,mapzoom,tagid]}&id=" + deep);
+            HAThemes themes = (new Service<HAThemes>()).Get("theme.json?v=1&schema={theme:[id,name,mapid,maplatitude,maplongitude,mapzoom,tagid,{content:[id,geoid,ordering,deleted,contenttypeid,{texts:[empty,id,created,{user:[firstname,lastname]},headline,text1]},{biblios:[empty,id,created,cql]},{externalcontent:[empty,id,created,externalsourceid,text,link]},{tag_contents:[{collapse:tagid}]}]}]}&id=[" + HttpUtility.UrlEncode(deep) + (stateObject.ContainsKey("th") ? "," + stateObject["th"] : "") + "]");
+            
             if (themes.data.Length == 0)
                 return null;
 

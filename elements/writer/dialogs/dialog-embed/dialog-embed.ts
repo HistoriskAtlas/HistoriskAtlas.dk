@@ -28,7 +28,7 @@ class DialogEmbed extends polymer.Base implements polymer.Element {
     private messageEventListener: (e: any) => void;
 
     ready() {
-        this.messageEventListener = (e) => { //TODO: post messages and change settings that way..................
+        this.messageEventListener = (e) => {
             if (e.data.event == 'urlChanged') {
                 this.src = e.data.url;
             }
@@ -43,7 +43,7 @@ class DialogEmbed extends polymer.Base implements polymer.Element {
     }
 
     iframeBorder(optionBorder: boolean): string {
-        return 'border:' + (optionBorder ? '1px solid black; appearance:none; -moz-appearance: none; -webkit-appearance:none; outline: none;' : '0');
+        return 'border:' + (optionBorder ? '1px solid black' : '0');
     }
 
     showCustomSizeFields(size: number): boolean {
