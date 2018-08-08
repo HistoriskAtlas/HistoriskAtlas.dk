@@ -1,0 +1,160 @@
+﻿<dom-module id="panel-api-admin">
+    <template>
+        <style>
+            :host {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+            .top {
+                display: flex;
+            }
+            .list {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                margin-right: 5px;
+            }
+            iron-list {
+                flex-grow: 1;
+            }
+            .item {
+                padding: 2px 10px;
+                cursor: pointer;
+            }
+            .item:hover {
+                background-color:#ddd;
+            }
+            .item > span, .logitem > span {
+                display: inline-block;
+                overflow-x: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                padding-right: 5px;
+            }
+            .item > span:nth-child(1) {
+                width: 15%;
+                /*max-width: 350px;*/
+                font-weight: bold;
+            }
+            .item > span:nth-child(2) {
+                width: 20%;
+                /*max-width: 350px;*/
+            }
+            .item > span:nth-child(3) {
+                width: 45%;
+                /*max-width: 150px;*/
+            }
+            .item > span:nth-child(4) {
+                width: 15%;
+            }
+
+            .logitem > span:nth-child(1) {
+                width: 31%;
+            }
+            .logitem > span:nth-child(2) {
+                width: 31%;
+            }
+            .logitem > span:nth-child(3) {
+                width: 31%;
+                text-align: right
+            }
+
+            .headline {
+                font-weight: bold;
+                background-color: inherit !important;
+                padding-top: 10px;
+                font-size: 16px;
+                margin-right: 8px;
+                user-select: none;
+            }
+            .headline.logitem {
+                font-size: 14px !important;
+            }
+
+            paper-input {
+                flex-grow: 1;
+                --paper-input-container-input:
+                {
+                    font-size: 13px;
+                }
+            }
+            #inputFilter {
+                margin-right: 10px;
+            }
+            paper-dropdown-menu {
+                --paper-input-container-input: {
+                    font-size: 13px;
+                }
+                width: 160px;
+            }
+            paper-item {
+                font-size: 13px;
+                min-height: 30px;
+            }
+
+            list-auto-suggest {
+                height: 100%;
+            }
+        </style>
+        
+        <panel-admin id="admin" items="{{keys}}" item="{{key}}">
+            <div class="top">
+                <!--<paper-input id="inputFilter" no-label-float autofocus tabindex="0" value="{{filter}}" on-keydown="filterCheckForEnter" placeholder="filter"></paper-input>
+                <paper-dropdown-menu no-label-float>
+                    <paper-listbox class="dropdown-content" selected="{{categoryIndex}}">
+                        <template is="dom-repeat" items="[[categories]]">
+                            <paper-item>[[item.name]]</paper-item>
+                        </template>
+                    </paper-listbox>
+                </paper-dropdown-menu>-->
+            </div>
+
+            <div class="list">
+                <div class="item headline">
+                    <span on-tap="sortOnKey">Key</span>
+                    <span>Forventet ID</span>
+                    <span>Beskrivelse</span>
+                    <span>Oprettet</span>
+                </div>
+                <iron-list items="{{keys}}" max-physical-count="50">
+                    <template>
+                        <div class="item" on-tap="itemTap">
+                            <span>[[item.key]]</span>
+                            <span>[[item.urorua]]</span>
+                            <span>[[item.description]]</span>
+                            <span>[[formatDate(item.created)]]</span>
+                        </div>
+                    </template>
+                </iron-list>
+            </div>
+
+            <div class="details">
+                <template is="dom-if" if="[[key]]">
+                    <div style="font-weight: bold; font-size:16px">[[key.key]]</div>
+                    <div>[[key.description]]</div>
+                    <div style="padding-top:15px;"><b>Forventet ID</b> [[key.urorua]]</div>
+                    <div><b>Oprettet d.</b> [[formatDate(key.created)]]</div>
+
+                    <div class="logitem headline">
+                        <span>Dato</span>
+                        <span>ID</span>
+                        <span>Antal kald</span>
+                    </div>
+                    <iron-list items="{{logs}}" max-physical-count="50">
+                        <template>
+                            <div class="logitem">
+                                <span>[[formatDate(item.date)]]</span>
+                                <span>[[item.urorua]]</span>
+                                <span>[[item.count]]</span>
+                            </div>
+                        </template>
+                    </iron-list>
+                    
+                </template>
+            </div>
+
+        </panel-admin>
+
+    </template>
+</dom-module>

@@ -48,6 +48,7 @@
     <Content Include="css\theme.css" />
     <Content Include="cs\proxy\test.xml" />
     <Content Include="elements\admin\windows\window-admin\panel-geo-admin\panel-geo-admin.html" />
+    <Content Include="elements\admin\windows\window-admin\panel-api-admin\panel-api-admin.html" />
     <Content Include="elements\admin\windows\window-admin\panel-tag-admin\panel-tag-admin.html" />
     <Content Include="elements\admin\windows\window-dev\window-dev.html" />
     <Content Include="elements\core\collections\ha-content\ha-content.html" />
@@ -284,6 +285,7 @@
     <TypeScriptCompile Include="classes\Map\DigDagLayer.ts" />
     <TypeScriptCompile Include="classes\HAClasses\haregion.ts" />
     <TypeScriptCompile Include="elements\admin\windows\window-admin\panel-geo-admin\panel-geo-admin.ts" />
+    <TypeScriptCompile Include="elements\admin\windows\window-admin\panel-api-admin\panel-api-admin.ts" />
     <TypeScriptCompile Include="elements\admin\windows\window-admin\panel-tag-admin\panel-tag-admin.ts" />
     <TypeScriptCompile Include="elements\admin\windows\window-dev\window-dev.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-content\ha-content.ts" />

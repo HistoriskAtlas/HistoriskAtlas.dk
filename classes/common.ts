@@ -18,6 +18,7 @@
 
     public static dom = $(document.body);
     private static _api: string;
+    private static _baseApi: string;
     public static apiSchemaTags = '{tag:[tagid,plurname,singname,category,yearstart,yearend,{parents:[empty,{collapse:{parent:id}}]}]}'
     public static base64chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
@@ -33,13 +34,20 @@
     //api | secureapi
 
     public static get api(): string {
+        if (!this._api)
+            this._api = Common.baseApi + '/hadb5' + (this.isDevOrBeta ? 'beta' : '') + '.';
+
+        return this._api;
+    }
+
+    public static get baseApi(): string {
         if (!this._api) {
-            this._api = location.protocol + '//' + (this.isDevOrBeta ? ((location.protocol == 'https:' ? 'betasecure.' : 'beta.')) : (location.protocol == 'https:' ? 'secure' : '')) + 'api.historiskatlas.dk/api/hadb5' + (this.isDevOrBeta ? 'beta' : '') + '.';
+            this._baseApi = location.protocol + '//' + (this.isDevOrBeta ? ((location.protocol == 'https:' ? 'betasecure.' : 'beta.')) : (location.protocol == 'https:' ? 'secure' : '')) + 'api.historiskatlas.dk/api';
             //this._api = 'http://beta.api.historiskatlas.dk/hadb5.';
             //this._api = 'http://34.252.49.216/hadb5beta.'
         }
 
-        return this._api;
+        return this._baseApi;
     }
 
     public static get baseUrl(): string {

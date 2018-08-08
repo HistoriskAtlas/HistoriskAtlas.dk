@@ -58,8 +58,11 @@ class HaGeos extends polymer.Base implements polymer.Element {
         this.updateAllGeosFromAPI(false);
         if (localStorage.getItem("sessionID") && !Common.embed)
             Services.get('login', {}, (result) => {
-                if (result.data.user.isvalid)
+                if (result.data.user.isvalid) {
                     App.haUsers.login(result.data.user);
+                    if (result.data.user.role > 3)
+                        Services.get('hadb5stats.login', {});
+                }
             });
     }
 

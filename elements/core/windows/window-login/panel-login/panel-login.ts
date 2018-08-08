@@ -76,11 +76,21 @@ class PanelLogin extends polymer.Base implements polymer.Element {
                 localStorage.setItem("sessionID", (<any>document).sid);
             (<any>this.domHost).$.windowbasic.close();
             App.haUsers.login(result.data.user);
+
+            if (result.data.user.role > 3)
+                Services.get('hadb5stats.login', { provider: "ha", uname: this.$.username.value, password: $.md5(this.$.password.value) });
+
             return;
         }
 
         App.toast.show('Forkert brugernavn eller adgangskode');
     }
+
+    //private getStatsLoginCallback(result) {
+    //    if (result.data.status.code == 1) //Authorized
+    //        if (this.remember)
+    //            localStorage.setItem("sessionID", (<any>document).sid);
+    //}
 
     public resetPasswordConfirm() {
         if (!(this.$.inputEmail.validate() && this.validatePassword('new', 'old'))) {

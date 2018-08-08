@@ -70,7 +70,8 @@ class HaUsers extends polymer.Base implements polymer.Element {
             //if (App.haCollections.allCollectionsFetched)
                 App.haCollections.getCollectionsFromUser();
 
-            this._loggingIn = false;
+                this._loggingIn = false;
+
         })
     }
 

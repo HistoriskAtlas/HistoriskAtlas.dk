@@ -44,7 +44,7 @@
 
         $.ajax({
             type: type,
-            url: Common.api + url,
+            url: url.indexOf('hadb5') == -1 ? Common.api + url : Common.baseApi + '/' + url,
             data: data,
             timeout: 10000,
             async: async,
