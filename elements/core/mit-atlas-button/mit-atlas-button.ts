@@ -53,7 +53,7 @@ class MitAtlasButton extends polymer.Base implements polymer.Element {
     }
 
     userCanCreateEmbed(user: HAUser) {
-        return user.isPro;
+        return user.isPro && Common.isDevOrBeta; //TODO: Remove on final publish
     }
     newEmbedTap() {
         this.showEmbed = true;

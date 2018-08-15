@@ -46,8 +46,8 @@ namespace HistoriskAtlas5.Frontend
                 //doc.Load(@"http://oss-services.dbc.dk/opensearch/?action=search&query=" + HttpUtility.UrlEncode(CQL) + @"&agency=100200&profile=test&start=1&stepValue=50&collectionType=work-1");
                 //doc.Load(@"http://opensearch.addi.dk/b3.0_4.3/?action=search&query=" + HttpUtility.UrlEncode(CQL) + @"&start=1&stepValue=50&collectionType=work-1");
                 //doc.Load(@"https://opensearch.addi.dk/b3.5_4.5/?action=search&query=" + HttpUtility.UrlEncode(CQL) + @"&start=1&stepValue=50&collectionType=work-1");
-                doc.Load(@"https://oss-services.dbc.dk/opensearch/5.0/?action=search&query=" + HttpUtility.UrlEncode(CQL) + @"&start=1&stepValue=50&collectionType=work-1");
-                
+                //doc.Load(@"https://oss-services.dbc.dk/opensearch/5.0/?action=search&query=" + HttpUtility.UrlEncode(CQL) + @"&start=1&stepValue=50&collectionType=work-1");
+                doc.Load(@"https://opensearch.addi.dk/b3.5_5.0/?action=search&query=" + HttpUtility.UrlEncode(CQL) + @"&start=1&stepValue=50&collectionType=work-1&profile=opac&agency=150043"); //<--agency and profile!
 
                 XmlNamespaceManager xmlnsManager = new XmlNamespaceManager(doc.NameTable);
                 xmlnsManager.AddNamespace("x", "http://oss.dbc.dk/ns/opensearch");
