@@ -35,6 +35,10 @@ class PanelAPIAdmin extends polymer.Base implements polymer.Element {
         return Common.formatDate(date);
     }
 
+    logItemClass(item, key) {
+        return 'logitem' + (key.urorua == item.urorua ? ' match' : '')
+    }
+
     //filterCheckForEnter(e: any) {
     //    if (e.keyCode === 13)
     //        this.fetchKeys();
@@ -51,6 +55,12 @@ class PanelAPIAdmin extends polymer.Base implements polymer.Element {
             'schema': '{authkey:[key,urorua,description,created]}',
             'count': 'all'
         }, (result) => {
+            result.data.push({
+                key: '',
+                urorua: '',
+                description: 'Uden key',
+                created: '2018-01-01'
+            });
             this.updateKeys(result.data);
         })
     }
@@ -71,10 +81,21 @@ class PanelAPIAdmin extends polymer.Base implements polymer.Element {
 
         this.set('logs', []);
         Services.get('hadb5stats.LogTile', {
-            'schema': '{logtile:[date,urorua,count]}',
+            'schema': '{logtile:[urorua,count]}', //TODO: filter by date (year / month)
             'authkey': this.key.key,
             'count': 'all'
         }, (result) => {
+            var sum = {};
+            for (var log of result.data)
+                if (sum[log.urorua])
+                    sum[log.urorua] += log.count;
+                else
+                    sum[log.urorua] = log.count;
+
+            result.data = [];
+            for (var param in sum)
+                result.data.push({ urorua: param, count: sum[param] });
+            
             this.set('logs', result.data)
         })
     }

@@ -50,14 +50,17 @@
             }
 
             .logitem > span:nth-child(1) {
-                width: 31%;
+                width: 60%;
             }
+            /*.logitem > span:nth-child(2) {
+                width: 31%;
+            }*/
             .logitem > span:nth-child(2) {
                 width: 31%;
-            }
-            .logitem > span:nth-child(3) {
-                width: 31%;
                 text-align: right
+            }
+            .logitem.match {
+                font-weight: bold;
             }
 
             .headline {
@@ -137,14 +140,14 @@
                     <div><b>Oprettet d.</b> [[formatDate(key.created)]]</div>
 
                     <div class="logitem headline">
-                        <span>Dato</span>
+                        <!--<span>Dato</span>-->
                         <span>ID</span>
                         <span>Antal kald</span>
                     </div>
                     <iron-list items="{{logs}}" max-physical-count="50">
                         <template>
-                            <div class="logitem">
-                                <span>[[formatDate(item.date)]]</span>
+                            <div class$="[[logItemClass(item,key)]]">
+                                <!--<span>[[formatDate(item.date)]]</span>-->
                                 <span>[[item.urorua]]</span>
                                 <span>[[item.count]]</span>
                             </div>
