@@ -16,6 +16,28 @@ class PanelAPIAdmin extends polymer.Base implements polymer.Element {
     @property({ type: Boolean })
     public selected: boolean;
 
+    @property({ type: Array })
+    public years: Array<number>;
+    @property({ type: Number })
+    public yearIndex: number;
+
+    @property({ type: Array })
+    public months: Array<string>;
+    @property({ type: Number })
+    public monthIndex: number;
+
+    ready() {
+        this.years = [];
+        for (var i = new Date().getFullYear(); i >= 2018; i--)
+            this.years.push(i);
+        this.yearIndex = 0;
+
+        this.months = [];
+        for (var i = 0; i < 12; i++)
+            this.months.push(new Date(2018, i).toLocaleString("da-dk", { month: "long" }));
+        this.monthIndex = new Date().getMonth();
+    }
+
     @observe('selected') 
     selectedChanged() {
         if (this.selected && !this.keys) {
@@ -33,6 +55,9 @@ class PanelAPIAdmin extends polymer.Base implements polymer.Element {
 
     formatDate(date: string): string {
         return Common.formatDate(date);
+    }
+    numberWithSeparaters(n: number): string {
+        return Common.numberWithSeparaters(n);
     }
 
     logItemClass(item, key) {
@@ -75,14 +100,16 @@ class PanelAPIAdmin extends polymer.Base implements polymer.Element {
         this.$.admin.select(e.model.item);
     }
     @observe('key')
+    @observe('monthIndex')
+    @observe('yearIndex')
     private getKey() {
         if (!this.key)
             return;
 
         this.set('logs', []);
         Services.get('hadb5stats.LogTile', {
-            'schema': '{logtile:[urorua,count]}', //TODO: filter by date (year / month)
-            'authkey': this.key.key,
+            'schema': '{logtile:{fields:[urorua,count],filters:{date:{min:' + this.years[this.yearIndex] + '-' + (this.monthIndex + 1) + '-1,max:' + this.years[this.yearIndex] + '-' + (this.monthIndex + 1) + '-' + new Date(this.years[this.yearIndex], this.monthIndex + 1, 0).getDate() + '}}}}', //todo: not 30.......
+            'authkey': this.key.key ? this.key.key : 'null',
             'count': 'all'
         }, (result) => {
             var sum = {};
