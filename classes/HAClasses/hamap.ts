@@ -81,7 +81,7 @@
         return HaMap.getTileUrlBase() + id + "/{z}/{x}/{y}.jpg"
     }
     private static getTileUrlBase(): string {
-        return location.protocol + "//tile.historiskatlas.dk/tile/" + (App.isDev() ? "ZGV2ZWxvcG" : "aGlzdG9yaX") + "/";
+        return location.protocol + "//tile.historiskatlas.dk/tile/" + Common.apiKey + "/";
     }
 
     public get source(): ol.source.XYZ {

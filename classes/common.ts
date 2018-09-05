@@ -33,6 +33,10 @@
     //beta.api | betasecure.api
     //api | secureapi
 
+    public static get apiKey(): string {
+        return App.isDev() ? "ZGV2ZWxvcG" : "aGlzdG9yaX";
+    }
+
     public static get api(): string {
         if (!this._api)
             this._api = Common.baseApi + '/hadb5' + (this.isDevOrBeta ? 'beta' : '') + '.';
