@@ -134,6 +134,7 @@ class TimeWarp extends TileLayer {
         $(window).on('touchend.timewarp', (event) => this.touchUp(<TouchEvent>event.originalEvent));
         $('#map').on('mousedown.timewarp', (event) => this.down([event.pageX, event.pageY]));
         $(window).on('mouseup.timewarp', (event) => this.up());
+        $('#map').on('touchmove.timewarp', (event) => this.touchMove(event.originalEvent));
         this.listenerKeyPointerDrag = mainMap.on('pointerdrag', (event) => { this.pointerDrag(event); });
         this.setVisible(true);
         this.setOpacity(1);
@@ -165,6 +166,7 @@ class TimeWarp extends TileLayer {
         $('#map').off('touchend.timewarp');
         $('#map').off('mousedown.timewarp');
         $('#map').off('mouseup.timewarp');
+        $('#map').off('touchmove.timewarp');
         ol.Observable.unByKey(this.listenerKeyPointerDrag);
         LocalStorage.showTimeWarp = false;
     }
@@ -411,8 +413,8 @@ class TimeWarp extends TileLayer {
     }
 
     public pointerDrag(event) {
-        //var newposition = this.getMouseCoordinates(event);
-        var newposition = event.originalEvent.type == 'touchmove' ? this.centerCoordFromTouches(event.originalEvent.touches, true) : (event.pixel ? event.pixel : [event.offsetX, event.offsetY]);
+        //var newposition = event.originalEvent.type == 'touchmove' ? this.centerCoordFromTouches(event.originalEvent.touches, true) : (event.pixel ? event.pixel : [event.offsetX, event.offsetY]);
+        var newposition = event.pixel ? event.pixel : [event.offsetX, event.offsetY];
         switch (this.dragMode) {
             case TimeWarpDragModes.CIRCLE_RADIUS:
                 var dist: number = Math.sqrt(Math.pow(this.position[0] - newposition[0], 2) + Math.pow(this.position[1] - newposition[1], 2));
@@ -421,13 +423,14 @@ class TimeWarp extends TileLayer {
                 App.map.preventDrag(event);
                 break;
             case TimeWarpDragModes.CIRCLE_MOVE:
-                this.position = [newposition[0] + this.mouseDisplace[0], newposition[1] + this.mouseDisplace[1]];
-                if (event.originalEvent.type == 'touchmove') {
-                    var touchDist = this.touchDistFromTouches(event.originalEvent.touches);
-                    this.radius += touchDist - this.lastTouchDist;
-                    this.radius = this.radius < this.minRadius ? this.minRadius : this.radius;
-                    this.lastTouchDist = touchDist;
-                }
+                if (event.originalEvent.pointerType != 'touch')
+                    this.position = [newposition[0] + this.mouseDisplace[0], newposition[1] + this.mouseDisplace[1]];
+                //if (event.originalEvent.type == 'touchmove') {
+                //    var touchDist = this.touchDistFromTouches(event.originalEvent.touches);
+                //    this.radius += touchDist - this.lastTouchDist;
+                //    this.radius = this.radius < this.minRadius ? this.minRadius : this.radius;
+                //    this.lastTouchDist = touchDist;
+                //}
                 App.map.preventDrag(event);
                 break;
             case TimeWarpDragModes.SPLIT:
@@ -445,6 +448,19 @@ class TimeWarp extends TileLayer {
             App.map.renderSync();
         TimeWarpButton.updateTimeWarpUI();
         App.map.changeTimeWarp();
+    }
+
+    public touchMove(event) {
+        if (this.dragMode != TimeWarpDragModes.CIRCLE_MOVE)
+            return;
+
+        var newposition = this.centerCoordFromTouches(event.touches, true);
+        this.position = [newposition[0] + this.mouseDisplace[0], newposition[1] + this.mouseDisplace[1]];
+
+        var touchDist = this.touchDistFromTouches(event.touches);
+        this.radius += touchDist - this.lastTouchDist;
+        this.radius = this.radius < this.minRadius ? this.minRadius : this.radius;
+        this.lastTouchDist = touchDist;
     }
 
     public centerCoordFromTouches(touches: TouchList, relative: boolean = false): Array<number> {

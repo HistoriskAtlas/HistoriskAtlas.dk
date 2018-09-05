@@ -7,7 +7,7 @@
 
             .container {
                 /*display:flex;*/
-                padding: 0 24px;
+                padding: 1px 0px;
             }
             .container > *:first-child {
                 display: flex;
@@ -63,32 +63,34 @@
         </style>
         <paper-dialog id="dialog" opened modal>
             <H2>Integrér på website</H2>
-            <div class="container">
-                <div>
-                    <div><b>Størrelse</b></div>
+            <paper-dialog-scrollable>
+                <div class="container">
                     <div>
-                        <paper-dropdown-menu no-label-float>
-                            <paper-listbox class="dropdown-content" selected="{{size}}">
-                                <paper-item>Lille (400x300)</paper-item>
-                                <paper-item>Mellem (600x450)</paper-item>
-                                <paper-item>Stor (800x600)</paper-item>
-                                <paper-item>Valgfrit (i pixels)</paper-item>
-                                <paper-item>Responsiv (auto)</paper-item>
-                            </paper-listbox>
-                        </paper-dropdown-menu>
-                    </div>
+                        <div><b>Størrelse</b></div>
+                        <div>
+                            <paper-dropdown-menu no-label-float>
+                                <paper-listbox class="dropdown-content" selected="{{size}}">
+                                    <paper-item>Lille (400x300)</paper-item>
+                                    <paper-item>Mellem (600x450)</paper-item>
+                                    <paper-item>Stor (800x600)</paper-item>
+                                    <paper-item>Valgfrit (i pixels)</paper-item>
+                                    <paper-item>Responsiv (auto)</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                        </div>
                     
-                    <div id="customSizeContainer" hidden$="[[!showCustomSizeFields(size)]]">
-                        <paper-input value="{{embedWidth}}" label="Bredde" type="number" min="300" max="1000"></paper-input>
-                        <paper-input value="{{embedHeight}}" label="Højde" type="number" min="300" max="1000"></paper-input>
-                    </div>
+                        <div id="customSizeContainer" hidden$="[[!showCustomSizeFields(size)]]">
+                            <paper-input value="{{embedWidth}}" label="Bredde" type="number" min="300" max="1000"></paper-input>
+                            <paper-input value="{{embedHeight}}" label="Højde" type="number" min="300" max="1000"></paper-input>
+                        </div>
 
-                    <div style="margin-top: 10px;"><b>Indstillinger</b></div>
-                    <div><span>Fortællinger åbner i ny fane</span><paper-checkbox noink checked="{{optionOpenGeoWindowInNewTab}}"></paper-checkbox></div>
-                    <div><span>Sort kant</span><paper-checkbox noink checked="{{optionBorder}}"></paper-checkbox></div>
+                        <div style="margin-top: 10px;"><b>Indstillinger</b></div>
+                        <div><span>Fortællinger åbner i ny fane</span><paper-checkbox noink checked="{{optionOpenGeoWindowInNewTab}}"></paper-checkbox></div>
+                        <div><span>Sort kant</span><paper-checkbox noink checked="{{optionBorder}}"></paper-checkbox></div>
+                    </div>
+                    <iframe id="embedIframe" src$="[[initialSrc]]" width$="[[restrictDimension(embedWidth)]]" height$="[[restrictDimension(embedHeight)]]" frameborder="0" style$="[[iframeBorder(optionBorder)]]"></iframe>
                 </div>
-                <iframe id="embedIframe" src$="[[initialSrc]]" width$="[[restrictDimension(embedWidth)]]" height$="[[restrictDimension(embedHeight)]]" frameborder="0" style$="[[iframeBorder(optionBorder)]]"></iframe>
-            </div>
+            </paper-dialog-scrollable>
             <div class="buttons">
                 <paper-input readonly no-label-float value="[[html(src, embedWidth, embedHeight, size, optionBorder)]]"></paper-input>
                 <paper-button>Kopiér HTML</paper-button>
