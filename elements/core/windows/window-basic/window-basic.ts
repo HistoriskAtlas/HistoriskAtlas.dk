@@ -86,6 +86,14 @@ class WindowBasic extends polymer.Base implements polymer.Element {
         return lightbox ? 'lightbox' : '';
     }
 
+    backButtonClass(): string {
+        return Common.embed ? 'hidden' : 'hide-when-wide';
+    }
+
+    closeButtonClass(): string {
+        return Common.embed ? '' : 'hide-when-narrow';
+    }
+
     fullscreenButtonClass(allowFullscreen: boolean): string {
         return allowFullscreen ? 'hide-when-narrow' : 'hidden';
     }

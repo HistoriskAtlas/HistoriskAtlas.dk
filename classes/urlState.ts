@@ -46,7 +46,7 @@
                 if (this.stateObject.m)
                     App.passed.theme.mapid = this.stateObject.m;
                 if (this.stateObject.hasOwnProperty('ogwint'))
-                    Common.openGeoWindowInNewTab = !!this.stateObject.ogwint;
+                    Common.openGeoWindowInNewTab = !!parseInt(this.stateObject.ogwint);
             }
         }
     }

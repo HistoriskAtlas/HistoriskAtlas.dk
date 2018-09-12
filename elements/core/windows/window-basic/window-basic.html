@@ -46,11 +46,11 @@
         <paper-material elevation="[[elevation]]" animated class$="[[materialClass(lightbox)]]">
             <paper-header-panel mode="[[toolbarMode]]" tall-class="medium-tall">
                 <paper-toolbar id="toolbar" class$="[[toolbarClass(secColor,lightbox,toolbarHeight)]]">
-                    <paper-icon-button id="back" icon="arrow-back" class="hide-when-wide"></paper-icon-button>
+                    <paper-icon-button id="back" icon="arrow-back" class$="[[backButtonClass()]]"></paper-icon-button>
                     <div class="title"><span>[[windowTitle]]</span></div>
                     <content select=".toolbar"></content>
                     <paper-icon-button id="fullscreen" icon="[[fullscreenIcon(fullscreen)]]" class$="[[fullscreenButtonClass(allowFullscreen)]]"></paper-icon-button>
-                    <paper-icon-button id="close" icon="close" class="hide-when-narrow"></paper-icon-button>
+                    <paper-icon-button id="close" icon="close" class$="[[closeButtonClass()]]"></paper-icon-button>
                     <content select=".header"></content>
                 </paper-toolbar>
                 <content></content>
