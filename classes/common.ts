@@ -142,6 +142,9 @@
         return typeof App == 'undefined';
     }
     public static get embed(): boolean {
+        if (typeof App == 'undefined')
+            return false;
+
         return App.passed.embed;
     }
 
