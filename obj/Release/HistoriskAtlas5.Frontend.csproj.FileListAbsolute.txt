@@ -6,4 +6,6 @@ C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\bin\HistoriskAtlas5.Frontend.dll
 C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\bin\HistoriskAtlas5.Frontend.pdb
 C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.dll
 C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.pdb
-C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csprojResolveAssemblyReference.cache
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csproj.CoreCompileInputs.cache
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csproj.CopyComplete
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csprojAssemblyReference.cache

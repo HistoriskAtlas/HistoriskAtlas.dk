@@ -205,7 +205,7 @@ declare module olx {
         target?: any;
 
         /** The map's view. No layer sources will be fetched unless this is specified at construction time or through ol.Map#setView. */
-        view?: ViewOptions;
+        view?: any;
     }
 
     interface OverlayOptions {

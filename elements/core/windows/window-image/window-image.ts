@@ -44,7 +44,7 @@ class WindowImage extends polymer.Base implements polymer.Element {
         this.set('contents', windowGeo.contents);
         $('.inner-container').css('width', (((this.youTubeEmbedUrl(this.contents) ? 1 : 0) + windowGeo.geo.images.length) * 100) + '%');
         this.image = windowGeo.geo.images[0];
-        this.scroll(0);
+        this.scrollWindow(0);
         setTimeout(() => { this.set('fullscreen', true) }, 10);
 
         $('.overlay').on('swipeleft', (event) => this.arrowRightTap());
@@ -90,11 +90,11 @@ class WindowImage extends polymer.Base implements polymer.Element {
     }
 
     arrowRightTap() {
-        this.scroll(1);
+        this.scrollWindow(1);
     }
 
     arrowLeftTap() {
-        this.scroll(-1);
+        this.scrollWindow(-1);
     }
 
     @listen('licens-changed')
@@ -102,7 +102,7 @@ class WindowImage extends polymer.Base implements polymer.Element {
         (<HaImageService>this.$.haImageService).addTagById(e.detail.tagID, true, true);
     }
 
-    private scroll(delta: number) {
+    private scrollWindow(delta: number) {
         var i = this.geo.images.indexOf(this.image) + delta;
         this.image = this.geo.images[i];
         $(this.$.container).animate({ scrollLeft: i * $('#container').width() }, 250, 'easeOutQuad');

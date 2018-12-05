@@ -105,6 +105,21 @@ declare module polymer {
         static create<T extends polymer.Base>(...args: any[]): T;
         static register(): void;
         is: string;
+
+        //Added 2018 RHL
+        properties?: Object;
+        listeners?: Object;
+        behaviors?: Object[];
+        observers?: String[];
+        factoryImpl?(...args: any[]): void;
+        ready?(): void;
+        created?(): void;
+        attached?(): void;
+        detached?(): void;
+        attributeChanged?(attrName: string, oldVal: any, newVal: any): void;
+        prototype?: Object;
+
+
     }
     function createEs6PolymerBase(): void;
     function prepareForRegistration(elementClass: Function): polymer.Element;
