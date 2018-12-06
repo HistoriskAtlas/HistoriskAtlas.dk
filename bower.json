@@ -1,11 +1,11 @@
 {
   "name": "polymer-project",
   "dependencies": {
-    "polymer": "*",
+    "polymer": "1.x",
     "web-animations-js": "^2.2.2",
-    "webcomponentsjs": "^0.7.20",
+    "webcomponentsjs": "0.7.24",
     "polymer-ts": "*",
-    "iron-ajax": "PolymerElements/iron-ajax#1.0.0",
+    "iron-ajax": "PolymerElements/iron-ajax#^1.0.0",
     "iron-pages": "PolymerElements/iron-pages#^1.0.0",
     "iron-collapse": "PolymerElements/iron-collapse#^1.0.0",
     "iron-list": "PolymerElements/iron-list#^1.0.0",
@@ -42,6 +42,7 @@
   },
   "resolutions": {
     "iron-overlay-behavior": "^1.0.0",
-    "webcomponentsjs": "^v1.0.19"
+    "webcomponentsjs": "^v1.0.19",
+    "polymer": ">=1.0.8"
   }
 }
