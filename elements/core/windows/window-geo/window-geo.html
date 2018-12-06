@@ -151,7 +151,9 @@
                                 <menu-item spacer></menu-item>
                                 <menu-item on-tap="toggleAddContentSubmenu">Tilføj fane...</menu-item>
                                 <menu-item on-tap="togglePublishedTap">[[togglePublishText(geo.online)]]</menu-item>
-                                <menu-item on-tap="editorialTap">Redaktion</menu-item>
+                                <template is="dom-if" if="[[isProUser()]]">
+                                    <menu-item on-tap="editorialTap">Redaktion</menu-item>
+                                </template>
                                 <menu-item spacer></menu-item>
                                 <menu-item on-tap="deleteGeo">Slet fortælling</menu-item>
                             </template>
