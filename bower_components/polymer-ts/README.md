@@ -1,6 +1,10 @@
 # PolymerTS
 
-Write Polymer 1.0 elements as TypeScript @decorated classes.
+Write Polymer 1.x elements as TypeScript @decorated classes.
+
+> NOTE: If you need to support Polymer 2.x or higher, see the official [PolymerDecorators project](https://github.com/Polymer/polymer-decorators). We will be working on 
+providing a migration path for users that are currently using Polymer 1.0 and PolymerTS. To find out more 
+(or help!), see issue [#110](https://github.com/nippur72/PolymerTS/issues/110).
 
 # Table of contents
 
@@ -221,7 +225,7 @@ The parameter `def` is a map object that sets the options for the property:
 
 Examples:
 ```TypeScript
-@property({ type: number, value: 42 })
+@property({ type: number, value: 42 }) // Polymer initialization (preferred)
 initialValue: number;
 ```
 
@@ -231,16 +235,19 @@ The default value for a property is optional as long as the property is initiali
 myprop = 42;  // direct initialization
 ```
 or
+
 ```TypeScript
 @property({ type: number })
 myprop: number;
 
 constructor() {
-   this.myprop = 42; // initialized within constructor
+   this.myprop = 42; // initialized within constructor; called after Polymer initialization
 }
 ```
 
-NOTE: If you use direct initialization, the property will be set _after_ the `ready()` method is called. If you use the `value` attribute of the `@property` decorator, it will be called before `ready()`:
+> NOTE: If you use direct initialization, the property will be set _after_ the `ready()` method is called. If you use the `value` attribute of the `@property` decorator, it will be called before `ready()`.
+
+> NOTE: If you're creating a `readOnly` property, use Polymer initialization. If you use direct initialization, Polymer will overwrite your value with `undefined`.
 
 ```TypeScript
 @property({type: number, value: 42})
@@ -267,6 +274,8 @@ nameChanged(newName,oldName)
    // ...
 }
 ```
+
+> NOTE: Only one single-property observer is supported for the same property name. If you have multiple single-property observers registered with the same property, only the last one one will be used (you will not get an error).
 
 ```TypeScript
 // multiple property observer
@@ -550,15 +559,6 @@ class TsElement extends polymer.Base implements Polymer.PaperRippleBehavior
 }
 ```
 
-# Running the example <a name="repoexample"></a>
-
-To run the "Test" project containing the Jasmine specs:
-
-- clone this repo `nippur72/PolymerTS`
-- go to the `Test` directory
-- run `bower update`
-- Open the solution in Visual Studio and run the "Test" project.
-
 # What it does<a name="details"></a>
 
 In short, PolymerTS:
@@ -585,8 +585,36 @@ Contributions are welcome.
 
 If you find bugs or want to improve it, just send a pull request.
 
+## Getting Started
+
+1. Clone this repo
+1. Make sure you have node and bower installed.
+1. Run `npm install && bower install`
+1. To build, just run `npm run build`. During development, using the TypeScript compiler settings in your editor should work fine, as long as it points to `./tsconfig.json` and uses the version of `tsc` installed in `node_modules`.
+
+## Testing
+
+PolymerTS uses [Jasmine](https://jasmine.github.io/) for unit tests. Currently there isn't a test runner like Karma setup, so you'll need to manually run the tests in different browsers.
+
+All of the tests are in the `Test` folder; the entry point is `tests.ts`.
+
+In order to run the tests, you need a local HTTP server. If you don't have one installed, you can install [http-server](https://www.npmjs.com/package/http-server) with the command `npm install http-server -g`.
+ 
+Next, just point your browser to `http://localhost:<port>/Test/`). `http-server` defaults to port 8080. 
+
+## Samples
+
+There is a `Samples` folder with some examples, but these are not currently built or maintained.
+
 # Change log <a name="changelog"></a>
-- v0.1.28 (Aug 8, 2015)
+
+- For recent versions, see the Github release logs: https://github.com/nippur72/PolymerTS/releases
+
+Older versions:
+
+- v0.2.0 (Apr 18, 2017)
+  - Fix: allow access/modify styles (override prototype.style)
+- v0.1.28 (Aug 8, 2016)
   - Added `unlisten()` to API
 - v0.1.19 (Sep 16, 2015)
   - Extended `@behavior` to work with plain JavaScript objects (in addition to TypeScript classes)

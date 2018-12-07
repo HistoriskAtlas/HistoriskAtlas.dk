@@ -629,7 +629,7 @@
     <Content Include="manifest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="bower.json" />
+    <Content Include="bowerPolymer2.json" />
     <Content Include="pdf\Retningslinjer for formidling på borgerlaget på HistoriskAtlas.dk.pdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -642,6 +642,7 @@
     <Content Include="pdf\Vejledning til at lave turforslag på HistoriskAtlas.dk for kulturinstitutioner.pdf" />
     <Content Include="pdf\Vejledning til skribenter på HistoriskAtlas.dk for kulturinstitutioner.pdf" />
     <Content Include="pdf\Vejledning til skribenter på HistoriskAtlas.dk.pdf" />
+    <Content Include="bower.json" />
     <None Include="Properties\PublishProfiles\beta.historiskatlas.dkNY.pubxml" />
     <None Include="Properties\PublishProfiles\historiskatlas.dkNY.pubxml" />
     <None Include="web.Debug.config">

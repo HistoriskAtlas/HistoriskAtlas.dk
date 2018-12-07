@@ -40,7 +40,7 @@ declare module polymer {
             removed: Array<any>;
             addedCount: number;
             object: Array<any>;
-            //type: "splice";
+            type: "splice";
         }[]): void;
         pop(path: string): any;
         push(path: string, value: any): any;
@@ -60,7 +60,7 @@ declare module polymer {
         unlinkPaths(path: string): void;
         unlisten(node: Element, eventName: string, methodName: string): void;
         unshift(path: string, value: any): any;
-        updateStyles(): void;
+        updateStyles(properties?: any): void;
     }
     interface dom {
         (node: HTMLElement): HTMLElement;
@@ -92,6 +92,7 @@ declare module polymer {
         style?: string;
     }
     interface Property {
+        /** @deprecated This is not used by either PolymerTS or Polymer */
         name?: string;
         type?: any;
         value?: any;
@@ -105,27 +106,23 @@ declare module polymer {
         static create<T extends polymer.Base>(...args: any[]): T;
         static register(): void;
         is: string;
-
-        //Added 2018 RHL
         properties?: Object;
         listeners?: Object;
         behaviors?: Object[];
         observers?: String[];
-        factoryImpl?(...args: any[]): void;
-        ready?(): void;
-        created?(): void;
-        attached?(): void;
-        detached?(): void;
-        attributeChanged?(attrName: string, oldVal: any, newVal: any): void;
         prototype?: Object;
-
-
     }
     function createEs6PolymerBase(): void;
     function prepareForRegistration(elementClass: Function): polymer.Element;
     function createDomModule(definition: polymer.Element): void;
-    function createElement<T extends polymer.Base>(element: new (...args: any[]) => T): new (...args: any[]) => T;
-    function createClass<T extends polymer.Base>(element: new (...args: any[]) => T): new (...args: any[]) => T;
+    /**
+     * @deprecated
+     */
+    function createElement(element: polymer.Base): any;
+    /**
+     * @deprecated
+     */
+    function createClass(element: polymer.Base): any;
     function isRegistered(element: polymer.Element): boolean;
 }
 declare var Polymer: {

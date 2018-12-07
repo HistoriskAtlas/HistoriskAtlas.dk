@@ -8,7 +8,8 @@ var polymer;
     // create an ES6 inheritable Polymer.Base object, referenced as "polymer.Base"
     function createEs6PolymerBase() {
         // create a placeholder class
-        var pb = function () { };
+        var pb = function () {
+        };
         // make it available as polymer.Base
         window["polymer"]["Base"] = pb;
         // add a default create method()
@@ -98,6 +99,9 @@ var polymer;
         };
         // copy inherited class members
         copyMembers(preparedElement, elementClass.prototype.__proto__);
+        //putting string in prototype.style in decorator style makes it impossible to access and modify css styles of created elements
+        //so it needs to be deleted in order to access and modify styles
+        delete preparedElement["style"];
         return preparedElement;
     }
     polymer.prepareForRegistration = prepareForRegistration;
@@ -105,25 +109,25 @@ var polymer;
     // see https://github.com/Polymer/polymer/issues/2114
     export function createDomModule(definition: polymer.Element) {
        var domModule: any = document.createElement('dom-module');
- 
+
        var proto = <any> definition.prototype;
- 
+
        domModule.id = proto.is;
- 
+
        // attaches style
        if (proto.style !== undefined) {
           var elemStyle = (<any> document).createElement('style', 'custom-style');
           domModule.appendChild(elemStyle);
           elemStyle.textContent = proto.style;
        }
- 
+
        // attaches template
        if (proto.template !== undefined) {
           var elemTemplate = document.createElement('template');
           domModule.appendChild(elemTemplate);
           elemTemplate.innerHTML = proto.template;
        }
- 
+
        // tells polymer the element has been created
        domModule.createdCallback();
     }
@@ -134,10 +138,11 @@ var polymer;
         var proto = definition.prototype;
         domModule.id = proto.is;
         var html = "";
+        var style = "";
         if (proto.style !== undefined)
-            html += "<style>" + proto.style + "</style>";
+            style = "<style>" + proto.style + "</style>";
         if (proto.template !== undefined)
-            html += "<template>" + proto.template + "</template>";
+            html = "<template>" + style + proto.template + "</template>";
         domModule.innerHTML = html;
         domModule.createdCallback();
     }
@@ -146,20 +151,20 @@ var polymer;
     // temporary version until https://github.com/Polymer/polymer/issues/2114 is fixed
     export function createDomModule(definition: polymer.Element) {
        var contentDoc = document.implementation.createHTMLDocument('template');
- 
+
        var domModule: any = document.createElement('dom-module');
- 
+
        var proto = <any> definition.prototype;
- 
+
        domModule.id = proto.is;
- 
+
        // attaches style
        if (proto.style !== undefined) {
           var elemStyle = (<any> document).createElement('style', 'custom-style');
           domModule.appendChild(elemStyle);
           elemStyle.textContent = proto.style;
        }
- 
+
        // attaches template
        if (proto.template !== undefined) {
           var elemTemplate = document.createElement('template');
@@ -169,11 +174,14 @@ var polymer;
             (<any>elemTemplate).content.appendChild(contentDoc.body.firstChild);
           }
        }
- 
+
        // tells polymer the element has been created
        domModule.createdCallback();
     }
     */
+    /**
+     * @deprecated
+     */
     function createElement(element) {
         if (polymer.isRegistered(element)) {
             throw "element already registered in Polymer";
@@ -190,6 +198,9 @@ var polymer;
         return maker;
     }
     polymer.createElement = createElement;
+    /**
+     * @deprecated
+     */
     function createClass(element) {
         if (polymer.isRegistered(element)) {
             throw "element already registered in Polymer";
@@ -260,7 +271,12 @@ function property(ob) {
         }
         else {
             // normal property
+            var previousProperty = target.properties[propertyKey];
             target.properties[propertyKey] = ob || {};
+            // make sure we grab the observer, just in case the observe decorator was called first
+            if (previousProperty && previousProperty.observer) {
+                target.properties[propertyKey].observer = previousProperty.observer;
+            }
         }
     };
 }
@@ -288,37 +304,51 @@ function listen(eventName) {
 }
 // @behavior decorator
 function behavior(behaviorObject) {
-    return function (target) {
-        if (typeof (target) === "function") {
-            // decorator applied externally, target is the class object
-            target.prototype["behaviors"] = target.prototype["behaviors"] || [];
-            var beObject = behaviorObject.prototype === undefined ? behaviorObject : behaviorObject.prototype;
-            target.prototype["behaviors"].push(beObject);
-        }
-        else {
-            // decorator applied internally, target is class.prototype
-            target.behaviors = target.behaviors || [];
-            var beObject = behaviorObject.prototype === undefined ? behaviorObject : behaviorObject.prototype;
-            target.behaviors.push(beObject);
-        }
-    };
+    if (!behaviorObject) {
+        throw new Error('@behavior not found; value is ' + behaviorObject);
+    }
+    else {
+        return function (target) {
+            if (typeof (target) === "function") {
+                // decorator applied externally, target is the class object
+                target.prototype["behaviors"] = target.prototype["behaviors"] || [];
+                var beObject = behaviorObject.prototype === undefined ? behaviorObject : behaviorObject.prototype;
+                target.prototype["behaviors"].push(beObject);
+            }
+            else {
+                // decorator applied internally, target is class.prototype
+                target.behaviors = target.behaviors || [];
+                var beObject = behaviorObject.prototype === undefined ? behaviorObject : behaviorObject.prototype;
+                target.behaviors.push(beObject);
+            }
+        };
+    }
 }
 // @observe decorator
 function observe(observedProps) {
-    if (observedProps.indexOf(",") > 0 || observedProps.indexOf(".") > 0) {
-        // observing multiple properties or path
-        return function (target, observerFuncName) {
-            target.observers = target.observers || [];
-            target.observers.push(observerFuncName + "(" + observedProps + ")");
-        };
+    if (!observedProps) {
+        throw new Error('@observe properties not found; value is ' + observedProps);
     }
     else {
-        // observing single property
-        return function (target, observerName) {
-            target.properties = target.properties || {};
-            target.properties[observedProps] = target.properties[observedProps] || {};
-            target.properties[observedProps].observer = observerName;
-        };
+        if (observedProps.indexOf(",") > 0 || observedProps.indexOf(".") > 0) {
+            // observing multiple properties or path
+            return function (target, observerFuncName) {
+                target.observers = target.observers || [];
+                target.observers.push(observerFuncName + "(" + observedProps + ")");
+            };
+        }
+        else {
+            // observing single property
+            return function (target, observerName) {
+                target.properties = target.properties || {};
+                var propertyDef = target.properties[observedProps];
+                if (propertyDef && propertyDef.observer) {
+                    console.warn("PolymerTS: simple observer '" + propertyDef.observer + "' already registered for property '" + observedProps + "'; overwriting with new observer '" + observerName + "'");
+                }
+                target.properties[observedProps] = target.properties[observedProps] || {};
+                target.properties[observedProps].observer = observerName;
+            };
+        }
     }
 }
 //# sourceMappingURL=polymer-ts.js.map
