@@ -258,7 +258,7 @@ class HaCollections extends Tags implements polymer.Element {
         collection.save(() => {
             this.push('collections', collection);
 
-            var content = new HaContent({ contenttypeid: 0, ordering: 0, texts: [{ headline: '', text1: '' }] });
+            var content = new HaContent({ contenttypeid: 0, ordering: 0, headline: '', texts: [{ headline: '', text1: '' }] });
             //this.set('collection.content', content);
             collection.content = content;
             this.select(collection);
