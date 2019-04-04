@@ -26,7 +26,7 @@ namespace HistoriskAtlas5.Frontend
             XmlNode urlset = doc.CreateElement("urlset", ns);
             doc.AppendChild(urlset);
 
-            HAGeos geos = (new Service<HAGeos>()).Get("geo.json?v=1&count=*&schema={geo:[id,title]}&online=true");
+            HAGeos geos = (new Service<HAGeos>()).Get("geo.json?v=1&count=*&schema={geo:[id,title]}&online=true"); //TODO: Exclude geos that is not published to ha.dk?
             foreach (HAGeo geo in geos.data)
             {
                 XmlNode url = doc.CreateElement("url", ns);

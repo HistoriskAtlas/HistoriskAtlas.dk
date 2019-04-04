@@ -34,9 +34,10 @@ class MitAtlasButton extends polymer.Base implements polymer.Element {
     }
 
     userCanCreateRoute(isDevOrBeta: boolean, user: HAUser): boolean {
-        if (isDevOrBeta)
-            return true;
-        return user.canAccessHoD2017;
+        return true;
+        //if (isDevOrBeta)
+        //    return true;
+        //return user.canAccessHoD2017;
     }
     
     newGeoTap() {
@@ -52,8 +53,9 @@ class MitAtlasButton extends polymer.Base implements polymer.Element {
         App.haCollections.newRoute();
     }
 
-    userCanCreateEmbed(user: HAUser) {
-        return (user.isPro && Common.isDevOrBeta) || user.isAdmin; //TODO: Remove on final publish
+    userCanCreateEmbed(user: HAUser): boolean {
+        return user.isPro;
+        //return (user.isPro && Common.isDevOrBeta) || user.isAdmin;
     }
     newEmbedTap() {
         this.showEmbed = true;
