@@ -185,7 +185,7 @@ class MainMenu extends polymer.Base implements polymer.Element {
         Common.dom.append(DialogVideoIntro.create());
     }
     writerGuideTap() {
-        window.open('../../../pdf/Vejledning til skribenter på HistoriskAtlas.dk' + (App.haUsers.user.isPro ? ' for kulturinstitutioner' : '') + '.pdf', '_blank')
+        window.open('../../../pdf/Vejledning til skribenter på HistoriskAtlas.dk' + (App.haUsers.user.isPro ? 's kulturinstitutionslag april 2019' : '') + '.pdf', '_blank')
     }
 
     profGuidelinesTap() {

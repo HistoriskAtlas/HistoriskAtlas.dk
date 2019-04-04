@@ -643,6 +643,7 @@
     <Content Include="pdf\Vejledning til skribenter på HistoriskAtlas.dk for kulturinstitutioner.pdf" />
     <Content Include="pdf\Vejledning til skribenter på HistoriskAtlas.dk.pdf" />
     <Content Include="bower.json" />
+    <Content Include="pdf\Vejledning til skribenter på HistoriskAtlas.dks kulturinstitutionslag april 2019.pdf" />
     <None Include="Properties\PublishProfiles\beta.historiskatlas.dkNY.pubxml" />
     <None Include="Properties\PublishProfiles\historiskatlas.dkNY.pubxml" />
     <None Include="web.Debug.config">
