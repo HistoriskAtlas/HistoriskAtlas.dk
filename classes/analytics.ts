@@ -1,6 +1,6 @@
 ﻿class Analytics {
     public static geoShow(geo: HaGeo) {
-        (<any>window).analytics('ha.send', {
+        Analytics.send({
             hitType: 'event',
             eventCategory: 'geo_show',
             eventAction: geo.title,
@@ -8,7 +8,7 @@
         });
     }
     public static mapShow(map: HaMap) {
-        (<any>window).analytics('ha.send', {
+        Analytics.send({
             hitType: 'event',
             eventCategory: 'map_show',
             eventAction: map.title,
@@ -16,7 +16,7 @@
         });
     }
     public static collectionShow(collection: HaCollection) {
-        (<any>window).analytics('ha.send', {
+        Analytics.send({
             hitType: 'event',
             eventCategory: 'collection_show',
             eventAction: collection.title,
@@ -24,7 +24,7 @@
         });
     }
     public static regionTypeShow(regionType: HARegionType) {
-        (<any>window).analytics('ha.send', {
+        Analytics.send({
             hitType: 'event',
             eventCategory: 'region_type_show',
             eventAction: regionType.name,
@@ -32,11 +32,15 @@
         });
     }
     public static apiError(error: string, userID: number) {
-        (<any>window).analytics('ha.send', {
+        Analytics.send({
             hitType: 'event',
             eventCategory: 'api_error',
             eventAction: error,
             eventLabel: userID
         });
+    }
+    private static send(params: object) {
+        (<any>window).analytics('ha.send', params);
+        (<any>window).analytics('obm.send', params);
     }
 }
