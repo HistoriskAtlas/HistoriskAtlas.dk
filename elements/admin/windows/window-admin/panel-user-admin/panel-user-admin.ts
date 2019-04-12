@@ -60,11 +60,12 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
                 {
                     user: {
                         filters: HaUsers.getApiFilter(this.filter),
-                        fields: ['id', 'login', 'firstname', 'lastname', 'roleid', { user_institutions: [{ institution: [(this.kind == 1 ? 'exists' : ''), { tag: ['plurname'] }] }] }]
+                        fields: ['id', 'login', 'firstname', 'lastname', 'roleid', 'isactive', 'deleted', { user_institutions: [{ institution: [(this.kind == 1 ? 'exists' : ''), { tag: ['plurname'] }] }] }]
                     }
                 }
             ),
-            'count': 'all'
+            'count': 'all',
+            'deleted': 'any'
         }, (result) => {
             this.updateUsers(result.data);
         })
@@ -94,7 +95,7 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
         this.showDetails = true;
         this.isGettingUser = true;
         Services.get('user', {
-            'schema': '{user:[id,login,firstname,lastname,email,isactive,roleid,internalnote,{userhierarkis:[{child:[id,login,firstname,lastname]}]},{userhierarkis1:[{parent:[id,login,firstname,lastname]}]},{user_institutions:[empty,{institution:[id,{tag:[plurname]}]}]}]}',
+            'schema': '{user:[id,login,firstname,lastname,email,deleted,isactive,roleid,internalnote,{userhierarkis:[{child:[id,login,firstname,lastname]}]},{userhierarkis1:[{parent:[id,login,firstname,lastname]}]},{user_institutions:[empty,{institution:[id,{tag:[plurname]}]}]}]}',
             'userid': this.user.id
         }, (result) => {
             for (var attr in result.data[0])
@@ -134,10 +135,14 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
         return result.join(', ');
     }
 
+    itemClass(deleted: string): string {
+        return deleted ? ' deleted' : '';
+    }
+
     activeClass(isactive: boolean): string {
         if (isactive == null)
             return '';
-        return isactive ? 'active' : 'inactive';
+        return isactive ? ' active' : ' inactive';
     }
 
     roleName(id: number): string {

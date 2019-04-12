@@ -17,6 +17,8 @@
                 display: flex;
                 flex-direction: column;
                 overflow-y: auto;
+                overflow-x: hidden;
+                height: calc(100% - 15px);
             }
             :host ::content.details {
                 z-index: 1;
@@ -30,12 +32,12 @@
                 bottom: 0px;
             }
             .watermark > iron-icon {
-                bottom: -250px;
+                top: -50px;
                 left: 20px;
                 position: absolute;
-                width: 600px;
-                height: 600px;
-                color: white;
+                width: 400px;
+                height: 400px;
+                color: #f7f7f7;
             }
         </style>
         
