@@ -5,4 +5,6 @@ class WindowAdmin extends polymer.Base implements polymer.Element {
     public selectedTab: number;
 }
 
+enum WindowAdminTabs { geos = 2 }
+
 WindowAdmin.register();

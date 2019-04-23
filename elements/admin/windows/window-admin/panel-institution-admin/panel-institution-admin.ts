@@ -13,6 +13,12 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
     @property({ type: Boolean })
     public selected: boolean;
 
+    @property({ type: Number, notify: true })
+    public institutionTagId: number;
+
+    @property({ type: Number, notify: true })
+    public selectedTab: number;
+
     private isGettingInstitution: boolean = false;
 
     @observe('selected') 
@@ -106,6 +112,11 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
     @listen('userAutosuggestRemoved')
     userRemoved(e: any) {
         Services.delete('user_institution', { 'institutionid': this.institution.id, 'userid': e.detail.user.id, 'deletemode': 'permanent' }, (result) => { this.getInstitution(); })
+    }
+
+    showGeos() {
+        this.institutionTagId = this.institution.tag.id;
+        this.selectedTab = WindowAdminTabs.geos;
     }
 
     sortOnName() {

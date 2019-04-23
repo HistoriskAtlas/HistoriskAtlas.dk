@@ -44,7 +44,7 @@ class MainMenuItem extends polymer.Base implements polymer.Element {
     }
 
     rightIcon(show: boolean): string {
-        return show ? 'help-outline' : 'chevron-right';
+        return show ? '' : 'chevron-right'; //help-outline
     }
     
 }

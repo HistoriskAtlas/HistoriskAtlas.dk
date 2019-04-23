@@ -29,7 +29,7 @@
             cursor: pointer;
         }
         .listsubitem {
-            padding-left: 10px !important;
+            /*padding-left: 10px !important;*/
             background-color: var(--light-gray-color);
         }
         .title {
@@ -37,9 +37,16 @@
             user-select: none;
             padding: 0px 0px 0px 30px;
             font-size: 13px;
+            line-height: 13px;
         }
         paper-icon-button ~ .title {
             padding-left: 0px !important;
+        }
+        .years {
+            user-select: none;
+            padding: 0px 5px 0px 10px;
+            font-size: 11px;
+            white-space: nowrap;
         }
         .inactive {
             color: var(--dark-gray-color);
@@ -73,7 +80,8 @@
         paper-icon-button.info {
             -webkit-transform: none !important;
             transform: none !important;
-            margin-right: 5px;
+            /*margin-right: 5px;*/
+            flex-shrink: 0;
             opacity: 0;
             transition: opacity 0.3s;
         }
@@ -102,6 +110,7 @@
                             <paper-icon-button class="info" icon="info-outline" on-tap="infoTap" keyBindings="[[child]]"></paper-icon-button> <!--keyBindings="[[child]]" needed because of on-tap (?!?!?!) -->
                         </template>
                         <span class="title">[[child.name]]</span>
+                        <span class="years">[[years(child.periodStart,child.periodEnd)]]</span>
                         <paper-radio-button noink checked="{{child.active}}"></paper-radio-button>
                     </div>
                 </template>

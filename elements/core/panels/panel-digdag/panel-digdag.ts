@@ -7,7 +7,7 @@ class PanelDigDag extends polymer.Base implements polymer.Element {
     @property({ type: Object, notify: true, value: null })
     private type: HARegionType & Object;
 
-    @property({ type: Number })
+    @property({ type: Number, notify: true })
     private year: number;
 
     @property({ type: Boolean })
@@ -20,6 +20,12 @@ class PanelDigDag extends polymer.Base implements polymer.Element {
     }
 
     childTap(e: any) {
+        if (this.year < e.model.child.periodStart)
+            this.year = e.model.child.periodStart;
+
+        if (this.year > e.model.child.periodEnd)
+            this.year = Math.min(e.model.child.periodEnd, 2016);
+
         e.model.set('child.active', true);
         this.update(e.model.child);
         this.type = e.model.child;

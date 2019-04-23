@@ -74,18 +74,16 @@
                     font-size: 13px;
                 }
             }
-            /*#inputFilter {
-                margin-right: 10px;
-            }
             paper-dropdown-menu {
                 --paper-input-container-input: {
                     font-size: 13px;
                 }
-                width: 160px;
-            }*/
+                width: 320px;
+            }
             paper-item {
                 font-size: 13px;
                 min-height: 30px;
+                cursor: pointer;
             }
             .is-online.online:before {
                 content: 'publiceret';
@@ -99,14 +97,15 @@
         
         <panel-admin id="admin" items="{{geos}}" item="{{geo}}">
             <div class="top">
-                <paper-input id="inputFilter" no-label-float autofocus tabindex="0" value="{{filter}}" on-keydown="filterCheckForEnter" placeholder="filter"></paper-input>
-                <!--<paper-dropdown-menu no-label-float>
-                    <paper-listbox class="dropdown-content" selected="{{categoryIndex}}">
-                        <template is="dom-repeat" items="[[categories]]">
-                            <paper-item>[[item.name]]</paper-item>
+                <paper-input id="inputFilter" no-label-float autofocus tabindex="0" value="{{filter}}" on-keydown="filterCheckForEnter" placeholder="filter" style="margin-right:10px"></paper-input>
+                <paper-dropdown-menu no-label-float>
+                    <paper-listbox class="dropdown-content" selected="{{institutionTagId}}" attr-for-selected="id">
+                        <paper-item id="0">Alle institutioner</paper-item>
+                        <template is="dom-repeat" items="[[institutionTags]]">
+                            <paper-item id="[[item.id]]">[[item.plurname]]</paper-item>
                         </template>
                     </paper-listbox>
-                </paper-dropdown-menu>-->
+                </paper-dropdown-menu>
             </div>
 
             <div class="list">

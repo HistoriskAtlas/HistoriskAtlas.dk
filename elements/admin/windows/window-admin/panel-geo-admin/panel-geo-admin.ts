@@ -7,6 +7,12 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
     @property({ type: Object })
     public geo: any;
 
+    @property({ type: Array })
+    public institutionTags: Array<any>;
+
+    @property({ type: Number, value: 0 })
+    public institutionTagId: number;
+
     @property({ type: String, value: '' })
     public filter: string;
 
@@ -21,11 +27,26 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
 
     @observe('selected')
     selectedChanged() {
-        if (this.selected && !this.geos) {
+        if (!this.selected)
+            return;
+
+        if (!this.geos) {
             this.geos = [];
             //this.sortOnTitle();
             this.fetchGeos();
         }
+        if (!this.institutionTags) {
+            this.institutionTags = [];
+            this.fetchInstitutionTags();
+        }
+    }
+
+    @observe('institutionTagId')
+    institutionIdChanged(newValue: any, oldValue: any) {
+        if (oldValue == undefined)
+            return;
+        this.updateGeos([]);
+        this.fetchGeos();
     }
 
     filterCheckForEnter(e: any) {
@@ -34,8 +55,13 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
     }
 
     public fetchGeos() {
+        var filters: Array<string> = [];
+        if (this.filter)
+            filters.push('title:{like:' + this.filter + '}');
+        if (this.institutionTagId > 0)
+            filters.push('tag_geos:[{tag:{id:' + this.institutionTagId + '}}]');
         Services.get('geo', {
-            'schema': '{geo:{' + (this.filter ? 'filters:{title:{like:' + this.filter + '}},' : '') + 'fields:[id,title,created,views,{tag_geos:[{tag:[plurname,{category:3}]}]},{user:[login,firstname,lastname]}]}}',  //{title:{like:' + this.filter + '}}
+            'schema': '{geo:{' + (filters.length > 0 ? 'filters:{' + filters.join(',') + '},' : '') + 'fields:[id,title,created,views,{tag_geos:[{tag:[plurname,{category:3}]}]},{user:[login,firstname,lastname]}]}}',  //{title:{like:' + this.filter + '}}
             'count': '100',
             'sort': '{' + this.sort + ':' + this.sortDir + '}'
         }, (result) => {
@@ -46,6 +72,16 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
         ////this.set('geos', (newList ? newList : this.geos).sort(this.compare));
         this.set('geos', newList);
         //this.$.admin.sort(null, newList);
+    }
+
+    public fetchInstitutionTags() {
+        Services.get('tag', {
+            'schema': '{tag:{fields:[id,plurname],filters:{category:3}}}',
+            'count': 'all'
+        }, (result) => {
+            result.data.sort((a, b) => a.plurname.localeCompare(b.plurname));
+            this.set('institutionTags', result.data);
+        })
     }
 
     itemTap(e: any) {
