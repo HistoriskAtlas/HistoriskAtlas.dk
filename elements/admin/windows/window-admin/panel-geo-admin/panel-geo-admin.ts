@@ -13,6 +13,12 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
     @property({ type: Number, value: 0 })
     public institutionTagId: number;
 
+    @property({ type: Array })
+    public users: Array<any>;
+
+    @property({ type: Number, value: 0 })
+    public userId: number;
+
     @property({ type: String, value: '' })
     public filter: string;
 
@@ -25,6 +31,8 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
     @property({ type: Boolean })
     public selected: boolean;
 
+    private isChangingParam: boolean = false;
+
     @observe('selected')
     selectedChanged() {
         if (!this.selected)
@@ -35,9 +43,13 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
             //this.sortOnTitle();
             this.fetchGeos();
         }
-        if (!this.institutionTags) {
+        if (!this.institutionTags) { //TODO: reload always?
             this.institutionTags = [];
             this.fetchInstitutionTags();
+        }
+        if (!this.users) { //TODO: reload always?
+            this.users = [];
+            this.fetchUsers();
         }
     }
 
@@ -45,8 +57,28 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
     institutionIdChanged(newValue: any, oldValue: any) {
         if (oldValue == undefined)
             return;
+        if (this.isChangingParam)
+            return;
+        this.isChangingParam = true;
+        this.filter = '';
+        this.userId = 0;
         this.updateGeos([]);
         this.fetchGeos();
+        this.isChangingParam = false;
+    }
+
+    @observe('userId')
+    userIdChanged(newValue: any, oldValue: any) {
+        if (oldValue == undefined)
+            return;
+        if (this.isChangingParam)
+            return;
+        this.isChangingParam = true;
+        this.filter = '';
+        this.institutionTagId = 0;
+        this.updateGeos([]);
+        this.fetchGeos();
+        this.isChangingParam = false;
     }
 
     filterCheckForEnter(e: any) {
@@ -60,6 +92,8 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
             filters.push('title:{like:' + this.filter + '}');
         if (this.institutionTagId > 0)
             filters.push('tag_geos:[{tag:{id:' + this.institutionTagId + '}}]');
+        if (this.userId > 0)
+            filters.push('userid:' + this.userId);
         Services.get('geo', {
             'schema': '{geo:{' + (filters.length > 0 ? 'filters:{' + filters.join(',') + '},' : '') + 'fields:[id,title,created,views,{tag_geos:[{tag:[plurname,{category:3}]}]},{user:[login,firstname,lastname]}]}}',  //{title:{like:' + this.filter + '}}
             'count': '100',
@@ -81,6 +115,17 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
         }, (result) => {
             result.data.sort((a, b) => a.plurname.localeCompare(b.plurname));
             this.set('institutionTags', result.data);
+        })
+    }
+
+    public fetchUsers() {
+        Services.get('user', {
+            'schema': '{user:{fields:[id,login,firstname,lastname]}}',
+            'count': 'all',
+            'deleted': 'any'
+        }, (result) => {
+            result.data.sort((a, b) => (a.firstname + ' ' + a.lastname + ' ' + a.login).localeCompare(b.firstname + ' ' + b.lastname + ' ' + b.login));
+            this.set('users', result.data);
         })
     }
 

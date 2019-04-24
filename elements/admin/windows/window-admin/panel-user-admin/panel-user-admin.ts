@@ -7,6 +7,9 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
     @property({ type: Object })
     public user: any;
 
+    @property({ type: Number, notify: true })
+    public userId: any;
+
     @property({ type: String, value: '' })
     public filter: string
 
@@ -24,6 +27,9 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
 
     @property({ type: Number, value: 1 })
     public kind: number;
+
+    @property({ type: Number, notify: true })
+    public selectedTab: number;
 
     private isGettingUser: boolean = false;
 
@@ -81,6 +87,11 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
         }
 
         this.$.admin.sort(null, newList);
+    }
+
+    showGeos() {
+        this.userId = this.user.id;
+        this.selectedTab = WindowAdminTabs.geos;
     }
 
     itemTap(e: any) {

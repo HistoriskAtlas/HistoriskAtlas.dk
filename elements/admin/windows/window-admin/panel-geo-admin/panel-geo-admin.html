@@ -77,8 +77,9 @@
             paper-dropdown-menu {
                 --paper-input-container-input: {
                     font-size: 13px;
-                }
+                } 
                 width: 320px;
+                margin-left: 10px;
             }
             paper-item {
                 font-size: 13px;
@@ -97,12 +98,20 @@
         
         <panel-admin id="admin" items="{{geos}}" item="{{geo}}">
             <div class="top">
-                <paper-input id="inputFilter" no-label-float autofocus tabindex="0" value="{{filter}}" on-keydown="filterCheckForEnter" placeholder="filter" style="margin-right:10px"></paper-input>
+                <paper-input id="inputFilter" no-label-float autofocus tabindex="0" value="{{filter}}" on-keydown="filterCheckForEnter" placeholder="filter"></paper-input>
                 <paper-dropdown-menu no-label-float>
                     <paper-listbox class="dropdown-content" selected="{{institutionTagId}}" attr-for-selected="id">
                         <paper-item id="0">Alle institutioner</paper-item>
                         <template is="dom-repeat" items="[[institutionTags]]">
                             <paper-item id="[[item.id]]">[[item.plurname]]</paper-item>
+                        </template>
+                    </paper-listbox>
+                </paper-dropdown-menu>
+                <paper-dropdown-menu no-label-float>
+                    <paper-listbox class="dropdown-content" selected="{{userId}}" attr-for-selected="id">
+                        <paper-item id="0">Alle brugere</paper-item>
+                        <template is="dom-repeat" items="[[users]]">
+                            <paper-item id="[[item.id]]">[[item.firstname]] [[item.lastname]] ([[item.login]])</paper-item>
                         </template>
                     </paper-listbox>
                 </paper-dropdown-menu>

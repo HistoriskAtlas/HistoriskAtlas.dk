@@ -113,6 +113,12 @@
             list-auto-suggest {
                 /*height: 100%;*/
             }
+
+            .showGeos {
+                text-align: right;
+                cursor: pointer;
+                color: #005b9c;
+            }
         </style>
 
         <panel-admin id="admin" items="{{users}}" item="{{user}}">
@@ -162,6 +168,7 @@
                         <div class$="is-active[[activeClass(user.isactive)]][[itemClass(user.deleted)]]" on-tap="activeTap"></div>
                     </div>
                     <div style="font-weight: bold; font-size:16px">[[user.firstname]] [[user.lastname]]</div>
+                    <div class="showGeos" on-tap="showGeos">vis fortællinger</div>
                     <dropdown-input label="rolle" selected="{{user.roleid}}">
                         <template is="dom-repeat" items="[[roleNames]]">
                             <paper-item>[[item]]</paper-item>

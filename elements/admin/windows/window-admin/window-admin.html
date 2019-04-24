@@ -26,9 +26,9 @@
             </paper-tabs>
 
             <iron-pages selected="[[selectedTab]]" selected-attribute="selected">
-                <panel-user-admin></panel-user-admin>
+                <panel-user-admin selected-tab="{{selectedTab}}" user-id="{{userId}}"></panel-user-admin>
                 <panel-institution-admin selected-tab="{{selectedTab}}" institution-tag-id="{{institutionTagId}}"></panel-institution-admin>
-                <panel-geo-admin institution-tag-id="[[institutionTagId]]"></panel-geo-admin>
+                <panel-geo-admin institution-tag-id="[[institutionTagId]]" user-id="[[userId]]"></panel-geo-admin>
                 <panel-tag-admin></panel-tag-admin>
                 <panel-api-admin></panel-api-admin>
             </iron-pages>
