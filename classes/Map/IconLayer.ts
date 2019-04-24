@@ -95,7 +95,7 @@
         super(IconLayer.clusterSource, (feature, resolution) => {
             var icons = <Icon[]>feature.get('features');
             return icons.length == 1 ? icons[0].getStyle() : this.getMultipleStyle(icons);
-        })
+        }, false)
 
         //if (!App.useClustering)
         //    this.on('precompose', (event: any) => {

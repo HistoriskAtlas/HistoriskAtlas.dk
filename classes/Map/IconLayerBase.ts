@@ -2,14 +2,14 @@
     //private source: ol.source.Vector; //TODO: Make non static?
     private oldDragCoordinate: ol.Coordinate;
 
-    constructor(source: ol.source.Vector, style: ol.style.StyleFunction) {
+    constructor(source: ol.source.Vector, style: ol.style.StyleFunction, updateWhileInteracting: boolean) {
         //this.source = source;
 
         super({
             source: source,
             style: style,
             updateWhileAnimating: false, //Performance? Maybe disable on mobile or dynamically according to fps
-            updateWhileInteracting: true,
+            updateWhileInteracting: updateWhileInteracting,
             renderBuffer: 48, //Icon height
             renderOrder: (feauture1: any, feauture2: any) => {
                 var coord1 = feauture1.getGeometry().getCoordinates();
@@ -27,8 +27,11 @@
     }
 
     public dragEvent(event: ol.MapBrowserEvent, geo: HaGeo) {
-        if (!App.haUsers.user.canEdit(geo))
+        if (!App.haUsers.user.canEdit(geo)) {
+            //if (!event.dragging)
+            //    Common.directGeoClick(geo)
             return;
+        }
 
         if (!this.oldDragCoordinate) {
             this.oldDragCoordinate = event.coordinate

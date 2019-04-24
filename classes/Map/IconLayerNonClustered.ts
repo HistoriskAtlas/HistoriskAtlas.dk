@@ -9,7 +9,7 @@
     constructor() {
         var source = new ol.source.Vector();
 
-        super(source, null) //Icon.defaultMarker
+        super(source, null, true) //Icon.defaultMarker
 
         this.source = source;
         this._youAreHereShown = false;

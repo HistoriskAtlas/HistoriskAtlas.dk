@@ -155,14 +155,20 @@
         //this.on('postrender', (event) => console.debug('postrender'));
         this.on('moveend', (event) => {
             this._moving = false;
+
             if (this.mousePixel)
                 this.getHoverObject(this.getCoordinateFromPixel(this.mousePixel), this.mousePixel);
+
+            if (this.curHoverObject instanceof HaGeo)
+                Common.directGeoClick(this.curHoverObject);
 
             UrlState.WriteToUrl();
         });
 
         this.on('pointermove', (event) => {
             var pixel = this.getEventPixel(event.originalEvent);
+
+            this.mousePixel = pixel;
 
             //TODO: Only if shown?
             App.mapTooltip.setPosition([pixel[0] + $("#map").offset().left, pixel[1] + 20]);
