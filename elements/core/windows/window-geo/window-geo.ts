@@ -432,6 +432,10 @@ class WindowGeo extends polymer.Base implements polymer.Element {
     //    return this.geo.creator;
     //}
 
+    showMoreMenu(isUGC, editing): boolean {
+        return this.canReport(isUGC) || this.isWriter() || this.editing;
+    }
+
     isProUser(): boolean {
         return typeof App == 'undefined' ? false : App.haUsers.user.isPro;
     }

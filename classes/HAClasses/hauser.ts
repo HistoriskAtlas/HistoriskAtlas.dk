@@ -101,7 +101,9 @@
     get favourites(): HaCollection { return this._favourites; }
     get isDefault(): boolean { return this._isDefault; }
     get isPro(): boolean { return this.institutions.length > 0; }
-    get fullname(): string { return this._firstname + ' ' + this._lastname; }
+    get fullname(): string {
+        return this._firstname + ' ' + this._lastname;
+    }
     get fullnameAndAbout(): string { return this.fullname + (this._about ? ', ' + this._about : ''); }
     get isWriter(): boolean { return this._role >= 1; }
     get isEditor(): boolean { return this._role >= 2; }

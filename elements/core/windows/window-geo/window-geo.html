@@ -60,12 +60,12 @@
             width:100%;
         }
         #addImage {
-            border-radius:0px; 
-            min-width:0px; 
-            margin:0; 
-            padding:8px; 
-            width:40px; 
-            height:40px
+            border-radius: 0px;
+            min-width: 0px;
+            margin: 0;
+            padding: 8px;
+            width: 40px;
+            height: 40px
         }
         .tabs-wrapper {
             height:48px; 
@@ -136,7 +136,7 @@
                             <menu-item on-tap="shareQR">Del med QR-kode</menu-item>
                         </paper-menu>
                     </paper-menu-button>
-                    <paper-menu-button id="morePaperMenuButton" dynamic-align close-on-activate no-overlap>
+                    <paper-menu-button id="morePaperMenuButton" dynamic-align close-on-activate no-overlap hidden$="[[!showMoreMenu(geo.isUGC,editing)]]">
                         <paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>
                         <paper-menu id="addMenu" class="dropdown-content">
                             <template is="dom-if" if="[[canReport(geo.isUGC)]]">
