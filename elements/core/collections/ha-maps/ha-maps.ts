@@ -96,9 +96,11 @@ class HaMaps extends polymer.Base implements polymer.Element {
         var res = App.map.getView().getResolution();
         var w = (20037508.34 * 2) / 256;
         var zoom = Math.log(w / res) / Math.LN2;
+        var center = [(extent[1] + extent[3]) / 2, (extent[0] + extent[2]) / 2]
         this.maps.forEach((map: HaMap) => {
             var prop = 'maps.' + this.maps.indexOf(map) + param;
-            if (!(extent[0] < map.maxLon && extent[1] < map.maxLat && extent[2] > map.minLon && extent[3] > map.minLat))
+            //if (!(extent[0] < map.maxLon && extent[1] < map.maxLat && extent[2] > map.minLon && extent[3] > map.minLat))
+            if (!(center[1] < map.maxLon && center[0] < map.maxLat && center[1] > map.minLon && center[0] > map.minLat))
                 this.set(prop, false)
             else 
                 this.set(prop, zoom < map.maxZ && zoom > map.minZ)
