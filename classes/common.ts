@@ -155,9 +155,14 @@
     public static objPathsString(obj: Object, paths: string): string {
         var result: string = '';
         for (var part of paths.split(',')) {
-            if (part.substr(0, 1) == "$")
-                result += part.substr(1);
-            else {
+            if (part.substr(0, 1) == "$") {
+                if (part.substr(0, 9) == '$deleted=') {
+                    var val = Common.objPath(obj, part.substr(9));
+                    if (val)
+                        result += ' SLETTET';
+                } else
+                    result += part.substr(1);
+            } else {
                 var val = Common.objPath(obj, part);
                 if (val)
                     result += val;

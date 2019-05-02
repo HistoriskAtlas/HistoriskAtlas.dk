@@ -60,7 +60,7 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
             return;
         this.isGettingInstitution = true;
         Services.get('institution', {
-            'schema': '{institution:[id,url,email,{user_institutions:[{user:[id,login,firstname,lastname]}]},{tag:[id,plurname]}]}',
+            'schema': '{institution:[id,url,email,{user_institutions:[{user:[id,login,firstname,lastname,deleted]}]},{tag:[id,plurname]}]}',
             'id': this.institution.id
         }, (result) => {
             for (var attr in result.data[0])

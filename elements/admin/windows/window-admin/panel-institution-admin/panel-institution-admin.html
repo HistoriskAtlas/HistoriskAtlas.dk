@@ -109,7 +109,7 @@
                     <confirm-input label="website" value="{{institution.url}}"></confirm-input>
                     <confirm-input label="email" value="{{institution.email}}"></confirm-input>
                     <div style="padding-top:15px; font-weight:bold">brugere</div>
-                    <list-auto-suggest id="userAutosuggest" items="{{institution.user_institutions}}" autosuggest-service="user" autosuggest-schema="[[getAutosuggestSchema(institution.user_institutions)]]" name-path="user.firstname,$ ,user.lastname,$ (,user.login,$)" suggest-name-path="firstname,$ ,lastname,$ (,login,$)"></list-auto-suggest>
+                    <list-auto-suggest id="userAutosuggest" items="{{institution.user_institutions}}" autosuggest-service="user" autosuggest-schema="[[getAutosuggestSchema(institution.user_institutions)]]" name-path="user.firstname,$ ,user.lastname,$ (,user.login,$) ,$deleted=user.deleted" suggest-name-path="firstname,$ ,lastname,$ (,login,$)"></list-auto-suggest>
                 </template>
             </div>
 
