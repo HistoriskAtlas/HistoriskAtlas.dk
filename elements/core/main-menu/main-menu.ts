@@ -32,7 +32,7 @@ class MainMenu extends polymer.Base implements polymer.Element {
     public collection: HaCollection;
 
     @property({ type: Number, notify: true })
-    public regionTypeID: number;
+    public regionType: number;
 
     @property({ type: Boolean })
     public touchDevice: boolean;

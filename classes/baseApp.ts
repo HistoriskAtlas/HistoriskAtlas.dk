@@ -127,7 +127,7 @@
 
         (<HaDigDag>document.querySelector('ha-digdag')).getData();
 
-        this.touchDevice = 'ontouchstart' in window || !!navigator.maxTouchPoints;
+        this.touchDevice = Common.touchDevice;
         //if (this.touchDevice)
         //    $('#drawer').css("overflow-y", "auto");
 

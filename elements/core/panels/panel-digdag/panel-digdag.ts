@@ -27,7 +27,6 @@ class PanelDigDag extends polymer.Base implements polymer.Element {
             this.year = Math.min(e.model.child.periodEnd, 2016);
 
         e.model.set('child.active', true);
-        this.update(e.model.child);
         this.type = e.model.child;
         clearTimeout(this.childDownTimeout);
     }
@@ -47,7 +46,6 @@ class PanelDigDag extends polymer.Base implements polymer.Element {
 
         this.update(null);
         this.type = null;
-        App.map.hideDigDagLayer();
     }
 
     years(start: number, end: number): string {
@@ -71,9 +69,18 @@ class PanelDigDag extends polymer.Base implements polymer.Element {
         return 'listitem listsubitem noselect' + ((year < regionType.periodStart || year > regionType.periodEnd) ? ' inactive' : '');
     }
 
+    @observe("type")
+    typeChanged(newVal: HARegionType) {
+        this.update(newVal);
+    }
+
     private update(activeRegionType: HARegionType) {
+        if (!this.digdags)
+            return;
         if (activeRegionType)
             App.map.showDigDagLayer(activeRegionType.name);
+        else
+            App.map.hideDigDagLayer();
         this.digdags.forEach((digdag: HARegionTypeCategory, i: number) =>
             digdag.regionTypes.forEach((regionType: HARegionType, j: number) => {
                 if (regionType != activeRegionType)

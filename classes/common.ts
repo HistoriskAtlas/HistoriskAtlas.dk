@@ -286,6 +286,10 @@
             done: done
         };
     }
+
+    public static get touchDevice(): boolean {
+        return 'ontouchstart' in window || !!navigator.maxTouchPoints;
+    }
 }
 
 class ChangeRecord<T> {

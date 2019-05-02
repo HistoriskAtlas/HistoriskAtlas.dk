@@ -207,7 +207,7 @@
         <ha-maps maps="{{maps}}" main-map="{{mainMap}}" time-warp-map="{{timeWarpMap}}"></ha-maps>
         <ha-tags tags="{{tags}}" tag-tops="{{tagTops}}"></ha-tags>
         <ha-geos geos="{{geos}}" year="[[year]]" time-warp-year="[[timeWarpYear]]" time-line-active=[[timeLineActive]] user-creators="[[userCreators]]" prof-creators="[[profCreators]]" theme="[[theme]]"></ha-geos>
-        <ha-regions type="[[regionTypeID]]"></ha-regions>
+        <ha-regions type="[[regionType]]"></ha-regions>
         <ha-users user="{{user}}"></ha-users>
         <ha-digdag digdags="{{digdags}}"></ha-digdag>
         <ha-collections collections="{{collections}}" collection="{{collection}}" geos="[[geos]]" subjects="{{collectionSubjects}}" periods="{{collectionPeriods}}" institutions="{{collectionInstitutions}}" destinations="{{collectionDestinations}}" licens="{{collectionLicens}}" prof-creators="[[profCreators]]" user-creators="[[userCreators]]"></ha-collections>
@@ -240,7 +240,7 @@
                     </div>
                 </paper-toolbar>
 
-                <main-menu class$="[[mainMenuClass(theme,showMenuThemes)]]" shown$="[[showMainMenu]]" show-main-menu="{{showMainMenu}}" show-menu-themes="{{showMenuThemes}}" drawer-open="{{drawerOpen}}" tags="{{tags}}" tag-tops="{{tagTops}}" main-map="{{mainMap}}" maps="[[maps]]" collections="{{collections}}" collection="{{collection}}" year="{{year}}" digdags="[[digdags]]" region-type-i-d="{{regionTypeID}}" touch-device="[[touchDevice]]" time-line-active="{{timeLineActive}}" user="[[user]]" theme="{{theme}}" prof-creators="{{profCreators}}" user-creators="{{userCreators}}"></main-menu>
+                <main-menu class$="[[mainMenuClass(theme,showMenuThemes)]]" shown$="[[showMainMenu]]" show-main-menu="{{showMainMenu}}" show-menu-themes="{{showMenuThemes}}" drawer-open="{{drawerOpen}}" tags="{{tags}}" tag-tops="{{tagTops}}" main-map="{{mainMap}}" maps="[[maps]]" collections="{{collections}}" collection="{{collection}}" year="{{year}}" digdags="[[digdags]]" region-type="{{regionType}}" touch-device="[[touchDevice]]" time-line-active="{{timeLineActive}}" user="[[user]]" theme="{{theme}}" prof-creators="{{profCreators}}" user-creators="{{userCreators}}"></main-menu>
                 <template is="dom-if" if="[[showMainMenu]]">
                     <div class="nordea-logo-container">
                         <img src="../../images/logos/nordea-fonden-black-logo.png" />
@@ -257,9 +257,9 @@
 
                     <div style="flex-grow:1"></div>
                     <iron-icon class="widelogo hide-narrow" icon="ha:widelogo"></iron-icon>
-                    <template is="dom-if" if="[[showThemeTitle(theme)]]">
+                    <!--<template is="dom-if" if="[[showThemeTitle(theme)]]">
                         <span class="hide-narrow">&nbsp;/ [[theme.name]]</span>
-                    </template>
+                    </template>-->
                     <div style="flex-grow:1"></div>
                     
                     <mit-atlas-button id="myAtlasButton" user="[[user]]"></mit-atlas-button>
@@ -281,7 +281,7 @@
                     <img class="nordeaLogo" src="../../images/logos/nordea-fonden-white-logo.png"/>
                     <time-warp-closed time-warp-active="{{timeWarpActive}}"></time-warp-closed>
                     <map-tooltip></map-tooltip>
-                    <map-menu main map="{{mainMap}}" lift="[[timeLineActive]]" drawer-open="{{drawerOpen}}" selected="{{selectedLeftPanel}}" show-main-menu="{{showMainMenu}}"></map-menu>
+                    <map-menu main map="{{mainMap}}" region-type="{{regionType}}" theme="{{theme}}" lift="[[timeLineActive]]" drawer-open="{{drawerOpen}}" selected="{{selectedLeftPanel}}" show-main-menu="{{showMainMenu}}"></map-menu>
                     <map-controls lift="[[timeLineActive]]" map-rotation="[[mapRotation]]" time-warp-active="{{timeWarpActive}}"></map-controls>
                     <map-about map=[[mainMap]] time-warp-map="[[timeWarpMap]]" time-warp-mode="[[timeWarpMode]]"></map-about>
                     <time-lines active="[[timeLineActive]]" time-warp-active="[[timeWarpActive]]" nudge="[[drawerOpen]]" touch-device="[[touchDevice]]" year="{{year}}" time-warp-year="{{timeWarpYear}}"></time-lines>

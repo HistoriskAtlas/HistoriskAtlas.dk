@@ -159,7 +159,7 @@
             if (this.mousePixel)
                 this.getHoverObject(this.getCoordinateFromPixel(this.mousePixel), this.mousePixel);
 
-            if (this.curHoverObject instanceof HaGeo)
+            if (this.curHoverObject instanceof HaGeo && Common.touchDevice)
                 Common.directGeoClick(this.curHoverObject);
 
             UrlState.WriteToUrl();
@@ -236,7 +236,7 @@
 
         this.on('click', (event) => {
             var eventPixel = this.getEventPixel(event.originalEvent);
-            if (!!('ontouchstart' in window))
+            if (Common.touchDevice)
                 this.getHoverObject(event.coordinate, eventPixel);
 
             if (App.haUsers.user.isAdmin) {

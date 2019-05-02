@@ -4,8 +4,14 @@ class MapMenu extends polymer.Base implements polymer.Element {
     @property({ type: Boolean, value: false })
     public main: boolean;
 
-    @property({ type: Object, notify:true })
+    @property({ type: Object, notify: true })
     public map: HaMap & Object;
+
+    @property({ type: Object, notify: true })
+    private regionType: HARegionType & Object;
+
+    @property({ type: Object, notify: true })
+    public theme: ITheme;    
 
     @property({ type: Boolean, value: false })
     public lift: boolean;
@@ -67,31 +73,39 @@ class MapMenu extends polymer.Base implements polymer.Element {
 
     @listen("button.tap")
     buttonTap() {
-        //this.selected = this.active ? (this.main ? 2 : 3) : null;
-        //this.selected = this.active ? 0 : null;
-
         if (!this.main)
         {
             this.fire('map-select');
             return;
         }
 
-        if (this.drawerOpen && App.mainMenu.showMenuMaps) {
+        this.toggleDrawer('showMenuMaps');
+    }
+
+    buttonDigDagTap(e: any) {
+        if (e.target.localName == 'iron-icon')
+            this.regionType = null;
+        else
+            this.toggleDrawer('showMenuDigDag');
+    }
+
+    buttonThemeTap(e: any) {
+        if (e.target.localName == 'iron-icon')
+            this.theme = Global.defaultTheme;
+        else
+            this.toggleDrawer('showMenuThemes');
+    }
+
+    private toggleDrawer(showMenu: string) {
+        if (this.drawerOpen && App.mainMenu[showMenu]) {
             this.drawerOpen = false;
             return;
         }
 
         this.drawerOpen = true;
-        App.mainMenu.set('showMenuMaps', true);
+        App.mainMenu.set(showMenu, true);
         this.showMainMenu = false;
     }
-
-    //@observe("selected")
-    //selectedChanged(newVal: boolean) {
-    //    //this.active = this.selected == (this.main ? 2 : 3);
-    //    this.active = this.selected == 0;
-    //}
-
 
     cssClass(main: boolean, lift: boolean, drawerOpen: boolean): string {
         //return (main ? 'primary HAPrimColor' : 'HASecColor') + (lift ? ' lift' : '') + (drawerOpen ? ' responsive-nudge' : '') + (!main && mode == TimeWarpModes.SPLIT ? ' fix' : '');
@@ -109,6 +123,14 @@ class MapMenu extends polymer.Base implements polymer.Element {
     year(startYear: number, endYear: number): string {
         return Common.years(startYear, endYear)
         //return (startYear ? startYear + ' - ' : '') + endYear;
+    }
+
+    showDigDag(regionType: HARegionType): boolean {
+        return !!regionType;
+    }
+
+    showTheme(theme: ITheme): boolean {
+        return theme.id != 'default';
     }
 
     //text(map: HaMap, licensee: string, orgSource: string, about: string): string {

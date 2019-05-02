@@ -8,7 +8,10 @@
             flex-direction:column;
             position:relative;
             /*transition: background-color 0.4s;*/
-        }        
+        }
+        :host:not(.no-content) {
+            min-width: 0px !important;
+        }
         #content {
             width: 100%;
             /*margin-top: 17px;*/

@@ -80,6 +80,7 @@ class PlainText extends polymer.Base implements polymer.Element {
     @observe('immediateContent')
     immediateContentChanged() {
         this.length = this.immediateContent.length + (this.immediateContent.match(/\n/g) || []).length; //"hack" to correctly count newline as 2 chars
+        $(this).toggleClass('no-content', this.immediateContent.length == 0)
     }
 
     //@observe('enableEditorPanel')
