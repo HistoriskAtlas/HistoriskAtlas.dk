@@ -32,6 +32,8 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
     public selected: boolean;
 
     private isChangingParam: boolean = false;
+    private geosPerPage: number = 100;
+    private curPage: number = 0;
 
     @observe('selected')
     selectedChanged() {
@@ -39,9 +41,8 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
             return;
 
         if (!this.geos) {
-            this.geos = [];
             //this.sortOnTitle();
-            this.fetchGeos();
+            this.fetchGeos(true);
         }
         if (!this.institutionTags) { //TODO: reload always?
             this.institutionTags = [];
@@ -62,8 +63,7 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
         this.isChangingParam = true;
         this.filter = '';
         this.userId = 0;
-        this.updateGeos([]);
-        this.fetchGeos();
+        this.fetchGeos(true);
         this.isChangingParam = false;
     }
 
@@ -76,17 +76,21 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
         this.isChangingParam = true;
         this.filter = '';
         this.institutionTagId = 0;
-        this.updateGeos([]);
-        this.fetchGeos();
+        this.fetchGeos(true);
         this.isChangingParam = false;
     }
 
     filterCheckForEnter(e: any) {
         if (e.keyCode === 13)
-            this.fetchGeos();
+            this.fetchGeos(true);
     }
 
-    public fetchGeos() {
+    public fetchGeos(reset: boolean) {
+        if (reset) {
+            this.curPage = 0;
+            this.set('geos', []);
+        }
+
         var filters: Array<string> = [];
         if (this.filter)
             filters.push('title:{like:' + this.filter + '}');
@@ -96,16 +100,19 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
             filters.push('userid:' + this.userId);
         Services.get('geo', {
             'schema': '{geo:{' + (filters.length > 0 ? 'filters:{' + filters.join(',') + '},' : '') + 'fields:[id,title,created,views,{tag_geos:[{tag:[plurname,{category:3}]}]},{user:[login,firstname,lastname]}]}}',  //{title:{like:' + this.filter + '}}
-            'count': '100',
+            'count': this.geosPerPage,
+            'skip': this.geosPerPage * this.curPage,
             'sort': '{' + this.sort + ':' + this.sortDir + '}'
-        }, (result) => {
-            this.updateGeos(result.data);
-        })
+            }, (result) => {
+                this.updateGeos(result.data);
+                //if (!reset)
+                //    this.$.ironList.scrollTop = this.$.ironList.scrollHeight;
+            })
+
+        this.curPage++;
     }
     public updateGeos(newList: Array<any>) {
-        ////this.set('geos', (newList ? newList : this.geos).sort(this.compare));
-        this.set('geos', newList);
-        //this.$.admin.sort(null, newList);
+        this.set('geos', this.geos.concat(newList));
     }
 
     public fetchInstitutionTags() {
@@ -235,11 +242,15 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
             this.sortDir = this.sortDir == 'asc' ? 'desc' : 'asc';
         else
             this.sort = col;
-        this.fetchGeos();        
+        this.fetchGeos(true);        
     }
 
     numberWithSeparaters(n: number): string {
         return Common.numberWithSeparaters(n);
+    }
+
+    more() {
+        this.fetchGeos(false)
     }
 }
 

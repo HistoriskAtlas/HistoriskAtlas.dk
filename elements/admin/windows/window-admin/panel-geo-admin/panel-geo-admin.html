@@ -94,6 +94,19 @@
                 content: 'upubliceret';
                 color: darkred;
             }
+            .footer {
+                padding-bottom: 8px;
+                padding-top: 2px;
+                padding-right: 10px;
+                text-align: right;
+                font-weight: bold;
+                border-top: 1px solid lightgrey;
+            }
+            .more {
+                padding-left: 10px;
+                cursor: pointer;
+                color: #005b9c;
+            }
         </style>
         
         <panel-admin id="admin" items="{{geos}}" item="{{geo}}">
@@ -126,7 +139,7 @@
                     <span on-tap="sortOnInstitution">Institution</span>
                     <span on-tap="sortOnViews">Visninger</span>
                 </div>
-                <iron-list items="{{geos}}" max-physical-count="50">
+                <iron-list id="ironList" items="{{geos}}" max-physical-count="100">
                     <template>
                         <div class="item" on-tap="itemTap">
                             <span>[[item.id]]</span>
@@ -138,6 +151,10 @@
                         </div>
                     </template>
                 </iron-list>
+                <div class="footer">
+                    <span>[[geos.length]] fortællinger hentet</span>
+                    <span class="more" on-tap="more">Hent flere</span>
+                </div>
             </div>
 
             <div class="details">
