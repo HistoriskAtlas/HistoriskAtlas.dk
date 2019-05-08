@@ -21,12 +21,16 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
 
     private isGettingInstitution: boolean = false;
 
+    @property({ type: Array })
+    public instTypes: Array<string>;
+
     @observe('selected') 
     selectedChanged() {
         if (this.selected && !this.institutions) {
             this.institutions = [];
-            this.sortOnName()
+            this.sortOnName();
             this.fetchInstitutions();
+            this.instTypes = HAInstitution.types;
         }
     }
 
@@ -35,12 +39,15 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
             this.fetchInstitutions();
     }
 
-    public fetchInstitutions() {
+    public fetchInstitutions(callback: () => void = null) {
         Services.get('institution', {
-            'schema': '{institution:{' + (this.filter ? 'filters:[{tag:[{plurname:{like:' + this.filter + '}}]}],' : '') + 'fields:[id,type,geoviews,{user_institutions:[{user:[firstname,lastname]}]},{tag:[plurname]}]}}',
-            'count': 'all'
+            'schema': '{institution:{' + (this.filter ? 'filters:[{tag:[{plurname:{like:' + this.filter + '}}]}],' : '') + 'fields:[id,type,deleted,geoviews,{user_institutions:[{user:[firstname,lastname]}]},{tag:[plurname]}]}}',
+            'count': 'all',
+            'deleted': 'any'
         }, (result) => {
             this.updateInstitutions(result.data);
+            if (callback)
+                callback();
         })
     }
 
@@ -73,6 +80,10 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
         return HAInstitution.types[type];
     }
 
+    public statusClass(deleted: string): string {
+        return deleted ? 'deleted' : '';
+    }
+
     public userNames(user_institutions: Array<any>): string {
         var result: Array<string> = [];
         for (var data of user_institutions)
@@ -88,12 +99,12 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
             Services.update('tag', JSON.parse('{ "id": ' + this.institution.tag.id + ', "plurname": "' + this.institution.tag.plurname + '", "singname": "' + this.institution.tag.plurname + '" }'));
         var property = e.path.split('.')[1];
         switch (property) {
-            case 'url': case 'email':
-                this.updateUserProperty(property);
+            case 'url': case 'email': case 'type':
+                this.updateInstProperty(property);
         }
     }
 
-    private updateUserProperty(property: string) {
+    private updateInstProperty(property: string) {
         Services.update('institution', JSON.parse('{ "id": ' + this.institution.id + ', "' + property + '": "' + this.institution[property] + '" }'));
     }
 
@@ -152,6 +163,39 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
     numberWithSeparaters(n: number): string {
         return Common.numberWithSeparaters(n);
     }
-}
+
+    public createNew() {
+        Common.dom.append(DialogText.create('Angiv navnet på den nye institution', (name) => this.newInstitution(name)));
+    }
+
+    private newInstitution(name: string) {
+        var tag: any = {
+            plurname: name,
+            singname: name,
+            category: 3
+        };
+
+        Services.insert('tag', tag, (result) => {
+            var tagid = result.data[0].id;
+
+            var institution: any = {
+                tagid: tagid,
+                url: '',
+                email: ''
+            };
+
+            Services.insert('institution', institution, (result) => {
+                var institutionid = result.data[0].id;
+                App.toast.show("Institution oprettet!");
+                this.fetchInstitutions(() => {
+                    for (var inst of this.institutions)
+                        if (inst.id == institutionid) {
+                            this.$.admin.select(inst);
+                            break;
+                        }                    
+                })
+            })
+        })
+    }}
 
 PanelInstitutionAdmin.register();

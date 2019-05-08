@@ -5,7 +5,7 @@
     private _email: string;
     private _type: boolean;
     private _content: HaContent;
-    public static types = [, 'Arkiv', 'Bibliotek', 'Museum'];
+    public static types = [, 'Arkiv', 'Bibliotek', 'Museum', '', 'Andet'];
     
 
     constructor(data: any) {

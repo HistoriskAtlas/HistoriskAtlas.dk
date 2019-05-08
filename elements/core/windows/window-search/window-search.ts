@@ -10,11 +10,14 @@ class WindowSearch extends polymer.Base implements polymer.Element {
     @property({ type: String, value: '' })
     public didYouMean: string;
 
-    @property({ type: String, value: false })
-    public noResults: boolean;
+    @property({ type: String, value: true })
+    public searchInProgress: boolean;
 
     @property({ type: Array })
     public googleResults: Array<GoogleResult>;
+
+    @property({ type: Array })
+    public geos: Array<HaGeo>;
 
     @property({ type: Array })
     public addresses: Array<Address>;
@@ -29,10 +32,10 @@ class WindowSearch extends polymer.Base implements polymer.Element {
     }
     
     doSearch() {
+        this.searchInProgress = true;
         this.googleResults = [];
         this.addresses = [];
         this.didYouMean = '';
-        this.noResults = false;
         $.getJSON("https://www.googleapis.com/customsearch/v1?q=" + this.search + "&key=AIzaSyAghy4ufGMclOCsaEPsLLF_lk_rALYezds&cx=015044497176521657010:pfssikn7wii&fields=items(link,htmlTitle,htmlSnippet),searchInformation/totalResults,spelling/correctedQuery&num=10", (data) => {
 
             if (data.spelling)
@@ -53,16 +56,17 @@ class WindowSearch extends polymer.Base implements polymer.Element {
 
                     this.push('googleResults', result);
                 }
-            } else
+            }
                 //if (!data.error)
-                    this.noResults = true;
+                //this.searchIsDone = true;
 
-            //if (data.error)
-            //    this.fallbackSearch = this.search;
+                //if (data.error)
+                //    this.fallbackSearch = this.search;
 
+            this.searchInProgress = false;
             
         }).fail(() => {
-            this.noResults = false;
+            this.searchInProgress = false;
             this.fallbackSearch = this.search;
         }).always(() => {
             this.doSearchAddress();
@@ -124,6 +128,10 @@ class WindowSearch extends polymer.Base implements polymer.Element {
 
     showDidYouMean(didYouMean: string): boolean {
         return !!didYouMean;
+    }
+
+    showNoResultsText(searchInProgress: boolean, googleResultsLength: number, geosLength: number): boolean {
+        return !searchInProgress && googleResultsLength == 0 && geosLength == 0;
     }
 }
 

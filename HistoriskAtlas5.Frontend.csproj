@@ -64,7 +64,7 @@
     <Content Include="elements\core\collections\ha-contents\ha-contents.html" />
     <Content Include="elements\core\collections\ha-collections\ha-collections.html" />
     <Content Include="elements\core\collections\ha-digdag\ha-digdag.html" />
-    <Content Include="elements\core\collections\ha-institutions\ha-institutions.html" />
+    <Content Include="elements\thrash\ha-institutions\ha-institutions.html" />
     <Content Include="elements\core\collections\ha-licenses\ha-licenses.html" />
     <Content Include="elements\core\collections\ha-users\ha-users.html" />
     <Content Include="elements\core\dialogs\dialog-alert\dialog-alert.html" />
@@ -497,7 +497,7 @@
     <TypeScriptCompile Include="elements\core\collections\ha-contents\ha-contents.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-collections\ha-collections.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-digdag\ha-digdag.ts" />
-    <TypeScriptCompile Include="elements\core\collections\ha-institutions\ha-institutions.ts" />
+    <TypeScriptCompile Include="elements\thrash\ha-institutions\ha-institutions.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-licenses\ha-licenses.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-users\ha-users.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-regions\ha-regions.ts" />

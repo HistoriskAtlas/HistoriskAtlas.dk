@@ -41,12 +41,16 @@
         
         <window-basic id="windowbasic" window-title="Søgeresultater for '[[search]]'" toolbar-mode="waterfall">
             <div id="wrapper">
-                <div id="noResultsDiv" class="box" hidden$="[[!noResults]]">
+                <div id="noResultsDiv" class="box" hidden$="[[!showNoResultsText(searchInProgress, googleResults.length, geos.length)]]">
                     Der blev ikke fundet fortællinger indeholdende <span class="HAInvertedPrimColor">[[search]]</span>.
                 </div>
 
                 <div id="didYouMeanDiv" class="box" hidden$="[[!showDidYouMean(didYouMean)]]" on-tap="didYouMeanTap">
                     Mente du <span class="HAInvertedPrimColor">[[didYouMean]]</span>?
+                </div>
+
+                <div id="noResultsDiv2" class="box" hidden$="[[!showNoResultsText(searchInProgress, googleResults.length, geos.length)]]">
+                    Du kan altid selv oprettet dig som bruger og skrive en fortælling, hvis der er noget der mangler. Tryk på MitAtlas-knappen øverst til højre for at komme igang.
                 </div>
 
                 <template is="dom-repeat" items="[[googleResults]]" as="result">

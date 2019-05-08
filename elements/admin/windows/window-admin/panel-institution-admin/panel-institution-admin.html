@@ -73,6 +73,26 @@
                 cursor: pointer;
                 color: #005b9c;
             }
+            .footer {
+                padding-bottom: 8px;
+                padding-top: 2px;
+                padding-right: 10px;
+                text-align: right;
+                font-weight: bold;
+                border-top: 1px solid lightgrey;
+            }
+            .create-new {
+                padding-left: 10px;
+                cursor: pointer;
+                color: #005b9c;
+            }
+            .status.deleted:before {
+                content: 'slettet';
+                color: red;
+            }
+            .item.deleted {
+                color: red;
+            }
         </style>
 
         <panel-admin id="admin" items="{{institutions}}" item="{{institution}}">
@@ -89,7 +109,7 @@
                 </div>
                 <iron-list items="{{institutions}}" max-physical-count="50">
                     <template>
-                        <div class="item" on-tap="itemTap">
+                        <div class$="item [[statusClass(item.deleted)]]" on-tap="itemTap">
                             <span>[[item.tag.plurname]]</span>
                             <span>[[instType(item.type)]]</span>
                             <span>[[userNames(item.user_institutions)]]</span>
@@ -97,14 +117,27 @@
                         </div>
                     </template>
                 </iron-list>
+                <div class="footer">
+                    <span>[[institutions.length]] institutioner hentet</span>
+                    <span class="create-new" on-tap="createNew">Opret ny</span>
+                </div>
             </div>
 
             <div class="details">
                 <template is="dom-if" if="[[institution]]">
+                    <div style="display:flex; height:15px">
+                        <div>id: [[institution.id]]</div>
+                        <div style="flex-grow:1"></div>
+                        <div class$="status [[statusClass(institution.deleted)]]"></div>
+                    </div>
                     <div style="font-weight: bold; font-size:16px">[[institution.tag.plurname]]</div>
-                    <div>[[instType(institution.type)]]</div>
-                    <div>[[institution.geoviews]] fortællingsvisninger (siden 19/4 2018)</div>
+                    <div>[[institution.geoviews]] fortællingsvisninger<br>(siden 19/4 2018)</div>
                     <div class="showGeos" on-tap="showGeos">vis fortællinger</div>
+                    <dropdown-input label="type" selected="{{institution.type}}">
+                        <template is="dom-repeat" items="[[instTypes]]">
+                            <paper-item>[[item]]</paper-item>
+                        </template>
+                    </dropdown-input>
                     <confirm-input label="navn" value="{{institution.tag.plurname}}"></confirm-input>
                     <confirm-input label="website" value="{{institution.url}}"></confirm-input>
                     <confirm-input label="email" value="{{institution.email}}"></confirm-input>
