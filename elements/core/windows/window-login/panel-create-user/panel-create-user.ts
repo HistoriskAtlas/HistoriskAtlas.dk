@@ -98,13 +98,6 @@ class PanelCreateUser extends polymer.Base implements polymer.Element {
             if (result.data.status.code == 1) {
                 App.haUsers.login(result.data.user); 
                 this.$.confirmationDialog.open();
-
-                
-                
-                //TODO: really send mail.................................. And restrict what a non active user can do..........
-
-
-
             } else {
                 App.toast.show("Brugernavnet findes allerede. Vælg et andet.")
                 this.exisitingLogins.push(this.login)
@@ -116,6 +109,10 @@ class PanelCreateUser extends polymer.Base implements polymer.Element {
 
     termsOfUseTap() {
         Common.dom.append(WindowTermsOfUse.create());
+    }
+
+    privacyTap() {
+        Common.dom.append(WindowPrivacy.create());
     }
 }
 

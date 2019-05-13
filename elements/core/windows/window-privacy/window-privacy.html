@@ -1,152 +1,99 @@
 ﻿<dom-module id="window-privacy">
     <style>
-        .intro {
-            display: block;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        .headline {
-            display: block;
-            font-weight: bold;
-        }
-
-        li {
-            margin-bottom: 20px;
-            margin-left: 10px;
-        }
-        li:before {
-            padding-left:10px;
-        }
+        p {
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }                
     </style>
     <template>
         <window-basic id="windowbasic" window-title="Cookie- og privatlivspolitik" width="660" height="510" toolbar-mode="waterfall">
             <div style="margin:17px; font-size:14px">
 
-                <span class="intro">Denne side beskriver, hvorfor og i hvilket omfang HistoriskAtlas.dk bruger cookies og andre data, som lagres lokalt på din computer. Desuden giver den en kort og præcis beskrivelse af, hvordan eventuelle data som du indtaster, eller på anden måde sender til os, behandles.</span>
-                <br>
-                Sidst opdateret: 21. maj 2016.<br>
-                <br />
-                <ol>
-                    <li>
-                        <span class="headline">Hvad er en cookie</span>
-                        En cookie er en lille tekstfil, der lagres i din browser for at kunne genkende din computer ved tilbagevendende besøg. Der er ingen personlige oplysninger gemt i vores cookies, og de kan ikke indeholde virus.<br>
-                        <br />
-                        Du kan få en nærmere beskrivelse af, hvad cookies er, og hvad de bruges til, ved at besøge <a href="http://minecookies.org/information-om-cookies/" target="_blank">MineCookies.org/Information-Om-Cookies</a>. MineCookies.org er en fællesside, der er oprettet af brancheforeningerne for de største internet-interesseorganistioner i Danmark.<br>
-                    </li>
-                    <li>
-                        <span class="headline">Hvorfor bruger HistoriskAtlas.dk cookies</span>
-                        HistoriskAtlas.dk bruger cookies for at kunne forbedre din brugeroplevelse, huske dine personlige indstillinger og indsamle statistik.<br>
-                        <br>
-                        Hvis du opretter en profil på HistoriskAtlas.dk og logger dig ind, bliver du tilbudt muligheden for forblive logget ind. Hvis du vælger det, så bruger vi også en cookie.<br>
-                        <br />
-                        Deklaration af brug af cookies på HistoriskAtlas.dk:<br>
-                        <br>
+                <!--https://gdpr.eu/privacy-notice/-->
 
-                        <table border="0" style="padding: 4px; border: solid 1px gray; width:95%">
-                            <tbody>
-                                <tr>
-                                    <td style="width: 350px;">
-                                        <strong>
-                                            Formål med brug af cookies på
-                                            websitet:
-                                        </strong>
-                                    </td>
-                                    <td style="width: 50px;">
-                                        <strong>
-                                            Intern / 1.
-                                            parts cookies
-                                        </strong>
-                                    </td>
-                                    <td style="width: 50px;">
-                                        <strong>
-                                            Ekstern / 3.
-                                            parts cookies
-                                        </strong>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>Teknisk funktionalitet</td>
-                                    <td class="rtecenter">ja</td>
-                                    <td class="rtecenter">ja</td>
-                                </tr>
-
-                                <tr>
-                                    <td>Trafikmåling</td>
-                                    <td class="rtecenter">ja</td>
-                                    <td class="rtecenter">ja</td>
-                                </tr>
-
-                                <tr>
-                                    <td>Annonceafvikling (frekvens, brugermåling o.lign.)</td>
-                                    <td class="rtecenter">nej</td>
-                                    <td class="rtecenter">nej</td>
-                                </tr>
-
-                                <tr>
-                                    <td>Adfærdsbaseret individuelt målrettet annoncering</td>
-                                    <td class="rtecenter">nej</td>
-                                    <td class="rtecenter">nej</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </li>
-
-                    <li>
-                        <span class="headline">Ejeroplysninger</span>
-                        Dette website udbydes af Foreningen HistoriskAtlas.dk.<br>
-                        Foreningen HistoriskAtlas.dk ledes af en bestyrelse, der vælges af medlemsinstitutionerne på den årlige generalforsamling. Du kan læse mere om Foreningen HistoriskAtlas.dk og <a href="http://blog.historiskatlas.dk/foreningen/" target="_blank">finde vedtægterne her</a><br>
-                        <br>
-                        Du kan kontakte foreningen HistoriskAtlas.dk på mail <a href="mailto:info@HistoriskAtlas.dk">info@HistoriskAtlas.dk</a>.<br>
-                    </li>
-                    <li>
-                        <span class="headline">Samtykke</span>
-                        Ved at blive på HistoriskAtlas.dks website, accepterer du, at vi bruger cookies til ovenstående formål. Du kan på et hvilket som helst tidspunkt vælge at gå væk fra vores website, og slette de cookies, vi har efterladt i din browser.<br>
-                    </li>
-                    <li>
-                        <span class="headline">Sådan undgår du cookies</span>
-                        Du har som udgangspunkt selv kontrol over, hvilke cookies, der bliver gemt på din computer. Du kan læse mere om, hvordan du blokerer cookies her: <a href="http://minecookies.org/cookiehandtering" target="_blank">http://minecookies.org/cookiehandtering</a><br />
-                    </li>
-                    <li>
-                        <span class="headline">Sådan sletter du cookies</span>
-                        Hvis du gerne vil slette cookies på din computer, så kan du se en vejledning her: <a href="http://minecookies.org/cookiehandtering" target="_blank">http://minecookies.org/cookiehandtering</a><br>
-                    </li>
-                    <li>
-                        <span class="headline">Så lang tid opbevares cookies, hvis du ikke selv sletter dem.</span>
-                        Cookies sletter sig selv efter et vist antal måneder (kan variere), men de fornyes automatisk ved hvert nyt besøg på websitet.<br />
-                    </li>
-                    <li>
-                        <span class="headline">Trafikmåling via Google Analytics</span>
-                        HistoriskAtlas.dk bruger cookies fra Google Analytics til at måle trafikken på websitet. Du kan fravælge cookies fra Google Analytics her: <a href="http://tools.google.com/dlpage/gaoptout" target="_blank">http://tools.google.com/dlpage/gaoptout</a>
-                    </li>
-                    <li>
-                        <span class="headline">Brug af personoplysninger</span>
-                        HistoriskAtlas.dk afgiver aldrig personoplysninger til tredjepart, med mindre du selv udtrykkeligt giver tilsagn hertil, og vi indsamler aldrig personoplysninger, uden at du selv har givet os disse oplysninger ved registrering, køb eller deltagelse i en undersøgelse m.v. Her indsamles oplysninger om navn, adresse, postnummer, e-mail, køn, alder, interesser, holdninger og kendskab til forskellige emner. Personoplysningerne bruges til at gennemføre det køb eller den service, som oplysningerne er indsamlet i forbindelse med. Oplysningerne bruges derudover til at få større kendskab til dig og øvrige brugere af websitet. Denne brug kan bl.a. omfatte undersøgelser og analyser, der er rettet mod en forbedring af vore produkter, tjenester og teknologier, samt visning af indhold, der er tilpasset dine interesser.<br>
-                    </li>
-                    <li>
-                        <span class="headline">Kontakt vedr. personoplysninger</span>
-                        Hvis du ønsker adgang til de oplysninger, som er registreret om dig hos HistoriskAtlas.dk, skal du rette henvendelse til <a href="mailto:info@HistoriskAtlas.dk">info@HistoriskAtlas.dk</a> Er der registreret forkerte data, eller har du andre indsigelser, kan du rette henvendelse samme sted. Du har mulighed for at få indsigt i, hvilke informationer der er registreret om dig, og du kan gøre indsigelse mod en registrering i henhold til reglerne i Persondataloven.<br>
-</li>
-                    <li>
-                        <span class="headline">Beskyttelse af personoplysninger</span>
-                        Ifølge <a href="https://www.retsinformation.dk/Forms/R0710.aspx?id=828" target="_blank">persondataloven</a> skal dine personlige oplysninger opbevares sikkert og fortroligt. Vi gemmer dine personlige oplysninger på computere med begrænset adgang, som er placeret i kontrollerede faciliteter, og vi håndterer dine brugeroplysninger forsvarligt, og under stadig hensyntagen til dine rettigheder som bruger. Vi kan dog ikke garantere 100 procent sikkerhed ved dataoverførsler via internettet. Det betyder, at der kan være en risiko for, at andre uberettiget tiltvinger sig adgang til oplysninger, når data sendes og opbevares elektronisk. Du afgiver således dine personlige oplysninger på eget ansvar.<br>
-                        <br>
-                        Personoplysninger slettes eller anonymiseres løbende efterhånden som det formål, de blev indsamlet til, afsluttes. Personoplysninger gemmes højst i 12 måneder efter brug.<br>
-                        <br>
-                        Den hurtige udvikling af internettet betyder, at ændringer i vores behandling af personoplysninger kan blive nødvendige. Vi forbeholder os derfor ret til at opdatere og ændre nærværende retningslinjer for behandling af personoplysninger. Gør vi det, retter vi selvfølgeligt datoen for "sidst opdateret" øverst på siden. I tilfælde af væsentlige ændringer giver vi dig besked i form af en synlig meddelelse på vores websites.<br>
-                        <br>
-                        I det omfang, der behandles personoplysninger om dig, har du ifølge persondataloven ret til at få oplyst, hvilke personoplysninger, der kan henføres til dig. Såfremt det viser sig, at de oplysninger eller data, der behandles om dig, er urigtige eller vildledende, har du ret til at kræve disse berigtiget, slettet eller blokeret. Du kan til enhver tid gøre indsigelse mod, at oplysninger om dig gøres til genstand for behandling. Du kan også til enhver tid tilbagekalde dit samtykke. Du har mulighed for at klage over behandlingen af oplysninger og data vedrørende dig. Klage indgives til Datatilsynet, jf. persondatalovens § 58, stk. 1.<br>
-                    </li>
-                    <li>
-                        <span class="headline">Lovbestemmelser om cookies</span>
-                        Europa Kommissionen har vedtaget et direktiv, populært kaldet 'Cookie-direktivet', som omhandler lagring af filer på borgernes computere, og bl.a. omfatter cookies og logfiler.<br>
-                        <br>
-                        Direktivet er implementeret i dansk lovgivning gennem en bekendtgørelse fra Erhvervs- og Vækstministeriet. Du kan læse mere om Cookiebekendtgørelsen ved at klikke på nedenstående link.<br>
-                        <br>
-                        Bekendtgørelsen på retsinformation: <a href="https://www.retsinformation.dk/Forms/R0710.aspx?id=139279" target="_blank">Bekendtgørelse om krav til information og samtykke ved lagring af eller adgang til oplysninger i slutbrugeres terminaludstyr</a>.<br>
-                    </li>
-                </ol>
-                <br />
+                <h3 style="text-align: center;">HistoriskAtlas.dk Cookie- og privatlivspolitik</h3>
+                <p>Denne privatlivspolitik vil forklare, hvordan vores organisation anvender de personoplysninger, vi indsamler fra dig, når du bruger vores hjemmeside.</p>
+                <p>Emner:</p>
+                <ul>
+                    <li>Hvilke data indsamler vi?</li>
+                    <li>Hvordan indsamler vi dine data?</li>
+                    <li>Hvordan bruger vi dine data?</li>
+                    <li>Hvordan gemmer vi dine data?</li>
+                    <li>Marketing</li>
+                    <li>Hvad er dine databeskyttelsesrettigheder?</li>
+                    <li>Hvad er cookies?</li>
+                    <li>Hvordan bruger vi cookies?</li>
+                    <li>Hvilke typer cookies bruger vi?</li>
+                    <li>Sådan administreres dine cookies</li>
+                    <li>Privatlivspolitik for andre websites</li>
+                    <li>Ændringer i vores privatlivspolitik</li>
+                    <li>Sådan kontaktes vi</li>
+                    <li>Hvordan kontaktes de relevante myndigheder</li>
+                </ul>
+                <h3>Hvilke data indsamler vi?</h3>
+                <p>HistoriskAtlas.dk indsamler følgende data:</p>
+                <ul>
+                    <li>Personoplysninger (navn, e-mail-adresse og evt. tilnkytning til kulturinstitution)</li>
+                    <li>Indhold i de fortællinger du opretter i forbindelse med indtastninger i MitAtlas.</li>
+                    <li>Logning af fejl og andre handlinger på websitet</li>
+                </ul>
+                <h3>Hvordan indsamler vi dine data?</h3>
+                <p>HistoriskAtlas.dk indsamler data og behandler data, når du</p>
+                <ul>
+                    <li>Registrerer dig som bruger på MitAtlas</li>
+                    <li>Indtaster eller uploader indhold i MitAtlas.</li>
+                    <li>Bruger eller ser vores hjemmeside</li>
+                </ul>
+                <h3>Hvordan bruger vi dine data?</h3>
+                <p>HistoriskAtlas.dk indsamler dine data, så vi kan:</p>
+                <ul>
+                    <li>Administrere din konto.</li>
+                    <li>Sende dig en e-mail med oplysninger vdr. din konto eller vigtige meddeleser om driften af HistoriskAtlas.dk.</li>
+                    <li>Vise dine indtastninger og uploads offentligt, når du har valgt at publicere disse.</li>
+                    <li>Fejlfinde og hjælpe dig vedrørende brug af websitet.</li>
+                </ul>
+                <h3>Hvordan gemmer vi dine data?</h3>
+                <p>HistoriskAtlas.dk gemmer sikkert dine data hos Amazon AWS på en server i Irland. Kommunikation med serveren foregår over en sikker forbindelse og kritiske data (adgangskoder) gemmes krypteret.</p>
+                <p>Vælger du at melde dig ud af HistoriskAtlas.dk, sletter vi dine personlige oplysninger.</p>
+                <h3>Marketing</h3>
+                <p>HistoriskAtlas.dk vil gerne sende dig informationer om nye tiltag på websitet eller andre aktiviteter relateret til HistoriskAtlas.dk.</p>
+                <p>Du har til enhver tid ret til at stoppe HistoriskAtlas.dk fra at kontakte dig til markedsføringsformål. Hvis du ikke længere ønsker at blive kontaktet til markedsføringsformål, klik venligst her.</p>
+                <h3>Hvad er dine databeskyttelsesrettigheder?</h3>
+                <p>HistoriskAtlas.dk vil gerne sikre, at du er fuldt ud klar over alle dine databeskyttelsesrettigheder. Hver bruger har ret til følgende:</p>
+                <p><strong>Retten til adgang</strong> – Du har ret til at anmode HistoriskAtlas.dk om kopier af de personlige data vi opbevarer om dig.</p>
+                <p><strong>Retten til berigtigelse</strong> – Du har ret til at anmode om, at HistoriskAtlas.dk korrigerer oplysninger vi har om dig, som du mener er unøjagtige. Du har også ret til at anmode HistoriskAtlas.dk om at udfylde de oplysninger vi har om dig, som du mener er ufuldstændige.</p>
+                <p><strong>Retten til at blive slettet</strong> – Du har ret til at anmode om, at HistoriskAtlas.dk sletter dine personlige oplysninger.</p>
+                <p><strong>Retten til at begrænse behandlingen</strong> – Du har ret til at anmode om, at HistoriskAtlas.dk begrænser behandlingen af ​​dine personoplysninger.</p>
+                <p><strong>Ret til indsigelse mod forarbejdning</strong> – Du har ret til at gøre indsigelse mod HistoriskAtlas.dk's behandling af dine personoplysninger.</p>
+                <p><strong>Retten til dataoverførbarhed</strong> – Du har ret til at anmode om, at HistoriskAtlas.dk overfører de personlige oplysninger, vi har indsamlet om dig til en anden organisation, eller direkte til dig.</p>
+                <p>Hvis du ønsker at benytte dig af nogle af ovenstående rettigheder, så bedes du kontakte os på vores email: info@historiskatlas.dk. Vi har en måned til at reagere på din henvendelse.</p>
+                <h3>Cookies</h3>
+                <p>Cookies er tekstfiler, der er placeret på din computer for at indsamle og logge oplysninger om besøgendes adfærd. Når du besøger vores website, indsamler vi oplysninger om dig automatisk via cookies eller lignende teknologi.</p>
+                <p>For yderligere information, besøg <a target="_blank" href="http://allaboutcookies.org">allaboutcookies.org</a>.</p>
+                <h3>Hvordan bruger vi cookies?</h3>
+                <p>HistoriskAtlas.dk bruger cookies til at forbedre din oplevelse på vores website, herunder:</p>
+                <ul>
+                    <li>Holde dig logget ind og huske dine indstillinger</li>
+                    <li>Forstå, hvordan du bruger vores website</li>
+                    <li>Gemme data på din computer, så websitet fungerer bedre ved dårlig eller ingen forbindelse til internettet.</li>
+                </ul>
+                <h3>Hvilke typer cookies bruger vi?</h3>
+                <p>Vores website bruger følgende typer af cookies:</p>
+                <ul>
+                    <li>Funktionalitet – HistoriskAtlas.dk bruger cookies, så vi kan genkende dig på vores website og huske dine tidligere valgte indstillinger. Vi bruger vores egne cookies og cookies fra Google.</li>
+                    <li>Reklame – HistoriskAtlas.dk bruger egne og tredjepartscookies (Google) til at indsamle oplysninger om dit besøg på vores website. Google modtager i den forbindelse information om din browser, IP-adresse og de sider, du besøger på HistoriskAtlas.dk. Er du samtidig med dit besøg logget ind på Google, kan disse data kobles med din profil på denne tjeneste. Dette ligger uden for HistoriskAtlas.dk’s kontrol og er derfor udelukkende et forhold mellem dig og tredjepart.</li>
+                </ul>
+                <h3>Sådan administreres cookies</h3>
+                <p>Du kan indstille din browser til ikke at acceptere cookies, og websitet <a target="_blank" href="http://allaboutcookies.org">allaboutcookies.org</a> fortæller dig, hvordan du fjerner cookies fra din browser. Hvis du slår cookies fra, kan der være dele af vores website der ikke fungerer.</p>
+                <h3>Privatlivspolitik for andre websites som du besøger via vores website</h3>
+                <p>HistoriskAtlas.dk's website indeholder links til andre websites. Vores privatlivspolitik gælder kun for vores website, så hvis du klikker på et link til et andet website, bør du læse deres privatlivspolitik.</p>
+                <h3>Ændringer i vores privatlivspolitik</h3>
+                <p>HistoriskAtlas.dk holder sin privatlivspolitik opdateret og placerer opdateringerne på dette website. Denne privatlivspolitik blev senest opdateret den 13. maj 2019.</p>
+                <h3>Sådan kontaktes vi</h3>
+                <p>Hvis du har spørgsmål om HistoriskAtlas.dk's privatlivspolitik, de data vi opbevarer på dig, eller du gerne vil udøve en af ​​dine databeskyttelsesrettigheder, skal du ikke tøve med at kontakte os.</p>
+                <p>Send en email til: info@historiskatlas.dk</p>
+                <h3>Hvordan kontaktes den relevante myndighed</h3>
+                <p>Du har mulighed for at klage over behandlingen af oplysninger og data vedrørende dig. Klage indgives til Datatilsynet, jf. persondatalovens § 58, stk. 1. Du kan kontakte datatilsynet her: <a target="_blank" href="http://www.datatilsynet.dk">www.datatilsynet.dk</a></p>
             </div>
         </window-basic>
     </template>

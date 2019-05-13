@@ -61,6 +61,19 @@ namespace HistoriskAtlas5.Frontend
         }
 
         [JsonIgnore]
+        public string absUrlPathImage
+        {
+            get
+            {
+                if (geo_images is null)
+                    return "";
+                if (geo_images.Length == 0)
+                    return "";
+                return "https://secureapi.historiskatlas.dk/api/hadb5.image/" + geo_images[0].image.id + "?action=scale&size={640:10000}&scalemode=inner";
+            }
+        }
+
+        [JsonIgnore]
         public List<HATag> tags
         {
             get

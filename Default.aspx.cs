@@ -23,7 +23,7 @@ namespace HistoriskAtlas5.Frontend
             var keylessParameters = GetKeylessParameters();
             
             dev = (Request.QueryString["dev"] != null ? (Request.QueryString["dev"] != "false") : !Request.Url.Host.Contains("historiskatlas.dk"));
-            crawler = Regex.IsMatch(Request.UserAgent, @"bot|crawler", RegexOptions.IgnoreCase);
+            crawler = Regex.IsMatch(Request.UserAgent, @"bot|crawler|facebook", RegexOptions.IgnoreCase);
             embed = keylessParameters.Contains("embed");
 
             stateObject = new Dictionary<string, string>();
@@ -47,6 +47,8 @@ namespace HistoriskAtlas5.Frontend
 
             passedTag = GetTag(deep);
             passedTheme = GetTheme(deep);
+
+            DataBind();
         }
 
         private List<string> GetKeylessParameters()
@@ -65,6 +67,21 @@ namespace HistoriskAtlas5.Frontend
                 HttpContext.Current.Response.RedirectPermanent(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/" + a[a.Length - 1], true);
 
             return (a[1].ToLower() != "default.aspx") ? a[1] : "";
+        }
+
+        public new string Title {
+            get
+            {
+                return (passedGeo == null ? (passedTag == null ? "" : htmlEncode(passedTag.plurName) + " | ") : htmlEncode(passedGeo.title) + " | ") + "Historisk Atlas";
+            }
+        }
+
+        public string ImageURL
+        {
+            get
+            {
+                return passedGeo == null ? "/images/appicons/logo-1000x1000.png" : passedGeo.absUrlPathImage;
+            }
         }
 
         private HAGeo GetGeo(string deep)

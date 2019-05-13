@@ -8,12 +8,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
     <meta name="description" content="<%=(passedGeo == null ? "G&aring; p&aring; opdagelse i historiske kort og udforsk din lokale kulturarv." : htmlEncode(passedGeo.intro))%>" />
-    <title><%=(passedGeo == null ? (passedTag == null ? "" : htmlEncode(passedTag.plurName) + " | ") : htmlEncode(passedGeo.title) + " | ")%>Historisk Atlas</title>
+    <title><%=Title%></title>
 
 <!--#region appicon -->
     <meta name="application-name" content="Historisk Atlas" />
-    <meta property="og:title" content="Historisk Atlas" />
-    <meta property="og:image" content="/images/appicons/logo-1000x1000.png" />
+    <meta property="og:title" content="<%# Title%>" />
+    <meta property="og:image" content="<%# ImageURL%>" />
     <link rel="icon" href="favicon.ico" />
     <link rel="icon" type="image/png" href="/images/appicons/favicon-16x16.png" sizes="16x16" />
     <link rel="icon" type="image/png" href="/images/appicons/favicon-32x32.png" sizes="32x32" />

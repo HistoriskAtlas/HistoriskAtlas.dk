@@ -33,9 +33,10 @@
             <paper-input id="inputPassword1" label="Adgangskode" required minlength="6" error-message="[[passwordErrorMessage(password1)]]" value="{{password1}}" type="password"></paper-input>
             <paper-input id="inputPassword2" label="Gentag adgangskode" required minlength="6" error-message="[[passwordErrorMessage(password2)]]" value="{{password2}}" type="password"></paper-input>
         </div>
-        <div style="margin-top:30px; align-self:center; font-size:13px">
+        <div style="margin-top: 20px; align-self: center; font-size: 13px; line-height: 12px;">
             <paper-checkbox checked="{{accepted}}">Jeg har læst og accepteret&nbsp;</paper-checkbox>
-            <span class="link" on-tap="termsOfUseTap">brugsbetingelserne</span>
+            <span class="link" on-tap="termsOfUseTap">brugsbetingelserne</span> samt
+            <div class="link" on-tap="privacyTap" style="text-align:right">cookie- og privatlivspolitikken</div>
         </div>
         <paper-button id="createUser" class="HAPrimColor" style="margin-top:10px" on-tap="createUser">opret bruger</paper-button>
 
