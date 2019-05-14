@@ -28,6 +28,12 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
     @property({ type: Number, value: 1 })
     public kind: number;
 
+    @property({ type: Boolean, value: false })
+    public deleted: boolean;
+
+    @property({ type: Boolean, value: false })
+    public inactive: boolean;
+
     @property({ type: Number, notify: true })
     public selectedTab: number;
 
@@ -43,6 +49,8 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
     }
 
     @observe('kind')
+    @observe('deleted')
+    @observe('inactive')
     @observe('roleIDFilter')
     kindChanged(newValue: any, oldValue: any) {
         if (oldValue == undefined)
@@ -71,7 +79,8 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
                 }
             ),
             'count': 'all',
-            'deleted': 'any'
+            'isactive': this.inactive ? 'any' : 'true',
+            'deleted': this.deleted ? 'any' : 'no',
         }, (result) => {
             this.updateUsers(result.data);
         })

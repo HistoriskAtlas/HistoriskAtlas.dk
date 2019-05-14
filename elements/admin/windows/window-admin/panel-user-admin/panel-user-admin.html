@@ -81,7 +81,7 @@
                 --paper-input-container-input: {
                     font-size: 13px;
                 }
-                width: 110px;
+                width: 130px;
             }
             paper-item {
                 font-size: 13px;
@@ -119,6 +119,25 @@
                 cursor: pointer;
                 color: #005b9c;
             }
+            paper-checkbox {
+                --paper-checkbox-unchecked-color: var(--light-gray-color);
+                --paper-checkbox-unchecked-background-color: var(--light-gray-color);
+                /*--paper-checkbox-checked-color: var(--primary-color);*/
+                --paper-checkbox-size: 14px; /*was 13px*/
+            }
+            paper-checkbox.deleted-checkbox {
+                --paper-checkbox-checked-color: red;
+            }
+            paper-checkbox.inactive-checkbox {
+                --paper-checkbox-checked-color: darkviolet;
+            }
+            .checkbox-container {
+                display: flex;
+                align-items: center
+            }
+            .checkbox-container > *:first-child {
+                margin-right: 5px;
+            }
         </style>
 
         <panel-admin id="admin" items="{{users}}" item="{{user}}">
@@ -132,13 +151,20 @@
                         <paper-item>alle roller</paper-item>
                     </paper-listbox>
                 </paper-dropdown-menu>
-                <paper-dropdown-menu no-label-float>
+                <paper-dropdown-menu no-label-float style="margin-right:10px">
                     <paper-listbox class="dropdown-content" selected="{{kind}}">
-                        <paper-item>alle brugere</paper-item>
+                        <paper-item>alle brugertyper</paper-item>
                         <paper-item>professionelle</paper-item>
-                        <!--<paper-item>borgere</paper-item> API not possible (not exists)-->
                     </paper-listbox>
                 </paper-dropdown-menu>
+                <div class="checkbox-container">
+                    <div>Slettede</div>
+                    <paper-checkbox noink checked="{{deleted}}" class="deleted-checkbox"></paper-checkbox>
+                </div>
+                <div class="checkbox-container">
+                    <div>Inaktive</div>
+                    <paper-checkbox noink checked="{{inactive}}" class="inactive-checkbox"></paper-checkbox>
+                </div>
             </div>
 
             <div class="list">
