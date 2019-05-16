@@ -68,8 +68,7 @@
                 height: 100%;
             }
 
-            .showGeos {
-                text-align: right;
+            .text-link {
                 cursor: pointer;
                 color: #005b9c;
             }
@@ -132,7 +131,9 @@
                     </div>
                     <div style="font-weight: bold; font-size:16px">[[institution.tag.plurname]]</div>
                     <div>[[institution.geoviews]] fortællingsvisninger<br>(siden 19/4 2018)</div>
-                    <div class="showGeos" on-tap="showGeos">vis fortællinger</div>
+                    <div style="text-align: right">
+                        <span class="text-link" on-tap="showGeos">vis fortællinger</span> | <span class="text-link" on-tap="delete">slet</span>
+                    </div>
                     <dropdown-input label="type" selected="{{institution.type}}">
                         <template is="dom-repeat" items="[[instTypes]]">
                             <paper-item>[[item]]</paper-item>

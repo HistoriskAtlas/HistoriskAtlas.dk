@@ -2,7 +2,7 @@
 
     private static pendingServiceCalls: Array<() => void> = [];
     private static timeoutToken: number;
-    private static loadingText: string = 'Kommunikerer med serveren...';
+    private static loadingText: string = 'Kommunikerer med serveren';
 
     public static insert(service: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null) {
         data.action = 'add';
@@ -19,36 +19,36 @@
         this.pushServiceCall(() => this.serviceCall(service + '.json', data, success, error, true));
     }
 
-    public static get(service: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null) {
-        this.pushServiceCall(() => this.serviceCall(service + '.json', data, success, error, true));
+    public static get(service: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null) {
+        this.pushServiceCall(() => this.serviceCall(service + '.json', data, success, error, true, message), message);
     }
 
     public static proxy(proxy: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null) {
         this.pushServiceCall(() => this.serviceCall('proxy/' + proxy + '.json', data, success, error, true));
     }
 
-    private static pushServiceCall(serviceCall: () => void) {
+    private static pushServiceCall(serviceCall: () => void, message: string = null) {
         if (App && !this.timeoutToken)
             this.timeoutToken = setTimeout(() => {
-                App.loading.show(this.loadingText);
-            }, 3000)
+                App.loading.show(message == null ? this.loadingText : message);
+            }, message == null ? 3000 : 100)
 
         this.pendingServiceCalls.push(serviceCall);
         if (this.pendingServiceCalls.length == 1)
             serviceCall();
     }
 
-    private static serviceCall(url: string, data: any, success: (data: any) => any, error: (data: any) => any, async: boolean = false, type: string = "POST") { //RHL: why default to not async.... performance hit...
+    private static serviceCall(url: string, data: any, success: (data: any) => any, error: (data: any) => any, async: boolean = false, message: string = null) { //RHL: why default to not async.... performance hit...
         data.v = 1;
         data.sid = (<any>document).sid;
 
         $.ajax({
-            type: type,
+            type: 'POST',
             url: url.indexOf('hadb5') == -1 ? Common.api + url : Common.baseApi + '/' + url,
             data: data,
             timeout: 10000,
             async: async,
-            success: (data) => {
+            success: (data) => ((data, succesMessage) => {
                 if (data.status != 'Success' && error)
                     error(data); //Soft error
                 else if (success)
@@ -59,8 +59,8 @@
                 if (this.pendingServiceCalls.length > 0)
                     this.pendingServiceCalls[0]();
 
-                this.hideLoading();
-            },
+                this.hideLoading(succesMessage);
+            })(data, message),
             error: (jqXHR: JQueryXHR, textStatus: string, errorThrown: string) => {
                 //Hard error
                 Common.dom.append(DialogAlert.create('Der opstod en fejl ved kommunikation med serveren. Hvis du oplever denne fejl gentagne gange, vil vi gerne høre om det på it@historiskatlas.dk', () => {
@@ -72,13 +72,14 @@
     }
 
 
-    private static hideLoading() {
+    private static hideLoading(message: string = null) {
         if (App && this.pendingServiceCalls.length == 0) {
             clearTimeout(this.timeoutToken);
             this.timeoutToken = null;
-            App.loading.hide(this.loadingText)
+            App.loading.hide(message == null ? this.loadingText : message)
             //this.loadingText = null;
-        }
+        } else if (App && message != null)
+            App.loading.hide(message)
     }
 
     private static toURLParams(obj, q?) {

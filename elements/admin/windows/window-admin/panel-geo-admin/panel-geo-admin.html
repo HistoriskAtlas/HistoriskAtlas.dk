@@ -102,8 +102,8 @@
                 font-weight: bold;
                 border-top: 1px solid lightgrey;
             }
-            .more {
-                padding-left: 10px;
+            .footer-link {
+                margin-left: 10px;
                 cursor: pointer;
                 color: #005b9c;
             }
@@ -153,7 +153,9 @@
                 </iron-list>
                 <div class="footer">
                     <span>[[geos.length]] fortællinger hentet</span>
-                    <span class="more" on-tap="more">Hent flere</span>
+                    <span class="footer-link" on-tap="more">Hent flere</span>
+                    <span class="footer-link" on-tap="removeInstitution">Fjern institution</span>
+                    <span class="footer-link" on-tap="addInstitution">Tilføj institution</span>
                 </div>
             </div>
 

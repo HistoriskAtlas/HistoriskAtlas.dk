@@ -83,7 +83,7 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
             'deleted': this.deleted ? 'any' : 'no',
         }, (result) => {
             this.updateUsers(result.data);
-        })
+        }, null, "Henter brugere")
     }
 
     public updateUsers(newList: Array<any>) {

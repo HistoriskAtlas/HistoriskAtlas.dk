@@ -48,7 +48,7 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
             this.updateInstitutions(result.data);
             if (callback)
                 callback();
-        })
+        }, null, "Henter institutioner")
     }
 
     public updateInstitutions(newList: Array<any>) {
@@ -68,7 +68,8 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
         this.isGettingInstitution = true;
         Services.get('institution', {
             'schema': '{institution:[id,url,email,{user_institutions:[{user:[id,login,firstname,lastname,deleted]}]},{tag:[id,plurname]}]}',
-            'id': this.institution.id
+            'id': this.institution.id,
+            'deleted': 'any'
         }, (result) => {
             for (var attr in result.data[0])
                 this.set('institution.' + attr, result.data[0][attr])
@@ -109,6 +110,8 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
     }
 
     getAutosuggestSchema(user_institutions: any): string {
+        if (!user_institutions)
+            return;
         var existingIds: Array<number> = [];
         for (var item of user_institutions)
             existingIds.push(item.user.id)
@@ -167,7 +170,6 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
     public createNew() {
         Common.dom.append(DialogText.create('Angiv navnet på den nye institution', (name) => this.newInstitution(name)));
     }
-
     private newInstitution(name: string) {
         var tag: any = {
             plurname: name,
@@ -196,6 +198,33 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
                 })
             })
         })
-    }}
+    }
+
+    public delete() {
+        Services.get('geo', { 
+            'schema': '{geo:{filters:{tag_geo:{tagid:' + this.institution.tag.id + '}},fields:[{collapse:geoid}]}}',
+            'count': 'all'
+        }, (result) => {
+            if (result.data.length == 0)
+                $(this).append(DialogConfirm.create("delete-institution", "Er du sikker på, at du vil slette '" + this.institution.tag.plurname + "'?"));
+            else
+                $(this).append(DialogConfirm.create("modify-geos", "Denne institution har " + result.data.length + " fortælling" + (result.data.length == 1 ? "" : "er") + " tilknyttet. Vil du få dem vist og evt. flytte eller slette dem?"));
+        }, null, "Henter oplysninger")        
+    }
+    @listen('modify-geos-confirmed')
+    private modifyGeos() {
+        this.showGeos();
+    }
+    @listen('delete-institution-confirmed')
+    private deleteInstitution() {
+
+        //TODO................................. really delete it.........................
+
+
+
+        Common.dom.append(DialogAlert.create("Institutionen er slettet!"));
+        this.$.admin.select(null);
+    }
+}
 
 PanelInstitutionAdmin.register();

@@ -33,7 +33,7 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
 
     private isChangingParam: boolean = false;
     private geosPerPage: number = 100;
-    private curPage: number = 0;
+    //private curPage: number = 0;
 
     @observe('selected')
     selectedChanged() {
@@ -87,11 +87,12 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
 
     public fetchGeos(reset: boolean) {
         if (reset) {
-            this.curPage = 0;
+            //this.curPage = 0;
             this.set('geos', []);
         }
 
         var filters: Array<string> = [];
+
         if (this.filter)
             filters.push('title:{like:' + this.filter + '}');
         if (this.institutionTagId > 0)
@@ -99,17 +100,17 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
         if (this.userId > 0)
             filters.push('userid:' + this.userId);
         Services.get('geo', {
-            'schema': '{geo:{' + (filters.length > 0 ? 'filters:{' + filters.join(',') + '},' : '') + 'fields:[id,title,created,views,{tag_geos:[{tag:[plurname,{category:3}]}]},{user:[login,firstname,lastname]}]}}',  //{title:{like:' + this.filter + '}}
-            'count': this.geosPerPage,
-            'skip': this.geosPerPage * this.curPage,
+            'schema': '{geo:{' + (filters.length > 0 ? 'filters:{' + filters.join(',') + '},' : '') + 'fields:[id,title,created,views,{tag_geos:[{tag:[id,plurname,category]}]},{user:[login,firstname,lastname]}]}}',  //{title:{like:' + this.filter + '}}
+            'count': this.institutionTagId > 0 || this.userId > 0 ? 'all' : this.geosPerPage,
+            'skip': this.geos.length,
             'sort': '{' + this.sort + ':' + this.sortDir + '}'
-            }, (result) => {
-                this.updateGeos(result.data);
-                //if (!reset)
-                //    this.$.ironList.scrollTop = this.$.ironList.scrollHeight;
-            })
+        }, (result) => {
+            this.updateGeos(result.data);
+            //if (!reset)
+            //    this.$.ironList.scrollTop = this.$.ironList.scrollHeight;
+        }, null, "Henter fortællinger")
 
-        this.curPage++;
+        //this.curPage++;
     }
     public updateGeos(newList: Array<any>) {
         this.set('geos', this.geos.concat(newList));
@@ -251,6 +252,41 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
 
     more() {
         this.fetchGeos(false)
+    }
+
+    removeInstitution() {
+        var tags = []
+        var tagIds = []
+        var geoCountByTagId = []
+
+        for (var geo of this.geos)
+            for (var tag_geo of geo.tag_geos)
+                if (tag_geo.tag.category == 3) {
+                    if (tagIds.indexOf(tag_geo.tag.id) == -1) {
+                        tagIds.push(tag_geo.tag.id);
+                        tags.push({ id: tag_geo.tag.id, plurName: tag_geo.tag.plurname });
+                    }
+                    if (!geoCountByTagId[tag_geo.tag.id])
+                        geoCountByTagId[tag_geo.tag.id] = 1
+                    else
+                        geoCountByTagId[tag_geo.tag.id]++
+                }
+
+        Common.dom.append(DialogTagSelection.create('Vælg institution der skal fjernes', tags, (tag) => {
+            $(this).append(DialogConfirm.create("remove-institution", "Advarsel! Du er ved at fjerne '" + tag.plurName + "' fra " + geoCountByTagId[tag.id] + " fortællinger. Vil du fortsætte?"));
+        }));
+
+    }
+    @listen('remove-institution-confirmed')
+    removeInstitutionConfirmed() {
+
+        //TODO: remove tag from geos one at a time..........................
+    }
+
+
+    addInstitution() {
+
+        ///TODO.................................................
     }
 }
 

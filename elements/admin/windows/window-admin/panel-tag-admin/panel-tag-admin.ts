@@ -52,7 +52,7 @@ class PanelTagAdmin extends polymer.Base implements polymer.Element {
             'count': 'all'
         }, (result) => {
             this.updateTags(result.data);
-        })
+        }, null, "Henter tags")
     }
 
     public updateTags(newList: Array<any> = null) {
