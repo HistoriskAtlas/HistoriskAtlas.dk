@@ -33,7 +33,10 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
 
     private isChangingParam: boolean = false;
     private geosPerPage: number = 100;
-    //private curPage: number = 0;
+    private tagSelectedForDeletion: any;
+    private geosSelectedForDeletionByTagId: Array<Array<any>>;
+    private tagSelectedForAddition: any;
+    private geosSelected: Array<any>;
 
     @observe('selected')
     selectedChanged() {
@@ -257,7 +260,8 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
     removeInstitution() {
         var tags = []
         var tagIds = []
-        var geoCountByTagId = []
+        //var geoCountByTagId = []
+        this.geosSelectedForDeletionByTagId = [];
 
         for (var geo of this.geos)
             for (var tag_geo of geo.tag_geos)
@@ -266,27 +270,92 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
                         tagIds.push(tag_geo.tag.id);
                         tags.push({ id: tag_geo.tag.id, plurName: tag_geo.tag.plurname });
                     }
-                    if (!geoCountByTagId[tag_geo.tag.id])
-                        geoCountByTagId[tag_geo.tag.id] = 1
+                    if (!this.geosSelectedForDeletionByTagId[tag_geo.tag.id])
+                        this.geosSelectedForDeletionByTagId[tag_geo.tag.id] = [geo];
                     else
-                        geoCountByTagId[tag_geo.tag.id]++
+                        this.geosSelectedForDeletionByTagId[tag_geo.tag.id].push(geo);
                 }
 
         Common.dom.append(DialogTagSelection.create('Vælg institution der skal fjernes', tags, (tag) => {
-            $(this).append(DialogConfirm.create("remove-institution", "Advarsel! Du er ved at fjerne '" + tag.plurName + "' fra " + geoCountByTagId[tag.id] + " fortællinger. Vil du fortsætte?"));
+            this.tagSelectedForDeletion = tag;
+            $(this).append(DialogConfirm.create("remove-institution", "Advarsel! Du er ved at fjerne '" + tag.plurName + "' fra " + this.geosSelectedForDeletionByTagId[tag.id].length + " fortællinger. Vil du fortsætte? (Det kan tage lang tid.)"));
         }));
 
     }
     @listen('remove-institution-confirmed')
     removeInstitutionConfirmed() {
+        App.loading.show("Fjerner institution");
+        this.removeOneInstitution();
+    }
+    removeOneInstitution() {
+        var geos = this.geosSelectedForDeletionByTagId[this.tagSelectedForDeletion.id];
+        var geo = geos.pop();
 
-        //TODO: remove tag from geos one at a time..........................
+        Services.delete('tag_geo', { tagid: this.tagSelectedForDeletion.id, geoid: geo.id, deletemode: 'permanent' }, (result) => {
+            if (geos.length > 0)
+                this.removeOneInstitution();
+            else {
+                App.loading.hide("Fjerner institution");
+                App.toast.show("Institution fjernet for fortællinger!");
+                setTimeout(this.fetchGeos(true), 500);
+            }
+        }, null, "")
+
     }
 
-
     addInstitution() {
+        var tags: Array<HaTag> = [];
+        for (var tag of App.haTags.tags)
+            if (tag.isInstitution)
+                tags.push(tag);
+        tags.sort((a, b) => a.plurName.localeCompare(b.plurName));
 
-        ///TODO.................................................
+        this.geosSelected = [...this.geos];
+
+        Common.dom.append(DialogTagSelection.create('Vælg institution der skal tilføjes', tags, (tag) => {
+            this.tagSelectedForAddition = tag;
+            $(this).append(DialogConfirm.create("add-institution", "Advarsel! Du er ved at tilføje '" + tag.plurName + "' til " + this.geos.length + " fortællinger. Vil du fortsætte? (Det kan tage lang tid.)"));
+        }));
+    }
+    @listen('add-institution-confirmed')
+    addInstitutionConfirmed() {
+        App.loading.show("Tilføjer institution");
+        this.addOneInstitution();
+    }
+    addOneInstitution() {
+        var geo = this.geosSelected.pop();
+        Services.insert('tag_geo', { tagid: this.tagSelectedForAddition.id, geoid: geo.id }, (result) => {
+            if (this.geosSelected.length > 0)
+                this.addOneInstitution();
+            else {
+                App.loading.hide("Tilføjer institution");
+                App.toast.show("Institution tilføjet til fortællinger!");
+                setTimeout(this.fetchGeos(true), 500);
+            }
+        }, null, "")
+    }
+
+    deleteGeos() {
+        $(this).append(DialogConfirm.create("delete-geos", "Advarsel! Du er ved at slette " + this.geos.length + " fortællinger. Vil du fortsætte? (Det kan tage lang tid.)"));
+    }
+    @listen('delete-geos-confirmed')
+    deleteGeosConfirmed() {
+        App.loading.show("Sletter fortællinger");
+        this.geosSelected = [...this.geos];
+        this.deleteOneGeo();
+    }
+    deleteOneGeo() {
+        var geo = this.geosSelected.pop();
+        Services.delete('geo', { id: geo.id }, (result) => {
+            if (this.geosSelected.length > 0)
+                this.deleteOneGeo();
+            else {
+                App.loading.hide("Sletter fortællinger");
+                App.toast.show("Fortællinger slettet!");
+                setTimeout(this.fetchGeos(true), 500);
+            }
+        }, null, "")
+
     }
 }
 

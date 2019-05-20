@@ -4,9 +4,9 @@
     private static timeoutToken: number;
     private static loadingText: string = 'Kommunikerer med serveren';
 
-    public static insert(service: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null) {
+    public static insert(service: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null) {
         data.action = 'add';
-        this.pushServiceCall(() => this.serviceCall(service + '.json', data, success, error, true));
+        this.pushServiceCall(() => this.serviceCall(service + '.json', data, success, error, true, message), message);
     }
 
     public static update(service: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null) {
@@ -14,9 +14,9 @@
         this.pushServiceCall(() => this.serviceCall(service + '.json', data, success, error, true));
     }
 
-    public static delete(service: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null) {
+    public static delete(service: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null) {
         data.action = 'delete';
-        this.pushServiceCall(() => this.serviceCall(service + '.json', data, success, error, true));
+        this.pushServiceCall(() => this.serviceCall(service + '.json', data, success, error, true, message), message);
     }
 
     public static get(service: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null) {
@@ -29,9 +29,10 @@
 
     private static pushServiceCall(serviceCall: () => void, message: string = null) {
         if (App && !this.timeoutToken)
-            this.timeoutToken = setTimeout(() => {
-                App.loading.show(message == null ? this.loadingText : message);
-            }, message == null ? 3000 : 100)
+            if (message != "")
+                this.timeoutToken = setTimeout(() => {
+                    App.loading.show(message == null ? this.loadingText : message);
+                }, message == null ? 3000 : 100)
 
         this.pendingServiceCalls.push(serviceCall);
         if (this.pendingServiceCalls.length == 1)
@@ -76,7 +77,8 @@
         if (App && this.pendingServiceCalls.length == 0) {
             clearTimeout(this.timeoutToken);
             this.timeoutToken = null;
-            App.loading.hide(message == null ? this.loadingText : message)
+            if (message != "")
+                App.loading.hide(message == null ? this.loadingText : message)
             //this.loadingText = null;
         } else if (App && message != null)
             App.loading.hide(message)
