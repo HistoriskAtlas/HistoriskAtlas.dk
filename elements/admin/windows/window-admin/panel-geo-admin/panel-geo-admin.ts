@@ -95,7 +95,6 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
         }
 
         var filters: Array<string> = [];
-
         if (this.filter)
             filters.push('title:{like:' + this.filter + '}');
         if (this.institutionTagId > 0)
@@ -103,7 +102,7 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
         if (this.userId > 0)
             filters.push('userid:' + this.userId);
         Services.get('geo', {
-            'schema': '{geo:{' + (filters.length > 0 ? 'filters:{' + filters.join(',') + '},' : '') + 'fields:[id,title,created,views,{tag_geos:[{tag:[id,plurname,category]}]},{user:[login,firstname,lastname]}]}}',  //{title:{like:' + this.filter + '}}
+            'schema': '{geo:{' + (filters.length > 0 ? 'filters:{' + filters.join(',') + '},' : '') + 'fields:[id,title,created,views,deleted,{tag_geos:[{tag:[id,plurname,category]}]},{user:[login,firstname,lastname]}]}}',  //{title:{like:' + this.filter + '}}
             'count': this.institutionTagId > 0 || this.userId > 0 ? 'all' : this.geosPerPage,
             'skip': this.geos.length,
             'sort': '{' + this.sort + ':' + this.sortDir + '}'

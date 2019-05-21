@@ -206,7 +206,7 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
             'count': 'all'
         }, (result) => {
             if (result.data.length == 0)
-                $(this).append(DialogConfirm.create("delete-institution", "Er du sikker på, at du vil slette '" + this.institution.tag.plurname + "'?"));
+                $(this).append(DialogConfirm.create("delete-institution", "ADVARSEL! Du er ved at slette '" + this.institution.tag.plurname + "'. Vil du fortsætte?"));
             else
                 $(this).append(DialogConfirm.create("modify-geos", "Denne institution har " + result.data.length + " fortælling" + (result.data.length == 1 ? "" : "er") + " tilknyttet. Vil du få dem vist og evt. flytte eller slette dem?"));
         }, null, "Henter oplysninger")        
@@ -217,13 +217,11 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
     }
     @listen('delete-institution-confirmed')
     private deleteInstitution() {
-
-        //TODO................................. really delete it.........................
-
-
-
-        Common.dom.append(DialogAlert.create("Institutionen er slettet!"));
-        this.$.admin.select(null);
+        Services.delete('institution', { id: this.institution.id }, (result) => {
+            App.toast.show("Institutionen er slettet!");
+            this.$.admin.select(null);
+            this.fetchInstitutions();
+        })      
     }
 }
 
