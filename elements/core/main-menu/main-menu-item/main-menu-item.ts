@@ -2,7 +2,7 @@
 class MainMenuItem extends polymer.Base implements polymer.Element {
 
     @property({ type: String })
-    public title: string;
+    public menuTitle: string;
 
     @property({ type: String })
     public icon: string;
