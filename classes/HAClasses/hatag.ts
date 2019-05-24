@@ -103,6 +103,7 @@
 
         //TODO: Should be part of the buffered loading system in HaGeos.......
         App.haGeos.updateShownGeos(idsChanged, val);
+        App.haTags.updateSelectedTagNames(this.category);
 
 
 
@@ -158,10 +159,20 @@
     }
 
     public get allChildrenSelected(): boolean {
-        for (var child of this.children)
+        for (var child of this._children)
             if (!child.selected)
                 return false;
         return true;
+    }
+
+    public get parentSelected(): boolean {
+        if (this.isTop)
+            return App.haTags.tagTops[this.category].selected;
+
+        for (var parent of this._parents)
+            if (parent.selected)
+                return true;
+        return false;
     }
 
     get isSubject(): boolean {

@@ -93,18 +93,7 @@ class PanelTag extends polymer.Base implements polymer.Element {
     }
 
     private toggle() {
-        IconLayer.updateDisabled = true;
-        //App.haTags.tags.forEach((tag: HaTag) => {
-        //    if (tag.isTop)
-        //        if (tag.category == this.tagCategory)
-        //            tag.selected = selected;
-        //});
-
-        //HaTags.tagTop[this.tagCategory].selected = selected;
-        this.set('tagTops.' + this.tagCategory + '.selected', !this.tagTopSelected(this.tagTops));
-
-        IconLayer.updateDisabled = false;
-        IconLayer.updateShown();
+        App.haTags.toggleTop(this.tagCategory, !this.tagTopSelected(this.tagTops));
     }
 
 }

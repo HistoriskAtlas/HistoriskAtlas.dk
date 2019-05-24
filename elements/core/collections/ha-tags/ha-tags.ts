@@ -9,6 +9,9 @@ class HaTags extends polymer.Base implements polymer.Element {
     @property({ type: Object, notify: true }) //Not used yet
     public passedTag: HaTag;
 
+    @property({ type: Array, notify: true, value: [] })
+    public selectedTagNames: Array<string>;
+
     //@property({ type: Boolean })
     //public beingIndexed: boolean;
 
@@ -116,6 +119,8 @@ class HaTags extends polymer.Base implements polymer.Element {
         if (App.passed.tag)
             this.passedTag = this.byId[App.passed.tag.id];
 
+        this.updateSelectedTagNames(9);
+        this.updateSelectedTagNames(10);
         this.loadMarkers();
     }
 
@@ -437,6 +442,72 @@ class HaTags extends polymer.Base implements polymer.Element {
     //public includeInSitemap(tag: HaTag): boolean {
     //    return this.passedTag ? tag.isChildOf(this.passedTag) : (tag.isTop && tag.category == 9); //only subjects for now
     //}
+
+    public updateSelectedTagNames(category: number) {
+
+        if (this.tagTops[category].selected) {
+            this.set(['selectedTagNames', category], "Alle" + category); //HACK... observes didn't fire when set to the same value as other in the array....
+            this.set(['selectedTagNames', category], "Alle");
+            return;
+        }
+
+        var selectedTags: Array<string> = [];
+        //var selectedTagTopChildren: Array<string> = [];
+        for (var tag of this.tags)
+            if (tag.category == category && tag.selected)
+                if (!tag.parentSelected) {
+                    selectedTags.push(tag.plurName);
+                    //if (tag.isTop)
+                    //    selectedTagTopChildren.push(tag.plurName);
+                }
+
+        //if (selectedTagTopChildren.length == selectedTags.length) {
+        //    selectedTags = "Alle pånær ";
+        //}
+
+        if (selectedTags.length == 0) {
+            this.set(['selectedTagNames', category], '' + category); //HACK... observes didn't fire when set to the same value as other in the array....
+            this.set(['selectedTagNames', category], '');
+            return;
+        }
+
+        if (selectedTags.length == 1) {
+            this.set(['selectedTagNames', category], selectedTags[0]);
+            return;
+        }
+
+        selectedTags.sort();
+
+        if (selectedTags.length > 3) {
+            this.set(['selectedTagNames', category], selectedTags.slice(0, 3).join(", ") + "...");
+            return;
+        }
+
+        this.set(['selectedTagNames', category], selectedTags.slice(0, selectedTags.length - 1).join(", ") + ' og ' + selectedTags[selectedTags.length - 1]);
+        return;
+    }
+
+    public toggleTop(category: number, value: boolean) {
+        IconLayer.updateDisabled = true;
+        //App.haTags.tags.forEach((tag: HaTag) => {
+        //    if (tag.isTop)
+        //        if (tag.category == this.tagCategory)
+        //            tag.selected = selected;
+        //});
+
+        //HaTags.tagTop[this.tagCategory].selected = selected;
+
+        if (this.tagTops[category].selected != value)
+            this.set('tagTops.' + category + '.selected', value);
+        else {
+            this.set('tagTops.' + category + '.selected', !value);
+            this.set('tagTops.' + category + '.selected', value);
+        }
+
+
+        IconLayer.updateDisabled = false;
+        IconLayer.updateShown();
+    }
 
 }
 

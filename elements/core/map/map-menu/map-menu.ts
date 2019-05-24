@@ -13,6 +13,9 @@ class MapMenu extends polymer.Base implements polymer.Element {
     @property({ type: Object, notify: true })
     public theme: ITheme;    
 
+    @property({ type: Array })
+    public selectedTagNames: Array<string>;
+
     @property({ type: Boolean, value: false })
     public lift: boolean;
 
@@ -89,6 +92,20 @@ class MapMenu extends polymer.Base implements polymer.Element {
             this.toggleDrawer('showMenuDigDag');
     }
 
+    buttonSubjectsTap(e: any) {
+        if (e.target.localName == 'iron-icon')
+            App.haTags.toggleTop(9, false);
+        else
+            this.toggleDrawer('showMenuSubjects');
+    }
+
+    buttonPeriodsTap(e: any) {
+        if (e.target.localName == 'iron-icon')
+            App.haTags.toggleTop(10, false);
+        else
+            this.toggleDrawer('showMenuPeriods');
+    }
+
     buttonThemeTap(e: any) {
         if (e.target.localName == 'iron-icon')
             this.theme = Global.defaultTheme;
@@ -132,6 +149,15 @@ class MapMenu extends polymer.Base implements polymer.Element {
     showTheme(theme: ITheme): boolean {
         return theme.id != 'default';
     }
+
+    showTags(category: number): boolean {
+        return !!this.selectedTagNames[category];
+    }
+
+    TagNames(category: number): string {
+        return this.selectedTagNames[category];
+    }
+
 
     //text(map: HaMap, licensee: string, orgSource: string, about: string): string {
     //    var result = [];

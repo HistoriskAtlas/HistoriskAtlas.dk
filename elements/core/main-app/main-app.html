@@ -205,7 +205,7 @@
     <template>
         <global-app year="{{year}}" time-warp-year="{{timeWarpYear}}" time-line-active="{{timeLineActive}}" routes-active="{{routesActive}}" time-warp-active="{{timeWarpActive}}" time-warp-mode="{{timeWarpMode}}" map-rotation="{{mapRotation}}" user-creators="[[userCreators]]" prof-creators="[[profCreators]]" theme="{{theme}}" map="{{mainMap}}" user-just-activated="{{userJustActivated}}" user-just-reset-password="{{userJustResetPassword}}"></global-app>
         <ha-maps maps="{{maps}}" main-map="{{mainMap}}" time-warp-map="{{timeWarpMap}}"></ha-maps>
-        <ha-tags tags="{{tags}}" tag-tops="{{tagTops}}"></ha-tags>
+        <ha-tags tags="{{tags}}" tag-tops="{{tagTops}}" selected-tag-names="{{selectedTagNames}}"></ha-tags>
         <ha-geos geos="{{geos}}" year="[[year]]" time-warp-year="[[timeWarpYear]]" time-line-active=[[timeLineActive]] user-creators="[[userCreators]]" prof-creators="[[profCreators]]" theme="[[theme]]"></ha-geos>
         <ha-regions type="[[regionType]]"></ha-regions>
         <ha-users user="{{user}}"></ha-users>
@@ -281,7 +281,7 @@
                     <img class="nordeaLogo" src="../../images/logos/nordea-fonden-white-logo.png"/>
                     <time-warp-closed time-warp-active="{{timeWarpActive}}"></time-warp-closed>
                     <map-tooltip></map-tooltip>
-                    <map-menu main map="{{mainMap}}" region-type="{{regionType}}" theme="{{theme}}" lift="[[timeLineActive]]" drawer-open="{{drawerOpen}}" selected="{{selectedLeftPanel}}" show-main-menu="{{showMainMenu}}"></map-menu>
+                    <map-menu main map="{{mainMap}}" region-type="{{regionType}}" theme="{{theme}}" selected-tag-names="{{selectedTagNames}}" lift="[[timeLineActive]]" drawer-open="{{drawerOpen}}" selected="{{selectedLeftPanel}}" show-main-menu="{{showMainMenu}}"></map-menu>
                     <map-controls lift="[[timeLineActive]]" map-rotation="[[mapRotation]]" time-warp-active="{{timeWarpActive}}"></map-controls>
                     <map-about map=[[mainMap]] time-warp-map="[[timeWarpMap]]" time-warp-mode="[[timeWarpMode]]"></map-about>
                     <time-lines active="[[timeLineActive]]" time-warp-active="[[timeWarpActive]]" nudge="[[drawerOpen]]" touch-device="[[touchDevice]]" year="{{year}}" time-warp-year="{{timeWarpYear}}"></time-lines>

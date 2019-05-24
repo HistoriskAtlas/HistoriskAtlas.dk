@@ -26,12 +26,12 @@
                 margin-left: 5px;
                 font-weight: bold;
             }
-            .map-title {
+            .info-title {
                 margin-left: 5px;
                 min-width: 0;
                 overflow: hidden;
             }
-            .map-year {
+            .info-year {
                 margin-left: 5px;
                 margin-right: 5px;
                 flex-grow: 1;
@@ -95,7 +95,21 @@
                 <paper-button id="buttonDigDag" raised hidden$="[[!showDigDag(regionType)]]" on-tap="buttonDigDagTap">
                     <div class="info">
                         <span class="label">GRÆNSER</span>
-                        <span class="map-title">[[regionType.name]]</span>
+                        <span class="info-title">[[regionType.name]]</span>
+                        <iron-icon icon="close"></iron-icon>
+                    </div>
+                </paper-button>
+                <paper-button id="buttonSubjects" raised hidden$="[[!showTags(9,selectedTagNames.*)]]" on-tap="buttonSubjectsTap">
+                    <div class="info">
+                        <span class="label">EMNER</span>
+                        <span class="info-title">[[TagNames(9,selectedTagNames.*)]]</span>
+                        <iron-icon icon="close"></iron-icon>
+                    </div>
+                </paper-button>
+                <paper-button id="buttonPeriods" raised hidden$="[[!showTags(10,selectedTagNames.*)]]" on-tap="buttonPeriodsTap">
+                    <div class="info">
+                        <span class="label">PERIODER</span>
+                        <span class="info-title">[[TagNames(10,selectedTagNames.*)]]</span>
                         <iron-icon icon="close"></iron-icon>
                     </div>
                 </paper-button>
@@ -103,8 +117,8 @@
             <paper-button id="button" raised="[[raised]]" class$="[[buttonClass(main)]]">
                 <div class="info">
                     <span class="label">KORT</span>
-                    <span class="map-title">[[map.title]]</span>
-                    <span class="map-year">[[year(map.orgStartYear,map.orgEndYear)]]</span>
+                    <span class="info-title">[[map.title]]</span>
+                    <span class="info-year">[[year(map.orgStartYear,map.orgEndYear)]]</span>
                     <iron-icon icon="paper-dropdown-menu:arrow-drop-down" style="flex-shrink:0"></iron-icon>
                 </div>
             </paper-button>
@@ -112,7 +126,7 @@
                 <paper-button id="buttonTheme" raised hidden$="[[!showTheme(theme)]]" on-tap="buttonThemeTap">
                     <div class="info">
                         <span class="label">TEMA</span>
-                        <span class="map-title">[[theme.name]]</span>
+                        <span class="info-title">[[theme.name]]</span>
                         <iron-icon icon="close"></iron-icon>
                     </div>
                 </paper-button>
