@@ -27,7 +27,7 @@
             -webkit-justify-content: flex-end;
             justify-content: flex-end;            
         }
-        .searching {
+        .message {
             text-align: center;
             font-style: italic;
             font-weight: bold;
@@ -79,7 +79,7 @@
             <div class="cql">
                 <div class="cql-header" on-tap="toggleCqlTap"><iron-icon icon="[[toggleIcon(showCql)]]"></iron-icon>Søgestreng</div>
                 <template is="dom-if" if="[[showCql]]">
-                    <plain-text content="{{immediatecql}}" editable placeholder="CQL søgestreng" maxlength="512"></plain-text>
+                    <plain-text id="cqlInput" content="{{immediatecql}}" editable placeholder="CQL søgestreng" maxlength="512"></plain-text>
                     <div class="buttons">
                         <paper-button on-tap="search">Søg</paper-button>
                     </div>
@@ -87,8 +87,13 @@
             </div>
         </template>
         <template is="dom-if" if="[[searching]]">
-            <div class="searching">
+            <div class="message">
                 Søger efter litteratur...
+            </div>
+        </template>
+        <template is="dom-if" if="[[errorMessage]]">
+            <div class="message">
+                [[errorMessage]]
             </div>
         </template>
         <template id="biblioRepeat" is="dom-repeat" items="[[biblios]]" as="biblio">

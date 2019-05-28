@@ -13,6 +13,9 @@ class WindowGeoBiblio extends polymer.Base implements polymer.Element {
     @property({ type: Boolean })
     public searching: boolean;
 
+    @property({ type: String })
+    public errorMessage: string;
+
     @property({ type: Boolean })
     public editing: boolean;
 
@@ -41,7 +44,9 @@ class WindowGeoBiblio extends polymer.Base implements polymer.Element {
         }
         this._closingItem = false;
         if (!this.url)
-            this.url = location.protocol + '//' + (Common.isDevOrBeta ? 'beta.' : '') + 'historiskatlas.dk/proxy/biblio.json'
+            this.url = './proxy/biblio.json'
+            //this.url = location.protocol + '//' + (Common.isDevOrBeta ? 'beta.' : '') + 'historiskatlas.dk/proxy/biblio.json'
+        this.errorMessage = '';
         this.$.ajax.generateRequest();
     }
 
@@ -53,6 +58,15 @@ class WindowGeoBiblio extends polymer.Base implements polymer.Element {
         this.searching = false;
         var data = this.$.ajax.lastResponse;
         this.biblios = data.biblios;
+        if (this.editing) {
+            this.errorMessage = data.errorMessage;
+            var cqlInput = <PlainText>this.$$('#cqlInput');
+            if (cqlInput) {
+                this.immediatecql = data.CQL;
+                if (data.errorPos)
+                    cqlInput.setPos(data.errorPos);
+            }
+        }
     }
 
     secondLine(creator: string, date: string, format: string): string {

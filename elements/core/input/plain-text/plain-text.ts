@@ -125,6 +125,13 @@ class PlainText extends polymer.Base implements polymer.Element {
         this.fire('read-more-tapped');
     }
 
+    public setPos(pos: number) {
+        var textarea = <HTMLTextAreaElement>this.$$('#content').textarea;
+        textarea.focus();
+        textarea.selectionStart = pos;
+        textarea.selectionEnd = pos + 1;
+    }
+
 }
 
 PlainText.register();

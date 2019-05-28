@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Routing;
 using System.Xml;
@@ -63,10 +64,30 @@ namespace HistoriskAtlas5.Frontend
 
                 XmlNode result = doc.SelectSingleNode(@"SOAP-ENV:Envelope/SOAP-ENV:Body/x:searchResponse/x:result", xmlnsManager);
 
-                if (result == null)
-                    return new HABiblioSearchResult(0); /*, doc.InnerXml*/
+                if (result == null) {
+                    var error = doc.SelectSingleNode(@"SOAP-ENV:Envelope/SOAP-ENV:Body/x:searchResponse/x:error", xmlnsManager).InnerText;
+                    var errorPos = 0;
+                    var matchPos = new Regex("at pos ([0-9]*)").Match(error);
 
-                HABiblioSearchResult HABiblioSearchResult = new HABiblioSearchResult(Int32.Parse(result.SelectSingleNode("x:collectionCount", xmlnsManager).InnerText));
+                    if (matchPos.Success)
+                        errorPos = int.Parse(matchPos.Groups[1].Value);
+
+                    var matchUnsupported = new Regex("Unsupported index \\((.*?)\\)").Match(error);
+                    if (matchUnsupported.Success)
+                        error = matchUnsupported.Groups[1].Value + " er ikke understøttet";
+
+                    var matchParentheses = new Regex("unsupported use of parentheses").Match(error);
+                    if (matchParentheses.Success)
+                        error = "Ikke understøttet brug af parenteser";
+
+                    var matchSyntax = new Regex("syntax error").Match(error);
+                    if (matchSyntax.Success)
+                        error = "Syntaks fejl";
+
+                    return new HABiblioSearchResult(0, CQL, error, errorPos);
+                }
+
+                HABiblioSearchResult HABiblioSearchResult = new HABiblioSearchResult(Int32.Parse(result.SelectSingleNode("x:collectionCount", xmlnsManager).InnerText), CQL);
 
                 foreach (XmlNode searchResult in result.SelectNodes("x:searchResult", xmlnsManager))
                 {
@@ -122,13 +143,17 @@ namespace HistoriskAtlas5.Frontend
     {
         public int count;
         public string errorMessage;
+        public int errorPos;
         public List<HABiblio> biblios;
+        public string CQL;
 
-        public HABiblioSearchResult(int count, string errorMessage = null)
+        public HABiblioSearchResult(int count, string CQL, string errorMessage = null, int errorPos = 0)
         {
             this.count = count;
             this.errorMessage = errorMessage;
+            this.errorPos = errorPos;
             biblios = new List<HABiblio>();
+            this.CQL = CQL;
         }
     }
 
