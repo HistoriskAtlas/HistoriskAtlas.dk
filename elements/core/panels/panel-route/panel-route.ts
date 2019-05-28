@@ -10,7 +10,7 @@ class PanelRoute extends polymer.Base implements polymer.Element {
     @property({ type: Object, notify: true })
     public collection: HaCollection;
 
-    @property({ type: Array })
+    @property({ type: Array, notify: true })
     public topLevels: Array<ICollectionTopLevel>;
 
     @property({ type: Boolean})
@@ -29,15 +29,15 @@ class PanelRoute extends polymer.Base implements polymer.Element {
 
     constructor() {
         super();
-        this.topLevels = [
-            { name: 'I bil', shown: false, selected: false, filter: (collection: HaCollection) => collection.type == 0, ignoreCreators: false },
-            { name: 'På cykel', shown: false, selected: false, filter: (collection: HaCollection) => collection.type == 1, ignoreCreators: false },
-            { name: 'Til fods', shown: false, selected: false, filter: (collection: HaCollection) => collection.type == 2, ignoreCreators: false },
-            { name: 'spacer', shown: false, selected: false, filter: null, ignoreCreators: false },
-            { name: 'Under 10 km', shown: false, selected: false, filter: (collection: HaCollection) => collection.distance < 10000, ignoreCreators: false },
-            { name: 'Over 10 km', shown: false, selected: false, filter: (collection: HaCollection) => collection.distance >= 10000, ignoreCreators: false },
-            { name: 'spacer', shown: false, selected: false, filter: null, ignoreCreators: false }
-        ]
+        //this.topLevels = [
+        //    { name: 'I bil', shown: false, selected: false, filter: (collection: HaCollection) => collection.type == 0, ignoreCreators: false },
+        //    { name: 'På cykel', shown: false, selected: false, filter: (collection: HaCollection) => collection.type == 1, ignoreCreators: false },
+        //    { name: 'Til fods', shown: false, selected: false, filter: (collection: HaCollection) => collection.type == 2, ignoreCreators: false },
+        //    { name: 'spacer', shown: false, selected: false, filter: null, ignoreCreators: false },
+        //    { name: 'Under 10 km', shown: false, selected: false, filter: (collection: HaCollection) => collection.distance < 10000, ignoreCreators: false },
+        //    { name: 'Over 10 km', shown: false, selected: false, filter: (collection: HaCollection) => collection.distance >= 10000, ignoreCreators: false },
+        //    { name: 'spacer', shown: false, selected: false, filter: null, ignoreCreators: false }
+        //]
     }
 
     @observe('show')

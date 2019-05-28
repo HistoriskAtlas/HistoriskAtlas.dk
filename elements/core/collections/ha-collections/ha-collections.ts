@@ -16,6 +16,21 @@ class HaCollections extends Tags implements polymer.Element {
     @property({ type: Boolean })
     public profCreators: boolean;
 
+    @property({
+        type: Array, notify: true, value: [
+            { name: 'I bil', shown: false, selected: false, filter: (collection: HaCollection) => collection.type == 0, ignoreCreators: false },
+            { name: 'På cykel', shown: false, selected: false, filter: (collection: HaCollection) => collection.type == 1, ignoreCreators: false },
+            { name: 'Til fods', shown: false, selected: false, filter: (collection: HaCollection) => collection.type == 2, ignoreCreators: false },
+            { name: 'spacer', shown: false, selected: false, filter: null, ignoreCreators: false },
+            { name: 'Under 10 km', shown: false, selected: false, filter: (collection: HaCollection) => collection.distance < 10000, ignoreCreators: false },
+            { name: 'Over 10 km', shown: false, selected: false, filter: (collection: HaCollection) => collection.distance >= 10000, ignoreCreators: false },
+            { name: 'spacer', shown: false, selected: false, filter: null, ignoreCreators: false }
+        ] })
+    public topLevels: Array<ICollectionTopLevel>;
+
+    @property({ type: String, notify: true, value: '' })
+    public selectedCollectionNames: string;
+
     private waitingForCallbackCount: number;
     //private drawRouteRequestCount: number = 0;
 
@@ -168,6 +183,9 @@ class HaCollections extends Tags implements polymer.Element {
 
         if (path.length == 3) {
             if (path[2] == 'selected') {
+
+                if (!CollectionList.ignoreCollectionChanges)
+                    this.updateSelectedCollectionNames()
 
                 //var collection: HaCollection = this.collections[path[1].substring(1)];
                 var collection: HaCollection = this.get(path[0] + '.' + path[1]);
@@ -614,6 +632,70 @@ class HaCollections extends Tags implements polymer.Element {
         //TODO: Handling of multiple requests while waiting for callback?....................
         App.map.routeLayer.removeFeatures(collection.features);
     }
+
+    public updateSelectedCollectionNames() {
+
+        var selectedNames = [];
+        var realTopLevelsCount = 0;
+        for (var topLevel of this.topLevels) {
+            if (topLevel.selected)
+                selectedNames.push(topLevel.name.toLocaleLowerCase());
+            if (topLevel.name != 'spacer')
+                realTopLevelsCount++;
+        }
+
+        if (selectedNames.length == realTopLevelsCount) {
+            this.set('selectedCollectionNames', 'Alle');
+            return;
+        } 
+
+        var containedInSelectedTopLevelNames = []
+        for (var topLevel of this.topLevels)
+            if (topLevel.selected && topLevel.filter)
+                for (var collection of this.collections)
+                    if (topLevel.filter(collection))
+                        containedInSelectedTopLevelNames.push(collection.title);
+        
+        for (var topLevel of this.topLevels)
+            if (!topLevel.selected && topLevel.filter)
+                for (var collection of this.collections)
+                    if (topLevel.filter(collection))
+                        if (collection.selected && containedInSelectedTopLevelNames.indexOf(collection.title) == -1 && selectedNames.indexOf(collection.title) == -1)
+                            selectedNames.push(collection.title);
+
+        if (selectedNames.length == 0) {
+            this.set('selectedCollectionNames', '');
+            return;
+        }
+
+        if (selectedNames.length == 1) {
+            this.set('selectedCollectionNames', Common.capitalize(selectedNames[0]));
+            return;
+        }
+
+        if (selectedNames.length > 3) {
+            this.set('selectedCollectionNames', Common.capitalize(selectedNames.slice(0, 3).join(", ") + "..."));
+            return;
+        }
+
+        this.set('selectedCollectionNames', Common.capitalize(selectedNames.slice(0, selectedNames.length - 1).join(", ") + ' og ' + selectedNames[selectedNames.length - 1]));
+    }
+
+    public deselectAll() {
+
+        CollectionList.ignoreCollectionChanges = true;
+
+        for (var collection of this.collections)
+            this.set('collections.' + this.collections.indexOf(collection) + '.selected', false);
+
+        CollectionList.ignoreCollectionChanges = false;
+
+        for (var list of CollectionList.collectionLists)
+            list.updateTopLevelSelections();
+
+        this.updateSelectedCollectionNames();
+    }
+
 
 }
 

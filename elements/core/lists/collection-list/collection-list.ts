@@ -19,8 +19,8 @@ class CollectionList extends polymer.Base implements polymer.Element {
     @property({ type: Boolean })
     public profCreators: boolean;
 
-    private static ignoreCollectionChanges: boolean = false;
-    private static collectionLists: Array<CollectionList> = [];
+    public static ignoreCollectionChanges: boolean = false;
+    public static collectionLists: Array<CollectionList> = [];
 
     ready() {
         CollectionList.collectionLists.push(this); //TODO: remove again?
@@ -55,6 +55,8 @@ class CollectionList extends polymer.Base implements polymer.Element {
 
         for (var list of CollectionList.collectionLists)
             list.updateTopLevelSelections();
+
+        App.haCollections.updateSelectedCollectionNames()
         
         e.cancelBubble = true;
         e.stopPropagation();

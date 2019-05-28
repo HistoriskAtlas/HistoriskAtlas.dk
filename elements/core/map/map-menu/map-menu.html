@@ -39,7 +39,7 @@
                 overflow: hidden;
             }
             paper-button {
-                transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1), ease-in-out 0.3s !important;
+                transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1), ease-in-out 0.3s, height .3s, margin-bottom .3s, padding-bottom .3s, padding-top .3s, opacity 0s .3s !important;
                 display: flex;
                 flex-direction: column;
                 /*align-items: center;*/
@@ -52,10 +52,21 @@
                 pointer-events: all;
                 align-items: stretch;
                 max-width: 100%;
-            }
 
+                height: 31px;
+                opacity: 1;
+            }
             paper-button[elevation="4"] {
                 box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2) !important;
+            }
+            paper-button.collapsed {
+                transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1), ease-in-out 0.3s, height .3s, margin-bottom .3s, padding-bottom .3s, padding-top .3s, opacity 0s !important;
+                visibility: hidden;
+                opacity: 0;
+                height: 0;
+                margin-bottom: 0;
+                padding-bottom: 0;
+                padding-top: 0;
             }
 
             .info {
@@ -92,24 +103,31 @@
 
         <div class$="content [[cssClass(main,lift,drawerOpen)]]">
             <template is="dom-if" if="[[main]]">
-                <paper-button id="buttonDigDag" raised hidden$="[[!showDigDag(regionType)]]" on-tap="buttonDigDagTap">
-                    <div class="info">
-                        <span class="label">GRÆNSER</span>
-                        <span class="info-title">[[regionType.name]]</span>
-                        <iron-icon icon="close"></iron-icon>
-                    </div>
-                </paper-button>
-                <paper-button id="buttonSubjects" raised hidden$="[[!showTags(9,selectedTagNames.*)]]" on-tap="buttonSubjectsTap">
+                <paper-button id="buttonSubjects" raised on-tap="buttonSubjectsTap" class$="[[classTags(9,selectedTagNames.*)]]">
                     <div class="info">
                         <span class="label">EMNER</span>
                         <span class="info-title">[[TagNames(9,selectedTagNames.*)]]</span>
                         <iron-icon icon="close"></iron-icon>
                     </div>
                 </paper-button>
-                <paper-button id="buttonPeriods" raised hidden$="[[!showTags(10,selectedTagNames.*)]]" on-tap="buttonPeriodsTap">
+                <paper-button id="buttonPeriods" raised on-tap="buttonPeriodsTap" class$="[[classTags(10,selectedTagNames.*)]]">
                     <div class="info">
                         <span class="label">PERIODER</span>
                         <span class="info-title">[[TagNames(10,selectedTagNames.*)]]</span>
+                        <iron-icon icon="close"></iron-icon>
+                    </div>
+                </paper-button>
+                <paper-button id="buttonCollections" raised on-tap="buttonCollectionsTap" class$="[[classCollections(selectedCollectionNames)]]">
+                    <div class="info">
+                        <span class="label">TURFORSLAG</span>
+                        <span class="info-title">[[selectedCollectionNames]]</span>
+                        <iron-icon icon="close"></iron-icon>
+                    </div>
+                </paper-button>
+                <paper-button id="buttonDigDag" raised on-tap="buttonDigDagTap" class$="[[classDigDag(regionType)]]">
+                    <div class="info">
+                        <span class="label">GRÆNSER</span>
+                        <span class="info-title">[[regionType.name]]</span>
                         <iron-icon icon="close"></iron-icon>
                     </div>
                 </paper-button>
@@ -123,7 +141,7 @@
                 </div>
             </paper-button>
             <template is="dom-if" if="[[main]]">
-                <paper-button id="buttonTheme" raised hidden$="[[!showTheme(theme)]]" on-tap="buttonThemeTap">
+                <paper-button id="buttonTheme" raised on-tap="buttonThemeTap" class$="[[classTheme(theme)]]">
                     <div class="info">
                         <span class="label">TEMA</span>
                         <span class="info-title">[[theme.name]]</span>

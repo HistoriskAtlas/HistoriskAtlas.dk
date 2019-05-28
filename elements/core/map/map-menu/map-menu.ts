@@ -16,6 +16,9 @@ class MapMenu extends polymer.Base implements polymer.Element {
     @property({ type: Array })
     public selectedTagNames: Array<string>;
 
+    @property({ type: String })
+    public selectedCollectionNames: string;
+
     @property({ type: Boolean, value: false })
     public lift: boolean;
 
@@ -106,6 +109,13 @@ class MapMenu extends polymer.Base implements polymer.Element {
             this.toggleDrawer('showMenuPeriods');
     }
 
+    buttonCollectionsTap(e: any) {
+        if (e.target.localName == 'iron-icon')
+            App.haCollections.deselectAll();
+        else
+            this.toggleDrawer('showMenuRoutes');
+    }
+
     buttonThemeTap(e: any) {
         if (e.target.localName == 'iron-icon')
             this.theme = Global.defaultTheme;
@@ -142,16 +152,20 @@ class MapMenu extends polymer.Base implements polymer.Element {
         //return (startYear ? startYear + ' - ' : '') + endYear;
     }
 
-    showDigDag(regionType: HARegionType): boolean {
-        return !!regionType;
+    classDigDag(regionType: HARegionType): string {
+        return !!regionType ? '' : 'collapsed';
     }
 
-    showTheme(theme: ITheme): boolean {
-        return theme.id != 'default';
+    classTheme(theme: ITheme): string {
+        return theme.id != 'default' ? '' : 'collapsed';
     }
 
-    showTags(category: number): boolean {
-        return !!this.selectedTagNames[category];
+    classTags(category: number): string {
+        return !!this.selectedTagNames[category] ? '' : 'collapsed';
+    }
+
+    classCollections(selectedCollectionNames: string): string {
+        return !!selectedCollectionNames ? '' : 'collapsed';
     }
 
     TagNames(category: number): string {
