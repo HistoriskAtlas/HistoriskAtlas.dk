@@ -100,8 +100,8 @@ class WindowGeo extends polymer.Base implements polymer.Element {
     }
     private insertEditorialText(text: string) {
         if (!this.editorialContent)
-            this.push('contents', new HaContent({ geoid: this.geo.id, ordering: 0, contenttypeid: 3 }));
-        this.push('editorialContent.subContents', new HaSubContentText({ headline: '', text1: Common.html2rich(text) }, this.editorialContent));
+            this.push('contents', new HaContent({ geoid: this.geo.id, ordering: 0, contenttypeid: 3, headline: '' }));
+        setTimeout(() => this.push('editorialContent.subContents', new HaSubContentText({ headline: '', text1: Common.html2rich(text), ordering: this.editorialContent.subContents.length }, this.editorialContent)), 100); //Timeout so Polymer has time to create the new HA-Content....
     }
 
     addTextContentTap() {

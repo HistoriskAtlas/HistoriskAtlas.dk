@@ -190,6 +190,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
                 //var newGeoIds = <Array<number>>result.data[0].tag_geos;
                 var newGeoIds = <Array<number>>result.data;
                 var removeArray: Array<HaGeo> = [];
+
                 this.geos.forEach((geo) => {
                     if (newGeoIds.indexOf(geo.id) == -1 && !geo.userLayer)
                         removeArray.push(geo);
@@ -219,7 +220,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
                     'lng',
                     'ptid'
                 ],
-                filters: !this.curRequest.userLayer ? [] : [
+                filters: (!this.curRequest.userLayer || App.haUsers.user.isAdmin) ? [] : [
                     {
                         user: [{ userhierarkis1: [{ parentid: App.haUsers.user.id /*is editor for owner*/ }] }]
                     },
@@ -240,25 +241,26 @@ class HaGeos extends polymer.Base implements polymer.Element {
         if (this.curRequest.userLayer)
             schema.geo.fields.push('online');
 
-        if (App.haUsers.user.institutions && this.curRequest.userLayer) //added  && this.curRequest.userLayer
-            if (App.haUsers.user.institutions.length > 0)
-                schema.geo.filters.push(
-                    <any>{
-                        tag_geos: [
-                            {
-                                tag: [
-                                    {
-                                        institutions: [
-                                            {
-                                                id: App.haUsers.user.institutions[0].id /*is same institution TODO: cur inst not only [0]*/
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                )
+        if (!App.haUsers.user.isAdmin)
+            if (App.haUsers.user.institutions && this.curRequest.userLayer) //added  && this.curRequest.userLayer
+                if (App.haUsers.user.institutions.length > 0)
+                    schema.geo.filters.push(
+                        <any>{
+                            tag_geos: [
+                                {
+                                    tag: [
+                                        {
+                                            institutions: [
+                                                {
+                                                    id: App.haUsers.user.institutions[0].id /*is same institution TODO: cur inst not only [0]*/
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    )
 
 
         this.params = {
@@ -389,7 +391,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
                         if (!geo.shown)
                             geo.show();
                 }
-            } else 
+            } else
                 App.haGeos.geos.forEach((geo) => {
                     if (data.data.indexOf(geo.id) > -1) {
                         if (!geo.shown)
@@ -517,10 +519,11 @@ class HaGeos extends polymer.Base implements polymer.Element {
 
         var change = false;
 
-        this.geos.forEach((geo) => {
+        for (var geo of this.geos)
+        //this.geos.forEach((geo) => {
             if (geo.yearChanged())
                 change = true;
-        });
+        //});
 
         if (change) {
             IconLayer.updateShown();

@@ -119,6 +119,9 @@
     }
 
     public canEdit(geo: HaGeo): boolean {
+        //if (this.isAdmin)
+        //    return true;
+
         return geo.userLayer;
         //for (var institution of this._institutions)
         //    if (geo.institutionTags.indexOf(institution.tag) > -1)

@@ -9,7 +9,7 @@
             .list {
                 display: flex;
                 flex-direction: column;
-                width: 100%;        
+                width: 95%;        
                 padding-top: 10px;    
             }
             .list > div {
@@ -30,9 +30,15 @@
                 text-overflow: ellipsis;
                 white-space: nowrap;
             }
+            paper-fab.add {
+                align-self: flex-end;
+                margin-top: 10px
+            }
+
         </style>
         <div class="list">
-            <template is="dom-repeat" items="[[content.texts]]" sort="sort" observe="created">
+            <paper-fab icon="add" mini class="HAPrimColor add" on-tap="addTap"></paper-fab>
+            <template is="dom-repeat" items="[[content.subContents]]" sort="sort" observe="created">
                 <div>
                     <div class="info">
                         <div>[[item.user.firstname]] [[item.user.lastname]]</div>

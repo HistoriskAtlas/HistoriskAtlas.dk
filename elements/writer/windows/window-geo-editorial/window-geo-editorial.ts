@@ -13,6 +13,9 @@ class WindowGeoEditorial extends polymer.Base implements polymer.Element {
     @property({ type: Object, notify: true })
     public content: HaContent;
 
+    @property({ type: Array, notify: true })
+    public contents: Array<HaContent>;
+
     @property({ type: Object })
     public tagsService: Tags;
 }
