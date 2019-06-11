@@ -195,6 +195,17 @@
                 UrlState.openGeoWindowInNewTabChanged();
             }
         });
+
+        window.addEventListener('beforeunload', (e) => {
+            if (!App.haUsers.user.isWriter)
+                return;
+
+            if (!Services.hasPendingCalls)
+                return;
+
+            e.preventDefault();
+            e.returnValue = '';
+        });
     }
 
     public static init() {

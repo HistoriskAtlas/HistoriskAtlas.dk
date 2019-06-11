@@ -4,6 +4,10 @@
     private static timeoutToken: number;
     private static loadingText: string = 'Kommunikerer med serveren';
 
+    public static get hasPendingCalls(): boolean {
+        return this.pendingServiceCalls.length > 0;
+    }
+
     public static insert(service: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null) {
         data.action = 'add';
         this.pushServiceCall(() => this.serviceCall(service + '.json', data, success, error, true, message), message);

@@ -39,6 +39,15 @@ class RichText extends polymer.Base implements polymer.Element {
     ready() {
         //this.contentChanged();
         this.isIE = Common.isIE;
+
+        window.addEventListener('beforeunload', (e) => {
+            if (!this.editable)
+                return;
+            if (this.content == this.immediateContent)
+                return;
+            e.preventDefault();
+            e.returnValue = '';
+        });
     }
 
     focus() {

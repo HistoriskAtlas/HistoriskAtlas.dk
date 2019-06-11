@@ -38,6 +38,15 @@ class PlainText extends polymer.Base implements polymer.Element {
 
     ready() {
         this.contentChanged();
+
+        window.addEventListener('beforeunload', (e) => {
+            if (!this.editable)
+                return;
+            if (this.content == this.immediateContent)
+                return;
+            e.preventDefault();
+            e.returnValue = '';
+        });
     }
 
     public setFocus() {
