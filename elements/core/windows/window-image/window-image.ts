@@ -97,6 +97,40 @@ class WindowImage extends polymer.Base implements polymer.Element {
         this.scrollWindow(-1);
     }
 
+    moveImageLeft() {
+        var i = this.geo.images.indexOf(this.image);
+        [this.geo.images[i - 1], this.geo.images[i]] = [this.geo.images[i], this.geo.images[i - 1]];
+        this.updateImageOrder();
+    }
+    moveImageRight() {
+        var i = this.geo.images.indexOf(this.image);
+        [this.geo.images[i], this.geo.images[i + 1]] = [this.geo.images[i + 1], this.geo.images[i]];
+        this.updateImageOrder();
+    }
+    moveImageFirst() {
+        var i = this.geo.images.indexOf(this.image);
+        [this.geo.images[0], this.geo.images[i]] = [this.geo.images[i], this.geo.images[0]];
+        this.updateImageOrder();
+    }
+
+    updateImageOrder() {
+        var index = 0;
+        for (var image of this.geo.images) {
+            if (image.ordering != index) {
+                image.ordering = index;
+                Services.update('geo_image', { geoid: this.geo.id, imageid: image.id, ordering: image.ordering });
+            }
+            index++;
+        }
+        this.notifyPath('image.ordering', this.image.ordering);
+
+        this.windowGeo.notifyPath('geo.images', []);
+        this.notifyPath('geo.images', [])
+        this.windowGeo.notifyPath('geo.images', this.geo.images);
+        this.notifyPath('geo.images', this.geo.images);
+        this.scrollWindow(0);
+    }
+
     @listen('licens-changed')
     licensChanged(e: any) {
         (<HaImageService>this.$.haImageService).addTagById(e.detail.tagID, true, true);
@@ -105,7 +139,7 @@ class WindowImage extends polymer.Base implements polymer.Element {
     private scrollWindow(delta: number) {
         var i = this.geo.images.indexOf(this.image) + delta;
         this.image = this.geo.images[i];
-        $(this.$.container).animate({ scrollLeft: i * $('#container').width() }, 250, 'easeOutQuad');
+        $(this.$.container).animate({ scrollLeft: i * $('#container').width() }, delta == 0 ? 0 : 250, 'easeOutQuad');
     }
 
     deleteImage() {

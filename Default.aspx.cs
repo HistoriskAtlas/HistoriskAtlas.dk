@@ -96,11 +96,14 @@ namespace HistoriskAtlas5.Frontend
             int geoID = int.Parse(match.Groups[1].Value);
 
 
-            string schema = crawler ? "{geo:[id,title,intro,lat,lng,{contents:[{texts:[headline,text1]}]},{geo_images:[{image:[id,text]}]}]}" : "{geo:[id,title,intro,lat,lng,ugc]}";
+            string schema = crawler ? "{geo:[id,title,intro,lat,lng,{contents:[{texts:[headline,text1]}]},{geo_images:[ordering,{image:[id,text]}]}]}" : "{geo:[id,title,intro,lat,lng,ugc]}";
             HAGeos geos = (new Service<HAGeos>()).Get("geo.json?v=1&schema=" + schema + "&geoid=" + geoID + "&online=true");
 
             if (geos.data.Length == 0)
                 return null;
+
+            if (geos.data[0].geo_images != null)
+                Array.Sort(geos.data[0].geo_images, (HAGeoImage a, HAGeoImage b) => a.ordering - b.ordering);
 
             return geos.data[0];
         }

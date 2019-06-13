@@ -88,7 +88,7 @@ class FileUpload extends polymer.Base implements polymer.Element {
     }
 
     private insertedImage(file: File, fileType: string, result: any) {
-        var image = new HAImage(result.data[0]);
+        var image = new HAImage(result.data[0], -1);
         (<any>file).path = 'Image\\' + (image.id % 100) + '\\' + image.id + '.' + fileType;
         (<any>file).image = image;
         this.inserted(file)

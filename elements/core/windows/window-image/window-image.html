@@ -91,6 +91,13 @@
                         <paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>
                         <paper-menu class="dropdown-content">
                             <menu-item on-tap="deleteImage">Slet billede</menu-item>
+                            <template is="dom-if" if="[[!isFirstImage(image)]]">
+                                <menu-item on-tap="moveImageFirst">Sæt som forsidebillede</menu-item>
+                                <menu-item on-tap="moveImageLeft">Flyt billede til venstre</menu-item>
+                            </template>
+                            <template is="dom-if" if="[[!isLastImage(image)]]">
+                                <menu-item on-tap="moveImageRight">Flyt billede til højre</menu-item>
+                            </template>
                         </paper-menu>
                     </paper-menu-button>
                 </div>
@@ -124,8 +131,8 @@
                 </div>
                 <div class="overlay noselect">
                     <div class="arrows">
-                        <div><paper-icon-button icon="paper-tabs:chevron-left" hidden$="[[isFirstImage(image)]]" on-tap="arrowLeftTap"></paper-icon-button></div>
-                        <div><paper-icon-button icon="paper-tabs:chevron-right" hidden$="[[isLastImage(image)]]" on-tap="arrowRightTap"></paper-icon-button></div>
+                        <div><paper-icon-button icon="paper-tabs:chevron-left" hidden$="[[isFirstImage(image,image.ordering)]]" on-tap="arrowLeftTap"></paper-icon-button></div>
+                        <div><paper-icon-button icon="paper-tabs:chevron-right" hidden$="[[isLastImage(image,image.ordering)]]" on-tap="arrowRightTap"></paper-icon-button></div>
                     </div>
                 </div>
             </div>

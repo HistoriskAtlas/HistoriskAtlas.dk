@@ -72,7 +72,21 @@ class HaGeoService extends Tags implements polymer.Element {
             //for (var image of indexSplice.removed)
             //    Services.delete('geo_image', { imageid: image.id, geoid: this.geo.id });
             for (var i = 0; i < indexSplice.addedCount; i++)
-                Services.insert('geo_image', { imageid: this.geo.images[indexSplice.index + i].id, geoid: this.geo.id, ordering: 0 });//TODO: ordering?§!
+                Services.insert('geo_image', { imageid: this.geo.images[indexSplice.index + i].id, geoid: this.geo.id, ordering: 0 });
+
+            if (indexSplice.addedCount > 0) {
+                var index = 0;
+                for (var image of this.geo.images) {
+                    if (image.ordering != index) {
+                        image.ordering = index;
+                        Services.update('geo_image', { geoid: this.geo.id, imageid: image.id, ordering: image.ordering });
+                    }
+                    index++;
+                }
+
+            }
+
+
         }
     }
 
@@ -146,7 +160,9 @@ class HaGeoService extends Tags implements polymer.Element {
 
         var images: Array<HAImage> = [];
         for (var i = 0; i < data.geo_image.length; i++)
-            images.push(new HAImage(data.geo_image[i].image));
+            images.push(new HAImage(data.geo_image[i].image, data.geo_image[i].ordering)); //TODO: ordering?
+
+        images.sort((a, b) => a.ordering - b.ordering);
         this.set('geo.images', images); //data.geo_images.length == 0 ? [113798] : [data.geo_images[0].id]
 
         this.ignoreChanges = false; //!this.editing;

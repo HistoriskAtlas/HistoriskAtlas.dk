@@ -6,17 +6,19 @@
     private _licensee: string;
     public tags: Array<HaTag>;
 
+    private _ordering: number; //from geo_image
     //"yearisapprox": false,
     //"created": "2009-02-13 01:11:47.533",
     //"deleted": "",
     //"userid": 5
 
-    constructor(data: any) {
+    constructor(data: any, ordering: number) {
         this._id = data.imageid;
         this._year = data.year;
         this._text = data.text == null ? '' : data.text;
         this._photographer = data.photographer == null ? '' : data.photographer;
         this._licensee = data.licensee == null ? '' : data.licensee;
+        this._ordering = ordering;
 
         this.tags = [];
         if (data.tag_images)
@@ -66,7 +68,13 @@
     get urlLowRes() {
         return Common.api + 'image/' + this._id + '?action=scale&size={640:10000}&scalemode=inner';
     }
-
+    
+    get ordering() {
+        return this._ordering;
+    }
+    set ordering(newVal: number) {
+        this._ordering = newVal;
+    }
     //public get licens(): HaLicens {
     //    for (var tag of this.tags) //TODO: when real tags class is available, use that instead..
     //        if (tag.category == 4) //Licens
