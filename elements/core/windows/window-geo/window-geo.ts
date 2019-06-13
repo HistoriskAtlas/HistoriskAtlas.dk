@@ -413,7 +413,8 @@ class WindowGeo extends polymer.Base implements polymer.Element {
     private uploadSuccess(result: any) {
         this.uploading = false;
         //$(this.fileUpload).css('display', 'none');
-        this.push('geo.images', <HAImage>result.detail.image);
+        this.unshift('geo.images', <HAImage>result.detail.image);
+        this.imageTap();
     }
 
     //ready() { //standalone only

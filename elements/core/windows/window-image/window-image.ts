@@ -116,6 +116,16 @@ class WindowImage extends polymer.Base implements polymer.Element {
         this.$.windowbasic.close();
         (<HaImageService>this.$.haImageService).deleteImage();
     }
+
+    @listen("windowbasic.closing")
+    windowClosing(e: Event) {
+        if (this.editing && !this.image.photographer) {
+            (<WindowBasic>this.$.windowbasic).cancelClose = true;
+            Common.dom.append(DialogAlert.create('Fotograf er et krævet felt. Angiv det venligst, før du lukker billedet.', () => {
+                (<PlainText>this.$$('#photographer')).setFocus();
+            }));
+        }
+    }
 }
 
 WindowImage.register();
