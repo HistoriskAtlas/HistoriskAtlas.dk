@@ -272,7 +272,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
             ]),
             schema: JSON.stringify(schema)
         }
-
+                
         if (this.curRequest.userLayer)
             this.params.sid = (<any>document).sid;
         else
@@ -323,11 +323,19 @@ class HaGeos extends polymer.Base implements polymer.Element {
         //    IconLayer.updateMinDist();
         //IconLayer.updateShown();
 
-        this.updateShownGeos(null, null, this.curRequest.themeTagID, this.userCreators, this.profCreators); //WAS true, true
+        if (this.requests.length == 0)
+            this.updateShownGeos(null, null, this.curRequest.themeTagID, this.userCreators, this.profCreators); //WAS true, true
+        else
+            this.updateShownGeosFinally(null);
     }
 
     public updateShownGeos(idsChanged: Array<number>, changedTo: boolean, themeTagID: number = null, userCreators: boolean = null, profCreators: boolean = null) {
         App.loading.show(HaGeos.showingText);
+
+        //if (App.haUsers.user.isAdmin) {
+        //    this.showAll(idsChanged);
+        //    return;
+        //}
 
         if ((this.curRequest.userLayer && !idsChanged) || (App.haTags.tagTops[9].selected && !idsChanged)) {
             this.updateShownGeosFinally(idsChanged);
@@ -412,6 +420,14 @@ class HaGeos extends polymer.Base implements polymer.Element {
         App.haGeos.geos.forEach((geo) => {
             if (geo.shown)
                 geo.hide();
+        });
+        this.updateShownGeosFinally(idsChanged);
+    }
+
+    private showAll(idsChanged: Array<number>) {
+        App.haGeos.geos.forEach((geo) => {
+            if (!geo.shown)
+                geo.show();
         });
         this.updateShownGeosFinally(idsChanged);
     }

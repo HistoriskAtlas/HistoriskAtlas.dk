@@ -101,25 +101,25 @@
         this.setStyle(styles);
     }
 
-    public updateMinDist() {
-        var minDistSquared: number = Number.MAX_VALUE;
+    //public updateMinDist() {
+    //    var minDistSquared: number = Number.MAX_VALUE;
 
-        IconLayer.iconsShown.forEach((icon: Icon) => {
-            if (icon != this) {
+    //    IconLayer.iconsShown.forEach((icon: Icon) => {
+    //        if (icon != this) {
 
-                var distSquared = Math.pow(icon.coord3857[0] - this.coord3857[0], 2) + Math.pow(icon.coord3857[1] - this.coord3857[1], 2);
+    //            var distSquared = Math.pow(icon.coord3857[0] - this.coord3857[0], 2) + Math.pow(icon.coord3857[1] - this.coord3857[1], 2);
 
-                if (distSquared < minDistSquared)
-                    minDistSquared = distSquared;
+    //            if (distSquared < minDistSquared)
+    //                minDistSquared = distSquared;
 
-                //if ((icon.coord3857[0] - this.coord3857[0]) * App.map.getView().getResolution() < 100 && (icon.coord3857[1] - this.coord3857[1]) * App.map.getView().getResolution() < 100)
-                //    scale *= .95;
+    //            //if ((icon.coord3857[0] - this.coord3857[0]) * App.map.getView().getResolution() < 100 && (icon.coord3857[1] - this.coord3857[1]) * App.map.getView().getResolution() < 100)
+    //            //    scale *= .95;
 
-            }
-        })
+    //        }
+    //    })
 
-        this.minDist = Math.sqrt(minDistSquared);
-    }
+    //    this.minDist = Math.sqrt(minDistSquared);
+    //}
 
     public get marker(): string {
         //var hasChildrenTag: HaTag;

@@ -496,7 +496,7 @@
     }
 
     public zoomUntilUnclustered() {
-        this.icon.updateMinDist();
+        //this.icon.updateMinDist();
         var res = App.map.getView().constrainResolution(this.icon.minDist / (50 * 1.5));
         if (res < App.map.getView().getResolution())
             App.map.centerAnim(this.coord, res, true, false);

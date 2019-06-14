@@ -1,8 +1,11 @@
 ﻿class IconLayer extends IconLayerBase {
     public static clusterSource: ol.source.Cluster;
-    public static backStyle: ol.style.Style;
-    public static ugcBackStyle: ol.style.Style;
-    public static mixedBackStyle: ol.style.Style;
+    //public static backStyle: ol.style.Style;
+    public static backStyles: Array<ol.style.Style>;
+    //public static ugcBackStyle: ol.style.Style;
+    public static ugcBackStyles: Array<ol.style.Style>;
+    //public static mixedBackStyle: ol.style.Style;
+    public static mixedBackStyles: Array<ol.style.Style>;
     //public static iconBackStyle: ol.style.Style;
     public static source: ol.source.Vector; //TODO: Make non static?
     public static iconsShown: Array<Icon> = [];
@@ -10,6 +13,10 @@
     public static feature: ol.Feature;
 
     public static updateDisabled: boolean;
+
+    private static backCanvas: HTMLCanvasElement;
+    private static ugcBackCanvas: HTMLCanvasElement;
+    private static mixedBackCanvas: HTMLCanvasElement;
 
     //private oldDragCoordinate: ol.Coordinate;
     //private dragDirtyGeo: HaGeo;
@@ -40,57 +47,57 @@
         context.fill();
         context.stroke();
 
-        IconLayer.backStyle = new ol.style.Style({
-            image: new ol.style.Icon({
-                src: canvas.toDataURL()
-            })
-            //image: new ol.style.Circle(({
-            //    radius: 16,
-            //    stroke: new ol.style.Stroke({
-            //        color: '#ffffff',
-            //        width: 1.5
-            //    }),
-            //    fill: new ol.style.Fill({
-            //        color: '#005d9a'
-            //    }),
-            //    snapToPixel: false
-            //}))
-        });
+        //IconLayer.backStyle = new ol.style.Style({
+        //    image: new ol.style.Icon({
+        //        src: canvas.toDataURL()
+        //    })
+        //    //image: new ol.style.Circle(({
+        //    //    radius: 16,
+        //    //    stroke: new ol.style.Stroke({
+        //    //        color: '#ffffff',
+        //    //        width: 1.5
+        //    //    }),
+        //    //    fill: new ol.style.Fill({
+        //    //        color: '#005d9a'
+        //    //    }),
+        //    //    snapToPixel: false
+        //    //}))
+        //});
 
 
-        var canvas = IconLayer.circleCanvas(false);
-        IconLayer.ugcBackStyle = new ol.style.Style({
-            image: new ol.style.Icon({
-                src: canvas.toDataURL()
-            })
-            //image: new ol.style.Circle(({
-            //    radius: 16,
-            //    stroke: new ol.style.Stroke({
-            //        color: '#005d9a',
-            //        width: 1.5
-            //    }),
-            //    fill: new ol.style.Fill({
-            //        color: '#ffffff'
-            //    }),
-            //    snapToPixel: false
-            //}))
-        });
+        //var canvas = IconLayer.circleCanvas(false);
+        //IconLayer.ugcBackStyle = new ol.style.Style({
+        //    image: new ol.style.Icon({
+        //        src: canvas.toDataURL()
+        //    })
+        //    //image: new ol.style.Circle(({
+        //    //    radius: 16,
+        //    //    stroke: new ol.style.Stroke({
+        //    //        color: '#005d9a',
+        //    //        width: 1.5
+        //    //    }),
+        //    //    fill: new ol.style.Fill({
+        //    //        color: '#ffffff'
+        //    //    }),
+        //    //    snapToPixel: false
+        //    //}))
+        //});
 
-        var ugcCanvas = IconLayer.circleCanvas(true);
-        IconLayer.ugcBackStyle = new ol.style.Style({
-            image: new ol.style.Icon({
-                src: ugcCanvas.toDataURL()
-            })
-        });
+        //var ugcCanvas = IconLayer.circleCanvas(true);
+        //IconLayer.ugcBackStyle = new ol.style.Style({
+        //    image: new ol.style.Icon({
+        //        src: ugcCanvas.toDataURL()
+        //    })
+        //});
 
-        context = canvas.getContext('2d');
-        context.clearRect(0, 0, canvas.width, canvas.height / 2);
-        context.drawImage(ugcCanvas, 0, 0, canvas.width, canvas.height / 2, 0, 0, canvas.width, canvas.height / 2);
-        IconLayer.mixedBackStyle = new ol.style.Style({
-            image: new ol.style.Icon({
-                src: canvas.toDataURL()
-            })
-        });
+        //context = canvas.getContext('2d');
+        //context.clearRect(0, 0, canvas.width, canvas.height / 2);
+        //context.drawImage(ugcCanvas, 0, 0, canvas.width, canvas.height / 2, 0, 0, canvas.width, canvas.height / 2);
+        //IconLayer.mixedBackStyle = new ol.style.Style({
+        //    image: new ol.style.Icon({
+        //        src: canvas.toDataURL()
+        //    })
+        //});
 
         super(IconLayer.clusterSource, (feature, resolution) => {
             var icons = <Icon[]>feature.get('features');
@@ -122,13 +129,18 @@
             
 
         //    });
+
+
+        IconLayer.backStyles = [];
+        IconLayer.ugcBackStyles = [];
+        IconLayer.mixedBackStyles = [];
     }
 
     //private clusterFunction(icon: Icon) {
     //    return icon.geo.isMoving ? null : icon.getGeometry();
     //}
 
-    private getMultipleStyle(icons: Array<Icon>): ol.style.Style[]{
+    private getMultipleStyle(icons: Array<Icon>): ol.style.Style{
         var ugcCount: number = 0;
         var proCount: number = 0;
         for (var icon of icons)
@@ -137,43 +149,86 @@
             else
                 proCount++;
 
-        if (ugcCount && proCount)
-            return [
-                IconLayer.mixedBackStyle,
-                new ol.style.Style({
-                    text: new ol.style.Text({
-                        text: ugcCount.toString(),
-                        font: '10px Roboto',
-                        offsetY: -5,
-                        fill: new ol.style.Fill({
-                            color: '#005d9a'
-                        })
-                    })
-                }),
-                new ol.style.Style({
-                    text: new ol.style.Text({
-                        text: proCount.toString(),
-                        font: '10px Roboto',
-                        offsetY: 6,
-                        fill: new ol.style.Fill({
-                            color: '#ffffff'
-                        })
-                    })
-                })
-            ];
+        if (ugcCount && proCount) {
+            var i = ugcCount * 1000000 + proCount;
+            if (IconLayer.mixedBackStyles[i])
+                return IconLayer.mixedBackStyles[i];
 
-        return [
-            ugcCount ? IconLayer.ugcBackStyle : IconLayer.backStyle,
-            new ol.style.Style({
-                text: new ol.style.Text({
-                    text: icons.length.toString(),
-                    font: '12px Roboto',
-                    fill: new ol.style.Fill({
-                        color: ugcCount ? '#005d9a' : '#ffffff'
-                    })
+            var canvas = IconLayer.circleCanvasMixed()
+            var context = canvas.getContext('2d');
+            context.font = "10px Roboto";
+            context.textAlign = 'center';
+            context.fillStyle = '#005d9a';
+            context.fillText('' + ugcCount, 16, 14);
+            context.fillStyle = '#ffffff';
+            context.fillText('' + proCount, 16, 25);
+            IconLayer.mixedBackStyles[i] = new ol.style.Style({
+                image: new ol.style.Icon({
+                    src: canvas.toDataURL()
                 })
+            });       
+
+            return IconLayer.mixedBackStyles[i];
+        }
+
+
+        var ugc = !!ugcCount
+        var styles = ugc ? IconLayer.ugcBackStyles : IconLayer.backStyles;
+        var count = ugc ? ugcCount : proCount;
+        if (styles[count])
+            return styles[count];
+
+        var canvas = IconLayer.circleCanvas(ugc);
+        var context = canvas.getContext('2d');
+        context.font = "12px Roboto";
+        context.fillStyle = ugc ? '#005d9a' : '#ffffff';
+        context.textAlign = 'center';
+        context.fillText('' + count, 16, 20);
+        styles[count] =  new ol.style.Style({
+            image: new ol.style.Icon({
+                src: canvas.toDataURL()
             })
-        ];
+        });       
+
+        return styles[count];
+
+        //if (ugcCount && proCount)
+        //    return [
+        //        IconLayer.mixedBackStyle,
+        //        new ol.style.Style({
+        //            text: new ol.style.Text({
+        //                text: ugcCount.toString(),
+        //                font: '10px Roboto',
+        //                offsetY: -5,
+        //                fill: new ol.style.Fill({
+        //                    color: '#005d9a'
+        //                })
+        //            })
+        //        }),
+        //        new ol.style.Style({
+        //            text: new ol.style.Text({
+        //                text: proCount.toString(),
+        //                font: '10px Roboto',
+        //                offsetY: 6,
+        //                fill: new ol.style.Fill({
+        //                    color: '#ffffff'
+        //                })
+        //            })
+        //        })
+        //    ];
+
+        //return [
+        //    ugcCount ? IconLayer.ugcBackStyle : IconLayer.backStyle,
+        //    new ol.style.Style({
+        //        text: new ol.style.Text({
+        //            text: icons.length.toString(),
+        //            font: '12px Roboto',
+        //            fill: new ol.style.Fill({
+        //                color: ugcCount ? '#005d9a' : '#ffffff'
+        //            })
+        //        })
+        //    })
+        //];
     }
 
     //public static updateMinDist() {
@@ -260,13 +315,46 @@
         canvas.height = 32;
         var context = canvas.getContext("2d");
 
-        context.arc(16, 16, 15.25, 0, Math.PI * 2);
-        context.strokeStyle = isUGC ? '#005d9a' : '#ffffff';
-        context.fillStyle = isUGC ? '#ffffff' : '#005d9a';
-        context.lineWidth = 1.5;
-        context.fill();
-        context.stroke();
+        var cachedCanvas = isUGC ? this.ugcBackCanvas : this.backCanvas;
+        if (!cachedCanvas) {
+            cachedCanvas = document.createElement('canvas');
+            cachedCanvas.width = 32;
+            cachedCanvas.height = 32;
+            var cachedContext = cachedCanvas.getContext("2d");
+            cachedContext.arc(16, 16, 15.25, 0, Math.PI * 2);
+            cachedContext.strokeStyle = isUGC ? '#005d9a' : '#ffffff';
+            cachedContext.fillStyle = isUGC ? '#ffffff' : '#005d9a';
+            cachedContext.lineWidth = 1.5;
+            cachedContext.fill();
+            cachedContext.stroke();
+            if (isUGC)
+                this.ugcBackCanvas = cachedCanvas;
+            else
+                this.backCanvas = cachedCanvas;
+        }
+
+        context.drawImage(cachedCanvas, 0, 0);
 
         return canvas;
     }
+
+    private static circleCanvasMixed(): HTMLCanvasElement {
+        var canvas = document.createElement('canvas');
+        canvas.width = 32;
+        canvas.height = 32;
+        var context = canvas.getContext("2d");
+
+        if (!this.mixedBackCanvas) {
+            this.mixedBackCanvas = IconLayer.circleCanvas(false);
+            var ugcCanvas = IconLayer.circleCanvas(true);
+
+            var mixedBackContext = this.mixedBackCanvas.getContext('2d');
+            mixedBackContext.clearRect(0, 0, this.mixedBackCanvas.width, this.mixedBackCanvas.height / 2);
+            mixedBackContext.drawImage(ugcCanvas, 0, 0, this.mixedBackCanvas.width, this.mixedBackCanvas.height / 2, 0, 0, this.mixedBackCanvas.width, this.mixedBackCanvas.height / 2);
+        }
+        
+        context.drawImage(this.mixedBackCanvas, 0, 0);
+        return canvas;
+    }
+
 }
