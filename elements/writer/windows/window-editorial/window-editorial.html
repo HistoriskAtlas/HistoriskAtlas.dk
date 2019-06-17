@@ -18,6 +18,7 @@
         <window-basic id="windowbasic" window-title="Redaktion" allow-fullscreen width="800" height="510" toolbar-height="medium-tall" toolbar-mode="standard">
 
             <paper-tabs id="tabs" selected="{{selectedTab}}" noink class="header bottom fit">
+                <paper-tab>Nyheder</paper-tab>
                 <paper-tab>Fortællinger</paper-tab>
                 <template is="dom-if" if="[[hasWriters()]]">
                     <paper-tab>Skribenter</paper-tab>
@@ -26,6 +27,7 @@
             </paper-tabs>
 
             <iron-pages selected="[[selectedTab]]" selected-attribute="selected">
+                <panel-news-editorial></panel-news-editorial>
                 <panel-geo-editorial></panel-geo-editorial>
                 <template is="dom-if" if="[[hasWriters()]]">
                     <panel-user-editorial></panel-user-editorial>

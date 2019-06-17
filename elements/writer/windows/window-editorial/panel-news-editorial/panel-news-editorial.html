@@ -1,0 +1,97 @@
+﻿<dom-module id="panel-news-editorial">
+    <template>
+        <style>
+            :host {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+            .list {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                margin-right: 5px;
+                margin-left: 5px;
+            }
+
+            iron-list {
+                flex-grow: 1;
+                overflow: scroll !important;
+            }
+
+            .item {
+                padding: 2px 10px;
+                cursor: pointer;
+            }
+            .item:hover {
+                background-color: #ddd;
+            }
+            .item > span {
+                display: inline-block;
+                overflow-x: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                padding-right: 5px;
+            }
+            .item > span:nth-child(1) {
+                font-weight: bold;
+                width: 40%;
+            }
+            .item > span:nth-child(2) {
+                width: 15%;
+            }
+            .item > span:nth-child(3) {
+                width: 40%;
+            }
+
+            .headline {
+                font-weight: bold;
+                background-color: inherit !important;
+                padding-top: 10px;
+                font-size: 16px;
+                margin-right: 8px; /*scrollbarspace*/
+                user-select: none;
+            }
+            paper-input {
+                flex-grow: 1;
+                --paper-input-container-input: {
+                    font-size: 13px;
+                }
+            }
+            paper-dropdown-menu {
+                --paper-input-container-input: {
+                    font-size: 13px;
+                    font-weight: bold;
+                }
+                width: 300px;
+            }
+            paper-item {
+                font-size: 13px;
+                min-height: 30px;
+            }
+            h2 {
+                margin-left: 15px;
+            }
+        </style>
+
+        <h2>10 nyeste fortællinger på HistoriskAtlas.dk</h2>
+
+        <div class="list">
+            <div class="item headline">
+                <span>Titel</span>
+                <span>Oprettet d.</span>
+                <span>Institution</span>
+            </div>
+            <iron-list id="list" items="{{geos}}" max-physical-count="50">
+                <template>
+                    <div class="item" on-tap="itemTap">
+                        <span>[[item.title]]</span>
+                        <span>[[formatDate(item.created)]]</span>
+                        <span>[[formatInstitutions(item.tag_geos)]]</span>
+                    </div>
+                </template>
+            </iron-list>
+        </div>
+
+    </template>
+</dom-module>
