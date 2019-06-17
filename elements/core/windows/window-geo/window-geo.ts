@@ -82,6 +82,24 @@ class WindowGeo extends polymer.Base implements polymer.Element {
             return;
         }
 
+        var missing: Array<string> = [];
+        if (!this.geo.title)
+            missing.push("en titel");
+        if (!this.geo.intro)
+            missing.push("en introducerende tekst");
+        if (!this.contents.some((content) => content.showAsTab))
+            missing.push("et faneblad");
+        if (this.geo.images.length == 0)
+            missing.push("et billede");
+        if (missing.length > 0) {
+            var join = []
+            if (missing.length > 1)
+                join.push(missing.slice(0, missing.length - 1).join(', '))
+            join.push(missing[missing.length - 1]);
+            Common.dom.append(DialogAlert.create('Giv fortællingen ' + join.join(' og ') + ' før du publicerer den.', () => { }));
+            return;
+        }
+
         if (App.haUsers.user.isEditor) {
             this.set('geo.online', true);
             this.insertEditorialText('<b>Publiceret</b>');
@@ -277,6 +295,8 @@ class WindowGeo extends polymer.Base implements polymer.Element {
     
     @listen("windowbasic.closing")
     windowClosing(e: Event) {
+        if (App.haUsers.user.isAdmin)
+            return;
         if (this.editing && !this.geo.title) {
             (<WindowBasic>this.$.windowbasic).cancelClose = true;
             Common.dom.append(DialogAlert.create('Giv fortællingen en titel, før du lukker den.', () => {

@@ -184,6 +184,7 @@
         context.fillStyle = ugc ? '#005d9a' : '#ffffff';
         context.textAlign = 'center';
         context.fillText('' + count, 16, 20);
+
         styles[count] =  new ol.style.Style({
             image: new ol.style.Icon({
                 src: canvas.toDataURL()
@@ -191,6 +192,35 @@
         });       
 
         return styles[count];
+
+        //var style = [
+        //    new ol.style.Style({
+        //        image: new ol.style.Icon({
+        //            anchor: [0.4, 1.05],
+        //            src: icons[1].marker,
+        //            opacity: icons[1].geo.online ? 1.0 : 0.5
+        //        })
+        //    }),
+        //    new ol.style.Style({
+        //        image: new ol.style.Icon({
+        //            anchor: [0.5, 1.0],
+        //            src: icons[0].marker,
+        //            opacity: icons[0].geo.online ? 1.0 : 0.5
+        //        })
+        //    })
+        //];
+
+        //if (icons.length > 2)
+        //    style.unshift(new ol.style.Style({
+        //        image: new ol.style.Icon({
+        //            anchor: [0.3, 1.1],
+        //            src: icons[2].marker,
+        //            opacity: icons[2].geo.online ? 1.0 : 0.5
+        //        })
+        //    }))
+
+        //return style;
+
 
         //if (ugcCount && proCount)
         //    return [
