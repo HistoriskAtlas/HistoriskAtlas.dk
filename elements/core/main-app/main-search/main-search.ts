@@ -44,8 +44,102 @@ class MainSearch extends polymer.Base implements polymer.Element {
 
         switch (value) {
             case 'devtools': Common.dom.append(WindowDev.create()); break;
+            case 'nmpoc': this.NM_POC(); break;
             default: Common.dom.append(WindowSearch.create(value)); break;
         }
+    }
+
+    private NM_POC() {
+        App.haTags.toggleTop(9, false);
+
+        var queryObject = {
+            "size": 500,
+            "from": 0,
+            "query": {
+                "bool": {
+                    "must": [
+                        {
+                            "term":
+                            {
+                                "type": "asset"
+                            }
+                        },
+                        {
+                            "exists":
+                            {
+                                "field": "location.crowd.latitude"
+                            }
+                        }
+                    ],
+                    "must_not": [ //default filter
+                        { "range": { "meta.rotation": { "gt": 1 } } },
+                        { "term": { "meta.cropping": "source" } },
+                        {
+                            "bool": {
+                                "must": [
+                                    { "term": { "collection.keyword": "AS" } },
+                                    { "term": { "type.keyword": "object" } }
+                                ]
+                            }
+                        },
+                        { "term": { "collection.keyword": "flmlibrary" } },
+                        { "term": { "collection.keyword": "DODMR" } },
+                        {
+                            "bool": {
+                                "must": [
+                                    { "term": { "collection.keyword": "MUM" } },
+                                    { "term": { "type.keyword": "asset" } }
+                                ]
+                            }
+                        },
+                        {
+                            "bool": {
+                                "must": [
+                                    { "term": { "collection.keyword": "KMM" } },
+                                    { "term": { "type.keyword": "asset" } }
+                                ]
+                            }
+                        },
+                        {
+                            "bool": {
+                                "must": [
+                                    { "term": { "collection.keyword": "DO" } },
+                                    { "term": { "type.keyword": "object" } }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        };
+
+        this.fetchFromNM(queryObject);
+    }
+
+    private fetchFromNM(queryObject: any) {
+        $.ajax('http://api.natmus.dk/search/public/raw', {
+            type: 'POST',
+            data: JSON.stringify(queryObject),
+            contentType: 'application/json'
+        }).done((data) => {
+            for (var hit of data.hits.hits) {
+
+                var geo = new HaGeo({
+                    title: hit._source.text['da-DK'].title,
+                    lat: hit._source.location.crowd.latitude,
+                    lng: hit._source.location.crowd.longitude
+                }, true, false);
+
+            }
+            IconLayer.updateShown();
+
+            if (data.hits.hits.length == queryObject.size) {
+                queryObject.from += queryObject.size;
+                this.fetchFromNM(queryObject)
+            }
+
+        });
+
     }
 }
 
