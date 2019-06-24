@@ -45,6 +45,7 @@ class MainSearch extends polymer.Base implements polymer.Element {
         switch (value) {
             case 'devtools': Common.dom.append(WindowDev.create()); break;
             case 'nmpoc': this.NM_POC(); break;
+            case 'nmpoconly': App.haTags.toggleTop(9, false); this.NM_POC(); break;
             default: Common.dom.append(WindowSearch.create(value)); break;
         }
     }
