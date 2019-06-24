@@ -64,6 +64,7 @@
     <Content Include="elements\core\collections\ha-contents\ha-contents.html" />
     <Content Include="elements\core\collections\ha-collections\ha-collections.html" />
     <Content Include="elements\core\collections\ha-digdag\ha-digdag.html" />
+    <Content Include="elements\core\windows\window-ext-image\window-ext-image.html" />
     <Content Include="elements\thrash\ha-institutions\ha-institutions.html" />
     <Content Include="elements\core\collections\ha-licenses\ha-licenses.html" />
     <Content Include="elements\core\collections\ha-users\ha-users.html" />
@@ -215,6 +216,7 @@
     <Content Include="images\lang\daFlag.png" />
     <Content Include="images\lang\deFlag.png" />
     <Content Include="images\lang\enFlag.png" />
+    <Content Include="images\markers\imagemarker.png" />
     <Content Include="images\pdfHeader.jpg" />
     <Content Include="images\theme\1001back.jpg" />
     <Content Include="images\theme\1001logo.jpg" />
@@ -498,6 +500,7 @@
     <TypeScriptCompile Include="elements\core\collections\ha-contents\ha-contents.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-collections\ha-collections.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-digdag\ha-digdag.ts" />
+    <TypeScriptCompile Include="elements\core\windows\window-ext-image\window-ext-image.ts" />
     <TypeScriptCompile Include="elements\thrash\ha-institutions\ha-institutions.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-licenses\ha-licenses.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-users\ha-users.ts" />
@@ -658,6 +661,7 @@
   <ItemGroup>
     <Compile Include="cs\bundles\Bundles.cs" />
     <Compile Include="cs\Common.cs" />
+    <Compile Include="cs\proxy\ImageProxy.cs" />
     <Compile Include="cs\proxy\CollectionPDFProxy.cs" />
     <Compile Include="cs\proxy\PDFProxy.cs" />
     <Compile Include="cs\proxy\GeoPDFProxy.cs" />

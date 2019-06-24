@@ -7,7 +7,11 @@
     public minDist: number;
     public scale: number;
     //public small: boolean;
+    //public style: ol.style.Style;
     public iconStyle: ol.style.Icon;
+
+    private img: HTMLImageElement;
+    private imgDataUrl: string;
 
     //private static styleCache: any = {};
 
@@ -68,7 +72,7 @@
     //    this.update();
     //}
 
-    public updateStyle(): void {
+    public updateStyle() {
         //var marker = this.marker;
         //var style: ol.style.Style = Icon.styleCache[marker + '']
 
@@ -121,6 +125,37 @@
     //    this.minDist = Math.sqrt(minDistSquared);
     //}
 
+    public loadImage() {
+        if (!this.geo.imageOnlyUrl)
+            return;
+
+        if (!this.img) {
+
+            this.img = document.createElement('img');
+            $(this.img).on('load', () => {
+
+                var canvas = document.createElement('canvas');
+                canvas.width = 48;
+                canvas.height = 60;
+                var context = canvas.getContext("2d");
+                context.drawImage(HaTags._blankImageMarker, 6, 12);
+
+                var x = Math.floor((canvas.width - this.img.width) / 2);
+                var y = canvas.height - this.img.height - 15;
+                context.drawImage(this.img, x, y);
+                context.strokeStyle = 'white';
+                context.strokeRect(x - .5, y - .5, this.img.width + 1, this.img.height + 1);
+                context.stroke();
+                this.imgDataUrl = canvas.toDataURL();
+                this.updateStyle();
+            });
+            this.img.src = 'proxy/image?url=' + encodeURIComponent(this.geo.imageOnlyUrl + '?maxsize=46');
+
+            //return HaTags._blankImageMarker.src;
+        }
+    }
+
+
     public get marker(): string {
         //var hasChildrenTag: HaTag;
         //for (var tag of this.geo.tags)
@@ -132,6 +167,14 @@
 
         //if (hasChildrenTag)
         //    return this.geo.isUGC ? hasChildrenTag.invertedMarker : hasChildrenTag.marker;        
+
+        if (this.geo.imageOnlyUrl) {
+            if (!this.imgDataUrl)
+                return HaTags._blankImageMarker.src;
+
+            return this.imgDataUrl;
+        }
+
         if (this.geo.isPartOfCurrentCollection) {
             return this.geo.id > 0 ? HaTags.numberMarker(App.haCollections.collection.collectionGeoOrdering(this.geo) + 1) : HaTags.viaPointMarker(App.haCollections.collection.viaPointOrdering(this.geo));
         }

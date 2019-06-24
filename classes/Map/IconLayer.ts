@@ -101,7 +101,11 @@
 
         super(IconLayer.clusterSource, (feature, resolution) => {
             var icons = <Icon[]>feature.get('features');
-            return icons.length == 1 ? icons[0].getStyle() : this.getMultipleStyle(icons);
+            if (icons.length > 1)
+                return this.getMultipleStyle(icons);
+
+            icons[0].loadImage();
+            return icons[0].getStyle();
         }, false)
 
         //if (!App.useClustering)

@@ -19,6 +19,7 @@
     private _isPartOfCurrentCollection: boolean;
     private _wasOnPrimaryLayer: boolean;
     public userLayer: boolean;
+    public imageOnlyUrl: string; //TODO: Split HaGeo into HaGeo and HaGeoExtImage(?) with base class..................
 
     public icon: Icon;
     public user: HAUser;
@@ -38,6 +39,7 @@
 
         this.online = data.online == null ? true : data.online;
         this.userLayer = userLayer;
+        this.imageOnlyUrl = data.imageOnlyUrl;
 
         //this.selectedTagsCount = 0;
         this.inYear = this._inYear;

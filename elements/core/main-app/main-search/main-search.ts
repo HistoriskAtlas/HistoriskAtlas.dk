@@ -50,7 +50,7 @@ class MainSearch extends polymer.Base implements polymer.Element {
     }
 
     private NM_POC() {
-        App.haTags.toggleTop(9, false);
+        //App.haTags.toggleTop(9, false);
 
         var queryObject = {
             "size": 500,
@@ -117,7 +117,7 @@ class MainSearch extends polymer.Base implements polymer.Element {
     }
 
     private fetchFromNM(queryObject: any) {
-        $.ajax('http://api.natmus.dk/search/public/raw', {
+        $.ajax('https://api.natmus.dk/search/public/raw', {
             type: 'POST',
             data: JSON.stringify(queryObject),
             contentType: 'application/json'
@@ -127,7 +127,8 @@ class MainSearch extends polymer.Base implements polymer.Element {
                 var geo = new HaGeo({
                     title: hit._source.text['da-DK'].title,
                     lat: hit._source.location.crowd.latitude,
-                    lng: hit._source.location.crowd.longitude
+                    lng: hit._source.location.crowd.longitude,
+                    imageOnlyUrl: 'http://cumulus.natmus.dk/CIP/preview/thumbnail/' + hit._source.collection + '/' + hit._source.id
                 }, true, false);
 
             }

@@ -121,7 +121,7 @@
         if (this.openGeoWindowInNewTab)
             window.open(geo.link, '_new');
         else
-            Common.dom.append(WindowGeo.create(geo));
+            Common.dom.append(geo.imageOnlyUrl ? WindowExtImage.create(geo) : WindowGeo.create(geo));
     }
 
     public static dateTimeStringFromMs(ms: number): string {
