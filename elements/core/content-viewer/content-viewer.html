@@ -8,6 +8,10 @@
         rich-text {
             padding-bottom: 17px;
         }
+        .name {
+            font-weight: bold;
+            margin-top: 6px;
+        }
     </style>
     <template>
 
@@ -43,7 +47,7 @@
                     </template>
                     <template is="dom-if" if="[[subContent.isPlainText]]">
                         <template is="dom-if" if="[[subContent.name]]">
-                            <span style="font-weight:bold">[[subContent.name]]</span>
+                            <div class="name">[[subContent.name]]</div>
                         </template>
                         <plain-text content="{{subContent.text}}" editable="[[editing]]"></plain-text>
                     </template>
