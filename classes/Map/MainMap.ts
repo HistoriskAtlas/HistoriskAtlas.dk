@@ -171,7 +171,7 @@
             this.mousePixel = pixel;
 
             //TODO: Only if shown?
-            App.mapTooltip.setPosition([pixel[0] + $("#map").offset().left, pixel[1] + 20]);
+            App.mapTooltip.setPosition([pixel[0] + $("#map").offset().left, pixel[1] + $("#map").offset().top]); // + 20
 
             if (event.dragging)
                 return;

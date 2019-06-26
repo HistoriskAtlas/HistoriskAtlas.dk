@@ -66,9 +66,22 @@ class MainSearch extends polymer.Base implements polymer.Element {
                             }
                         },
                         {
-                            "exists":
-                            {
-                                "field": "location.crowd.latitude"
+                            "bool": {
+                                "should": [
+                                    {
+                                        "exists":
+                                        {
+                                            "field": "location.crowd.latitude"
+                                        }
+                                    },
+                                    {
+                                        "exists":
+                                        {
+                                            "field": "location.verified.latitude"
+                                        }
+                                    }
+
+                                ]
                             }
                         }
                     ],
@@ -127,8 +140,8 @@ class MainSearch extends polymer.Base implements polymer.Element {
 
                 var geo = new HaGeo({
                     title: hit._source.text['da-DK'].title,
-                    lat: hit._source.location.crowd.latitude,
-                    lng: hit._source.location.crowd.longitude,
+                    lat: hit._source.location.verified.latitude ? hit._source.location.verified.latitude : hit._source.location.crowd.latitude,
+                    lng: hit._source.location.verified.longitude ? hit._source.location.verified.longitude : hit._source.location.crowd.longitude,
                     imageOnlyUrl: 'http://cumulus.natmus.dk/CIP/preview/thumbnail/' + hit._source.collection + '/' + hit._source.id
                 }, true, false);
 

@@ -18,7 +18,7 @@ namespace HistoriskAtlas5.Frontend
             RouteTable.Routes.Add(new Route("robots.txt", new RobotsTxt()));
             RouteTable.Routes.Add(new Route("proxy/route.json", new RouteProxy()));
             RouteTable.Routes.Add(new Route("proxy/biblio.json", new BiblioProxy()));
-            RouteTable.Routes.Add(new Route("proxy/image", new ImageProxy()));
+            //RouteTable.Routes.Add(new Route("proxy/image", new ImageProxy())); //used by NM image only location PoC
             RouteTable.Routes.Add(new Route("{title}_(r{collectionid}).pdf", new CollectionPDFProxy()));
             RouteTable.Routes.Add(new Route("{title}_({geoid}).pdf", new GeoPDFProxy()));
             RouteTable.Routes.Add(new Route("{title}_({geoid})", null, new RouteValueDictionary { { "geoid", new GeoIDConstraint() } }, new RedirectRouteHandler())); //Tunø workaround

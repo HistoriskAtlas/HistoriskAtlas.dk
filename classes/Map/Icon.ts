@@ -1,6 +1,7 @@
 ﻿class Icon extends ol.Feature {
     public geo: HaGeo;
     public static defaultMarker: string;
+    public static imageOnlyMarker: string;
     public static invertedDefaultMarker: string;
     //private coord: ol.Coordinate;
     private point: ol.geom.Point;
@@ -125,35 +126,35 @@
     //    this.minDist = Math.sqrt(minDistSquared);
     //}
 
-    public loadImage() {
-        if (!this.geo.imageOnlyUrl)
-            return;
+    //public loadImage() {
+    //    if (!this.geo.imageOnlyUrl)
+    //        return;
 
-        if (!this.img) {
+    //    if (!this.img) {
 
-            this.img = document.createElement('img');
-            $(this.img).on('load', () => {
+    //        this.img = document.createElement('img');
+    //        $(this.img).on('load', () => {
 
-                var canvas = document.createElement('canvas');
-                canvas.width = 48;
-                canvas.height = 60;
-                var context = canvas.getContext("2d");
-                context.drawImage(HaTags._blankImageMarker, 6, 12);
+    //            var canvas = document.createElement('canvas');
+    //            canvas.width = 48;
+    //            canvas.height = 60;
+    //            var context = canvas.getContext("2d");
+    //            context.drawImage(HaTags._blankImageMarker, 6, 12);
 
-                var x = Math.floor((canvas.width - this.img.width) / 2);
-                var y = canvas.height - this.img.height - 15;
-                context.drawImage(this.img, x, y);
-                context.strokeStyle = 'white';
-                context.strokeRect(x - .5, y - .5, this.img.width + 1, this.img.height + 1);
-                context.stroke();
-                this.imgDataUrl = canvas.toDataURL();
-                this.updateStyle();
-            });
-            this.img.src = 'proxy/image?url=' + encodeURIComponent(this.geo.imageOnlyUrl + '?maxsize=46');
+    //            var x = Math.floor((canvas.width - this.img.width) / 2);
+    //            var y = canvas.height - this.img.height - 15;
+    //            context.drawImage(this.img, x, y);
+    //            context.strokeStyle = 'white';
+    //            context.strokeRect(x - .5, y - .5, this.img.width + 1, this.img.height + 1);
+    //            context.stroke();
+    //            this.imgDataUrl = canvas.toDataURL();
+    //            this.updateStyle();
+    //        });
+    //        this.img.src = 'proxy/image?url=' + encodeURIComponent(this.geo.imageOnlyUrl + '?maxsize=46');
 
-            //return HaTags._blankImageMarker.src;
-        }
-    }
+    //        //return HaTags._blankImageMarker.src;
+    //    }
+    //}
 
 
     public get marker(): string {
@@ -169,10 +170,11 @@
         //    return this.geo.isUGC ? hasChildrenTag.invertedMarker : hasChildrenTag.marker;        
 
         if (this.geo.imageOnlyUrl) {
-            if (!this.imgDataUrl)
-                return HaTags._blankImageMarker.src;
+            //if (!this.imgDataUrl)
+            //    return HaTags._blankImageMarker.src;
 
-            return this.imgDataUrl;
+            //return this.imgDataUrl;
+            return Icon.imageOnlyMarker;
         }
 
         if (this.geo.isPartOfCurrentCollection) {

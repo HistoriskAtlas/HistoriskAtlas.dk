@@ -104,7 +104,7 @@
             if (icons.length > 1)
                 return this.getMultipleStyle(icons);
 
-            icons[0].loadImage();
+            //icons[0].loadImage();
             return icons[0].getStyle();
         }, false)
 

@@ -2,11 +2,32 @@
     <template>
         <style>
             :host {
-                position: absolute; 
-                min-width: 300px; 
+                pointer-events: none;
+                position: absolute;
+                min-width: 200px;
                 text-align: left;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            paper-tooltip {
+                left: auto !important;
+                top: auto !important;
+                bottom: 20px !important;
+                transform: translateX(-100px);
+            }
+            #container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
             }
         </style>
-        <paper-tooltip id="tooltip" animation-delay="0" fit-to-visible-bounds position="left">[[tooltipText]]</paper-tooltip>
+        
+        <paper-tooltip id="tooltip" animation-delay="0">            <!--fit-to-visible-bounds position="left"-->
+            <div id="container">
+                <img src="[[imageUrl]]" hidden$="[[hideImage]]" on-load="imageLoaded" style="margin-bottom:6px">
+                <span>[[tooltipText]]</span>
+            </div>
+        </paper-tooltip>
     </template>
 </dom-module>

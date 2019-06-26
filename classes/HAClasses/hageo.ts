@@ -520,8 +520,10 @@
     }
 
     public showToolTip() {
+
+        var imageUrl = this.imageOnlyUrl ? this.imageOnlyUrl + '?maxsize=150' : null;
         if (this._title)
-            App.mapTooltip.setText(this._title);
+            App.mapTooltip.setText(this._title, false, imageUrl);
         else
             if (this._title != '') {
                 App.mapTooltip.setText('');
@@ -538,7 +540,7 @@
                     },
                     (result) => {
                         this._title = result.data[0].title;
-                        App.mapTooltip.setText(this._title, true);
+                        App.mapTooltip.setText(this._title, true, imageUrl);
                     }
                 );
             }
