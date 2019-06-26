@@ -1,17 +1,19 @@
 ﻿class HaSubContentText extends HaSubContent {
     private _text: string;
-    //private _headline: string;
+    private _name: string;
+    private _type: number; //0=rich-text, 1=plain-text
 
     constructor(data: any, content: HaContent) {
         super(data, content);
         this._text = Common.rich2html(data.text1);
+        this._name = data.name;
+        this._type = data.type;
         //this._headline = Common.rich2html(data.headline); //TODO: conversion needed?
     }
 
     get isText(): boolean {
         return true;
     }
-
 
     get text(): string {
         return this._text;
@@ -20,12 +22,19 @@
         this._text = value;
     }
 
-    //get headline(): string {
-    //    return this._headline;
-    //}
-    //set headline(value: string) {
-    //    this._headline = value;
-    //}
+    get name(): string {
+        return this._name;
+    }
+    set name(value: string) {
+        this._name = value;
+    }
+
+    get isRichText(): boolean {
+        return this._type == 0;
+    }
+    get isPlainText(): boolean {
+        return this._type == 1;
+    }
 
     public insert(callback: (props: Array<string>) => void) {
         super.insert(callback, 'text',

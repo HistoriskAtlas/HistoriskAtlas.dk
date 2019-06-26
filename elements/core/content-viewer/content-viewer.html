@@ -38,7 +38,15 @@
         <template is="dom-repeat" items="{{content.subContents}}" as="subContent">
             <subcontent-viewer content="{{content}}" sub-content="{{subContent}}" editing="[[editing]]" adjustable="[[adjustable]]">
                 <template is="dom-if" if="[[subContent.isText]]">
-                    <rich-text content="{{subContent.text}}" editable="[[editing]]" placeholder="Skriv din tekst her..." truncate-text-at="[[truncateTextAt]]"></rich-text>
+                    <template is="dom-if" if="[[subContent.isRichText]]">
+                        <rich-text content="{{subContent.text}}" editable="[[editing]]" placeholder="Skriv din tekst her..." truncate-text-at="[[truncateTextAt]]"></rich-text>
+                    </template>
+                    <template is="dom-if" if="[[subContent.isPlainText]]">
+                        <template is="dom-if" if="[[subContent.name]]">
+                            <span style="font-weight:bold">[[subContent.name]]</span>
+                        </template>
+                        <plain-text content="{{subContent.text}}" editable="[[editing]]"></plain-text>
+                    </template>
                 </template>
                 <template is="dom-if" if="[[subContent.isBiblio]]">
                     <window-geo-biblio cql="{{subContent.cql}}" editing="[[editing]]"></window-geo-biblio>

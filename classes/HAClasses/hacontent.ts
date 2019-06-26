@@ -83,7 +83,7 @@
         return this._contenttypeid == 3;
     }
     public get showAsTab(): boolean {
-        return this.isText || this.isBiblio;
+        return this.isText || this.isBiblio || this._contenttypeid == 5; //Sabotage
     }
 
     public insert(callback?: () => void) {
