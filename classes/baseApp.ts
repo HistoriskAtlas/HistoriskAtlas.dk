@@ -99,6 +99,8 @@
 
         if (!App.passed.theme)
             App.passed.theme = $.extend({}, Global.defaultTheme);
+
+        UrlState.ReadFromUrl();
     }
 
     ready() {
@@ -168,7 +170,7 @@
         //}
 
 
-        UrlState.ReadFromUrl();
+        //UrlState.ReadFromUrl();
 
         //else {
         //    App.passed.initCoord = [Global.defaultTheme.maplatitude, Global.defaultTheme.maplongitude]; //TODO: what if default theme isnt selected....
@@ -232,7 +234,8 @@ interface IPassed {
     theme: ITheme,
     dev: boolean,
     redribbon: boolean,
-    embed: boolean
+    embed: boolean,
+    search: string
 }
 
 (<any>ol.source.XYZ.prototype).setCanvasTileClass = function () {

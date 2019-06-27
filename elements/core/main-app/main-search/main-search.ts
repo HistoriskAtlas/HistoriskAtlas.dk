@@ -4,6 +4,11 @@ class MainSearch extends polymer.Base implements polymer.Element {
     @property({ type: Boolean, notify: true, value: false })
     public open: boolean;
 
+    ready() {
+        if (App.passed.search)
+            this.doSearch(App.passed.search);
+    }
+
     searchIconTap() {
         if (!this.open) {
             this.open = true;
@@ -40,12 +45,19 @@ class MainSearch extends polymer.Base implements polymer.Element {
         this.open = false;
         setTimeout(() => this.$.searchInput.value = '', 300);
         if (!value)
-            return
+            return;
 
         switch (value) {
             case 'devtools': Common.dom.append(WindowDev.create()); break;
             case 'nmpoc': this.NM_POC(); break;
-            case 'nmpoconly': App.haTags.toggleTop(9, false); this.NM_POC(); break;
+            case 'nmpoconly': {                
+                if (App.haTags)
+                    App.haTags.toggleTop(9, false);
+                else
+                    UrlState.stateObject.t = '-A9-A9-AG';
+                this.NM_POC();
+                break;
+            }
             default: Common.dom.append(WindowSearch.create(value)); break;
         }
     }

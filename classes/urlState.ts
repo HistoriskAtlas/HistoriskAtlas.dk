@@ -9,16 +9,6 @@
     public static ReadFromUrl() {
         var path = window.location.pathname;
 
-        if (path.substr(-8) == '/welcome') {
-            window.history.replaceState({}, null, window.location.href.substr(0, window.location.href.length - 8));
-            App.global.userJustActivated = true;
-        }
-
-        if (path.substr(-13) == '/new_password') {
-            window.history.replaceState({}, null, window.location.href.substr(0, window.location.href.length - 13));
-            App.global.userJustResetPassword = true;
-        }
-
         //TODO: error handling on wrong inputs..............
         if (path.substr(0, 2) == '/@') {
             var atArr = path.substr(2).split(',');
@@ -48,7 +38,23 @@
                 if (this.stateObject.hasOwnProperty('ogwint'))
                     Common.openGeoWindowInNewTab = !!parseInt(this.stateObject.ogwint);
             }
+            return;
         }
+
+        if (path.substr(-8) == '/welcome') {
+            window.history.replaceState({}, null, window.location.href.substr(0, window.location.href.length - 8));
+            App.global.userJustActivated = true;
+            return;
+        }
+
+        if (path.substr(-13) == '/new_password') {
+            window.history.replaceState({}, null, window.location.href.substr(0, window.location.href.length - 13));
+            App.global.userJustResetPassword = true;
+            return;
+        }
+
+        if (!App.passed.geo && !App.passed.embed && App.passed.theme.id == Global.defaultTheme.id)
+            App.passed.search = path.substr(1);
     }
 
     public static WriteToUrl() {
