@@ -66,7 +66,7 @@
             return viaPoint;
         }
 
-        $.getJSON("proxy/route.json?type=" + collection.type +  "&loc=" + loc1[0] + "," + loc1[1] + "&loc=" + loc2[0] + "," + loc2[1], (data) => {
+        $.getJSON("proxy/route.json?type=" + collection.type + "&loc=" + loc1[0] + "," + loc1[1] + "&loc=" + loc2[0] + "," + loc2[1], (data) => {
             var route = new (<any>ol.format.Polyline)({
                 factor: 1e5
             }).readGeometry(data.geometry, {
@@ -96,6 +96,9 @@
             //this.source.addFeature(feature);
             //this.cache[cacheIndex] = feature;
             //callback(feature, data.distance);
+
+            if (!data.fromCache)
+                Analytics.calcRoute(collection.type)
         });
 
         return viaPoint;

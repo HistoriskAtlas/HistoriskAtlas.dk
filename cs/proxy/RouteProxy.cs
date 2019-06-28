@@ -50,7 +50,7 @@ namespace HistoriskAtlas5.Frontend
                 }
             }
             OSRMRoute osrmRoute = JsonConvert.DeserializeObject<OSRMResult>(json).routes[0];
-            HARoute haRoute = new HARoute() { distance = osrmRoute.distance, time = osrmRoute.duration, geometry = osrmRoute.geometry };
+            HARoute haRoute = new HARoute() { distance = osrmRoute.distance, time = osrmRoute.duration, geometry = osrmRoute.geometry, fromCache = true };
 
             string output = JsonConvert.SerializeObject(haRoute);
             try
@@ -59,6 +59,8 @@ namespace HistoriskAtlas5.Frontend
             }
             catch { }
 
+            haRoute.fromCache = true;
+            output = JsonConvert.SerializeObject(haRoute);
             context.Response.Output.WriteLine(output);
         }
 
@@ -81,6 +83,7 @@ namespace HistoriskAtlas5.Frontend
         public float distance;
         public float time;
         public string geometry;
+        public Boolean fromCache;
     }
 
 }

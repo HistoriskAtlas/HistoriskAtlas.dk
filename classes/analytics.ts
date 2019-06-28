@@ -39,6 +39,13 @@
             eventLabel: userID
         });
     }
+    public static calcRoute(type: number) {
+        Analytics.send({
+            hitType: 'event',
+            eventCategory: 'calc_route',
+            eventAction: type
+        });
+    }
     private static send(params: object) {
         (<any>window).analytics('ha.send', params);
         (<any>window).analytics('obm.send', params);
