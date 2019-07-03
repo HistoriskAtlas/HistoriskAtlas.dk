@@ -45,7 +45,7 @@
                     <template is="dom-if" if="[[subContent.isRichText]]">
                         <rich-text content="{{subContent.text}}" editable="[[editing]]" placeholder="Skriv din tekst her..." truncate-text-at="[[truncateTextAt]]"></rich-text>
                     </template>
-                    <template is="dom-if" if="[[subContent.isPlainText]]">
+                    <template is="dom-if" if="[[showPlainText(subContent.isPlainText,subContent.text,editing)]]">
                         <template is="dom-if" if="[[subContent.name]]">
                             <div class="name">[[subContent.name]]</div>
                         </template>

@@ -14,6 +14,14 @@ class ContentViewer extends polymer.Base implements polymer.Element {
 
     @property({ type: Number })
     public truncateTextAt: number;
+
+    private showPlainText(isPlainText: boolean, text: string, editing: boolean): boolean {
+        if (!isPlainText)
+            return false;
+        if (editing)
+            return true;
+        return !!text;
+    }
 }
 
 ContentViewer.register();
