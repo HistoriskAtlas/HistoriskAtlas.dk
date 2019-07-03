@@ -139,7 +139,8 @@ class WindowImage extends polymer.Base implements polymer.Element {
     private scrollWindow(delta: number) {
         var i = this.geo.images.indexOf(this.image) + delta;
         this.image = this.geo.images[i];
-        $(this.$.container).animate({ scrollLeft: i * $('#container').width() }, delta == 0 ? 0 : 250, 'easeOutQuad');
+        var width = $(this.$$('#container')).width();
+        $(this.$.container).animate({ scrollLeft: i * width }, delta == 0 ? 0 : 250, 'easeOutQuad');
     }
 
     deleteImage() {
