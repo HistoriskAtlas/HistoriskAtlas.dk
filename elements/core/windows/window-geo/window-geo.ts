@@ -128,7 +128,7 @@ class WindowGeo extends polymer.Base implements polymer.Element {
     @listen('content-title-confirmed')
     contentTitleConfirmed(e: any) {
         var ordering = this.contents.length == 0 ? 1 : Math.max.apply(Math, this.contents.map((o) => { return o.ordering; })) + 1;
-        var content = new HaContent({ geoid: this.geo.id, headline: e.detail, ordering: ordering, contenttypeid: 0, texts: [{ text1: '', ordering: 0 }] });
+        var content = new HaContent({ geoid: this.geo.id, headline: e.detail, ordering: ordering, contenttypeid: 0, texts: [{ text1: '', ordering: 0, type: 0 }] });
         this.push('contents', content);
         this.selectedTab = ordering; //this.contents.length;
     }
@@ -140,7 +140,7 @@ class WindowGeo extends polymer.Base implements polymer.Element {
     }
 
     addTextSubContentTap() {
-        this.push('contents.' + this.contents.indexOf(this.curContent) + '.subContents', new HaSubContentText({ text1: '', ordering: this.curContent.subContents.length }, this.curContent));
+        this.push('contents.' + this.contents.indexOf(this.curContent) + '.subContents', new HaSubContentText({ text1: '', ordering: this.curContent.subContents.length, type: 0 }, this.curContent));
     }
     addPDFSubContentTap() {
         this.push('contents.' + this.contents.indexOf(this.curContent) + '.subContents', new HaSubContentPDF({ title: '', filename: '', ordering: this.curContent.subContents.length }, this.curContent));

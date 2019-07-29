@@ -40,7 +40,8 @@
         super.insert(callback, 'text',
             {
                 //headline: this._headline,
-                text1: Common.html2rich(this._text)
+                text1: Common.html2rich(this._text),
+                type: this._type
             }
         )
     }
