@@ -527,25 +527,26 @@ class HaGeos extends polymer.Base implements polymer.Element {
     }
 
     public updateYears(forceUpdate: boolean = false): boolean {
-        if (!this.geos)
-            return false;
+        return false; //TODO: not used at the moment
 
-        if (!this.timeLineActive && !forceUpdate)
-            return false;
+        //if (!this.geos)
+        //    return false;
 
-        var change = false;
+        //if (!this.timeLineActive && !forceUpdate)
+        //    return false;
 
-        for (var geo of this.geos)
+        //var change = false;
+
         //this.geos.forEach((geo) => {
-            if (geo.yearChanged())
-                change = true;
+        //    if (geo.yearChanged())
+        //        change = true;
         //});
 
-        if (change) {
-            IconLayer.updateShown();
-            return true;
-        } else
-            return false;
+        //if (change) {
+        //    IconLayer.updateShown();
+        //    return true;
+        //} else
+        //    return false;
     }
 
     //@observe('userCreators')
