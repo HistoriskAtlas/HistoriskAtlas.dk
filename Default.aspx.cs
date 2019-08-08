@@ -10,7 +10,7 @@ namespace HistoriskAtlas5.Frontend
 {
     public partial class Default : Page
     {
-        public bool dev, crawler, fullapp, embed;
+        public bool dev, beta, crawler, fullapp, embed;
         public HAGeo passedGeo;
         public HACollection passedCollection;
         public HATag passedTag;
@@ -23,6 +23,7 @@ namespace HistoriskAtlas5.Frontend
             var keylessParameters = GetKeylessParameters();
             
             dev = (Request.QueryString["dev"] != null ? (Request.QueryString["dev"] != "false") : !Request.Url.Host.Contains("historiskatlas.dk"));
+            beta = Request.Url.Host.StartsWith("beta");
             crawler = Regex.IsMatch(Request.UserAgent, @"bot|crawler|facebook", RegexOptions.IgnoreCase);
             embed = keylessParameters.Contains("embed");
 
