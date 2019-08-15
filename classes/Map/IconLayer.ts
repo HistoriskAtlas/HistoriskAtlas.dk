@@ -14,9 +14,9 @@
 
     public static updateDisabled: boolean;
 
-    private static backCanvas: HTMLCanvasElement;
-    private static ugcBackCanvas: HTMLCanvasElement;
-    private static mixedBackCanvas: HTMLCanvasElement;
+    private static backCanvas: Array<HTMLCanvasElement>;
+    private static ugcBackCanvas: Array<HTMLCanvasElement>;
+    private static mixedBackCanvas: Array<HTMLCanvasElement>;
 
     //private oldDragCoordinate: ol.Coordinate;
     //private dragDirtyGeo: HaGeo;
@@ -28,6 +28,10 @@
         IconLayer.updateDisabled = false;
         IconLayer.source = new ol.source.Vector();
 
+        IconLayer.backCanvas = [];
+        IconLayer.ugcBackCanvas = [];
+        IconLayer.mixedBackCanvas = [];
+
         //if (App.useClustering)
             IconLayer.clusterSource = new ol.source.Cluster({
                 distance: 40, /*Was 50*/
@@ -35,17 +39,17 @@
                 source: IconLayer.source,
             });
 
-        var canvas = document.createElement('canvas');
-        canvas.width = 32;
-        canvas.height = 32;
-        var context = canvas.getContext("2d");
+        //var canvas = document.createElement('canvas');
+        //canvas.width = 32;
+        //canvas.height = 32;
+        //var context = canvas.getContext("2d");
 
-        context.arc(16, 16, 15.25, 0, Math.PI * 2);
-        context.strokeStyle = '#ffffff';
-        context.fillStyle = '#005d9a';
-        context.lineWidth = 1.5;
-        context.fill();
-        context.stroke();
+        //context.arc(16, 16, 15.25, 0, Math.PI * 2);
+        //context.strokeStyle = '#ffffff';
+        //context.fillStyle = '#005d9a';
+        //context.lineWidth = 1.5;
+        //context.fill();
+        //context.stroke();
 
         //IconLayer.backStyle = new ol.style.Style({
         //    image: new ol.style.Icon({
@@ -158,14 +162,14 @@
             if (IconLayer.mixedBackStyles[i])
                 return IconLayer.mixedBackStyles[i];
 
-            var canvas = IconLayer.circleCanvasMixed()
+            var canvas = IconLayer.circleCanvasMixed(ugcCount + proCount)
             var context = canvas.getContext('2d');
             context.font = "10px Roboto";
             context.textAlign = 'center';
             context.fillStyle = '#005d9a';
-            context.fillText('' + ugcCount, 16, 14);
+            context.fillText('' + ugcCount, canvas.width / 2, canvas.width / 2 - 2);
             context.fillStyle = '#ffffff';
-            context.fillText('' + proCount, 16, 25);
+            context.fillText('' + proCount, canvas.width / 2, canvas.width / 2 + 9);
             IconLayer.mixedBackStyles[i] = new ol.style.Style({
                 image: new ol.style.Icon({
                     src: canvas.toDataURL()
@@ -182,12 +186,12 @@
         if (styles[count])
             return styles[count];
 
-        var canvas = IconLayer.circleCanvas(ugc);
+        var canvas = IconLayer.circleCanvas(ugc, count);
         var context = canvas.getContext('2d');
         context.font = "12px Roboto";
         context.fillStyle = ugc ? '#005d9a' : '#ffffff';
         context.textAlign = 'center';
-        context.fillText('' + count, 16, 20);
+        context.fillText('' + count, canvas.width / 2, canvas.width / 2 + 4);
 
         styles[count] =  new ol.style.Style({
             image: new ol.style.Icon({
@@ -343,28 +347,28 @@
     //    return [lonlat[0], lonlat[1]];
     //}
 
-    private static circleCanvas(isUGC: boolean): HTMLCanvasElement {
+    private static circleCanvas(isUGC: boolean, count: number): HTMLCanvasElement {
         var canvas = document.createElement('canvas');
-        canvas.width = 32;
-        canvas.height = 32;
+        canvas.width = this.sizeFromCount(count);
+        canvas.height = canvas.width;
         var context = canvas.getContext("2d");
 
-        var cachedCanvas = isUGC ? this.ugcBackCanvas : this.backCanvas;
+        var cachedCanvas = isUGC ? this.ugcBackCanvas[canvas.width] : this.backCanvas[canvas.width];
         if (!cachedCanvas) {
             cachedCanvas = document.createElement('canvas');
-            cachedCanvas.width = 32;
-            cachedCanvas.height = 32;
+            cachedCanvas.width = canvas.width;
+            cachedCanvas.height = cachedCanvas.width;
             var cachedContext = cachedCanvas.getContext("2d");
-            cachedContext.arc(16, 16, 15.25, 0, Math.PI * 2);
+            cachedContext.arc(canvas.width / 2, canvas.width / 2, canvas.width / 2 - .75, 0, Math.PI * 2);
             cachedContext.strokeStyle = isUGC ? '#005d9a' : '#ffffff';
             cachedContext.fillStyle = isUGC ? '#ffffff' : '#005d9a';
             cachedContext.lineWidth = 1.5;
             cachedContext.fill();
             cachedContext.stroke();
             if (isUGC)
-                this.ugcBackCanvas = cachedCanvas;
+                this.ugcBackCanvas[canvas.width] = cachedCanvas;
             else
-                this.backCanvas = cachedCanvas;
+                this.backCanvas[canvas.width] = cachedCanvas;
         }
 
         context.drawImage(cachedCanvas, 0, 0);
@@ -372,23 +376,29 @@
         return canvas;
     }
 
-    private static circleCanvasMixed(): HTMLCanvasElement {
+    private static circleCanvasMixed(count: number): HTMLCanvasElement {
         var canvas = document.createElement('canvas');
-        canvas.width = 32;
-        canvas.height = 32;
+        canvas.width = this.sizeFromCount(count); //was 32;
+        canvas.height = canvas.width;
         var context = canvas.getContext("2d");
 
-        if (!this.mixedBackCanvas) {
-            this.mixedBackCanvas = IconLayer.circleCanvas(false);
-            var ugcCanvas = IconLayer.circleCanvas(true);
+        var mixedBackCanvas = this.mixedBackCanvas[canvas.width];
+        if (!mixedBackCanvas) {
+            mixedBackCanvas = IconLayer.circleCanvas(false, count);
+            var ugcCanvas = IconLayer.circleCanvas(true, count);
 
-            var mixedBackContext = this.mixedBackCanvas.getContext('2d');
-            mixedBackContext.clearRect(0, 0, this.mixedBackCanvas.width, this.mixedBackCanvas.height / 2);
-            mixedBackContext.drawImage(ugcCanvas, 0, 0, this.mixedBackCanvas.width, this.mixedBackCanvas.height / 2, 0, 0, this.mixedBackCanvas.width, this.mixedBackCanvas.height / 2);
+            var mixedBackContext = mixedBackCanvas.getContext('2d');
+            mixedBackContext.clearRect(0, 0, mixedBackCanvas.width, mixedBackCanvas.height / 2);
+            mixedBackContext.drawImage(ugcCanvas, 0, 0, mixedBackCanvas.width, mixedBackCanvas.height / 2, 0, 0, mixedBackCanvas.width, mixedBackCanvas.height / 2);
+            this.mixedBackCanvas[canvas.width] = mixedBackCanvas;
         }
         
-        context.drawImage(this.mixedBackCanvas, 0, 0);
+        context.drawImage(this.mixedBackCanvas[canvas.width], 0, 0);
         return canvas;
+    }
+
+    private static sizeFromCount(count: number): number {
+        return Math.max(25 + count.toString().length * 3, 32);
     }
 
 }
