@@ -3,14 +3,17 @@
         :host {
             display: flex;
             flex-direction: column;
-            padding-bottom: 17px; 
+            padding-bottom: 17px !important; 
         }
-        rich-text {
+        /*rich-text {
             padding-bottom: 17px;
-        }
+        }*/
         .name {
             font-weight: bold;
-            margin-top: 6px;
+            /*margin-top: 6px;*/
+        }
+        .plain-text-container {
+            padding-top: 17px;
         }
     </style>
     <template>
@@ -46,10 +49,12 @@
                         <rich-text content="{{subContent.text}}" editable="[[editing]]" placeholder="Skriv din tekst her..." truncate-text-at="[[truncateTextAt]]"></rich-text>
                     </template>
                     <template is="dom-if" if="[[showPlainText(subContent.isPlainText,subContent.text,editing)]]">
-                        <template is="dom-if" if="[[subContent.name]]">
-                            <div class="name">[[subContent.name]]</div>
-                        </template>
-                        <plain-text content="{{subContent.text}}" editable="[[editing]]"></plain-text>
+                        <div class="plain-text-container">
+                            <template is="dom-if" if="[[subContent.name]]">
+                                <div class="name">[[subContent.name]]</div>
+                            </template>
+                            <plain-text content="{{subContent.text}}" editable="[[editing]]"></plain-text>
+                        </div>
                     </template>
                 </template>
                 <template is="dom-if" if="[[subContent.isBiblio]]">
