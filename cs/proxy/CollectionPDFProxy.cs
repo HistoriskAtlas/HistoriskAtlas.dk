@@ -52,8 +52,6 @@ namespace HistoriskAtlas5.Frontend
                     writeHtml(Common.RichToHtml(collection.content.texts[0].text1));
                 }
 
-            newPage();
-
             if (context.Request.InputStream.Length > 0) { 
                 MemoryStream memstream = new MemoryStream();
                 context.Request.InputStream.CopyTo(memstream);
@@ -67,6 +65,7 @@ namespace HistoriskAtlas5.Frontend
             }
             writeParagraph("Rutens længde: " + (collection.distance >= 1000 ? ((float)collection.distance / 1000f).ToString("#.#") + " km" : collection.distance + " m"), 11, 2);
 
+            newPage();
 
             Array.Sort<HACollectionGeoPDF>(collection.collection_geos, (cg1, cg2) => cg1.ordering - cg2.ordering);
             writeParagraph("Punkter på ruten", 12, 1, 20);

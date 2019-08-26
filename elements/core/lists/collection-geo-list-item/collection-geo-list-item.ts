@@ -33,6 +33,9 @@ class CollectionGeoListItem extends polymer.Base implements polymer.Element {
         if (uiOpen || closeable)
             return false;
 
+        var test1 = $(this.$.headline).outerWidth();
+        var test2 = this.$.headline.scrollWidth;
+
         return $(this.$.headline).outerWidth() >= this.$.headline.scrollWidth;
     }
 
@@ -40,18 +43,27 @@ class CollectionGeoListItem extends polymer.Base implements polymer.Element {
         e.cancelBubble = true;
     }
 
-    headline(title: string, showText: boolean, uiOpen: boolean): string {
+    headline(title: string, showText: boolean): string {
         if (title)
             return title;
 
-        if (uiOpen)
-            return '';
+        //if (uiOpen)
+        //    return '';
 
         if (showText && this.collectionGeo.content) {
             return $('<span>' + (<HaSubContentText>this.collectionGeo.content.subContents[0]).text.replace('<br>', ' - ') + '</span>').text();
         }
 
-        return '';
+        return ''; //isViaPoint ? '- via -' : ''
+    }
+
+    headlineClass(uiOpen: boolean, isViaPoint): string {
+        var classes = [];
+        if (uiOpen)
+            classes.push('ui-open');
+        if (isViaPoint)
+            classes.push('via-point');
+        return classes.join(' ');
     }
 }
 

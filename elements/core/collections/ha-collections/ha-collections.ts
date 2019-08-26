@@ -276,7 +276,7 @@ class HaCollections extends Tags implements polymer.Element {
         collection.save(() => {
             this.push('collections', collection);
 
-            var content = new HaContent({ contenttypeid: 0, ordering: 0, headline: '', texts: [{ headline: '', text1: '' }] });
+            var content = new HaContent({ contenttypeid: 0, ordering: 0, headline: '', texts: [{ headline: '', text1: '', ordering: 0, type: 0 }] });
             //this.set('collection.content', content);
             collection.content = content;
             this.select(collection);
@@ -423,7 +423,7 @@ class HaCollections extends Tags implements polymer.Element {
             if (prop == 'showText') {
                 if (this.get(changeRecord.path)) {
                     if (!collection_geo.content) {
-                        var content = new HaContent({ contenttypeid: 0, ordering: 0, texts: [{ headline: '', text1: '' }] });
+                        var content = new HaContent({ contenttypeid: 0, ordering: 0, headline: '', texts: [{ headline: '', text1: '', type: 0, ordering: 0 }] });
                         this.set(cgPath + '.content', content);
                         content.insert(() => {
                             Services.update('collection_geo', { id: collection_geo.id, contentid: content.id });
@@ -682,6 +682,11 @@ class HaCollections extends Tags implements polymer.Element {
     }
 
     public deselectAll() {
+
+        if (this.collection) {
+            this.$.selector.deselect(this.collection);
+            App.map.iconLayer.visible = true;
+        }
 
         CollectionList.ignoreCollectionChanges = true;
 

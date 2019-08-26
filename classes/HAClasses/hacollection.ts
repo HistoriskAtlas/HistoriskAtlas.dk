@@ -144,7 +144,7 @@
     }
 
     public get link(): string {
-        return location.protocol + '//' + location.hostname + (!location.port ? '' : (':' + location.port)) + '/' + (this._title ? this._title.replace(new RegExp(' ', 'g'), '_') : '') + '_(r' + this._id + ')';
+        return location.protocol + '//' + location.hostname + (!location.port ? '' : (':' + location.port)) + '/' + (this._title ? this._title.replace(new RegExp(' |/', 'g'), '_') : '') + '_(r' + this._id + ')';
     }
     //set geos(val: Array<HaCollectionGeo>) {
     //    this.collection_geos = val;

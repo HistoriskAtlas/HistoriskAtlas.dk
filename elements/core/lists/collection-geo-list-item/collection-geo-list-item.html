@@ -100,6 +100,14 @@
             overflow: hidden;
             white-space: nowrap;
         }
+        #headline.ui-open {
+            visibility: hidden;
+        }
+        #headline.via-point:empty::after {
+            font-style: italic;
+            color: gray;
+            content: 'via'
+        }
     </style>
     <template>
         <ha-content content="{{collectionGeo.content}}"></ha-content>
@@ -109,7 +117,7 @@
                 <paper-icon-button icon="arrow-drop-down" class="arrow" toggles active="{{collectionGeo.uiOpen}}" noink on-tap="arrowTap" hidden$="[[hideArrow(closeable,collectionGeo.showText,collectionGeo.uiOpen,domChangeCounter)]]"></paper-icon-button>
             </div>
             <span class$="icon via-point-[[collectionGeo.isViaPoint]]"><img src="[[collectionGeo.geo.icon.marker]]"></span>
-            <span id="headline">[[headline(collectionGeo.geo.title,collectionGeo.showText,collectionGeo.uiOpen,collectionGeo.*)]]</span>
+            <span id="headline" class$="[[headlineClass(collectionGeo.uiOpen,collectionGeo.isViaPoint)]]">[[headline(collectionGeo.geo.title,collectionGeo.showText,collectionGeo.*)]]</span> <!--,collectionGeo.uiOpen-->
             <template is="dom-if" if="[[dragable]]">
                 <iron-icon icon="editor:drag-handle" class="drag-handle" style="flex-shrink:0"></iron-icon>
             </template>
