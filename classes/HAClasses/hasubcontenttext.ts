@@ -5,7 +5,7 @@
 
     constructor(data: any, content: HaContent) {
         super(data, content);
-        this._text = Common.rich2html(data.text1);
+        this._text = data.type == 0 ? Common.rich2html(data.text1) : data.text1;
         this._name = data.name;
         this._type = data.type;
         //this._headline = Common.rich2html(data.headline); //TODO: conversion needed?

@@ -88,6 +88,15 @@ class PlainText extends polymer.Base implements polymer.Element {
 
     @observe('immediateContent')
     immediateContentChanged() {
+        if (!this.editable) {
+            var element = <HTMLDivElement>this.$.content;
+            if (element) {
+                var html = Common.rich2html(this.immediateContent) + (this.showReadMore(this.content) ? '<span class="read-more" on-tap="readMore">læs mere</span>' : '');
+                if (element.innerHTML != html)
+                    element.innerHTML = html;
+            }
+        }
+
         this.length = this.immediateContent.length + (this.immediateContent.match(/\n/g) || []).length; //"hack" to correctly count newline as 2 chars
         $(this).toggleClass('no-content', this.immediateContent.length == 0)
     }
@@ -140,7 +149,6 @@ class PlainText extends polymer.Base implements polymer.Element {
         textarea.selectionStart = pos;
         textarea.selectionEnd = pos + 1;
     }
-
 }
 
 PlainText.register();

@@ -73,12 +73,11 @@
             <template is="dom-if" if="[[enableEditorPanel]]">
                 <div id="editorPanel" style="display:none"></div> <!--dummy-->
             </template>
-            <div id="content">
-                [[content]]
-                <template is="dom-if" if="[[showReadMore(content)]]">
-                    <span class="read-more" on-tap="readMore">læs mere</span>
-                </template>
-            </div>
         </template>
+        <div id="content" hidden$="[[editable]]">
+            <!--<template is="dom-if" if="[[showReadMore(content)]]">
+            <span class="read-more" on-tap="readMore">læs mere</span>
+        </template>-->
+        </div>
     </template>
 </dom-module>
