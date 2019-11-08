@@ -100,6 +100,7 @@
         if (!App.passed.theme)
             App.passed.theme = $.extend({}, Global.defaultTheme);
 
+        Common.openGeoWindowInNewTab = Common.embed;
         UrlState.ReadFromUrl();
     }
 
@@ -152,8 +153,6 @@
         if (App.passed.redribbon) {
             this.showRedRibbon = true;
         }
-
-        Common.openGeoWindowInNewTab = Common.embed;
 
         //if (localStorage.getItem("sessionID"))
         //    Services.get('login', {}, (result) => {

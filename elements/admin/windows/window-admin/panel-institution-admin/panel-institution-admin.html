@@ -11,10 +11,16 @@
                 flex-direction: column;
                 flex-grow: 1;
                 margin-right: 5px;
+                
+                /*hack*/
+                /*height: 200px;*/
             }
             iron-list {
                 flex-grow: 1;
                 overflow: scroll !important;
+                
+                /*hack*/
+                /*min-height: 336px;*/
             }
             .item {
                 padding: 2px 10px;
@@ -106,7 +112,7 @@
                     <span on-tap="sortOnUsers">Brugere</span>
                     <span on-tap="sortOnViews">Visninger</span>
                 </div>
-                <iron-list items="{{institutions}}" max-physical-count="50">
+                <iron-list items="{{institutions}}" max-physical-count="100">
                     <template>
                         <div class$="item [[statusClass(item.deleted)]]" on-tap="itemTap">
                             <span>[[item.tag.plurname]]</span>
