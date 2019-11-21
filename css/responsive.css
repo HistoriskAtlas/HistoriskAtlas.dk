@@ -8,8 +8,8 @@
         right: 0px !important;
         top: 0px !important;
         bottom: 0px !important;
-        width: 100vw !important;
-        height: 100vh !important;
+        width: auto !important; /*was 100vw*/
+        height: auto !important; /*was 100vh*/
     }
 }
 
@@ -18,8 +18,8 @@
     right: 0px !important;
     top: 0px !important;
     bottom: 0px !important;
-    width: 100vw !important;
-    height: 100vh !important;
+    width: auto !important; /*was 100vw*/
+    height: auto !important; /*was 100vh*/
     transition: left 0.4s, right 0.4s, top 0.4s, bottom 0.4s, width 0.4s, height 0.4s;
 }
 
