@@ -53,7 +53,7 @@
             return;
         }
 
-        if (!App.passed.geo && !App.passed.embed && App.passed.theme.id == Global.defaultTheme.id)
+        if (!App.passed.geo && !App.passed.collection && !App.passed.embed && App.passed.theme.id == Global.defaultTheme.id && path.substr(1).toLowerCase() != 'default.aspx')
             App.passed.search = path.substr(1);
     }
 
