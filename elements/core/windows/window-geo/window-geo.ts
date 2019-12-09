@@ -295,8 +295,9 @@ class WindowGeo extends polymer.Base implements polymer.Element {
     
     @listen("windowbasic.closing")
     windowClosing(e: Event) {
-        if (App.haUsers.user.isAdmin)
-            return;
+        if (!this.standalone)
+            if (App.haUsers.user.isAdmin)
+                return;
         if (this.editing && !this.geo.title) {
             (<WindowBasic>this.$.windowbasic).cancelClose = true;
             Common.dom.append(DialogAlert.create('Giv fortællingen en titel, før du lukker den.', () => {

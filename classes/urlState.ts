@@ -135,8 +135,9 @@
 
     private static GetMapStateString(coord: ol.Coordinate, zoom: number, rotation: number = 0): string {
 
-        if (coord[1] == Global.defaultTheme.maplatitude && coord[0] == Global.defaultTheme.maplongitude && zoom.toPrecision(4) == Global.defaultTheme.mapzoom.toPrecision(4) && rotation == 0 && this.stateObjectString == '')
-            return '';
+        if (typeof Global != 'undefined')
+            if (coord[1] == Global.defaultTheme.maplatitude && coord[0] == Global.defaultTheme.maplongitude && zoom.toPrecision(4) == Global.defaultTheme.mapzoom.toPrecision(4) && rotation == 0 && this.stateObjectString == '')
+                return '';
 
         return '@' + coord[1].toFixed(7) + ',' + coord[0].toFixed(7) + ',' + zoom.toFixed(2).replace(/[.,]00$/, "") + 'z' + (rotation == 0 ? '' : ',' + rotation.toFixed(2) + 'r');
     }

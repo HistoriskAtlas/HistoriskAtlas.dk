@@ -32,7 +32,7 @@
     }
 
     private static pushServiceCall(serviceCall: () => void, message: string = null) {
-        if (App && !this.timeoutToken)
+        if (typeof App != 'undefined' && !this.timeoutToken)
             if (message != "")
                 this.timeoutToken = setTimeout(() => {
                     App.loading.show(message == null ? this.loadingText : message);
@@ -71,20 +71,20 @@
                 Common.dom.append(DialogAlert.create('Der opstod en fejl ved kommunikation med serveren. Hvis du oplever denne fejl gentagne gange, vil vi gerne høre om det på it@historiskatlas.dk', () => {
                     this.pendingServiceCalls[0]();
                 }, true, "Prøv igen"));
-                Analytics.apiError(textStatus + (errorThrown ? ' - ' + errorThrown : ''), App ? App.haUsers.user.id : 0);
+                Analytics.apiError(textStatus + (errorThrown ? ' - ' + errorThrown : ''), typeof App != 'undefined' ? App.haUsers.user.id : 0);
             }
         });
     }
 
 
     private static hideLoading(message: string = null) {
-        if (App && this.pendingServiceCalls.length == 0) {
+        if (typeof App != 'undefined' && this.pendingServiceCalls.length == 0) {
             clearTimeout(this.timeoutToken);
             this.timeoutToken = null;
             if (message != "")
                 App.loading.hide(message == null ? this.loadingText : message)
             //this.loadingText = null;
-        } else if (App && message != null)
+        } else if (typeof App != 'undefined' && message != null)
             App.loading.hide(message)
     }
 
