@@ -278,6 +278,10 @@ class HaGeos extends polymer.Base implements polymer.Element {
         else
             this.params.online = true;
 
+        //v.2 hack
+        if (this.params.tag_geos == "[{\"tagid\":427}]" && this.params.schema == "{\"geo\":{\"fields\":[\"id\",\"lat\",\"lng\",\"ptid\"],\"filters\":[]}}" && this.params.online)
+            this.params.v = 2;
+
         this.$.ajax.generateRequest();
     }
 
