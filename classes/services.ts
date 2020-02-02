@@ -44,7 +44,8 @@
     }
 
     private static serviceCall(url: string, data: any, success: (data: any) => any, error: (data: any) => any, async: boolean = false, message: string = null) { //RHL: why default to not async.... performance hit...
-        data.v = 1;
+        if (!('v' in data))
+            data.v = 1;
         data.sid = (<any>document).sid;
 
         $.ajax({
