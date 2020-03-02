@@ -55,8 +55,9 @@
         }
         .read-more {
             white-space: nowrap;
-            color: var(--primary-color);
+            color: #005b9c;
             cursor: pointer;
+            text-align: right;
         }
 
     </style>
@@ -75,9 +76,9 @@
             </template>
         </template>
         <div id="content" hidden$="[[editable]]">
-            <!--<template is="dom-if" if="[[showReadMore(content)]]">
-            <span class="read-more" on-tap="readMore">læs mere</span>
-        </template>-->
         </div>
+        <template is="dom-if" if="[[showReadMore(content)]]">
+            <span class="read-more" on-tap="readMore">læs mere</span>
+        </template>
     </template>
 </dom-module>

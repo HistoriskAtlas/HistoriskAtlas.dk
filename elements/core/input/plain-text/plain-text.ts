@@ -91,7 +91,7 @@ class PlainText extends polymer.Base implements polymer.Element {
         if (!this.editable) {
             var element = <HTMLDivElement>this.$.content;
             if (element) {
-                var html = Common.rich2html(this.immediateContent) + (this.showReadMore(this.content) ? '<span class="read-more" on-tap="readMore">læs mere</span>' : '');
+                var html = Common.rich2html(this.immediateContent);// + (this.showReadMore(this.content) ? '<span class="read-more" on-tap="readMore">læs mere</span>' : '');
                 if (element.innerHTML != html)
                     element.innerHTML = html;
             }
