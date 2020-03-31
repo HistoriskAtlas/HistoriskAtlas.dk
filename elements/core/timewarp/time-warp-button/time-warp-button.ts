@@ -65,7 +65,7 @@ class TimeWarpButton extends polymer.Base implements polymer.Element {
                 dom.css('transition', TimeWarpButton.transitionMorph);
                 dom.css('right', this.maxX);
                 if (this.isMapButton)
-                    dom.css('bottom', 15);
+                    dom.css('bottom', 10);
                 else
                     dom.css('top', this.radian ? this.minY : this.maxYCalc);
                 dom.css('max-width', 'calc(50vw - 85px)');

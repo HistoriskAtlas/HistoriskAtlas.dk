@@ -4,7 +4,10 @@
 
             .content {
                 font-size: 12px;
-                max-width: calc(50vw - 25px);
+                max-width: calc(100vw - 70px);
+            }
+            .time-warp-active {
+                max-width: calc(50vw - 25px) !important;                
             }
 
             .main {
@@ -30,11 +33,13 @@
                 margin-left: 5px;
                 min-width: 0;
                 overflow: hidden;
+                text-overflow: ellipsis;
             }
             .info-year {
                 margin-left: 5px;
                 margin-right: 5px;
                 flex-grow: 1;
+                flex-shrink: 10000;
                 min-width: 0;
                 overflow: hidden;
             }
@@ -101,7 +106,7 @@
 
         </style>
 
-        <div class$="content [[cssClass(main,lift,drawerOpen)]]">
+        <div class$="content [[cssClass(main,lift,drawerOpen,timeWarpActive,timeWarpMode)]]">
             <template is="dom-if" if="[[main]]">
                 <paper-button id="buttonSubjects" raised on-tap="buttonSubjectsTap" class$="[[classTags(9,selectedTagNames.*)]]">
                     <div class="info">

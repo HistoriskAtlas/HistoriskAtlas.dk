@@ -17,7 +17,7 @@ class WindowSearch extends polymer.Base implements polymer.Element {
     public googleResults: Array<GoogleResult>;
 
     @property({ type: Array })
-    public geos: Array<HaGeo>;
+    public geos: Array<HaGeo> = [];
 
     @property({ type: Array })
     public addresses: Array<Address>;
@@ -53,6 +53,9 @@ class WindowSearch extends polymer.Base implements polymer.Element {
                     result.geoid = parseInt(matches[1]);
                     result.title = item.htmlTitle.replace(' | Historisk Atlas', '');
                     result.snippet = item.htmlSnippet.replace(reSnippet, '');
+
+                    if (!App.haGeos.geos[result.geoid])
+                        continue;
 
                     this.push('googleResults', result);
                 }

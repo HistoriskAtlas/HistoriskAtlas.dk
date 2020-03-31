@@ -207,6 +207,10 @@
             e.preventDefault();
             e.returnValue = '';
         });
+
+        window.addEventListener('touchmove', (e) => { //Fixes zooming bug on mobile(?)
+            event.preventDefault();
+        });
     }
 
     public static init() {

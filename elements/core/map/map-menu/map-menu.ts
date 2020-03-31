@@ -28,6 +28,11 @@ class MapMenu extends polymer.Base implements polymer.Element {
     @property({ type: Boolean, value: true, notify: true })
     public showMainMenu: boolean;
 
+    @property({ type: Boolean })
+    public timeWarpActive: boolean;
+
+    @property({ type: Number })
+    public timeWarpMode: TimeWarpModes;
 
     //@property({ type: Number, notify: true })
     //public selected: number; //2 or 3
@@ -134,9 +139,9 @@ class MapMenu extends polymer.Base implements polymer.Element {
         this.showMainMenu = false;
     }
 
-    cssClass(main: boolean, lift: boolean, drawerOpen: boolean): string {
+    cssClass(main: boolean, lift: boolean, drawerOpen: boolean, timeWarpActive: boolean, timeWarpMode: TimeWarpModes): string {
         //return (main ? 'primary HAPrimColor' : 'HASecColor') + (lift ? ' lift' : '') + (drawerOpen ? ' responsive-nudge' : '') + (!main && mode == TimeWarpModes.SPLIT ? ' fix' : '');
-        return (main ? 'main' : 'warp') + (lift ? ' lift' : '') + ((drawerOpen && main) ? ' responsive-nudge' : '');
+        return (main ? 'main' : 'warp') + (lift ? ' lift' : '') + ((drawerOpen && main) ? ' responsive-nudge' : '') + ((timeWarpActive && timeWarpMode == TimeWarpModes.SPLIT) ? ' time-warp-active' : '');
     }
 
     buttonClass(main: boolean) {
