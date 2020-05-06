@@ -20,12 +20,13 @@ namespace HistoriskAtlas5.Frontend
             if (File.Exists(outputFile))
                 return;
 
-            string[] files = (Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "images\\markers", "tag*.svg"));
-            
-            using (Bitmap outputBmp = new Bitmap(markersPerRow * markerSize, (files.Length / markersPerRow + 1) * markerSize))
+            string[] svgFiles = (Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "images\\markers", "tag*.svg"));
+            string[] pngFiles = (Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "images\\markers", "tag*.png"));
+
+            using (Bitmap outputBmp = new Bitmap(markersPerRow * markerSize, ((svgFiles.Length + pngFiles.Length) / markersPerRow + 1) * markerSize))
             {
                 int i = 0;
-                foreach (string file in files)
+                foreach (string file in svgFiles)
                 {
                     SvgDocument svg = SvgDocument.Open(file);
 
@@ -62,6 +63,22 @@ namespace HistoriskAtlas5.Frontend
                     outputBmp.SetPixel(x + markerSize - 1, y, Color.FromArgb(id / 256, 255, 255, 255));
                     i++;
                 }
+                foreach (string file in pngFiles)
+                {
+                    var bmp = Image.FromFile(file);
+
+                    int x = (i % markersPerRow) * markerSize;
+                    int y = (i / markersPerRow) * markerSize;
+                    using (Graphics g = Graphics.FromImage(outputBmp))
+                        g.DrawImage(bmp, x, y, markerSize, markerSize);
+
+                    int idStart = file.IndexOf("\\tag") + 4;
+                    int id = Int32.Parse(file.Substring(idStart, file.Length - idStart - 4));
+                    outputBmp.SetPixel(x, y, Color.FromArgb(id % 256, 255, 255, 255));
+                    outputBmp.SetPixel(x + markerSize - 1, y, Color.FromArgb(id / 256, 255, 255, 255));
+                    i++;
+                }
+
                 outputBmp.Save(outputFile, ImageFormat.Png);
             }
         }

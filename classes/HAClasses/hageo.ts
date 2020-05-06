@@ -505,6 +505,10 @@
     }
 
     public get getNewPrimaryTag(): HaTag {
+
+        //if (this.title.indexOf("nedkastningsplads") > -1)
+            //alert("tag!");
+
         var hasChildrenTag: HaTag;
         for(var tag of this.tags)
         if(tag.marker) {
