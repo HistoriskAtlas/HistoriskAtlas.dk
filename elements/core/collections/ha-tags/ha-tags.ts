@@ -214,9 +214,11 @@ class HaTags extends polymer.Base implements polymer.Element {
                         this.byId[tagID].invertedMarker = canvas.toDataURL();
                         HaTags.tagsWithMarkers.push(this.byId[tagID]);
                     } else {
-                        Icon.defaultMarker = canvas.toDataURL();
-                        this.invertColors(canvas, context);
-                        Icon.invertedDefaultMarker = canvas.toDataURL();
+                        if (!Icon.defaultMarker) {
+                            Icon.defaultMarker = canvas.toDataURL();
+                            this.invertColors(canvas, context);
+                            Icon.invertedDefaultMarker = canvas.toDataURL();
+                        }
                     }
 
                     x++;
