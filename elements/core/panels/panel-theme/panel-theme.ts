@@ -55,7 +55,7 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         }
 
         if (!Common.isDevOrBeta)
-            send.id = '{in:["1001","hod","' + App.passed.theme.id + '"]}'
+            send.id = '{in:["1001","hod","modstandskamp","' + App.passed.theme.id + '"]}'
 
         Services.get('theme', send, (result) => {
             if (this.theme.id != 'default') {
