@@ -189,7 +189,10 @@
             <main-app></main-app>
         <% } %>
     <% } else { %>
-        <window-geo></window-geo>
+        <% if (!(crawler && passedGeo != null))
+            { %>
+            <window-geo></window-geo>
+        <% } %>
     <% } %>
 
     <script>
