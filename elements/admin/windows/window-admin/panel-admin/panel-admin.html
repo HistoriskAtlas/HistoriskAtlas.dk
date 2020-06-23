@@ -43,11 +43,11 @@
         
         <array-sort-selector id="selector" items="{{items}}" selected="{{item}}"></array-sort-selector>
 
-        <div class="top">
+        <div class="top" style="height:42px;">
             <content select=".top"></content>
         </div>
 
-        <div style="display: flex; flex-grow:1; height: 100%">
+        <div style="display: flex; flex-grow:1; height: calc(100% - 42px)">
             <content select=".list"></content>
             <div class="details-container">
                 <div class="watermark">
