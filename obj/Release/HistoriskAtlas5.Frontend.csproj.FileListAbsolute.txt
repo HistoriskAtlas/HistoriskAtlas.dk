@@ -9,3 +9,5 @@ C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Front
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csproj.CoreCompileInputs.cache
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csproj.CopyComplete
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csprojAssemblyReference.cache
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\images\theme\Modstandskamp_bomb_icon.png
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\images\theme\Modstandskamp_parachute_icon.png

@@ -60,6 +60,25 @@
                     <template is="dom-if" if="[[is1001(item)]]">
                         <img class="logo-theme" src="../../../../images/theme/1001logo.jpg">
                     </template>
+                    <template is="dom-if" if="[[isModstandskamp(item)]]">
+                        <div style="color:#d83c30">
+                            <div style="font-size:18px; font-weight: bold; margin-bottom:5px; margin-top:5px">Nedkastninger og sabotage<br>i Danmark 1940 - 1945</div>
+                            <div style="margin-bottom:10px;background-image:url(../../../../images/theme/Modstandskamp_parachute_icon.png); background-position: left; background-repeat: no-repeat; background-size: 30px; padding-left: 40px;"><div style="font-weight:bold">Nedkastninger</div>Nedkastninger af bl.a. våben og og sprængstof til hjælp i modstandskampen fra de allierede.</div>
+                            <div style="margin-bottom:10px;background-image:url(../../../../images/theme/Modstandskamp_bomb_icon.png); background-position: left; background-repeat: no-repeat; background-size: 30px; padding-left: 40px;"><div style="font-weight:bold">Sabotage</div>Sabotage af virksomheder der leverede varer til Tyskland. Sabotagen skete ved brandattentater eller sprængninger.</div>
+                            Kortet viser alle nedkastninger fra 1940-1945 og alla sabotager, der har opnået skadeerstatning på minimum 200.000 i nutids kr. eller derover.
+                        </div>
+                        <div style="color:#355e9c; margin-top: 20px; margin-bottom: 350px;">
+                            <div style="font-size:18px; font-weight: bold; margin-bottom:5px">Besøg Frihedsmuseet</div>
+                            Gå under jorden i besættelsestidens Danmark og kom helt tæt på modstandskampen under 2. verdenskrig. I besættelsestidens skyggefulde gader møder du fem historiske personer. Alle har valgt side, og alle må møde konsekvenserne.<br>
+                            <br>
+                            <div style="font-weight:bold">
+                                Esplanaden 13<br>
+                                1263 København K<br>
+                                <br>
+                                <a href="http://frihedsmuseet.dk">frihedsmuseet.dk</a>
+                            </div>
+                        </div>
+                    </template>
 
                     <content-viewer content="[[newHaContent(item.content)]]"></content-viewer>
 

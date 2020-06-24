@@ -152,6 +152,8 @@
             flex-grow: 1;
         }
         main-menu {
+            display: flex;
+            flex-direction: column;
             flex-grow: 1;
             flex-shrink: 0;
             transition: background .3s;
@@ -178,7 +180,7 @@
             }
         }
         .nordea-logo-container {
-            flex-grow: 1; 
+            /*flex-grow: 1;*/ 
             flex-shrink:0; 
             display: flex; 
             align-items: flex-end; 
@@ -186,7 +188,7 @@
             padding:16px;
         }
         .nordea-logo-container > img {
-            width: 170px;
+            width: 150px;
         }
 
         @media (max-width: 950px) {

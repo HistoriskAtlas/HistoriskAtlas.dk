@@ -133,14 +133,17 @@ class MainMenu extends polymer.Base implements polymer.Element {
         return user.canAccessHoD2017;
     }
 
-    tap1001() {
+    //tap1001() {
+    //    this.set('showMenuThemes', true);
+    //    this.set('theme', (<PanelTheme>this.$.panelTheme).getThemeByName('1001 fortællinger om Danmark'));
+    //}
+    //tapHOD2017() {
+    //    this.set('showMenuThemes', true);
+    //    this.set('theme', (<PanelTheme>this.$.panelTheme).getThemeByName('Historier om Danmark'));
+    //}
+    tapModstandskamp() {
         this.set('showMenuThemes', true);
-        this.set('theme', (<PanelTheme>this.$.panelTheme).getThemeByName('1001 fortællinger om Danmark'));
-        //Common.dom.append(WindowInstitution.create(App.haTags.byId[731]));
-    }
-    tapHOD2017() {
-        this.set('showMenuThemes', true);
-        this.set('theme', (<PanelTheme>this.$.panelTheme).getThemeByName('Historier om Danmark'));
+        this.set('theme', (<PanelTheme>this.$.panelTheme).getThemeByName('Modstandskamp'));
     }
 
     aboutTap() {

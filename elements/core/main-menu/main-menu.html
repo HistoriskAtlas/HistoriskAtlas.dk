@@ -25,22 +25,20 @@
         .prof-menu > paper-item {
             color: var(--primary-color);
         }
-        .promo {
+        /*.promo {
             min-height: 42px;
             border-bottom: 1px solid #e7eef5;
-            /*color: #005d9a;*/     
         }
         .promo > .icon {
             width: 32px;
             height: 32px;
             margin-right: 13px;
             margin-left: -3px;
-            /* border: 1px solid rgba(0,0,0,0.2); */
             border-radius: 16px;
             box-shadow: inset 0px 0.5px 1px #000000;
         }
         .icon-1001 {
-            background-color: #ecdf39; /*#ffe600*/ /*#d2d200*/
+            background-color: #ecdf39;
             font-family: serif;
             font-size: 12px;
             display: flex;
@@ -49,7 +47,6 @@
             color: black;
         }
         .icon-hod {
-            /*background-color: #8bb300;*/
             background-image: url('../../../images/theme/HoD2017grass.png');
             background-size: contain;
             display: flex;
@@ -58,6 +55,24 @@
             align-items: center;
             font-weight: bold;
             font-size: 9px;
+        }*/
+        .new-theme {
+            text-align:center;
+            font-size:14px;
+        }
+        .modstandskamp-item {
+            background-image: url('../../../images/theme/Modstandskamp_back.jpg');
+            background-color: #e9e9e9;
+            background-size: cover;
+            background-position: bottom;
+            color: #d83c30;
+            width: 150px;
+            margin: auto;
+            height: 290px;
+            align-items: flex-start;
+            line-height: 18px;
+            padding-top: 10px;
+            margin-top: 10px;
         }
 
     </style>
@@ -82,22 +97,22 @@
         </main-menu-item>
 
         <!--<main-menu-item show="{{showMenuReset}}" show-main-menu="{{showMainMenu}}" title="Nulstil valg" icon="refresh">
-            <div class="soon">Kommer snart</div>
-        </main-menu-item>-->
-        <iron-collapse opened="[[showMainMenu]]">
+        <div class="soon">Kommer snart</div>
+    </main-menu-item>-->
+        <iron-collapse opened="[[showMainMenu]]" style="flex-grow: 1; display: flex; flex-direction: column;">
 
-            <paper-item class="promo" on-tap="tap1001"><div class="icon icon-1001">1001</div>1001 fortællinger om Danmark</paper-item>
-            <template is="dom-if" if="[[showHOD2017(isDevOrBeta,user)]]">
-                <paper-item class="promo" on-tap="tapHOD2017"><div class="icon icon-hod">H o D</div>Historier om Danmark</paper-item>
-            </template>
+            <!--<paper-item class="promo" on-tap="tap1001"><div class="icon icon-1001">1001</div>1001 fortællinger om Danmark</paper-item>
+    <template is="dom-if" if="[[showHOD2017(isDevOrBeta,user)]]">
+        <paper-item class="promo" on-tap="tapHOD2017"><div class="icon icon-hod">H o D</div>Historier om Danmark</paper-item>
+    </template>-->
 
             <div style="height:10px"></div>
             <!--<template is="dom-if" if="[[user.isPro]]">
-                <paper-item toggles active="{{showProfMenu}}" class="prof-menu">For kulturinstitutioner</paper-item>
-                <iron-collapse class="sub-menu prof-menu" opened="[[showProfMenu]]">
-                    <paper-item on-tap="profGuidelinesTap">Retningslinjer for formidling</paper-item>
-                </iron-collapse>
-            </template>-->
+        <paper-item toggles active="{{showProfMenu}}" class="prof-menu">For kulturinstitutioner</paper-item>
+        <iron-collapse class="sub-menu prof-menu" opened="[[showProfMenu]]">
+            <paper-item on-tap="profGuidelinesTap">Retningslinjer for formidling</paper-item>
+        </iron-collapse>
+    </template>-->
             <paper-item toggles active="{{showAboutMenu}}">Om HistoriskAtlas.dk</paper-item>
             <iron-collapse class="sub-menu" opened="[[showAboutMenu]]">
                 <paper-item on-tap="theAssociationTap">Foreningen HistoriskAtlas.dk</paper-item>
@@ -107,11 +122,11 @@
                 <paper-item on-tap="privacyTap">Cookie- og privatlivspolitik</paper-item>
                 <paper-item on-tap="termsOfUseTap">Brugsbetingelser / ansvarsfraskrivelse</paper-item>
                 <paper-item on-tap="monetarySupportTap">Økonomisk støtte</paper-item>
+                <paper-item on-tap="facebookTap">HistoriskAtlas.dk på Facebook</paper-item>
+                <paper-item on-tap="feedbackTap">Send feedback</paper-item>
+                <paper-item on-tap="contactTap">Kontakt</paper-item>
             </iron-collapse>
-            <paper-item on-tap="facebookTap">HistoriskAtlas.dk på Facebook</paper-item>
             <!--<paper-item on-tap="blogTap">HistoriskAtlas.dk's blog</paper-item>-->
-            <paper-item on-tap="feedbackTap">Send feedback</paper-item>
-            <paper-item on-tap="contactTap">Kontakt</paper-item>
             <paper-item toggles active="{{showHelpMenu}}">Hjælp og vejledning</paper-item>
             <iron-collapse class="sub-menu" opened="[[showHelpMenu]]">
                 <paper-item on-tap="guidedTourTap">Start guidet tour</paper-item>
@@ -121,6 +136,12 @@
                     <paper-item on-tap="profGuidelinesTap">Retningslinjer for formidling</paper-item>
                 </template>
             </iron-collapse>
+            <div style="flex-grow:1; display:flex; flex-direction: column; align-items: center;">
+                <div style="flex-grow:1"></div>
+                <div class="new-theme">Nyt tema</div>
+                <paper-item class="modstandskamp-item" on-tap="tapModstandskamp">Nedkastninger og sabotage i Danmark 1940 - 1945</paper-item>
+                <div style="flex-grow:1"></div>
+            </div>
         </iron-collapse>
     </template>
 </dom-module>

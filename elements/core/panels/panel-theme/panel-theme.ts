@@ -219,6 +219,11 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         Common.dom.append(WindowInstitution.create(App.haTags.byId[731]));
     }
 
+    isModstandskamp(theme: ITheme): boolean {
+        return theme.id == 'modstandskamp';
+    }
+
+
     //itemTap(e: any) {
     //    //var map = <HaMap>e.model.item;
     //    //this.set('map', map);
