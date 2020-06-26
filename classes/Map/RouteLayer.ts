@@ -66,29 +66,26 @@
             return viaPoint;
         }
 
-        $.getJSON("proxy/route.json?type=" + collection.type + "&loc=" + loc1[0] + "," + loc1[1] + "&loc=" + loc2[0] + "," + loc2[1], (data) => {
-            var route = new (<any>ol.format.Polyline)({
-                factor: 1e5
-            }).readGeometry(data.geometry, {
-                dataProjection: 'EPSG:4326',
-                featureProjection: 'EPSG:3857'
-            });
+        $.getJSON("proxy/route.json?type=" + collection.type + "&loc=" + loc1[1] + "," + loc1[0] + "&loc=" + loc2[1] + "," + loc2[0], (data) => {
+                                 
+            //var route = new (<any>ol.format.Polyline)({
+            //    factor: 1e5,
+            //    geometryLayout: 'xy'
+            //}).readGeometry(data.geometry, {
+            //    dataProjection: 'EPSG:4326',
+            //    featureProjection: 'EPSG:3857'
+            //});
 
+            var coords = FlexiblePolyline.decode(data.geometry);
 
-            //var coord = Common.toMapCoord(loc2);
-            //var stop = new ol.geom.Circle(coord, 100);
-            //var featureStop = new ol.Feature(stop);
-            //featureStop.setStyle(new ol.style.Style({
-            //    zIndex: 10,
-            //    fill: new ol.style.Fill({
-            //        color: [255, 0, 0, 1]
-            //    })
-            //}))
-            //this.source.addFeature(featureStop);
+            var route = new (<any>ol.geom.LineString)(coords);
 
             var feature = new ol.Feature({
                 geometry: route
             });
+
+
+
             this.addFeature(feature, data.distance, collection, loc1, loc2, cacheIndex, callback);
             //(<any>feature).distance = data.distance;
             //(<any>feature).collection = collection;

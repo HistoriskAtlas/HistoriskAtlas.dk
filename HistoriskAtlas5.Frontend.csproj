@@ -259,6 +259,7 @@
     <TypeScriptCompile Include="bower_components\polymer-ts\polymer-ts.d.ts" />
     <Content Include="bower_components\polymer-ts\polymer-ts.ts" />
     <TypeScriptCompile Include="classes\appmode.ts" />
+    <TypeScriptCompile Include="classes\flexible-polyline.ts" />
     <TypeScriptCompile Include="classes\HAClasses\hacollectiongeo.ts" />
     <TypeScriptCompile Include="classes\HAClasses\hasubcontentpdf.ts" />
     <TypeScriptCompile Include="classes\HAClasses\hasubcontentexternal.ts" />

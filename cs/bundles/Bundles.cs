@@ -51,6 +51,7 @@ namespace HistoriskAtlas5.Frontend
 
                 if (bundle != "ha_core_geo_only")
                 {
+                    sb.Include("~/classes/flexible-polyline.js");
                     sb.Include("~/classes/Map/IconLayerBase.js");
                     sb.Include("~/classes/Map/TileLayer.js");
                     sb.IncludeDirectory("~/classes/Map", "*.js", false);
