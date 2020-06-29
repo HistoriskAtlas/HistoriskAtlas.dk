@@ -92,14 +92,14 @@ namespace HistoriskAtlas5.Frontend
                 writeTOCentry(cg.headline);
             }
 
-            newPage();
+            //newPage();
 
             foreach (HACollectionGeoPDF cg in collection.collection_geos)
             {
                 if (!cg.showonmap)
                     continue;
 
-                //newPage();
+                newPage();
 
                 writeHeadline(cg.headline);
                 if (cg.geo != null)
