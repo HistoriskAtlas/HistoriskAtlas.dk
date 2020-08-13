@@ -315,7 +315,7 @@ class WindowGeo extends polymer.Base implements polymer.Element {
     @listen("imageContainer.tap")
     @listen("imageCount.tap")
     imageTap() {
-        if (this.geo.images.length == 0) {
+        if (this.mediaCount(this.geo.images.length, this.contents) == 0) {
             if (this.editing)
                 this.addImageTap();
             return;
@@ -328,6 +328,11 @@ class WindowGeo extends polymer.Base implements polymer.Element {
         this.startUpload();
         this.fileUpload.uploadClick();
     }
+
+    mediaCount(imageCount: number, contents: Array<HaContent>): number {
+        return imageCount + (this.externalContent(contents) == null ? 0 : 1);
+    }
+
 
     //licens(): HaLicens {
     //    return this.geo.licens;

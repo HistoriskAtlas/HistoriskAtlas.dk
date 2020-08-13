@@ -217,7 +217,7 @@
                         </div>
                         <div style="height: 0px; align-self:flex-end">
                             <div class="image-count">
-                                <div id="imageCount" style="width:40px; text-align:center">[[geo.images.length]]</div>
+                                <div id="imageCount" style="width:40px; text-align:center">[[mediaCount(geo.images.length,contents)]]</div>
                                 <template is="dom-if" if="[[editing]]">
                                     <paper-button id="addImage" on-tap="addImageTap" class="HAPrimColor"><iron-icon icon="add"></iron-icon></paper-button>
                                 </template>
