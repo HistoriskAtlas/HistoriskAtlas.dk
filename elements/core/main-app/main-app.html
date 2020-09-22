@@ -215,6 +215,7 @@
         <ha-users user="{{user}}"></ha-users>
         <ha-digdag digdags="{{digdags}}"></ha-digdag>
         <ha-collections collections="{{collections}}" collection="{{collection}}" top-levels="{{collectionTopLevels}}" selected-collection-names="{{selectedCollectionNames}}" geos="[[geos]]" subjects="{{collectionSubjects}}" periods="{{collectionPeriods}}" institutions="{{collectionInstitutions}}" destinations="{{collectionDestinations}}" licens="{{collectionLicens}}" prof-creators="[[profCreators]]" user-creators="[[userCreators]]"></ha-collections>
+        <ha-themes themes="{{themes}}" theme="{{theme}}"></ha-themes>
         <ha-licenses></ha-licenses>
 
         <iron-media-query query-matches="{{narrow}}" query="(max-width:640px)"></iron-media-query>
@@ -222,8 +223,9 @@
         <template is="dom-if" if="[[showRedRibbon]]">
             <red-ribbon show="{{showRedRibbon}}"></red-ribbon>
         </template>
-        
-        <paper-drawer-panel id="leftPanel" selected="{{panelSelected}}" force-narrow disable-swipe="[[disableLeftPanelSwipe(touchDevice,narrow)]]" drawer-width="300px" dragging="{{leftPanelDragging}}" drawer-focus-selector=""> <!--drawer-focus-selector="" fixes focus steal from time-line -->
+
+        <paper-drawer-panel id="leftPanel" selected="{{panelSelected}}" force-narrow disable-swipe="[[disableLeftPanelSwipe(touchDevice,narrow)]]" drawer-width="300px" dragging="{{leftPanelDragging}}" drawer-focus-selector="">
+            <!--drawer-focus-selector="" fixes focus steal from time-line -->
             <paper-header-panel drawer mode="waterfall" id="drawer">
 
                 <paper-toolbar class="medium-tall">
@@ -244,7 +246,7 @@
                     </div>
                 </paper-toolbar>
 
-                <main-menu class$="[[mainMenuClass(theme,showMenuThemes)]]" shown$="[[showMainMenu]]" show-main-menu="{{showMainMenu}}" show-menu-themes="{{showMenuThemes}}" drawer-open="{{drawerOpen}}" tags="{{tags}}" tag-tops="{{tagTops}}" main-map="{{mainMap}}" maps="[[maps]]" collections="{{collections}}" collection="{{collection}}" collection-top-levels="{{collectionTopLevels}}" year="{{year}}" digdags="[[digdags]]" region-type="{{regionType}}" touch-device="[[touchDevice]]" time-line-active="{{timeLineActive}}" user="[[user]]" theme="{{theme}}" prof-creators="{{profCreators}}" user-creators="{{userCreators}}"></main-menu>
+                <main-menu class$="[[mainMenuClass(theme,showMenuThemes)]]" shown$="[[showMainMenu]]" show-main-menu="{{showMainMenu}}" show-menu-themes="{{showMenuThemes}}" drawer-open="{{drawerOpen}}" tags="{{tags}}" tag-tops="{{tagTops}}" main-map="{{mainMap}}" maps="[[maps]]" collections="{{collections}}" collection="{{collection}}" collection-top-levels="{{collectionTopLevels}}" year="{{year}}" digdags="[[digdags]]" region-type="{{regionType}}" touch-device="[[touchDevice]]" time-line-active="{{timeLineActive}}" user="[[user]]" theme="{{theme}}" themes="{{themes}}" prof-creators="{{profCreators}}" user-creators="{{userCreators}}"></main-menu>
                 <template is="dom-if" if="[[showMainMenu]]">
                     <div class="nordea-logo-container">
                         <img src="../../images/logos/nordea-fonden-black-logo.png" />
@@ -256,22 +258,22 @@
                     <template is="dom-if" if="[[!searchOpen]]">
                         <paper-icon-button id="logo" icon="menu" paper-drawer-toggle style="flex-shrink:0; margin-right:0px"></paper-icon-button>
                     </template>
-                    
+
                     <main-search open="{{searchOpen}}"></main-search>
 
                     <div style="flex-grow:1"></div>
                     <iron-icon class="widelogo hide-narrow" icon="ha:widelogo"></iron-icon>
                     <!--<template is="dom-if" if="[[showThemeTitle(theme)]]">
-                        <span class="hide-narrow">&nbsp;/ [[theme.name]]</span>
-                    </template>-->
+                    <span class="hide-narrow">&nbsp;/ [[theme.name]]</span>
+                </template>-->
                     <div style="flex-grow:1"></div>
-                    
+
                     <mit-atlas-button id="myAtlasButton" user="[[user]]"></mit-atlas-button>
 
                     <!--<template is="dom-if" if="[[!touchDevice]]">
-                        <paper-tooltip for="menuItemFeedback">Send feedback på BETA-versionen</paper-tooltip>
-                        <paper-tooltip for="myAtlasButton">MitAtlas - Bidrag med dit eget indhold - Kommer snart</paper-tooltip>
-                    </template>-->
+                    <paper-tooltip for="menuItemFeedback">Send feedback på BETA-versionen</paper-tooltip>
+                    <paper-tooltip for="myAtlasButton">MitAtlas - Bidrag med dit eget indhold - Kommer snart</paper-tooltip>
+                </template>-->
                 </paper-toolbar>
                 <div main id="mainDiv" style="left: 0px; bottom: 0px; top: 0px; right: 0px; position: absolute; overflow:hidden">
                     <div id="map"></div>
@@ -282,7 +284,7 @@
                         <time-warp-map-button map="{{timeWarpMap}}" maps="[[maps]]" lift="[[timeLineActive]]"></time-warp-map-button>
                     </template>
 
-                    <img class="nordeaLogo" src="../../images/logos/nordea-fonden-white-logo.png"/>
+                    <img class="nordeaLogo" src="../../images/logos/nordea-fonden-white-logo.png" />
                     <time-warp-closed time-warp-active="{{timeWarpActive}}"></time-warp-closed>
                     <map-tooltip></map-tooltip>
                     <map-menu main map="{{mainMap}}" region-type="{{regionType}}" theme="{{theme}}" selected-tag-names="[[selectedTagNames]]" selected-collection-names="[[selectedCollectionNames]]" lift="[[timeLineActive]]" drawer-open="{{drawerOpen}}" selected="{{selectedLeftPanel}}" show-main-menu="{{showMainMenu}}" time-warp-active="[[timeWarpActive]]" time-warp-mode="[[timeWarpMode]]"></map-menu>
@@ -305,7 +307,7 @@
                     <paper-button on-tap="openCookiesWindow">Læs vores Cookie- og privatlivspolitik</paper-button>
                     <paper-button dialog-confirm on-tap="cookieConcentGiven">Luk og accepter</paper-button>
                 </div>
-            </paper-dialog>            
+            </paper-dialog>
         </template>
 
         <template is="dom-if" if="[[!user.isActive]]">
@@ -318,7 +320,7 @@
                 <div class="buttons">
                     <paper-button dialog-confirm>OK</paper-button>
                 </div>
-            </paper-dialog> 
+            </paper-dialog>
         </template>
 
         <template is="dom-if" if="[[userJustActivated]]">
@@ -342,7 +344,7 @@
                 </div>
             </paper-dialog>
         </template>
-        
+
         <template is="dom-if" if="[[collection]]" restamp>
             <window-route route="{{collection}}" subjects="[[collectionSubjects]]" periods="[[collectionPeriods]]" destinations="[[collectionDestinations]]" institutions="[[collectionInstitutions]]" editing="[[canEditCollection(collection,user)]]"></window-route>
         </template>

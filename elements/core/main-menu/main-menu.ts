@@ -73,6 +73,9 @@ class MainMenu extends polymer.Base implements polymer.Element {
     @property({ type: Object, notify: true })
     public theme: ITheme;
 
+    @property({ type: Array, notify: true })
+    public themes: Array<ITheme>;
+
     @property({ type: Boolean })
     public isDevOrBeta: boolean;
 

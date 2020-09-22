@@ -79,11 +79,11 @@ class HaCollections extends Tags implements polymer.Element {
         this.getCollections({ count: 'all', schema: '{collection:[collectionid,title,ugc,cyclic,distance,type,{userid:' + App.haUsers.user.id + '},' + HaCollections.collectionGeosAPISchema + ']}', online: false });
     }
 
-    public getCollectionsByTagId(tagId: number) {
+    public getCollectionsByTagId(tagId: number, drawOnMap: boolean = false) {
         //if (this.awaitGeos(() => this.getCollectionsByTagId(tagId)))
         //    return;
         App.map.showRouteLayer();
-        this.getCollections({ count: 'all', schema: '{collection:{fields:[collectionid,title,ugc,cyclic,distance,type,userid,' + HaCollections.collectionGeosAPISchema + ',{content:[{tag_contents:[{collapse:id}]}]}],filters:[{content:[{tag_contents:[{id:' + tagId + '}]}]}]}}', online: true });
+        this.getCollections({ count: 'all', schema: '{collection:{fields:[collectionid,title,ugc,cyclic,distance,type,userid,' + HaCollections.collectionGeosAPISchema + ',{content:[{tag_contents:[{collapse:id}]}]}],filters:[{content:[{tag_contents:[{id:' + tagId + '}]}]}]}}', online: true }, drawOnMap);
     }
 
     //private awaitGeos(callback: () => any): boolean {
@@ -101,7 +101,7 @@ class HaCollections extends Tags implements polymer.Element {
         return result;
     }
 
-    private getCollections(sendData: any) {
+    private getCollections(sendData: any, drawOnMap: boolean = false) {
         Services.get('collection', sendData, (result) => {
             var collections: Array<HaCollection> = this.collections.slice();
             var allCollectionIDs = this.allCollectionIDs;
@@ -131,6 +131,9 @@ class HaCollections extends Tags implements polymer.Element {
 
                     collections.push(collection);
                     //this.push('collections', collection);
+
+                    if (drawOnMap)
+                        this.drawRoute(collection);
                 }
             }
             var curCollection = this.collection;
@@ -580,7 +583,7 @@ class HaCollections extends Tags implements polymer.Element {
                         callback();
                     //this.nextUpdateRouteLayerRequest();
                 }
-            });
+            }, collection.collection_geos[collection.collection_geos.length - 1] == cg);
 
             if (viaPoint) {
                 (<any>viaPoint).collection_geo = cg;

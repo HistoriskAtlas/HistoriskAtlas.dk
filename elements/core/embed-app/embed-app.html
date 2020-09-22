@@ -27,6 +27,7 @@
         <ha-users user="{{user}}"></ha-users>
         <ha-digdag digdags="{{digdags}}"></ha-digdag>
         <ha-collections collections="{{collections}}" collection="{{collection}}" geos="[[geos]]" subjects="{{collectionSubjects}}" periods="{{collectionPeriods}}" institutions="{{collectionInstitutions}}" destinations="{{collectionDestinations}}" licens="{{collectionLicens}}" prof-creators="[[profCreators]]" user-creators="[[userCreators]]"></ha-collections>
+        <ha-themes themes="{{themes}}" theme="{{theme}}"></ha-themes>
         <ha-licenses></ha-licenses>
 
 
@@ -36,8 +37,8 @@
             <div id="map"></div>
             <map-tooltip></map-tooltip>
 
-            <img class="nordeaLogo" src="../../images/logos/nordea-fonden-white-logo.png"/>
-            
+            <img class="nordeaLogo" src="../../images/logos/nordea-fonden-white-logo.png" />
+
             <!--<map-menu main map="{{mainMap}}" lift="[[timeLineActive]]" drawer-open="{{drawerOpen}}" selected="{{selectedLeftPanel}}" show-main-menu="{{showMainMenu}}"></map-menu>-->
             <map-controls lift="[[timeLineActive]]" map-rotation="[[mapRotation]]" time-warp-active="{{timeWarpActive}}"></map-controls>
             <map-about map=[[mainMap]] time-warp-map="[[timeWarpMap]]" time-warp-mode="[[timeWarpMode]]"></map-about>

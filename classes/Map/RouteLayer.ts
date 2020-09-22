@@ -3,6 +3,7 @@
     private cache: any;
     private oldDragCoordinate: ol.Coordinate;
     private viaPointDragDirty: boolean;
+    private waitingRouteProxyCalls: Array<RouteProxyCall>
 
     constructor() {
         var source = new ol.source.Vector();
@@ -20,11 +21,12 @@
             //})
         })
 
+        this.waitingRouteProxyCalls = [];
         this.cache = {};
         this.source = source;
     }
 
-    public addPath(loc1: ol.Coordinate, loc2: ol.Coordinate, collection: HaCollection, drawViaPoint: boolean, drawPath: boolean, calcRoute: boolean, callback: (feature: ol.Feature, distance: number) => void): ol.Feature {
+    public addPath(loc1: ol.Coordinate, loc2: ol.Coordinate, collection: HaCollection, drawViaPoint: boolean, drawPath: boolean, calcRoute: boolean, callback: (feature: ol.Feature, distance: number) => void, flush: boolean): ol.Feature {
 
         var viaPoint;
         if (drawViaPoint) {
@@ -45,14 +47,19 @@
             collection.features.push(viaPoint);
         }
 
-        if (!drawPath)
-            return viaPoint;        
+        if (!drawPath) {
+            if (flush)
+                this.flush();
+            return viaPoint;
+        }
 
         var cacheIndex = (loc1.toString() + 'x' + loc2.toString() + 't' + collection.type + 'c' + calcRoute).replace(/\./g, 'd').replace(/,/g, 'c');
         if (this.cache[cacheIndex]) {
             var feature: ol.Feature = this.cache[cacheIndex];
             callback(feature, (<any>feature).distance);
             this.source.addFeature(feature);
+            if (flush)
+                this.flush();
             return viaPoint;
         }
 
@@ -63,42 +70,66 @@
             });
 
             this.addFeature(feature, Common.sphericalDistance(loc1, loc2), collection, loc1, loc2, cacheIndex, callback);
+            if (flush)
+                this.flush();
             return viaPoint;
         }
 
-        $.getJSON("proxy/route.json?type=" + collection.type + "&loc=" + loc1[1] + "," + loc1[0] + "&loc=" + loc2[1] + "," + loc2[0], (data) => {
-                                 
-            //var route = new (<any>ol.format.Polyline)({
-            //    factor: 1e5,
-            //    geometryLayout: 'xy'
-            //}).readGeometry(data.geometry, {
-            //    dataProjection: 'EPSG:4326',
-            //    featureProjection: 'EPSG:3857'
-            //});
+        this.waitingRouteProxyCalls.push({ collection: collection, loc1: loc1, loc2: loc2, cacheIndex: cacheIndex, callback: callback });
 
-            var coords = FlexiblePolyline.decode(data.geometry);
-
-            var route = new (<any>ol.geom.LineString)(coords);
-
-            var feature = new ol.Feature({
-                geometry: route
-            });
-
-
-
-            this.addFeature(feature, data.distance, collection, loc1, loc2, cacheIndex, callback);
-            //(<any>feature).distance = data.distance;
-            //(<any>feature).collection = collection;
-            //(<any>feature).locs = [loc1, loc2];
-            //this.source.addFeature(feature);
-            //this.cache[cacheIndex] = feature;
-            //callback(feature, data.distance);
-
-            if (!data.fromCache)
-                Analytics.calcRoute(collection.type)
-        });
+        if (flush)
+            this.flush();
 
         return viaPoint;
+    }
+
+    private flush() {
+        this.getRouteFromProxy(this.waitingRouteProxyCalls);
+        this.waitingRouteProxyCalls = [];
+    }
+
+    private getRouteFromProxy(waitingRouteProxyCalls: Array<RouteProxyCall>) {
+        if (waitingRouteProxyCalls.length == 0)
+            return;
+
+        var locs: Array<{ loc1: ol.Coordinate, loc2: ol.Coordinate, type: number }> = [];
+        for (var call of waitingRouteProxyCalls)
+            locs.push({ loc1: call.loc1, loc2: call.loc2, type: call.collection.type });
+
+        $.post("proxy/route.json", JSON.stringify(locs), (data) => {
+        //$.getJSON("proxy/route.json?type=" + collection.type + "&loc=" + loc1[1] + "," + loc1[0] + "&loc=" + loc2[1] + "," + loc2[0], (data) => {
+            var i = 0;
+            for (var call of waitingRouteProxyCalls) {
+                //var route = new (<any>ol.format.Polyline)({
+                //    factor: 1e5,
+                //    geometryLayout: 'xy'
+                //}).readGeometry(data.geometry, {
+                //    dataProjection: 'EPSG:4326',
+                //    featureProjection: 'EPSG:3857'
+                //});
+
+                var coords = FlexiblePolyline.decode(data[i].geometry);
+
+                var route = new (<any>ol.geom.LineString)(coords);
+
+                var feature = new ol.Feature({
+                    geometry: route
+                });
+
+                this.addFeature(feature, data[i].distance, call.collection, call.loc1, call.loc2, call.cacheIndex, call.callback);
+                //(<any>feature).distance = data.distance;
+                //(<any>feature).collection = collection;
+                //(<any>feature).locs = [loc1, loc2];
+                //this.source.addFeature(feature);
+                //this.cache[cacheIndex] = feature;
+                //callback(feature, data.distance);
+
+                if (!data[i].fromCache)
+                    Analytics.calcRoute(call.collection.type)
+                i++;
+            }
+        });
+
     }
 
     private addFeature(feature: ol.Feature, distance: number, collection: HaCollection, loc1: ol.Coordinate, loc2: ol.Coordinate, cacheIndex: string, callback: (feature: ol.Feature, distance: number) => void) {
@@ -261,6 +292,13 @@
 
         //return viaPoint;
     }
+    
+}
 
-
+class RouteProxyCall {
+    public collection: HaCollection;
+    public loc1: ol.Coordinate;
+    public loc2: ol.Coordinate;
+    public cacheIndex: string;
+    public callback: (feature: ol.Feature, distance: number) => void
 }

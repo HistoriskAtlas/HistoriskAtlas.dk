@@ -53,6 +53,7 @@
     <Content Include="elements\admin\windows\window-admin\panel-api-admin\panel-api-admin.html" />
     <Content Include="elements\admin\windows\window-admin\panel-tag-admin\panel-tag-admin.html" />
     <Content Include="elements\admin\windows\window-dev\window-dev.html" />
+    <Content Include="elements\core\collections\ha-themes\ha-themes.html" />
     <Content Include="elements\core\collections\ha-content\ha-content.html" />
     <Content Include="elements\core\content-viewer\subcontent-viewer\subcontent-viewer.html" />
     <Content Include="elements\core\content-viewer\content-viewer-pdf\content-viewer-pdf.html" />
@@ -305,6 +306,7 @@
     <TypeScriptCompile Include="elements\admin\windows\window-admin\panel-api-admin\panel-api-admin.ts" />
     <TypeScriptCompile Include="elements\admin\windows\window-admin\panel-tag-admin\panel-tag-admin.ts" />
     <TypeScriptCompile Include="elements\admin\windows\window-dev\window-dev.ts" />
+    <TypeScriptCompile Include="elements\core\collections\ha-themes\ha-themes.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-content\ha-content.ts" />
     <TypeScriptCompile Include="elements\core\content-viewer\subcontent-viewer\subcontent-viewer.ts" />
     <TypeScriptCompile Include="elements\core\content-viewer\content-viewer-pdf\content-viewer-pdf.ts" />

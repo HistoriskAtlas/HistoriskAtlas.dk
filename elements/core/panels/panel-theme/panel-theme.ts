@@ -7,7 +7,7 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     @property({ type: Object, notify: true })
     public theme: ITheme;
 
-    @property({ type: Array })
+    @property({ type: Array, notify: true })
     public themes: Array<ITheme>;
 
     @property({ type: Array, notify: true })
@@ -46,29 +46,10 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     ready() {
         this.isDevOrBeta = Common.isDevOrBeta;
 
-        HaTags.loadedCallbacks.push(() => this.themeChanged());
-
-        var send: any = {
-            count: '*',
-            schema: '{theme:[name]}',
-            order: 'name'
-        }
-
-        if (!Common.isDevOrBeta)
-            send.id = '{in:["1001","hod","modstandskamp","' + App.passed.theme.id + '"]}'
-
-        Services.get('theme', send, (result) => {
-            if (this.theme.id != 'default') {
-                this.showThemeMenu = false;
-                for (var theme of result.data)
-                    if (this.active(theme, this.theme)) {
-                        result.data[result.data.indexOf(theme)] = this.theme;
-                        break;
-                    }
-            }
-
-            this.themes = result.data;
-        })
+        if (Common.tagsLoaded)
+            this.themeChanged()
+        else
+            HaTags.loadedCallbacks.push(() => this.themeChanged());
     }
 
     active(item: ITheme, theme: ITheme): boolean {
@@ -125,24 +106,18 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         //    })
         //}
 
-        if (!App.haTags)
+        if (!Common.tagsLoaded)
             return;
 
-        if (!App.haTags.tagsLoaded)
-            return;
-
-        UrlState.themeChanged();
+        //UrlState.themeChanged(); Moved to ha-themes
 
         var routeTopLevels: Array<ICollectionTopLevel> = [];
         if (this.theme.tagid && this.theme != Global.defaultTheme) {
-            App.haCollections.getCollectionsByTagId(this.theme.tagid);
-            //App.haCollections.getPublishedCollections();
+            //App.haCollections.getCollectionsByTagId(this.theme.tagid); Moved to ha-themes
             for (var tag of App.haTags.byId[this.theme.tagid].children) {
                 if (tag.isPublicationDestination) //TODO: other category?
                     routeTopLevels.push(((tag: HaTag) => <ICollectionTopLevel>{
-                        name: tag.singName, shown: false, selected: true, ignoreCreators: true, filter: (collection: HaCollection) => {
-                            return collection.tags.indexOf(tag) > -1;
-                        }
+                        name: tag.singName, shown: false, selected: true, ignoreCreators: true, filter: (collection: HaCollection) => collection.tags.indexOf(tag) > -1
                     })(tag));
             }
         }

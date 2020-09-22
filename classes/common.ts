@@ -291,6 +291,11 @@
         return 'ontouchstart' in window || !!navigator.maxTouchPoints;
     }
 
+    public static get tagsLoaded(): boolean {
+        return !(!App.haTags || !App.haTags.tagsLoaded)
+    }
+
+
     public static capitalize(text: string): string {
         return text.charAt(0).toUpperCase() + text.slice(1);
     }
