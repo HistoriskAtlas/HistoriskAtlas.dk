@@ -59,6 +59,14 @@
         analytics('create', 'UA-84971843-1', {'name':'ha'});
         analytics('obm.send', 'pageview'); //deprecated
         analytics('ha.send', 'pageview');
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./js/sw.js', { scope: '/' }).then(function (reg) {
+                //console.log('Successfully registered service worker', reg);
+            }).catch(function(err) {
+                //console.warn('Error whilst registering service worker', err);
+            });
+        }
     </script>
 
     <%--Polymer links --%>

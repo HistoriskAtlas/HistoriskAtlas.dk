@@ -635,6 +635,7 @@
     <TypeScriptCompile Include="typings\jQuery\jquery.md5.d.ts" />
     <TypeScriptCompile Include="typings\jQuery\jquery.d.ts" />
     <Content Include="EmbedTest.aspx" />
+    <Content Include="js\sw.js" />
     <Content Include="LangSelect.aspx" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
