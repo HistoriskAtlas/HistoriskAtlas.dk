@@ -65,8 +65,6 @@
     <%--<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>--%> <%--TODO: needed in chrome? Bundle? --%>
     <link rel="import" href="bower_components/polymer/polymer.html">
     <link rel="import" href="bower_components/polymer-ts/polymer-ts.html">
-
-
     
     <%--<link rel="import" href="bundles/bower.html">--%>
     <%--TODO: use this CDN instead? https://github.com/download/polymer-cdn--%>

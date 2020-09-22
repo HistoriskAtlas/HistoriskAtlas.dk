@@ -19,6 +19,11 @@ namespace HistoriskAtlas5.Frontend
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //HttpContext.Current.Response.PushPromise("js/ol/ol-custom.js");
+            //HttpContext.Current.Response.AppendHeader("link", "</bower_components/polymer/polymer.html>; rel=preload; as=document");
+            HttpContext.Current.Response.AppendHeader("link", "</js/ol/ol-custom.js>; rel=preload; as=script, </bower_components/webcomponentsjs/webcomponents-lite.min.js>; rel=preload; as=script");
+            
+
             string deep = GetDeep();
             var keylessParameters = GetKeylessParameters();
             
@@ -50,6 +55,7 @@ namespace HistoriskAtlas5.Frontend
             passedTheme = GetTheme(deep);
 
             DataBind();
+            var test = 42;
         }
 
         private List<string> GetKeylessParameters()

@@ -1,5 +1,6 @@
 {
   "name": "Historisk Atlas",
+  "start_url": "https://historiskatlas.dk",
   "theme_color": "#005d9a",
   "background_color": "#005d9a",
   "display": "fullscreen",
