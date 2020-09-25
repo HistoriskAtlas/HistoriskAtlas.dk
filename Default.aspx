@@ -26,8 +26,8 @@
     <link rel="icon" type="image/png" href="/images/appicons/coast-228x228.png" sizes="228x228" />
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes" />
-    <link rel="icon" type="image/png" href="/images/appicons/android-128x128.png" sizes="128x128" />
-    <link rel="icon" type="image/png" href="/images/appicons/android-196x196.png" sizes="196x196" />
+    <link rel="icon" type="image/png" href="/images/appicons/maskable-192x192.png" sizes="192x192" />
+    <link rel="icon" type="image/png" href="/images/appicons/maskable-512x512.png" sizes="512x512" />
     <link rel="manifest" href="/manifest.json" />
     <!-- Add to homescreen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
