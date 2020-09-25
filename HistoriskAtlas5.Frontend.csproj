@@ -213,6 +213,15 @@
     <Content Include="html\RegionTypeAbouts\40.html" />
     <Content Include="html\RegionTypeAbouts\102.html" />
     <Content Include="html\RegionTypeAbouts\101.html" />
+    <Content Include="images\appicons\maskable-144x144.png" />
+    <Content Include="images\appicons\maskable-192x192.png" />
+    <Content Include="images\appicons\maskable-196x196.png" />
+    <Content Include="images\appicons\maskable-256x256.png" />
+    <Content Include="images\appicons\maskable-36x36.png" />
+    <Content Include="images\appicons\maskable-48x48.png" />
+    <Content Include="images\appicons\maskable-512x512.png" />
+    <Content Include="images\appicons\maskable-72x72.png" />
+    <Content Include="images\appicons\maskable-96x96.png" />
     <Content Include="images\institution\HoD2017about.jpg" />
     <Content Include="images\Kontingentsatser2016.png" />
     <Content Include="images\lang\daFlag.png" />
