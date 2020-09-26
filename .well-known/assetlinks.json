@@ -1,0 +1,5 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "dk.historiskatlas.twa",
+        "sha256_cert_fingerprints": [ "25:19:67:B1:0D:1A:D4:6C:4B:7C:C1:28:26:1A:59:02:A0:E7:F9:F7:1C:11:B1:2C:D5:B7:39:82:54:C6:C7:91" ] }
+    }]
