@@ -6,6 +6,9 @@
     public static stateObject: any = {};
     private static stateObjectString: string = '';
 
+    public static userJustActivated: boolean = false;
+    public static userJustResetPassword: boolean = false;
+
     public static ReadFromUrl() {
         var path = window.location.pathname;
 
@@ -43,13 +46,15 @@
 
         if (path.substr(-8) == '/welcome') {
             window.history.replaceState({}, null, window.location.href.substr(0, window.location.href.length - 8));
-            App.global.userJustActivated = true;
+            //App.global.userJustActivated = true;
+            UrlState.userJustActivated = true;
             return;
         }
 
         if (path.substr(-13) == '/new_password') {
             window.history.replaceState({}, null, window.location.href.substr(0, window.location.href.length - 13));
-            App.global.userJustResetPassword = true;
+            //App.global.userJustResetPassword = true;
+            UrlState.userJustResetPassword = true;
             return;
         }
 

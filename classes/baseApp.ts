@@ -128,6 +128,9 @@
         App.haLicenses = <HaLicenses>document.querySelector('ha-licenses');
         App.timeWarpClosed = <TimeWarpClosed>document.querySelector('time-warp-closed');
 
+        App.global.userJustActivated = UrlState.userJustActivated;
+        App.global.userJustResetPassword = UrlState.userJustResetPassword;
+
         (<HaDigDag>document.querySelector('ha-digdag')).getData();
 
         this.touchDevice = Common.touchDevice;
