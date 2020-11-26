@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Routing;
@@ -42,6 +43,9 @@ namespace HistoriskAtlas5.Frontend
         {
             try
             {
+                if (!ServicePointManager.SecurityProtocol.HasFlag(SecurityProtocolType.Tls12))
+                    ServicePointManager.SecurityProtocol = ServicePointManager.SecurityProtocol | SecurityProtocolType.Tls12;
+
                 XmlDocument doc = new XmlDocument();
                 //doc.Load("http://localhost/cs/proxy/test.xml");
                 //doc.Load(@"http://oss-services.dbc.dk/opensearch/?action=search&query=" + HttpUtility.UrlEncode(CQL) + @"&agency=100200&profile=test&start=1&stepValue=50&collectionType=work-1");
