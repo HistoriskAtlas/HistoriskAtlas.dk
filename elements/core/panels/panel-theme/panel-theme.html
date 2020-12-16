@@ -48,8 +48,8 @@
     <template>
         <div class="host-container">
             <template id="themeRepeater" is="dom-repeat" items="{{themes}}">
-                <main-menu-item show$="[[active(item,theme)]]" show-main-menu="{{showThemeMenu}}" hidden$="[[!showMenuItem(item,user)]]">
-                    <div class="header" hide-when-active$="[[hideHeadline(item)]]">
+                <main-menu-item show$="[[active(item,theme)]]" show-main-menu="{{showThemeMenu}}" hidden$="[[!showMenuItem(item,user)]]" style="cursor: default">
+                    <div class="header" hide-when-active$="[[hideHeadline(item)]]" style="cursor: pointer">
                         <span>[[item.name]]</span>
                         <iron-icon icon="close" hidden$="[[!active(item,theme)]]"></iron-icon>
                     </div>
@@ -63,8 +63,8 @@
                     <template is="dom-if" if="[[isModstandskamp(item)]]">
                         <div style="color:#d83c30">
                             <div style="font-size:18px; font-weight: bold; margin-bottom:5px; margin-top:5px">Nedkastninger og sabotage<br>i Danmark 1940 - 1945</div>
-                            <div style="margin-bottom:10px;background-image:url(../../../../images/theme/Modstandskamp_parachute_icon.png); background-position: left; background-repeat: no-repeat; background-size: 30px; padding-left: 40px;"><div style="font-weight:bold">Nedkastninger</div>Nedkastninger af bl.a. SOE-agenter, våben og sprængstof til hjælp i modstandskampen fra de allierede.</div>
-                            <div style="margin-bottom:10px;background-image:url(../../../../images/theme/Modstandskamp_bomb_icon.png); background-position: left; background-repeat: no-repeat; background-size: 30px; padding-left: 40px;"><div style="font-weight:bold">Sabotage</div>Sabotage af virksomheder, der leverede varer til Tyskland. Sabotagen skete ved brandattentater eller sprængninger.</div>
+                            <div style="margin-bottom:10px;background-image:url(../../../../images/theme/Modstandskamp_parachute_icon.png); background-position: left; background-repeat: no-repeat; background-size: 30px; padding-left: 40px;"><a href="/?th!nedkastning" style="font-weight:bold; display: block; color:inherit">Nedkastninger</a>Nedkastninger af bl.a. SOE-agenter, våben og sprængstof til hjælp i modstandskampen fra de allierede.</div>
+                            <div style="margin-bottom:10px;background-image:url(../../../../images/theme/Modstandskamp_bomb_icon.png); background-position: left; background-repeat: no-repeat; background-size: 30px; padding-left: 40px;"><a href="/?th!sabotage" style="font-weight:bold; display: block; color:inherit">Sabotage</a>Sabotage af virksomheder, der leverede varer til Tyskland. Sabotagen skete ved brandattentater eller sprængninger.</div>
                             Kortet viser alle nedkastninger fra 1940 til 1945 og alle industrisabotager frem til 31.12. 1942. Fra 1.1. 1943 til 5.5. der har opnået skadeerstatning på minimum 200.000 i nutidskroner eller derover.
                         </div>
                         <div style="color:#355e9c; margin-top: 20px; margin-bottom: 350px;">
