@@ -76,6 +76,8 @@
                 return 'http://1.base.maps.cit.api.here.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png?app_id=8ULuzJVtMXlpZU6FXGMn&app_code=Hz7S4nhSy6orPnR1KKOHYw&lg=dan&style=mini'
             //case 42009:
             //    return 'http://1.aerial.maps.cit.api.here.com/maptile/2.1/maptile/newest/satellite.day/{z}/{x}/{y}/256/png?app_id=8ULuzJVtMXlpZU6FXGMn&app_code=Hz7S4nhSy6orPnR1KKOHYw&lg=dan'
+            case 42010:
+                return 'https://tiles.arcgis.com/tiles/LLv1s9hErwtXBU3t/arcgis/rest/services/Copenhagen_Trial_Web_Layer/MapServer/WMTS/tile/1.0.0/Copenhagen_Trial_Web_Layer/default/default028mm/{z}/{y}/{x}'
         }
 
         return HaMap.getTileUrlBase() + id + "/{z}/{x}/{y}.jpg"
