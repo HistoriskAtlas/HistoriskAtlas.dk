@@ -179,6 +179,8 @@ namespace HistoriskAtlas5.Frontend
     {
         public string headline;
         public string text1;
+        public int ordering;
+        public int type;
     }
     public class HAGeoImage
     {

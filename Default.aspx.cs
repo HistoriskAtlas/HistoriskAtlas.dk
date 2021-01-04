@@ -55,7 +55,7 @@ namespace HistoriskAtlas5.Frontend
             passedTheme = GetTheme(deep);
 
             DataBind();
-            var test = 42;
+            //var test = 42;
         }
 
         private List<string> GetKeylessParameters()
@@ -159,7 +159,7 @@ namespace HistoriskAtlas5.Frontend
                 return null;
             
             //HAThemes themes = (new Service<HAThemes>()).Get("theme.json?v=1&schema={theme:[id,name,mapid,maplatitude,maplongitude,mapzoom,tagid]}&id=" + deep);
-            HAThemes themes = (new Service<HAThemes>()).Get("theme.json?v=1&schema={theme:[id,name,mapid,maplatitude,maplongitude,mapzoom,tagid,{content:[id,geoid,ordering,deleted,contenttypeid,{texts:[empty,id,created,{user:[firstname,lastname]},headline,text1]},{biblios:[empty,id,created,cql]},{externalcontent:[empty,id,created,externalsourceid,text,link]},{tag_contents:[{collapse:tagid}]}]}]}&id=[" + HttpUtility.UrlEncode(deep) + (stateObject.ContainsKey("th") ? "," + stateObject["th"] : "") + "]");
+            HAThemes themes = (new Service<HAThemes>()).Get("theme.json?v=1&schema={theme:[id,name,mapid,maplatitude,maplongitude,mapzoom,tagid,{content:[id,geoid,ordering,deleted,contenttypeid,{texts:[empty,id,created,{user:[firstname,lastname]},headline,text1,type]},{biblios:[empty,id,created,cql]},{externalcontent:[empty,id,created,externalsourceid,text,link]},{tag_contents:[{collapse:tagid}]}]}]}&id=[" + HttpUtility.UrlEncode(deep) + (stateObject.ContainsKey("th") ? "," + stateObject["th"] : "") + "]");
             
             if (themes.data.Length == 0)
                 return null;

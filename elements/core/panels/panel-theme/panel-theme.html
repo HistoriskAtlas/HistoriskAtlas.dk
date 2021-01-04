@@ -54,6 +54,9 @@
                         <iron-icon icon="close" hidden$="[[!active(item,theme)]]"></iron-icon>
                     </div>
 
+                    <template is="dom-if" if="[[isDigterruter(item)]]">
+                        <img class="logo-theme" src="../../../../images/theme/DanskeDigterruterLogo.png">
+                    </template>
                     <template is="dom-if" if="[[isHoD2017(item)]]">
                         <img class="logo-theme" src="../../../../images/theme/HoD2017logo.png">
                     </template>

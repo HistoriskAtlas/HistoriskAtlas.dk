@@ -113,6 +113,14 @@ class PanelTheme extends polymer.Base implements polymer.Element {
 
         var routeTopLevels: Array<ICollectionTopLevel> = [];
         if (this.theme.tagid && this.theme != Global.defaultTheme) {
+
+            if (this.isDigterruter(this.theme)) {
+                var themeTag = App.haTags.byId[this.theme.tagid];
+                routeTopLevels.push(((tag: HaTag) => <ICollectionTopLevel>{
+                    name: 'Ruterne', shown: false, selected: true, ignoreCreators: true, filter: (collection: HaCollection) => collection.tags.indexOf(tag) > -1
+                })(themeTag));
+            }
+
             //App.haCollections.getCollectionsByTagId(this.theme.tagid); Moved to ha-themes
             for (var tag of App.haTags.byId[this.theme.tagid].children) {
                 if (tag.isPublicationDestination) //TODO: other category?
@@ -144,7 +152,7 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     }
 
     hideHeadline(theme: ITheme): boolean {
-        return this.isHoD2017(theme) || this.is1001(theme);
+        return this.isHoD2017(theme) || this.is1001(theme) || this.isDigterruter(theme);
     }
 
     isHoD2017(theme: ITheme): boolean {
@@ -198,6 +206,9 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         return theme.id == 'modstandskamp';
     }
 
+    isDigterruter(theme: ITheme): boolean {
+        return theme.id == 'digterruter';
+    }
 
     //itemTap(e: any) {
     //    //var map = <HaMap>e.model.item;

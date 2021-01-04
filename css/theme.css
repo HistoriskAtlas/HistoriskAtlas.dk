@@ -1,4 +1,17 @@
-﻿.menu-style-theme-hod {
+﻿.menu-style-theme-digterruter {
+    background: linear-gradient(180deg, rgba(18,83,58,1) 0%, rgba(18,83,58,1) 145px, rgba(243,240,233,1) 145px, rgba(243,240,233,1) 100%); /*#f3f0e9;*/ /*#f4edd2;*/
+}
+.menu-style-theme-digterruter iron-icon[icon="close"] {
+    fill: #fff;
+}
+.menu-style-theme-digterruter  .logo-theme {
+    width: 230px;
+    height: 75px;
+    margin-bottom: 10px;
+}
+
+
+.menu-style-theme-hod {
     background-color: #e4e7eb;
     background-image: url(../../../../images/theme/HoD2017back.jpg);
     background-size: 100%;
