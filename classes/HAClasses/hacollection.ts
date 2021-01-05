@@ -127,6 +127,10 @@
         return this._ugc;
     }
 
+    public get isWalk(): boolean {
+        return this._type == 2;
+    }
+
     get collection_geos(): Array<HaCollectionGeo> {
         //if (this._geoIds.length > 0) {
         //    var newGeoIds: Array<number> = [];
