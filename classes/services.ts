@@ -31,6 +31,10 @@
         this.pushServiceCall(() => this.serviceCall('proxy/' + proxy + '.json', data, success, error, true));
     }
 
+    public static getHAAPI(service: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null) {
+        this.pushServiceCall(() => this.serviceCall('https://haapi-apim.azure-api.net/' + service, data, success, error, true, message), message);
+    }
+
     private static pushServiceCall(serviceCall: () => void, message: string = null) {
         if (typeof App != 'undefined' && !this.timeoutToken)
             if (message != "")
@@ -50,7 +54,7 @@
 
         $.ajax({
             type: 'POST',
-            url: url.indexOf('hadb5') == -1 ? Common.api + url : Common.baseApi + '/' + url,
+            url: url.indexOf('http') == 0 ? url : (url.indexOf('hadb5') == -1 ? Common.api + url : Common.baseApi + '/' + url),
             data: data,
             timeout: 10000,
             async: async,
