@@ -573,7 +573,8 @@ class HaCollections extends Tags implements polymer.Element {
 
                 //TODO: calc extent of the whole collection: ..... console.log(feature.getGeometry().getExtent());
 
-                collection.features.push(feature);
+                collection.features.push(feature); //TODO: Could be optmized if its a LineString, by putting all adjecent linestring into a MultiLineString (but this is not present in the current OL build)
+
                 totalDistance += Math.round(distance);
                 this.waitingForCallbackCount--;
                 if (this.waitingForCallbackCount == 0) {
