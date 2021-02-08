@@ -53,7 +53,7 @@ class HaCollections extends Tags implements polymer.Element {
     public addPassedColection(data: any) {
         var collection = this.getCollectionFromData(data, true);
         this.push('collections', collection);
-        this.select(collection);
+        this.select(collection, null, false, false);
     }
 
     public getPublishedCollections() {
@@ -219,7 +219,7 @@ class HaCollections extends Tags implements polymer.Element {
         }
     }
 
-    public select(collection: HaCollection, addGeo?: HaGeo, mapClick: boolean = false) {
+    public select(collection: HaCollection, addGeo?: HaGeo, mapClick: boolean = false, anim: boolean = true) {
         if (!App.haUsers.user.isWriter)
             App.map.iconLayer.visible = false;
 
@@ -241,7 +241,7 @@ class HaCollections extends Tags implements polymer.Element {
         }
         this.drawRoute(collection, null, false, () => {
             if (!mapClick)
-                collection.showOnMap();
+                collection.showOnMap(anim);
         });
 
 
