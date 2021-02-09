@@ -54,7 +54,9 @@ class HaTags extends polymer.Base implements polymer.Element {
         if (!this.tagIdsInStorage)
             this.tagIdsInStorage = [];                                                    
 
-        this.$.ajax.url = Common.api + 'tag.json?count=all&schema=' + Common.apiSchemaTags + (this.tagIdsInStorage.length > 0 ? '&lastmodified={min:' + LocalStorage.timestampDateTime('tag-ids') + '}' : '');
+        //this.$.ajax.url = Common.api + 'tag.json?count=all&schema=' + Common.apiSchemaTags + (this.tagIdsInStorage.length > 0 ? '&lastmodified={min:' + LocalStorage.timestampDateTime('tag-ids') + '}' : '');
+        Services.getHAAPI(`tags${(this.tagIdsInStorage.length > 0 ? `?after=${LocalStorage.timestampDateTime('tag-ids')}` : '')}`, { v: 6 }, (result) => this.handleResponse(result.data))
+
         //HaTags.createCrossHairMarker();
     }
 
@@ -65,14 +67,14 @@ class HaTags extends polymer.Base implements polymer.Element {
         return this.tags.length > 0;
     }
 
-    public handleResponse() {
+    public handleResponse(result: any) {
 
         //TODO: also handle deleted tags.................................................
 
 
         var selections = this.getSelectionArray(UrlState.stateObject.t);
 
-        for (var data of this.$.ajax.lastResponse) {
+        for (var data of result) { //this.$.ajax.lastResponse
             data.selected = selections ? selections[data.tagid] : data.category == 9;
             this.getTagFromData(data)
             LocalStorage.set('tag-' + data.tagid, JSON.stringify(data));
@@ -134,15 +136,16 @@ class HaTags extends polymer.Base implements polymer.Element {
         var tag: HaTag;
         this.push('tags', tag = new HaTag(data)); //TODO: should update all at once?
         this.byId[tag.id] = tag;
-        if (data.parents.length > 0) {
-            this.parentIDs[tag.id] = [];
-            data.parents.forEach((parentID: number) => {
-                this.parentIDs[tag.id].push(parentID);
-                if (!this.childIDs[parentID])
-                    this.childIDs[parentID] = [];
-                this.childIDs[parentID].push(tag.id);
-            });
-        }
+        if (data.parents)
+            if (data.parents.length > 0) {
+                this.parentIDs[tag.id] = [];
+                data.parents.forEach((parentID: number) => {
+                    this.parentIDs[tag.id].push(parentID);
+                    if (!this.childIDs[parentID])
+                        this.childIDs[parentID] = [];
+                    this.childIDs[parentID].push(tag.id);
+                });
+            }
     }
 
     public setSelectedByCategory(tagCategory: number, value: boolean) {

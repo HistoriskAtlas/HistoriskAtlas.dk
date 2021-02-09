@@ -21,7 +21,7 @@
         this.id = data.tagid;
         this.category = data.category;
         this.plurName = data.plurname;
-        this.singName = data.singname;
+        this.singName = data.singname == null ? data.plurname : data.singname;
         this.yearEnd = data.yearend;
         this.yearStart = data.yearstart;
         //this.parentIDs = data.taghierarkis1;
