@@ -31,7 +31,11 @@
         this.pushServiceCall(() => this.serviceCall('proxy/' + proxy + '.json', data, success, error, true));
     }
 
-    public static getHAAPI(service: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null) {
+    public static getHAAPI(service: string, success: (data: any) => any = null, data: any = null, error: (data: any) => any = null, message: string = null) {
+        if (data == null)
+            data = { v: 6 }
+        else
+            data.v = 6;
         this.pushServiceCall(() => this.serviceCall('https://haapi-apim.azure-api.net/' + service, data, success, error, true, message), message);
     }
 

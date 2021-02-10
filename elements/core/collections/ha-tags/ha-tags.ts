@@ -55,7 +55,7 @@ class HaTags extends polymer.Base implements polymer.Element {
             this.tagIdsInStorage = [];                                                    
 
         //this.$.ajax.url = Common.api + 'tag.json?count=all&schema=' + Common.apiSchemaTags + (this.tagIdsInStorage.length > 0 ? '&lastmodified={min:' + LocalStorage.timestampDateTime('tag-ids') + '}' : '');
-        Services.getHAAPI(`tags${(this.tagIdsInStorage.length > 0 ? `?after=${LocalStorage.timestampDateTime('tag-ids')}` : '')}`, { v: 6 }, (result) => this.handleResponse(result.data))
+        Services.getHAAPI(`tags${(this.tagIdsInStorage.length > 0 ? `?after=${LocalStorage.timestampDateTime('tag-ids')}` : '')}`, (result) => this.handleResponse(result.data))
 
         //HaTags.createCrossHairMarker();
     }
