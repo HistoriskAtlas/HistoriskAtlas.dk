@@ -142,6 +142,9 @@
         IconLayer.backStyles = [];
         IconLayer.ugcBackStyles = [];
         IconLayer.mixedBackStyles = [];
+
+        if (IconLayer.iconsShown)
+            IconLayer.updateShown();
     }
 
     //private clusterFunction(icon: Icon) {

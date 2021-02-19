@@ -51,7 +51,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
         //this.tagsIsLoaded = false;
         HaTags.loadedCallbacks.push(() => this.tagsLoaded());
 
-        this.$.ajax.url = Common.api + "geo.json";       
+        //this.$.ajax.url = Common.api + "geo.json";       
     }
 
     public tagsLoaded() {
@@ -150,25 +150,6 @@ class HaGeos extends polymer.Base implements polymer.Element {
             this.getGeos();
         else {
 
-            //var send: any = {
-            //    count: '*',
-            //    //TODO: also include theme filter? (old theme id)
-            //    schema: JSON.stringify({
-            //        tag: {
-            //            fields: [
-            //                {
-            //                    tag_geos: [{ collapse: "geoid" }]
-            //                }
-            //            ],
-            //            filters: [
-            //                {
-            //                    tagid: this.curRequest.themeTagID
-            //                }
-            //            ]
-            //        }
-            //    })
-            //}
-
             var send: any = {
                 count: '*',
                 schema: JSON.stringify({
@@ -207,106 +188,115 @@ class HaGeos extends polymer.Base implements polymer.Element {
     }
 
     private getGeos() {
-        var selectedTagIds: Array<number> = [];
-        for (var tag of App.haTags.tags) //TODO: created selectedTags array on hatags instead?
-            if (tag.selected)
-                selectedTagIds.push(tag.id);
+        //var selectedTagIds: Array<number> = [];
+        //for (var tag of App.haTags.tags)
+        //    if (tag.selected)
+        //        selectedTagIds.push(tag.id);
 
-        var schema = {   //TODO: Dont fetch geos without tag id 530 (non ready) or convert 530's to "remove all themes"
-            geo: {
-                fields: [
-                    'id',
-                    'lat',
-                    'lng',
-                    'ptid'
-                ],
-                filters: (!this.curRequest.userLayer || App.haUsers.user.isAdmin) ? [] : [
-                    {
-                        user: [{ userhierarkis1: [{ parentid: App.haUsers.user.id /*is editor for owner*/ }] }]
-                    },
-                    {
-                        user: [{ id: App.haUsers.user.id /*is owner*/ }]
-                    }
-                ]
+        //var schema = {   //TODO: Dont fetch geos without tag id 530 (non ready) or convert 530's to "remove all themes"
+        //    geo: {
+        //        fields: [
+        //            'id',
+        //            'lat',
+        //            'lng',
+        //            'ptid'
+        //        ],
+        //        filters: (!this.curRequest.userLayer || App.haUsers.user.isAdmin) ? [] : [
+        //            {
+        //                user: [{ userhierarkis1: [{ parentid: App.haUsers.user.id /*is editor for owner*/ }] }]
+        //            },
+        //            {
+        //                user: [{ id: App.haUsers.user.id /*is owner*/ }]
+        //            }
+        //        ]
+        //    }
+        //}
 
-                //filters: this.curRequest.selectedByTags ?
-                //    [{ tag_geos: [{ tagid: { in: selectedTagIds } }] }]
-                //    :
-                //    [{ id: { not: this.lastGeoIdsLoaded } }] //TODO: Problem... way to long URL generated!.........
-                //[{ tag_geos: [{ tagid: { except: selectedTagIds } }] }] Problem: dosnt work... Should use ALL instead of ANY....
+        //if (this.curRequest.userLayer)
+        //    schema.geo.fields.push('online');
 
-            }
-        }
-
-        if (this.curRequest.userLayer)
-            schema.geo.fields.push('online');
-
-        if (!App.haUsers.user.isAdmin)
-            if (App.haUsers.user.institutions && this.curRequest.userLayer) //added  && this.curRequest.userLayer
-                if (App.haUsers.user.institutions.length > 0)
-                    schema.geo.filters.push(
-                        <any>{
-                            tag_geos: [
-                                {
-                                    tag: [
-                                        {
-                                            institutions: [
-                                                {
-                                                    id: App.haUsers.user.institutions[0].id /*is same institution TODO: cur inst not only [0]*/
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    )
+        //if (!App.haUsers.user.isAdmin)
+        //    if (App.haUsers.user.institutions && this.curRequest.userLayer) //added  && this.curRequest.userLayer
+        //        if (App.haUsers.user.institutions.length > 0)
+        //            schema.geo.filters.push(
+        //                <any>{
+        //                    tag_geos: [
+        //                        {
+        //                            tag: [
+        //                                {
+        //                                    institutions: [
+        //                                        {
+        //                                            id: App.haUsers.user.institutions[0].id /*is same institution TODO: cur inst not only [0]*/
+        //                                        }
+        //                                    ]
+        //                                }
+        //                            ]
+        //                        }
+        //                    ]
+        //                }
+        //            )
 
 
-        this.params = {
-            v: 1,
-            count: '*',
-            ugc: this.curRequest.ugc,
-            tag_geos: JSON.stringify([
-                { tagid: this.curRequest.themeTagID }
-            ]),
-            schema: JSON.stringify(schema)
-        }
+        //this.params = {
+        //    v: 1,
+        //    count: '*',
+        //    ugc: this.curRequest.ugc,
+        //    tag_geos: JSON.stringify([
+        //        { tagid: this.curRequest.themeTagID }
+        //    ]),
+        //    schema: JSON.stringify(schema)
+        //}
                 
+        //if (this.curRequest.userLayer)
+        //    this.params.sid = (<any>document).sid;
+        //else
+        //    this.params.online = true;
+
+        ////v.2 hack
+        //if (this.params.tag_geos == "[{\"tagid\":427}]" && this.params.schema == "{\"geo\":{\"fields\":[\"id\",\"lat\",\"lng\",\"ptid\"],\"filters\":[]}}" && this.params.online)
+        //    this.params.v = 2;
+
+        //this.$.ajax.generateRequest();
+
+        var params: any = {};
+        params.ugc = this.curRequest.ugc;
+        params.dest = this.curRequest.themeTagID;
         if (this.curRequest.userLayer)
-            this.params.sid = (<any>document).sid;
-        else
-            this.params.online = true;
+            params.sid = (<any>document).sid;
 
-        //v.2 hack
-        if (this.params.tag_geos == "[{\"tagid\":427}]" && this.params.schema == "{\"geo\":{\"fields\":[\"id\",\"lat\",\"lng\",\"ptid\"],\"filters\":[]}}" && this.params.online)
-            this.params.v = 2;
-
-        this.$.ajax.generateRequest();
+        Services.getHAAPI(`geos`, params, (result) => this.addGeosFromResponse(result));
     }
 
-    public handleResponse() {
-        var response: any = this.$.ajax.lastResponse;
-           
-        this.addGeosFromResponse(response);
-    }
+    //public handleResponse() {
+    //    var response: any = this.$.ajax.lastResponse;           
+    //    this.addGeosFromResponse(response);
+    //}
 
     private addGeosFromResponse(response: any) {
         var tempGeos: Array<HaGeo> = this.geos.slice();
+        var ptidIndex = this.curRequest.userLayer ? 4 : 3;
 
         //this.lastGeoIdsLoaded = [];
-        for (var data of response.data) {
-            if (this.geos[data.id]) {
+        for (var dataArray of <[][]>response.data) {
+            if (this.geos[dataArray[0]]) { //id
                 if (this.curRequest.userLayer)
-                    this.geos[data.id].userLayer = true;
+                    this.geos[dataArray[0]].userLayer = true;
                 continue;
             }
 
             //this.lastGeoIdsLoaded.push(data.id);
 
+            var data: any = {
+                id: dataArray[0],
+                lat: dataArray[1],
+                lng: dataArray[2],
+            };
+
+            if (dataArray.length - 1 == ptidIndex)
+                data.ptid = dataArray[ptidIndex];
+            
             data.ugc = this.curRequest.ugc;
-            if (!this.curRequest.userLayer)
-                data.online = true;
+            data.online = this.curRequest.userLayer ? dataArray[3] : true;
 
             var geo: HaGeo = new HaGeo(data, !this.curRequest.removeAlso || App.haTags.tagTops[9].selected ? true : this.curRequest.userLayer, this.curRequest.userLayer);
             //if (!geo.online)
@@ -377,20 +367,29 @@ class HaGeos extends polymer.Base implements polymer.Element {
             return;
         }
 
-        var send: any = {
-            count: '*',
-            ugc: userCreators == profCreators ? '' : userCreators,
-            //sid: (<any>document).sid,
-            tag_geos: JSON.stringify([
-                { tagid: themeTagID }
-            ]),
-            schema: JSON.stringify({ geo: { fields: [{ "collapse": "id" }], filters: [{ tag_geos: [{ tagid: selectedTagIds }] }] } })
-        }
+        //var send: any = {
+        //    count: '*',
+        //    ugc: userCreators == profCreators ? '' : userCreators,
+        //    //sid: (<any>document).sid,
+        //    tag_geos: JSON.stringify([
+        //        { tagid: themeTagID }
+        //    ]),
+        //    schema: JSON.stringify({ geo: { fields: [{ "collapse": "id" }], filters: [{ tag_geos: [{ tagid: selectedTagIds }] }] } })
+        //}
 
-        if (!userCreators && idsChanged && App.haUsers.user.isDefault)
-            send.online = true;
+        //if (!userCreators && idsChanged && App.haUsers.user.isDefault)
+        //    send.online = true;
 
-        Services.get('geo', send, (data) => {
+        var params: any = {};
+        if (userCreators != profCreators)
+            params.ugc = userCreators;
+        params.dest = themeTagID;
+        params.tags = selectedTagIds.join(',');
+        if (!App.haUsers.user.isDefault)
+            params.sid = (<any>document).sid;
+
+        //Services.get('geo', send, (data) => {
+        Services.getHAAPI('geos', params, (data) => {
             if (data.data.length == 0) {
                 this.hideAll(idsChanged);
                 return;
@@ -417,6 +416,8 @@ class HaGeos extends polymer.Base implements polymer.Element {
 
             this.updateShownGeosFinally(idsChanged);
 
+        }, (data) => {
+            this.updateShownGeosFinally(null);
         })
     }
 

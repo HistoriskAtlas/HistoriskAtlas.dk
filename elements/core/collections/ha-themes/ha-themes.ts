@@ -7,12 +7,13 @@ class HaThemes extends polymer.Base implements polymer.Element {
     @property({ type: Object, notify: true })
     public theme: ITheme;
 
-    ready() {
-        var send: any = {
-            count: '*',
-            schema: '{theme:[name]}',
-            order: 'name'
-        }
+    public init() { //was ready()
+
+        //var send: any = {
+        //    count: '*',
+        //    schema: '{theme:[name]}',
+        //    order: 'name'
+        //}
 
         //if (!Common.isDevOrBeta)
         //    send.id = '{in:["1001","hod","modstandskamp","' + App.passed.theme.id + '"]}'
@@ -30,7 +31,11 @@ class HaThemes extends polymer.Base implements polymer.Element {
         //    this.themes = result.data;
         //})
 
-        Services.getHAAPI(`themes${(Common.isDevOrBeta ? '' : `?linknames=1001,hod,modstandskamp,${App.passed.theme.id}`)}`, (result) => {
+        var params: any = {}
+        if (!Common.isDevOrBeta)
+            params.linknames = `1001,hod,modstandskamp,${App.passed.theme.id}`
+
+        Services.getHAAPI('themes', params, (result) => {
             //this.showThemeMenu = false; TODO...................................................................
             var themes: Array<ITheme> = [];
             for (var name of result.data)
@@ -40,9 +45,9 @@ class HaThemes extends polymer.Base implements polymer.Element {
         })
 
         if (Common.tagsLoaded)
-            this.themeChanged()
+            this.getThemeCollections();
         else
-            HaTags.loadedCallbacks.push(() => this.themeChanged());
+            HaTags.loadedCallbacks.push(() => this.getThemeCollections());
     }
 
     @observe('theme')
@@ -51,7 +56,10 @@ class HaThemes extends polymer.Base implements polymer.Element {
             return;
 
         UrlState.themeChanged();
+        this.getThemeCollections();
+    }
 
+    private getThemeCollections() {
         if (this.theme.tagid && this.theme.name != Global.defaultTheme.name)
             App.haCollections.getCollectionsByTagId(this.theme.tagid, true);
     }

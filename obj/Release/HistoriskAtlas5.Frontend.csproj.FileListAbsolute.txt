@@ -1,13 +1,13 @@
-C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\bin\manifest.json
-C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\bin\pdf\Retningslinjer for formidling på borgerlaget på HistoriskAtlas.dk.pdf
-C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\bin\pdf\Retningslinjer for formidling på kulturinstitutionslaget på HistoriskAtlas.dk.pdf
-C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\bin\HistoriskAtlas5.Frontend.dll.config
-C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\bin\HistoriskAtlas5.Frontend.dll
-C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\bin\HistoriskAtlas5.Frontend.pdb
-C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.dll
-C:\Users\Rasmus\Source\Repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.pdb
-C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csproj.CoreCompileInputs.cache
-C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csproj.CopyComplete
-C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csprojAssemblyReference.cache
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\images\theme\Modstandskamp_bomb_icon.png
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\images\theme\Modstandskamp_parachute_icon.png
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\manifest.json
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\pdf\Retningslinjer for formidling på borgerlaget på HistoriskAtlas.dk.pdf
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\pdf\Retningslinjer for formidling på kulturinstitutionslaget på HistoriskAtlas.dk.pdf
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\HistoriskAtlas5.Frontend.dll.config
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\HistoriskAtlas5.Frontend.dll
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\HistoriskAtlas5.Frontend.pdb
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csproj.CoreCompileInputs.cache
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csproj.CopyComplete
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.dll
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.pdb
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csprojAssemblyReference.cache

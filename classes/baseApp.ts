@@ -11,6 +11,7 @@
     public static haTags: HaTags;
     public static haGeos: HaGeos;
     public static haMaps: HaMaps;
+    public static haThemes: HaMaps;
     public static haRegions: HaRegions;
     public static haUsers: HaUsers;
     public static haCollections: HaCollections;
@@ -122,6 +123,7 @@
         App.haTags = <HaTags>document.querySelector('ha-tags');
         App.haGeos = <HaGeos>document.querySelector('ha-geos');
         App.haMaps = <HaMaps>document.querySelector('ha-maps');
+        App.haThemes = <HaMaps>document.querySelector('ha-themes');
         App.haRegions = <HaRegions>document.querySelector('ha-regions');
         App.haUsers = <HaUsers>document.querySelector('ha-users');
         App.haCollections = <HaCollections>document.querySelector('ha-collections');
@@ -223,12 +225,13 @@
         var rotation = theme.maprotation ? theme.maprotation : Global.defaultTheme.maprotation;
         App.map = new MainMap(coord, zoom, rotation);
         App.global.setMapRotation(rotation);
-        //FB.init({ appId: '876939902336614', xfbml: true, version: 'v2.2' }); //moved to login window
 
         $(document).ready(() => {
             App.map.ready();
             if (App.passed.collection)
                 App.haCollections.addPassedColection(App.passed.collection);
+            App.haMaps.init();
+            App.haThemes.init();
         });
     }
 }

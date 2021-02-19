@@ -31,12 +31,10 @@
         this.pushServiceCall(() => this.serviceCall('proxy/' + proxy + '.json', data, success, error, true));
     }
 
-    public static getHAAPI(service: string, success: (data: any) => any = null, data: any = null, error: (data: any) => any = null, message: string = null) {
-        if (data == null)
-            data = { v: 6 }
-        else
-            data.v = 6;
-        this.pushServiceCall(() => this.serviceCall('https://haapi-apim.azure-api.net/' + service, data, success, error, true, message), message);
+    public static getHAAPI(service: string, params: { [key: string]: any }, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null) {
+        params = params || {};
+        params.db = Common.isDevOrBeta ? 'hadb5beta' : 'hadb5';
+        this.pushServiceCall(() => this.serviceCallHAAPI(`https://haapi-apim.azure-api.net/${service}${this.toURLParams(params)}`, success, error, message), message);
     }
 
     private static pushServiceCall(serviceCall: () => void, message: string = null) {
@@ -49,6 +47,39 @@
         this.pendingServiceCalls.push(serviceCall);
         if (this.pendingServiceCalls.length == 1)
             serviceCall();
+    }
+
+    private static serviceCallHAAPI(url: string, success: (data: any) => any, error: (data: any) => any, message: string = null) {
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true); //TODO: support POST also...
+        xhr.responseType = 'json';
+        xhr.timeout = 10000,
+        xhr.addEventListener('load', () => {
+            if (xhr.status === 200)
+                success(xhr.response);
+            else {
+                if (error)
+                    error(xhr.response);
+                Services.error(url, xhr.statusText, 'HAAPI soft error')
+                return;
+            }
+
+            this.pendingServiceCalls.shift();
+            if (this.pendingServiceCalls.length > 0)
+                this.pendingServiceCalls[0]();
+            this.hideLoading(message);
+        });
+        xhr.addEventListener('error', () => Services.error(url, xhr.statusText, 'HAAPI error'));
+        xhr.addEventListener('timeout', () => Services.error(url, xhr.statusText, 'HAAPI timeout'));
+        xhr.send();
+    }
+
+    private static error(url: string, status: string, error: string) {
+        Common.dom.append(DialogAlert.create('Der opstod en fejl ved kommunikation med serveren. Hvis du oplever denne fejl gentagne gange, vil vi gerne høre om det på it@historiskatlas.dk. Teknisk info: ' + url + ' - ' + status + ' - ' + error, () => {
+            this.pendingServiceCalls[0]();
+        }, true, "Prøv igen"));
+        Analytics.apiError(status + (error ? ' - ' + error : ''), url); //typeof App != 'undefined' ? App.haUsers.user.id : 0
     }
 
     private static serviceCall(url: string, data: any, success: (data: any) => any, error: (data: any) => any, async: boolean = false, message: string = null) { //RHL: why default to not async.... performance hit...
@@ -75,14 +106,7 @@
 
                 this.hideLoading(succesMessage);
             })(data, message),
-            error: (jqXHR: JQueryXHR, textStatus: string, errorThrown: string) => {
-                //Hard error
-                Common.dom.append(DialogAlert.create('Der opstod en fejl ved kommunikation med serveren. Hvis du oplever denne fejl gentagne gange, vil vi gerne høre om det på it@historiskatlas.dk', () => {
-                    this.pendingServiceCalls[0]();
-                }, true, "Prøv igen"));
-                Analytics.apiError(textStatus + (errorThrown ? ' - ' + errorThrown : ''), typeof App != 'undefined' ? App.haUsers.user.id : 0);
-            }
-        });
+            error: (jqXHR: JQueryXHR, textStatus: string, errorThrown: string) => Services.error(url, textStatus, errorThrown)});
     }
 
 
@@ -97,12 +121,13 @@
             App.loading.hide(message)
     }
 
-    private static toURLParams(obj, q?) {
-        var str = new Array();
-        for (var key in obj) {
-            str[str.length] = key + '=' + obj[key];
-        }
-        return (q === true ? '?' : '') + str.join('&');
+    private static toURLParams(obj) {
+        if (!obj)
+            return '';
+        var str: string[] = [];
+        for (var key in obj)
+            str.push(`${key}=${obj[key]}`);
+        return str.length == 0 ? '' : `?${str.join('&')}`;
     }
 
 }

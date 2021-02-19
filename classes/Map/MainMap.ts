@@ -106,7 +106,7 @@
         //setTimeout(() => this.updateExtent(), 1000);
         //setTimeout(() => this.updateExtentTimeWarp(), 1100);
 
-        setTimeout(() => App.global.set('timeWarpActive', LocalStorage.showTimeWarp), 0); //make sure the timewarp opens if it should (IE workaround).
+        setTimeout(() => App.global.set('timeWarpActive', LocalStorage.showTimeWarp), 0); //make sure the timewarp opens if it should
     }
 
     public updateExtent() {

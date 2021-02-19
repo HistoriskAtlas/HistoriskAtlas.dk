@@ -31,12 +31,12 @@
             eventLabel: regionType.id
         });
     }
-    public static apiError(error: string, userID: number) {
+    public static apiError(error: string, url: string) {
         Analytics.send({
             hitType: 'event',
             eventCategory: 'api_error',
             eventAction: error,
-            eventLabel: userID
+            eventLabel: url
         });
     }
     public static calcRoute(type: number) {

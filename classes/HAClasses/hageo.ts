@@ -543,6 +543,8 @@
                         })
                     },
                     (result) => {
+                        if (result.data.length == 0)
+                            return;
                         this._title = result.data[0].title;
                         App.mapTooltip.setText(this._title, true, imageUrl);
                     }

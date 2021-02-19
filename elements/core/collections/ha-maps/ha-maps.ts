@@ -17,14 +17,19 @@ class HaMaps extends polymer.Base implements polymer.Element {
     private firstMainMapShowIgnored = false;
     private firstTimeWarpMapShowIgnored = false;
 
-    ready() {
-        //this.maps = [];
+    //ready() {
+    //    //this.maps = [];
+    //    this.byId = [];
+    //    HaTags.loadedCallbacks.push(() =>
+    //        Services.getHAAPI('maps', null, (result) => this.handleResponse(result.data))
+    //        //Services.get('map', { v:2, count: 'all', sort:'{orgproductionendyear:asc}', schema: '{map:[id,name,orgproductionstartyear,orgproductionendyear,minlat,maxlat,minlon,maxlon,minz,maxz,iconcoords]}', ispublic: true }, (result) => this.handleResponse(result.data))
+    //        //this.$.ajax.url = Common.api + 'map.json?ispublic=true&sort={orgproductionendyear:asc}&count=all&v=1&schema={map:[id,name,orgproductionstartyear,orgproductionendyear,minlat,maxlat,minlon,maxlon,minz,maxz,iconcoords]}'
+    //    )
+    //}
+
+    public init() {
         this.byId = [];
-        HaTags.loadedCallbacks.push(() =>
-            Services.getHAAPI('maps', (result) => this.handleResponse(result.data))
-            //Services.get('map', { v:2, count: 'all', sort:'{orgproductionendyear:asc}', schema: '{map:[id,name,orgproductionstartyear,orgproductionendyear,minlat,maxlat,minlon,maxlon,minz,maxz,iconcoords]}', ispublic: true }, (result) => this.handleResponse(result.data))
-            //this.$.ajax.url = Common.api + 'map.json?ispublic=true&sort={orgproductionendyear:asc}&count=all&v=1&schema={map:[id,name,orgproductionstartyear,orgproductionendyear,minlat,maxlat,minlon,maxlon,minz,maxz,iconcoords]}'
-        )
+        Services.getHAAPI('maps', null, (result) => this.handleResponse(result.data))
     }
 
     public handleResponse(result: any) {

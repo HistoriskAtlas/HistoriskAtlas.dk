@@ -49,10 +49,11 @@ class MainApp extends App implements polymer.Element {
     mainMapChanged(newVal: HaMap, oldVal: HaMap) {
         if (!newVal)
             return;
-        if (App.map)
+        if (App.map) {
             App.map.HaMap = newVal;
+            UrlState.mapChanged();
+        }
         this.year = newVal.orgEndYear;
-        UrlState.mapChanged();
     }
 
     @observe("timeWarpMap")
