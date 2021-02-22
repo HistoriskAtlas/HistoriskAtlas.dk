@@ -156,7 +156,7 @@
                 new ol.style.Style({
                     stroke: new ol.style.Stroke({
                         color: collection == App.haCollections.collection ? [153, 0, 0, collection.online ? 1 : 0.5] : [0, 93, 154, collection.online ? 1 : 0.5],
-                        width: 5,
+                        width: collection.isWalk ? Math.min(Math.max(res / 10, 5), 20) : 5,
                         //width: collection == App.haCollections.collection ? 8 : 5
                         lineDash: collection.isWalk ? [0, 15] : null
                     })

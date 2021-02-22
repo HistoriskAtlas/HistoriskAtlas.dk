@@ -246,7 +246,7 @@ class HaCollections extends Tags implements polymer.Element {
 
 
         Services.get('geo', { count: 'all', schema: '{geo:{fields:[geoid,title],filters:[{collection_geos:[{collectionid:' + collection.id + '}]}]}}' }, (result) => {
-            var geos: Array<HaGeo> = [];
+            //var geos: Array<HaGeo> = [];
             for (var data of result.data)
                 for (var cg of collection.collection_geos)
                     if (cg.geo.id == data.geoid)

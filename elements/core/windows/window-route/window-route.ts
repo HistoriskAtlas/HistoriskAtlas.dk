@@ -10,7 +10,7 @@ class WindowRoute extends polymer.Base implements polymer.Element {
     @property({ type: Array })
     public periods: Array<HaTag>;
 
-    @property({ type: Boolean })
+    @property({ type: Boolean, value: false })
     public editing: boolean;
 
     @property({ type: Boolean, value: false })
