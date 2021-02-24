@@ -150,23 +150,30 @@ class HaGeos extends polymer.Base implements polymer.Element {
             this.getGeos();
         else {
 
-            var send: any = {
-                count: '*',
-                schema: JSON.stringify({
-                    geo: {
-                        fields: [{ collapse: "geoid" }],
-                        filters: [
-                            {
-                                tag_geos: [{ tagid: this.curRequest.themeTagID }]
-                            }
-                        ]
-                    }
-                })
-            }
-            if (App.haUsers.user.isDefault)
-                send.online = true;
+            //var send: any = {
+            //    count: '*',
+            //    schema: JSON.stringify({
+            //        geo: {
+            //            fields: [{ collapse: "geoid" }],
+            //            filters: [
+            //                {
+            //                    tag_geos: [{ tagid: this.curRequest.themeTagID }]
+            //                }
+            //            ]
+            //        }
+            //    })
+            //}
+            //if (App.haUsers.user.isDefault)
+            //    send.online = true;
 
-            Services.get('geo', send, (result) => {
+            var params: any = {};
+            params.dest = this.curRequest.themeTagID;
+            params.tags = this.curRequest.themeTagID; //This gives back list of id's
+            if (!App.haUsers.user.isDefault)
+                params.sid = (<any>document).sid;
+
+            //Services.get('geo', send, (result) => {
+            Services.getHAAPI('geos', params, (result) => {
                 IconLayer.updateDisabled = true;
                 //var newGeoIds = <Array<number>>result.data[0].tag_geos;
                 var newGeoIds = <Array<number>>result.data;
@@ -264,7 +271,11 @@ class HaGeos extends polymer.Base implements polymer.Element {
         if (this.curRequest.userLayer)
             params.sid = (<any>document).sid;
 
-        Services.getHAAPI(`geos`, params, (result) => this.addGeosFromResponse(result));
+        //if (!params.dest) {
+        //    console.log('Missing dest')
+        //}
+
+        Services.getHAAPI('geos', params, (result) => this.addGeosFromResponse(result));
     }
 
     //public handleResponse() {
@@ -387,6 +398,10 @@ class HaGeos extends polymer.Base implements polymer.Element {
         params.tags = selectedTagIds.join(',');
         if (!App.haUsers.user.isDefault)
             params.sid = (<any>document).sid;
+
+        //if (!params.dest) {
+        //    console.log('Missing dest')
+        //}
 
         //Services.get('geo', send, (data) => {
         Services.getHAAPI('geos', params, (data) => {

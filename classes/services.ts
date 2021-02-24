@@ -61,7 +61,7 @@
             else {
                 if (error)
                     error(xhr.response);
-                Services.error(url, xhr.statusText, 'HAAPI soft error')
+                Services.error(url, xhr.status.toString(), 'HAAPI soft error')
                 return;
             }
 
@@ -70,8 +70,8 @@
                 this.pendingServiceCalls[0]();
             this.hideLoading(message);
         });
-        xhr.addEventListener('error', () => Services.error(url, xhr.statusText, 'HAAPI error'));
-        xhr.addEventListener('timeout', () => Services.error(url, xhr.statusText, 'HAAPI timeout'));
+        xhr.addEventListener('error', () => Services.error(url, xhr.status.toString(), 'HAAPI error'));
+        xhr.addEventListener('timeout', () => Services.error(url, xhr.status.toString(), 'HAAPI timeout'));
         xhr.send();
     }
 

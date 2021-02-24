@@ -36,7 +36,7 @@
             hitType: 'event',
             eventCategory: 'api_error',
             eventAction: error,
-            eventLabel: url
+            eventLabel: `API: ${url} | URL: ${window.location.href}`
         });
     }
     public static calcRoute(type: number) {
