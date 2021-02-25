@@ -146,7 +146,8 @@ class MainMenu extends polymer.Base implements polymer.Element {
     //}
     tapModstandskamp() {
         this.set('showMenuThemes', true);
-        this.set('theme', (<PanelTheme>this.$.panelTheme).getThemeByName('Modstandskamp'));
+        //this.set('theme', (<PanelTheme>this.$.panelTheme).getThemeByName('Modstandskamp'));
+        App.haThemes.selectTheme((<PanelTheme>this.$.panelTheme).getThemeByName('Modstandskamp'));
     }
 
     aboutTap() {

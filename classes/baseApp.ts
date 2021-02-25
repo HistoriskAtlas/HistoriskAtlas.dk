@@ -11,7 +11,7 @@
     public static haTags: HaTags;
     public static haGeos: HaGeos;
     public static haMaps: HaMaps;
-    public static haThemes: HaMaps;
+    public static haThemes: HaThemes;
     public static haRegions: HaRegions;
     public static haUsers: HaUsers;
     public static haCollections: HaCollections;
@@ -123,7 +123,7 @@
         App.haTags = <HaTags>document.querySelector('ha-tags');
         App.haGeos = <HaGeos>document.querySelector('ha-geos');
         App.haMaps = <HaMaps>document.querySelector('ha-maps');
-        App.haThemes = <HaMaps>document.querySelector('ha-themes');
+        App.haThemes = <HaThemes>document.querySelector('ha-themes');
         App.haRegions = <HaRegions>document.querySelector('ha-regions');
         App.haUsers = <HaUsers>document.querySelector('ha-users');
         App.haCollections = <HaCollections>document.querySelector('ha-collections');

@@ -82,30 +82,22 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     @listen('shown')
     shown(e) {
         var theme = <ITheme>this.$.themeRepeater.modelForElement(e.target).item;
-        if (!theme.id) {
-            Services.get('theme', {
-                name: theme.name,
-                schema: '{theme:[id,name,mapid,maplatitude,maplongitude,mapzoom,tagid,' + ContentViewer.contentSchema + ']}',
-            }, (result) => {
-                this.theme = <ITheme>result.data[0];
-                this.set('themes.' + this.themes.indexOf(theme), this.theme);
-            })
-        }
-        else
-            this.theme = theme;
+        //if (!theme.id) {
+        //    Services.get('theme', {
+        //        name: theme.name,
+        //        schema: '{theme:[id,name,mapid,maplatitude,maplongitude,mapzoom,tagid,' + ContentViewer.contentSchema + ']}',
+        //    }, (result) => {
+        //        this.theme = <ITheme>result.data[0];
+        //        this.set('themes.' + this.themes.indexOf(theme), this.theme);
+        //    })
+        //}
+        //else
+        //    this.theme = theme;
+        App.haThemes.selectTheme(theme);
     }
 
     @observe('theme')
     themeChanged() {
-        //if (this.theme.content == undefined && this.theme != Global.defaultTheme) { //If theme selected from deep link
-        //    Services.get('theme', {
-        //        id: this.theme.id,
-        //        schema: '{theme:[' + ContentViewer.contentSchema + ']}',
-        //    }, (result) => {
-        //        this.set('theme.content', (<ITheme>result.data[0]).content);
-        //    })
-        //}
-
         if (!Common.tagsLoaded)
             return;
 

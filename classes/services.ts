@@ -61,7 +61,7 @@
             else {
                 if (error)
                     error(xhr.response);
-                Services.error(url, xhr.status.toString(), 'HAAPI soft error')
+                Services.error(url, xhr.status, 'HAAPI soft error')
                 return;
             }
 
@@ -70,12 +70,12 @@
                 this.pendingServiceCalls[0]();
             this.hideLoading(message);
         });
-        xhr.addEventListener('error', () => Services.error(url, xhr.status.toString(), 'HAAPI error'));
-        xhr.addEventListener('timeout', () => Services.error(url, xhr.status.toString(), 'HAAPI timeout'));
+        xhr.addEventListener('error', () => Services.error(url, xhr.status, 'HAAPI error'));
+        xhr.addEventListener('timeout', () => Services.error(url, xhr.status, 'HAAPI timeout'));
         xhr.send();
     }
 
-    private static error(url: string, status: string, error: string) {
+    private static error(url: string, status: any, error: string) {
         Common.dom.append(DialogAlert.create('Der opstod en fejl ved kommunikation med serveren. Hvis du oplever denne fejl gentagne gange, vil vi gerne høre om det på it@historiskatlas.dk. Teknisk info: ' + url + ' - ' + status + ' - ' + error, () => {
             this.pendingServiceCalls[0]();
         }, true, "Prøv igen"));

@@ -64,6 +64,24 @@ class HaThemes extends polymer.Base implements polymer.Element {
             App.haCollections.getCollectionsByTagId(this.theme.tagid, true);
     }
 
+    public selectTheme(theme: ITheme) {
+        if (this.theme && this.theme.name == theme.name)
+            return;
+
+        if (theme.id) {
+            this.theme = theme;
+            return;
+        }
+
+        Services.get('theme', {
+            name: theme.name,
+            schema: '{theme:[id,name,mapid,maplatitude,maplongitude,mapzoom,tagid,' + ContentViewer.contentSchema + ']}',
+        }, (result) => {
+            this.theme = <ITheme>result.data[0];
+            this.set('themes.' + this.themes.indexOf(theme), this.theme);
+        })
+    }
+
 }
 
 HaThemes.register();

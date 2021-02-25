@@ -146,52 +146,52 @@ class HaGeos extends polymer.Base implements polymer.Element {
 
         this.curRequest = request;
 
-        if (!this.curRequest.removeAlso)
+        if (!this.curRequest.removeAlso) {
             this.getGeos();
-        else {
-
-            //var send: any = {
-            //    count: '*',
-            //    schema: JSON.stringify({
-            //        geo: {
-            //            fields: [{ collapse: "geoid" }],
-            //            filters: [
-            //                {
-            //                    tag_geos: [{ tagid: this.curRequest.themeTagID }]
-            //                }
-            //            ]
-            //        }
-            //    })
-            //}
-            //if (App.haUsers.user.isDefault)
-            //    send.online = true;
-
-            var params: any = {};
-            params.dest = this.curRequest.themeTagID;
-            params.tags = this.curRequest.themeTagID; //This gives back list of id's
-            if (!App.haUsers.user.isDefault)
-                params.sid = (<any>document).sid;
-
-            //Services.get('geo', send, (result) => {
-            Services.getHAAPI('geos', params, (result) => {
-                IconLayer.updateDisabled = true;
-                //var newGeoIds = <Array<number>>result.data[0].tag_geos;
-                var newGeoIds = <Array<number>>result.data;
-                var removeArray: Array<HaGeo> = [];
-
-                this.geos.forEach((geo) => {
-                    if (newGeoIds.indexOf(geo.id) == -1 && !geo.userLayer)
-                        removeArray.push(geo);
-                })
-
-                for (var geo of removeArray)
-                    this.removeGeo(geo);
-
-                IconLayer.updateDisabled = false;
-                //IconLayer.updateShown();
-                this.getGeos();
-            })
+            return;
         }
+
+        //var send: any = {
+        //    count: '*',
+        //    schema: JSON.stringify({
+        //        geo: {
+        //            fields: [{ collapse: "geoid" }],
+        //            filters: [
+        //                {
+        //                    tag_geos: [{ tagid: this.curRequest.themeTagID }]
+        //                }
+        //            ]
+        //        }
+        //    })
+        //}
+        //if (App.haUsers.user.isDefault)
+        //    send.online = true;
+
+        var params: any = {};
+        params.dest = this.curRequest.themeTagID;
+        params.tags = this.curRequest.themeTagID; //This gives back list of id's
+        if (!App.haUsers.user.isDefault)
+            params.sid = (<any>document).sid;
+
+        //Services.get('geo', send, (result) => {
+        Services.getHAAPI('geos', params, (result) => {
+            IconLayer.updateDisabled = true;
+            //var newGeoIds = <Array<number>>result.data[0].tag_geos;
+            var newGeoIds = <Array<number>>result.data;
+            var removeArray: Array<HaGeo> = [];
+
+            this.geos.forEach((geo) => {
+                if (newGeoIds.indexOf(geo.id) == -1 && !geo.userLayer)
+                    removeArray.push(geo);
+            })
+
+            for (var geo of removeArray)
+                this.removeGeo(geo);
+
+            IconLayer.updateDisabled = false;
+            //IconLayer.updateShown();
+            this.getGeos();
+        })
     }
 
     private getGeos() {
