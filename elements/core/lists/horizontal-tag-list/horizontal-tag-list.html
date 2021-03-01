@@ -45,7 +45,7 @@
         }
     </style>
     <template>
-        <span>[[title]]</span>
+        <span hidden$="[[hideTitle(tags.length,editing)]]">[[title]]</span>
         <template id="tagRepeater" is="dom-repeat" items="[[tags]]" as="tag">
             <div class="tag" primary$="[[primary(tag,localPrimaryTag)]]">
                 <span>[[tag.plurName]]</span>

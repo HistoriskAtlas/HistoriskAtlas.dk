@@ -17,6 +17,9 @@
         #map {
             touch-action:none; /*TEMP! Fix for dragpan on Chrome 55+ (seems to breake resizing of time warp using touch) */
         }
+
+
+
     </style>
     <template>
         <global-app year="{{year}}" time-warp-year="{{timeWarpYear}}" time-line-active="{{timeLineActive}}" routes-active="{{routesActive}}" time-warp-active="{{timeWarpActive}}" time-warp-mode="{{timeWarpMode}}" map-rotation="{{mapRotation}}" user-creators="[[userCreators]]" prof-creators="[[profCreators]]" theme="{{theme}}" map="{{mainMap}}" user-just-activated="{{userJustActivated}}" user-just-reset-password="{{userJustResetPassword}}"></global-app>
@@ -44,7 +47,7 @@
         <toast-wrapper></toast-wrapper>
         <dialog-loading></dialog-loading>
 
-        <template is="dom-if" if="[[collection]]" restamp>
+        <template is="dom-if" if="[[showWindowRoute(collection)]]" restamp>
             <window-route route="{{collection}}" subjects="[[collectionSubjects]]" periods="[[collectionPeriods]]" destinations="[[collectionDestinations]]" institutions="[[collectionInstitutions]]"></window-route>
         </template>
 

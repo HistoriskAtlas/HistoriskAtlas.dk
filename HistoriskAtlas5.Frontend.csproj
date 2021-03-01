@@ -237,6 +237,7 @@
     <Content Include="images\theme\1001back.jpg" />
     <Content Include="images\theme\1001logo.jpg" />
     <Content Include="images\theme\DanskeDigterruterLogo.png" />
+    <Content Include="images\theme\EmilAarestrupRoute.png" />
     <Content Include="images\theme\Modstandskamp_bomb_icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

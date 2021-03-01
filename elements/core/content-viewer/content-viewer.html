@@ -18,30 +18,6 @@
     </style>
     <template>
 
-        <!-- TODO: Add ordering to Text and other tables, so it would be possible to have multiple Texts and Images? in one content-viewer -->
-        <!--<template is="dom-if" if="[[content.isText]]">
-            <rich-text ordering$="[[content.ordering]]" content="{{content.texts.0.text}}" editable="[[editing]]" placeholder="Skriv din tekst her..." style="min-height:0px; width:100%" truncate-text-at="[[truncateTextAt]]"></rich-text>
-        </template>
-        <template is="dom-if" if="[[content.isBiblio]]">
-            <window-geo-biblio ordering$="[[content.ordering]]" cql="{{content.biblios.0.cql}}" editing="[[editing]]"></window-geo-biblio>
-        </template>-->
-
-        <!--<template is="dom-repeat" items="{{content.texts}}" as="text">
-            <subcontent-viewer content="[[content]]" item="{{text}}" editing="[[editing]]" adjustable="[[adjustable]]" type="tekst">
-                <rich-text content="{{text.text}}" editable="[[editing]]" placeholder="Skriv din tekst her..." truncate-text-at="[[truncateTextAt]]"></rich-text>
-            </subcontent-viewer>
-        </template>
-        <template is="dom-repeat" items="{{content.biblios}}" as="biblio">
-            <subcontent-viewer content="[[content]]" item="{{biblio}}" editing="[[editing]]" adjustable="[[adjustable]]" type="litteraturreference">
-                <window-geo-biblio cql="{{biblio.cql}}" editing="[[editing]]"></window-geo-biblio>
-            </subcontent-viewer>
-        </template>
-        <template is="dom-repeat" items="{{content.pdfs}}" as="pdf">
-            <subcontent-viewer content="[[content]]" item="{{pdf}}" editing="[[editing]]" adjustable="[[adjustable]]" type="PDF">
-                <content-viewer-pdf pdf="{{pdf}}" editing="[[editing]]"></content-viewer-pdf>
-            </subcontent-viewer>
-        </template>-->
-
         <template is="dom-repeat" items="{{content.subContents}}" as="subContent">
             <subcontent-viewer content="{{content}}" sub-content="{{subContent}}" editing="[[editing]]" adjustable="[[adjustable]]">
                 <template is="dom-if" if="[[subContent.isText]]">
@@ -63,6 +39,22 @@
                 <template is="dom-if" if="[[subContent.isPDF]]">
                     <content-viewer-pdf pdf="{{subContent}}" editing="[[editing]]"></content-viewer-pdf>
                 </template>
+
+
+
+
+
+
+
+                <!--TODO: Create content-viewer for ExternalContent and use it for "external image with link" (ExternalSourceID=1) Link = link to page, Create new column for url to website (danskedigterruter.dk) (?) -->
+
+
+
+
+
+
+
+
             </subcontent-viewer>
         </template>
 

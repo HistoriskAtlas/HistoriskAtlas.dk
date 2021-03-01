@@ -63,6 +63,12 @@ class HorizontalTagList extends polymer.Base implements polymer.Element {
         return (this.primary(tag) ? 'Frav' : 'V') + 'ælg som primær';
     }
 
+    hideTitle(tags: Array<HaTag>, editing: boolean): boolean {
+        if (!tags)
+            return true;
+        return tags.length == 0 && !editing;
+    }
+
     @observe('tags.length')
     tagsLengthChanged() {
         this.addingTag = false;
