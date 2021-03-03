@@ -230,6 +230,8 @@
             App.map.ready();
             if (App.passed.collection)
                 App.haCollections.addPassedColection(App.passed.collection);
+            if (App.passed.theme)
+                UrlState.themeChanged();
             App.haMaps.init();
             App.haThemes.init();
         });

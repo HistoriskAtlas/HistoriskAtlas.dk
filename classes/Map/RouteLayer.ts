@@ -26,7 +26,7 @@
         this.source = source;
     }
 
-    public addPath(loc1: ol.Coordinate, loc2: ol.Coordinate, collection: HaCollection, drawViaPoint: boolean, drawPath: boolean, calcRoute: boolean, callback: (feature: ol.Feature, distance: number) => void, flush: boolean): ol.Feature {
+    public addPath(loc1: ol.Coordinate, loc2: ol.Coordinate, collection: HaCollection, drawViaPoint: boolean, drawPath: boolean, calcRoute: boolean, index: number, callback: (feature: ol.Feature, distance: number) => void, flush: boolean): ol.Feature {
 
         var viaPoint;
         if (drawViaPoint) {
@@ -69,7 +69,7 @@
                 geometry: geom
             });
 
-            this.addFeature(feature, Common.sphericalDistance(loc1, loc2), collection, loc1, loc2, cacheIndex, callback);
+            this.addFeature(feature, index, Common.sphericalDistance(loc1, loc2), collection, loc1, loc2, cacheIndex, callback);
             if (flush)
                 this.flush();
             return viaPoint;
@@ -116,7 +116,7 @@
                     geometry: route
                 });
 
-                this.addFeature(feature, data[i].distance, call.collection, call.loc1, call.loc2, call.cacheIndex, call.callback);
+                this.addFeature(feature, i, data[i].distance, call.collection, call.loc1, call.loc2, call.cacheIndex, call.callback);
                 //(<any>feature).distance = data.distance;
                 //(<any>feature).collection = collection;
                 //(<any>feature).locs = [loc1, loc2];
@@ -132,10 +132,11 @@
 
     }
 
-    private addFeature(feature: ol.Feature, distance: number, collection: HaCollection, loc1: ol.Coordinate, loc2: ol.Coordinate, cacheIndex: string, callback: (feature: ol.Feature, distance: number) => void) {
+    private addFeature(feature: ol.Feature, index: number, distance: number, collection: HaCollection, loc1: ol.Coordinate, loc2: ol.Coordinate, cacheIndex: string, callback: (feature: ol.Feature, distance: number) => void) {
         (<any>feature).distance = distance;
         (<any>feature).collection = collection;
         (<any>feature).locs = [loc1, loc2];
+        (<any>feature).point = index == 1 ? new ol.geom.Point(Common.toMapCoord(loc1)) : null;
         this.source.addFeature(feature);
         this.cache[cacheIndex] = feature;
         callback(feature, distance);
@@ -151,27 +152,33 @@
                     })
                 })
             ]
-        else
-            return [
-                new ol.style.Style({
-                    stroke: new ol.style.Stroke({
-                        color: collection == App.haCollections.collection ? [153, 0, 0, collection.online ? 1 : 0.5] : [0, 93, 154, collection.online ? 1 : 0.5],
-                        width: collection.isWalk ? Math.min(Math.max(res / 10, 5), 20) : 5,
-                        //width: collection == App.haCollections.collection ? 8 : 5
-                        lineDash: collection.isWalk ? [0, 15] : null
+        else {
+            var color = collection == App.haCollections.collection ? [153, 0, 0, collection.online ? 1 : 0.5] : [0, 93, 154, collection.online ? 1 : 0.5];
+            var size = collection.isWalk ? Math.min(Math.max(res / 10, 5), 20) : 5;
+
+            //TODO: A alot of this could be cached:
+
+            if (collection.isWalk && res > 100) {
+                return (<any>feature).point ? [
+                    new ol.style.Style({
+                        image: new ol.style.Circle({
+                            radius: size / 2,
+                            fill: new ol.style.Fill({ color: color })
+                        }),
+                        geometry: (<any>feature).point
                     })
-                    //, image: new ol.style.Circle({
-                    //    radius: 10,
-                    //    fill: new ol.style.Fill({
-                    //        color: 'white'
-                    //    }),
-                    //    stroke: new ol.style.Stroke({
-                    //        color: [153, 0, 0, 1],
-                    //        width: 3
-                    //    })
-                    //})
-                })
-            ]
+                ] : []
+            } else 
+                return [
+                    new ol.style.Style({
+                        stroke: new ol.style.Stroke({
+                            color: color,
+                            width: size,
+                            lineDash: collection.isWalk ? [0, 15] : null
+                        })
+                    })
+                ]
+        }
     }
 
     public removeFeatures(features: Array<ol.Feature>) {
