@@ -174,6 +174,15 @@
     public sort(otherContent: HaContent): number {
         return this._ordering - otherContent.ordering;
     }
+
+    public get externals(): Array<HaSubContentExternal> {
+        var result: Array<HaSubContentExternal> = [];
+        for (var subContent of this.subContents)
+            if (subContent instanceof HaSubContentExternal)
+                result.push(<HaSubContentExternal>subContent);
+        return result;
+    }
+
 }
 
 //enum ContentType {

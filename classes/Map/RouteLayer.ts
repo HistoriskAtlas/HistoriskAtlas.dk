@@ -28,7 +28,7 @@
 
     public addPath(loc1: ol.Coordinate, loc2: ol.Coordinate, collection: HaCollection, drawViaPoint: boolean, drawPath: boolean, calcRoute: boolean, index: number, callback: (feature: ol.Feature, distance: number) => void, flush: boolean): ol.Feature {
 
-        var viaPoint;
+        var viaPoint: ol.Feature;
         if (drawViaPoint) {
             viaPoint = new ol.Feature({
                 geometry: new ol.geom.Point(Common.toMapCoord(loc1)),
@@ -42,7 +42,16 @@
                 //})
             });
             (<any>viaPoint).collection = collection;
+            (<any>viaPoint).collection_geo = collection.collection_geos[index];
             (<any>viaPoint).loc = loc1;
+
+            var content = (<HaCollectionGeo>(<any>viaPoint).collection_geo).content;
+            if (content) {
+                var externals = content.externals;
+                if (externals.length > 0)
+                    (<any>viaPoint).externalLink = externals[0].link;
+            }
+
             this.source.addFeature(viaPoint);
             collection.features.push(viaPoint);
         }

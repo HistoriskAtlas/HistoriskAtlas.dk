@@ -262,6 +262,9 @@ class HaCollections extends Tags implements polymer.Element {
                 for (var cg of collection.collection_geos)
                     if (cg.contentID == data.id)
                         this.set('collection.collection_geos.' + this.collection.collection_geos.indexOf(cg) + '.content', new HaContent(data));
+
+            //To ensure that content is included when drawing route:
+            this.drawRoute(collection, null, true);
         })
     }
 

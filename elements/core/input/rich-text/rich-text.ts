@@ -34,6 +34,7 @@ class RichText extends polymer.Base implements polymer.Element {
     public isIE: boolean;
 
     private static matchGeoLink: RegExp = new RegExp('<a href=["\']http:\/\/historiskatlas\.dk\/.*?_\\((.*?)\\)["\']>(.*?)<\/a>', 'g');
+    private static matchBlankLink: RegExp = new RegExp('target="_blank"', 'g');
     private savedSelectionRange: Range;
 
     ready() {
@@ -118,11 +119,15 @@ class RichText extends polymer.Base implements polymer.Element {
 
         var content: string;
 
-        if ((<any>window).App)
+        if ((<any>window).App) {
             content = this.content.replace(RichText.matchGeoLink, (g1, g2, g3, g4, g5) => { //TODO: function not needed... use $3 in a string instead?
                 return '<a href="javascript:void(0);" onclick="Common.geoClick(' + g2 + ')">' + g3 + '</a>'
             });
-        else
+
+            if (Common.embed && !this.editable)
+                content = content.replace(RichText.matchBlankLink, 'target="_parent"')
+
+        } else
             content = this.content;
 
         this.set('immediateContent', content);

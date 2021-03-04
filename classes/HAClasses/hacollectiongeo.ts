@@ -112,4 +112,17 @@
         var coord = Common.fromMapCoord(this.coord);
         Services.update('collection_geo', { id: this._id, latitude: coord[1], longitude: coord[0] }, () => { });
     }
+
+    public followExternalLink(): boolean {
+        if (!this.content)
+            return false;
+
+        var externals = this.content.externals;
+        if (externals.length == 0)
+            return false;
+
+        var win = Common.embed ? window.parent : window;
+        win.open(this.content.externals[0].link, Common.embed ? '_parent' : '_blank');
+        return true;
+    }
 }

@@ -7,8 +7,10 @@ class CollectionGeoList extends polymer.Base implements polymer.Element {
     cgTap(e: any) {
         var collection_geo = <HaCollectionGeo>e.model.cg;
 
-        if (collection_geo.isViaPoint || collection_geo.geoIsPlaceholder)
+        if (collection_geo.isViaPoint || collection_geo.geoIsPlaceholder) {
+            collection_geo.followExternalLink();            
             return;
+        }
 
         if (!App.haGeos.geos[collection_geo.geo.id])
             return;

@@ -295,8 +295,13 @@
                 //this.centerAnim(coord, this.view.getResolution() / 8, true, false);
             }
 
-            if (this.curHoverObject instanceof HaCollection)
-                App.haCollections.select(<HaCollection>this.curHoverObject, null, true);
+            if (this.curHoverObject instanceof HaCollection) {
+                var externalLinkFollowed = false;
+                if ('collection_geo' in this.curHoverFeature)
+                    externalLinkFollowed = (<HaCollectionGeo>(<any>this.curHoverFeature).collection_geo).followExternalLink();
+                if (!externalLinkFollowed)
+                    App.haCollections.select(<HaCollection>this.curHoverObject, null, true);
+            }
 
             if (this.curHoverObject instanceof HaRegion)
                 Common.dom.append(WindowRegion.create(<HaRegion>this.curHoverObject));
