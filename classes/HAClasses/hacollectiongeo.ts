@@ -122,7 +122,7 @@
             return false;
 
         var win = Common.embed ? window.parent : window;
-        win.open(this.content.externals[0].link, Common.embed ? '_parent' : '_blank');
+        win.open(this.content.externals[0].link, '_blank');
         return true;
     }
 }

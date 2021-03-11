@@ -678,6 +678,7 @@
     <Content Include="bower.json" />
     <Content Include="pdf\Vejledning til skribenter på HistoriskAtlas.dks kulturinstitutionslag april 2019.pdf" />
     <Content Include=".well-known\assetlinks.json" />
+    <Content Include="pdf\Dagsorden generalforsamling 2021.pdf" />
     <None Include="Properties\PublishProfiles\beta.historiskatlas.dkNY.pubxml" />
     <None Include="Properties\PublishProfiles\historiskatlas.dkNY.pubxml" />
     <None Include="web.Debug.config">
