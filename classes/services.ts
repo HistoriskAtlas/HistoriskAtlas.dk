@@ -79,7 +79,7 @@
         Common.dom.append(DialogAlert.create('Der opstod en fejl ved kommunikation med serveren. Hvis du oplever denne fejl gentagne gange, vil vi gerne høre om det på it@historiskatlas.dk. Teknisk info: ' + url + ' - ' + status + ' - ' + error, () => {
             this.pendingServiceCalls[0]();
         }, true, "Prøv igen"));
-        Analytics.apiError((status ? status.substr(0, 50) : '(no status)') + (error ? ' - ' + error : ''), url); //typeof App != 'undefined' ? App.haUsers.user.id : 0
+        Analytics.apiError(error, `${url} - ${(status ? status.substr(0, 50) : '(no status)')}`); //typeof App != 'undefined' ? App.haUsers.user.id : 0
     }
 
     private static serviceCall(url: string, data: any, success: (data: any) => any, error: (data: any) => any, async: boolean = false, message: string = null) { //RHL: why default to not async.... performance hit...

@@ -115,8 +115,10 @@ class HaMaps extends polymer.Base implements polymer.Element {
     }
 
     public loadExtendedData(map: HaMap) {
-        Services.get('map', { count: 1, schema: '{map:[licenstagid,licensee,source,about]}', id: map.id }, (result) => {
-            var data = result.data[0];
+        //Services.get('map', { count: 1, schema: '{map:[licenstagid,licensee,source,about]}', id: map.id }, (result) => {
+        //    var data = result.data[0];
+        Services.getHAAPI('map', { id: map.id }, (result) => {
+            var data = result.data;
             var i = this.maps.indexOf(map);
             if (data.licenstagid)
                 this.set(['maps', i, 'licens'], App.haTags.byId[data.licenstagid]);

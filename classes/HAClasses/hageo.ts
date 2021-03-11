@@ -531,24 +531,32 @@
         else
             if (this._title != '') {
                 App.mapTooltip.setText('');
-                Services.get('geo',
-                    {
-                        schema: JSON.stringify({
-                            geo: {
-                                fields: ['title'],
-                                filters: [{
-                                    geoid: this._id
-                                }]
-                            }
-                        })
-                    },
-                    (result) => {
-                        if (result.data.length == 0)
-                            return;
-                        this._title = result.data[0].title;
-                        App.mapTooltip.setText(this._title, true, imageUrl);
-                    }
-                );
+            //    Services.get('geo',
+            //        {
+            //            schema: JSON.stringify({
+            //                geo: {
+            //                    fields: ['title'],
+            //                    filters: [{
+            //                        geoid: this._id
+            //                    }]
+            //                }
+            //            })
+            //        },
+            //        (result) => {
+            //            if (result.data.length == 0)
+            //                return;
+            //            this._title = result.data[0].title;
+            //            App.mapTooltip.setText(this._title, true, imageUrl);
+            //        }
+            //    );
+
+                Services.getHAAPI('geo', { id: this._id }, (result) => {
+                    if (!result.data)
+                        return;
+                    this._title = result.data.title;
+                    App.mapTooltip.setText(this._title, true, imageUrl);
+                });
+
             }
     }
 }
