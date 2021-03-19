@@ -154,14 +154,18 @@
     private getMultipleStyle(icons: Array<Icon>): ol.style.Style{
         var ugcCount: number = 0;
         var proCount: number = 0;
-        for (var icon of icons)
+        var opacity = .5;
+        for (var icon of icons) {
             if (icon.geo.isUGC)
                 ugcCount++;
             else
                 proCount++;
+            if (icon.geo.online)
+                opacity = 1;
+        }
 
         if (ugcCount && proCount) {
-            var i = ugcCount * 1000000 + proCount;
+            var i = `${ugcCount}-${proCount}-${opacity}`; //ugcCount * 1000000 + proCount
             if (IconLayer.mixedBackStyles[i])
                 return IconLayer.mixedBackStyles[i];
 
@@ -175,7 +179,8 @@
             context.fillText('' + proCount, canvas.width / 2, canvas.width / 2 + 9);
             IconLayer.mixedBackStyles[i] = new ol.style.Style({
                 image: new ol.style.Icon({
-                    src: canvas.toDataURL()
+                    src: canvas.toDataURL(),
+                    opacity: opacity
                 })
             });       
 
@@ -186,8 +191,9 @@
         var ugc = !!ugcCount
         var styles = ugc ? IconLayer.ugcBackStyles : IconLayer.backStyles;
         var count = ugc ? ugcCount : proCount;
-        if (styles[count])
-            return styles[count];
+        var i = `${count}-${opacity}`;
+        if (styles[i])
+            return styles[i];
 
         var canvas = IconLayer.circleCanvas(ugc, count);
         var context = canvas.getContext('2d');
@@ -196,13 +202,14 @@
         context.textAlign = 'center';
         context.fillText('' + count, canvas.width / 2, canvas.width / 2 + 4);
 
-        styles[count] =  new ol.style.Style({
+        styles[i] =  new ol.style.Style({
             image: new ol.style.Icon({
-                src: canvas.toDataURL()
+                src: canvas.toDataURL(),
+                opacity: opacity
             })
         });       
 
-        return styles[count];
+        return styles[i];
 
         //var style = [
         //    new ol.style.Style({

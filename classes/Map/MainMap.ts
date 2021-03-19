@@ -47,22 +47,25 @@
         */
         var view = new ol.View({ center: Common.toMapCoord([coord[1], coord[0]]), zoom: zoom, minZoom: MainMap.minZoom, maxZoom: MainMap.maxZoom, rotation: rotation });
         var dragPan = new ol.interaction.DragPan();
+        var interactions = [
+            new ol.interaction.DragRotate(),
+            new ol.interaction.DoubleClickZoom(),
+            dragPan,
+            new ol.interaction.PinchRotate(),
+            new ol.interaction.PinchZoom(),
+            //new ol.interaction.KeyboardPan(),
+            //new ol.interaction.KeyboardZoom(),
+            
+            //new ol.interaction.DragZoom()
+        ];
+        if (!Common.embed)
+            interactions.push(new ol.interaction.MouseWheelZoom()) //{ onFocusOnly: true } on embed when OL is upgraded...
         super({
             target: document.getElementById('map'),
             view: view,
             renderer: 'canvas',
             controls: [],
-            interactions: [
-                new ol.interaction.DragRotate(),
-                new ol.interaction.DoubleClickZoom(),
-                dragPan,
-                new ol.interaction.PinchRotate(),
-                new ol.interaction.PinchZoom(),
-                //new ol.interaction.KeyboardPan(),
-                //new ol.interaction.KeyboardZoom(),
-                new ol.interaction.MouseWheelZoom()
-                //new ol.interaction.DragZoom()
-            ],
+            interactions: interactions,
             loadTilesWhileAnimating: true,
             loadTilesWhileInteracting: true,
             pixelRatio: 1.0 //TODO: good idea?
