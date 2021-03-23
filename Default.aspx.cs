@@ -71,7 +71,14 @@ namespace HistoriskAtlas5.Frontend
             //return (a.Length > 1 && a[a.Length - 1].ToLower() != "default.aspx") ? a[a.Length - 1] : "";
 
             if (a.Length > 2)
+            {
+                if (a[1].ToLower() == "css") //for missing theme css files
+                {
+                    HttpContext.Current.Response.StatusCode = (int)HttpStatusCode.NoContent;
+                    return "";
+                }
                 HttpContext.Current.Response.RedirectPermanent(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/" + a[a.Length - 1], true);
+            }
 
             return (a[1].ToLower() != "default.aspx") ? a[1] : "";
         }

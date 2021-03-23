@@ -9,10 +9,10 @@
             position:relative;
             /*transition: background-color 0.4s;*/
         }
-        :host:not(.no-content) {
+        :host:not(.no-content).plain-text {
             min-width: 0px !important;
         }
-        #content {
+        #content.plain-text {
             width: 100%;
             /*margin-top: 17px;*/
             /*outline: none;
@@ -20,7 +20,7 @@
             transition: margin-top 0.4s;
         }
 
-        #editorPanel {
+        #editorPanel.plain-text {
             position: absolute;
             display: flex;
             width: calc(100% - 34px);
@@ -30,11 +30,11 @@
             color: grey;
             pointer-events: none;
             background-color: inherit;
-            font-size: 12px; 
+            font-size: 12px;
             font-weight: normal;
         }
 
-        iron-autogrow-textarea {
+        iron-autogrow-textarea.plain-text {
             border: none;
             padding: 0px;
             --iron-autogrow-textarea-placeholder: {
@@ -47,13 +47,13 @@
             }
         }
 
-        #editorPanel ~ #content {
+        #editorPanel.plain-text ~ #content {
             margin-top: 17px;
         }
-        #editorPanel ~ #content[focused] {
+        #editorPanel.plain-text ~ #content[focused] {
             margin-top: 25px !important;
         }
-        .read-more {
+        .read-more.plain-text {
             white-space: nowrap;
             color: #005b9c;
             cursor: pointer;

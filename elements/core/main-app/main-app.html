@@ -1,6 +1,6 @@
 ﻿<dom-module id="main-app">
     <style>
-        :root {
+/*        :root {
             --primary-color: #005d9a !important;
             --primary-contrast-color: #ffffff !important;
             --primary-color-light: #0f64a6 !important;
@@ -13,7 +13,7 @@
             --unchecked-color: #bbbbbb !important;
             --unchecked-background-color: transperant !important;
         }
-
+*/
         paper-tabs {
             --paper-tabs-selection-bar-color: var(--primary-color)
         }
@@ -246,7 +246,7 @@
                     </div>
                 </paper-toolbar>
 
-                <main-menu class$="[[mainMenuClass(theme,showMenuThemes)]]" shown$="[[showMainMenu]]" show-main-menu="{{showMainMenu}}" show-menu-themes="{{showMenuThemes}}" drawer-open="{{drawerOpen}}" tags="{{tags}}" tag-tops="{{tagTops}}" main-map="{{mainMap}}" maps="[[maps]]" collections="{{collections}}" collection="{{collection}}" collection-top-levels="{{collectionTopLevels}}" year="{{year}}" digdags="[[digdags]]" region-type="{{regionType}}" touch-device="[[touchDevice]]" time-line-active="{{timeLineActive}}" user="[[user]]" theme="{{theme}}" themes="{{themes}}" prof-creators="{{profCreators}}" user-creators="{{userCreators}}"></main-menu>
+                <main-menu class$="[[mainMenuClass(showMenuThemes)]]" shown$="[[showMainMenu]]" show-main-menu="{{showMainMenu}}" show-menu-themes="{{showMenuThemes}}" drawer-open="{{drawerOpen}}" tags="{{tags}}" tag-tops="{{tagTops}}" main-map="{{mainMap}}" maps="[[maps]]" collections="{{collections}}" collection="{{collection}}" collection-top-levels="{{collectionTopLevels}}" year="{{year}}" digdags="[[digdags]]" region-type="{{regionType}}" touch-device="[[touchDevice]]" time-line-active="{{timeLineActive}}" user="[[user]]" theme="{{theme}}" themes="{{themes}}" prof-creators="{{profCreators}}" user-creators="{{userCreators}}"></main-menu>
                 <template is="dom-if" if="[[showMainMenu]]">
                     <div class="nordea-logo-container">
                         <img src="../../images/logos/nordea-fonden-black-logo.png" />

@@ -283,36 +283,43 @@ class HaTags extends polymer.Base implements polymer.Element {
     }
 
     public static viaPointMarker(number: number): string {
-        var marker: string = this._viaPointMarkers[number];
+        var color = Common.getStyleVar('--map-route-via-point-color')
+        var type = Common.getStyleVar('--map-route-via-point-type')
+        var cacheIndex = `${color}-${number}-${type}`
+
+        var marker: string = this._viaPointMarkers[cacheIndex];
         if (marker)
             return marker;
 
         var canvas = document.createElement('canvas');
-        canvas.width = 36;
-        canvas.height = 36;
+        canvas.width = 32; // 36;
+        canvas.height = 32; // 36;
         var context = canvas.getContext("2d");
-        context.fillStyle = '#FFFFFF';
+        context.fillStyle = color//'#FFFFFF';
         context.font = 'bold 14px Roboto'
-        context.strokeStyle = '#990000';
-        context.lineWidth = 4;
+        //context.strokeStyle = '#990000';
+        //context.lineWidth = 4;
 
-        context.arc(18, 18, 10, 0, Math.PI * 2);
-        context.stroke();
+        context.arc(canvas.width / 2, canvas.height / 2, canvas.width / 2, 0, Math.PI * 2);
+        //context.stroke();
         context.fill();
 
         if (number > -1) {
-            context.fillStyle = '#990000';
+            context.fillStyle = '#ffffff';//'#990000';
             var text: string;
-            switch (number) {
-                case 26: text = String.fromCharCode(198); break;
-                case 27: text = String.fromCharCode(216); break;
-                case 28: text = String.fromCharCode(197); break;
-                default: text = String.fromCharCode(65 + number); break;
-            }
-            context.fillText(text, (canvas.width - context.measureText(text).width) / 2.0, 23)
+            if (type == 'alpha') {
+                switch (number) {
+                    case 26: text = String.fromCharCode(198); break;
+                    case 27: text = String.fromCharCode(216); break;
+                    case 28: text = String.fromCharCode(197); break;
+                    default: text = String.fromCharCode(65 + number); break;
+                }
+            } else
+                text = (number + 1).toString();
+            context.fillText(text, (canvas.width - context.measureText(text).width) / 2.0, 21) //23
         }
         var marker = canvas.toDataURL()
-        this._viaPointMarkers[number] = marker;
+        this._viaPointMarkers[cacheIndex] = marker;
 
         return marker;
     }

@@ -48,6 +48,11 @@
     <Content Include="bower_components\polymer-ts\README.md" />
     <Content Include="css\ol.css" />
     <Content Include="css\theme.css" />
+    <Content Include="css\themes\theme-modstandskamp.css" />
+    <Content Include="css\themes\theme-default.css" />
+    <Content Include="css\themes\theme-digterruter.css" />
+    <Content Include="css\themes\theme-1001.css" />
+    <Content Include="css\themes\theme-hod.css" />
     <Content Include="cs\proxy\test.xml" />
     <Content Include="elements\admin\windows\window-admin\panel-geo-admin\panel-geo-admin.html" />
     <Content Include="elements\admin\windows\window-admin\panel-api-admin\panel-api-admin.html" />

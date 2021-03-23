@@ -1,0 +1,16 @@
+﻿.theme-1001 main-menu.show-menu-themes {
+    background-color: black;
+    background-image: url(../../../../images/theme/1001back.jpg);
+    background-size: 100%;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    color: white;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    letter-spacing: 1px;
+}
+
+.theme-1001 main-menu.show-menu-themes .logo-theme {
+    width: 80%;
+    display: block;
+    margin: 50px auto 30px auto;
+}

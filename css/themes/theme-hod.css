@@ -1,0 +1,18 @@
+﻿.theme-hod main-menu.show-menu-themes {
+    /*.menu-style-theme-hod {*/
+    background-color: #e4e7eb;
+    background-image: url(../../../../images/theme/HoD2017back.jpg);
+    background-size: 100%;
+    background-position: bottom;
+    background-repeat: no-repeat;
+}
+.theme-hod main-menu.show-menu-themes .logo-theme{
+/*.menu-style-theme-hod .logo-theme {*/
+    max-width: 80%;
+    min-width: 70%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: calc(5vh - 10px);
+    width: 25vh;
+}

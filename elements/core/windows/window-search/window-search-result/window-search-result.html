@@ -1,6 +1,6 @@
 ﻿<dom-module id="window-search-result">
     <style>
-        .listitem {
+        .listitem.window-search-result {
             display: flex;
             align-items: center;
             border-bottom: solid 1px;
@@ -11,22 +11,22 @@
             align-items: flex-start;
             padding: 8px 0px;
         }
-        img {
+        .listitem.window-search-result > .icon > img {
             height: 32px;
         }
-        span.icon {
+        span.icon.window-search-result {
             /*width: 25px;*/
             margin-right: 10px;
             display: flex;
             justify-content: center;
             color: #005D9A;
         }
-        .text {
+        .text.window-search-result {
             display: flex;
             flex-direction: column;
             padding: 2px 0px;
         }
-        #title {
+        #title.window-search-result {
             font-size: 15px;
             font-weight: 500;
         }

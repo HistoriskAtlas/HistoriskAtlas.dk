@@ -81,9 +81,14 @@ class MainApp extends App implements polymer.Element {
         return !touchDevice || !narrow;
     }
 
-    mainMenuClass(theme: ITheme, showMenuThemes: boolean): string {
+    //mainMenuClass(theme: ITheme, showMenuThemes: boolean): string {
+    //    if (showMenuThemes)
+    //        return 'menu-style-theme-' + theme.id;
+    //    return '';
+    //}
+    mainMenuClass(showMenuThemes: boolean): string {
         if (showMenuThemes)
-            return 'menu-style-theme-' + theme.id;
+            return 'show-menu-themes';
         return '';
     }
 

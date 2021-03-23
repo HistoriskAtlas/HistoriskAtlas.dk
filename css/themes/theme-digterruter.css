@@ -1,0 +1,38 @@
+﻿:root.theme-digterruter {
+    --digterruter-red: #dd655b;
+    --digterruter-green: #24523a;
+    /*--primary-color: #f00 !important;*/
+
+    --map-route-collapsed-color: var(--digterruter-red);
+    --map-route-line-color: var(--digterruter-green);
+    --map-route-via-point-color: var(--digterruter-red);
+    --map-route-via-point-type: numeric;
+}
+
+paper-toolbar.window-basic {
+    background-color: white !important;
+    color: var(--digterruter-green) !important;
+}
+paper-toolbar.window-basic .title {
+    font-weight: bold !important;
+    padding-left: 0px;
+}
+
+window-basic a {
+    color: var(--digterruter-red);
+    text-decoration: none;
+}
+
+.theme-digterruter main-menu.show-menu-themes {
+    background: linear-gradient(180deg, rgba(18,83,58,1) 0%, rgba(18,83,58,1) 145px, rgba(243,240,233,1) 145px, rgba(243,240,233,1) 100%); /*#f3f0e9;*/ /*#f4edd2;*/
+}
+
+.theme-digterruter main-menu.show-menu-themes iron-icon[icon="close"] {
+    fill: #fff;
+}
+
+.theme-digterruter main-menu.show-menu-themes .logo-theme {
+    width: 230px;
+    height: 75px;
+    margin-bottom: 10px;
+}

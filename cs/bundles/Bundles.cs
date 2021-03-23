@@ -93,7 +93,7 @@ namespace HistoriskAtlas5.Frontend
             BundleTable.Bundles.Add(sbJQueryExtent);
 
             StyleBundle sbCSS = new StyleBundle("~/bundles/ha_css");
-            sbCSS.IncludeDirectory("~/css", "*.css", true);
+            sbCSS.IncludeDirectory("~/css", "*.css", false); //true
             BundleTable.Bundles.Add(sbCSS);
         }
     }

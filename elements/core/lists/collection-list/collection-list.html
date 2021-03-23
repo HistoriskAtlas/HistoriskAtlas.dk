@@ -1,6 +1,6 @@
 ﻿<dom-module id="collection-list">
     <style>
-        .listitem {
+        .listitem.collection-list {
             display: flex;
             align-items: center;
             border-bottom: solid 1px;
@@ -10,15 +10,15 @@
             cursor: pointer;
         }
 
-        .listitem > span {
+        .listitem.collection-list > span {
             cursor: pointer;
             flex-grow: 1;
         }
-        .listsubitem {
+        .listsubitem.collection-list {
             padding-left: 40px !important;
             background-color: var(--light-gray-color);
         }
-        paper-icon-button {
+        paper-icon-button.collection-list {
             width: 30px !important; /*was 25px*/
             height: 30px !important; /*was 25px*/
             padding: 3px !important;
@@ -27,13 +27,13 @@
             transform: rotate(-90deg);
             transition: transform 0.3s, -webkit-transform 0.3s;
         }
-        paper-icon-button[active] {
+        paper-icon-button[active].collection-list {
             transform: rotate(0deg) !important;
         }
-        .spacer {
+        .spacer.collection-list {
             height: 20px;
         }
-        paper-checkbox {
+        paper-checkbox.collection-list {
             margin-right: -1px;
             --paper-checkbox-unchecked-color: var(--unchecked-color);
             --paper-checkbox-unchecked-background-color: var(--unchecked-background-color);

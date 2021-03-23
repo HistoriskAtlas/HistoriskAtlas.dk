@@ -1,18 +1,12 @@
 ﻿<dom-module id="window-favourites">
     <template>
         <style>
-            .list {
-                /*display:flex; 
-                flex-direction:column; 
-                justify-content:flex-start; 
-                flex-grow:1;
-                padding-left:20px;*/ 
-                
+            .list.panel-tag {
                 display: block;
                 padding: 0px 10px;
-                overflow-y: auto;                
+                overflow-y: auto;
             }
-            .listitem {
+            .listitem.panel-tag {
                 display: flex;
                 align-items: center;
                 border-bottom: solid 1px;
@@ -21,17 +15,17 @@
                 height: 32px; /*was 25px*/
                 cursor: pointer;
             }
-            img {
+            img.panel-tag {
                 height: 25px;
-            }   
-            span.icon {
+            }
+            span.icon.panel-tag {
                 width: 25px;
                 margin-right: 10px;
                 display: flex;
                 justify-content: center;
                 color: #005D9A;
             }
-            .title {
+            .title.panel-tag {
                 flex-grow: 1;
             }
         </style>

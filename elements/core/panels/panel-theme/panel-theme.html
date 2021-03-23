@@ -4,10 +4,10 @@
             display: block;
             font-size: 13px;
         }
-        .host-container {
+        .host-container.panel-theme {
             margin-top:15px;
         }
-        .header {
+        .header.panel-theme {
             flex-grow: 1;
             display: flex;
             font-size: 13px;
@@ -20,27 +20,27 @@
         /*main-menu-item[show] .header {
             border-bottom-color: darkgray !important;
         }*/
-        .header > span {
+        .header.panel-theme > span {
             flex-grow: 1;
             transition: font-size .3s, opacity .3s;
         }
-        main-menu-item[show] .header > span {
+        main-menu-item[show].panel-theme .header > span {
             font-size: 15px;
         }
-        main-menu-item[show] .header[hide-when-active] {
+        main-menu-item[show].panel-theme .header[hide-when-active] {
             position: absolute;
             width: 100%;
             top: 0px;
             z-index: 2;
             border-bottom: none;
         }
-        main-menu-item[show] .header[hide-when-active] > span {
+        main-menu-item[show].panel-theme .header[hide-when-active] > span {
             opacity: 0;
         }
         /*content-viewer {
             font-size: 13px;
         }*/
-        iron-icon {
+        iron-icon.panel-theme {
             width: 18px;
             height: 18px;
         }

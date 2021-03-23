@@ -1,6 +1,6 @@
 ﻿<dom-module id="geo-list-item">
     <style>
-        .listitem {
+        .listitem.geo-list-item {
             display: flex;
             align-items: center;
             border-bottom: solid 1px;
@@ -9,28 +9,28 @@
             height: 32px;
             cursor: pointer;
         }
-        img {
+        .listitem.geo-list-item > .icon > img {
             height: 32px;
             margin-top: 6px;
         }
-        span.icon {
+        span.icon.geo-list-item {
             width: 25px;
             margin-right: 10px;
             display: flex;
             justify-content: center;
             color: #005D9A;
         }
-        iron-icon {
+        iron-icon.geo-list-item {
             width: 20px;
             height: 20px;
             flex-shrink: 0;
             padding-left: 10px;
         }
-        .drag-handle {
+        .drag-handle.geo-list-item {
             cursor: move;
             /*color: lightgray;*/
         }
-        paper-icon-button {
+        paper-icon-button.geo-list-item {
             width: 36px;
             height: 36px;
             flex-shrink: 0;

@@ -1,15 +1,15 @@
 ﻿<dom-module id="collection-geo-list-item">
     <style>
-        .listitem {
+        .listitem.collection-geo-list-item {
             display: flex;
             align-items: center;
             border-top: solid 1px;
-            border-top-color: rgba(0,0,0,.07);/*#ececec;*/
+            border-top-color: rgba(0,0,0,.07); /*#ececec;*/
             font-size: 13px;
             height: 32px;
             cursor: pointer;
         }
-        paper-icon-button.arrow {
+        paper-icon-button.arrow.collection-geo-list-item {
             width: 30px !important;
             height: 30px !important;
             padding: 3px !important;
@@ -17,10 +17,10 @@
             transform: rotate(-90deg);
             transition: transform 0.3s;
         }
-        paper-icon-button.arrow[active] {
+        paper-icon-button.collection-geo-list-item.arrow[active] {
             transform: rotate(0deg) !important;
         }
-        span.icon {
+        span.icon.collection-geo-list-item {
             width: 25px;
             margin-right: 10px;
             display: flex;
@@ -28,48 +28,48 @@
             color: #005D9A;
             flex-shrink: 0;
         }
-        span.icon > img {
+        span.icon.collection-geo-list-item > img {
             height: 32px;
         }
-        span.icon.via-point-false > img {
+        span.icon.collection-geo-list-item.via-point-false > img {
             margin-top: 6px;
         }
-        iron-icon {
+        iron-icon.collection-geo-list-item {
             width: 20px;
             height: 20px;
             flex-shrink: 0;
             padding-left: 10px;
         }
-        .drag-handle {
+        .drag-handle.collection-geo-list-item {
             cursor: move;
             /*color: lightgray;*/
         }
-        paper-icon-button {
+        paper-icon-button.collection-geo-list-item {
             width: 36px;
             height: 36px;
             flex-shrink: 0;
         }
-        .content {
+        .content.collection-geo-list-item {
             margin: 0px 0px 10px 25px;
         }
-        .content-top {
+        .content-top.collection-geo-list-item {
             display: flex;
             /*justify-content: space-between;*/
         }
-        .content-top > paper-button {
+        .content-top.collection-geo-list-item > paper-button {
             text-transform: none;
             font-size: 13px;
         }
-        .content-top > paper-button > span {
+        .content-top.collection-geo-list-item > paper-button > span {
             margin-right: 4px;
             margin-bottom: 3px;
             white-space: nowrap;
             color: grey;
         }
-        .content-top > paper-button[active]:not([disabled]) > span {
+        .content-top.collection-geo-list-item > paper-button[active]:not([disabled]) > span {
             color: var(--primary-color);
         }
-        .content-top > paper-button > paper-toggle-button {
+        .content-top.collection-geo-list-item > paper-button > paper-toggle-button {
             pointer-events: none;
             width: 32px;
             --paper-toggle-button-unchecked-button: {
@@ -81,29 +81,29 @@
                 height: 10.5px;
             }
         }
-        #arrowContainer {
+        #arrowContainer.collection-geo-list-item {
             width: 30px;
             height: 30px;
             flex-shrink: 0;
         }
-        paper-button[disabled] {
+        paper-button[disabled].collection-geo-list-item {
             background: white !important;
             color: #a8a8a8 !important;
         }
-        content-viewer {
+        content-viewer.collection-geo-list-item {
             font-size: 12px;
             line-height: 16px;
         }
-        #headline {
+        #headline.collection-geo-list-item {
             flex-grow: 1;
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
         }
-        #headline.ui-open {
+        #headline.ui-open.collection-geo-list-item {
             visibility: hidden;
         }
-        #headline.via-point:empty::after {
+        #headline.via-point.collection-geo-list-item:empty::after {
             font-style: italic;
             color: gray;
             content: 'via'

@@ -202,6 +202,18 @@
         } (document));
     }
 
+    public static loadCSS(id: string, src: string) {
+        if (document.getElementById(id))
+            return;
+
+        var link = document.createElement("link");
+        link.id = id;
+        link.rel = "stylesheet";
+        link.type = "text/css";
+        link.href = src;
+        document.getElementsByTagName("head")[0].appendChild(link)
+    }
+
 
     public static get isIE(): boolean {
         return window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
@@ -295,9 +307,12 @@
         return !(!App.haTags || !App.haTags.tagsLoaded)
     }
 
-
     public static capitalize(text: string): string {
         return text.charAt(0).toUpperCase() + text.slice(1);
+    }
+
+    public static getStyleVar(prop: string): string {
+        return getComputedStyle(document.documentElement).getPropertyValue(prop).trim();
     }
 }
 

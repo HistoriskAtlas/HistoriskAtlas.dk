@@ -1,6 +1,6 @@
-﻿.menu-style-theme-digterruter {
-    background: linear-gradient(180deg, rgba(18,83,58,1) 0%, rgba(18,83,58,1) 145px, rgba(243,240,233,1) 145px, rgba(243,240,233,1) 100%); /*#f3f0e9;*/ /*#f4edd2;*/
-}
+﻿/*.menu-style-theme-digterruter {
+    background: linear-gradient(180deg, rgba(18,83,58,1) 0%, rgba(18,83,58,1) 145px, rgba(243,240,233,1) 145px, rgba(243,240,233,1) 100%);*/ /*#f3f0e9;*/ /*#f4edd2;*/
+/*}
 .menu-style-theme-digterruter iron-icon[icon="close"] {
     fill: #fff;
 }
@@ -8,9 +8,12 @@
     width: 230px;
     height: 75px;
     margin-bottom: 10px;
-}
+}*/
 
 
+
+
+/*
 .menu-style-theme-hod {
     background-color: #e4e7eb;
     background-image: url(../../../../images/theme/HoD2017back.jpg);
@@ -28,7 +31,11 @@
     width: 25vh;
 }
 
-.menu-style-theme-1001 {
+
+*/
+
+
+/*.menu-style-theme-1001 {
     background-color: black;
     background-image: url(../../../../images/theme/1001back.jpg);
     background-size: 100%;
@@ -42,9 +49,13 @@
     width: 80%;
     display: block;
     margin: 50px auto 30px auto;
-}
+}*/
 
-.menu-style-theme-modstandskamp {
+
+
+
+
+/*.menu-style-theme-modstandskamp {
     background-color: #e9e9e9;
     background-image: url(../../../../images/theme/Modstandskamp_back.jpg);
     background-size: 100%;
@@ -52,4 +63,6 @@
     background-repeat: no-repeat;
     color: black;
     font-size: 12px;    
-}
+}*/
+
+/*TODO: put all of this en separat css files... one per theme......... and use css var to define colors.......... and read them in ts.... to use on map....... */

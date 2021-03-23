@@ -218,6 +218,20 @@
         });
     }
 
+    @observe('theme')
+    themeChanged() {
+        var root = document.documentElement;
+        for (let i = root.classList.length - 1; i >= 0; i--) {
+            const className = root.classList[i];
+            if (className.indexOf('theme') > -1)
+                root.classList.remove(className);
+        }
+        var id = `theme-${this.theme.id}`;
+        Common.loadCSS(id, `css/themes/${id}.css`);
+        root.classList.add(id);
+    }
+
+
     public static init() {
         var theme = App.passed.theme
         var coord = App.passed.geo ? [App.passed.geo.lat, App.passed.geo.lng] : ([theme.maplatitude ? theme.maplatitude : Global.defaultTheme.maplatitude, theme.maplongitude ? theme.maplongitude : Global.defaultTheme.maplongitude]);

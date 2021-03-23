@@ -162,8 +162,11 @@
                 })
             ]
         else {
-            var color = collection == App.haCollections.collection ? [153, 0, 0, collection.online ? 1 : 0.5] : [0, 93, 154, collection.online ? 1 : 0.5];
-            var size = collection.isWalk ? Math.min(Math.max(res / 10, 5), 20) : 5;
+            //var color = collection == App.haCollections.collection ? [153, 0, 0, collection.online ? 1 : 0.5] : [0, 93, 154, collection.online ? 1 : 0.5];
+            //var color = [36, 82, 58, collection.online ? 1 : 0.5]; //TODO: Theme depend
+            var color = Common.getStyleVar('--map-route-line-color')
+            //var size = collection.isWalk ? Math.min(Math.max(res / 10, 4), 20) : 5;
+            var size = 5;
 
             //TODO: A alot of this could be cached:
 
@@ -171,8 +174,8 @@
                 return (<any>feature).point ? [
                     new ol.style.Style({
                         image: new ol.style.Circle({
-                            radius: size / 2,
-                            fill: new ol.style.Fill({ color: color })
+                            radius: 10, //Math.min(Math.max(res / 20, 2), 10),
+                            fill: new ol.style.Fill({ color: Common.getStyleVar('--map-route-collapsed-color') })
                         }),
                         geometry: (<any>feature).point
                     })
@@ -183,7 +186,7 @@
                         stroke: new ol.style.Stroke({
                             color: color,
                             width: size,
-                            lineDash: collection.isWalk ? [0, 15] : null
+                            //lineDash: collection.isWalk ? [0, 15] : null
                         })
                     })
                 ]

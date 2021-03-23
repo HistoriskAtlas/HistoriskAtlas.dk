@@ -4,19 +4,19 @@
             display: block;
             /*padding: 0px 10px;*/
         }
-        .headline {
+        .headline.panel-digdag {
             font-size: 16px;
             font-weight: bold;
             padding-bottom: 30px;
             /*padding-top: 20px;*/
-            padding-left: 10px;        
+            padding-left: 10px;
         }
-        .attribution {
+        .attribution.panel-digdag {
             font-size: 13px;
             padding: 30px 10px 10px 10px;
             color: var(--dark-gray-color);
         }
-        .listitem {
+        .listitem.panel-digdag {
             display: flex;
             align-items: center;
             border-bottom: solid 1px;
@@ -25,33 +25,33 @@
             font-size: 13px;
             height: 32px; /*was 25px*/
         }
-        .listitem > span {
+        .listitem.panel-digdag > span {
             cursor: pointer;
         }
-        .listsubitem {
+        .listsubitem.panel-digdag {
             /*padding-left: 10px !important;*/
             background-color: var(--light-gray-color);
         }
-        .title {
+        .title.panel-digdag {
             flex-grow: 1;
             user-select: none;
             padding: 0px 0px 0px 30px;
             font-size: 13px;
             line-height: 13px;
         }
-        paper-icon-button ~ .title {
+        paper-icon-button.panel-digdag ~ .title {
             padding-left: 0px !important;
         }
-        .years {
+        .years.panel-digdag {
             user-select: none;
             padding: 0px 5px 0px 10px;
             font-size: 11px;
             white-space: nowrap;
         }
-        .inactive {
+        .inactive.panel-digdag {
             color: var(--dark-gray-color);
         }
-        paper-icon-button {
+        paper-icon-button.panel-digdag {
             width: 30px !important; /*was 25px*/
             height: 30px !important; /*was 25px*/
             padding: 3px !important;
@@ -60,16 +60,16 @@
             transform: rotate(-90deg);
             transition: transform 0.3s, -webkit-transform 0.3s;
         }
-        paper-icon-button[active] {
+        paper-icon-button[active].panel-digdag {
             transform: rotate(0deg) !important;
         }
-        paper-radio-button {
+        paper-radio-button.panel-digdag {
             --paper-radio-button-unchecked-color: #cccccc !important;
             --paper-radio-button-unchecked-background-color: #cccccc !important;
             --paper-radio-button-checked-color: var(--primary-color);
             --paper-radio-button-label-spacing: 6px;
         }
-        paper-radio-button.disabled {
+        paper-radio-button.panel-digdag.disabled {
             --paper-radio-button-unchecked-color: var(--light-gray-color);
             --paper-radio-button-unchecked-background-color: var(--light-gray-color);
         }
@@ -77,7 +77,7 @@
             width: 230px;
             line-height: 1.1;
         }*/
-        paper-icon-button.info {
+        paper-icon-button.info.panel-digdag {
             -webkit-transform: none !important;
             transform: none !important;
             /*margin-right: 5px;*/
@@ -85,7 +85,7 @@
             opacity: 0;
             transition: opacity 0.3s;
         }
-        .listitem:hover > .info {
+        .listitem.panel-digdag:hover > .info {
             opacity: 1 !important;
             transition: opacity 0.3s 0.5s !important;
         }

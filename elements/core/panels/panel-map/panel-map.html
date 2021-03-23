@@ -1,42 +1,15 @@
 ﻿<dom-module id="panel-map">
     <style>
-        /*.container {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            padding: 16px 6px 16px 6px;
-            flex-grow: 1;
-            overflow-y: auto;
-        }
-        .map {
-            padding: 0px; 
-            margin: 4px; 
-            display: inline-block; 
-            width: calc(100% * (1/2) - 8px);
-            cursor: pointer;
-        }
-        .image {
-            width:100%;
-        }
-        .selectedImage {
-            padding: 6px;
-        }
-        .title {
-            font-size: 12px;
-            padding: 6px 8px 2px 8px;
-        }*/
         :host {
             display: block;
-            /*padding: 0px 10px;*/
         }
-        .headline {
+        .headline.panel-map {
             font-size: 16px;
             font-weight: bold;
             padding-bottom: 30px;
-            /*padding-top: 20px;*/
-            padding-left: 10px;        
+            padding-left: 10px;
         }
-        .title {
+        .title.panel-map {
             padding: 0px 8px 2px 8px;
             font-size: inherit;
             font-weight: bold;
@@ -44,7 +17,7 @@
         /*.years {
             font-size: 11px;
         }*/
-        .listitem {
+        .listitem.panel-map {
             display: flex;
             align-items: center;
             border-bottom: solid 1px;
@@ -55,15 +28,15 @@
             border-bottom-right-radius: 18px;
             border-top-right-radius: 18px;
         }
-            .listitem > div {
-                flex-grow: 1;
-                padding-left: 5px;
-                text-shadow: 0px 0px 2px white, 0px 0px 4px white, 0px 0px 6px white, 0px 0px 8px white, 0px 0px 10px white;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-            }
-        paper-radio-button {
+        .listitem.panel-map > div {
+            flex-grow: 1;
+            padding-left: 5px;
+            text-shadow: 0px 0px 2px white, 0px 0px 4px white, 0px 0px 6px white, 0px 0px 8px white, 0px 0px 10px white;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        paper-radio-button.panel-map {
             --paper-radio-button-unchecked-color: #777777;
             --paper-radio-button-unchecked-background-color: #ffffff;
             --paper-radio-button-checked-color: var(--secondary-color);
@@ -71,30 +44,30 @@
             margin-right: 2px;
         }
         /*div.primary > div > paper-radio-button {*/
-        paper-radio-button.primary {
+        paper-radio-button.primary.panel-map {
             --paper-radio-button-checked-color: var(--primary-color);
         }
-        .options {
+        .options.panel-map {
             padding-bottom: 20px;
         }
-        .options > div {
+        .options.panel-map > div {
             display: flex;
             align-items: center;
             font-size: 12px;
             height: 25px;
         }
-        .options > div > span {
+        .options.panel-map > div > span {
             flex-grow: 1; 
             padding: 4px; 
             cursor: pointer !important;
         }
-        paper-slider {
+        paper-slider.panel-map {
             --paper-slider-active-color: var(--primary-color);
             --paper-slider-knob-color: var(--primary-color);
             --paper-slider-knob-start-color: var(--white-color);
             --paper-slider-knob-start-border-color: var(--paper-grey-400);
         }
-        paper-checkbox {
+        paper-checkbox.panel-map {
             --paper-checkbox-unchecked-color: var(--unchecked-color);
             --paper-checkbox-unchecked-background-color: var(--unchecked-background-color);
             --paper-checkbox-checked-color: var(--primary-color);

@@ -4,14 +4,14 @@
             display: block;
             /*padding: 0px 10px;*/
         }
-        .headline {
+        .headline.panel-tag {
             font-size: 16px;
             font-weight: bold;
             padding-bottom: 30px;
             /*padding-top: 20px;*/
-            padding-left: 10px;        
+            padding-left: 10px;
         }
-        .listitem {
+        .listitem.panel-tag {
             display: flex;
             align-items: center;
             border-bottom: solid 1px;
@@ -20,15 +20,15 @@
             font-size: 13px;
             height: 32px; /*was 25px*/
         }
-        .listitem > span {
+        .listitem.panel-tag > span {
             cursor: pointer;
             flex-grow: 1;
         }
-        .listsubitem {
+        .listsubitem.panel-tag {
             padding-left: 40px !important;
             background-color: var(--light-gray-color);
         }
-        paper-icon-button {
+        paper-icon-button.panel-tag {
             width: 30px !important; /*was 25px*/
             height: 30px !important; /*was 25px*/
             padding: 3px !important;
@@ -37,31 +37,31 @@
             transform: rotate(-90deg);
             transition: transform 0.3s, -webkit-transform 0.3s;
         }
-        paper-icon-button[active] {
+        paper-icon-button[active].panel-tag {
             transform: rotate(0deg) !important;
         }
-        paper-checkbox {
+        paper-checkbox.panel-tag {
             pointer-events: none;
             --paper-checkbox-unchecked-color: var(--unchecked-color);
             --paper-checkbox-unchecked-background-color: var(--unchecked-background-color);
             --paper-checkbox-checked-color: var(--primary-color);
             --paper-checkbox-size: 14px; /*was 13px*/
         }
-        paper-checkbox.top {
+        paper-checkbox.top.panel-tag {
             margin-right: -1px;
             --paper-checkbox-size: 16px;
         }
-        .listsubitem > paper-checkbox {
+        .listsubitem.panel-tag > paper-checkbox {
             --paper-checkbox-unchecked-color: var(--unchecked-color);
             --paper-checkbox-unchecked-background-color: var(--unchecked-background-color);
         }
-        .buttons {
+        .buttons.panel-tag {
             display: flex;
             flex-direction: row;
             justify-content: center;
             padding-top: 20px;
         }
-        paper-button {
+        paper-button.panel-tag {
             color: var(--primary-color);
             font-size: 13px;
         }

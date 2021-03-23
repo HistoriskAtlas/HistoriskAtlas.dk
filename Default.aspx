@@ -67,6 +67,11 @@
                 //console.warn('Error whilst registering service worker', err);
             });
         }
+
+        window.Polymer = {
+            lazyRegister: true,
+            useNativeCSSProperties: true
+        };
     </script>
 
     <%--Polymer links --%>
@@ -119,16 +124,14 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold&lang=da" type="text/css" /> <%--,italic,thin,light,bolditalic,black,medium--%>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" /> <%--TODO: needed?--%>
     <%:System.Web.Optimization.Styles.Render("~/bundles/ha_css") %>
-    <style is="custom-style">
+   
+    <style is="custom-style"> /*TODO: ARE these needed? */
     :root {
-        /*--dark-primary-color: #FFA000;*/
         --default-primary-color: #005b9c;
-        /*--light-primary-color: #FFECB3;*/
         --text-primary-color: #FFFFFF;
         --accent-color: #fece00;
         --primary-text-color: #000000;
         --secondary-text-color: #000000;
-        /*--divider-color: #B6B6B6;*/
     }
     </style>
 
@@ -144,11 +147,6 @@
     <%--:System.Web.Optimization.Scripts.Render("~/bundles/ha_core") --%>
     <link rel="import" href="elements/ha_core<%=(fullapp ? "" : "_geo_only")%>.aspx"> <!-- Workaround for webcomponents polyfill browsers -->
     
-<%--    <% if (passedGeo != null) { %>
-    <style>
-        body { background-color: grey; }
-    </style>
-    <% } %>--%>
 </head>
 <body<%=(crawler && passedGeo != null ? " style=\"overflow:auto\"" : "")%>>
     <% foreach (HistoriskAtlas5.Frontend.HATag tag in sitemapTags.data) { %>
