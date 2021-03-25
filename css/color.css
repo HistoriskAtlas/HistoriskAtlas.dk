@@ -1,7 +1,7 @@
 ﻿:root {
     --primary-color: #005d9a !important;
     --primary-contrast-color: #ffffff !important;
-    --primary-color-light: #0f64a6 !important;
+    /*--primary-color-light: #0f64a6 !important;*/
     --secondary-color: #ffcc00 !important;
     --secondary-contrast-color: #000000 !important;
     --light-gray-color: #ececec !important;
@@ -11,6 +11,8 @@
     --unchecked-color: #bbbbbb !important;
     --unchecked-background-color: transperant !important;
     
+    --lighten-color: rgba(255,255,255,.1); /*Instead of primary-color-light*/
+
     --map-route-collapsed-color: var(--primary-color);
     --map-route-line-color: var(--primary-color);
     --map-route-via-point-color: #990000;

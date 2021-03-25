@@ -1,19 +1,6 @@
 ﻿<dom-module id="main-app">
     <style>
-/*        :root {
-            --primary-color: #005d9a !important;
-            --primary-contrast-color: #ffffff !important;
-            --primary-color-light: #0f64a6 !important;
-            --secondary-color: #ffcc00 !important;
-            --secondary-contrast-color: #000000 !important;
-            --light-gray-color: #ececec !important;
-            --dark-gray-color: #777777 !important;
-            --white-color: #ffffff !important;
-            --paper-grey-400: #bdbdbd !important;
-            --unchecked-color: #bbbbbb !important;
-            --unchecked-background-color: transperant !important;
-        }
-*/
+
         paper-tabs {
             --paper-tabs-selection-bar-color: var(--primary-color)
         }
@@ -28,16 +15,6 @@
         paper-tab {
             flex-basis: auto !important;
         }        
-
-        /*paper-button {
-            text-transform: none;
-            display: flex;
-            align-items: center;
-            height: 40px;
-        }
-        paper-button[active] {
-            background-color: rgba(255, 255, 255, 0.3);
-        }*/
 
         paper-item {
             cursor:pointer;
@@ -115,7 +92,7 @@
             margin: 0px;
             border-radius: 0px;
             font-size: 13px;
-            background-color: var(--primary-color-light);
+            background-color: var(--lighten-color);
             text-transform: none;
             display: flex;
             align-items: center;
@@ -139,7 +116,7 @@
             }
             --paper-toggle-button-unchecked-bar-color: #b9b9b9;
             --paper-toggle-button-checked-bar-color: #b9b9b9;
-            --paper-toggle-button-unchecked-button-color: #1575c1;
+            --paper-toggle-button-unchecked-button-color: var(--primary-color);
             --paper-toggle-button-checked-button-color: white;
         }
 

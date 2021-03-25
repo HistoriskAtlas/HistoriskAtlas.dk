@@ -1,7 +1,8 @@
 ﻿:root.theme-digterruter {
     --digterruter-red: #dd655b;
     --digterruter-green: #24523a;
-    /*--primary-color: #f00 !important;*/
+    
+    --primary-color: var(--digterruter-green) !important;
 
     --map-route-collapsed-color: var(--digterruter-red);
     --map-route-line-color: var(--digterruter-green);
@@ -9,18 +10,29 @@
     --map-route-via-point-type: numeric;
 }
 
-paper-toolbar.window-basic {
+.theme-digterruter embed-app paper-toolbar.window-basic {
     background-color: white !important;
     color: var(--digterruter-green) !important;
 }
-paper-toolbar.window-basic .title {
+.theme-digterruter embed-app paper-toolbar.window-basic .title {
     font-weight: bold !important;
     padding-left: 0px;
 }
+.theme-digterruter embed-app window-route collection-geo-list {
+    display: none;
+}
 
-window-basic a {
+.theme-digterruter window-basic a {
     color: var(--digterruter-red);
     text-decoration: none;
+}
+
+.theme-digterruter paper-toolbar.medium-tall.main-app {
+    height: 64px !important;
+}
+.theme-digterruter paper-toolbar.medium-tall.main-app #bottomBar {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .theme-digterruter main-menu.show-menu-themes {

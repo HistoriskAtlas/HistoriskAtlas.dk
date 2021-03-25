@@ -2,15 +2,15 @@
     <template>
         <style>
 
-            .content {
+            .content.map-menu {
                 font-size: 12px;
                 max-width: calc(100vw - 70px);
             }
-            .time-warp-active {
-                max-width: calc(50vw - 25px) !important;                
+            .time-warp-active.map-menu {
+                max-width: calc(50vw - 25px) !important;
             }
 
-            .main {
+            .main.map-menu {
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
@@ -22,20 +22,20 @@
                 pointer-events: none;
             }
 
-            .lift {
+            .lift.map-menu {
                 margin-bottom: 74px !important; /*64 + 10*/
             }
-            .label {
+            .label.map-menu {
                 margin-left: 5px;
                 font-weight: bold;
             }
-            .info-title {
+            .info-title.map-menu {
                 margin-left: 5px;
                 min-width: 0;
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
-            .info-year {
+            .info-year.map-menu {
                 margin-left: 5px;
                 margin-right: 5px;
                 flex-grow: 1;
@@ -43,7 +43,7 @@
                 min-width: 0;
                 overflow: hidden;
             }
-            paper-button {
+            paper-button.map-menu {
                 transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1), ease-in-out 0.3s, height .3s, margin-bottom .3s, padding-bottom .3s, padding-top .3s, opacity 0s .3s !important;
                 display: flex;
                 flex-direction: column;
@@ -57,14 +57,13 @@
                 pointer-events: all;
                 align-items: stretch;
                 max-width: 100%;
-
                 height: 31px;
                 opacity: 1;
             }
-            paper-button[elevation="4"] {
+            paper-button[elevation="4"].map-menu {
                 box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2) !important;
             }
-            paper-button.collapsed {
+            paper-button.collapsed.map-menu {
                 transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1), ease-in-out 0.3s, height .3s, margin-bottom .3s, padding-bottom .3s, padding-top .3s, opacity 0s !important;
                 visibility: hidden;
                 opacity: 0;
@@ -74,29 +73,29 @@
                 padding-top: 0;
             }
 
-            .info {
+            .info.map-menu {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                white-space: nowrap;      
+                white-space: nowrap;
                 overflow-x: hidden;
                 /*min-height: 24px;*/
             }
 
-            .text {
+            .text.map-menu {
                 margin: 0px 5px 2px 5px;
                 white-space: normal;
                 font-size: 11px;
                 font-weight: lighter;
             }
-            .text:empty {
+            .text.map-menu:empty {
                 display: none;
             }
 
             /*#buttonDigDag {
                 margin-left: 10px;
             }*/
-            iron-icon[icon="close"] {
+            iron-icon[icon="close"].map-menu {
                 width: 16px;
                 height: 16px;
                 padding: 4px;
