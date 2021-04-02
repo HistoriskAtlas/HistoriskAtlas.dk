@@ -6,7 +6,7 @@
             min-width: 1px;
             line-height: 16px;
         }
-        :host > span {
+        :host > span.horizontal-tag-list {
             font-size: 9px; 
             font-weight: bold; 
             margin-right: 10px;
@@ -15,22 +15,22 @@
             margin-left: 10px;
             pointer-events: none;
         }
-        .tag {
-            background-color: #f2f2f2; 
-            padding: 2px 8px 2px 8px; 
+        .tagconfirm-input.horizontal-tag-list {
+            background-color: #f2f2f2;
+            padding: 2px 8px 2px 8px;
             font-size: 10px;
             /*margin: 1px 2px 1px 2px;*/
             margin-right: 2px;
-            margin-bottom: 2px; 
+            margin-bottom: 2px;
             display: flex;
             flex-grow: 1;
             text-align: center;
         }
-        .tag > span {
+        .tag.horizontal-tag-list > span {
             flex-grow: 1;
             pointer-events: none;
         }
-        .tag[primary] > span {
+        .tag[primary].horizontal-tag-list > span {
             font-weight: bold;
         }
         paper-icon-button.horizontal-tag-list {

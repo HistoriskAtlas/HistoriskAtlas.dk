@@ -116,3 +116,8 @@ img {
 paper-button.active {
     color: #fece00;
 }
+
+paper-input.confirm-input[disabled] > paper-input-container, paper-textarea.confirm-input[disabled] > paper-input-container {
+    opacity: 1 !important;
+    pointer-events: all !important;
+}

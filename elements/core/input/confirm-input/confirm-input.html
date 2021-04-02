@@ -5,12 +5,12 @@
                 outline: none !important;
             }
 
-            paper-input {
+            paper-input.confirm-input {
                 --paper-input-container-input: {
                     font-size: 13px;
                 }
             }
-            paper-textarea {
+            paper-textarea.confirm-input {
                 flex-grow: 1;
                 --paper-input-container-input: {
                     font-size: 13px;
@@ -18,11 +18,11 @@
                     margin-top: 4px !important
                 }
             }
-            paper-input, paper-textarea {
+            paper-input.confirm-input, paper-textarea.confirm-input {
                 outline: none !important;
                 --paper-input-container-underline: {
                     visibility: hidden;
-                }
+                };
                 --paper-input-container-label: {
                     line-height: inherit !important;
                     color: #005b9c;
@@ -30,13 +30,13 @@
                 }
             }
 
-            paper-input[disabled] {
+            paper-input[disabled].confirm-input {
                 --paper-input-container-input: {
                     font-size: 13px;
                     cursor: text;
                 }
             }
-            paper-textarea[disabled] {
+            paper-textarea[disabled].confirm-input {
                 --paper-input-container-input: {
                     font-size: 13px;
                     cursor: text;
@@ -44,18 +44,18 @@
                     margin-top: 4px !important
                 }
             }
-            paper-input[disabled], paper-textarea[disabled] {
+            paper-input[disabled].confirm-input, paper-textarea[disabled].confirm-input {
                 pointer-events: all !important;
-                --paper-input-container: {
+/*                --paper-input-container: {     moved to app.css
                     opacity: 1 !important;
                     pointer-events: all !important;
-                }
-                --paper-input-container-underline-focus: {
+                };
+*/              --paper-input-container-underline-focus: {
                     visibility:hidden !important;
                 }
             }
 
-            paper-icon-button {
+            paper-icon-button.confirm-input {
                 width: 18px;
                 height: 18px;
                 padding: 0px;

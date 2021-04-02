@@ -31,8 +31,7 @@
     height: 64px !important;
 }
 .theme-digterruter paper-toolbar.medium-tall.main-app #bottomBar {
-    opacity: 0;
-    pointer-events: none;
+    display: none;
 }
 
 .theme-digterruter main-menu.show-menu-themes {
