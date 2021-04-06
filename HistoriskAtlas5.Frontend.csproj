@@ -108,7 +108,7 @@
     <Content Include="elements\core\lists\geo-list\geo-list.html" />
     <Content Include="elements\core\panels\panel-theme\panel-theme.html" />
     <Content Include="elements\core\content-viewer\content-viewer.html" />
-    <Content Include="elements\core\windows\abouts\window-member-signup\window-member-signup.html" />
+    <Content Include="elements\thrash\window-member-signup\window-member-signup.html" />
     <Content Include="elements\core\windows\window-institution\window-institution.html" />
     <Content Include="elements\core\by-line\by-line.html" />
     <Content Include="elements\writer\windows\window-editorial\panel-user-editorial\panel-user-editorial.html" />
@@ -151,10 +151,10 @@
     <Content Include="elements\core\input\rich-text\rich-text.html" />
     <Content Include="elements\core\panels\panel-tag\panel-tag.html" />
     <Content Include="elements\core\windows\abouts\window-contact\window-contact.html" />
-    <Content Include="elements\core\windows\abouts\window-monetary-support\window-monetary-support.html" />
-    <Content Include="elements\core\windows\abouts\window-become-a-member\window-become-a-member.html" />
-    <Content Include="elements\core\windows\abouts\window-committee\window-committee.html" />
-    <Content Include="elements\core\windows\abouts\window-the-association\window-the-association.html" />
+    <Content Include="elements\thrash\window-monetary-support\window-monetary-support.html" />
+    <Content Include="elements\thrash\window-become-a-member\window-become-a-member.html" />
+    <Content Include="elements\thrash\window-committee\window-committee.html" />
+    <Content Include="elements\thrash\window-the-association\window-the-association.html" />
     <Content Include="elements\admin\windows\window-admin\panel-institution-admin\panel-institution-admin.html" />
     <Content Include="elements\admin\windows\window-admin\panel-user-admin\panel-user-admin.html" />
     <Content Include="elements\core\windows\window-geo\window-geo-add-content\window-geo-add-content.html" />
@@ -167,7 +167,7 @@
     <Content Include="elements\writer\windows\window-geo-editorial\window-geo-editorial.html" />
     <Content Include="elements\writer\windows\window-user-news\window-user-news.html" />
     <Content Include="elements\core\windows\window-terms-of-use\window-terms-of-use.html" />
-    <Content Include="elements\core\windows\abouts\window-about\window-about.html" />
+    <Content Include="elements\thrash\window-about\window-about.html" />
     <Content Include="elements\core\windows\window-privacy\window-privacy.html" />
     <Content Include="elements\core\windows\window-geo\window-geo-settings\window-geo-settings.html" />
     <Content Include="elements\core\windows\window-geo\window-geo-biblio\window-geo-biblio.html" />
@@ -238,6 +238,7 @@
     <Content Include="images\markers\tag762.png" />
     <Content Include="images\markers\tag757.png" />
     <Content Include="images\markers\tag766.png" />
+    <Content Include="images\new-tab-icon.png" />
     <Content Include="images\pdfHeader.jpg" />
     <Content Include="images\routes\route457.png" />
     <Content Include="images\theme\1001back.jpg" />
@@ -585,7 +586,7 @@
     <TypeScriptCompile Include="elements\core\panels\panel-tag\panel-tag.ts" />
     <TypeScriptCompile Include="elements\core\panels\panel-map\panel-map.ts" />
     <TypeScriptCompile Include="elements\core\map\map-controls\map-controls.ts" />
-    <TypeScriptCompile Include="elements\core\windows\abouts\window-member-signup\window-member-signup.ts" />
+    <TypeScriptCompile Include="elements\thrash\window-member-signup\window-member-signup.ts" />
     <TypeScriptCompile Include="elements\core\windows\window-institution\window-institution.ts" />
     <TypeScriptCompile Include="elements\core\by-line\by-line.ts" />
     <TypeScriptCompile Include="elements\writer\windows\window-editorial\panel-user-editorial\panel-user-editorial.ts" />
@@ -608,10 +609,10 @@
     <TypeScriptCompile Include="elements\core\time-line\time-line.ts" />
     <TypeScriptCompile Include="elements\core\input\rich-text\rich-text.ts" />
     <TypeScriptCompile Include="elements\core\windows\abouts\window-contact\window-contact.ts" />
-    <TypeScriptCompile Include="elements\core\windows\abouts\window-monetary-support\window-monetary-support.ts" />
-    <TypeScriptCompile Include="elements\core\windows\abouts\window-become-a-member\window-become-a-member.ts" />
-    <TypeScriptCompile Include="elements\core\windows\abouts\window-committee\window-committee.ts" />
-    <TypeScriptCompile Include="elements\core\windows\abouts\window-the-association\window-the-association.ts" />
+    <TypeScriptCompile Include="elements\thrash\window-monetary-support\window-monetary-support.ts" />
+    <TypeScriptCompile Include="elements\thrash\window-become-a-member\window-become-a-member.ts" />
+    <TypeScriptCompile Include="elements\thrash\window-committee\window-committee.ts" />
+    <TypeScriptCompile Include="elements\thrash\window-the-association\window-the-association.ts" />
     <TypeScriptCompile Include="elements\admin\windows\window-admin\panel-institution-admin\panel-institution-admin.ts" />
     <TypeScriptCompile Include="elements\admin\windows\window-admin\panel-user-admin\panel-user-admin.ts" />
     <TypeScriptCompile Include="elements\core\windows\window-geo\window-geo-add-content\window-geo-add-content.ts" />
@@ -624,7 +625,7 @@
     <TypeScriptCompile Include="elements\writer\windows\window-geo-editorial\window-geo-editorial.ts" />
     <TypeScriptCompile Include="elements\writer\windows\window-user-news\window-user-news.ts" />
     <TypeScriptCompile Include="elements\core\windows\window-terms-of-use\window-terms-of-use.ts" />
-    <TypeScriptCompile Include="elements\core\windows\abouts\window-about\window-about.ts" />
+    <TypeScriptCompile Include="elements\thrash\window-about\window-about.ts" />
     <TypeScriptCompile Include="elements\core\windows\window-privacy\window-privacy.ts" />
     <TypeScriptCompile Include="elements\core\windows\window-geo\window-geo-settings\window-geo-settings.ts" />
     <TypeScriptCompile Include="elements\core\windows\window-geo\window-geo-biblio\window-geo-biblio.ts" />

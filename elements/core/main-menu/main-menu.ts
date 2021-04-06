@@ -150,23 +150,26 @@ class MainMenu extends polymer.Base implements polymer.Element {
         App.haThemes.selectTheme((<PanelTheme>this.$.panelTheme).getThemeByName('Modstandskamp'));
     }
 
-    aboutTap() {
-        Common.dom.append(WindowAbout.create());
-    }
+    //aboutTap() {
+    //    Common.dom.append(WindowAbout.create());
+    //}
     theAssociationTap() {
-        Common.dom.append(WindowTheAssociation.create());
+        //Common.dom.append(WindowTheAssociation.create());
+        window.open('http://blog.historiskatlas.dk/?page_id=55', '_blank')
     }
-    committeeTap() {
-        Common.dom.append(WindowCommittee.create());
-    }
+    //committeeTap() {
+    //    Common.dom.append(WindowCommittee.create());
+    //}
     becomeAMemberTap() {
-        Common.dom.append(WindowBecomeAMember.create());
+        window.open('https://docs.google.com/forms/d/e/1FAIpQLSccVmHV4lPkaO8f2qsphqAA66zLNEW55WB77n__eXHHmIVmSw/viewform?usp=sf_link', '_blank')
+        //Common.dom.append(WindowBecomeAMember.create());
     }
     guidelinesTap() {
         window.open('../../../pdf/Retningslinjer for formidling på borgerlaget på HistoriskAtlas.dk.pdf', '_blank')
     }
     monetarySupportTap() {
-        Common.dom.append(WindowMonetarySupport.create());
+        //Common.dom.append(WindowMonetarySupport.create());
+        window.open('http://blog.historiskatlas.dk/?page_id=220', '_blank')
     }
     privacyTap() {
         Common.dom.append(WindowPrivacy.create());
@@ -174,10 +177,6 @@ class MainMenu extends polymer.Base implements polymer.Element {
     termsOfUseTap() {
         Common.dom.append(WindowTermsOfUse.create());
     }
-
-    //blogTap() {
-    //    window.open('http://blog.historiskatlas.dk/', '_blank')
-    //}
     facebookTap() {
         window.open('http://www.facebook.com/historiskatlas', '_blank')
     }

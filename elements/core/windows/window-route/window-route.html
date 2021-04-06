@@ -85,8 +85,8 @@
             </div>
 
             <div id="content" class="content">
-                <content-viewer id="introContentViewer" content="{{route.content}}" editing="[[editing]]" truncate-text-at="300"></content-viewer>
-                
+                <content-viewer id="introContentViewer" content="{{route.content}}" editing="[[editing]]"></content-viewer>  <!--truncate-text-at="300"  TODO: maybe more long text to secondary tab.... -->
+
                 <div id="byAndInfoLine">
                     <by-line user="[[route.user]]" institutions="[[institutions]]"></by-line>
                     <div id="infoLine" class="info-line">
@@ -122,11 +122,11 @@
                         <paper-fab icon="add" mini class="HAPrimColor add-button"></paper-fab>
                         <paper-fab icon="close" mini class="HAPrimColor remove-button"></paper-fab>
                         <!--<paper-menu-button id="paperMenuButtonGeoMenu" horizontal-align="right">
-                            <paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>
-                            <div class="dropdown-content">
-                                <menu-item>Slet</menu-item>
-                            </div>
-                        </paper-menu-button>-->
+                <paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>
+                <div class="dropdown-content">
+                    <menu-item>Slet</menu-item>
+                </div>
+            </paper-menu-button>-->
                     </list-auto-suggest>
                 </template>
                 <template is="dom-if" if="[[!editing]]">

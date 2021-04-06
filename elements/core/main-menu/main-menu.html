@@ -84,14 +84,14 @@
     </template>-->
             <paper-item toggles active="{{showAboutMenu}}">Om HistoriskAtlas.dk</paper-item>
             <iron-collapse class="sub-menu" opened="[[showAboutMenu]]">
-                <paper-item on-tap="theAssociationTap">Foreningen HistoriskAtlas.dk</paper-item>
-                <paper-item on-tap="committeeTap">Bestyrelse og redaktionsudvalg</paper-item>
-                <paper-item on-tap="becomeAMemberTap">Bliv medlem af foreningen</paper-item>
+                <paper-item on-tap="theAssociationTap" class="opens-in-new-tab">Foreningen HistoriskAtlas.dk</paper-item>
+                <!--<paper-item on-tap="committeeTap">Bestyrelse og redaktionsudvalg</paper-item>-->
+                <paper-item on-tap="becomeAMemberTap" class="opens-in-new-tab">Bliv medlem af foreningen</paper-item>
+                <paper-item on-tap="monetarySupportTap" class="opens-in-new-tab">Økonomisk støtte</paper-item>
                 <paper-item on-tap="guidelinesTap">Retningslinjer for formidling</paper-item>
                 <paper-item on-tap="privacyTap">Cookie- og privatlivspolitik</paper-item>
                 <paper-item on-tap="termsOfUseTap">Brugsbetingelser / ansvarsfraskrivelse</paper-item>
-                <paper-item on-tap="monetarySupportTap">Økonomisk støtte</paper-item>
-                <paper-item on-tap="facebookTap">HistoriskAtlas.dk på Facebook</paper-item>
+                <paper-item on-tap="facebookTap" class="opens-in-new-tab">HistoriskAtlas.dk på Facebook</paper-item>
                 <paper-item on-tap="feedbackTap">Send feedback</paper-item>
                 <paper-item on-tap="contactTap">Kontakt</paper-item>
             </iron-collapse>

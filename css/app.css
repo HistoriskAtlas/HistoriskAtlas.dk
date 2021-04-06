@@ -121,3 +121,14 @@ paper-input.confirm-input[disabled] > paper-input-container, paper-textarea.conf
     opacity: 1 !important;
     pointer-events: all !important;
 }
+
+.opens-in-new-tab::after {
+    content: ' ';
+    background-image: url(../images/new-tab-icon.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 8px;
+    width: 12px;
+    height: 14px;
+    opacity: .5;
+}
