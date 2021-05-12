@@ -33,7 +33,7 @@
 
     public static getHAAPI(service: string, params: { [key: string]: any }, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null) {
         params = params || {};
-        params.db = Common.isDevOrBeta ? 'hadb5beta' : 'hadb5';
+        params.db = Common.isDevOrBeta ? 'hadb6beta' : 'hadb6';
         this.pushServiceCall(() => this.serviceCallHAAPI(`https://haapi-apim.azure-api.net/${service}${this.toURLParams(params)}`, success, error, message), message);
     }
 
@@ -89,9 +89,9 @@
 
         $.ajax({
             type: 'POST',
-            url: url.indexOf('http') == 0 ? url : (url.indexOf('hadb5') == -1 ? Common.api + url : Common.baseApi + '/' + url),
+            url: url.indexOf('http') == 0 ? url : (url.indexOf('hadb6') == -1 ? Common.api + url : Common.baseApi + '/' + url), //url.indexOf('hadb5')
             data: data,
-            timeout: 10000,
+            timeout: 30000, //was 10000 on hadb5
             async: async,
             success: (data) => ((data, succesMessage) => {
                 if (data.status != 'Success' && error)

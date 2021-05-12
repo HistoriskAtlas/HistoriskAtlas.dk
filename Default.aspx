@@ -160,7 +160,7 @@
         <h1><%=passedGeo.title%></h1>
         <% if (passedGeo.geo_images != null) { %>
             <% foreach (HistoriskAtlas5.Frontend.HAGeoImage image in passedGeo.geo_images) { %>
-                <img src="https://secureapi.historiskatlas.dk/api/hadb5.image/<%=image.image.id%>" style="width:50%"/><br>
+                <img src="https://secureapi.historiskatlas.dk/api/hadb6.image/<%=image.image.id%>" style="width:50%"/><br>
                 <i><%=image.image.text%></i><br><br>
             <% } %>
         <% } %>

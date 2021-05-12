@@ -61,7 +61,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
                 if (result.data.user.isvalid) {
                     App.haUsers.login(result.data.user);
                     if (result.data.user.role > 3)
-                        Services.get('hadb5stats.login', {});
+                        Services.get('hadb6stats.login', {}); //hadb5stats.login
                 }
             });
     }

@@ -5,6 +5,8 @@
 
     constructor(data: any, content: HaContent) {
         super(data, content);
+        if (!this._id)
+            this._id = data.textid;
         this._text = data.type == 0 ? Common.rich2html(data.text1) : data.text1;
         this._name = data.name;
         this._type = data.type;

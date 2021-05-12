@@ -9,7 +9,7 @@
     
 
     constructor(data: any) {
-        this._id = data.id;
+        this._id = data.id || data.institutionid;
         this._url = data.url;
         this._email = data.email;
         this._type = data.type;

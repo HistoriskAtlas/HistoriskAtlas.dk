@@ -78,7 +78,7 @@ class PanelLogin extends polymer.Base implements polymer.Element {
             App.haUsers.login(result.data.user);
 
             if (result.data.user.role > 3)
-                Services.get('hadb5stats.login', { provider: "ha", uname: this.$.username.value, password: $.md5(this.$.password.value) });
+                Services.get('hadb6stats.login', { provider: "ha", uname: this.$.username.value, password: $.md5(this.$.password.value) }); //hadb5stats
 
             return;
         }

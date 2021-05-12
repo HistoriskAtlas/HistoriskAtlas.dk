@@ -26,7 +26,7 @@
     //private profiletext: string;
 
     constructor(data: any) {
-        this._id = data.id;
+        this._id = data.id || data.userid;
         this._login = data.login;
         this._firstname = data.firstname;
         this._lastname = data.lastname;

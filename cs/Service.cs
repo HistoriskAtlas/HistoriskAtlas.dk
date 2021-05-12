@@ -13,7 +13,7 @@ namespace HistoriskAtlas5.Frontend
 
         public O Get(string url)
         {
-            var api = "http://" + (isDevOrBeta ? "beta." : "") + "api.historiskatlas.dk/hadb5" + (isDevOrBeta ? "beta" : "") + ".";
+            var api = "http://" + (isDevOrBeta ? "beta." : "") + "api.historiskatlas.dk/hadb6" + (isDevOrBeta ? "beta" : "") + "."; //hadb5
 
             using (WebClient wc = new WebClient())
             {
@@ -70,7 +70,7 @@ namespace HistoriskAtlas5.Frontend
                 if (geo_images.Length == 0)
                     return "";
 
-                return "https://secureapi.historiskatlas.dk/api/hadb5.image/" + geo_images[0].image.id + "?action=scale&size={640:10000}&scalemode=inner";
+                return "https://secureapi.historiskatlas.dk/api/hadb6.image/" + geo_images[0].image.id + "?action=scale&size={640:10000}&scalemode=inner"; //hadb5.image
             }
         }
 

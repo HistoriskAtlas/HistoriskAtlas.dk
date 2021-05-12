@@ -4,6 +4,8 @@
 
     constructor(data: any, content: HaContent) {
         super(data, content);
+        if (!this._id)
+            this._id = data.pdfid;
         this._title = data.title;
         this._filename = data.filename;
     }

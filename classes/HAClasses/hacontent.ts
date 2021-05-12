@@ -12,7 +12,7 @@
     public subContents: Array<HaSubContent> = [];
 
     constructor(data: any) {
-        this._id = data.id;
+        this._id = data.id || data.contentid;
         this._headline = data.headline;
         this._geoid = data.geoid;
         this._contenttypeid = data.contenttypeid;
@@ -30,8 +30,8 @@
             for (var pdf of data.pdfs)
                 this.subContents.push(new HaSubContentPDF(pdf, this));
 
-        if (data.externalcontent)
-            for (var external of data.externalcontent)
+        if (data.externalcontents)
+            for (var external of data.externalcontents)
                 this.subContents.push(new HaSubContentExternal(external, this));
     }
 

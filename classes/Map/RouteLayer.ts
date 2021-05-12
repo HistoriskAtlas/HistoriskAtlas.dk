@@ -153,15 +153,28 @@
 
     private static styleFunction(feature: ol.Feature, res: number): Array<ol.style.Style> {
         var collection: HaCollection = (<any>feature).collection;
-        if ((<any>feature).loc)
+
+        var scale = 1; //8 - used for export of screenshots in high res for digterruter
+
+        if ((<any>feature).loc) {
+            var number = collection.viaPointOrdering((<HaCollectionGeo>(<any>feature).collection_geo).geo);
+            //if (collection.id == 516) //digterruter hack... not working....
+            //    switch (number) {
+            //        case 2: number = 5;
+            //        case 5: number = 2;
+            //        case 3: number = 6;
+            //        case 6: number = 3;
+            //        case 8: number = 9;
+            //        case 9: number = 8;
+            //    }
             return [
                 new ol.style.Style({
                     image: new ol.style.Icon({
-                        src: HaTags.viaPointMarker(collection.viaPointOrdering((<HaCollectionGeo>(<any>feature).collection_geo).geo))
+                        src: HaTags.viaPointMarker(number)
                     })
                 })
             ]
-        else {
+        } else {
             //var color = collection == App.haCollections.collection ? [153, 0, 0, collection.online ? 1 : 0.5] : [0, 93, 154, collection.online ? 1 : 0.5];
             //var color = [36, 82, 58, collection.online ? 1 : 0.5]; //TODO: Theme depend
             var color = Common.getStyleVar('--map-route-line-color')
@@ -185,7 +198,7 @@
                     new ol.style.Style({
                         stroke: new ol.style.Stroke({
                             color: color,
-                            width: size,
+                            width: size * scale,
                             //lineDash: collection.isWalk ? [0, 15] : null
                         })
                     })

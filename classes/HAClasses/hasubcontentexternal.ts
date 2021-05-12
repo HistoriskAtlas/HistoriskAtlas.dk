@@ -5,6 +5,8 @@
 
     constructor(data: any, content: HaContent) {
         super(data, content);
+        if (!this._id)
+            this._id = data.externalcontentid;
         this._text = data.text;
         this._link = data.link;
     }

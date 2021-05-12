@@ -39,7 +39,7 @@
 
     public static get api(): string {
         if (!this._api)
-            this._api = Common.baseApi + '/hadb5' + (this.isDevOrBeta ? 'beta' : '') + '.';
+            this._api = Common.baseApi + '/hadb6' + (this.isDevOrBeta ? 'beta' : '') + '.'; //'/hadb5'
 
         return this._api;
     }

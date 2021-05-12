@@ -12,28 +12,32 @@ class HaContents extends polymer.Base implements polymer.Element {
     @property({ type: Object })
     public params: Object;
 
-    ready() {
-        this.$.ajax.url = Common.api + 'content.json';
-    }
+    //ready() {
+    //    this.$.ajax.url = Common.api + 'content.json';
+    //}
 
     @observe("geo")
     geoChanged(newVal: number, oldVal: number) {
         if (!this.geo.id)
             return;
-        this.set('params', {
-            'geoid': this.geo.id, 
-            'count': 'all',//TODO: exclude content types based on if editing........
-            'schema': ContentViewer.contentSchema
-        });
-        this.$.ajax.generateRequest();
+        //this.set('params', {
+        //    'geoid': this.geo.id, 
+        //    'count': 'all',//TODO: exclude content types based on if editing........
+        //    'schema': ContentViewer.contentSchema
+        //});
+        //this.$.ajax.generateRequest();
+        Services.getHAAPI('contents', {
+            geoid: this.geo.id
+        }, (result) => this.handleResponse(result.data))
     }
 
-    public handleResponse() {
+    public handleResponse(datas: Array<any>) {
         var newContents: Array<HaContent> = [];
-        var newContent: HaContent;
-        this.$.ajax.lastResponse.forEach(data => {
+        //var newContent: HaContent;
+        //this.$.ajax.lastResponse.forEach(data => {
+        for (var data of datas)
             newContents.push(new HaContent(data));
-        });
+        //});
         this.contents = newContents;
     }
 

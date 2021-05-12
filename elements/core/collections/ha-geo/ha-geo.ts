@@ -15,9 +15,11 @@ class HaGeoService extends Tags implements polymer.Element {
     //@property({ type: Number, notify: true })
     //public noMissingTags: number;
 
-    ready() {
-        this.$.ajax.url = Common.api + 'geo.json';
-    }
+    //ready() {
+    //    this.$.ajax.url = Common.api + 'geo.json';
+    //}
+
+    //geoid,title,intro,primarytagstatic,freetags,yearstart,yearend,latitude,longitude,online,views,deleted,{user:[id,firstname,lastname,about,{user_institutions:[{institution:[id,tagid]}]}]},{geo_image:[empty,ordering,{image:[imageid,text,year,yearisapprox,photographer,licensee,userid,{tag_images:[{collapse:id}]}]}]},{tag_geos:[{tag:[tagid,plurname,singname,category,yearstart,yearend,{parents:[empty,{collapse:{parent:id}}]}]}]}
 
     @observe("geo")
     geoChanged(newVal: number, oldVal: number) {
@@ -25,17 +27,25 @@ class HaGeoService extends Tags implements polymer.Element {
         if (!this.geo.id)
             return;
         this.ignoreChanges = true;
-        var schema = 'geoid,title,intro,primarytagstatic,freetags,yearstart,yearend,latitude,longitude,online,views,deleted,{user:[id,firstname,lastname,about,{user_institutions:[{institution:[id,tagid]}]}]},{geo_image:[empty,ordering,{image:[imageid,text,year,yearisapprox,photographer,licensee,userid,{tag_images:[' + (typeof App == 'undefined' ? Common.apiSchemaTags : '{collapse:id}') + ']}]}]}';
-        if (this.geo.tags.length == 0) //&& typeof App == 'undefined'
-            schema += ',{tag_geos:[' + Common.apiSchemaTags + ']}'; //TODO: only needed to get ids when in app mode.............................
-            //schema += ',{tag_geos:[empty,{collapse:tagid}]}'
-        this.set('params', {
-            'v': 1,
-            'sid': (<any>document).sid,
-            'geoid': this.geo.id,
-            'schema': '{geo:[' + schema + ']}'
-        });
-        this.$.ajax.generateRequest();
+        //var schema = 'geoid,title,intro,primarytagstatic,freetags,yearstart,yearend,latitude,longitude,online,views,deleted,{user:[id,firstname,lastname,about,{user_institutions:[{institution:[id,tagid]}]}]},{geo_image:[empty,ordering,{image:[imageid,text,year,yearisapprox,photographer,licensee,userid,{tag_images:[' + (typeof App == 'undefined' ? Common.apiSchemaTags : '{collapse:id}') + ']}]}]}';
+        //if (this.geo.tags.length == 0) //&& typeof App == 'undefined'
+        //    schema += ',{tag_geos:[' + Common.apiSchemaTags + ']}'; //TODO: only needed to get ids when in app mode.............................
+        //    //schema += ',{tag_geos:[empty,{collapse:tagid}]}'
+        //this.set('params', {
+        //    'v': 1,
+        //    'sid': (<any>document).sid,
+        //    'geoid': this.geo.id,
+        //    'schema': '{geo:[' + schema + ']}'
+        //});
+        //this.$.ajax.generateRequest();
+
+        var params: any = {
+            id: this.geo.id,
+            schema: Common.standalone ? 'standalonegeowindow' : 'geowindow'
+        }
+        //if (this.tagIdsInStorage.length > 0)
+        //    params.after = LocalStorage.timestampDateTime('tag-ids');
+        Services.getHAAPI('geo', params, (result) => this.handleResponse(result.data))
     }
     
     @observe("geo.title")
@@ -139,53 +149,36 @@ class HaGeoService extends Tags implements polymer.Element {
         Services.update('geo', { primarytagstatic: this.geo.primaryTagStatic, geoid: this.geo.id });
     }
 
-    public handleResponse() {
+    public handleResponse(data) {
         this.ignoreChanges = true;
-        var data = this.$.ajax.lastResponse.data[0];
+        //var data = this.$.ajax.lastResponse.data[0];
         
         if (typeof App == 'undefined')
             this.set('geo.shown', true);
 
-        //TODO: check if already sat?
         this.set('geo.title', data.title);
         this.set('geo.intro', data.intro);
         this.set('geo.user', new HAUser(data.user));
         this.set('geo.primaryTagStatic', data.primarytagstatic);
 
-        if (data.tag_geos)
+        if (data.tag_geos) //standalone
             for (var tag_geo of data.tag_geos)
                 this.addTag(typeof App == 'undefined' ? new HaTag(tag_geo.tag) : App.haTags.byId[tag_geo.tag.tagid], true, false);
 
-                //this.addTagById(tagID, true, false);
+        if (data.tagids)
+            for (var tagid of data.tagids)
+                this.addTagById(tagid, true, false);
+                //this.addTag(App.haTags.byId[tag_geo.tag.tagid], true, false);
 
         var images: Array<HAImage> = [];
-        for (var i = 0; i < data.geo_image.length; i++)
-            images.push(new HAImage(data.geo_image[i].image, data.geo_image[i].ordering)); //TODO: ordering?
+        for (var i = 0; i < data.geo_images.length; i++) //geo_image
+            images.push(new HAImage(data.geo_images[i].image, data.geo_images[i].ordering));
 
         images.sort((a, b) => a.ordering - b.ordering);
-        this.set('geo.images', images); //data.geo_images.length == 0 ? [113798] : [data.geo_images[0].id]
+        this.set('geo.images', images);
 
-        this.ignoreChanges = false; //!this.editing;
+        this.ignoreChanges = false;
     }
-
-    //TODO: move to common element ("Tags"?)... inherit to ha-geo and (new) ha-image
-
-    //private addTagFromAPI(tagID: number) {
-    //    Services.get('tag', {
-    //        schema: Common.apiSchemaTags,
-    //        id: tagID
-    //    }, (result) => {
-    //        this.addTag(new HaTag(result.data[0]));
-    //    });
-    //}
-
-    //public addTag(tag: HaTag) {
-    //        this.addingTag = false;
-
-    //    if (this.geo.tags2.indexOf(tag) == -1)
-    //        this.push('geo.tags2', tag);
-    //}
-
 }
 
 HaGeoService.register();

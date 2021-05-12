@@ -283,6 +283,9 @@ class HaTags extends polymer.Base implements polymer.Element {
     }
 
     public static viaPointMarker(number: number): string {
+
+        var scale = 1; //8 - used for export of screenshots in high res for digterruter
+
         var color = Common.getStyleVar('--map-route-via-point-color')
         var type = Common.getStyleVar('--map-route-via-point-type')
         var cacheIndex = `${color}-${number}-${type}`
@@ -292,11 +295,11 @@ class HaTags extends polymer.Base implements polymer.Element {
             return marker;
 
         var canvas = document.createElement('canvas');
-        canvas.width = 32; // 36;
-        canvas.height = 32; // 36;
+        canvas.width = 32 * scale; // 36;
+        canvas.height = 32 * scale; // 36;
         var context = canvas.getContext("2d");
         context.fillStyle = color//'#FFFFFF';
-        context.font = 'bold 14px Roboto'
+        context.font = `bold ${14 * scale}px Roboto`
         //context.strokeStyle = '#990000';
         //context.lineWidth = 4;
 
@@ -316,7 +319,9 @@ class HaTags extends polymer.Base implements polymer.Element {
                 }
             } else
                 text = (number + 1).toString();
-            context.fillText(text, (canvas.width - context.measureText(text).width) / 2.0, 21) //23
+
+            context.textAlign = "center";
+            context.fillText(text, canvas.width / 2.0, canvas.height / 2 + 4 * scale + 1) //21
         }
         var marker = canvas.toDataURL()
         this._viaPointMarkers[cacheIndex] = marker;

@@ -76,7 +76,7 @@ class PanelAPIAdmin extends polymer.Base implements polymer.Element {
     //}
 
     public fetchKeys() {
-        Services.get('hadb5stats.AuthKey', {
+        Services.get('hadb6stats.AuthKey', { //hadb5stats
             'schema': '{authkey:[key,urorua,description,created]}',
             'count': 'all'
         }, (result) => {
@@ -107,7 +107,7 @@ class PanelAPIAdmin extends polymer.Base implements polymer.Element {
             return;
 
         this.set('logs', []);
-        Services.get('hadb5stats.LogTile', {
+        Services.get('hadb6stats.LogTile', { //hadb5stats
             'schema': '{logtile:{fields:[urorua,count],filters:{date:{min:' + this.years[this.yearIndex] + '-' + (this.monthIndex + 1) + '-1,max:' + this.years[this.yearIndex] + '-' + (this.monthIndex + 1) + '-' + new Date(this.years[this.yearIndex], this.monthIndex + 1, 0).getDate() + '}}}}', //todo: not 30.......
             'authkey': this.key.key ? this.key.key : 'null',
             'count': 'all'

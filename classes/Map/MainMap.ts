@@ -17,7 +17,7 @@
     private longtitude: number;
     private latitude: number;
     private zoom: number;
-    private static maxZoom: number = 19;
+    private static maxZoom: number = 19; //19
     private static minZoom: number = 2;
     private static resConst: number = (2 * Math.PI * 6378137.0) / 256.0;
     public runAnimation: boolean;

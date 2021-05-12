@@ -21,12 +21,16 @@
         this._ordering = ordering;
 
         this.tags = [];
-        if (data.tag_images)
+        if (data.tag_images) //v5 naming
             for (var tag_image of data.tag_images)
                 if (typeof tag_image === 'object')
                     this.tags.push(new HaTag(tag_image.tag))
                 else
                     this.tags.push(App.haTags.byId[tag_image])
+
+        if (data.tagids) //v6 naming
+            for (var tagid of data.tagids)
+                this.tags.push(App.haTags.byId[tagid])
     }
 
     get id() {

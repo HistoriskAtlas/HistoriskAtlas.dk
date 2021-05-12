@@ -29,7 +29,7 @@
     public freeTags: string;
 
     constructor(data: any, show: boolean, userLayer: boolean) {
-        this._id = data.id;
+        this._id = data.id || data.geoid;
         //this._lat = data.lat;
         //this._lng = data.lng;
         this._title = data.title;
