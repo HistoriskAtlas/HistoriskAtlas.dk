@@ -50,12 +50,15 @@
 
         if (data.iconcoords) { //TODO: all should have?
             var coords: string[] = (<string>data.iconcoords).split('|');
-            this._previewUrl = HaMap.getTileUrlBase() + this.id + '/' + coords[2] + '/' + coords[0] + '/' + coords[1] + '.jpg'
+            //this._previewUrl = HaMap.getTileUrlBase() + this.id + '/' + coords[2] + '/' + coords[0] + '/' + coords[1] + '.jpg'
+            this._previewUrl = this.tileUrl.replace('{z}', coords[2]).replace('{x}', coords[0]).replace('{y}', coords[1]);
         }
     }
 
     public static getTileUrlFromMapID(id: number) {
         switch (id) {
+            //case 54:
+            //    return `https://haapi-apim.azure-api.net/cache/tile_normal/54/{z}/{x}/{y}.jpg?key=${Common.apiKey}` //test
             //case 42000:
             //    return 'http://otile1.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png';
             case 42001:
@@ -80,10 +83,11 @@
                 return 'https://tiles.arcgis.com/tiles/LLv1s9hErwtXBU3t/arcgis/rest/services/Copenhagen_Trial_Web_Layer/MapServer/WMTS/tile/1.0.0/Copenhagen_Trial_Web_Layer/default/default028mm/{z}/{y}/{x}'
         }
 
-        return HaMap.getTileUrlBase() + id + "/{z}/{x}/{y}.jpg"
+        return `${HaMap.getTileUrlBase()}${id}/{z}/{x}/{y}.jpg?key=${Common.apiKey}`
     }
     private static getTileUrlBase(): string {
-        return location.protocol + "//tile.historiskatlas.dk/tile/" + Common.apiKey + "/";
+        //return location.protocol + "//tile.historiskatlas.dk/tile/" + Common.apiKey + "/";
+        return `https://haapi-apim.azure-api.net/cache/tile_normal/`;
     }
 
     public get source(): ol.source.XYZ {

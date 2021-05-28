@@ -34,6 +34,7 @@
     public static getHAAPI(service: string, params: { [key: string]: any }, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null) {
         params = params || {};
         params.db = Common.isDevOrBeta ? 'hadb6beta' : 'hadb6';
+        params.key = '00e763e5df5f47e3a4a64aea3a18fdaa';
         this.pushServiceCall(() => this.serviceCallHAAPI(`https://haapi-apim.azure-api.net/${service}${this.toURLParams(params)}`, success, error, message), message);
     }
 

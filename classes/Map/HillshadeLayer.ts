@@ -3,7 +3,8 @@
     constructor(mainMap: MainMap) {
         super({
             source: new ol.source.XYZ({
-                url: location.protocol + '//tile.historiskatlas.dk/tile/hillshade/' + Common.apiKey + '/{z}/{x}/{y}.png',
+                //url: location.protocol + '//tile.historiskatlas.dk/tile/hillshade/' + Common.apiKey + '/{z}/{x}/{y}.png',
+                url: `https://haapi-apim.azure-api.net/cache/tile_hillshade/{z}/{x}/{y}.png?key=${Common.apiKey}`,
                 crossOrigin: 'Anonymous'
             })
         });

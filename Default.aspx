@@ -11,6 +11,13 @@
     <meta name="description" content="<%=(passedGeo == null ? "G&aring; p&aring; opdagelse i historiske kort og udforsk din lokale kulturarv." : htmlEncode(passedGeo.intro))%>" />
     <title><%=Title%></title>
 
+
+
+    <%--TODO: api.historiskatlas.dk slows way down when stopping the hadb5 server.... fix...................................................................................--%>
+
+
+
+
 <!--#region appicon -->
     <meta name="application-name" content="Historisk Atlas" />
     <meta property="og:title" content="<%# Title%>" />
