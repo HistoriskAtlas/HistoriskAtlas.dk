@@ -35,7 +35,7 @@
         params = params || {};
         params.db = Common.isDevOrBeta ? 'hadb6beta' : 'hadb6';
         params.key = '00e763e5df5f47e3a4a64aea3a18fdaa';
-        this.pushServiceCall(() => this.serviceCallHAAPI(`https://haapi-apim.azure-api.net/${service}${this.toURLParams(params)}`, success, error, message), message);
+        this.pushServiceCall(() => this.serviceCallHAAPI(`https://haapi.historiskatlas.dk/${service}${this.toURLParams(params)}`, success, error, message), message);
     }
 
     private static pushServiceCall(serviceCall: () => void, message: string = null) {

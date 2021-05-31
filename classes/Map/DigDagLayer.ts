@@ -68,7 +68,7 @@
 
     public static getUrl(type: string, year: number) {
         //return location.protocol + '//tile.historiskatlas.dk/tile/digdag/' + Common.apiKey + '/' + type.replace("/", "_") + '/' + year + '/{z}/{x}/{y}.png';
-        return `https://haapi-apim.azure-api.net/cache/tile_digdag/${type.replace("/", "_")}/${year}/{z}/{x}/{y}.png?key=${Common.apiKey}`;
+        return `https://haapi.historiskatlas.dk/cache/tile_digdag/${type.replace("/", "_")}/${year}/{z}/{x}/{y}.png?key=${Common.apiKey}`;
     }
 
     public show(type: string) {

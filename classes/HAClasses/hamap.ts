@@ -57,8 +57,6 @@
 
     public static getTileUrlFromMapID(id: number) {
         switch (id) {
-            //case 54:
-            //    return `https://haapi-apim.azure-api.net/cache/tile_normal/54/{z}/{x}/{y}.jpg?key=${Common.apiKey}` //test
             //case 42000:
             //    return 'http://otile1.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png';
             case 42001:
@@ -87,7 +85,7 @@
     }
     private static getTileUrlBase(): string {
         //return location.protocol + "//tile.historiskatlas.dk/tile/" + Common.apiKey + "/";
-        return `https://haapi-apim.azure-api.net/cache/tile_normal/`;
+        return `https://haapi.historiskatlas.dk/cache/tile_normal/`;
     }
 
     public get source(): ol.source.XYZ {
