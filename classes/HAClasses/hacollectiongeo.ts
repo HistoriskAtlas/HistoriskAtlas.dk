@@ -33,7 +33,7 @@
         }
 
         if (!this._geo) {
-            this._geo = new HaGeo({ id: data.geoid ? data.geoid : 0, lng: data.longitude, lat: data.latitude, title: '' }, false, false)
+            this._geo = new HaGeo({ geoid: data.geoid ? data.geoid : 0, lng: data.longitude, lat: data.latitude, title: '' }, false, false)
             this._geoIsPlaceholder = true;
         }
     }
