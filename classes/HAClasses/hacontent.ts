@@ -30,8 +30,9 @@
             for (var pdf of data.pdfs)
                 this.subContents.push(new HaSubContentPDF(pdf, this));
 
-        if (data.externalcontents)
-            for (var external of data.externalcontents)
+        var externalcontents = data.externalcontents || data.externalcontent;  // data.externalcontent is v5 specs.....
+        if (externalcontents)
+            for (var external of externalcontents)
                 this.subContents.push(new HaSubContentExternal(external, this));
     }
 

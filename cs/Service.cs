@@ -11,9 +11,11 @@ namespace HistoriskAtlas5.Frontend
     {
         static bool isDevOrBeta = HttpContext.Current.Request.IsLocal || HttpContext.Current.Request.Url.Host.StartsWith("beta");
 
-        public O Get(string url)
+        public O Get(string url, bool? isDev = null)
         {
-            var api = "http://" + (isDevOrBeta ? "beta." : "") + "api.historiskatlas.dk/hadb6" + (isDevOrBeta ? "beta" : "") + "."; //hadb5
+            var useBeta = isDev ?? isDevOrBeta;
+            
+            var api = "http://" + (useBeta ? "beta." : "") + "api.historiskatlas.dk/hadb6" + (useBeta ? "beta" : "") + "."; //hadb5
 
             using (WebClient wc = new WebClient())
             {

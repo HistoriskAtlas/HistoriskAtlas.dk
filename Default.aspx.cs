@@ -113,7 +113,7 @@ namespace HistoriskAtlas5.Frontend
 
 
             string schema = crawler ? "{geo:[id,title,intro,lat,lng,{contents:[{texts:[headline,text1]}]},{geo_images:[ordering,{image:[id,text]}]}]}" : "{geo:[id,title,intro,lat,lng,ugc]}";
-            HAGeos geos = (new Service<HAGeos>()).Get("geo.json?v=1&schema=" + schema + "&geoid=" + geoID + "&online=true");
+            HAGeos geos = (new Service<HAGeos>()).Get("geo.json?v=1&schema=" + schema + "&geoid=" + geoID + "&online=true", dev);
 
             if (geos.data.Length == 0)
                 return null;
@@ -135,7 +135,7 @@ namespace HistoriskAtlas5.Frontend
 
             int collectionID = int.Parse(match.Groups[1].Value);
 
-            HACollections collections = (new Service<HACollections>()).Get("collection.json?v=1&schema=" + HACollections.schema + "&collectionid=" + collectionID + "&online=true");
+            HACollections collections = (new Service<HACollections>()).Get("collection.json?v=1&schema=" + HACollections.schema + "&collectionid=" + collectionID + "&online=true", dev);
 
             if (collections.data.Length == 0)
                 return null;
@@ -151,7 +151,7 @@ namespace HistoriskAtlas5.Frontend
             if (this.passedGeo != null)
                 return null;
 
-            HATags tags = (new Service<HATags>()).Get("tag.json?v=1&schema={tag:[id,plurName]}&plurName=" + deep + "&category=9"); //only subject for now
+            HATags tags = (new Service<HATags>()).Get("tag.json?v=1&schema={tag:[id,plurName]}&plurName=" + deep + "&category=9", dev); //only subject for now
 
             if (tags.data.Length == 0)
                 return null;
