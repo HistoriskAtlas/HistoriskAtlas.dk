@@ -28,7 +28,7 @@ namespace HistoriskAtlas5.Frontend
             var keylessParameters = GetKeylessParameters();
 
             dev = (Request.QueryString["dev"] != null ? (Request.QueryString["dev"] != "false") : !Request.Url.Host.Contains("historiskatlas.dk"));
-            //dev = false; //TODO.......................................... TEMP!
+            dev = false; //TODO.......................................... TEMP!
 
             beta = Request.Url.Host.StartsWith("beta");
             crawler = Regex.IsMatch(Request.UserAgent, @"bot|crawler|facebook", RegexOptions.IgnoreCase);
