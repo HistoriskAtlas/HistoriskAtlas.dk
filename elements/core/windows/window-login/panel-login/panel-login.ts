@@ -73,7 +73,7 @@ class PanelLogin extends polymer.Base implements polymer.Element {
         if (result.data.status.code == 1) //Authorized
         {
             if (this.remember)
-                localStorage.setItem("sessionID", (<any>document).sid);
+                LocalStorage.set("sessionID", (<any>document).sid);
             (<any>this.domHost).$.windowbasic.close();
             App.haUsers.login(result.data.user);
 

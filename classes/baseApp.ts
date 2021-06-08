@@ -106,11 +106,11 @@
     }
 
     ready() {
-        if (localStorage.getItem("sessionID"))
-            (<any>document).sid = localStorage.getItem("sessionID");
+        if (LocalStorage.get("sessionID"))
+            (<any>document).sid = LocalStorage.get("sessionID");
 
         //this.beingIndexed = /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent) || App.isDev;
-        this.cookieConcent = localStorage.getItem("cookieConcent") == 'true';
+        this.cookieConcent = LocalStorage.get("cookieConcent") == 'true';
 
         //App.instance = this;
         //App.dom = $(document.body);
