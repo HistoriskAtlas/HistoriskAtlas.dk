@@ -121,8 +121,16 @@
         if (externals.length == 0)
             return false;
 
-        var win = Common.embed ? window.parent : window;
-        win.open(this.content.externals[0].link, '_blank');
+        //var win = Common.embed ? window.parent : window;
+        if (Common.embed) {
+            var match = /point\/(.*?)\//gm.exec(this.content.externals[0].link); //digterruter
+            if (match && match.length > 0) {
+                window.parent.postMessage({ event: 'pointclick', point: parseInt(match[1]) }, "*");
+                return true;
+            }
+        }
+
+        window.open(this.content.externals[0].link, '_blank');
         return true;
     }
 }

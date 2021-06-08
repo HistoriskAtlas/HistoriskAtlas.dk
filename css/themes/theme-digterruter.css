@@ -22,7 +22,7 @@
     display: none;
 }
 
-.theme-digterruter window-basic a {
+.theme-digterruter window-basic a, .theme-digterruter panel-theme a {
     color: var(--digterruter-red);
     text-decoration: none;
 }
