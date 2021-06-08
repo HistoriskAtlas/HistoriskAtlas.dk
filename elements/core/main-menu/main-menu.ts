@@ -144,10 +144,14 @@ class MainMenu extends polymer.Base implements polymer.Element {
     //    this.set('showMenuThemes', true);
     //    this.set('theme', (<PanelTheme>this.$.panelTheme).getThemeByName('Historier om Danmark'));
     //}
-    tapModstandskamp() {
+    //tapModstandskamp() {
+    //    this.set('showMenuThemes', true);
+    //    //this.set('theme', (<PanelTheme>this.$.panelTheme).getThemeByName('Modstandskamp'));
+    //    App.haThemes.selectTheme((<PanelTheme>this.$.panelTheme).getThemeByName('Modstandskamp'));
+    //}
+    tapDigterruter() {
         this.set('showMenuThemes', true);
-        //this.set('theme', (<PanelTheme>this.$.panelTheme).getThemeByName('Modstandskamp'));
-        App.haThemes.selectTheme((<PanelTheme>this.$.panelTheme).getThemeByName('Modstandskamp'));
+        App.haThemes.selectTheme((<PanelTheme>this.$.panelTheme).getThemeByName('Danske Digterruter'));
     }
 
     //aboutTap() {

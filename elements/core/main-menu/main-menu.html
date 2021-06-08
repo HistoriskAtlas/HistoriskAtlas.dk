@@ -25,11 +25,11 @@
         .prof-menu.main-menu > paper-item {
             color: var(--primary-color);
         }
-        .new-theme.main-menu {
+/*        .new-theme.main-menu {
             text-align: center;
             font-size: 14px;
-        }
-        .modstandskamp-item.main-menu {
+        }*/
+/*        .modstandskamp-item.main-menu {
             background-image: url('../../../images/theme/Modstandskamp_back.jpg');
             background-color: #e9e9e9;
             background-size: cover;
@@ -42,6 +42,21 @@
             line-height: 18px;
             padding-top: 10px;
             margin-top: 10px;
+        }
+*/
+        .digterruter-item.main-menu {
+            background-image: url(http://localhost:51169/images/theme/DanskeDigterruterLogo.png);
+            background-color: #24523a;
+            background-position: center 40px;
+            background-repeat: no-repeat;
+            height: 120px;
+            align-self: stretch;
+            margin: 16px;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 10px;
         }
 
     </style>
@@ -106,9 +121,10 @@
                 </template>
             </iron-collapse>
             <div style="flex-grow:1; display:flex; flex-direction: column; align-items: center;">
-                <div style="flex-grow:1"></div>
-                <div class="new-theme">Nyt tema</div>
-                <paper-item class="modstandskamp-item" on-tap="tapModstandskamp">Nedkastninger og sabotage i Danmark 1940 - 1945</paper-item>
+                <!--<div style="flex-grow:1"></div>-->
+                <!--<div class="new-theme">Nyt tema</div>-->
+                <!--<paper-item class="modstandskamp-item" on-tap="tapModstandskamp">Nedkastninger og sabotage i Danmark 1940 - 1945</paper-item>-->
+                <paper-item class="digterruter-item" on-tap="tapDigterruter">Nyt tema:</paper-item>
                 <div style="flex-grow:1"></div>
             </div>
         </iron-collapse>
