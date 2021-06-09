@@ -250,7 +250,7 @@ class HaCollections extends Tags implements polymer.Element {
             for (var data of result.data)
                 for (var cg of collection.collection_geos)
                     if (cg.geo.id == data.geoid)
-                        this.set('collection.collection_geos.' + this.collection.collection_geos.indexOf(cg) + '.geo.title', data.title);
+                        this.set('collection.collection_geos.' + collection.collection_geos.indexOf(cg) + '.geo.title', data.title);
 
             //TODO: needed?
             //for (var geo of collection.geos)
@@ -261,7 +261,7 @@ class HaCollections extends Tags implements polymer.Element {
             for (var data of result.data)
                 for (var cg of collection.collection_geos)
                     if (cg.contentID == data.id)
-                        this.set('collection.collection_geos.' + this.collection.collection_geos.indexOf(cg) + '.content', new HaContent(data));
+                        this.set('collection.collection_geos.' + collection.collection_geos.indexOf(cg) + '.content', new HaContent(data));
 
             //To ensure that content is included when drawing route:
             this.drawRoute(collection, null, true);

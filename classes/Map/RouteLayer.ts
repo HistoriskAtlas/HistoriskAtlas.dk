@@ -59,6 +59,7 @@
         if (!drawPath) {
             if (flush)
                 this.flush();
+
             return viaPoint;
         }
 
@@ -84,7 +85,7 @@
             return viaPoint;
         }
 
-        this.waitingRouteProxyCalls.push({ collection: collection, loc1: loc1, loc2: loc2, cacheIndex: cacheIndex, callback: callback });
+        this.waitingRouteProxyCalls.push({ collection: collection, loc1: loc1, loc2: loc2, cacheIndex: cacheIndex, callback: callback, index: index });
 
         if (flush)
             this.flush();
@@ -125,7 +126,7 @@
                     geometry: route
                 });
 
-                this.addFeature(feature, i, data[i].distance, call.collection, call.loc1, call.loc2, call.cacheIndex, call.callback);
+                this.addFeature(feature, call.index, data[i].distance, call.collection, call.loc1, call.loc2, call.cacheIndex, call.callback);
                 //(<any>feature).distance = data.distance;
                 //(<any>feature).collection = collection;
                 //(<any>feature).locs = [loc1, loc2];
@@ -145,7 +146,11 @@
         (<any>feature).distance = distance;
         (<any>feature).collection = collection;
         (<any>feature).locs = [loc1, loc2];
-        (<any>feature).point = index == 1 ? new ol.geom.Point(Common.toMapCoord(loc1)) : null;
+        //if (index == 0 && collection.collection_geos[0].calcRoute)
+        //    (<any>feature).point = new ol.geom.Point(Common.toMapCoord(loc2));
+        if (index == 1)
+            (<any>feature).point = new ol.geom.Point(Common.toMapCoord(loc2));
+        //(<any>feature).point = index == 0 ? new ol.geom.Point(Common.toMapCoord(loc2)) : null;
         this.source.addFeature(feature);
         this.cache[cacheIndex] = feature;
         callback(feature, distance);
@@ -332,5 +337,6 @@ class RouteProxyCall {
     public loc1: ol.Coordinate;
     public loc2: ol.Coordinate;
     public cacheIndex: string;
+    public index: number;
     public callback: (feature: ol.Feature, distance: number) => void
 }

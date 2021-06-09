@@ -87,7 +87,8 @@
         return App.isDev();
     }
     public static isDev(): boolean { //static getter inheritance buggy in TS 1.8.31...
-        return this.passed.dev;
+        //return this.passed.dev;
+        return false; //TODO: TEMP!......
     }
 
     public static useClustering(): boolean { //static getter inheritance buggy in TS 1.8.31...
