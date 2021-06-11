@@ -26,6 +26,9 @@
     color: var(--digterruter-red);
     text-decoration: none;
 }
+.theme-digterruter .institution.by-line {
+    color: var(--digterruter-red);
+}
 
 .theme-digterruter paper-toolbar.medium-tall.main-app {
     height: 64px !important;

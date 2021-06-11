@@ -163,15 +163,6 @@
 
         if ((<any>feature).loc) {
             var number = collection.viaPointOrdering((<HaCollectionGeo>(<any>feature).collection_geo).geo);
-            //if (collection.id == 516) //digterruter hack... not working....
-            //    switch (number) {
-            //        case 2: number = 5;
-            //        case 5: number = 2;
-            //        case 3: number = 6;
-            //        case 6: number = 3;
-            //        case 8: number = 9;
-            //        case 9: number = 8;
-            //    }
             return [
                 new ol.style.Style({
                     image: new ol.style.Icon({

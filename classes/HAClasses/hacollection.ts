@@ -179,7 +179,20 @@
         var i = 0;
         for (var cg of this._collection_geos) {
             if (cg.geo == geo) {
-                return cg.showOnMap ? i : -1;
+                if (!cg.showOnMap)
+                    return -1;
+
+                if (this.id == 516) //digterruter hack (Carit Etlar)... 
+                    switch (i + 1) {
+                        case 2: i = 5 - 1; break;
+                        case 5: i = 2 - 1; break;
+                        case 3: i = 6 - 1; break;
+                        case 6: i = 3 - 1; break;
+                        case 8: i = 9 - 1; break;
+                        case 9: i = 8 - 1; break;
+                    }
+
+                return i;
             }
             if (cg.isViaPoint && cg.showOnMap)
                 i++;
