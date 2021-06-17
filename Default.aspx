@@ -154,7 +154,7 @@
     <%--:System.Web.Optimization.Scripts.Render("~/bundles/ha_core") --%>
     <link rel="import" href="elements/ha_core<%=(fullapp ? "" : "_geo_only")%>.aspx"> <!-- Workaround for webcomponents polyfill browsers -->
     
-    <% if (this.passedTheme != null) { %><%=string.Format("<link id=\"theme-{0}\" rel=\"stylesheet\" href=\"css/themes/theme-{0}.css\">", this.passedTheme.id )%><% } %>
+    <% if (this.passedTheme != null) { %><%=string.Format("<link id=\"theme-{0}\" rel=\"stylesheet\" href=\"css/themes/theme-{0}.css\">", this.passedTheme.linkname )%><% } %>
 </head>
 <body<%=(crawler && passedGeo != null ? " style=\"overflow:auto\"" : "")%>>
     <% foreach (HistoriskAtlas5.Frontend.HATag tag in sitemapTags.data) { %>

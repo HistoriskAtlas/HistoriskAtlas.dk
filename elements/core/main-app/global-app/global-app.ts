@@ -41,7 +41,7 @@ class Global extends polymer.Base implements polymer.Element {
     public userJustResetPassword: boolean;
 
     public static defaultTheme: ITheme = {
-        id: 'default',
+        linkname: 'default',
         name: 'default',
         mapzoom: 7,
         maprotation: 0.0,

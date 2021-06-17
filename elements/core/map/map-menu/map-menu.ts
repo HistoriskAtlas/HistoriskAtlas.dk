@@ -162,7 +162,7 @@ class MapMenu extends polymer.Base implements polymer.Element {
     }
 
     classTheme(theme: ITheme): string {
-        return theme.id != 'default' ? '' : 'collapsed';
+        return theme.linkname != 'default' ? '' : 'collapsed';
     }
 
     classTags(category: number): string {

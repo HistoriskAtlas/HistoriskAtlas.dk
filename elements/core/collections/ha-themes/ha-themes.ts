@@ -33,13 +33,13 @@ class HaThemes extends polymer.Base implements polymer.Element {
 
         var params: any = {}
         if (!Common.isDevOrBeta)
-            params.linknames = `1001,hod,modstandskamp,digterruter,${App.passed.theme.id}`
+            params.linknames = `1001,hod,modstandskamp,digterruter,${App.passed.theme.linkname}`
 
         Services.getHAAPI('themes', params, (result) => {
             //this.showThemeMenu = false; TODO...................................................................
             var themes: Array<ITheme> = [];
             for (var name of result.data)
-                themes.push(name == this.theme.name && this.theme.id != 'default' ? this.theme : <ITheme>{ name: name });
+                themes.push(name == this.theme.name && this.theme.linkname != 'default' ? this.theme : <ITheme>{ name: name });
 
             this.themes = themes;
         })
@@ -68,7 +68,7 @@ class HaThemes extends polymer.Base implements polymer.Element {
         if (this.theme && this.theme.name == theme.name)
             return;
 
-        if (theme.id) {
+        if (theme.linkname) {
             this.theme = theme;
             return;
         }

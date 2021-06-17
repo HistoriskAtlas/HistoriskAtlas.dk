@@ -150,7 +150,7 @@
             Common.dom.append(WindowGeo.create(geo));
         }
 
-        if (App.passed.theme.id != 'default' && !Common.embed) {
+        if (App.passed.theme.linkname != 'default' && !Common.embed) {
             this.drawerOpen = true;
             App.mainMenu.showMainMenu = false;
             App.mainMenu.showMenuThemes = true;
@@ -227,7 +227,7 @@
             if (className.indexOf('theme') > -1)
                 root.classList.remove(className);
         }
-        var id = `theme-${this.theme.id}`;
+        var id = `theme-${this.theme.linkname}`;
         Common.loadCSS(id, `css/themes/${id}.css`);
         root.classList.add(id);
     }

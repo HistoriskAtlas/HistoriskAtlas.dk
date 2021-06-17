@@ -25,6 +25,25 @@ namespace HistoriskAtlas5.Frontend
                 return geosJsonObject;
             }
         }
+
+        public O GetHAAPI(string function, bool? isDev = null)
+        {
+            var useBeta = isDev ?? isDevOrBeta;
+            var url = $"https://haapi.historiskatlas.dk/{function}?db={(useBeta ? "hadb6beta" : "hadb6")}&key=00e763e5df5f47e3a4a64aea3a18fdaa";
+
+            using (WebClient wc = new WebClient())
+            {
+                wc.Encoding = Encoding.UTF8;
+                string json = wc.DownloadString(url);
+                HAAPIResult<O> result = JsonConvert.DeserializeObject<HAAPIResult<O>>(json);
+                return result.data;
+            }
+        }
+    }
+
+    public class HAAPIResult<O>
+    {
+        public O data;
     }
 
     public class HAGeos
@@ -248,13 +267,13 @@ namespace HistoriskAtlas5.Frontend
         }
     }
 
-    public class HAThemes
-    {
-        public HATheme[] data;
-    }
+    //public class HAThemes
+    //{
+    //    public HATheme[] data;
+    //}
     public class HATheme
     {
-        public string id;
+        public string linkname;//id;
         public string name;
         public int? mapid;
         public decimal? maplatitude;

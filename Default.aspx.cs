@@ -113,7 +113,7 @@ namespace HistoriskAtlas5.Frontend
 
 
             string schema = crawler ? "{geo:[id,title,intro,lat,lng,{contents:[{texts:[headline,text1]}]},{geo_images:[ordering,{image:[id,text]}]}]}" : "{geo:[id,title,intro,lat,lng,ugc]}";
-            HAGeos geos = (new Service<HAGeos>()).Get("geo.json?v=1&schema=" + schema + "&geoid=" + geoID + "&online=true", dev);
+            HAGeos geos = (new Service<HAGeos>()).Get("geo.json?v=1&schema=" + schema + "&geoid=" + geoID + "&online=true", dev); //TODO: SLOW....... implement HAAPI instead..............................
 
             if (geos.data.Length == 0)
                 return null;
@@ -135,7 +135,7 @@ namespace HistoriskAtlas5.Frontend
 
             int collectionID = int.Parse(match.Groups[1].Value);
 
-            HACollections collections = (new Service<HACollections>()).Get("collection.json?v=1&schema=" + HACollections.schema + "&collectionid=" + collectionID + "&online=true", dev);
+            HACollections collections = (new Service<HACollections>()).Get("collection.json?v=1&schema=" + HACollections.schema + "&collectionid=" + collectionID + "&online=true", dev);  //TODO: SLOW....... implement HAAPI instead.......
 
             if (collections.data.Length == 0)
                 return null;
@@ -145,13 +145,13 @@ namespace HistoriskAtlas5.Frontend
 
         private HATag GetTag(string deep)
         {
-            if (deep == "")
+            if (deep == "" || deep.StartsWith("?") || deep.StartsWith("@"))
                 return null;
 
             if (this.passedGeo != null)
                 return null;
 
-            HATags tags = (new Service<HATags>()).Get("tag.json?v=1&schema={tag:[id,plurName]}&plurName=" + deep + "&category=9", dev); //only subject for now
+            HATags tags = (new Service<HATags>()).Get("tag.json?v=1&schema={tag:[id,plurName]}&plurName=" + deep + "&category=9", dev); //only subject for now  //TODO: SLOW....... implement HAAPI instead.......
 
             if (tags.data.Length == 0)
                 return null;
@@ -167,13 +167,14 @@ namespace HistoriskAtlas5.Frontend
             if (this.passedGeo != null)
                 return null;
             
-            //HAThemes themes = (new Service<HAThemes>()).Get("theme.json?v=1&schema={theme:[id,name,mapid,maplatitude,maplongitude,mapzoom,tagid]}&id=" + deep);
-            HAThemes themes = (new Service<HAThemes>()).Get("theme.json?v=1&schema={theme:[id,name,mapid,maplatitude,maplongitude,mapzoom,tagid,{content:[id,geoid,ordering,deleted,contenttypeid,{texts:[empty,id,created,{user:[firstname,lastname]},headline,text1,type]},{biblios:[empty,id,created,cql]},{externalcontent:[empty,id,created,externalsourceid,text,link]},{tag_contents:[{collapse:tagid}]}]}]}&id=[" + HttpUtility.UrlEncode(deep) + (stateObject.ContainsKey("th") ? "," + stateObject["th"] : "") + "]");
-            
-            if (themes.data.Length == 0)
-                return null;
+            //HAThemes themes = (new Service<HAThemes>()).Get("theme.json?v=1&schema={theme:[id,name,mapid,maplatitude,maplongitude,mapzoom,tagid,{content:[id,geoid,ordering,deleted,contenttypeid,{texts:[empty,id,created,{user:[firstname,lastname]},headline,text1,type]},{biblios:[empty,id,created,cql]},{externalcontent:[empty,id,created,externalsourceid,text,link]},{tag_contents:[{collapse:tagid}]}]}]}&id=[" + HttpUtility.UrlEncode(deep) + (stateObject.ContainsKey("th") ? "," + stateObject["th"] : "") + "]");
+            HATheme theme = (new Service<HATheme>()).GetHAAPI($"theme/{(stateObject.ContainsKey("th") ? stateObject["th"] : HttpUtility.UrlEncode(deep))}");
 
-            return themes.data[0];
+            //if (themesdata.Length == 0)
+            //    return null;
+
+            //return themes.data[0];
+            return theme;
         }
 
         public string json(object obj) { return JsonConvert.SerializeObject(obj); }

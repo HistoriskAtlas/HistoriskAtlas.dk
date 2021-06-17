@@ -148,7 +148,7 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     }
 
     isHoD2017(theme: ITheme): boolean {
-        return theme.id == 'hod' || theme.name == 'Historier om Danmark';
+        return theme.linkname == 'hod' || theme.name == 'Historier om Danmark';
     }
     aboutHoD2017Tap() {
         Common.dom.append(WindowInstitution.create(App.haTags.byId[736]));
@@ -188,18 +188,18 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     }
 
     is1001(theme: ITheme): boolean {
-        return theme.id == '1001';
+        return theme.linkname == '1001';
     }
     about1001Tap() {
         Common.dom.append(WindowInstitution.create(App.haTags.byId[731]));
     }
 
     isModstandskamp(theme: ITheme): boolean {
-        return theme.id == 'modstandskamp';
+        return theme.linkname == 'modstandskamp';
     }
 
     isDigterruter(theme: ITheme): boolean {
-        return theme.id == 'digterruter';
+        return theme.linkname == 'digterruter';
     }
 
     //itemTap(e: any) {
@@ -224,7 +224,7 @@ class PanelTheme extends polymer.Base implements polymer.Element {
 }
 
 interface ITheme {
-    id: string;
+    linkname: string;
     name: string;
     mapid: number;
     maplatitude: number;

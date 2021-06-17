@@ -58,7 +58,7 @@
             return;
         }
 
-        if (!App.passed.geo && !App.passed.collection && !App.passed.embed && App.passed.theme.id == Global.defaultTheme.id && path.substr(1).toLowerCase() != 'default.aspx')
+        if (!App.passed.geo && !App.passed.collection && !App.passed.embed && App.passed.theme.linkname == Global.defaultTheme.linkname && path.substr(1).toLowerCase() != 'default.aspx')
             App.passed.search = path.substr(1);
     }
 
@@ -113,8 +113,8 @@
         }, 100);
     }
     public static themeChanged() {
-        if (App.global.theme.id != Global.defaultTheme.id)
-            this.stateObject.th = App.global.theme.id;
+        if (App.global.theme.linkname != Global.defaultTheme.linkname)
+            this.stateObject.th = App.global.theme.linkname;
         else
             delete this.stateObject.th;
 
