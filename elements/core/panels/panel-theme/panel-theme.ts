@@ -57,11 +57,11 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     }
 
     showMenuItem(item: ITheme, user: HAUser): boolean {
-        if (this.isDevOrBeta)
-            return true;
+        //if (this.isDevOrBeta)
+        //    return true;
 
-        if (this.isHoD2017(item))
-            return user ? user.canAccessHoD2017 : false;
+        ////if (this.isHoD2017(item))
+        ////    return user ? user.canAccessHoD2017 : false;
 
         return true;
     }

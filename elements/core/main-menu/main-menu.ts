@@ -130,11 +130,11 @@ class MainMenu extends polymer.Base implements polymer.Element {
                 menuItem.show = false;
     }
 
-    showHOD2017(isDevOrBeta: boolean, user: HAUser): boolean {
-        if (isDevOrBeta)
-            return true;
-        return user.canAccessHoD2017;
-    }
+    //showHOD2017(isDevOrBeta: boolean, user: HAUser): boolean {
+    //    if (isDevOrBeta)
+    //        return true;
+    //    return user.canAccessHoD2017;
+    //}
 
     //tap1001() {
     //    this.set('showMenuThemes', true);
