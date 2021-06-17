@@ -16,7 +16,7 @@
     public showText: boolean;
 
     constructor(data: any) {
-        this._id = data.id;
+        this._id = data.id || data.collectiongeoid;
         this._ordering = data.ordering;
         this._contentID = data.contentid;
         this._calcRoute = data.calcroute == null ? true : data.calcroute;

@@ -52,8 +52,8 @@ namespace HistoriskAtlas5.Frontend
                     HttpContext.Current.Response.Redirect(passedGeo.absUrlPath + HttpContext.Current.Request.Url.Query, true);
 
             passedCollection = GetCollection(deep);
-
-            passedTag = GetTag(deep);
+            if (passedCollection == null)
+                passedTag = GetTag(deep);
             passedTheme = GetTheme(deep);
 
             DataBind();
@@ -133,14 +133,15 @@ namespace HistoriskAtlas5.Frontend
             if (!match.Success)
                 return null;
 
-            int collectionID = int.Parse(match.Groups[1].Value);
+            //int collectionID = int.Parse(match.Groups[1].Value);
+            //HACollections collections = (new Service<HACollections>()).Get("collection.json?v=1&schema=" + HACollections.schema + "&collectionid=" + collectionID + "&online=true", dev);
+            HACollection collection = (new Service<HACollection>()).GetHAAPI($"collection/{match.Groups[1].Value}");
 
-            HACollections collections = (new Service<HACollections>()).Get("collection.json?v=1&schema=" + HACollections.schema + "&collectionid=" + collectionID + "&online=true", dev);  //TODO: SLOW....... implement HAAPI instead.......
+            //if (collections.data.Length == 0)
+            //    return null;
 
-            if (collections.data.Length == 0)
-                return null;
-
-            return collections.data[0];
+            //return collections.data[0];
+            return collection;
         }
 
         private HATag GetTag(string deep)

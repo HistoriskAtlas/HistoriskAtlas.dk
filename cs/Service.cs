@@ -151,7 +151,7 @@ namespace HistoriskAtlas5.Frontend
     }
     public class HACollectionGeo
     {
-        public int id;
+        public int collectiongeoid;
         public int? geoid;
         public int ordering;
         public bool showonmap;
@@ -160,8 +160,6 @@ namespace HistoriskAtlas5.Frontend
         public decimal? longitude;
         public decimal? latitude;
     }
-    //var collectionGeosAPISchema = "{collection_geos:[id,geoid,ordering,showonmap,calcroute,contentid,longitude,latitude]}'";
-    //string schema = "{collection:[collectionid,title,ugc,cyclic,distance,type,userid," + collectionGeosAPISchema + "]}";
 
     public class HAContent
     {
