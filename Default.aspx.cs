@@ -31,7 +31,8 @@ namespace HistoriskAtlas5.Frontend
             //dev = false; //TODO.......................................... TEMP!
 
             beta = Request.Url.Host.StartsWith("beta");
-            crawler = Regex.IsMatch(Request.UserAgent, @"bot|crawler|facebook", RegexOptions.IgnoreCase);
+            //crawler = Regex.IsMatch(Request.UserAgent, @"bot|crawler|facebook", RegexOptions.IgnoreCase);
+            crawler = true;
             embed = keylessParameters.Contains("embed");
 
             stateObject = new Dictionary<string, string>();
@@ -109,19 +110,20 @@ namespace HistoriskAtlas5.Frontend
             if (!match.Success)
                 return null;
 
-            int geoID = int.Parse(match.Groups[1].Value);
+            //int geoID = int.Parse(match.Groups[1].Value);
 
+            //string schema = crawler ? "{geo:[id,title,intro,lat,lng,{contents:[{texts:[headline,text1]}]},{geo_images:[ordering,{image:[id,text]}]}]}" : "{geo:[id,title,intro,lat,lng,ugc]}";
+            //HAGeos geos = (new Service<HAGeos>()).Get("geo.json?v=1&schema=" + schema + "&geoid=" + geoID + "&online=true", dev); //TODO: SLOW....... implement HAAPI instead..............................
+            var geo = (new Service<HAGeo>()).GetHAAPI($"geo/{match.Groups[1].Value}", crawler ? "deeplinkcrawler" : "deeplink");
 
-            string schema = crawler ? "{geo:[id,title,intro,lat,lng,{contents:[{texts:[headline,text1]}]},{geo_images:[ordering,{image:[id,text]}]}]}" : "{geo:[id,title,intro,lat,lng,ugc]}";
-            HAGeos geos = (new Service<HAGeos>()).Get("geo.json?v=1&schema=" + schema + "&geoid=" + geoID + "&online=true", dev); //TODO: SLOW....... implement HAAPI instead..............................
+            //if (geos.data.Length == 0)
+            //    return null;
 
-            if (geos.data.Length == 0)
-                return null;
+            if (geo.geo_images != null)
+                Array.Sort(geo.geo_images, (HAGeoImage a, HAGeoImage b) => a.ordering - b.ordering);
 
-            if (geos.data[0].geo_images != null)
-                Array.Sort(geos.data[0].geo_images, (HAGeoImage a, HAGeoImage b) => a.ordering - b.ordering);
-
-            return geos.data[0];
+            //return geos.data[0];
+            return geo;
         }
 
         private HACollection GetCollection(string deep)
@@ -135,7 +137,7 @@ namespace HistoriskAtlas5.Frontend
 
             //int collectionID = int.Parse(match.Groups[1].Value);
             //HACollections collections = (new Service<HACollections>()).Get("collection.json?v=1&schema=" + HACollections.schema + "&collectionid=" + collectionID + "&online=true", dev);
-            HACollection collection = (new Service<HACollection>()).GetHAAPI($"collection/{match.Groups[1].Value}");
+            var collection = (new Service<HACollection>()).GetHAAPI($"collection/{match.Groups[1].Value}");
 
             //if (collections.data.Length == 0)
             //    return null;
@@ -169,7 +171,7 @@ namespace HistoriskAtlas5.Frontend
                 return null;
             
             //HAThemes themes = (new Service<HAThemes>()).Get("theme.json?v=1&schema={theme:[id,name,mapid,maplatitude,maplongitude,mapzoom,tagid,{content:[id,geoid,ordering,deleted,contenttypeid,{texts:[empty,id,created,{user:[firstname,lastname]},headline,text1,type]},{biblios:[empty,id,created,cql]},{externalcontent:[empty,id,created,externalsourceid,text,link]},{tag_contents:[{collapse:tagid}]}]}]}&id=[" + HttpUtility.UrlEncode(deep) + (stateObject.ContainsKey("th") ? "," + stateObject["th"] : "") + "]");
-            HATheme theme = (new Service<HATheme>()).GetHAAPI($"theme/{(stateObject.ContainsKey("th") ? stateObject["th"] : HttpUtility.UrlEncode(deep))}");
+            var theme = (new Service<HATheme>()).GetHAAPI($"theme/{(stateObject.ContainsKey("th") ? stateObject["th"] : HttpUtility.UrlEncode(deep))}");
 
             //if (themesdata.Length == 0)
             //    return null;

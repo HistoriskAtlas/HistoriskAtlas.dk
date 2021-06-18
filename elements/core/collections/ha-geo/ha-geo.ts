@@ -39,13 +39,9 @@ class HaGeoService extends Tags implements polymer.Element {
         //});
         //this.$.ajax.generateRequest();
 
-        var params: any = {
-            id: this.geo.id,
-            schema: Common.standalone ? 'standalonegeowindow' : 'geowindow'
-        }
         //if (this.tagIdsInStorage.length > 0)
         //    params.after = LocalStorage.timestampDateTime('tag-ids');
-        Services.getHAAPI('geo', params, (result) => this.handleResponse(result.data))
+        Services.getHAAPI(`geo/${this.geo.id}`, { schema: Common.standalone ? 'standalonegeowindow' : 'geowindow' }, (result) => this.handleResponse(result.data))
     }
     
     @observe("geo.title")

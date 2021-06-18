@@ -26,10 +26,10 @@ namespace HistoriskAtlas5.Frontend
             }
         }
 
-        public O GetHAAPI(string function, bool? isDev = null)
+        public O GetHAAPI(string function, string schema = null, bool? isDev = null)
         {
             var useBeta = isDev ?? isDevOrBeta;
-            var url = $"https://haapi.historiskatlas.dk/{function}?db={(useBeta ? "hadb6beta" : "hadb6")}&key=00e763e5df5f47e3a4a64aea3a18fdaa";
+            var url = $"https://haapi.historiskatlas.dk/{function}?db={(useBeta ? "hadb6beta" : "hadb6")}{(schema == null ? "" : $"&schema={schema}")}&key=00e763e5df5f47e3a4a64aea3a18fdaa";
 
             using (WebClient wc = new WebClient())
             {
@@ -52,7 +52,7 @@ namespace HistoriskAtlas5.Frontend
     }
     public class HAGeo
     {
-        public int id;
+        public int geoid;
         public string title;
         public string intro;
         public bool ugc;
@@ -68,7 +68,7 @@ namespace HistoriskAtlas5.Frontend
         {
             get
             {
-                return title.Replace(' ', '_').Replace(':', '_').Replace('/', '_').Replace("?", "") + "_(" + id + ")";
+                return title.Replace(' ', '_').Replace(':', '_').Replace('/', '_').Replace("?", "") + "_(" + geoid + ")";
             }
         }
 
@@ -91,7 +91,7 @@ namespace HistoriskAtlas5.Frontend
                 if (geo_images.Length == 0)
                     return "";
 
-                return "https://secureapi.historiskatlas.dk/api/hadb6.image/" + geo_images[0].image.id + "?action=scale&size={640:10000}&scalemode=inner"; //hadb5.image
+                return "https://secureapi.historiskatlas.dk/api/hadb6.image/" + geo_images[0].image.imageid + "?action=scale&size={640:10000}&scalemode=inner"; //hadb5.image
             }
         }
 
@@ -220,7 +220,7 @@ namespace HistoriskAtlas5.Frontend
     }
     public class HAImage
     {
-        public int id;
+        public int imageid;
         public string text;
         public int? year;
         public string photographer;

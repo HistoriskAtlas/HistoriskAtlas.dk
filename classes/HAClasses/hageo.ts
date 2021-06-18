@@ -550,7 +550,7 @@
             //        }
             //    );
 
-                Services.getHAAPI('geo', { id: this._id }, (result) => {
+                Services.getHAAPI(`geo/${this._id}`, null, (result) => {
                     if (!result.data)
                         return;
                     this._title = result.data.title;
