@@ -11,25 +11,25 @@ namespace HistoriskAtlas5.Frontend
     {
         static bool isDevOrBeta = HttpContext.Current.Request.IsLocal || HttpContext.Current.Request.Url.Host.StartsWith("beta");
 
-        public O Get(string url, bool? isDev = null)
+        //public O Get(string url, bool? isDev = null)
+        //{
+        //    var useBeta = isDev ?? isDevOrBeta;
+
+        //    var api = "http://" + (useBeta ? "beta." : "") + "api.historiskatlas.dk/hadb6" + (useBeta ? "beta" : "") + "."; //hadb5
+
+        //    using (WebClient wc = new WebClient())
+        //    {
+        //        wc.Encoding = Encoding.UTF8;
+        //        string json = wc.DownloadString(api + url);
+        //        O geosJsonObject = JsonConvert.DeserializeObject<O>(json);
+        //        return geosJsonObject;
+        //    }
+        //}
+
+        public O GetHAAPI(string function, string schema = null, string pars = null, bool? isDev = null)
         {
             var useBeta = isDev ?? isDevOrBeta;
-            
-            var api = "http://" + (useBeta ? "beta." : "") + "api.historiskatlas.dk/hadb6" + (useBeta ? "beta" : "") + "."; //hadb5
-
-            using (WebClient wc = new WebClient())
-            {
-                wc.Encoding = Encoding.UTF8;
-                string json = wc.DownloadString(api + url);
-                O geosJsonObject = JsonConvert.DeserializeObject<O>(json);
-                return geosJsonObject;
-            }
-        }
-
-        public O GetHAAPI(string function, string schema = null, bool? isDev = null)
-        {
-            var useBeta = isDev ?? isDevOrBeta;
-            var url = $"https://haapi.historiskatlas.dk/{function}?db={(useBeta ? "hadb6beta" : "hadb6")}{(schema == null ? "" : $"&schema={schema}")}&key=00e763e5df5f47e3a4a64aea3a18fdaa";
+            var url = $"https://haapi.historiskatlas.dk/{function}?db={(useBeta ? "hadb6beta" : "hadb6")}{(schema == null ? "" : $"&schema={schema}")}{(pars == null ? "" : $"&{pars}")}&key=00e763e5df5f47e3a4a64aea3a18fdaa";
 
             using (WebClient wc = new WebClient())
             {
@@ -46,18 +46,18 @@ namespace HistoriskAtlas5.Frontend
         public O data;
     }
 
-    public class HAGeos
-    {
-        public HAGeo[] data;
-    }
+    //public class HAGeos
+    //{
+    //    public HAGeo[] data;
+    //}
     public class HAGeo
     {
         public int geoid;
         public string title;
         public string intro;
         public bool ugc;
-        public decimal lat;
-        public decimal lng;
+        public decimal latitude;
+        public decimal longitude;
         public HAUser user;
         public HAContent[] contents;
         public HAGeoImage[] geo_images;
@@ -109,11 +109,11 @@ namespace HistoriskAtlas5.Frontend
         }
     }
 
-    public class HACollections
-    {
-        public static string schema = "{collection:[collectionid,title,ugc,cyclic,distance,type,userid,{collection_geos:[id,geoid,ordering,showonmap,calcroute,contentid,longitude,latitude]}]}";
-        public HACollection[] data;
-    }
+    //public class HACollections
+    //{
+    //    public static string schema = "{collection:[collectionid,title,ugc,cyclic,distance,type,userid,{collection_geos:[id,geoid,ordering,showonmap,calcroute,contentid,longitude,latitude]}]}";
+    //    public HACollection[] data;
+    //}
     public class HAUser
     {
         public string firstname;
@@ -188,7 +188,7 @@ namespace HistoriskAtlas5.Frontend
             {
                 var result = new List<int>();
                 foreach (HATagContent tag_content in tag_contents)
-                    result.Add(tag_content.tag.id);
+                    result.Add(tag_content.tag.tagid);
 
                 return result;
             }
@@ -245,13 +245,13 @@ namespace HistoriskAtlas5.Frontend
     }
 
 
-    public class HATags
-    {
-        public HATag[] data;
-    }
+    //public class HATags
+    //{
+    //    public HATag[] data;
+    //}
     public class HATag
     {
-        public int id;
+        public int tagid;
         public string plurName;
         public int category;
 

@@ -22,10 +22,14 @@ namespace HistoriskAtlas5.Frontend
         public override void ProcessRequest(HttpContext context)
         {
             this.context = context;
-            HACollectionsPDF collections = (new Service<HACollectionsPDF>()).Get("collection.json?v=1&count=1&schema=" + HACollectionsPDF.schema + "&online=true&collectionid=" + routeData.Values["collectionid"]);
-            if (collections.data.Length == 0)
+            //HACollectionsPDF collections = (new Service<HACollectionsPDF>()).Get("collection.json?v=1&count=1&schema=" + HACollectionsPDF.schema + "&online=true&collectionid=" + routeData.Values["collectionid"]);
+            //if (collections.data.Length == 0)
+            //    return;
+            //HACollectionPDF collection = collections.data[0];
+
+            var collection = (new Service<HACollectionPDF>()).GetHAAPI($"collection/{routeData.Values["collectionid"]}", "pdf");
+            if (collection == null)
                 return;
-            HACollectionPDF collection = collections.data[0];
 
             var isHoD = collection.content == null ? false : collection.content.tagIDs.Contains(736);
 

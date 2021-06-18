@@ -97,7 +97,7 @@ namespace HistoriskAtlas5.Frontend
             List<string> institutions = new List<string>();
             foreach (HATag tag in tags)
                 if (tag.category == 3)
-                    institutions.Add(tag.plurName + (tag.id == 731 ? " / " + user.fullnameAndAbout : ""));
+                    institutions.Add(tag.plurName + (tag.tagid == 731 ? " / " + user.fullnameAndAbout : ""));
 
             var byline = institutions.Count == 0 ? user.fullnameAndAbout : string.Join(", ", institutions);
 

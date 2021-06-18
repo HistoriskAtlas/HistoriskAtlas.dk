@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Web;
@@ -26,8 +27,9 @@ namespace HistoriskAtlas5.Frontend
             XmlNode urlset = doc.CreateElement("urlset", ns);
             doc.AppendChild(urlset);
 
-            HAGeos geos = (new Service<HAGeos>()).Get("geo.json?v=1&count=*&schema={geo:[id,title]}&online=true"); //TODO: Exclude geos that is not published to ha.dk?
-            foreach (HAGeo geo in geos.data)
+            //HAGeos geos = (new Service<HAGeos>()).Get("geo.json?v=1&count=*&schema={geo:[id,title]}&online=true"); //TODO: Exclude geos that is not published to ha.dk?
+            List<HAGeo> geos = (new Service<List<HAGeo>>()).GetHAAPI("geos", "sitemap", "online=true");
+            foreach (HAGeo geo in geos)
             {
                 XmlNode url = doc.CreateElement("url", ns);
                 urlset.AppendChild(url);

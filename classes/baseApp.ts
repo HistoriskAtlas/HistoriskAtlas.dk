@@ -235,7 +235,7 @@
 
     public static init() {
         var theme = App.passed.theme
-        var coord = App.passed.geo ? [App.passed.geo.lat, App.passed.geo.lng] : ([theme.maplatitude ? theme.maplatitude : Global.defaultTheme.maplatitude, theme.maplongitude ? theme.maplongitude : Global.defaultTheme.maplongitude]);
+        var coord = App.passed.geo ? [App.passed.geo.latitude, App.passed.geo.longitude] : ([theme.maplatitude ? theme.maplatitude : Global.defaultTheme.maplatitude, theme.maplongitude ? theme.maplongitude : Global.defaultTheme.maplongitude]);
         var zoom = App.passed.geo ? 16 : (theme.mapzoom ? theme.mapzoom : Global.defaultTheme.mapzoom);
         var rotation = theme.maprotation ? theme.maprotation : Global.defaultTheme.maprotation;
         App.map = new MainMap(coord, zoom, rotation);

@@ -157,12 +157,12 @@
     <% if (this.passedTheme != null) { %><%=string.Format("<link id=\"theme-{0}\" rel=\"stylesheet\" href=\"css/themes/theme-{0}.css\">", this.passedTheme.linkname )%><% } %>
 </head>
 <body<%=(crawler && passedGeo != null ? " style=\"overflow:auto\"" : "")%>>
-    <% foreach (HistoriskAtlas5.Frontend.HATag tag in sitemapTags.data) { %>
+<%--    <% foreach (HistoriskAtlas5.Frontend.HATag tag in sitemapTags.data) { %>
         <a href="<%=tag.urlPath%>"><%=tag.plurName%></a>
     <% } %>
     <% foreach (HistoriskAtlas5.Frontend.HAGeo geo in sitemapGeos.data) { %>
         <a href="<%=geo.urlPath%>"><%=geo.title%></a>
-    <% } %>
+    <% } %>--%>
     <% if (crawler && passedGeo != null) { %>
         <h1><%=passedGeo.title%></h1>
         <% if (passedGeo.geo_images != null) { %>

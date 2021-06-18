@@ -15,7 +15,8 @@ namespace HistoriskAtlas5.Frontend
         }
 
         public HAGeo GetGeo(int geoid) {
-            return (new Service<HAGeos>()).Get("geo.json?v=1&schema={geo:[id,title]}&geoid=" + geoid + "&online=true").data[0];
+            //return (new Service<HAGeos>()).Get("geo.json?v=1&schema={geo:[id,title]}&geoid=" + geoid + "&online=true").data[0];
+            return (new Service<HAGeo>()).GetHAAPI($"geo/{geoid}", "deeplink", "online=true");
         }
 
     }
