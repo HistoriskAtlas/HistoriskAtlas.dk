@@ -74,22 +74,24 @@ class FileUpload extends polymer.Base implements polymer.Element {
         var fileType: string = file.name.split('.').pop().toLowerCase();
 
         if (fileType == 'pdf') {
-            this.insertedPDF(file, fileType);
+            this.insertedPDF(file); //, fileType
         }
         else {
-            Services.insert('image', { 'userid': App.haUsers.user.id, 'text': '' }, (data) => this.insertedImage(file, fileType, data))
+            Services.insert('image', { 'userid': App.haUsers.user.id, 'text': '' }, (data) => this.insertedImage(file, data)) //, fileType
         }
     }
 
-    private insertedPDF(file: File, fileType: string) {
-        (<any>file).newName = (Math.floor(Math.random() * 9000000) + 1000000) + file.name;
-        (<any>file).path = 'Pdf\\' + (<any>file).newName;
-        this.inserted(file)
+    private insertedPDF(file: File) { //, fileType: string
+        //(<any>file).newName = (Math.floor(Math.random() * 9000000) + 1000000) + file.name;
+        //(<any>file).path = 'Pdf\\' + (<any>file).newName;
+        (<any>file).url = `pdf/${file.name}`;
+        this.inserted(file) //TODO: Handle filename collisions............................................
     }
 
-    private insertedImage(file: File, fileType: string, result: any) {
+    private insertedImage(file: File, result: any) { //, fileType: string
         var image = new HAImage(result.data[0], -1);
-        (<any>file).path = 'Image\\' + (image.id % 100) + '\\' + image.id + '.' + fileType;
+        //(<any>file).path = 'Image\\' + (image.id % 100) + '\\' + image.id + '.' + fileType;
+        (<any>file).url = `image/${image.id}.jpg`;
         (<any>file).image = image;
         this.inserted(file)
     }
@@ -99,31 +101,43 @@ class FileUpload extends polymer.Base implements polymer.Element {
         formData.append("file", file, (<any>file).path);
         var prefix = "files." + this.files.indexOf(file);
 
-        var xhr = (<any>file).xhr = new XMLHttpRequest();
-        xhr.upload.onprogress = (e) => {
+        //var xhr = (<any>file).xhr = new XMLHttpRequest();
+        Services.HAAPI((<any>file).url, null, () => {
+            this.fire("success", { image: (<any>file).image, file: file }); //xhr: xhr, 
+            this.set(prefix + ".complete", true);
+            this.splice("files", this.files.indexOf(file), 1);
+        }, () => {
+            this.set(prefix + ".error", true);
+            this.set(prefix + ".complete", false);
+            this.set(prefix + ".progress", 100);
+            this.updateStyles();
+            this.fire("error"); //, { xhr: xhr }
+        }, (e: ProgressEvent) => {
             var done = e.loaded, total = e.total;
             this.set(prefix + ".progress", Math.floor((done / total) * 1000) / 10);
-        };
-        var url = Common.api + 'upload.json?v=1&sid=' + (<any>document).sid;
-        xhr.open('post', url, true);
-        //for (var key in this.headers)
-        //    if (this.headers.hasOwnProperty(key))
-        //        xhr.setRequestHeader(key, this.headers[key]);
+        }, "Uploader fil", formData)
 
-        xhr.onload = (e) => {
-            if (xhr.status === 200) {
-                this.fire("success", { xhr: xhr, image: (<any>file).image, file: file });
-                this.set(prefix + ".complete", true);
-                this.splice("files", this.files.indexOf(file), 1);
-            } else {
-                this.set(prefix + ".error", true);
-                this.set(prefix + ".complete", false);
-                this.set(prefix + ".progress", 100);
-                this.updateStyles();
-                this.fire("error", { xhr: xhr });
-            }
-        };
-        xhr.send(formData);
+        //xhr.upload.onprogress = (e: ProgressEvent) => {
+        //    var done = e.loaded, total = e.total;
+        //    this.set(prefix + ".progress", Math.floor((done / total) * 1000) / 10);
+        //};
+        //var url = Common.api + 'upload.json?v=1&sid=' + (<any>document).sid;
+        //xhr.open('post', url, true);
+
+        //xhr.onload = (e) => {
+        //    if (xhr.status === 200) {
+        //        this.fire("success", { xhr: xhr, image: (<any>file).image, file: file });
+        //        this.set(prefix + ".complete", true);
+        //        this.splice("files", this.files.indexOf(file), 1);
+        //    } else {
+        //        this.set(prefix + ".error", true);
+        //        this.set(prefix + ".complete", false);
+        //        this.set(prefix + ".progress", 100);
+        //        this.updateStyles();
+        //        this.fire("error", { xhr: xhr });
+        //    }
+        //};
+        //xhr.send(formData);
     }
 }
 

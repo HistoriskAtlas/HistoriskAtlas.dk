@@ -35,7 +35,7 @@
 
     public static get apiKey(): string {
         //return App.isDev() ? "ZGV2ZWxvcG" : "aGlzdG9yaX";
-        return App.isDev() ? "0f38b3d8b8ec48ba9d406e9edb5700ce" : "00e763e5df5f47e3a4a64aea3a18fdaa";
+        return typeof App == 'undefined' || !App.isDev() ? "00e763e5df5f47e3a4a64aea3a18fdaa" : "0f38b3d8b8ec48ba9d406e9edb5700ce";
     }
 
     public static get api(): string {

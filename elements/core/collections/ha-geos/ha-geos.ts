@@ -170,11 +170,11 @@ class HaGeos extends polymer.Base implements polymer.Element {
         var params: any = {};
         params.dest = this.curRequest.themeTagID;
         params.tags = this.curRequest.themeTagID; //This gives back list of id's
-        if (!App.haUsers.user.isDefault)
-            params.sid = (<any>document).sid;
+        //if (!App.haUsers.user.isDefault)
+        //    params.sid = (<any>document).sid;
 
         //Services.get('geo', send, (result) => {
-        Services.getHAAPI('geos', params, (result) => {
+        Services.HAAPI('geos', params, (result) => {
             IconLayer.updateDisabled = true;
             //var newGeoIds = <Array<number>>result.data[0].tag_geos;
             var newGeoIds = <Array<number>>result.data;
@@ -268,14 +268,14 @@ class HaGeos extends polymer.Base implements polymer.Element {
         var params: any = {};
         params.ugc = this.curRequest.ugc;
         params.dest = this.curRequest.themeTagID;
-        if (this.curRequest.userLayer)
-            params.sid = (<any>document).sid;
+        //if (this.curRequest.userLayer)
+        //    params.sid = (<any>document).sid;
 
         //if (!params.dest) {
         //    console.log('Missing dest')
         //}
 
-        Services.getHAAPI('geos', params, (result) => this.addGeosFromResponse(result));
+        Services.HAAPI('geos', params, (result) => this.addGeosFromResponse(result), null, null, null, null, this.curRequest.userLayer);
     }
 
     //public handleResponse() {
@@ -396,15 +396,15 @@ class HaGeos extends polymer.Base implements polymer.Element {
             params.ugc = userCreators;
         params.dest = themeTagID;
         params.tags = selectedTagIds.join(',');
-        if (!App.haUsers.user.isDefault)
-            params.sid = (<any>document).sid;
+        //if (!App.haUsers.user.isDefault)
+        //    params.sid = (<any>document).sid;
 
         //if (!params.dest) {
         //    console.log('Missing dest')
         //}
 
         //Services.get('geo', send, (data) => {
-        Services.getHAAPI('geos', params, (data) => {
+        Services.HAAPI('geos', params, (data) => {
             if (data.data.length == 0) {
                 this.hideAll(idsChanged);
                 return;

@@ -10,7 +10,8 @@ class ContentViewerPdf extends polymer.Base implements polymer.Element {
     private fileUpload: FileUpload;
 
     pdfTap(e: any) {
-        Common.savePDF(Common.api + 'pdf/' + this.pdf.id + '.pdf', this.pdf.title.indexOf('.pdf') == this.pdf.title.length - 4 ? this.pdf.title : this.pdf.title + '.pdf');
+        //Common.savePDF(Common.api + 'pdf/' + this.pdf.id + '.pdf', this.pdf.title.indexOf('.pdf') == this.pdf.title.length - 4 ? this.pdf.title : this.pdf.title + '.pdf');
+        Common.savePDF(Services.getPDFUrl(this.pdf.filename), this.pdf.title.indexOf('.pdf') == this.pdf.title.length - 4 ? this.pdf.title : this.pdf.title + '.pdf');
     }
 
     ready() {

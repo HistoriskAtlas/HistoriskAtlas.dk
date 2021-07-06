@@ -2,7 +2,7 @@
 
     private static pendingServiceCalls: Array<() => void> = [];
     private static timeoutToken: number;
-    private static loadingText: string = 'Kommunikerer med serveren';
+    private static readonly loadingText: string = 'Kommunikerer med serveren';
 
     public static get hasPendingCalls(): boolean {
         return this.pendingServiceCalls.length > 0;
@@ -31,11 +31,22 @@
         this.pushServiceCall(() => this.serviceCall('proxy/' + proxy + '.json', data, success, error, true));
     }
 
-    public static getHAAPI(service: string, params: { [key: string]: any }, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null) {
+    public static HAAPI(service: string, params: { [key: string]: any } = null, success: (data: any) => any = null, error: (data: any) => any = null, progress: (event: ProgressEvent) => any = null, message: string = null, data: FormData = null, addSid: boolean = true) {
         params = params || {};
         params.db = Common.isDevOrBeta ? 'hadb6beta' : 'hadb6';
-        params.key = '00e763e5df5f47e3a4a64aea3a18fdaa';
-        this.pushServiceCall(() => this.serviceCallHAAPI(`https://haapi.historiskatlas.dk/${service}${this.toURLParams(params)}`, success, error, message), message);
+        params.key = Common.apiKey;
+        if (typeof App != 'undefined' && App.haUsers && !App.haUsers.user.isDefault && addSid)
+            params.sid = (<any>document).sid;
+        this.pushServiceCall(() => this.serviceCallHAAPI(`https://haapi.historiskatlas.dk/${service}${this.toURLParams(params)}`, success, error, progress, message, data), message);
+    }
+    public static getImageUrl(image: HAImage, params: { [key: string]: any } = null) {
+        params = params || {};
+        params.key = Common.apiKey;
+        return `https://haapi.historiskatlas.dk/image/${image.id}.jpg${this.toURLParams(params)}`;
+    }
+    public static getPDFUrl(filename: string) {
+        var params = { key: Common.apiKey };
+        return `https://haapi.historiskatlas.dk/pdf/${filename}${this.toURLParams(params)}`;
     }
 
     private static pushServiceCall(serviceCall: () => void, message: string = null) {
@@ -50,10 +61,9 @@
             serviceCall();
     }
 
-    private static serviceCallHAAPI(url: string, success: (data: any) => any, error: (data: any) => any, message: string = null) {
-
+    private static serviceCallHAAPI(url: string, success: (data: any) => any, error: (data: any) => any, progress: (event: ProgressEvent) => any, message: string = null, data: FormData) {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', url, true); //TODO: support POST also...
+        xhr.open(data ? 'POST' : 'GET', url, true);
         xhr.responseType = 'json';
         xhr.timeout = 10000,
         xhr.addEventListener('load', () => {
@@ -71,9 +81,11 @@
                 this.pendingServiceCalls[0]();
             this.hideLoading(message);
         });
+        if (progress)
+            xhr.addEventListener('progress', (e: ProgressEvent) => progress(e));
         xhr.addEventListener('error', () => Services.error(url, xhr.responseText, 'HAAPI error'));
         xhr.addEventListener('timeout', () => Services.error(url, xhr.responseText, 'HAAPI timeout'));
-        xhr.send();
+        xhr.send(data);
     }
 
     private static error(url: string, status: string, error: string) {

@@ -35,7 +35,7 @@ class HaThemes extends polymer.Base implements polymer.Element {
         if (!Common.isDevOrBeta)
             params.linknames = `1001,hod,modstandskamp,digterruter,${App.passed.theme.linkname}`
 
-        Services.getHAAPI('themes', params, (result) => {
+        Services.HAAPI('themes', params, (result) => {
             //this.showThemeMenu = false; TODO...................................................................
             var themes: Array<ITheme> = [];
             for (var name of result.data)

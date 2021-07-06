@@ -2,7 +2,7 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectView>ProjectFiles</ProjectView>
-    <NameOfLastUsedPublishProfile>C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\Properties\PublishProfiles\historiskatlas.dkNY.pubxml</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\Properties\PublishProfiles\beta.historiskatlas.dkNY.pubxml</NameOfLastUsedPublishProfile>
     <ToolsVersionPromptShown>1.8</ToolsVersionPromptShown>
     <UseIISExpress>true</UseIISExpress>
     <LastActiveSolutionConfig>Release|Any CPU</LastActiveSolutionConfig>

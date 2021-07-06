@@ -21,7 +21,7 @@ class HaMaps extends polymer.Base implements polymer.Element {
     //    //this.maps = [];
     //    this.byId = [];
     //    HaTags.loadedCallbacks.push(() =>
-    //        Services.getHAAPI('maps', null, (result) => this.handleResponse(result.data))
+    //        Services.HAAPI('maps', null, (result) => this.handleResponse(result.data))
     //        //Services.get('map', { v:2, count: 'all', sort:'{orgproductionendyear:asc}', schema: '{map:[id,name,orgproductionstartyear,orgproductionendyear,minlat,maxlat,minlon,maxlon,minz,maxz,iconcoords]}', ispublic: true }, (result) => this.handleResponse(result.data))
     //        //this.$.ajax.url = Common.api + 'map.json?ispublic=true&sort={orgproductionendyear:asc}&count=all&v=1&schema={map:[id,name,orgproductionstartyear,orgproductionendyear,minlat,maxlat,minlon,maxlon,minz,maxz,iconcoords]}'
     //    )
@@ -29,7 +29,7 @@ class HaMaps extends polymer.Base implements polymer.Element {
 
     public init() {
         this.byId = [];
-        Services.getHAAPI('maps', null, (result) => this.handleResponse(result.data))
+        Services.HAAPI('maps', null, (result) => this.handleResponse(result.data))
     }
 
     public handleResponse(result: any) {
@@ -117,7 +117,7 @@ class HaMaps extends polymer.Base implements polymer.Element {
     public loadExtendedData(map: HaMap) {
         //Services.get('map', { count: 1, schema: '{map:[licenstagid,licensee,source,about]}', id: map.id }, (result) => {
         //    var data = result.data[0];
-        Services.getHAAPI('map', { id: map.id }, (result) => {
+        Services.HAAPI('map', { id: map.id }, (result) => {
             var data = result.data;
             var i = this.maps.indexOf(map);
             if (data.licenstagid)

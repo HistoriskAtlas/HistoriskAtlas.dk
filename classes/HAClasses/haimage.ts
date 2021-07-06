@@ -66,11 +66,13 @@
     }
 
     get url() {
-        return Common.api + 'image/' + this._id;
+        //return Common.api + 'image/' + this._id;
+        return Services.getImageUrl(this);
     }
 
     get urlLowRes() {
-        return Common.api + 'image/' + this._id + '?action=scale&size={640:10000}&scalemode=inner';
+        //return Common.api + 'image/' + this._id + '?action=scale&size={640:10000}&scalemode=inner';
+        return Services.getImageUrl(this, { width: '640' });
     }
     
     get ordering() {
