@@ -22,8 +22,6 @@
         if (source.getUrls()[0] == this.HaMap.tileUrl)
             return;
 
-        //source.setUrl(this.HaMap.tileUrl);
-
         this.setSource(this._HaMap.source);
     }
 }

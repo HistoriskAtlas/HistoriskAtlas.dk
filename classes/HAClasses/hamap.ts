@@ -25,7 +25,7 @@
     public inViewTimeWarp: boolean;
 
     constructor(data: any) {
-        this.id = data.id;
+        this.id = data.id || data.mapid;
 
         if (data.minlat) {
             var coord = Common.toMapCoord([data.minlon, data.minlat]);

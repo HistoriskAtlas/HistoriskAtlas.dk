@@ -46,6 +46,7 @@ class Global extends polymer.Base implements polymer.Element {
         mapzoom: 7,
         maprotation: 0.0,
         mapid: 161,
+        secondarymapid: null,
         maplatitude: 56.0,
         maplongitude: 10.0,
         tagid: 427,

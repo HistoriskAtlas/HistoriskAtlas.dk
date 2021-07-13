@@ -226,11 +226,15 @@ class PanelTheme extends polymer.Base implements polymer.Element {
 interface ITheme {
     linkname: string;
     name: string;
+
     mapid: number;
     maplatitude: number;
     maplongitude: number;
     mapzoom: number;
     maprotation: number;
+
+    secondarymapid: number;
+
     tagid: number;
     content: IContent;
 }

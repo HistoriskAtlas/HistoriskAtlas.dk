@@ -100,7 +100,7 @@
     }
 
     public ready() {
-        this.timeWarp = new TimeWarp(this, HaMaps.initTimeWarpMapId);
+        this.timeWarp = new TimeWarp(this, App.global.theme.secondarymapid); //HaMaps.initTimeWarpMapId
         this.hillshade = new Hillshade(this);
         this.addLayer(this.iconLayer = new IconLayer());
         this.addLayer(this.iconLayerNonClustered = new IconLayerNonClustered());
@@ -109,7 +109,7 @@
         //setTimeout(() => this.updateExtent(), 1000);
         //setTimeout(() => this.updateExtentTimeWarp(), 1100);
 
-        setTimeout(() => App.global.set('timeWarpActive', LocalStorage.showTimeWarp), 0); //make sure the timewarp opens if it should
+        setTimeout(() => App.global.set('timeWarpActive', LocalStorage.showTimeWarp || App.global.theme.secondarymapid), 0); //make sure the timewarp opens if it should
     }
 
     public updateExtent() {

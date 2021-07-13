@@ -39,7 +39,7 @@ class TimeWarp extends TileLayer {
     private panCounter: number;
     
     constructor(mainMap: MainMap, mapID: number) {
-        super(mainMap, mapID);
+        super(mainMap, mapID ? mapID : HaMaps.initTimeWarpMapId);
         this.bindEvents();
         
         this.setVisible(false);
@@ -141,6 +141,7 @@ class TimeWarp extends TileLayer {
 
         App.timeWarpClosed.hide();
         LocalStorage.showTimeWarp = true;
+        UrlState.secondaryMapChanged();
     }
 
 
@@ -345,6 +346,7 @@ class TimeWarp extends TileLayer {
             App.map.renderSync();
             this.setVisible(false); //TODO: Remove layer instead?
             App.timeWarpClosed.show();
+            UrlState.secondaryMapChanged();
         }
     }
 

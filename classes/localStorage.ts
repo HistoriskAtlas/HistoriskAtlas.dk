@@ -3,7 +3,7 @@
 
     public static get showTimeWarp(): boolean {
         try {
-            return localStorage.getItem('showTimeWarp') != 'false'; //default open
+            return localStorage.getItem('showTimeWarp') == 'true'; //default closed - was:  != 'false'
         }
         catch {
             return false;

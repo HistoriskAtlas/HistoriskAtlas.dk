@@ -38,6 +38,8 @@
                 this.RefeshStateObjectString(false)
                 if (this.stateObject.m)
                     App.passed.theme.mapid = this.stateObject.m;
+                if (this.stateObject.sm)
+                    App.passed.theme.secondarymapid = this.stateObject.sm;
                 if (this.stateObject.hasOwnProperty('ogwint'))
                     Common.openGeoWindowInNewTab = !!parseInt(this.stateObject.ogwint);
             }
@@ -100,6 +102,14 @@
             this.stateObject.m = App.map.HaMap.id;
         else
             delete this.stateObject.m;
+
+        this.RefeshStateObjectString();
+    }
+    public static secondaryMapChanged() {
+        if (App.map.timeWarp.isVisible && App.map.timeWarp.HaMap)
+            this.stateObject.sm = App.map.timeWarp.HaMap.id;
+        else
+            delete this.stateObject.sm;
 
         this.RefeshStateObjectString();
     }

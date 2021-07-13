@@ -67,7 +67,7 @@ class HaMaps extends polymer.Base implements polymer.Element {
 
         this.set('maps', newMaps);
         this.mainMap = this.byId[App.global.theme.mapid ? App.global.theme.mapid : Global.defaultTheme.mapid];
-        this.timeWarpMap = this.byId[HaMaps.initTimeWarpMapId];
+        this.timeWarpMap = this.byId[App.global.theme.secondarymapid ? App.global.theme.secondarymapid : HaMaps.initTimeWarpMapId];
 
         //this.$.selectorMain.select(this.byId[App.global.theme.mapid ? App.global.theme.mapid : Global.defaultTheme.mapid]);
         //this.$.selectorTimeWarp.select(this.byId[HaMaps.initTimeWarpMapId]);
