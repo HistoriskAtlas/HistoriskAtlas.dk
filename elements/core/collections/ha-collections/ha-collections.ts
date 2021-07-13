@@ -35,8 +35,7 @@ class HaCollections extends Tags implements polymer.Element {
     //private drawRouteRequestCount: number = 0;
 
     public allCollectionsFetched: boolean = false;
-    //private static awitingGeos: Array<() => any> = [];
-    private static collectionGeosAPISchema = '{collection_geos:[id,geoid,ordering,showonmap,calcroute,contentid,longitude,latitude]}'; //Remeber to apply changes to default.aspx.cs also
+    //private static collectionGeosAPISchema = '{collection_geos:[id,geoid,ordering,showonmap,calcroute,contentid,longitude,latitude]}'; //Remeber to apply changes to default.aspx.cs also
 
     private static routeDrawingDisabled: boolean = false;
 
@@ -60,39 +59,23 @@ class HaCollections extends Tags implements polymer.Element {
         if (this.allCollectionsFetched)
             return;
 
-        //if (this.awaitGeos(() => this.getPublishedCollections()))
-        //    return;
-
         this.allCollectionsFetched = true;
         App.map.showRouteLayer();
-        this.getCollections({ count: 'all', schema: '{collection:[collectionid,title,ugc,cyclic,distance,type,userid,' + HaCollections.collectionGeosAPISchema + ']}', online: true }); //Remeber to apply changes to default.aspx.cs also
-
-        //if (!App.haUsers.user.isDefault)
-        //    this.getCollectionsFromUser();
+        //this.getCollections({ count: 'all', schema: '{collection:[collectionid,title,ugc,cyclic,distance,type,userid,' + HaCollections.collectionGeosAPISchema + ']}', online: true }); //Remeber to apply changes to default.aspx.cs also
+        Services.HAAPI('collections', null, (result) => this.getCollectionsFromData(result.data, false, true));
     }
 
     public getCollectionsFromUser() {
-        //if (this.awaitGeos(() => this.getCollectionsFromUser()))
-        //    return;
-
         App.map.showRouteLayer();
-        this.getCollections({ count: 'all', schema: '{collection:[collectionid,title,ugc,cyclic,distance,type,{userid:' + App.haUsers.user.id + '},' + HaCollections.collectionGeosAPISchema + ']}', online: false });
+        //this.getCollections({ count: 'all', schema: '{collection:[collectionid,title,ugc,cyclic,distance,type,{userid:' + App.haUsers.user.id + '},' + HaCollections.collectionGeosAPISchema + ']}', online: false });
+        Services.HAAPI('collections', { userid: App.haUsers.user.id }, (result) => this.getCollectionsFromData(result.data, false, false));
     }
 
     public getCollectionsByTagId(tagId: number, drawOnMap: boolean = false) {
-        //if (this.awaitGeos(() => this.getCollectionsByTagId(tagId)))
-        //    return;
         App.map.showRouteLayer();
-        this.getCollections({ count: 'all', schema: '{collection:{fields:[collectionid,title,ugc,cyclic,distance,type,userid,' + HaCollections.collectionGeosAPISchema + ',{content:[{tag_contents:[{collapse:id}]}]}],filters:[{content:[{tag_contents:[{id:' + tagId + '}]}]}]}}', online: true }, drawOnMap);
+        //this.getCollections({ count: 'all', schema: '{collection:{fields:[collectionid,title,ugc,cyclic,distance,type,userid,' + HaCollections.collectionGeosAPISchema + ',{content:[{tag_contents:[{collapse:id}]}]}],filters:[{content:[{tag_contents:[{id:' + tagId + '}]}]}]}}', online: true }, drawOnMap);
+        Services.HAAPI('collections', { tagid: tagId }, (result) => this.getCollectionsFromData(result.data, drawOnMap, true));
     }
-
-    //private awaitGeos(callback: () => any): boolean {
-    //    if (App.haGeos.geos.length == 0) {
-    //        HaCollections.awitingGeos.push(callback);
-    //        return true;
-    //    }
-    //    return false
-    //}
 
     public get allCollectionIDs(): Array<number> {
         var result = [];
@@ -101,49 +84,51 @@ class HaCollections extends Tags implements polymer.Element {
         return result;
     }
 
-    private getCollections(sendData: any, drawOnMap: boolean = false) {
-        Services.get('collection', sendData, (result) => {
-            var collections: Array<HaCollection> = this.collections.slice();
-            var allCollectionIDs = this.allCollectionIDs;
-            var tempFeatures: ol.Feature[];
-            var tempSelected: boolean;
-            for (var data of result.data) {
-                if (allCollectionIDs.indexOf(data.collectionid) > -1) {
-                    for (var collection of this.collections)
-                        if (collection.id == data.collectionid) {
-                            tempFeatures = collection.features;
-                            tempSelected = collection.selected;
-                            collections.splice(collections.indexOf(collection), 1);
-                            //this.splice('collections', this.collections.indexOf(collection), 1);
-                            break;
-                        }
-                }
-                var collection = this.getCollectionFromData(data, sendData.online) //allCollectionIDs, 
-                if (collection) {
-                    if (tempFeatures) {
-                        collection.features = tempFeatures;
-                        tempFeatures = null;
-                    }
-                    if (tempSelected) {
-                        collection.selected = tempSelected;
-                        tempSelected = null;
-                    }
+    //private getCollections(sendData: any, drawOnMap: boolean = false) {
+    //    Services.get('collection', sendData, (result) => this.getCollectionsFromData(result.data, drawOnMap, sendData.online));
+    //}
 
-                    collections.push(collection);
-                    //this.push('collections', collection);
-
-                    if (drawOnMap)
-                        this.drawRoute(collection);
-                }
+    private getCollectionsFromData(resultData: any, drawOnMap: boolean, online: boolean) {
+        var collections: Array<HaCollection> = this.collections.slice();
+        var allCollectionIDs = this.allCollectionIDs;
+        var tempFeatures: ol.Feature[];
+        var tempSelected: boolean;
+        for (var data of resultData) {
+            if (allCollectionIDs.indexOf(data.collectionid) > -1) {
+                for (var collection of this.collections)
+                    if (collection.id == data.collectionid) {
+                        tempFeatures = collection.features;
+                        tempSelected = collection.selected;
+                        collections.splice(collections.indexOf(collection), 1);
+                        //this.splice('collections', this.collections.indexOf(collection), 1);
+                        break;
+                    }
             }
-            var curCollection = this.collection;
+            var collection = this.getCollectionFromData(data, online) //allCollectionIDs, 
+            if (collection) {
+                if (tempFeatures) {
+                    collection.features = tempFeatures;
+                    tempFeatures = null;
+                }
+                if (tempSelected) {
+                    collection.selected = tempSelected;
+                    tempSelected = null;
+                }
 
-            this.set('collections', collections);
-            //this.notifyPath('collections', this.collections);
+                collections.push(collection);
+                //this.push('collections', collection);
 
-            if (curCollection)
-                this.select(curCollection);
-        })
+                if (drawOnMap)
+                    this.drawRoute(collection);
+            }
+        }
+        var curCollection = this.collection;
+
+        this.set('collections', collections);
+        //this.notifyPath('collections', this.collections);
+
+        if (curCollection)
+            this.select(curCollection);
     }
 
     private getCollectionFromData(data: any, online: boolean): HaCollection { //allCollectionIDs: Array<number>, 
@@ -155,7 +140,7 @@ class HaCollections extends Tags implements polymer.Element {
 
         var collection = new HaCollection(data);
         if (data.content)
-            for (var tagId of data.content.tag_contents)
+            for (var tagId of data.content.tag_contents || data.content.tagids)
                 collection.tags.push(App.haTags.byId[tagId]);
 
         return collection;
