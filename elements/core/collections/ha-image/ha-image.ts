@@ -21,25 +21,31 @@ class HaImageService extends Tags implements polymer.Element {
     
     @observe("image.text")
     textChanged() {
-        Services.update('image', { id: this.image.id, text: this.image.text });
+        if (this.editing)
+            Services.update('image', { id: this.image.id, text: this.image.text });
     }
 
     @observe("image.year")
     yearChanged() {
-        Services.update('image', { id: this.image.id, year: this.image.year });
+        if (this.editing)
+            Services.update('image', { id: this.image.id, year: this.image.year });
     }
 
     @observe("image.licensee")
     licenseeChanged() {
-        Services.update('image', { id: this.image.id, licensee: this.image.licensee });
+        if (this.editing)
+            Services.update('image', { id: this.image.id, licensee: this.image.licensee });
     }
 
     @observe("image.photographer")
     photographerChanged() {
-        Services.update('image', { id: this.image.id, photographer: this.image.photographer });
+        if (this.editing)
+            Services.update('image', { id: this.image.id, photographer: this.image.photographer });
     }
 
     deleteImage() {
+        if (!this.editing)
+            return;
         Services.delete('image', { id: this.image.id }, (result) => {
             App.toast.show('Billedet blev slettet.');
             (<WindowImage>this.parentNode).windowGeo.splice('geo.images', this.geo.images.indexOf(this.image), 1); //TODO: might be easier to stop spawning windom-image dynamically

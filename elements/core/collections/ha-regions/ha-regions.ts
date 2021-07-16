@@ -7,9 +7,9 @@ class HaRegions extends polymer.Base implements polymer.Element {
     @property({ type: Object })
     private type: HARegionType & Object; 
     
-    ready() {
-        this.$.ajax.url = Common.api + 'region.json';
-    }
+    //ready() {
+    //    this.$.ajax.url = Common.api + 'region.json';
+    //}
 
     @observe("type")
     regionTypeChanged(regionType: HARegionType) {
@@ -26,28 +26,26 @@ class HaRegions extends polymer.Base implements polymer.Element {
 
         regionType.regionsLoaded = true;
 
-        this.set('params', {
-            'v': 1,
-            'schema': '{region:[regionid,name]}',
-            'count': 'all',
-            'regiontypeid': regionType.id
-        });
-        this.$.ajax.generateRequest();
+    //    this.set('params', {
+    //        'v': 1,
+    //        'schema': '{region:[regionid,name]}',
+    //        'count': 'all',
+    //        'regiontypeid': regionType.id
+    //    });
+    //    this.$.ajax.generateRequest();
+
+        Services.HAAPI('regions', { schema: 'minimal', regiontypeid: regionType.id }, (result) => {
+            for (var data of result.data)
+                this.regions[data.regionid] = new HaRegion(data)
+        })
     }
 
-    public handleResponse() {
-        this.$.ajax.lastResponse.data.forEach(data => {
-            var region: HaRegion = new HaRegion(data)
-            //if (this.regions.length - 1 < region.id)
-            //    //this.regions.length = region.id + 1;
-            //    this.set('regions.length', region.id + 1);
-            
-            this.regions[region.id] = region;
-            //this.set('regions.' + region.id, region);
-            
-            //this.push('regions', new HaRegion(data));
-        });
-    }
+//    public handleResponse() {
+//        this.$.ajax.lastResponse.data.forEach(data => {
+//            var region: HaRegion = new HaRegion(data)
+//            this.regions[region.id] = region;
+//        });
+//    }
 }
 
 HaRegions.register();
