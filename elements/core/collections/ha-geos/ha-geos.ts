@@ -57,13 +57,18 @@ class HaGeos extends polymer.Base implements polymer.Element {
     public tagsLoaded() {
         this.updateAllGeosFromAPI(false);
         if (LocalStorage.get("sessionID") && !Common.embed)
-            Services.get('login', {}, (result) => {
-                if (result.data.user.isvalid) {
-                    App.haUsers.login(result.data.user);
-                    if (result.data.user.role > 3)
-                        Services.get('hadb6stats.login', {}); //hadb5stats.login
-                }
+            Services.HAAPI('login', { sid: LocalStorage.get("sessionID") }, (result) => {
+                if (result)
+                    App.haUsers.login(result.data)
             });
+
+    //        Services.get('login', {}, (result) => {
+    //            if (result.data.user.isvalid) {
+    //                App.haUsers.login(result.data.user);
+    //            //    if (result.data.user.role > 3)
+    //            //        Services.get('hadb6stats.login', {}); //hadb5stats.login
+    //            }
+    //        });
     }
 
     public login() {

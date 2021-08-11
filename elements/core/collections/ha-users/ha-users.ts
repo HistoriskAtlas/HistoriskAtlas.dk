@@ -41,7 +41,7 @@ class HaUsers extends polymer.Base implements polymer.Element {
         //var user = new HAUser(data);
         Services.get('user', {
             'schema': '{user:[location,created,licensename,{userhierarkis:[empty,{child:[id,login,firstname,lastname]}]},{userhierarkis1:[empty,{parent:[id,login,firstname,lastname]}]},{geos:[empty,{collapse:geoid}]},{user_institutions:[{institution:[id,url,email,type,deleted,tagid]}]}]}',
-            'userid': data.id
+            'userid': data.id | data.userid
         }, (result) => {
             for (var prop in result.data[0])
                 data[prop] = result.data[0][prop];
@@ -84,8 +84,10 @@ class HaUsers extends polymer.Base implements polymer.Element {
             App.toast.show(newUser.isDefault ? 'Logget ud' : 'Logget ind som ' + newUser.firstname + ' ' + newUser.lastname);
 
         if (newUser.isDefault) {
-            if (oldUser)
+            if (oldUser) { //logged out
                 App.haGeos.logout();
+                LocalStorage.delete("sessionID");
+            }
             return;
         }
 

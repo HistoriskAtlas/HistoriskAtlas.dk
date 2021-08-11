@@ -65,9 +65,9 @@
         var xhr = new XMLHttpRequest();
         xhr.open(data ? 'POST' : 'GET', url, true);
         xhr.responseType = 'json';
-        xhr.timeout = 10000,
+        xhr.timeout = 10000;
         xhr.addEventListener('load', () => {
-            if (xhr.status === 200)
+            if (Math.floor(xhr.status / 100) === 2)
                 success(xhr.response);
             else {
                 if (error)
