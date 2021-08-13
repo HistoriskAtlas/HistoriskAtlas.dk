@@ -39,7 +39,7 @@ class HaUsers extends polymer.Base implements polymer.Element {
     public login(data: any) {
         this._loggingIn = true;
         //var user = new HAUser(data);
-        Services.get('user', {
+        Services.get('user', {  //TODO: DO NOT DO THIS.... get the full user from org. login instead....................................................................
             'schema': '{user:[location,created,licensename,{userhierarkis:[empty,{child:[id,login,firstname,lastname]}]},{userhierarkis1:[empty,{parent:[id,login,firstname,lastname]}]},{geos:[empty,{collapse:geoid}]},{user_institutions:[{institution:[id,url,email,type,deleted,tagid]}]}]}',
             'userid': data.id | data.userid
         }, (result) => {

@@ -16,7 +16,17 @@ class PanelLogin extends polymer.Base implements polymer.Element {
 
     ready() {
         Common.loadJS('facebook-jssdk', '//connect.facebook.com/da_DK/sdk.js');
-        Common.loadJS('google-jssdk', '//apis.google.com/js/client:platform.js');
+        //Common.loadJS('google-jssdk', '//apis.google.com/js/client:platform.js');
+        Common.loadJS('google-jssdk', '//accounts.google.com/gsi/client', () => {
+            (<any>window).google.accounts.id.initialize({
+                client_id: '232489990938-2m96hqlhfm75bqvqtr8i4ukvnuhrc7n4.apps.googleusercontent.com',
+                callback: (response) => this.handleGoogleCredentialResponse(response)
+            });
+            (<any>window).google.accounts.id.renderButton(document.getElementById('login_google'), {
+                theme: 'outline',
+                size: 'large',
+            });
+        });
     }
 
     resetPassword() {
@@ -35,47 +45,62 @@ class PanelLogin extends polymer.Base implements polymer.Element {
         if (!(this.$.username.validate() && this.$.password.validate()))
             return;
 
-        Services.get('login', { provider: "ha", uname: this.$.username.value, password: $.md5(this.$.password.value) }, (result) => this.getLoginCallback(result));
+        //Services.get('login', { provider: "ha", uname: this.$.username.value, password: $.md5(this.$.password.value) }, (result) => this.getLoginCallback(result));
+        Services.HAAPI('login', { provider: "ha", username: this.$.username.value, password: Common.md5(this.$.password.value), sid: (<any>document).sid }, (result) => this.getLoginCallback(result.data));
     }
 
-    @listen("loginFB.tap")
+    @listen("loginFB.tap") //TODO: Do as with google.....and find newest api............and fix google button not showing on repated opens of login window..............................
     loginFB() {
         FB.init({ appId: '876939902336614', xfbml: true, version: 'v2.9' });
         FB.login((fbToken) => {
             FB.api('/me?fields=name,first_name,last_name,email,link', (fbUser) => {
-                Services.get('login', { provider: "facebook", utoken: JSON.stringify(fbUser) }, (result) => this.getLoginCallback(result));
+                Services.get('login', { provider: "facebook", utoken: JSON.stringify(fbUser) }, (result) => this.getLoginCallback(result.data.user));
             });
         }, { scope: 'public_profile, email' });
     }
 
-    @listen("loginG.tap")
-    loginG() { //TODO: user Polymer google sign in instead?
+    //@listen("loginG.tap")
+    //loginG() {
+    //    var params = {
+    //        client_id: "232489990938-2m96hqlhfm75bqvqtr8i4ukvnuhrc7n4.apps.googleusercontent.com", //"364350662015-nssk0tgtoh9d7d0r7brt78mr0utvoi0d.apps.googleusercontent.com",
+    //        immediate: false,
+    //        response_type: "token",
+    //        scope: "email"
+    //    };
+    //    gapi.auth.authorize(params, (UToken) => {
+    //        gapi.client.load('plus', 'v1', () => {
+    //            var object = { path: '/plus/v1/people/me' };
+    //            var request = gapi.client.request(object);
+    //            request.then((googleToken) => {
+    //                var gplink = 'https://plus.google.com/' + googleToken.result.id;
+    //                var token = { id: googleToken.result.id, name: googleToken.result.displayName, photo: googleToken.result.image.url, email: googleToken.result.emails[0].value, link: gplink };
+    //                Services.get('login', { provider: "google-plus", utoken: JSON.stringify(token) }, (result) => this.getLoginCallback(result.data.user));
+    //            }, (fail) => { });
+    //        });
+    //    });
+    //}
+    private handleGoogleCredentialResponse(response: any) {
+        var payloadString = (<string>response.credential).split('.')[1];
+        var payload = JSON.parse(atob(payloadString));
         var params = {
-            client_id: "232489990938-2m96hqlhfm75bqvqtr8i4ukvnuhrc7n4.apps.googleusercontent.com", //"364350662015-nssk0tgtoh9d7d0r7brt78mr0utvoi0d.apps.googleusercontent.com",
-            immediate: false,
-            response_type: "token",
-            scope: "email"
-        };
-        gapi.auth.authorize(params, (UToken) => {
-            gapi.client.load('plus', 'v1', () => {
-                var object = { path: '/plus/v1/people/me' };
-                var request = gapi.client.request(object);
-                request.then((googleToken) => {
-                    var gplink = 'https://plus.google.com/' + googleToken.result.id;
-                    var token = { id: googleToken.result.id, name: googleToken.result.displayName, photo: googleToken.result.image.url, email: googleToken.result.emails[0].value, link: gplink };
-                    Services.get('login', { provider: "google-plus", utoken: JSON.stringify(token) }, (result) => this.getLoginCallback(result));
-                }, (fail) => { });
-            });
-        });
+            sid: (<any>document).sid,
+            provider: 'google',
+            authkey: payload.sub,
+            firstname: payload.given_name,
+            lastname: payload.family_name,
+            email: payload.email
+        }
+        Services.HAAPI('login', params, (result) => this.getLoginCallback(result.data));
     }
-
-    private getLoginCallback(result) {
-        if (result.data.status.code == 1) //Authorized
+    
+    private getLoginCallback(user) {
+        //if (result.data.status.code == 1) //Authorized
+        if (user) //Authorized
         {
             if (this.remember)
                 LocalStorage.set("sessionID", (<any>document).sid);
             (<any>this.domHost).$.windowbasic.close();
-            App.haUsers.login(result.data.user);
+            App.haUsers.login(user);
 
             //if (result.data.user.role > 3)
             //    Services.get('hadb6stats.login', { provider: "ha", uname: this.$.username.value, password: $.md5(this.$.password.value) }); //hadb5stats
@@ -98,7 +123,7 @@ class PanelLogin extends polymer.Base implements polymer.Element {
             return;
         }
 
-        Services.get('auth', { send_reset_password_mail_to: this.email, new_password: $.md5(this.password1) }, (result) => {
+        Services.get('auth', { send_reset_password_mail_to: this.email, new_password: Common.md5(this.password1) }, (result) => {
             Common.dom.append(DialogAlert.create("Der vil nu blive sendt en email til den adresse du har angivet. Følg instruktionerne i emailen, for at fortsætte."));
         });
         this.$.dialog.close();

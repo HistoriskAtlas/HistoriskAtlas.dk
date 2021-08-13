@@ -1,5 +1,3 @@
-C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csproj.AssemblyReference.cache
-C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csproj.CoreCompileInputs.cache
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\images\theme\Modstandskamp_bomb_icon.png
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\images\theme\Modstandskamp_parachute_icon.png
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\manifest.json
@@ -8,6 +6,8 @@ C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\pdf\Retningslinjer for formid
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\HistoriskAtlas5.Frontend.dll.config
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\HistoriskAtlas5.Frontend.dll
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\HistoriskAtlas5.Frontend.pdb
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csproj.CoreCompileInputs.cache
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csproj.CopyComplete
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.dll
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.pdb
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csproj.AssemblyReference.cache

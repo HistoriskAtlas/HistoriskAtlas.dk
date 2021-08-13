@@ -456,7 +456,7 @@ class HaTags extends polymer.Base implements polymer.Element {
         var decodedRLE = state.replace(/_/g, '/').replace(/--/g, '+');
         var decodedB64 = decodedRLE.replace(/-(..)/g, (substring: string) => Array(Common.base64chars.indexOf(substring[2]) + 1).join(substring[1]));
         var decodedBINSTR = atob(decodedB64);
-        var decodedBYTES = new Uint8Array(decodedBINSTR.length);
+        //var decodedBYTES = new Uint8Array(decodedBINSTR.length);
         var result: Array<boolean> = [];
         for (var i = 0; i < decodedBINSTR.length; i++) {
             var byte = decodedBINSTR.charCodeAt(i);

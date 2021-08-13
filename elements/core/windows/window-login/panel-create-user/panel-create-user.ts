@@ -88,7 +88,7 @@ class PanelCreateUser extends polymer.Base implements polymer.Element {
         Services.get('login', {
             provider: "ha", utoken: JSON.stringify({
                 login: this.login,
-                pass: $.md5(this.password1),
+                pass: Common.md5(this.password1),
                 email: this.email,
                 firstname: this.firstname,
                 lastname: this.lastname,

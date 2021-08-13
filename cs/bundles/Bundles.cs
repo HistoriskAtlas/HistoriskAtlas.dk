@@ -86,8 +86,8 @@ namespace HistoriskAtlas5.Frontend
             sbJQueryExtent.Include("~/js/jquery/jquery-ui.1.11.4.custom.js"); //Effects Core ONLY... TOOD: use "min"?
             sbJQueryExtent.Include("~/js/jquery/jquery.mobile.1.4.5.custom.js"); //Swipe ONLY... TOOD: use "min"? and only serve on mobile devices?
             //sbJQueryExtent.Include("~/js/jquery/simplegallery.js");
-            sbJQueryExtent.Include("~/js/jquery/Base64.js"); //needed?
-            sbJQueryExtent.Include("~/js/jquery/jquery.md5.js");
+            //sbJQueryExtent.Include("~/js/jquery/Base64.js"); //needed?
+            //sbJQueryExtent.Include("~/js/jquery/jquery.md5.js");
             //sbJQueryExtent.Include("~/js/jquery/jquery.mCustomScrollbar.concat.min.js");
             //sbJQueryExtent.Include("~/js/jquery/js.cookie.2.1.0");
             BundleTable.Bundles.Add(sbJQueryExtent);

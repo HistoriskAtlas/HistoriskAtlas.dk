@@ -10,32 +10,43 @@
             h2 {
                 margin: 5px;
             }
+
             .intro {
                 font-size: small;
             }
+
             .remember {
                 text-align: center;
                 font-size: small;
-                margin-top:10px;
+                margin-top: 10px;
             }
+
             .reset {
                 text-align: center;
                 font-size: small;
-                margin-top:10px;
+                margin-top: 10px;
                 cursor: pointer;
             }
+
             .or {
                 font-style: italic;
                 text-align: center;
                 font-size: small;
             }
-            .social {
+            /*            .social {
                 display: flex;
             }
             .social > paper-button {
                 text-transform: none !important;
                 flex-grow: 1;
+            }*/
+            .social {
+                align-self: center;
+                height: 50px;
+                display: flex;
+                align-items: center;
             }
+
             #dialog {
                 width: 360px;
                 height: 510px;
@@ -61,10 +72,11 @@
         <div class="or">
             eller
         </div>
-        <div class="social">
-            <paper-button id="loginFB" class="HAPrimColor">Log ind med Facebook</paper-button>
-            <paper-button id="loginG" class="HAPrimColor">Log ind med Google-konto</paper-button>
-        </div>
+    
+        <paper-button id="loginFB" class="HAPrimColor">Log ind med Facebook</paper-button>
+        
+        <!--<paper-button id="loginG" class="HAPrimColor">Log ind med Google-konto</paper-button>-->
+        <div id="login_google" class="social"></div>
 
         <paper-dialog id="dialog" always-on-top>
             <h2>Ny adgangskode</h2>
