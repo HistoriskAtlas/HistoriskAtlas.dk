@@ -216,13 +216,9 @@ class WindowGeo extends polymer.Base implements polymer.Element {
         this.$$('#shareLinkDialog').open();
     }
     shareFB() {
-        Common.loadJS('facebook-jssdk', '//connect.facebook.com/da_DK/sdk.js', (e) => {
-            FB.init({ appId: '876939902336614', xfbml: true, version: 'v2.9' });
-            FB.ui({
-                method: 'share',
-                href: this.geo.link,
-            }, (response) => {
-            });
+        Common.loadJS('facebook-jssdk', '//connect.facebook.net/da_DK/sdk.js', (e) => {
+            (<any>window).FB.init({ appId: '876939902336614', xfbml: true, version: 'v11.0' });
+            (<any>window).FB.ui({ method: 'share', href: this.geo.link, }, (response) => { });
         });
     }
     shareQR() {

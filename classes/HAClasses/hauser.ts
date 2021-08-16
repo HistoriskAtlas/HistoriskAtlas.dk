@@ -32,16 +32,16 @@
         this._lastname = data.lastname;
         this._email = data.email;
         this._isActive = data.isactive;
-        this._role = data.role;
+        this._role = data.role || data.roleid;
         this._about = data.about;
 
         this._created = data.created;
         this._favourites = new HaCollection(data.favourites);
         this._isDefault = !this._id; //TODO: not always so...
 
-        if (data.user_institutions)
-            for (var user_institution of data.user_institutions)
-                this._institutions.push(new HAInstitution(user_institution.institution));
+        if (data.institutions)
+            for (var institution of data.institutions)
+                this._institutions.push(new HAInstitution(institution));
 
         //this._deleted = data.deleted;
         //this.institutionid = data.institutionid;

@@ -76,6 +76,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
     }
 
     public logout() {
+        HaGeos.usersGeoIDs = [];
         this.geos.forEach((geo) => {
             geo.userLayer = false;
         })

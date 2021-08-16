@@ -19,6 +19,7 @@
                 text-align: center;
                 font-size: small;
                 margin-top: 10px;
+                margin-bottom: 10px;
             }
 
             .reset {
@@ -32,6 +33,10 @@
                 font-style: italic;
                 text-align: center;
                 font-size: small;
+                flex-grow: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
             /*            .social {
                 display: flex;
@@ -40,11 +45,16 @@
                 text-transform: none !important;
                 flex-grow: 1;
             }*/
-            .social {
+            .panel-login.login-button {
                 align-self: center;
                 height: 50px;
                 display: flex;
                 align-items: center;
+            }
+            .panel-login#login {
+                /*margin-top: 30px;*/
+                width: 230px;
+                height: initial;
             }
 
             #dialog {
@@ -55,7 +65,7 @@
             }
         </style>
         <div style="text-align:center; margin:0px 5px">
-            <H2><span style="font-weight:lighter">Mit</span>Atlas</H2><br>
+            <H2><span style="font-weight:lighter">Mit</span>Atlas</H2>
             <span class="intro">Log ind på MitAtlas for at fortælle DIN historie. Hvis du ikke har været logget ind før, kan du oprette en bruger ved at vælge 'Opret bruger' øverst eller logge ind med en facebook- eller google-konto nederst.</span>
         </div>
         <div style="width:80%; align-self:center; display: flex">
@@ -66,17 +76,18 @@
             Har du glemt din adgangskode? klik her.
         </div>
         <div class="remember">
-            <paper-checkbox checked="{{remember}}">Husk mit login (dette er ikke en delt computer)</paper-checkbox>
+            <paper-checkbox checked="{{remember}}">Husk mit login</paper-checkbox>
         </div>
-        <paper-button id="login" class="HAPrimColor" style="margin-top:30px">log ind</paper-button>
+        <paper-button id="login" class="login-button HAPrimColor">log ind</paper-button>
         <div class="or">
             eller
         </div>
     
-        <paper-button id="loginFB" class="HAPrimColor">Log ind med Facebook</paper-button>
-        
+        <!--<paper-button id="loginFB" class="HAPrimColor">Log ind med Facebook</paper-button>-->
+        <div class="fb-login-button login-button" onlogin="handleFacebookResponse" scope="public_profile,email" data-width="" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
+
         <!--<paper-button id="loginG" class="HAPrimColor">Log ind med Google-konto</paper-button>-->
-        <div id="login_google" class="social"></div>
+        <div id="login_google" class="login-button"></div>
 
         <paper-dialog id="dialog" always-on-top>
             <h2>Ny adgangskode</h2>

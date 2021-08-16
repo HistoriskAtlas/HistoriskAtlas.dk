@@ -8,7 +8,7 @@ class HaUsers extends polymer.Base implements polymer.Element {
     public users: Array<HAUser>;
 
     public firstLogInTour: DialogTour;
-    private _loggingIn: boolean;
+    //private _loggingIn: boolean;
 
     ready() {
         //this.$.ajax.url = Common.api + 'user.json';
@@ -37,42 +37,43 @@ class HaUsers extends polymer.Base implements polymer.Element {
     //}
 
     public login(data: any) {
-        this._loggingIn = true;
+        //this._loggingIn = true;
         //var user = new HAUser(data);
-        Services.get('user', {  //TODO: DO NOT DO THIS.... get the full user from org. login instead....................................................................
-            'schema': '{user:[location,created,licensename,{userhierarkis:[empty,{child:[id,login,firstname,lastname]}]},{userhierarkis1:[empty,{parent:[id,login,firstname,lastname]}]},{geos:[empty,{collapse:geoid}]},{user_institutions:[{institution:[id,url,email,type,deleted,tagid]}]}]}',
-            'userid': data.id | data.userid
-        }, (result) => {
-            for (var prop in result.data[0])
-                data[prop] = result.data[0][prop];
+        //Services.get('user', {  //TODO: DO NOT DO THIS.... get the full user from org. login instead....................................................................
+        //    'schema': '{user:[location,created,licensename,{userhierarkis:[empty,{child:[id,login,firstname,lastname]}]},{userhierarkis1:[empty,{parent:[id,login,firstname,lastname]}]},{geos:[empty,{collapse:geoid}]},{user_institutions:[{institution:[id,url,email,type,deleted,tagid]}]}]}',
+        //    'userid': data.id | data.userid
+        //}, (result) => {
 
-            var user = new HAUser(data);
+        //for (var prop in result.data[0])
+        //    data[prop] = result.data[0][prop];
 
-            user.geos = [];
-            for (var geoID of data.geos) {
-                var geo: HaGeo = App.haGeos[geoID];
-                if (geo)
-                    geo.connectUser();
-                else
-                    HaGeos.usersGeoIDs.push(geoID);                
-            }
+        var user = new HAUser(data);
 
-            //Moved to constructer for HAUser...
-            //for (var user_institution of result.data[0].user_institutions)
-            //    user.institutions.push(new HAInstitution(user_institution.institution));
+        user.geos = [];
+        for (var geoID of data.geoids) {
+            var geo: HaGeo = App.haGeos[geoID];
+            if (geo)
+                geo.connectUser();
+            else
+                HaGeos.usersGeoIDs.push(geoID);                
+        }
+
+        //Moved to constructer for HAUser...
+        //for (var user_institution of result.data[0].user_institutions)
+        //    user.institutions.push(new HAInstitution(user_institution.institution));
 
 
-            this.set('user', user);
+        this.set('user', user);
 
-            //IconLayer.updateShown();
-            App.haGeos.login();
+        //IconLayer.updateShown();
+        App.haGeos.login();
 
-            //if (App.haCollections.allCollectionsFetched)
-                App.haCollections.getCollectionsFromUser();
+        //if (App.haCollections.allCollectionsFetched)
+            App.haCollections.getCollectionsFromUser();
 
-                this._loggingIn = false;
+            //this._loggingIn = false;
 
-        })
+        //})
     }
 
     @observe('user')
@@ -132,7 +133,7 @@ class HaUsers extends polymer.Base implements polymer.Element {
     private updateUserProperty(property: string) {
         if (!this.user)
             return;
-        if (this.user.isDefault || this._loggingIn)
+        if (this.user.isDefault) // || this._loggingIn
             return;
 
         Services.update('user', JSON.parse('{ "id": ' + this.user.id + ', "' + property + '": "' + this.user[property] + '" }'), null, (data) => {

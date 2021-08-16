@@ -82,12 +82,11 @@ class MitAtlasButton extends polymer.Base implements polymer.Element {
     }
 
     logOutTap() {
-        Services.get('exit', {}, (result) => {
-            if (result.data.status.code == 2)
-                App.haUsers.set('user', HAUser.default);
-            //else
-            //    error logging out
-        })
+    //    Services.get('exit', {}, (result) => {
+    //        if (result.data.status.code == 2)
+    //            App.haUsers.set('user', HAUser.default);
+        //    })
+        Services.HAAPI('logout', null, () => App.haUsers.set('user', HAUser.default));
     }
 
     noAnimations(user: HAUser): boolean {

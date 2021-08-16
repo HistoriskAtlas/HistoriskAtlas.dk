@@ -664,8 +664,6 @@
     <TypeScriptCompile Include="typings\ga.d.ts" />
     <TypeScriptCompile Include="typings\jQuery\jqueryui.d.ts" />
     <TypeScriptCompile Include="typings\openlayers.d.ts" />
-    <TypeScriptCompile Include="typings\facebook.d.ts" />
-    <TypeScriptCompile Include="typings\googleApi.d.ts" />
     <TypeScriptCompile Include="typings\jQuery\jquery.d.ts" />
     <Content Include="EmbedTest.aspx" />
     <Content Include="js\sw.js" />

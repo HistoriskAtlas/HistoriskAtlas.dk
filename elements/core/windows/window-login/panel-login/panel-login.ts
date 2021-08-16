@@ -13,18 +13,24 @@ class PanelLogin extends polymer.Base implements polymer.Element {
     @property({ type: String })
     public email: string;
 
-
     ready() {
-        Common.loadJS('facebook-jssdk', '//connect.facebook.com/da_DK/sdk.js');
+        //Common.loadJS('facebook-jssdk', '//connect.facebook.com/da_DK/sdk.js');
         //Common.loadJS('google-jssdk', '//apis.google.com/js/client:platform.js');
+        (<any>window).handleFacebookResponse = (response) => this.handleFacebookResponse(response);
+        Common.loadJS('facebook-jssdk', '//connect.facebook.net/da_DK/sdk.js', () => {
+            (<any>window).FB.init({ appId: '876939902336614', cookie: true, xfbml: true, version: 'v11.0' }); //TODO: callback when button is clicked?!................................
+
+        });
         Common.loadJS('google-jssdk', '//accounts.google.com/gsi/client', () => {
             (<any>window).google.accounts.id.initialize({
                 client_id: '232489990938-2m96hqlhfm75bqvqtr8i4ukvnuhrc7n4.apps.googleusercontent.com',
-                callback: (response) => this.handleGoogleCredentialResponse(response)
+                callback: (response) => this.handleGoogleResponse(response)
             });
-            (<any>window).google.accounts.id.renderButton(document.getElementById('login_google'), {
-                theme: 'outline',
+            (<any>window).google.accounts.id.renderButton(this.$.login_google, {
+                theme: 'filled_blue',
+                logo_alignment: 'left',
                 size: 'large',
+                width: 230
             });
         });
     }
@@ -49,37 +55,24 @@ class PanelLogin extends polymer.Base implements polymer.Element {
         Services.HAAPI('login', { provider: "ha", username: this.$.username.value, password: Common.md5(this.$.password.value), sid: (<any>document).sid }, (result) => this.getLoginCallback(result.data));
     }
 
-    @listen("loginFB.tap") //TODO: Do as with google.....and find newest api............and fix google button not showing on repated opens of login window..............................
-    loginFB() {
-        FB.init({ appId: '876939902336614', xfbml: true, version: 'v2.9' });
-        FB.login((fbToken) => {
-            FB.api('/me?fields=name,first_name,last_name,email,link', (fbUser) => {
-                Services.get('login', { provider: "facebook", utoken: JSON.stringify(fbUser) }, (result) => this.getLoginCallback(result.data.user));
-            });
-        }, { scope: 'public_profile, email' });
+    private handleFacebookResponse(response: any) {
+        if (response.status != 'connected') {
+            App.toast.show('Fejl under indlogning via facebook.');
+            return;
+        }
+        (<any>window).FB.api('/me', { fields: 'first_name, last_name, email' }, (meResponse) => {
+            var params = {
+                sid: (<any>document).sid,
+                provider: 'facebook',
+                authkey: meResponse.id,
+                firstname: meResponse.first_name,
+                lastname: meResponse.last_name,
+                email: meResponse.email
+            }
+            Services.HAAPI('login', params, (result) => this.getLoginCallback(result.data));
+        });
     }
-
-    //@listen("loginG.tap")
-    //loginG() {
-    //    var params = {
-    //        client_id: "232489990938-2m96hqlhfm75bqvqtr8i4ukvnuhrc7n4.apps.googleusercontent.com", //"364350662015-nssk0tgtoh9d7d0r7brt78mr0utvoi0d.apps.googleusercontent.com",
-    //        immediate: false,
-    //        response_type: "token",
-    //        scope: "email"
-    //    };
-    //    gapi.auth.authorize(params, (UToken) => {
-    //        gapi.client.load('plus', 'v1', () => {
-    //            var object = { path: '/plus/v1/people/me' };
-    //            var request = gapi.client.request(object);
-    //            request.then((googleToken) => {
-    //                var gplink = 'https://plus.google.com/' + googleToken.result.id;
-    //                var token = { id: googleToken.result.id, name: googleToken.result.displayName, photo: googleToken.result.image.url, email: googleToken.result.emails[0].value, link: gplink };
-    //                Services.get('login', { provider: "google-plus", utoken: JSON.stringify(token) }, (result) => this.getLoginCallback(result.data.user));
-    //            }, (fail) => { });
-    //        });
-    //    });
-    //}
-    private handleGoogleCredentialResponse(response: any) {
+    private handleGoogleResponse(response: any) {
         var payloadString = (<string>response.credential).split('.')[1];
         var payload = JSON.parse(atob(payloadString));
         var params = {
