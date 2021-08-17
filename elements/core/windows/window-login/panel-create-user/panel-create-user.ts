@@ -85,25 +85,44 @@ class PanelCreateUser extends polymer.Base implements polymer.Element {
             return;
         }
 
-        Services.get('login', {
-            provider: "ha", utoken: JSON.stringify({
-                login: this.login,
-                pass: Common.md5(this.password1),
-                email: this.email,
-                firstname: this.firstname,
-                lastname: this.lastname,
-                role: 2 //Has no effect(?)
-            })
-        }, (result: any) => {
-            if (result.data.status.code == 1) {
-                App.haUsers.login(result.data.user); 
-                this.$.confirmationDialog.open();
-            } else {
+        var data = new FormData();
+        data.append('username', this.login)
+        data.append('password', Common.md5(this.password1))
+        data.append('firstname', this.firstname)
+        data.append('lastname', this.lastname)
+        data.append('email', this.email)
+
+        Services.HAAPI('login', { provider: "ha", sid: (<any>document).sid}, (result) => {
+            if (!result) {
                 App.toast.show("Brugernavnet findes allerede. Vælg et andet.")
                 this.exisitingLogins.push(this.login)
                 this.validateLogin(this.login, this.login);
+                return;
             }
-        });
+            App.haUsers.login(result.data);
+            (<any>this.domHost).$.windowbasic.close();
+            //this.$.confirmationDialog.open();
+        }, null, null, "Opretter bruger", data);
+
+        //Services.get('login', {
+        //    provider: "ha", utoken: JSON.stringify({
+        //        login: this.login,
+        //        pass: Common.md5(this.password1),
+        //        email: this.email,
+        //        firstname: this.firstname,
+        //        lastname: this.lastname,
+        //        role: 2 //Has no effect(?)
+        //    })
+        //}, (result: any) => {
+        //    if (result.data.status.code == 1) {
+        //        App.haUsers.login(result.data.user); 
+        //        this.$.confirmationDialog.open();
+        //    } else {
+        //        App.toast.show("Brugernavnet findes allerede. Vælg et andet.")
+        //        this.exisitingLogins.push(this.login)
+        //        this.validateLogin(this.login, this.login);
+        //    }
+        //});
 
     }
 
