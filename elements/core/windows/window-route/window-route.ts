@@ -310,6 +310,10 @@ class WindowRoute extends polymer.Base implements polymer.Element {
     tagsService(): Tags {
         return App.haCollections;
     }
+
+    showReadonlyGeos(distance: number, editing: boolean): boolean {
+        return !editing && distance > 0;
+    }
 }
 
 WindowRoute.register();

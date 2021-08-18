@@ -179,12 +179,14 @@
 
             //TODO: A alot of this could be cached:
 
-            if (collection.isWalk && res > 100) {
+            if (collection.isWalk && (res > 100 || !collection.distance)) {
                 return (<any>feature).point ? [
                     new ol.style.Style({
                         image: new ol.style.Circle({
                             radius: 10, //Math.min(Math.max(res / 20, 2), 10),
-                            fill: new ol.style.Fill({ color: Common.getStyleVar('--map-route-collapsed-color') })
+                            fill: new ol.style.Fill({
+                                color: collection.distance ? Common.getStyleVar('--map-route-collapsed-color') : Common.getStyleVar('--map-route-zero-length-color')
+                            })                            
                         }),
                         geometry: (<any>feature).point
                     })

@@ -102,7 +102,7 @@
             lat1 = this.toRad(coord1[1]),
             lat2 = this.toRad(coord2[1]);
 
-        return Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(dLon)) * R;
+        return Math.acos(Math.min(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(dLon), 1)) * R;
     }
     public static toRad(x): number { return x * Math.PI / 180; }
 
@@ -313,7 +313,7 @@
         return text.charAt(0).toUpperCase() + text.slice(1);
     }
 
-    public static getStyleVar(prop: string): string {
+    public static getStyleVar(prop: string): string { //TODO: cache?
         return getComputedStyle(document.documentElement).getPropertyValue(prop).trim();
     }
 

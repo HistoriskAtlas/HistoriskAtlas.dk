@@ -1,10 +1,10 @@
 ﻿:root.theme-digterruter {
     --digterruter-red: #dd655b;
     --digterruter-green: #24523a;
-    
     --primary-color: var(--digterruter-green) !important;
-
+    
     --map-route-collapsed-color: var(--digterruter-red);
+    --map-route-zero-length-color: rgba(221, 101, 91, .5);
     --map-route-line-color: var(--digterruter-green);
     --map-route-via-point-color: var(--digterruter-red);
     --map-route-via-point-type: numeric;

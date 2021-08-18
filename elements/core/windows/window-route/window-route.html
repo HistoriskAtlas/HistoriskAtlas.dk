@@ -129,7 +129,7 @@
             </paper-menu-button>-->
                     </list-auto-suggest>
                 </template>
-                <template is="dom-if" if="[[!editing]]">
+                <template is="dom-if" if="[[showReadonlyGeos(route.distance,editing)]]">
                     <collection-geo-list collection-geos="[[route.collection_geos]]" class="geo-list"></collection-geo-list>
                 </template>
 

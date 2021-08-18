@@ -10,10 +10,10 @@
     --paper-grey-400: #bdbdbd !important;
     --unchecked-color: #bbbbbb !important;
     --unchecked-background-color: transperant !important;
-    
     --lighten-color: rgba(255,255,255,.1); /*Instead of primary-color-light*/
 
     --map-route-collapsed-color: var(--primary-color);
+    --map-route-zero-length-color: var(--primary-color);
     --map-route-line-color: var(--primary-color);
     --map-route-via-point-color: #990000;
     --map-route-via-point-type: alpha;
