@@ -28,7 +28,7 @@
                 else
                     this.tags.push(App.haTags.byId[tag_image])
 
-        if (data.tagids) //v6 naming
+        if (data.tagids && !Common.standalone) //v6 naming
             for (var tagid of data.tagids)
                 this.tags.push(App.haTags.byId[tagid])
     }

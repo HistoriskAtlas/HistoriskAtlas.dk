@@ -11,13 +11,6 @@
     <meta name="description" content="<%=(passedGeo == null ? "G&aring; p&aring; opdagelse i historiske kort og udforsk din lokale kulturarv." : htmlEncode(passedGeo.intro))%>" />
     <title><%=Title%></title>
 
-
-
-    <%--TODO: api.historiskatlas.dk slows way down when stopping the hadb5 server.... fix...................................................................................--%>
-
-
-
-
 <!--#region appicon -->
     <meta name="application-name" content="Historisk Atlas" />
     <meta property="og:title" content="<%# Title%>" />
@@ -82,7 +75,6 @@
     </script>
 
     <%--Polymer links --%>
-    <%--<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>--%> <%--TODO: needed in chrome? Bundle? --%>
     <link rel="import" href="bower_components/polymer/polymer.html">
     <link rel="import" href="bower_components/polymer-ts/polymer-ts.html">
     
@@ -157,12 +149,7 @@
     <% if (this.passedTheme != null) { %><%=string.Format("<link id=\"theme-{0}\" rel=\"stylesheet\" href=\"css/themes/theme-{0}.css\">", this.passedTheme.linkname )%><% } %>
 </head>
 <body<%=(crawler && passedGeo != null ? " style=\"overflow:auto\"" : "")%>>
-<%--    <% foreach (HistoriskAtlas5.Frontend.HATag tag in sitemapTags.data) { %>
-        <a href="<%=tag.urlPath%>"><%=tag.plurName%></a>
-    <% } %>
-    <% foreach (HistoriskAtlas5.Frontend.HAGeo geo in sitemapGeos.data) { %>
-        <a href="<%=geo.urlPath%>"><%=geo.title%></a>
-    <% } %>--%>
+
     <% if (crawler && passedGeo != null) { %>
         <h1><%=passedGeo.title%></h1>
         <% if (passedGeo.geo_images != null) { %>
