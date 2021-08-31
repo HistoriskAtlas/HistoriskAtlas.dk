@@ -31,6 +31,9 @@
         this.pushServiceCall(() => this.serviceCall('proxy/' + proxy + '.json', data, success, error, true));
     }
 
+    public static HAAPI_POST(service: string, params: { [key: string]: any }, data: FormData, message: string = null, success: (data: any) => any = null) {
+        this.HAAPI(service, params, success, null, null, message, data);
+    }
     public static HAAPI(service: string, params: { [key: string]: any } = null, success: (data: any) => any = null, error: (data: any) => any = null, progress: (event: ProgressEvent) => any = null, message: string = null, data: FormData = null, addSid: boolean = true) {
         params = params || {};
         params.db = Common.isDevOrBeta ? 'hadb6beta' : 'hadb6';
@@ -67,9 +70,10 @@
         xhr.responseType = 'json';
         xhr.timeout = 10000;
         xhr.addEventListener('load', () => {
-            if (Math.floor(xhr.status / 100) === 2)
-                success(xhr.response);
-            else {
+            if (Math.floor(xhr.status / 100) === 2) {
+                if (success)
+                    success(xhr.response);
+            } else {
                 if (error)
                     error(xhr.response);
                 Services.error(url, xhr.status.toString(), 'HAAPI soft error')

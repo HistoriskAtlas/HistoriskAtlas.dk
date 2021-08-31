@@ -110,10 +110,13 @@ class WindowGeo extends polymer.Base implements polymer.Element {
         $(this).append(DialogRichText.create('Du er ved at sende fortællingen til redaktionel gennemgang og publicering.', 'Skriv en kommentar til redaktøren her...', (message) => {
             (<HaGeoService>this.$.haGeoService).addTagById(730, true, true);
             this.insertEditorialText('<b>Sendt til publicering</b><br>' + message);
-            Services.proxy('sendgeotopublish', {
-                geoid: this.geo.id,
-                remark: Common.html2rich(message)
-            })
+        //    Services.proxy('sendgeotopublish', {
+        //        geoid: this.geo.id,
+        //        remark: Common.html2rich(message)
+            //    })
+            var formData = new FormData();
+            formData.append("remark", Common.html2rich(message));
+            Services.HAAPI_POST(`publishgeo/${this.geo.id}`, null, formData)
         }));
     }
     private insertEditorialText(text: string) {
