@@ -1798,10 +1798,8 @@
     <Content Include="bower_components\webcomponentsjs\build.log" />
     <Content Include="bower_components\webcomponentsjs\package.json" />
     <Content Include="bower_components\webcomponentsjs\README.md" />
-    <None Include="Properties\PublishProfiles\beta.historiskatlas.dkNY.pubxml" />
     <None Include="Properties\PublishProfiles\historiskatlas - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\historiskatlas-beta - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\historiskatlas.dkNY.pubxml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

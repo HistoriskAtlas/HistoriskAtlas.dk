@@ -447,11 +447,15 @@
 
     public revertCoords() {
         this.isMoving = false;
-        Services.get('geo', {
-            id: this._id,
-            schema: '{geo:[latitude,longitude]}'
-        }, (result) => {
-            this.icon.coord4326 = [result.data[0].longitude, result.data[0].latitude];
+    //    Services.get('geo', {
+    //        id: this._id,
+    //        schema: '{geo:[latitude,longitude]}'
+    //    }, (result) => {
+    //        this.icon.coord4326 = [result.data[0].longitude, result.data[0].latitude];
+        //    })
+        Services.HAAPI(`geo/${this._id}`, { schema: 'coordsonly' }, (result) => {
+            this._title = result.data.title;
+            this.icon.coord4326 = [result.data.longitude, result.data.latitude];
         })
     }
 
