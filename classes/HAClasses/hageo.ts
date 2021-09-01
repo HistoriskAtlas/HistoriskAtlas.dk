@@ -453,53 +453,48 @@
     //    }, (result) => {
     //        this.icon.coord4326 = [result.data[0].longitude, result.data[0].latitude];
         //    })
-        Services.HAAPI(`geo/${this._id}`, { schema: 'coordsonly' }, (result) => {
+        Services.HAAPI_GET(`geo/${this._id}`, { schema: 'coordsonly' }, (result) => {
             this._title = result.data.title;
             this.icon.coord4326 = [result.data.longitude, result.data.latitude];
         })
     }
 
     public delete() {
-        //this.hide();
-        var loadText = 'Sletter fortælling';
-        App.loading.show(loadText)
-        Services.get('collection_geo', { geoid: this._id, count: 'all' }, (resultCG) => {
-
-            //TODO: create ALERT... this story is part of some route.... are you sure you wish to.........
-
-            Services.delete('geo', { geoid: this._id }, (result) => {
-
-                this.insertCollectionGeosOnGeoDelete(resultCG.data, loadText, this._id);
-
-                //App.toast.show('Fortællingen er slettet.');
-                //App.loading.hide(loadText)
-            })
-        });
-    }
-    private insertCollectionGeosOnGeoDelete(data: Array<any>, loadText: string, geoid: number) {
-        if (data.length == 0) {
+        //    var loadText = 'Sletter fortælling';
+        //    App.loading.show(loadText)
+        //    Services.get('collection_geo', { geoid: this._id, count: 'all' }, (resultCG) => {
+        //        Services.delete('geo', { geoid: this._id }, (result) => {
+        //            this.insertCollectionGeosOnGeoDelete(resultCG.data, loadText, this._id);
+        //        })
+        //    });
+        Services.HAAPI_DELETE(`geo/${this._id}`, null, null, () => {
             App.toast.show('Fortællingen er slettet.');
-            App.loading.hide(loadText)
-            return;
-        }
-
-        var cg = data.pop();
-
-        if (cg.geoid != geoid) { //safety meassaure... if API returns faulty data...
-            this.insertCollectionGeosOnGeoDelete(data, loadText, geoid);
-            return;
-        }
-
-        delete cg.collectiongeoid;
-        delete cg.created;
-        delete cg.deleted;
-        if (!cg.contentid)
-            delete cg.contentid;
-
-        Services.insert('collection_geo', cg, (result) => {
-            this.insertCollectionGeosOnGeoDelete(data, loadText, geoid);
-        });
+        })
     }
+    //private insertCollectionGeosOnGeoDelete(data: Array<any>, loadText: string, geoid: number) {
+    //    if (data.length == 0) {
+    //        App.toast.show('Fortællingen er slettet.');
+    //        App.loading.hide(loadText)
+    //        return;
+    //    }
+
+    //    var cg = data.pop();
+
+    //    if (cg.geoid != geoid) { //safety meassaure... if API returns faulty data...
+    //        this.insertCollectionGeosOnGeoDelete(data, loadText, geoid);
+    //        return;
+    //    }
+
+    //    delete cg.collectiongeoid;
+    //    delete cg.created;
+    //    delete cg.deleted;
+    //    if (!cg.contentid)
+    //        delete cg.contentid;
+
+    //    Services.insert('collection_geo', cg, (result) => {
+    //        this.insertCollectionGeosOnGeoDelete(data, loadText, geoid);
+    //    });
+    //}
 
     public zoomUntilUnclustered() {
         //this.icon.updateMinDist();
@@ -554,7 +549,7 @@
             //        }
             //    );
 
-                Services.HAAPI(`geo/${this._id}`, null, (result) => {
+                Services.HAAPI_GET(`geo/${this._id}`, null, (result) => {
                     if (!result.data)
                         return;
                     this._title = result.data.title;

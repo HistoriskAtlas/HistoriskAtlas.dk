@@ -29,7 +29,7 @@ class HaMaps extends polymer.Base implements polymer.Element {
 
     public init() {
         this.byId = [];
-        Services.HAAPI('maps', null, (result) => this.handleResponse(result.data))
+        Services.HAAPI_GET('maps', null, (result) => this.handleResponse(result.data))
     }
 
     public handleResponse(result: any) {
@@ -117,7 +117,7 @@ class HaMaps extends polymer.Base implements polymer.Element {
     public loadExtendedData(map: HaMap) {
         //Services.get('map', { count: 1, schema: '{map:[licenstagid,licensee,source,about]}', id: map.id }, (result) => {
         //    var data = result.data[0];
-        Services.HAAPI('map', { id: map.id }, (result) => {
+        Services.HAAPI_GET('map', { id: map.id }, (result) => {
             var data = result.data;
             var i = this.maps.indexOf(map);
             if (data.licenstagid)

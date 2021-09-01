@@ -57,7 +57,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
     public tagsLoaded() {
         this.updateAllGeosFromAPI(false);
         if (LocalStorage.get("sessionID") && !Common.embed)
-            Services.HAAPI('login', { sid: LocalStorage.get("sessionID") }, (result) => {
+            Services.HAAPI_GET('login', { sid: LocalStorage.get("sessionID") }, (result) => {
                 if (result)
                     App.haUsers.login(result.data)
             });
@@ -180,7 +180,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
         //    params.sid = (<any>document).sid;
 
         //Services.get('geo', send, (result) => {
-        Services.HAAPI('geos', params, (result) => {
+        Services.HAAPI_GET('geos', params, (result) => {
             IconLayer.updateDisabled = true;
             //var newGeoIds = <Array<number>>result.data[0].tag_geos;
             var newGeoIds = <Array<number>>result.data;
@@ -281,7 +281,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
         //    console.log('Missing dest')
         //}
 
-        Services.HAAPI('geos', params, (result) => this.addGeosFromResponse(result), null, null, null, null, this.curRequest.userLayer);
+        Services.HAAPI_GET('geos', params, (result) => this.addGeosFromResponse(result), null, null, this.curRequest.userLayer);
     }
 
     //public handleResponse() {
@@ -410,7 +410,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
         //}
 
         //Services.get('geo', send, (data) => {
-        Services.HAAPI('geos', params, (data) => {
+        Services.HAAPI_GET('geos', params, (data) => {
             if (data.data.length == 0) {
                 this.hideAll(idsChanged);
                 return;

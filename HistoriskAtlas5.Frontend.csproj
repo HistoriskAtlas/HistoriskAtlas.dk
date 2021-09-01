@@ -813,7 +813,7 @@
     <Content Include="elements\core\windows\window-geo\window-geo-add-content\window-geo-add-content.html" />
     <Content Include="elements\core\lists\horizontal-tag-list\horizontal-tag-list.html" />
     <Content Include="elements\admin\windows\window-admin\window-admin.html" />
-    <Content Include="elements\editor\array-sort-selector\array-sort-selector.html" />
+    <Content Include="elements\writer\array-sort-selector\array-sort-selector.html" />
     <Content Include="elements\writer\panels\panel-publication\panel-publication.html" />
     <Content Include="elements\writer\panels\panel-editorial-notes\panel-editorial-notes.html" />
     <Content Include="elements\writer\windows\window-route-editorial\window-route-editorial.html" />
@@ -1286,7 +1286,7 @@
     <TypeScriptCompile Include="elements\core\windows\window-geo\window-geo-add-content\window-geo-add-content.ts" />
     <TypeScriptCompile Include="elements\core\lists\horizontal-tag-list\horizontal-tag-list.ts" />
     <TypeScriptCompile Include="elements\admin\windows\window-admin\window-admin.ts" />
-    <TypeScriptCompile Include="elements\editor\array-sort-selector\array-sort-selector.ts" />
+    <TypeScriptCompile Include="elements\writer\array-sort-selector\array-sort-selector.ts" />
     <TypeScriptCompile Include="elements\writer\panels\panel-publication\panel-publication.ts" />
     <TypeScriptCompile Include="elements\writer\panels\panel-editorial-notes\panel-editorial-notes.ts" />
     <TypeScriptCompile Include="elements\writer\windows\window-route-editorial\window-route-editorial.ts" />

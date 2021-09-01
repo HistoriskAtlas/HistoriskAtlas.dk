@@ -59,7 +59,7 @@ class HaTags extends polymer.Base implements polymer.Element {
         var params: any = {}
         if (this.tagIdsInStorage.length > 0)
             params.after = LocalStorage.timestampDateTime('tag-ids');
-        Services.HAAPI('tags', params, (result) => this.handleResponse(result.data))
+        Services.HAAPI_GET('tags', params, (result) => this.handleResponse(result.data))
 
         //HaTags.createCrossHairMarker();
     }

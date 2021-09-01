@@ -92,7 +92,7 @@ class PanelCreateUser extends polymer.Base implements polymer.Element {
         data.append('lastname', this.lastname)
         data.append('email', this.email)
 
-        Services.HAAPI('login', { provider: "ha", sid: (<any>document).sid}, (result) => {
+        Services.HAAPI_POST('login', { provider: "ha", sid: (<any>document).sid }, data, "Opretter bruger", (result) => {
             if (!result) {
                 App.toast.show("Brugernavnet findes allerede. Vælg et andet.")
                 this.exisitingLogins.push(this.login)
@@ -102,7 +102,7 @@ class PanelCreateUser extends polymer.Base implements polymer.Element {
             App.haUsers.login(result.data);
             (<any>this.domHost).$.windowbasic.close();
             //this.$.confirmationDialog.open();
-        }, null, null, "Opretter bruger", data);
+        });
 
         //Services.get('login', {
         //    provider: "ha", utoken: JSON.stringify({

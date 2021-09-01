@@ -34,7 +34,7 @@ class HaRegions extends polymer.Base implements polymer.Element {
     //    });
     //    this.$.ajax.generateRequest();
 
-        Services.HAAPI('regions', { schema: 'minimal', regiontypeid: regionType.id }, (result) => {
+        Services.HAAPI_GET('regions', { schema: 'minimal', regiontypeid: regionType.id }, (result) => {
             for (var data of result.data)
                 this.regions[data.regionid] = new HaRegion(data)
         })

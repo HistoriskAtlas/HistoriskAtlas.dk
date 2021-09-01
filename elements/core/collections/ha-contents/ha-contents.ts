@@ -26,7 +26,7 @@ class HaContents extends polymer.Base implements polymer.Element {
         //    'schema': ContentViewer.contentSchema
         //});
         //this.$.ajax.generateRequest();
-        Services.HAAPI('contents', {
+        Services.HAAPI_GET('contents', {
             geoid: this.geo.id
         }, (result) => this.handleResponse(result.data))
     }

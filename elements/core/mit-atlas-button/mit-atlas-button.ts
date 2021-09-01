@@ -86,7 +86,7 @@ class MitAtlasButton extends polymer.Base implements polymer.Element {
     //        if (result.data.status.code == 2)
     //            App.haUsers.set('user', HAUser.default);
         //    })
-        Services.HAAPI('logout', null, () => App.haUsers.set('user', HAUser.default));
+        Services.HAAPI_GET('logout', null, () => App.haUsers.set('user', HAUser.default));
     }
 
     noAnimations(user: HAUser): boolean {

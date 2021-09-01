@@ -31,16 +31,22 @@
         this.pushServiceCall(() => this.serviceCall('proxy/' + proxy + '.json', data, success, error, true));
     }
 
-    public static HAAPI_POST(service: string, params: { [key: string]: any }, data: FormData, message: string = null, success: (data: any) => any = null) {
-        this.HAAPI(service, params, success, null, null, message, data);
+    public static HAAPI_POST(service: string, params: { [key: string]: any }, data: FormData, message: string = null, success: (data: any) => any = null, error: (data: any) => any = null, progress: (event: ProgressEvent) => any = null) {
+        this.HAAPI(service, params, success, error, progress, message, data, 'POST');
     }
-    public static HAAPI(service: string, params: { [key: string]: any } = null, success: (data: any) => any = null, error: (data: any) => any = null, progress: (event: ProgressEvent) => any = null, message: string = null, data: FormData = null, addSid: boolean = true) {
+    public static HAAPI_DELETE(service: string, params: { [key: string]: any }, message: string = null, success: (data: any) => any = null) {
+        this.HAAPI(service, params, success, null, null, message, null, 'DELETE');
+    }
+    public static HAAPI_GET(service: string, params: { [key: string]: any } = null, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null, addSid: boolean = true) {
+        this.HAAPI(service, params, success, error, null, message, null, 'GET', addSid);
+    }
+    private static HAAPI(service: string, params: { [key: string]: any } = null, success: (data: any) => any = null, error: (data: any) => any = null, progress: (event: ProgressEvent) => any = null, message: string = null, data: FormData = null, method: string, addSid: boolean = true) {
         params = params || {};
         params.db = Common.isDevOrBeta ? 'hadb6beta' : 'hadb6';
         params.key = Common.apiKey;
         if (typeof App != 'undefined' && App.haUsers && !App.haUsers.user.isDefault && addSid)
             params.sid = (<any>document).sid;
-        this.pushServiceCall(() => this.serviceCallHAAPI(`https://haapi.historiskatlas.dk/${service}${this.toURLParams(params)}`, success, error, progress, message, data), message);
+        this.pushServiceCall(() => this.serviceCallHAAPI(`https://haapi.historiskatlas.dk/${service}${this.toURLParams(params)}`, success, error, progress, message, data, method), message);
     }
     public static getImageUrl(image: HAImage, params: { [key: string]: any } = null) {
         params = params || {};
@@ -64,9 +70,9 @@
             serviceCall();
     }
 
-    private static serviceCallHAAPI(url: string, success: (data: any) => any, error: (data: any) => any, progress: (event: ProgressEvent) => any, message: string = null, data: FormData) {
+    private static serviceCallHAAPI(url: string, success: (data: any) => any, error: (data: any) => any, progress: (event: ProgressEvent) => any, message: string, data: FormData, method: string) {
         var xhr = new XMLHttpRequest();
-        xhr.open(data ? 'POST' : 'GET', url, true);
+        xhr.open(method, url, true);
         xhr.responseType = 'json';
         xhr.timeout = 10000;
         xhr.addEventListener('load', () => {

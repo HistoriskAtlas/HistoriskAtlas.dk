@@ -52,7 +52,7 @@ class PanelLogin extends polymer.Base implements polymer.Element {
             return;
 
         //Services.get('login', { provider: "ha", uname: this.$.username.value, password: $.md5(this.$.password.value) }, (result) => this.getLoginCallback(result));
-        Services.HAAPI('login', { provider: "ha", username: this.$.username.value, password: Common.md5(this.$.password.value), sid: (<any>document).sid }, (result) => this.getLoginCallback(result.data));
+        Services.HAAPI_GET('login', { provider: "ha", username: this.$.username.value, password: Common.md5(this.$.password.value), sid: (<any>document).sid }, (result) => this.getLoginCallback(result.data));
     }
 
     private handleFacebookResponse(response: any) {
@@ -69,7 +69,7 @@ class PanelLogin extends polymer.Base implements polymer.Element {
                 lastname: meResponse.last_name,
                 email: meResponse.email
             }
-            Services.HAAPI('login', params, (result) => this.getLoginCallback(result.data));
+            Services.HAAPI_GET('login', params, (result) => this.getLoginCallback(result.data));
         });
     }
     private handleGoogleResponse(response: any) {
@@ -83,7 +83,7 @@ class PanelLogin extends polymer.Base implements polymer.Element {
             lastname: payload.family_name,
             email: payload.email
         }
-        Services.HAAPI('login', params, (result) => this.getLoginCallback(result.data));
+        Services.HAAPI_GET('login', params, (result) => this.getLoginCallback(result.data));
     }
     
     private getLoginCallback(user) {

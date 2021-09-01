@@ -62,19 +62,19 @@ class HaCollections extends Tags implements polymer.Element {
         this.allCollectionsFetched = true;
         App.map.showRouteLayer();
         //this.getCollections({ count: 'all', schema: '{collection:[collectionid,title,ugc,cyclic,distance,type,userid,' + HaCollections.collectionGeosAPISchema + ']}', online: true }); //Remeber to apply changes to default.aspx.cs also
-        Services.HAAPI('collections', null, (result) => this.getCollectionsFromData(result.data, false, true));
+        Services.HAAPI_GET('collections', null, (result) => this.getCollectionsFromData(result.data, false, true));
     }
 
     public getCollectionsFromUser() {
         App.map.showRouteLayer();
         //this.getCollections({ count: 'all', schema: '{collection:[collectionid,title,ugc,cyclic,distance,type,{userid:' + App.haUsers.user.id + '},' + HaCollections.collectionGeosAPISchema + ']}', online: false });
-        Services.HAAPI('collections', { userid: App.haUsers.user.id }, (result) => this.getCollectionsFromData(result.data, false, false));
+        Services.HAAPI_GET('collections', { userid: App.haUsers.user.id }, (result) => this.getCollectionsFromData(result.data, false, false));
     }
 
     public getCollectionsByTagId(tagId: number, drawOnMap: boolean = false) {
         App.map.showRouteLayer();
         //this.getCollections({ count: 'all', schema: '{collection:{fields:[collectionid,title,ugc,cyclic,distance,type,userid,' + HaCollections.collectionGeosAPISchema + ',{content:[{tag_contents:[{collapse:id}]}]}],filters:[{content:[{tag_contents:[{id:' + tagId + '}]}]}]}}', online: true }, drawOnMap);
-        Services.HAAPI('collections', { tagid: tagId }, (result) => this.getCollectionsFromData(result.data, drawOnMap, true));
+        Services.HAAPI_GET('collections', { tagid: tagId }, (result) => this.getCollectionsFromData(result.data, drawOnMap, true));
     }
 
     public get allCollectionIDs(): Array<number> {

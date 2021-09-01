@@ -29,7 +29,7 @@ class WindowRegion extends polymer.Base implements polymer.Element {
     //        //'sort': '[key:"region.parents.periodstart"]' TODO: HOW?! Sort on client instead...
     //    });
     //    this.$.ajax.generateRequest();
-        Services.HAAPI(`region/${this.region.id}`, null, (result) => this.handleResponse(result.data))
+        Services.HAAPI_GET(`region/${this.region.id}`, null, (result) => this.handleResponse(result.data))
     }
 
     public handleResponse(data: any) {

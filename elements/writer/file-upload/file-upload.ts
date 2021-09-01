@@ -102,7 +102,7 @@ class FileUpload extends polymer.Base implements polymer.Element {
         var prefix = "files." + this.files.indexOf(file);
 
         //var xhr = (<any>file).xhr = new XMLHttpRequest();
-        Services.HAAPI((<any>file).url, null, () => {
+        Services.HAAPI_POST((<any>file).url, null, formData, "Uploader fil", () => {
             this.fire("success", { image: (<any>file).image, file: file }); //xhr: xhr, 
             this.set(prefix + ".complete", true);
             this.splice("files", this.files.indexOf(file), 1);
@@ -115,7 +115,7 @@ class FileUpload extends polymer.Base implements polymer.Element {
         }, (e: ProgressEvent) => {
             var done = e.loaded, total = e.total;
             this.set(prefix + ".progress", Math.floor((done / total) * 1000) / 10);
-        }, "Uploader fil", formData)
+        })
 
         //xhr.upload.onprogress = (e: ProgressEvent) => {
         //    var done = e.loaded, total = e.total;
