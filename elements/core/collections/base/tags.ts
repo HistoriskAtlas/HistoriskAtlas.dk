@@ -36,12 +36,15 @@
 
     public addTagById(tagId: number, addToBaseArray: boolean, save: boolean) {
         if (typeof App == 'undefined') {
-            Services.get('tag', {
-                schema: Common.apiSchemaTags,
-                id: tagId
-            }, (result) => {
-                this.addTag(new HaTag(result.data[0]), addToBaseArray, save);
-            })
+        //    Services.get('tag', {
+        //        schema: Common.apiSchemaTags,
+        //        id: tagId
+        //    }, (result) => {
+        //        this.addTag(new HaTag(result.data[0]), addToBaseArray, save);
+            //    })
+            Services.HAAPI_GET(`tag/${tagId}`, null, (result) => {
+                this.addTag(new HaTag(result.data), addToBaseArray, save);
+            });
         } else
             this.addTag(App.haTags.byId[tagId], addToBaseArray, save);
     }

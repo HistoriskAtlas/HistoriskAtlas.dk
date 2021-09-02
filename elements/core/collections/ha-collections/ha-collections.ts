@@ -230,7 +230,8 @@ class HaCollections extends Tags implements polymer.Element {
         });
 
 
-        Services.get('geo', { count: 'all', schema: '{geo:{fields:[geoid,title],filters:[{collection_geos:[{collectionid:' + collection.id + '}]}]}}' }, (result) => {
+        //Services.get('geo', { count: 'all', schema: '{geo:{fields:[geoid,title],filters:[{collection_geos:[{collectionid:' + collection.id + '}]}]}}' }, (result) => {
+        Services.HAAPI_GET('geos', { collectionid: collection.id, schema: 'collectiontitles' }, (result) => {
             //var geos: Array<HaGeo> = [];
             for (var data of result.data)
                 for (var cg of collection.collection_geos)

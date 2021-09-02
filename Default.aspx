@@ -195,21 +195,22 @@
     <% } %>
 
     <script>
-        window.addEventListener('WebComponentsReady', function() {
-            App.init();
+        window.addEventListener('WebComponentsReady', function () {
+            if (!Common.standalone)
+                App.init();
         });
 
         (function() {
-            if ('registerElement' in document && 'import' in document.createElement('link') && 'content' in document.createElement('template')) {
-                // platform is good!
-                if (!Common.standalone)
-                    App.init();
-            } else {
+            //if ('registerElement' in document && 'import' in document.createElement('link') && 'content' in document.createElement('template')) {
+            //    // platform is good!
+            //    if (!Common.standalone)
+            //        App.init();
+            //} else {
                 // polyfill the platform first!
                 var e = document.createElement('script');
                 e.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
                 document.body.appendChild(e);
-            }
+            //}
         })();
     </script>
 </body>

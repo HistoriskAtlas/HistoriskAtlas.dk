@@ -76,18 +76,18 @@ class PanelAPIAdmin extends polymer.Base implements polymer.Element {
     //}
 
     public fetchKeys() {
-        Services.get('hadb6stats.AuthKey', { //hadb5stats
-            'schema': '{authkey:[key,urorua,description,created]}',
-            'count': 'all'
-        }, (result) => {
-            result.data.push({
-                key: '',
-                urorua: '',
-                description: 'Uden key',
-                created: '2018-01-01'
-            });
-            this.updateKeys(result.data);
-        })
+    //    Services.get('hadb6stats.AuthKey', { //hadb5stats
+    //        'schema': '{authkey:[key,urorua,description,created]}',
+    //        'count': 'all'
+    //    }, (result) => {
+    //        result.data.push({
+    //            key: '',
+    //            urorua: '',
+    //            description: 'Uden key',
+    //            created: '2018-01-01'
+    //        });
+    //        this.updateKeys(result.data);
+    //    })
     }
 
     public updateKeys(newList: Array<any> = null) {
@@ -106,25 +106,25 @@ class PanelAPIAdmin extends polymer.Base implements polymer.Element {
         if (!this.key)
             return;
 
-        this.set('logs', []);
-        Services.get('hadb6stats.LogTile', { //hadb5stats
-            'schema': '{logtile:{fields:[urorua,count],filters:{date:{min:' + this.years[this.yearIndex] + '-' + (this.monthIndex + 1) + '-1,max:' + this.years[this.yearIndex] + '-' + (this.monthIndex + 1) + '-' + new Date(this.years[this.yearIndex], this.monthIndex + 1, 0).getDate() + '}}}}', //todo: not 30.......
-            'authkey': this.key.key ? this.key.key : 'null',
-            'count': 'all'
-        }, (result) => {
-            var sum = {};
-            for (var log of result.data)
-                if (sum[log.urorua])
-                    sum[log.urorua] += log.count;
-                else
-                    sum[log.urorua] = log.count;
+    //    this.set('logs', []);
+    //    Services.get('hadb6stats.LogTile', { //hadb5stats
+    //        'schema': '{logtile:{fields:[urorua,count],filters:{date:{min:' + this.years[this.yearIndex] + '-' + (this.monthIndex + 1) + '-1,max:' + this.years[this.yearIndex] + '-' + (this.monthIndex + 1) + '-' + new Date(this.years[this.yearIndex], this.monthIndex + 1, 0).getDate() + '}}}}', //todo: not 30.......
+    //        'authkey': this.key.key ? this.key.key : 'null',
+    //        'count': 'all'
+    //    }, (result) => {
+    //        var sum = {};
+    //        for (var log of result.data)
+    //            if (sum[log.urorua])
+    //                sum[log.urorua] += log.count;
+    //            else
+    //                sum[log.urorua] = log.count;
 
-            result.data = [];
-            for (var param in sum)
-                result.data.push({ urorua: param, count: sum[param] });
+    //        result.data = [];
+    //        for (var param in sum)
+    //            result.data.push({ urorua: param, count: sum[param] });
             
-            this.set('logs', result.data)
-        })
+    //        this.set('logs', result.data)
+    //    })
     }
 
     sortOnKey() {
