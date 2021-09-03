@@ -243,10 +243,11 @@ class HaCollections extends Tags implements polymer.Element {
             //    geo.isPartOfCurrentCollection = true;
         })
 
-        Services.get('content', { count: 'all', schema: ContentViewer.contentSchema, collection_geos: '[{collection:[{collectionid:' + collection.id + '}]}]' }, (result) => {
+        //Services.get('content', { count: 'all', schema: ContentViewer.contentSchema, collection_geos: '[{collection:[{collectionid:' + collection.id + '}]}]' }, (result) => {
+        Services.HAAPI_GET('contents', { collectionid: collection.id, schema: 'collection' }, (result) => {
             for (var data of result.data)
                 for (var cg of collection.collection_geos)
-                    if (cg.contentID == data.id)
+                    if (cg.contentID == data.contentid)
                         this.set('collection.collection_geos.' + collection.collection_geos.indexOf(cg) + '.content', new HaContent(data));
 
             //To ensure that content is included when drawing route:
