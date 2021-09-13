@@ -294,7 +294,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
         var ptidIndex = this.curRequest.userLayer ? 4 : 3;
 
         //this.lastGeoIdsLoaded = [];
-        for (var dataArray of <[][]>response.data) {
+        for (var dataArray of <any[][]>response.data) {
             if (this.geos[dataArray[0]]) { //id
                 if (this.curRequest.userLayer)
                     this.geos[dataArray[0]].userLayer = true;

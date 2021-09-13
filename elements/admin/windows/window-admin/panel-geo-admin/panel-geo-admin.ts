@@ -296,7 +296,7 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
             else {
                 App.loading.hide("Fjerner institution");
                 App.toast.show("Institution fjernet for fortællinger!");
-                setTimeout(this.fetchGeos(true), 500);
+                setTimeout(() => this.fetchGeos(true), 500);
             }
         }, null, "")
 
@@ -329,7 +329,7 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
             else {
                 App.loading.hide("Tilføjer institution");
                 App.toast.show("Institution tilføjet til fortællinger!");
-                setTimeout(this.fetchGeos(true), 500);
+                setTimeout(() => this.fetchGeos(true), 500);
             }
         }, null, "")
     }
@@ -351,7 +351,7 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
             else {
                 App.loading.hide("Sletter fortællinger");
                 App.toast.show("Fortællinger slettet!");
-                setTimeout(this.fetchGeos(true), 500);
+                setTimeout(() => this.fetchGeos(true), 500);
             }
         }, null, "")
 
