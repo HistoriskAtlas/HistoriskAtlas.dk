@@ -331,17 +331,18 @@ class HaCollections extends Tags implements polymer.Element {
 
         if (!this.collection.content) {
 
-            Services.get('collection', { schema: '{collection:[{user:[id,firstname,lastname]},' + ContentViewer.contentSchema + ']}', collectionid: this.collection.id }, (result) => { //,{collection_geos:[{collapse:geoid}]}
+            //Services.get('collection', { schema: '{collection:[{user:[id,firstname,lastname]},' + ContentViewer.contentSchema + ']}', collectionid: this.collection.id }, (result) => { //,{collection_geos:[{collapse:geoid}]}
+            Services.HAAPI_GET(`collection/${this.collection.id}`, { schema: 'content' }, (result) => {
                 if (!result.data)
                     return;
 
-                if (result.data[0].user.id != App.haUsers.user.id)
-                    this.set('collection.user', new HAUser(result.data[0].user));
+                if (result.data.user.id != App.haUsers.user.id)
+                    this.set('collection.user', new HAUser(result.data.user));
 
-                if (result.data[0].content) {
-                    this.set('collection.content', new HaContent(result.data[0].content))
-                    if (result.data[0].content.tag_contents)
-                        for (var tagid of result.data[0].content.tag_contents)
+                if (result.data.content) {
+                    this.set('collection.content', new HaContent(result.data.content))
+                    if (result.data.content.tag_contents)
+                        for (var tagid of result.data.content.tag_contents)
                             this.addTag(App.haTags.byId[tagid], true, false);
                 }
                 else {
