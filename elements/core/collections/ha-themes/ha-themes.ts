@@ -7,29 +7,36 @@ class HaThemes extends polymer.Base implements polymer.Element {
     @property({ type: Object, notify: true })
     public theme: ITheme;
 
+    private gettingThemes: boolean = false;
+
     public init() { //was ready()
 
-        //if (!Common.isDevOrBeta)
-        //    send.id = '{in:["1001","hod","modstandskamp","' + App.passed.theme.id + '"]}'
-
-
-        var params: any = {}
-        if (!Common.isDevOrBeta)
-            params.linknames = `1001,hod,modstandskamp,digterruter,${App.passed.theme.linkname}`
-
-        Services.HAAPI_GET('themes', params, (result) => { //Could be moved to when accessing the theme menu.................
-            //this.showThemeMenu = false; TODO...................................................................
-            var themes: Array<ITheme> = [];
-            for (var theme of result.data)
-                themes.push(name == this.theme.name && this.theme.linkname != 'default' ? this.theme : <ITheme>theme);
-
-            this.themes = themes;
-        })
+        this.getThemes(); //TODO: Could be postponed?
 
         if (Common.tagsLoaded)
             this.getThemeCollections();
         else
             HaTags.loadedCallbacks.push(() => this.getThemeCollections());
+    }
+
+    public getThemes(): void {
+        if (this.themes.length > 0 || this.gettingThemes)
+            return;
+
+        this.gettingThemes = true;
+        var params: any = {}
+        if (!Common.isDevOrBeta)
+            params.linknames = `1001,hod,modstandskamp,digterruter,${App.passed.theme.linkname}`
+
+        Services.HAAPI_GET('themes', params, (result) => {
+            //this.showThemeMenu = false; TODO...................................................................
+            var themes: Array<ITheme> = [];
+            for (var theme of result.data)
+                themes.push(theme.name == this.theme.name && this.theme.linkname != 'default' ? this.theme : <ITheme>theme);
+
+            this.themes = themes;
+            this.gettingThemes = false;
+        })
     }
 
     @observe('theme')

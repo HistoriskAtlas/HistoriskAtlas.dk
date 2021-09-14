@@ -101,6 +101,8 @@
 
         if (!App.passed.theme)
             App.passed.theme = $.extend({}, Global.defaultTheme);
+        else
+            App.passed.theme.isfullyloaded = true;
 
         Common.openGeoWindowInNewTab = Common.embed;
         UrlState.ReadFromUrl();
