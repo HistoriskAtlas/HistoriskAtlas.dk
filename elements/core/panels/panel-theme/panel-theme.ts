@@ -237,6 +237,8 @@ interface ITheme {
 
     tagid: number;
     content: IContent;
+
+    isfullyloaded: boolean;
 }
 
 interface IContent {

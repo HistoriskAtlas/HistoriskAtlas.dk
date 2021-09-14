@@ -50,7 +50,8 @@ class Global extends polymer.Base implements polymer.Element {
         maplatitude: 56.0,
         maplongitude: 10.0,
         tagid: 427,
-        content: null
+        content: null,
+        isfullyloaded: true
     };  
 
     ready() {
