@@ -116,9 +116,12 @@ class PanelLogin extends polymer.Base implements polymer.Element {
             return;
         }
 
-        Services.get('auth', { send_reset_password_mail_to: this.email, new_password: Common.md5(this.password1) }, (result) => {
+        //Services.get('auth', { send_reset_password_mail_to: this.email, new_password: Common.md5(this.password1) }, (result) => {
+        //    Common.dom.append(DialogAlert.create("Der vil nu blive sendt en email til den adresse du har angivet. Følg instruktionerne i emailen, for at fortsætte."));
+        //});
+        Services.HAAPI_GET('resetpassword', { email: this.email, password: Common.md5(this.password1) }, () => {
             Common.dom.append(DialogAlert.create("Der vil nu blive sendt en email til den adresse du har angivet. Følg instruktionerne i emailen, for at fortsætte."));
-        });
+        })
         this.$.dialog.close();
     }
     resetPasswordDismiss() {
