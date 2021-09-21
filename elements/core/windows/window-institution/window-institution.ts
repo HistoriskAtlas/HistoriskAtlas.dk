@@ -8,11 +8,14 @@ class WindowInstitution extends polymer.Base implements polymer.Element {
         super();
         this.institution = new HAInstitution({ tagid: tag.id });
 
-        Services.get('institution', {
-            schema: '{institution:[id,url,type,tagid,' + ContentViewer.contentSchema + ']}',
-            tagid: tag.id
-        }, (data) => {
-            this.institution = new HAInstitution(data.data[0]);
+        //Services.get('institution', {
+        //    schema: '{institution:[id,url,type,tagid,' + ContentViewer.contentSchema + ']}',
+        //    tagid: tag.id
+        //}, (data) => {
+        //    this.institution = new HAInstitution(data.data[0]);
+        //});
+        Services.HAAPI_GET('institution', { tagid: tag.id }, (result) => {
+            this.institution = new HAInstitution(result.data)
         });
     }
 
