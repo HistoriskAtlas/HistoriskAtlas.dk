@@ -81,13 +81,15 @@ class PanelTagAdmin extends polymer.Base implements polymer.Element {
         return HaTag.categoryNames[category];
     }
 
-    getAutosuggestSchema(children: any): string {
+    //getAutosuggestSchema(children: any): string {
+    getAutosuggestExistingIds(children: any): number[] {
         if (!children)
-            return;
+            return [];
         var existingIds: Array<number> = [];
         for (var item of children)
             existingIds.push(item.child.id)
-        return '{tag:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},category:' + this.tag.category + ',plurname:{like:$input}},fields:[id,plurname]}}';
+        //return '{tag:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},category:' + this.tag.category + ',plurname:{like:$input}},fields:[id,plurname]}}';
+        return existingIds;
     }
 
     sortOnName() {

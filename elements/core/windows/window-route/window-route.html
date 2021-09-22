@@ -115,7 +115,7 @@
                 </div>
 
                 <template is="dom-if" if="[[editing]]">
-                    <list-auto-suggest id="geoAutosuggest" class="geo-list" items="{{route.collection_geos}}" autosuggest-service="geo" autosuggest-schema="[[getAutosuggestSchema(route.collection_geos,route.collection_geos.length)]]" name-path="title" suggest-name-path="title">
+                    <list-auto-suggest id="geoAutosuggest" class="geo-list" items="{{route.collection_geos}}" autosuggest-service="geos" existing-ids="[[getAutosuggestExistingIds(route.collection_geos,route.collection_geos.length)]]" name-path="title" suggest-name-path="title"> <!--autosuggest-schema="[[getAutosuggestSchema(route.collection_geos,route.collection_geos.length)]]"-->
                         <div class="list">
                             <collection-geo-sortable-list id="geoSortableList" items="{{route.collection_geos}}" editing></collection-geo-sortable-list>
                         </div>

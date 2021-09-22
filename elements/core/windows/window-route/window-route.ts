@@ -223,11 +223,13 @@ class WindowRoute extends polymer.Base implements polymer.Element {
     //    Common.dom.append(WindowGeo.create(<HaGeo>e.model.geo));
     //}
 
-    getAutosuggestSchema(collection_geos: Array<HaCollectionGeo>): string {
+    //getAutosuggestSchema(collection_geos: Array<HaCollectionGeo>): string {
+    getAutosuggestExistingIds(collection_geos: Array<HaCollectionGeo>): number[] {
         var existingIds: Array<number> = [];
         for (var cg of collection_geos)
             existingIds.push(cg.geo.id)
-        return '{geo:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},title:{like:$input}},fields:[id,title]}}';
+        //return '{geo:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},title:{like:$input}},fields:[id,title]}}';
+        return existingIds;
     }
 
     @listen('geoAutosuggestSelected')
@@ -237,7 +239,7 @@ class WindowRoute extends polymer.Base implements polymer.Element {
 
     @listen('geoAutosuggestAdded')
     geoAdded(e: any) {
-        var geo = App.haGeos.geos[e.detail.id];
+        var geo = App.haGeos.geos[e.detail.geoid];
         geo.title = e.detail.title;
         App.map.centerAnim(geo.coord, 3000, true, true);
         //geo.zoomUntilUnclustered

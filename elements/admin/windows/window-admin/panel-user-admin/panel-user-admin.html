@@ -203,11 +203,11 @@
                     <confirm-input label="email" value="{{user.email}}" tabindex="0"></confirm-input>
                     <confirm-input label="intern note" value="{{user.internalnote}}" multiline tabindex="0"></confirm-input>
                     <div class="list-title">institutioner</div>
-                    <list-auto-suggest id="institutionAutosuggest" items="{{user.user_institutions}}" autosuggest-service="institution" autosuggest-schema="[[getAutosuggestSchema(user.user_institutions)]]" name-path="institution.tag.plurname" suggest-name-path="tag.plurname"></list-auto-suggest>
+                    <list-auto-suggest id="institutionAutosuggest" items="{{user.user_institutions}}" autosuggest-service="institutions" existing-ids="[[getAutosuggestExistingIds(user.user_institutions)]]" name-path="institution.tag.plurname" suggest-name-path="tag.plurname"></list-auto-suggest>
                     <div class="list-title">skribenter</div>
-                    <list-auto-suggest id="writerAutosuggest" items="{{user.userhierarkis}}" autosuggest-service="user" autosuggest-schema="[[getUserAutosuggestSchema(user.userhierarkis)]]" name-path="child.firstname,$ ,child.lastname,$ (,child.login,$)" suggest-name-path="firstname,$ ,lastname,$ (,login,$)"></list-auto-suggest>
+                    <list-auto-suggest id="writerAutosuggest" items="{{user.userhierarkis}}" autosuggest-service="users" existing-ids="[[getUserAutosuggestExistingIds(user.userhierarkis)]]" name-path="child.firstname,$ ,child.lastname,$ (,child.login,$)" suggest-name-path="firstname,$ ,lastname,$ (,login,$)"></list-auto-suggest>
                     <div class="list-title">redaktører</div>
-                    <list-auto-suggest id="editorAutosuggest" items="{{user.userhierarkis1}}" autosuggest-service="user" autosuggest-schema="[[getUserAutosuggestSchema(user.userhierarkis1)]]" name-path="parent.firstname,$ ,parent.lastname,$ (,parent.login,$)" suggest-name-path="firstname,$ ,lastname,$ (,login,$)"></list-auto-suggest>
+                    <list-auto-suggest id="editorAutosuggest" items="{{user.userhierarkis1}}" autosuggest-service="users" existing-ids="[[getUserAutosuggestExistingIds(user.userhierarkis1)]]" name-path="parent.firstname,$ ,parent.lastname,$ (,parent.login,$)" suggest-name-path="firstname,$ ,lastname,$ (,login,$)"></list-auto-suggest>
                 </template>
             </div>
         </panel-admin>

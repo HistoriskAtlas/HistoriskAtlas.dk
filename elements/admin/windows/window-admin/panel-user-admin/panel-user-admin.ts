@@ -177,34 +177,38 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
         Services.update('user', { 'userid': this.user.id, 'isactive': !this.user.isactive }, (result) => { this.getUser(); })
     }
 
-    getAutosuggestSchema(user_institutions: any): string {
+    //getAutosuggestSchema(user_institutions: any): string {
+    getAutosuggestExistingIds(user_institutions: any): number[] {
         if (!user_institutions)
-            return;
+            return [];
         var existingIds: Array<number> = [];
         for (var item of user_institutions)
             existingIds.push(item.institution.id)
-        return '{institution:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},tag:{plurname:{like:$input}}},fields:[id,{tag:[plurname]}]}}';
+        //return '{institution:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},tag:{plurname:{like:$input}}},fields:[id,{tag:[plurname]}]}}';
+        return existingIds;
     }
     @listen('institutionAutosuggestAdded')
     institutionAdded(e: any) {
-        Services.insert('user_institution', { 'institutionid': e.detail.id, 'userid': this.user.id }, (result) => { this.getUser(); })
+        Services.insert('user_institution', { 'institutionid': e.detail.institutionid, 'userid': this.user.id }, (result) => { this.getUser(); })
     }
     @listen('institutionAutosuggestRemoved')
     institutionRemoved(e: any) {
         Services.delete('user_institution', { 'institutionid': e.detail.institution.id, 'userid': this.user.id, 'deletemode': 'permanent' }, (result) => { this.getUser(); })
     }
 
-    getUserAutosuggestSchema(userhierarkis: any): string {
+    //getUserAutosuggestSchema(userhierarkis: any): string {
+    getUserAutosuggestExistingIds(userhierarkis: any): number[] {
         if (!userhierarkis)
-            return;
+            return [];
         var existingIds: Array<number> = [];
         for (var item of userhierarkis)
             existingIds.push(item.child ? item.child.id : item.parent.id);
-        return '{user:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},firstname:{like:$input}},fields:[id,login,firstname,lastname]}}'; //TODO Search more than login!
+        //return '{user:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},firstname:{like:$input}},fields:[id,login,firstname,lastname]}}'; //TODO Search more than login!
+        return existingIds;
     }
     @listen('writerAutosuggestAdded')
     writerAdded(e: any) {
-        Services.insert('userhierarki', { 'upperuserid': this.user.id, 'userid': e.detail.id }, (result) => { this.getUser(); })
+        Services.insert('userhierarki', { 'upperuserid': this.user.id, 'userid': e.detail.userid }, (result) => { this.getUser(); })
     }
     @listen('writerAutosuggestRemoved')
     writerRemoved(e: any) {
@@ -212,7 +216,7 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
     }
     @listen('editorAutosuggestAdded')
     editorAdded(e: any) {
-        Services.insert('userhierarki', { 'upperuserid': e.detail.id, 'userid': this.user.id }, (result) => { this.getUser(); })
+        Services.insert('userhierarki', { 'upperuserid': e.detail.userid, 'userid': this.user.id }, (result) => { this.getUser(); })
     }
     @listen('editorAutosuggestRemoved')
     editorRemoved(e: any) {

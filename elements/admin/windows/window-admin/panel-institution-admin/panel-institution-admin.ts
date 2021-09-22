@@ -109,18 +109,20 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
         Services.update('institution', JSON.parse('{ "id": ' + this.institution.id + ', "' + property + '": "' + this.institution[property] + '" }'));
     }
 
-    getAutosuggestSchema(user_institutions: any): string {
+    //getAutosuggestSchema(user_institutions: any): string {
+    getAutosuggestExistingIds(user_institutions: any): number[] {
         if (!user_institutions)
-            return;
+            return [];
         var existingIds: Array<number> = [];
         for (var item of user_institutions)
             existingIds.push(item.user.id)
-        return '{user:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},firstname:{like:$input}},fields:[id,login,firstname,lastname]}}';
+        //return '{user:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},firstname:{like:$input}},fields:[id,login,firstname,lastname]}}';
+        return existingIds;
     }
 
     @listen('userAutosuggestAdded')
     userAdded(e: any) {
-        Services.insert('user_institution', { 'institutionid': this.institution.id, 'userid': e.detail.id }, (result) => { this.getInstitution(); })
+        Services.insert('user_institution', { 'institutionid': this.institution.id, 'userid': e.detail.userid }, (result) => { this.getInstitution(); })
     }
 
     @listen('userAutosuggestRemoved')

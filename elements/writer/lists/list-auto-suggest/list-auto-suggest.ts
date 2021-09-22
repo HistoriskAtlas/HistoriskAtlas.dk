@@ -4,8 +4,11 @@ class ListAutoSuggest extends polymer.Base implements polymer.Element {
     @property({ type: Array, notify: true })
     public items: Array<any>;
 
-    @property({ type: String })
-    public autosuggestSchema: string;
+    //@property({ type: String })
+    //public autosuggestSchema: string;
+
+    @property({ type: Array })
+    public existingIds: number[];
 
     @property({ type: String })
     public autosuggestService: string;
@@ -77,14 +80,14 @@ class ListAutoSuggest extends polymer.Base implements polymer.Element {
             this.setAutocompleteItems([]);
             return;
         }
-        //var existingIds: Array<number> = [];
-        //for (var item of this.items)
-        //    existingIds.push(item.institution.id) //TODO
-
-        Services.get(this.autosuggestService, {
-            //'schema': '{institution:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},tag:{plurname:{like:' + this.input + '}}},fields:[id,{tag:[plurname]}]}}',
-            'schema': this.autosuggestSchema.replace(/\$input/g, this.input),
-            'count': ListAutoSuggest.maxSuggestions + 1
+        //Services.get(this.autosuggestService, {
+        //    'schema': this.autosuggestSchema.replace(/\$input/g, this.input),
+        //    'count': ListAutoSuggest.maxSuggestions + 1
+        Services.HAAPI_GET(this.autosuggestService, {
+            schema: 'autosuggest',
+            input: this.input,
+            existingids: this.existingIds,
+            count: ListAutoSuggest.maxSuggestions + 1
         }, (result) => {
             this.setAutocompleteItems(result.data);
         })
@@ -128,9 +131,13 @@ class ListAutoSuggest extends polymer.Base implements polymer.Element {
         return index < ListAutoSuggest.maxSuggestions;
     }
     showMore() {
-        Services.get(this.autosuggestService, {
-            'schema': this.autosuggestSchema.replace(/\$input/g, this.input),
-            'count': 'all',
+        //Services.get(this.autosuggestService, {
+        //    'schema': this.autosuggestSchema.replace(/\$input/g, this.input),
+        //    'count': 'all',
+        Services.HAAPI_GET(this.autosuggestService, {
+            schema: 'autosuggest',
+            input: this.input,
+            existingids: this.existingIds
         }, (result) => {
             (<Array<any>>result.data).sort((a: any, b: any) => { return this.suggestName(a).localeCompare(this.suggestName(b)) });
             this.allAutocompleteItems = result.data,
