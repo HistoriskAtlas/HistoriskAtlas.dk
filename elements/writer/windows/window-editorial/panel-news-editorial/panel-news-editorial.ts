@@ -22,25 +22,25 @@ class PanelNewsEditorial extends polymer.Base implements polymer.Element {
     }
 
     public fetchGeos() {
-        Services.get('geo', {
-            'schema': JSON.stringify(
-                {
-                    geo: {
-                        fields: [
-                            'id',
-                            'title',
-                            'created',
-                            { tag_geos: [{ tag: ['id', 'plurname', 'category'] }] }
-                        ],
-                        filters: {
-                            online: true
-                        }
-                    }
-                }
-            ),
-            'count': '10',
-            'sort': '{created:desc}'
-        }, (result) => {
+        //Services.get('geo', {
+        //    'schema': JSON.stringify(
+        //        {
+        //            geo: {
+        //                fields: [
+        //                    'id',
+        //                    'title',
+        //                    'created',
+        //                    { tag_geos: [{ tag: ['id', 'plurname', 'category'] }] }
+        //                ],
+        //                filters: {
+        //                    online: true
+        //                }
+        //            }
+        //        }
+        //    ),
+        //    'count': '10',
+        //    'sort': '{created:desc}'
+        Services.HAAPI_GET('geos', { schema: 'newest' }, (result) => {
             this.updateGeos(result.data);
         })
     }
@@ -55,18 +55,18 @@ class PanelNewsEditorial extends polymer.Base implements polymer.Element {
     }
 
     itemTap(e: any) {
-        Common.geoClick(e.model.item.id);
+        Common.geoClick(e.model.item.geoid);
     }
 
     numberWithSeparaters(n: number): string {
         return Common.numberWithSeparaters(n);
     }
 
-    formatInstitutions(tag_geos: Array<any>): string {
+    formatInstitutions(tags: Array<any>): string {
         var institutions: Array<string> = [];
-        for (var tag_geo of tag_geos)
-            if (tag_geo.tag.category == 3)
-                institutions.push(tag_geo.tag.plurname);
+        for (var tag of tags)
+            if (tag.category == 3)
+                institutions.push(tag.plurname);
         return institutions.join(', ');
     }
 }

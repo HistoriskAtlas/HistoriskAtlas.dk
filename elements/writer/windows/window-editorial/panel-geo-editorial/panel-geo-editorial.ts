@@ -36,77 +36,82 @@ class PanelGeoEditorial extends polymer.Base implements polymer.Element {
     }
 
     public fetchGeos() {
-        //this.showDetails = false;
-        Services.get('geo', {
-            'schema': JSON.stringify(
-                {
-                    geo: {
-                        fields: [
-                            'id',
-                            'title',
-                            'online',
-                            'created',
-                            'views',
-                            {
-                                user: [
-                                    'firstname',
-                                    'lastname'
-                                ]
-                            },
-                            {
-                                tag_geos: [
-                                    'empty',
-                                    {
-                                        collapse: 'tagid'
-                                    }
-                                ]
-                            }
-                        ],
-                        filters: this.kind == 2 ?
-                            {
-                                tag_geos: [
-                                    {
-                                        tag: [
-                                            {
-                                                institutions: [
-                                                    {
-                                                        id: App.haUsers.user.currentInstitution.id
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                ],
-                                title: {
-                                    like: this.filter
-                                }
-                            }
-                            :
-                            {
-                            user: this.kind == 0 ?
-                                [
-                                    { id: App.haUsers.user.id }
-                                ]
-                                :
-                                [
-                                    {
-                                        userhierarkis1: [
-                                            {
-                                                parentid: App.haUsers.user.id
-                                            }
-                                        ]
-                                    }
-                                ]
-                                ,
-                            title: {
-                                like: this.filter
-                            }
-                        }
-                    }
-                }
-            ),
-            'count': 'all'
-        }, (result) => {
+        //Services.get('geo', {
+        //    'schema': JSON.stringify(
+        //        {
+        //            geo: {
+        //                fields: [
+        //                    'id',
+        //                    'title',
+        //                    'online',
+        //                    'created',
+        //                    'views',
+        //                    {
+        //                        user: [
+        //                            'firstname',
+        //                            'lastname'
+        //                        ]
+        //                    },
+        //                    {
+        //                        tag_geos: [
+        //                            'empty',
+        //                            {
+        //                                collapse: 'tagid'
+        //                            }
+        //                        ]
+        //                    }
+        //                ],
+        //                filters: this.kind == 2 ?
+        //                    {
+        //                        tag_geos: [
+        //                            {
+        //                                tag: [
+        //                                    {
+        //                                        institutions: [
+        //                                            {
+        //                                                id: App.haUsers.user.currentInstitution.id
+        //                                            }
+        //                                        ]
+        //                                    }
+        //                                ]
+        //                            }
+        //                        ],
+        //                        title: {
+        //                            like: this.filter
+        //                        }
+        //                    }
+        //                    :
+        //                    {
+        //                    user: this.kind == 0 ?
+        //                        [
+        //                            { id: App.haUsers.user.id }
+        //                        ]
+        //                        :
+        //                        [
+        //                            {
+        //                                userhierarkis1: [
+        //                                    {
+        //                                        parentid: App.haUsers.user.id
+        //                                    }
+        //                                ]
+        //                            }
+        //                        ]
+        //                        ,
+        //                    title: {
+        //                        like: this.filter
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    ),
+        //    'count': 'all'
+        var params: any = { schema: 'editorial' };
+        switch (this.kind) {
+            case 0: params.userid = App.haUsers.user.id; break;
+            case 1: params.parentuserid = App.haUsers.user.id; break;
+            case 2: params.institutionid = App.haUsers.user.currentInstitution.id; break;
+        }
+        Services.HAAPI_GET('geos', params, (result) => {
             this.updateGeos(result.data);
         })
     }
@@ -133,15 +138,15 @@ class PanelGeoEditorial extends polymer.Base implements polymer.Element {
         return Common.formatDate(date);
     }
 
-    statusClass(online: boolean, tag_geos: Array<number>): string {
-        if (tag_geos.indexOf(730) > -1)
+    statusClass(online: boolean, tagids: Array<number>): string {
+        if (tagids.indexOf(730) > -1)
             return 'publish-request'
 
         return online ? 'online' : 'offline';
     }
 
     itemTap(e: any) {
-        Common.geoClick(e.model.item.id);
+        Common.geoClick(e.model.item.geoid);
     }
 
     sortOnTitle() {
@@ -169,8 +174,8 @@ class PanelGeoEditorial extends polymer.Base implements polymer.Element {
         this.$.selector.sort(this.compareStatus);
     }
     compareStatus(a: any, b: any): number {
-        var valA = a.tag_geos.indexOf(730) > 0 ? 1 : (a.online ? 2 : 0);
-        var valB = b.tag_geos.indexOf(730) > 0 ? 1 : (b.online ? 2 : 0);
+        var valA = a.tagids.indexOf(730) > 0 ? 1 : (a.online ? 2 : 0);
+        var valB = b.tagids.indexOf(730) > 0 ? 1 : (b.online ? 2 : 0);
         return valA - valB;
     }
 

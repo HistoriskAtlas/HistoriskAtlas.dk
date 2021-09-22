@@ -11,7 +11,8 @@ class PanelPublication extends polymer.Base implements polymer.Element {
         var existingTagIds: Array<number> = [];
         for (var destination of this.destinations)
             existingTagIds.push(destination.id);
-        Services.get('tag', { schema: JSON.stringify({ tag: { fields: [{ collapse: 'id' }], filters: [{ parents: [{ id: App.haUsers.user.currentInstitution.tagid }] }] } }), categori: 8, count: 'all' }, (result) => {
+        //Services.get('tag', { schema: JSON.stringify({ tag: { fields: [{ collapse: 'id' }], filters: [{ parents: [{ id: App.haUsers.user.currentInstitution.tagid }] }] } }), categori: 8, count: 'all' }, (result) => {
+        Services.HAAPI_GET('tags', { schema: 'destinations', tagid: App.haUsers.user.currentInstitution.tagid }, (result) => {
             var tags: Array<HaTag> = [];
             for (var tagid of result.data)
                 if (existingTagIds.indexOf(tagid) == -1)
