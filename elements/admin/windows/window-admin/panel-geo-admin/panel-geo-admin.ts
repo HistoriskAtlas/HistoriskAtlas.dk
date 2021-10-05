@@ -94,19 +94,29 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
             this.set('geos', []);
         }
 
-        var filters: Array<string> = [];
+        var params: any = {
+            schema: 'admin',
+            count: this.institutionTagId > 0 || this.userId > 0 ? 'all' : this.geosPerPage,
+            skip: this.geos.length,
+            sort: this.sort,
+            sortdir: this.sortDir
+        };
+        //var filters: Array<string> = [];
         if (this.filter)
-            filters.push('title:{like:' + this.filter + '}');
+            params.filter = this.filter;
+            //filters.push('title:{like:' + this.filter + '}');
         if (this.institutionTagId > 0)
-            filters.push('tag_geos:[{tag:{id:' + this.institutionTagId + '}}]');
+            params.institutiontagid = this.institutionTagId;
+            //filters.push('tag_geos:[{tag:{id:' + this.institutionTagId + '}}]');
         if (this.userId > 0)
-            filters.push('userid:' + this.userId);
-        Services.get('geo', {
-            'schema': '{geo:{' + (filters.length > 0 ? 'filters:{' + filters.join(',') + '},' : '') + 'fields:[id,title,created,views,deleted,{tag_geos:[{tag:[id,plurname,category]}]},{user:[login,firstname,lastname]}]}}',  //{title:{like:' + this.filter + '}}
-            'count': this.institutionTagId > 0 || this.userId > 0 ? 'all' : this.geosPerPage,
-            'skip': this.geos.length,
-            'sort': '{' + this.sort + ':' + this.sortDir + '}'
-        }, (result) => {
+            params.userid = this.userId;
+            //filters.push('userid:' + this.userId);
+        //Services.get('geo', {
+        //    'schema': '{geo:{' + (filters.length > 0 ? 'filters:{' + filters.join(',') + '},' : '') + 'fields:[id,title,created,views,deleted,{tag_geos:[{tag:[id,plurname,category]}]},{user:[login,firstname,lastname]}]}}',  //{title:{like:' + this.filter + '}}
+        //    'count': this.institutionTagId > 0 || this.userId > 0 ? 'all' : this.geosPerPage,
+        //    'skip': this.geos.length,
+        //    'sort': '{' + this.sort + ':' + this.sortDir + '}'
+        Services.HAAPI_GET('geos', params, (result) => {
             this.updateGeos(result.data);
             //if (!reset)
             //    this.$.ironList.scrollTop = this.$.ironList.scrollHeight;
@@ -119,21 +129,21 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
     }
 
     public fetchInstitutionTags() {
-        Services.get('tag', {
-            'schema': '{tag:{fields:[id,plurname],filters:{category:3}}}',
-            'count': 'all'
-        }, (result) => {
+        //Services.get('tag', {
+        //    'schema': '{tag:{fields:[id,plurname],filters:{category:3}}}',
+        //    'count': 'all'
+        Services.HAAPI_GET('tags', { schema: 'plurnames', categoryid: 3 }, (result) => {
             result.data.sort((a, b) => a.plurname.localeCompare(b.plurname));
             this.set('institutionTags', result.data);
         })
     }
 
     public fetchUsers() {
-        Services.get('user', {
-            'schema': '{user:{fields:[id,login,firstname,lastname]}}',
-            'count': 'all',
-            'deleted': 'any'
-        }, (result) => {
+        //Services.get('user', {
+        //    'schema': '{user:{fields:[id,login,firstname,lastname]}}',
+        //    'count': 'all',
+        //    'deleted': 'any'
+        Services.HAAPI_GET('users', {}, (result) => {
             result.data.sort((a, b) => (a.firstname + ' ' + a.lastname + ' ' + a.login).localeCompare(b.firstname + ' ' + b.lastname + ' ' + b.login));
             this.set('users', result.data);
         })
@@ -146,12 +156,12 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
     private getGeo() {
         if (!this.geo)
             return;
-        Services.get('geo', {
-            'schema': '{geo:[title,intro,online]}',
-            'id': this.geo.id
-        }, (result) => {
-            for (var attr in result.data[0])
-                this.set('geo.' + attr, result.data[0][attr])
+        //Services.get('geo', {
+        //    'schema': '{geo:[title,intro,online]}',
+        //    'id': this.geo.id
+        Services.HAAPI_GET(`geo/${this.geo.geoid}`, { schema: 'title-intro-online' }, (result) => {
+            for (var attr in result.data)
+                this.set('geo.' + attr, result.data[attr])
         })
     }
 
@@ -174,11 +184,11 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
         return Common.formatDate(date);
     }
 
-    formatInstitutions(tag_geos: Array<any>): string {
+    formatInstitutions(tags: Array<any>): string {
         var institutions: Array<string> = [];
-        for (var tag_geo of tag_geos)
-            if (tag_geo.tag.category == 3)
-                institutions.push(tag_geo.tag.plurname);
+        for (var tag of tags)
+            if (tag.category == 3)
+                institutions.push(tag.plurname);
         return institutions.join(', ');
     }
 

@@ -116,7 +116,7 @@
                     <paper-listbox class="dropdown-content" selected="{{institutionTagId}}" attr-for-selected="id">
                         <paper-item id="0">Alle institutioner</paper-item>
                         <template is="dom-repeat" items="[[institutionTags]]">
-                            <paper-item id="[[item.id]]">[[item.plurname]]</paper-item>
+                            <paper-item id="[[item.tagid]]">[[item.plurname]]</paper-item>
                         </template>
                     </paper-listbox>
                 </paper-dropdown-menu>
@@ -124,7 +124,7 @@
                     <paper-listbox class="dropdown-content" selected="{{userId}}" attr-for-selected="id">
                         <paper-item id="0">Alle brugere</paper-item>
                         <template is="dom-repeat" items="[[users]]">
-                            <paper-item id="[[item.id]]">[[item.firstname]] [[item.lastname]] ([[item.login]])</paper-item>
+                            <paper-item id="[[item.userid]]">[[item.firstname]] [[item.lastname]] ([[item.login]])</paper-item>
                         </template>
                     </paper-listbox>
                 </paper-dropdown-menu>
@@ -142,11 +142,11 @@
                 <iron-list id="ironList" items="{{geos}}" max-physical-count="100">
                     <template>
                         <div class="item" on-tap="itemTap">
-                            <span>[[item.id]]</span>
+                            <span>[[item.geoid]]</span>
                             <span>[[item.title]]</span>
                             <span>[[item.user.firstname]] [[item.user.lastname]] ([[item.user.login]])</span>
                             <span>[[formatDate(item.created)]]</span>
-                            <span>[[formatInstitutions(item.tag_geos)]]</span>
+                            <span>[[formatInstitutions(item.tags)]]</span>
                             <span>[[numberWithSeparaters(item.views)]]</span>
                         </div>
                     </template>
@@ -173,17 +173,17 @@
                     <div style="margin-top: 10px"><b>Oprettet d.</b> [[formatDate(geo.created)]]</div>
 
                     <div style="margin-top: 10px"><b>Tilknyttede institutioner</b></div>
-                    <template is="dom-repeat" items="[[geo.tag_geos]]">
-                        <template is="dom-if" if="[[isInstitutionCaetgory(item.tag.category)]]">
-                            <div>[[item.tag.plurname]]</div>
+                    <template is="dom-repeat" items="[[geo.tags]]">
+                        <template is="dom-if" if="[[isInstitutionCaetgory(item.category)]]">
+                            <div>[[item.plurname]]</div>
                         </template>
                     </template>
                     
                     <div style="margin-top: 10px"><b>Visninger (siden 19/4 2018):</b> [[geo.views]]</div>
 
                     <div style="margin-top: 10px"><b>Alle tags</b></div>
-                    <template is="dom-repeat" items="[[geo.tag_geos]]">
-                        <div>[[item.tag.plurname]]</div>
+                    <template is="dom-repeat" items="[[geo.tags]]">
+                        <div>[[item.plurname]]</div>
                     </template>
 
                 </template>
