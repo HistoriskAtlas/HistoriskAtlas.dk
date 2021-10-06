@@ -68,20 +68,35 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
 
     public fetchUsers() {
         this.showDetails = false;
-        Services.get('user', {
-            //Use when "and"-bug on api is fixed:  'schema': '{user:{filters:[{login:{like:' + this.filter + '}},{firstname:{like:' + firstFilter + '},lastname:{like:' + lastFilter + '}}],fields:[id,login,firstname,lastname,roleid,{user_institutions:[empty,{institution:[{tag:[plurname]}]}]}]}}',
-            'schema': JSON.stringify(
-                {
-                    user: {
-                        filters: HaUsers.getApiFilter(this.filter),
-                        fields: ['id', 'login', 'firstname', 'lastname', 'roleid', 'isactive', 'deleted', { user_institutions: [{ institution: [(this.kind == 1 ? 'exists' : ''), { tag: ['plurname'] }] }] }]
-                    }
-                }
-            ),
-            'count': 'all',
-            'isactive': this.inactive ? 'any' : 'true',
-            'deleted': this.deleted ? 'any' : 'no',
-        }, (result) => {
+        //Services.get('user', {
+        //    //Use when "and"-bug on api is fixed:  'schema': '{user:{filters:[{login:{like:' + this.filter + '}},{firstname:{like:' + firstFilter + '},lastname:{like:' + lastFilter + '}}],fields:[id,login,firstname,lastname,roleid,{user_institutions:[empty,{institution:[{tag:[plurname]}]}]}]}}',
+        //    'schema': JSON.stringify(
+        //        {
+        //            user: {
+        //                filters: HaUsers.getApiFilter(this.filter),
+        //                fields: ['id', 'login', 'firstname', 'lastname', 'roleid', 'isactive', 'deleted', { user_institutions: [{ institution: [(this.kind == 1 ? 'exists' : ''), { tag: ['plurname'] }] }] }]
+        //            }
+        //        }
+        //    ),
+        //    'count': 'all',
+        //    'isactive': this.inactive ? 'any' : 'true',
+        //    'deleted': this.deleted ? 'any' : 'no',
+
+        var params: any = { schema: 'admin' };
+
+        if (this.filter)
+            params.filter = this.filter;
+
+        if (this.inactive)
+            params.inactive = true;
+
+        if (this.deleted)
+            params.deleted = true;
+
+        if (this.kind == 1)
+            params.professional = true;
+
+        Services.HAAPI_GET('users', params, (result) => {
             this.updateUsers(result.data);
         }, null, "Henter brugere")
     }
@@ -99,7 +114,7 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
     }
 
     showGeos() {
-        this.userId = this.user.id;
+        this.userId = this.user.userid;
         this.selectedTab = WindowAdminTabs.geos;
     }
 
@@ -114,12 +129,12 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
             return;
         this.showDetails = true;
         this.isGettingUser = true;
-        Services.get('user', {
-            'schema': '{user:[id,login,firstname,lastname,email,deleted,isactive,roleid,internalnote,{userhierarkis:[{child:[id,login,firstname,lastname]}]},{userhierarkis1:[{parent:[id,login,firstname,lastname]}]},{user_institutions:[empty,{institution:[id,{tag:[plurname]}]}]}]}',
-            'userid': this.user.id
-        }, (result) => {
-            for (var attr in result.data[0])
-                this.set('user.' + attr, result.data[0][attr])
+        //Services.get('user', {
+        //    'schema': '{user:[id,login,firstname,lastname,email,deleted,isactive,roleid,internalnote,{userhierarkis:[{child:[id,login,firstname,lastname]}]},{userhierarkis1:[{parent:[id,login,firstname,lastname]}]},{user_institutions:[empty,{institution:[id,{tag:[plurname]}]}]}]}',
+        //    'userid': this.user.id
+        Services.HAAPI_GET(`user/${this.user.userid}`, { schema: 'admin' }, (result) => {
+            for (var attr in result.data)
+                this.set('user.' + attr, result.data[attr])
             this.isGettingUser = false;
         })
     }
@@ -145,13 +160,13 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
     }
 
     private updateUserProperty(property: string) {
-        Services.update('user', JSON.parse('{ "id": ' + this.user.id + ', "' + property + '": "' + this.user[property] + '" }'));
+        Services.update('user', JSON.parse('{ "id": ' + this.user.userid + ', "' + property + '": "' + this.user[property] + '" }'));
     }
 
     institutions(institutions: Array<any>): string {
         var result: Array<string> = [];
-        for (var data of institutions)
-            result.push(data.institution.tag.plurname)
+        for (var institution of institutions)
+            result.push(institution.plurname)
         return result.join(', ');
     }
 
@@ -174,16 +189,16 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
     }
     @listen('toggle-active-confirmed')
     toggleActiveConfirmed(e: any) {
-        Services.update('user', { 'userid': this.user.id, 'isactive': !this.user.isactive }, (result) => { this.getUser(); })
+        Services.update('user', { 'userid': this.user.userid, 'isactive': !this.user.isactive }, (result) => { this.getUser(); })
     }
 
     //getAutosuggestSchema(user_institutions: any): string {
-    getAutosuggestExistingIds(user_institutions: any): number[] {
-        if (!user_institutions)
+    getAutosuggestExistingIds(institutions: any): number[] {
+        if (!institutions)
             return [];
         var existingIds: Array<number> = [];
-        for (var item of user_institutions)
-            existingIds.push(item.institution.id)
+        for (var institution of institutions)
+            existingIds.push(institution.userid)
         //return '{institution:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},tag:{plurname:{like:$input}}},fields:[id,{tag:[plurname]}]}}';
         return existingIds;
     }
@@ -201,26 +216,26 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
         if (!userhierarkis)
             return [];
         var existingIds: Array<number> = [];
-        for (var item of userhierarkis)
-            existingIds.push(item.child ? item.child.id : item.parent.id);
+        for (var user of userhierarkis)
+            existingIds.push(user.userid);
         //return '{user:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},firstname:{like:$input}},fields:[id,login,firstname,lastname]}}'; //TODO Search more than login!
         return existingIds;
     }
     @listen('writerAutosuggestAdded')
     writerAdded(e: any) {
-        Services.insert('userhierarki', { 'upperuserid': this.user.id, 'userid': e.detail.userid }, (result) => { this.getUser(); })
+        Services.insert('userhierarki', { 'upperuserid': this.user.userid, 'userid': e.detail.userid }, (result) => { this.getUser(); })
     }
     @listen('writerAutosuggestRemoved')
     writerRemoved(e: any) {
-        Services.delete('userhierarki', { 'upperuserid': this.user.id, 'userid': e.detail.child.id, 'deletemode': 'permanent' }, (result) => { this.getUser(); })
+        Services.delete('userhierarki', { 'upperuserid': this.user.userid, 'userid': e.detail.child.userid, 'deletemode': 'permanent' }, (result) => { this.getUser(); })
     }
     @listen('editorAutosuggestAdded')
     editorAdded(e: any) {
-        Services.insert('userhierarki', { 'upperuserid': e.detail.userid, 'userid': this.user.id }, (result) => { this.getUser(); })
+        Services.insert('userhierarki', { 'upperuserid': e.detail.userid, 'userid': this.user.userid }, (result) => { this.getUser(); })
     }
     @listen('editorAutosuggestRemoved')
     editorRemoved(e: any) {
-        Services.delete('userhierarki', { 'upperuserid': e.detail.parent.id, 'userid': this.user.id, 'deletemode': 'permanent' }, (result) => { this.getUser(); })
+        Services.delete('userhierarki', { 'upperuserid': e.detail.parent.userid, 'userid': this.user.userid, 'deletemode': 'permanent' }, (result) => { this.getUser(); })
     }
 
     sortOnLogin() {

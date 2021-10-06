@@ -47,10 +47,13 @@ class PanelTagAdmin extends polymer.Base implements polymer.Element {
     }
 
     public fetchTags() {
-        Services.get('tags', {
-            'schema': '{tag:{fields:[id,plurname,category],filters:{' + (this.filter ? 'plurname:{like:' + this.filter + '},' : '') + 'category:' + this.categories[this.categoryIndex].id + '}}}', //TODO: multiple "not"? 6 = søgning
-            'count': 'all'
-        }, (result) => {
+        //Services.get('tags', {
+        //    'schema': '{tag:{fields:[id,plurname,category],filters:{' + (this.filter ? 'plurname:{like:' + this.filter + '},' : '') + 'category:' + this.categories[this.categoryIndex].id + '}}}', //TODO: multiple "not"? 6 = søgning
+        //    'count': 'all'
+        var categoryId = this.categories[this.categoryIndex].id;
+        Services.HAAPI_GET('tags', { schema: 'plurnames', categoryid: categoryId }, (result) => {
+            for (var tag of result.data)
+                tag.category = categoryId;
             this.updateTags(result.data);
         }, null, "Henter tags")
     }
@@ -68,12 +71,12 @@ class PanelTagAdmin extends polymer.Base implements polymer.Element {
     private getTag() {
         if (!this.tag)
             return;
-        Services.get('tag', {
-            'schema': '{tag:[singname,{children:[{child:[id,plurname]}]},{parents:[{parent:[id,plurname]}]}]}',
-            'id': this.tag.id
-        }, (result) => {
-            for (var attr in result.data[0])
-                this.set('tag.' + attr, result.data[0][attr])
+        //Services.get('tag', {
+        //    'schema': '{tag:[singname,{children:[{child:[id,plurname]}]},{parents:[{parent:[id,plurname]}]}]}',
+        //    'id': this.tag.tagid
+        Services.HAAPI_GET(`tag/${this.tag.tagid}`, { schema: 'admin' }, (result) => {
+            for (var attr in result.data)
+                this.set('tag.' + attr, result.data[attr])
         })
     }
 
@@ -86,8 +89,8 @@ class PanelTagAdmin extends polymer.Base implements polymer.Element {
         if (!children)
             return [];
         var existingIds: Array<number> = [];
-        for (var item of children)
-            existingIds.push(item.child.id)
+        for (var child of children)
+            existingIds.push(child.id)
         //return '{tag:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},category:' + this.tag.category + ',plurname:{like:$input}},fields:[id,plurname]}}';
         return existingIds;
     }

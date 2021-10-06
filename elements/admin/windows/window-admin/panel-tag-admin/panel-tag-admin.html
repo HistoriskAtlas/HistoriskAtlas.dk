@@ -113,7 +113,7 @@
                     <confirm-input label="flertal" value="{{tag.plurname}}"></confirm-input>
                     <confirm-input label="ental" value="{{tag.singname}}"></confirm-input>
                     <div style="padding-top:15px; font-weight:bold">undertags</div>
-                    <list-auto-suggest id="undertagsAutosuggest" items="{{tag.children}}" autosuggest-service="tags" existing-ids="[[getAutosuggestExistingIds(tag.children)]]" name-path="child.plurname" suggest-name-path="plurname"></list-auto-suggest>
+                    <list-auto-suggest id="undertagsAutosuggest" items="{{tag.children}}" autosuggest-service="tags" existing-ids="[[getAutosuggestExistingIds(tag.children)]]" name-path="plurname" suggest-name-path="plurname"></list-auto-suggest>
                 </template>
             </div>
 

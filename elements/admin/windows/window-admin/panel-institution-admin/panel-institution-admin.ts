@@ -40,11 +40,11 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
     }
 
     public fetchInstitutions(callback: () => void = null) {
-        Services.get('institution', {
-            'schema': '{institution:{' + (this.filter ? 'filters:[{tag:[{plurname:{like:' + this.filter + '}}]}],' : '') + 'fields:[id,type,deleted,geoviews,{user_institutions:[{user:[firstname,lastname]}]},{tag:[plurname]}]}}',
-            'count': 'all',
-            'deleted': 'any'
-        }, (result) => {
+        //Services.get('institution', {
+        //    'schema': '{institution:{' + (this.filter ? 'filters:[{tag:[{plurname:{like:' + this.filter + '}}]}],' : '') + 'fields:[id,type,deleted,geoviews,{user_institutions:[{user:[firstname,lastname]}]},{tag:[plurname]}]}}',
+        //    'count': 'all',
+        //    'deleted': 'any'
+        Services.HAAPI_GET('institutions', { schema: 'admin' }, (result) => {
             this.updateInstitutions(result.data);
             if (callback)
                 callback();
@@ -66,13 +66,13 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
         if (!this.institution)
             return;
         this.isGettingInstitution = true;
-        Services.get('institution', {
-            'schema': '{institution:[id,url,email,{user_institutions:[{user:[id,login,firstname,lastname,deleted]}]},{tag:[id,plurname]}]}',
-            'id': this.institution.id,
-            'deleted': 'any'
-        }, (result) => {
-            for (var attr in result.data[0])
-                this.set('institution.' + attr, result.data[0][attr])
+        //Services.get('institution', {
+        //    'schema': '{institution:[id,url,email,{user_institutions:[{user:[id,login,firstname,lastname,deleted]}]},{tag:[id,plurname]}]}',
+        //    'id': this.institution.id,
+        //    'deleted': 'any'
+        Services.HAAPI_GET(`institution/${this.institution.institutionid}`, { schema: 'admin' }, (result) => {
+            for (var attr in result.data)
+                this.set('institution.' + attr, result.data[attr])
             this.isGettingInstitution = false;
         })
     }
@@ -85,10 +85,10 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
         return deleted ? 'deleted' : '';
     }
 
-    public userNames(user_institutions: Array<any>): string {
+    public userNames(users: Array<any>): string {
         var result: Array<string> = [];
-        for (var data of user_institutions)
-            result.push(data.user.firstname + ' ' + data.user.lastname)
+        for (var user of users)
+            result.push(user.firstname + ' ' + user.lastname)
         return result.join(', ');
     }
 
@@ -97,7 +97,7 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
         if (this.isGettingInstitution)
             return;
         if (e.path == 'institution.tag.plurname')
-            Services.update('tag', JSON.parse('{ "id": ' + this.institution.tag.id + ', "plurname": "' + this.institution.tag.plurname + '", "singname": "' + this.institution.tag.plurname + '" }'));
+            Services.update('tag', JSON.parse('{ "id": ' + this.institution.tag.tagid + ', "plurname": "' + this.institution.tag.plurname + '", "singname": "' + this.institution.tag.plurname + '" }'));
         var property = e.path.split('.')[1];
         switch (property) {
             case 'url': case 'email': case 'type':
@@ -106,32 +106,32 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
     }
 
     private updateInstProperty(property: string) {
-        Services.update('institution', JSON.parse('{ "id": ' + this.institution.id + ', "' + property + '": "' + this.institution[property] + '" }'));
+        Services.update('institution', JSON.parse('{ "id": ' + this.institution.tagid + ', "' + property + '": "' + this.institution[property] + '" }'));
     }
 
     //getAutosuggestSchema(user_institutions: any): string {
-    getAutosuggestExistingIds(user_institutions: any): number[] {
-        if (!user_institutions)
+    getAutosuggestExistingIds(users: any): number[] {
+        if (!users)
             return [];
         var existingIds: Array<number> = [];
-        for (var item of user_institutions)
-            existingIds.push(item.user.id)
+        for (var user of users)
+            existingIds.push(user.userid)
         //return '{user:{filters:{id:{not:{is:[' + existingIds.join(',') + ']}},firstname:{like:$input}},fields:[id,login,firstname,lastname]}}';
         return existingIds;
     }
 
     @listen('userAutosuggestAdded')
     userAdded(e: any) {
-        Services.insert('user_institution', { 'institutionid': this.institution.id, 'userid': e.detail.userid }, (result) => { this.getInstitution(); })
+        Services.insert('user_institution', { 'institutionid': this.institution.tagid, 'userid': e.detail.userid }, (result) => { this.getInstitution(); })
     }
 
     @listen('userAutosuggestRemoved')
     userRemoved(e: any) {
-        Services.delete('user_institution', { 'institutionid': this.institution.id, 'userid': e.detail.user.id, 'deletemode': 'permanent' }, (result) => { this.getInstitution(); })
+        Services.delete('user_institution', { 'institutionid': this.institution.tagid, 'userid': e.detail.user.tagid, 'deletemode': 'permanent' }, (result) => { this.getInstitution(); })
     }
 
     showGeos() {
-        this.institutionTagId = this.institution.tag.id;
+        this.institutionTagId = this.institution.tag.tagid;
         this.selectedTab = WindowAdminTabs.geos;
     }
 
@@ -153,8 +153,8 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
         this.$.admin.sort(this.compareUsers);
     }
     compareUsers(a: any, b: any): number {
-        var aName = a.user_institutions.length == 0 ? '' : a.user_institutions[0].user.firstname + a.user_institutions[0].user.lastname
-        var bName = b.user_institutions.length == 0 ? '' : b.user_institutions[0].user.firstname + b.user_institutions[0].user.lastname
+        var aName = a.users.length == 0 ? '' : a.users[0].firstname + a.users[0].lastname
+        var bName = b.users.length == 0 ? '' : b.users[0].firstname + b.users[0].lastname
         return aName.localeCompare(bName);
     }
 
@@ -204,7 +204,7 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
 
     public delete() {
         Services.get('geo', { 
-            'schema': '{geo:{filters:{tag_geo:{tagid:' + this.institution.tag.id + '}},fields:[{collapse:geoid}]}}',
+            'schema': '{geo:{filters:{tag_geo:{tagid:' + this.institution.tag.tagid + '}},fields:[{collapse:geoid}]}}',
             'count': 'all'
         }, (result) => {
             if (result.data.length == 0)
@@ -219,7 +219,7 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
     }
     @listen('delete-institution-confirmed')
     private deleteInstitution() {
-        Services.delete('institution', { id: this.institution.id }, (result) => {
+        Services.delete('institution', { id: this.institution.institutionid }, (result) => {
             App.toast.show("Institutionen er slettet!");
             this.$.admin.select(null);
             this.fetchInstitutions();

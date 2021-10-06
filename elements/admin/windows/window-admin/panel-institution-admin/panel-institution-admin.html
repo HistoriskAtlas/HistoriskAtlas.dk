@@ -117,7 +117,7 @@
                         <div class$="item [[statusClass(item.deleted)]]" on-tap="itemTap">
                             <span>[[item.tag.plurname]]</span>
                             <span>[[instType(item.type)]]</span>
-                            <span>[[userNames(item.user_institutions)]]</span>
+                            <span>[[userNames(item.users)]]</span>
                             <span>[[numberWithSeparaters(item.geoviews)]]</span>
                         </div>
                     </template>
@@ -149,7 +149,7 @@
                     <confirm-input label="website" value="{{institution.url}}"></confirm-input>
                     <confirm-input label="email" value="{{institution.email}}"></confirm-input>
                     <div style="padding-top:15px; font-weight:bold">brugere</div>
-                    <list-auto-suggest id="userAutosuggest" items="{{institution.user_institutions}}" autosuggest-service="users" existing-ids="[[getAutosuggestExistingIds(institution.user_institutions)]]" name-path="user.firstname,$ ,user.lastname,$ (,user.login,$) ,$deleted=user.deleted" suggest-name-path="firstname,$ ,lastname,$ (,login,$)"></list-auto-suggest>
+                    <list-auto-suggest id="userAutosuggest" items="{{institution.users}}" autosuggest-service="users" existing-ids="[[getAutosuggestExistingIds(institution.users)]]" name-path="firstname,$ ,lastname,$ (,login,$) ,$deleted=deleted" suggest-name-path="firstname,$ ,lastname,$ (,login,$)"></list-auto-suggest>
                 </template>
             </div>
 
