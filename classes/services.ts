@@ -23,9 +23,9 @@
         this.pushServiceCall(() => this.serviceCall(service + '.json', data, success, error, true, message), message);
     }
 
-    public static get(service: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null) {
-        this.pushServiceCall(() => this.serviceCall(service + '.json', data, success, error, true, message), message);
-    }
+    //public static get(service: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null) {
+    //    this.pushServiceCall(() => this.serviceCall(service + '.json', data, success, error, true, message), message);
+    //}
 
     public static proxy(proxy: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null) {
         this.pushServiceCall(() => this.serviceCall('proxy/' + proxy + '.json', data, success, error, true));

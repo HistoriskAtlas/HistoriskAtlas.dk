@@ -25,37 +25,37 @@ class PanelUserEditorial extends polymer.Base implements polymer.Element {
     }
 
     public fetchUsers() {
-        Services.get('user', {
-            'schema': JSON.stringify(
-                {
-                    user: {
-                        fields: [
-                            'login',
-                            'firstname',
-                            'lastname',
-                            {
-                                user_institutions: [
-                                    {
-                                        institution: [
-                                            {
-                                                tag: ['plurname']
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ],
-                        filters: HaUsers.getApiFilter(this.filter)
-                    }
-                }
-            ),
-            'userhierarkis1': JSON.stringify(
-                {
-                    parentid: App.haUsers.user.id
-                }
-            ),
-            'count': 'all'
-        }, (result) => {
+        //Services.get('user', {
+        //    'schema': JSON.stringify(
+        //        {
+        //            user: {
+        //                fields: [
+        //                    'login',
+        //                    'firstname',
+        //                    'lastname',
+        //                    {
+        //                        user_institutions: [
+        //                            {
+        //                                institution: [
+        //                                    {
+        //                                        tag: ['plurname']
+        //                                    }
+        //                                ]
+        //                            }
+        //                        ]
+        //                    }
+        //                ],
+        //                filters: HaUsers.getApiFilter(this.filter)
+        //            }
+        //        }
+        //    ),
+        //    'userhierarkis1': JSON.stringify(
+        //        {
+        //            parentid: App.haUsers.user.id
+        //        }
+        //    ),
+        //    'count': 'all'
+        Services.HAAPI_GET('users', { schema: 'writers' }, (result) => {
             this.updateUsers(result.data);
         })
     }
@@ -71,8 +71,8 @@ class PanelUserEditorial extends polymer.Base implements polymer.Element {
 
     institutions(institutions: Array<any>): string {
         var result: Array<string> = [];
-        for (var data of institutions)
-            result.push(data.institution.tag.plurname)
+        for (var institution of institutions)
+            result.push(institution)
         return result.join(', ');
     }
 

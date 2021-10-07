@@ -203,10 +203,10 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
     }
 
     public delete() {
-        Services.get('geo', { 
-            'schema': '{geo:{filters:{tag_geo:{tagid:' + this.institution.tag.tagid + '}},fields:[{collapse:geoid}]}}',
-            'count': 'all'
-        }, (result) => {
+        //Services.get('geo', { 
+        //    'schema': '{geo:{filters:{tag_geo:{tagid:' + this.institution.tag.tagid + '}},fields:[{collapse:geoid}]}}',
+        //    'count': 'all'
+        Services.HAAPI_GET('geos', { schema: 'taggeolist', tagid: this.institution.tag.tagid }, (result) => {
             if (result.data.length == 0)
                 $(this).append(DialogConfirm.create("delete-institution", "ADVARSEL! Du er ved at slette '" + this.institution.tag.plurname + "'. Vil du fortsætte?"));
             else
