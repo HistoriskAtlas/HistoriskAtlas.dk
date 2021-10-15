@@ -5,10 +5,6 @@
     private _contenttypeid: number;
     private _ordering: number;
 
-    //public texts: Array<HaSubContentText> = [];
-    //public biblios: Array<HaSubContentBiblio> = [];
-    //public pdfs: Array<HaSubContentPDF> = [];
-    //public externals: Array<HaSubContentExternal> = [];
     public subContents: Array<HaSubContent> = [];
 
     constructor(data: any) {
@@ -47,24 +43,10 @@
         this._ordering = value;
     }
 
-    //get count(): number {
-    //    return this.texts.length + this.biblios.length + this.pdfs.length + this.externals.length;
-    //}
-
     get headline(): string {
         switch (this._contenttypeid) {
-        //    case 0:
-        //        if (this.texts.length > 0)
-        //            return this.texts[0].headline;
-        //        else {
-        //            if (this.pdfs.length > 0)
-        //                return 'Dokumenter'
-        //        }
-        //        break;
             case 1: return 'Litteratur';
         }
-
-        //return '';
         return this._headline;
     }
     set headline(value: string) {
@@ -88,22 +70,9 @@
     }
 
     public insert(callback?: () => void) {
-        var data: any = {
-            geoid: this._geoid,
-            headline: this._headline,
-            ordering: this._ordering,
-            userid: App.haUsers.user.id,
-            contenttypeid: this._contenttypeid
-        };
-        Services.insert('content', data, (result) => {
-            this._id = result.data[0].id;
+        Services.HAAPI_POST('content', {}, Common.formData({ geoid: this._geoid, headline: this._headline, ordering: this._ordering, contenttypeid: this._contenttypeid }), (result) => {
+            this._id = result.data.contentid;
 
-            //for (var text of this.texts)
-            //    text.insert(null); //TODO callbacks needed?
-            //for (var biblio of this.biblios)
-            //    biblio.insert();
-            //for (var external of this.externals)
-            //    external.insert();
             for (var subContent of this.subContents) {
                 if (subContent instanceof HaSubContentText)
                     (<HaSubContentText>subContent).insert(null);
@@ -115,61 +84,22 @@
 
             if (callback)
                 callback();
-
-            //var data: any = {
-            //    contentid: this._id,
-            //};
-            //switch (this._type) {
-            //    //case ContentType.Text:
-            //    //    data.headline = this._headline;
-            //    //    data.text1 = this._text; //use Common.html2rich( ?
-            //    //    Services.insert('text', data, (result) => { //TODO: Not always text...
-            //    //        this._textid = result.data[0].id;
-            //    //    })
-            //    //    break;
-            //    case ContentType.Biblio:
-            //        data.cql = this._cql;
-            //        Services.insert('biblio', data, (result) => { //TODO: Not always text...
-            //            this._biblioid = result.data[0].id;
-            //        })
-            //        break;
-            //}
        })
     }
 
     public update(property: string) {
         switch (property) {
-            case 'ordering': //TODO: Add Ordering to PDF and Biblio tables................................................................................................
-                Services.update('content', { id: this._id, ordering: this._ordering }, (result) => { }); break; 
+            case 'ordering': //TODO: Add Ordering to PDF and Biblio tables.....................
+                Services.HAAPI_PUT('content', this._id, {}, Common.formData({ ordering: this._ordering })); break;
             case 'headline':
-                Services.update('content', { id: this._id, headline: this._headline }, (result) => { }); break;
+                Services.HAAPI_PUT('content', this._id, {}, Common.formData({ headline: this._headline })); break;
         }
     }
 
     public delete() {
-        Services.delete('content', { id: this._id, deletemode: 'permanent' }, (result) => { })
-
-        //TODO wait for below to finish first?
-
-        //for (var text of this.texts)
-        //    text.delete();
-        //for (var biblio of this.biblios)
-        //    biblio.delete();
-        //for (var external of this.externals)
-        //    external.delete();
-
-        for (var subContent of this.subContents)
-            subContent.delete();
-
-
-        //switch (this._type) {
-        //    case ContentType.Text:
-        //        Services.delete('text', { textid: this._textid, deletemode: 'permanent' }, (result) => { })
-        //        break;
-        //    case ContentType.Biblio:
-        //        Services.delete('biblio', { biblioid: this._biblioid, deletemode: 'permanent' }, (result) => { })
-        //        break;
-        //}
+        Services.HAAPI_DELETE('content', this._id, true);
+    //    for (var subContent of this.subContents) // Not needed... is cascadedeleted...
+    //        subContent.delete();
     }
 
     public sort(otherContent: HaContent): number {
@@ -185,9 +115,3 @@
     }
 
 }
-
-//enum ContentType {
-//    Intro,
-//    Text,
-//    Biblio
-//}

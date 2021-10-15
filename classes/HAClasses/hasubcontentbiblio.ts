@@ -35,7 +35,7 @@
                 super.update('biblio', property); break;
         }
     }
-    public delete() {
-        this.deleteSuper('biblio')
-    }
+    //public delete() {
+    //    this.deleteSuper('biblio')
+    //}
 }

@@ -407,35 +407,25 @@
             freetags: this.freeTags,
             latitude: this.icon.coord4326[1],
             longitude: this.icon.coord4326[0],
-            userid: this.user.id,
+            //userid: this.user.id,
             online: this.online,
             ugc: this._ugc,
             views: this.views,
-            deleted: false, //TODO: shouldnt be a required field...
+            //deleted: false, //TODO: shouldnt be a required field...
             primarytagstatic: this._primaryTagStatic
         };
 
-        //if (this._id) {
-        //    data.geoid = this._id;
-        //    Services.update('geo', data, () => { })
-        //} else
-        Services.insert('geo', data, (result) => {
-            this._id = result.data[0].geoid;
+        Services.HAAPI_POST('geo', {}, Common.formData(data), (result) => {
+            this._id = result.data.geoid;
             App.haGeos.geos[this._id] = this;
             for (var tag of this.tags)
-                //if (tag != HaTags.tagUserLayer) //tag != HaTags.tagUGC && 
-                    Services.insert('tag_geo', { tagid: tag.id, geoid: this._id }, (result) => {
-                    })
+                Services.HAAPI_POST('taggeo', {}, Common.formData({ tagid: tag.id, geoid: this._id }));
         })
     }
 
     public saveCoords() {
         this.isMoving = false;
-        Services.update('geo', {
-            id: this._id,
-            latitude: this.icon.coord4326[1],
-            longitude: this.icon.coord4326[0]
-        }, () => { })
+        Services.HAAPI_PUT('geo', this._id, {}, Common.formData({ latitude: this.icon.coord4326[1], longitude: this.icon.coord4326[0] }));
 
         if (App.haGeos.firstGeoTour) {
             App.haGeos.firstGeoTour.title = 'Så er den placeret!';
@@ -467,7 +457,7 @@
         //            this.insertCollectionGeosOnGeoDelete(resultCG.data, loadText, this._id);
         //        })
         //    });
-        Services.HAAPI_DELETE(`geo/${this._id}`, null, () => {
+        Services.HAAPI_DELETE('geo', this._id, null, () => {
             App.toast.show('Fortællingen er slettet.');
         })
     }

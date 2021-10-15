@@ -63,9 +63,9 @@
         }
     }
     
-    abstract delete() 
+    //abstract delete() 
 
-    protected deleteSuper(table: string) {
-        Services.delete(table, { id: this._id, deletemode: 'permanent' }, (result) => { })
-    }
+    //protected deleteSuper(table: string) {
+    //    Services.delete(table, { id: this._id, deletemode: 'permanent' }, (result) => { })
+    //}
 }

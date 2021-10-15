@@ -60,7 +60,7 @@
         }
     }
 
-    public delete() {
-        this.deleteSuper('text')
-    }
+    //public delete() {
+    //    this.deleteSuper('text')
+    //}
 }

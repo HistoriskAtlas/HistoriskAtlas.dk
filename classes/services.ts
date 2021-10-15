@@ -40,7 +40,10 @@
     public static HAAPI_PUT(service: string, id: number, params: { [key: string]: any }, data: FormData, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null, progress: (event: ProgressEvent) => any = null) {
         this.HAAPI(`${service}/${id}`, params, success, error, progress, message, data, 'PUT');
     }
-    public static HAAPI_DELETE(service: string, id: number, params: { [key: string]: any } = {}, success: (data: any) => any = null, message: string = null) {
+    public static HAAPI_DELETE(service: string, id: number, permanent: boolean = false, params: { [key: string]: any } = {}, success: (data: any) => any = null, message: string = null) {
+        params = params || {};
+        if (permanent)
+            params.deletemode = 'permanent';
         this.HAAPI(`${service}/${id}`, params, success, null, null, message, null, 'DELETE');
     }
     private static HAAPI(service: string, params: { [key: string]: any } = null, success: (data: any) => any = null, error: (data: any) => any = null, progress: (event: ProgressEvent) => any = null, message: string = null, data: FormData = null, method: string, addSid: boolean = true) {

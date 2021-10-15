@@ -48,7 +48,7 @@
         }
     }
 
-    public delete() {
-        this.deleteSuper('pdf')
-    }
+    //public delete() {
+    //    this.deleteSuper('pdf')
+    //}
 }
