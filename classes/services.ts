@@ -31,14 +31,17 @@
         this.pushServiceCall(() => this.serviceCall('proxy/' + proxy + '.json', data, success, error, true));
     }
 
-    public static HAAPI_POST(service: string, params: { [key: string]: any }, data: FormData, message: string = null, success: (data: any) => any = null, error: (data: any) => any = null, progress: (event: ProgressEvent) => any = null) {
-        this.HAAPI(service, params, success, error, progress, message, data, 'POST');
-    }
-    public static HAAPI_DELETE(service: string, params: { [key: string]: any }, message: string = null, success: (data: any) => any = null) {
-        this.HAAPI(service, params, success, null, null, message, null, 'DELETE');
-    }
     public static HAAPI_GET(service: string, params: { [key: string]: any } = null, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null, addSid: boolean = true) {
         this.HAAPI(service, params, success, error, null, message, null, 'GET', addSid);
+    }
+    public static HAAPI_POST(service: string, params: { [key: string]: any }, data: FormData, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null, progress: (event: ProgressEvent) => any = null) {
+        this.HAAPI(service, params, success, error, progress, message, data, 'POST');
+    }
+    public static HAAPI_PUT(service: string, id: number, params: { [key: string]: any }, data: FormData, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null, progress: (event: ProgressEvent) => any = null) {
+        this.HAAPI(`${service}/${id}`, params, success, error, progress, message, data, 'PUT');
+    }
+    public static HAAPI_DELETE(service: string, id: number, params: { [key: string]: any } = {}, success: (data: any) => any = null, message: string = null) {
+        this.HAAPI(`${service}/${id}`, params, success, null, null, message, null, 'DELETE');
     }
     private static HAAPI(service: string, params: { [key: string]: any } = null, success: (data: any) => any = null, error: (data: any) => any = null, progress: (event: ProgressEvent) => any = null, message: string = null, data: FormData = null, method: string, addSid: boolean = true) {
         params = params || {};

@@ -323,6 +323,12 @@
         return MD5_inner(unescape(encodeURIComponent(str)));
     }
 
+    public static formData(data: { [key: string]: any }): FormData {
+        var formData = new FormData();
+        for (var prop in data)
+            formData.append(prop, data[prop].toString())
+        return formData;
+    }
 }
 
 class ChangeRecord<T> {

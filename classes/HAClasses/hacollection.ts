@@ -234,24 +234,16 @@
     //        Common.dom.append(WindowRoute.create(this));
     //}
     public save(callback?: () => void) {
-        var data: any = {
-            title: this._title,
-        };
-        if (this._id) { //TODO: not tested yet?
-            data.collectionid = this._id;
-            Services.update('collection', data, () => {
+        if (this._id) { //TODO: not tested yet? in use?
+            var data = Common.formData({ title: this._title });
+            Services.HAAPI_PUT('collection', this._id, {}, data, () => {
                 if (callback)
                     callback();
-            })
+            });
         } else {
-            data.userid = this.user.id;
-            data.ugc = this._ugc;
-            data.online = this._online;
-            data.type = this._type;
-            data.distance = this._distance;
-            data.cyclic = this._cyclic;
-            Services.insert('collection', data, (result) => {
-                this._id = result.data[0].collectionid;
+            var data = Common.formData({ title: this._title, ugc: this._ugc, online: this._online, type: this._type, distance: this._distance, cyclic: this._cyclic });
+            Services.HAAPI_POST('collection', {}, data, (result) => {
+                this._id = result.data.collectionid;
                 if (callback)
                     callback();
             });
@@ -260,29 +252,24 @@
 
     public saveNewCollectionGeo(collection_geo: HaCollectionGeo) {
         var coord = Common.fromMapCoord(collection_geo.coord);
-        var send: any = { collectionid: this._id, ordering: collection_geo.ordering, showonmap: collection_geo.showOnMap, calcroute: collection_geo.calcRoute, latitude: coord[1], longitude: coord[0] };
+        var data = Common.formData({ collectionid: this._id, ordering: collection_geo.ordering, showonmap: collection_geo.showOnMap, calcroute: collection_geo.calcRoute, latitude: coord[1], longitude: coord[0] });
         if (!collection_geo.isViaPoint)
-            send.geoid = collection_geo.geo.id;
-        Services.insert('collection_geo', send, (result) => {
-            collection_geo.id = result.data[0].collectiongeoid;
-        });
+            data.set('geoid', collection_geo.geo.id.toString());
+
+        Services.HAAPI_POST('collectiongeo', {}, data, (result) => collection_geo.id = result.data.collectiongeoid);
     }
 
     public saveProp(prop: string) {
-        var data = { collectionid: this._id };
-        data[prop] = this['_' + prop];
-        Services.update('collection', data, (result) => {
+        var formData = new FormData();
+        formData.append(prop, this['_' + prop]);
+        Services.HAAPI_PUT('collection', this._id, {}, formData, (result) => {
             if (prop == 'online')
                 App.toast.show('Turforslaget er nu ' + (this._online ? '' : 'af') + 'publiceret');
         });
     }
 
     public removeCollectionGeo(collection_geo: HaCollectionGeo) {
-        var data: any = {
-            collectiongeoid: collection_geo.id
-            //deletemode: 'permanent'
-        };
-        Services.delete('collection_geo', data, (result) => { });
+        Services.HAAPI_DELETE('collectiongeo', collection_geo.id);
     }
 
     //public updateOrdering(indexStart: number, indexEnd: number) {

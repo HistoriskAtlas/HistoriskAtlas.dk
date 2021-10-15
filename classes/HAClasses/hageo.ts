@@ -467,7 +467,7 @@
         //            this.insertCollectionGeosOnGeoDelete(resultCG.data, loadText, this._id);
         //        })
         //    });
-        Services.HAAPI_DELETE(`geo/${this._id}`, null, null, () => {
+        Services.HAAPI_DELETE(`geo/${this._id}`, null, () => {
             App.toast.show('Fortællingen er slettet.');
         })
     }
