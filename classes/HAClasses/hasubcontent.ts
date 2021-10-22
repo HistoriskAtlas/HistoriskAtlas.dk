@@ -45,11 +45,11 @@
     }
 
     protected insert(callback: (props: Array<string>) => void, table: string, data: any) {
-        data.contentid = this._content.id,
-        data.ordering = this._ordering,
-        Services.insert(table, data, (result) => {
-            this._id = result.data[0].id;
-            this._created = new Date(result.data[0].created);
+        data.contentid = this._content.id;
+        data.ordering = this._ordering;
+        Services.HAAPI_POST(table, {}, Common.formData(data), (result) => {
+            this._id = result.data[`${table}id`];
+            this._created = new Date(result.data.created);
             this._user = { firstname: App.haUsers.user.firstname, lastname: App.haUsers.user.lastname };
             if (callback)
                 callback(['id', 'created', 'user']);
@@ -59,7 +59,7 @@
     public update(table: string, property: string) {
         switch (property) {
             case 'ordering':
-                Services.update(table, { id: this._id, ordering: this._ordering }, (result) => { }); break;
+                Services.HAAPI_PUT(table, this._id, {}, Common.formData({ ordering: this._ordering }), (result) => { }); break;
         }
     }
     
