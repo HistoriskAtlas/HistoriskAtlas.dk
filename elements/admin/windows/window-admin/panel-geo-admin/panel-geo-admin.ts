@@ -300,15 +300,15 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
         var geos = this.geosSelectedForDeletionByTagId[this.tagSelectedForDeletion.id];
         var geo = geos.pop();
 
-        Services.delete('tag_geo', { tagid: this.tagSelectedForDeletion.id, geoid: geo.id, deletemode: 'permanent' }, (result) => {
+        Services.HAAPI_DELETE('tag_geo', null, true, { tagid: this.tagSelectedForDeletion.id, geoid: geo.id }, (result) => {
             if (geos.length > 0)
                 this.removeOneInstitution();
             else {
                 App.loading.hide("Fjerner institution");
-                App.toast.show("Institution fjernet for fortællinger!");
+                App.toast.show("Institution fjernet fra fortællinger!");
                 setTimeout(() => this.fetchGeos(true), 500);
             }
-        }, null, "")
+        })
 
     }
 
@@ -333,7 +333,7 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
     }
     addOneInstitution() {
         var geo = this.geosSelected.pop();
-        Services.insert('tag_geo', { tagid: this.tagSelectedForAddition.id, geoid: geo.id }, (result) => {
+        Services.HAAPI_POST('tag_geo', {}, Common.formData({ tagid: this.tagSelectedForAddition.id, geoid: geo.id }), (result) => {
             if (this.geosSelected.length > 0)
                 this.addOneInstitution();
             else {
@@ -341,7 +341,7 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
                 App.toast.show("Institution tilføjet til fortællinger!");
                 setTimeout(() => this.fetchGeos(true), 500);
             }
-        }, null, "")
+        })
     }
 
     deleteGeos() {
@@ -355,7 +355,7 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
     }
     deleteOneGeo() {
         var geo = this.geosSelected.pop();
-        Services.delete('geo', { id: geo.id }, (result) => {
+        Services.HAAPI_DELETE('geo', geo.id, false, {}, (result) => {
             if (this.geosSelected.length > 0)
                 this.deleteOneGeo();
             else {
@@ -363,7 +363,7 @@ class PanelGeoAdmin extends polymer.Base implements polymer.Element {
                 App.toast.show("Fortællinger slettet!");
                 setTimeout(() => this.fetchGeos(true), 500);
             }
-        }, null, "")
+        });
 
     }
 }

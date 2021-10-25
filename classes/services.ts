@@ -44,7 +44,8 @@
         params = params || {};
         if (permanent)
             params.deletemode = 'permanent';
-        this.HAAPI(`${service}/${id}`, params, success, null, null, message, null, 'DELETE');
+
+        this.HAAPI(id ? `${service}/${id}` : service, params, success, null, null, message, null, 'DELETE');
     }
     private static HAAPI(service: string, params: { [key: string]: any } = null, success: (data: any) => any = null, error: (data: any) => any = null, progress: (event: ProgressEvent) => any = null, message: string = null, data: FormData = null, method: string, addSid: boolean = true) {
         params = params || {};
