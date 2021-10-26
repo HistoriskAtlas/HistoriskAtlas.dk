@@ -97,7 +97,7 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
         if (this.isGettingInstitution)
             return;
         if (e.path == 'institution.tag.plurname')
-            Services.update('tag', JSON.parse('{ "id": ' + this.institution.tag.tagid + ', "plurname": "' + this.institution.tag.plurname + '", "singname": "' + this.institution.tag.plurname + '" }'));
+            Services.HAAPI_PUT('tag', this.institution.tag.tagid, {}, Common.formData({ "plurname": this.institution.tag.plurname, "singname": this.institution.tag.plurname }));
         var property = e.path.split('.')[1];
         switch (property) {
             case 'url': case 'email': case 'type':
@@ -106,7 +106,7 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
     }
 
     private updateInstProperty(property: string) {
-        Services.update('institution', JSON.parse('{ "id": ' + this.institution.tagid + ', "' + property + '": "' + this.institution[property] + '" }'));
+        Services.HAAPI_PUT('institution', this.institution.institutionid, {}, Common.formData(JSON.parse('{ "' + property + '": "' + this.institution[property] + '" }')));
     }
 
     //getAutosuggestSchema(user_institutions: any): string {
@@ -122,12 +122,12 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
 
     @listen('userAutosuggestAdded')
     userAdded(e: any) {
-        Services.insert('user_institution', { 'institutionid': this.institution.tagid, 'userid': e.detail.userid }, (result) => { this.getInstitution(); })
+        Services.HAAPI_POST('userinstitution', {}, Common.formData({ 'institutionid': this.institution.institutionid, 'userid': e.detail.userid }), (result) => { this.getInstitution(); })
     }
 
     @listen('userAutosuggestRemoved')
     userRemoved(e: any) {
-        Services.delete('user_institution', { 'institutionid': this.institution.tagid, 'userid': e.detail.user.tagid, 'deletemode': 'permanent' }, (result) => { this.getInstitution(); })
+        Services.HAAPI_DELETE('userinstitution', null, true, { 'institutionid': this.institution.institutionid, 'userid': e.detail.userid }, (result) => { this.getInstitution(); })
     }
 
     showGeos() {
@@ -179,8 +179,8 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
             category: 3
         };
 
-        Services.insert('tag', tag, (result) => {
-            var tagid = result.data[0].id;
+        Services.HAAPI_POST('tag', {}, Common.formData(tag), (result) => {
+            var tagid = result.data.tagid;
 
             var institution: any = {
                 tagid: tagid,
@@ -188,8 +188,8 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
                 email: ''
             };
 
-            Services.insert('institution', institution, (result) => {
-                var institutionid = result.data[0].id;
+            Services.HAAPI_POST('institution', {}, Common.formData(institution), (result) => {
+                var institutionid = result.data.institutionid;
                 App.toast.show("Institution oprettet!");
                 this.fetchInstitutions(() => {
                     for (var inst of this.institutions)
@@ -219,7 +219,7 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
     }
     @listen('delete-institution-confirmed')
     private deleteInstitution() {
-        Services.delete('institution', { id: this.institution.institutionid }, (result) => {
+        Services.HAAPI_DELETE('institution', this.institution.institutionid, false, (result) => {
             App.toast.show("Institutionen er slettet!");
             this.$.admin.select(null);
             this.fetchInstitutions();

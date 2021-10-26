@@ -203,7 +203,7 @@
                     <confirm-input label="email" value="{{user.email}}" tabindex="0"></confirm-input>
                     <confirm-input label="intern note" value="{{user.internalnote}}" multiline tabindex="0"></confirm-input>
                     <div class="list-title">institutioner</div>
-                    <list-auto-suggest id="institutionAutosuggest" items="{{user.institutions}}" autosuggest-service="institutions" existing-ids="[[getAutosuggestExistingIds(user.institutions)]]" name-path="plurname" suggest-name-path="plurname"></list-auto-suggest>
+                    <list-auto-suggest id="institutionAutosuggest" items="{{user.institutions}}" autosuggest-service="institutions" existing-ids="[[getAutosuggestExistingIds(user.institutions)]]" name-path="plurname" suggest-name-path="tag.plurname"></list-auto-suggest>
                     <div class="list-title">skribenter</div>
                     <list-auto-suggest id="writerAutosuggest" items="{{user.children}}" autosuggest-service="users" existing-ids="[[getUserAutosuggestExistingIds(user.children)]]" name-path="firstname,$ ,lastname,$ (,login,$)" suggest-name-path="firstname,$ ,lastname,$ (,login,$)"></list-auto-suggest>
                     <div class="list-title">redaktører</div>

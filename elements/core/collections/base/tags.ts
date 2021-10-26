@@ -66,7 +66,7 @@
             this.push(Tags.categoryNames[tag.category], tag);
 
         if (save)
-            Services.insert('tag_' + this.propertyName(), JSON.parse('{ "tagid": ' + tag.id + ', "' + this.propertyName() + 'id": ' + this.propertyId() + ' }')); //this.tagRelationId
+            Services.HAAPI_POST(`tag${this.propertyName()}`, {}, Common.formData(JSON.parse('{ "tagid": ' + tag.id + ', "' + this.propertyName() + 'id": ' + this.propertyId() + ' }'))); //this.tagRelationId
 
         return true;
     }
@@ -83,7 +83,7 @@
         if (Tags.categoryNames[tag.category])
             this.splice(Tags.categoryNames[tag.category], this[Tags.categoryNames[tag.category]].indexOf(tag), 1);
 
-        Services.delete('tag_' + this.propertyName(), JSON.parse('{ "tagid": ' + tag.id + ', "' + this.propertyName() + 'id": ' + this.propertyId() + ', "deletemode": "permanent" }')); //this.tagRelationId
+        Services.HAAPI_DELETE(`tag${this.propertyName()}`, null, true, JSON.parse('{ "tagid": ' + tag.id + ', "' + this.propertyName() + 'id": ' + this.propertyId() + ' }')); //this.tagRelationId
     }
 
     private propertyName(): string {

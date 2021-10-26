@@ -204,11 +204,11 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
     }
     @listen('institutionAutosuggestAdded')
     institutionAdded(e: any) {
-        Services.insert('user_institution', { 'institutionid': e.detail.institutionid, 'userid': this.user.id }, (result) => { this.getUser(); })
+        Services.HAAPI_POST('userinstitution', {}, Common.formData({ 'institutionid': e.detail.institutionid, 'userid': this.user.userid }), (result) => { this.getUser(); })
     }
     @listen('institutionAutosuggestRemoved')
     institutionRemoved(e: any) {
-        Services.delete('user_institution', { 'institutionid': e.detail.institution.id, 'userid': this.user.id, 'deletemode': 'permanent' }, (result) => { this.getUser(); })
+        Services.HAAPI_DELETE('userinstitution', null, true, { 'institutionid': e.detail.institutionid, 'userid': this.user.userid }, (result) => { this.getUser(); })
     }
 
     //getUserAutosuggestSchema(userhierarkis: any): string {
@@ -223,19 +223,19 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
     }
     @listen('writerAutosuggestAdded')
     writerAdded(e: any) {
-        Services.insert('userhierarki', { 'upperuserid': this.user.userid, 'userid': e.detail.userid }, (result) => { this.getUser(); })
+        Services.HAAPI_POST('userhierarki', {}, Common.formData({ 'upperuserid': this.user.userid, 'userid': e.detail.userid }), (result) => { this.getUser(); })
     }
     @listen('writerAutosuggestRemoved')
     writerRemoved(e: any) {
-        Services.delete('userhierarki', { 'upperuserid': this.user.userid, 'userid': e.detail.child.userid, 'deletemode': 'permanent' }, (result) => { this.getUser(); })
+        Services.HAAPI_DELETE('userhierarki', null, true, { 'upperuserid': this.user.userid, 'userid': e.detail.userid }, (result) => { this.getUser(); })
     }
     @listen('editorAutosuggestAdded')
     editorAdded(e: any) {
-        Services.insert('userhierarki', { 'upperuserid': e.detail.userid, 'userid': this.user.userid }, (result) => { this.getUser(); })
+        Services.HAAPI_POST('userhierarki', {}, Common.formData({ 'upperuserid': e.detail.userid, 'userid': this.user.userid }), (result) => { this.getUser(); })
     }
     @listen('editorAutosuggestRemoved')
     editorRemoved(e: any) {
-        Services.delete('userhierarki', { 'upperuserid': e.detail.parent.userid, 'userid': this.user.userid, 'deletemode': 'permanent' }, (result) => { this.getUser(); })
+        Services.HAAPI_DELETE('userhierarki', null, true, { 'upperuserid': e.detail.userid, 'userid': this.user.userid }, (result) => { this.getUser(); })
     }
 
     sortOnLogin() {
