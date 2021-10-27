@@ -22,35 +22,35 @@ class HaImageService extends Tags implements polymer.Element {
     @observe("image.text")
     textChanged() {
         if (this.editing)
-            Services.update('image', { id: this.image.id, text: this.image.text });
+            Services.HAAPI_PUT('image', this.image.id, {}, Common.formData({ text: this.image.text }));
     }
 
     @observe("image.year")
     yearChanged() {
         if (this.editing)
-            Services.update('image', { id: this.image.id, year: this.image.year });
+            Services.HAAPI_PUT('image', this.image.id, {}, Common.formData({ year: this.image.year }));
     }
 
     @observe("image.licensee")
     licenseeChanged() {
         if (this.editing)
-            Services.update('image', { id: this.image.id, licensee: this.image.licensee });
+            Services.HAAPI_PUT('image', this.image.id, {}, Common.formData({ licensee: this.image.licensee }));
     }
 
     @observe("image.photographer")
     photographerChanged() {
         if (this.editing)
-            Services.update('image', { id: this.image.id, photographer: this.image.photographer });
+            Services.HAAPI_PUT('image', this.image.id, {}, Common.formData({ photographer: this.image.photographer }));
     }
 
     deleteImage() {
         if (!this.editing)
             return;
-        Services.delete('image', { id: this.image.id }, (result) => {
+        Services.HAAPI_DELETE('image', this.image.id, false, {}, (result) => {
             App.toast.show('Billedet blev slettet.');
             (<WindowImage>this.parentNode).windowGeo.splice('geo.images', this.geo.images.indexOf(this.image), 1); //TODO: might be easier to stop spawning windom-image dynamically
         }, (result) => {
-            App.toast.show('Billedet blev IKKE slettet. Muligvis pga. manglende rettigheder.');
+            App.toast.show('Billedet blev IKKE slettet. Muligvis pga. manglende rettigheder. Kontakt it@historiskatlas.dk');
         })
     }
 }

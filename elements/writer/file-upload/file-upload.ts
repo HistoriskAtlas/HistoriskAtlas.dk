@@ -73,12 +73,10 @@ class FileUpload extends polymer.Base implements polymer.Element {
         this.fire('before-upload');
         var fileType: string = file.name.split('.').pop().toLowerCase();
 
-        if (fileType == 'pdf') {
+        if (fileType == 'pdf')
             this.insertedPDF(file); //, fileType
-        }
-        else {
-            Services.insert('image', { 'userid': App.haUsers.user.id, 'text': '' }, (data) => this.insertedImage(file, data)) //, fileType
-        }
+        else
+            Services.HAAPI_POST('image', {}, Common.formData({ 'text': '' }), (data) => this.insertedImage(file, data)) //, fileType
     }
 
     private insertedPDF(file: File) { //, fileType: string
@@ -89,7 +87,7 @@ class FileUpload extends polymer.Base implements polymer.Element {
     }
 
     private insertedImage(file: File, result: any) { //, fileType: string
-        var image = new HAImage(result.data[0], -1);
+        var image = new HAImage(result.data, -1);
         //(<any>file).path = 'Image\\' + (image.id % 100) + '\\' + image.id + '.' + fileType;
         (<any>file).url = `image/${image.id}.jpg`;
         (<any>file).image = image;

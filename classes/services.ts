@@ -8,10 +8,10 @@
         return this.pendingServiceCalls.length > 0;
     }
 
-    public static insert(service: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null) {
-        data.action = 'add';
-        this.pushServiceCall(() => this.serviceCall(service + '.json', data, success, error, true, message), message);
-    }
+    //public static insert(service: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null) {
+    //    data.action = 'add';
+    //    this.pushServiceCall(() => this.serviceCall(service + '.json', data, success, error, true, message), message);
+    //}
 
     public static update(service: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null) {
         data.action = 'set';
@@ -38,14 +38,14 @@
         this.HAAPI(service, params, success, error, progress, message, data, 'POST');
     }
     public static HAAPI_PUT(service: string, id: number, params: { [key: string]: any }, data: FormData, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null, progress: (event: ProgressEvent) => any = null) {
-        this.HAAPI(`${service}/${id}`, params, success, error, progress, message, data, 'PUT');
+        this.HAAPI(id ? `${service}/${id}` : service, params, success, error, progress, message, data, 'PUT');
     }
-    public static HAAPI_DELETE(service: string, id: number, permanent: boolean = false, params: { [key: string]: any } = {}, success: (data: any) => any = null, message: string = null) {
+    public static HAAPI_DELETE(service: string, id: number, permanent: boolean = false, params: { [key: string]: any } = {}, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null) {
         params = params || {};
         if (permanent)
             params.deletemode = 'permanent';
 
-        this.HAAPI(id ? `${service}/${id}` : service, params, success, null, null, message, null, 'DELETE');
+        this.HAAPI(id ? `${service}/${id}` : service, params, success, error, null, message, null, 'DELETE');
     }
     private static HAAPI(service: string, params: { [key: string]: any } = null, success: (data: any) => any = null, error: (data: any) => any = null, progress: (event: ProgressEvent) => any = null, message: string = null, data: FormData = null, method: string, addSid: boolean = true) {
         params = params || {};

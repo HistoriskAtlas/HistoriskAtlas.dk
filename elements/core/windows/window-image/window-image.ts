@@ -118,7 +118,7 @@ class WindowImage extends polymer.Base implements polymer.Element {
         for (var image of this.geo.images) {
             if (image.ordering != index) {
                 image.ordering = index;
-                Services.update('geo_image', { geoid: this.geo.id, imageid: image.id, ordering: image.ordering });
+                Services.HAAPI_PUT('geoimage', null, { geoid: this.geo.id, imageid: image.id }, Common.formData({ ordering: image.ordering }));
             }
             index++;
         }
