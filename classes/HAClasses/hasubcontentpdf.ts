@@ -40,7 +40,7 @@
     public update(property: string) {
         switch (property) {
             case 'title':
-                Services.update('pdf', { id: this._id, title: this._title, filename: this._filename }, (result) => { }); break; //HACK with filename included... to avoid to closely followed API calls...
+                Services.HAAPI_PUT('pdf', this._id, {}, Common.formData({ title: this._title, filename: this._filename })); break; //HACK with filename included... to avoid to closely followed API calls...
             //case 'filename':
             //    Services.update('pdf', { id: this._id, filename: this._filename }, (result) => { }); break;
             default:

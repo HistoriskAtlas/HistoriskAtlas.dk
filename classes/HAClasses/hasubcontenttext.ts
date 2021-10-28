@@ -53,8 +53,7 @@
             //case 'headline':
             //    Services.update('text', { id: this._id, headline: this._headline }, (result) => { }); break;
             case 'text':
-                var test = Common.html2rich(this._text);
-                Services.update('text', { id: this._id, text1: Common.html2rich(this._text) }, (result) => { }); break;
+                Services.HAAPI_PUT('text', this._id, {}, Common.formData({ text1: Common.html2rich(this._text) })); break;
             default:
                 super.update('text', property); break;
         }

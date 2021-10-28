@@ -30,7 +30,7 @@
     public update(property) {
         switch (property) {
             case 'cql':
-                Services.update('biblio', { id: this._id, cql: this._cql }, (result) => { }); break;
+                Services.HAAPI_PUT('biblio', this._id, {}, Common.formData({ cql: this._cql })); break;
             default:
                 super.update('biblio', property); break;
         }

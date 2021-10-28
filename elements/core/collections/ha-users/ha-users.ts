@@ -136,7 +136,7 @@ class HaUsers extends polymer.Base implements polymer.Element {
         if (this.user.isDefault) // || this._loggingIn
             return;
 
-        Services.update('user', JSON.parse('{ "id": ' + this.user.id + ', "' + property + '": "' + this.user[property] + '" }'), null, (data) => {
+        Services.HAAPI_PUT('user', this.user.id, {}, Common.formData(JSON.parse('{ "' + property + '": "' + this.user[property] + '" }')), null, (data) => {
 
             
             

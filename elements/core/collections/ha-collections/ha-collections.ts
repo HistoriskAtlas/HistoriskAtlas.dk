@@ -444,7 +444,8 @@ class HaCollections extends Tags implements polymer.Element {
     @listen('delete-cg-text-confirmed')
     deleteCGTextConfirmed(e) {
         var collection_geo: HaCollectionGeo = this.get(e.detail);
-        Services.delete('content', { id: collection_geo.id, contentid: collection_geo.content.id }, () => {
+        //Services.delete('content', { id: collection_geo.id, contentid: collection_geo.content.id }, () => {
+        Services.HAAPI_DELETE('content', collection_geo.content.id, false, () => {
             this.set(e.detail + '.content', null);
             this.set(e.detail + '.contentID', null);
         });

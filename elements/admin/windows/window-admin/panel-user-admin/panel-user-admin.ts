@@ -160,7 +160,7 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
     }
 
     private updateUserProperty(property: string) {
-        Services.update('user', JSON.parse('{ "id": ' + this.user.userid + ', "' + property + '": "' + this.user[property] + '" }'));
+        Services.HAAPI_PUT('user', this.user.userid, {}, Common.formData(JSON.parse('{ "' + property + '": "' + this.user[property] + '" }')));
     }
 
     institutions(institutions: Array<any>): string {
@@ -189,7 +189,7 @@ class PanelUserAdmin extends polymer.Base implements polymer.Element {
     }
     @listen('toggle-active-confirmed')
     toggleActiveConfirmed(e: any) {
-        Services.update('user', { 'userid': this.user.userid, 'isactive': !this.user.isactive }, (result) => { this.getUser(); })
+        Services.HAAPI_PUT('user', this.user.userid, {}, Common.formData({ 'isactive': !this.user.isactive }), (result) => { this.getUser(); })
     }
 
     //getAutosuggestSchema(user_institutions: any): string {

@@ -314,7 +314,7 @@
                 collection_Geo.ordering = Math.round((this.collection_geos[indexEnd - 1].ordering + this.collection_geos[indexEnd + 1].ordering) / 2);
         }
 
-        Services.update('collection_geo', { id: collection_Geo.id, ordering: collection_Geo.ordering }, (result) => { });
+        Services.HAAPI_PUT('collectiongeo', collection_Geo.id, {}, Common.formData({ ordering: collection_Geo.ordering })); //UNTESTED! Sortable bug?
     }
 
     public showOnMap(anim: boolean = true, forSave: boolean = false) {
@@ -364,9 +364,7 @@
     }
 
     public delete() {
-        Services.delete('collection', { collectionid: this._id/*, deletemode: 'permanent'*/ }, (result) => {
-            App.toast.show('Turforslaget er slettet.');
-        })
+        Services.HAAPI_DELETE('collection', this._id, false, {}, (result) => App.toast.show('Turforslaget er slettet.'));
     }
 
 }

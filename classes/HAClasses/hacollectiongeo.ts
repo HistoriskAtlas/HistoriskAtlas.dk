@@ -110,7 +110,7 @@
 
     public saveCoords() {
         var coord = Common.fromMapCoord(this.coord);
-        Services.update('collection_geo', { id: this._id, latitude: coord[1], longitude: coord[0] }, () => { });
+        Services.HAAPI_PUT('collectiongeo', this._id, {}, Common.formData({ latitude: coord[1], longitude: coord[0] }));
     }
 
     public followExternalLink(): boolean {
