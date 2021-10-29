@@ -275,7 +275,7 @@ class HaCollections extends Tags implements polymer.Element {
             this.select(collection);
 
             content.insert(() => {
-                Services.update('collection', { collectionid: this.collection.id, contentid: content.id });
+                Services.HAAPI_PUT('collection', this.collection.id, {}, Common.formData({ contentid: content.id }));
                 if (App.haUsers.user.isPro)
                     this.addTag(App.haUsers.user.currentInstitution.tag, true, true);
             });
@@ -407,12 +407,12 @@ class HaCollections extends Tags implements polymer.Element {
             var collection_geo: HaCollectionGeo = this.get(cgPath);
             if (prop == 'calcRoute') { 
                 this.drawRoute();
-                Services.update('collection_geo', { id: collection_geo.id, calcroute: collection_geo.calcRoute }, () => { });
+                Services.HAAPI_PUT('collectiongeo', collection_geo.id, {}, Common.formData({ calcroute: collection_geo.calcRoute }));
             }
             if (prop == 'showOnMap') {
                 this.drawRoute();
                 this.updateMarkers();
-                Services.update('collection_geo', { id: collection_geo.id, showonmap: collection_geo.showOnMap }, () => { });
+                Services.HAAPI_PUT('collectiongeo', collection_geo.id, {}, Common.formData({ showonmap: collection_geo.showOnMap }));
             }
             if (prop == 'showText') {
                 if (this.get(changeRecord.path)) {
@@ -420,7 +420,7 @@ class HaCollections extends Tags implements polymer.Element {
                         var content = new HaContent({ contenttypeid: 0, ordering: 0, headline: '', texts: [{ headline: '', text1: '', type: 0, ordering: 0 }] });
                         this.set(cgPath + '.content', content);
                         content.insert(() => {
-                            Services.update('collection_geo', { id: collection_geo.id, contentid: content.id });
+                            Services.HAAPI_PUT('collectiongeo', collection_geo.id, {}, Common.formData({ contentid: content.id }));
                             this.set(cgPath + '.contentID', content.id);
                         });
                     }

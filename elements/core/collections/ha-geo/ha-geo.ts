@@ -48,22 +48,19 @@ class HaGeoService extends Tags implements polymer.Element {
     titleChanged(newVal: string) {
         this.notifyPath('geo.link', this.geo.link);
         if (newVal && !this.ignoreChanges)
-            Services.update('geo', { id: this.geo.id, title: this.geo.title }, () => {
-            });
+            Services.HAAPI_PUT('geo', this.geo.id, {}, Common.formData({ title: this.geo.title }));
     }
 
     @observe("geo.intro")
     introChanged(newVal: string) {
         if (newVal && !this.ignoreChanges)
-            Services.update('geo', { id: this.geo.id, intro: this.geo.intro }, () => {
-                //App.toast.show('Introtekst gemt');
-            });
+            Services.HAAPI_PUT('geo', this.geo.id, {}, Common.formData({ intro: this.geo.intro }));
     }
 
     @observe("geo.online")
     onlineChanged() {
         if (!this.ignoreChanges)
-            Services.update('geo', { id: this.geo.id, online: this.geo.online }, () => {
+            Services.HAAPI_PUT('geo', this.geo.id, {}, Common.formData({ online: this.geo.online }), () => {
                 this.geo.icon.updateStyle();
                 App.toast.show('Fortællingen er nu ' + (this.geo.online ? '' : 'af') + 'publiceret');
             });
@@ -135,14 +132,14 @@ class HaGeoService extends Tags implements polymer.Element {
             return;
 
         this.geo.icon.updateStyle();
-        Services.update('geo', { primarytagid: this.geo.primaryTag ? this.geo.primaryTag.id : '\0', geoid: this.geo.id });
+        Services.HAAPI_PUT('geo', this.geo.id, {}, Common.formData({ primarytagid: this.geo.primaryTag ? this.geo.primaryTag.id : '\0' }));
     }
     @observe("geo.primaryTagStatic")
     primaryTagStaticChanged() {
         if (this.ignoreChanges)
             return;
 
-        Services.update('geo', { primarytagstatic: this.geo.primaryTagStatic, geoid: this.geo.id });
+        Services.HAAPI_PUT('geo', this.geo.id, {}, Common.formData({ primarytagstatic: this.geo.primaryTagStatic }));
     }
 
     public handleResponse(data) {

@@ -13,10 +13,10 @@
     //    this.pushServiceCall(() => this.serviceCall(service + '.json', data, success, error, true, message), message);
     //}
 
-    public static update(service: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null) {
-        data.action = 'set';
-        this.pushServiceCall(() => this.serviceCall(service + '.json', data, success, error, true));
-    }
+    //public static update(service: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null) {
+    //    data.action = 'set';
+    //    this.pushServiceCall(() => this.serviceCall(service + '.json', data, success, error, true));
+    //}
 
     //public static delete(service: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null) {
     //    data.action = 'delete';
@@ -27,9 +27,9 @@
     //    this.pushServiceCall(() => this.serviceCall(service + '.json', data, success, error, true, message), message);
     //}
 
-    public static proxy(proxy: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null) {
-        this.pushServiceCall(() => this.serviceCall('proxy/' + proxy + '.json', data, success, error, true));
-    }
+    //public static proxy(proxy: string, data: any, success: (data: any) => any = null, error: (data: any) => any = null) {
+    //    this.pushServiceCall(() => this.serviceCall('proxy/' + proxy + '.json', data, success, error, true));
+    //}
 
     public static HAAPI_GET(service: string, params: { [key: string]: any } = null, success: (data: any) => any = null, error: (data: any) => any = null, message: string = null, addSid: boolean = true) {
         this.HAAPI(service, params, success, error, null, message, null, 'GET', addSid);
@@ -112,32 +112,32 @@
         Analytics.apiError(error, `${url} - ${(status ? status.substr(0, 50) : '(no status)')}`); //typeof App != 'undefined' ? App.haUsers.user.id : 0
     }
 
-    private static serviceCall(url: string, data: any, success: (data: any) => any, error: (data: any) => any, async: boolean = false, message: string = null) { //RHL: why default to not async.... performance hit...
-        if (!('v' in data))
-            data.v = 1;
-        data.sid = (<any>document).sid;
+    //private static serviceCall(url: string, data: any, success: (data: any) => any, error: (data: any) => any, async: boolean = false, message: string = null) { //RHL: why default to not async.... performance hit...
+    //    if (!('v' in data))
+    //        data.v = 1;
+    //    data.sid = (<any>document).sid;
 
-        $.ajax({
-            type: 'POST',
-            url: url.indexOf('http') == 0 ? url : (url.indexOf('hadb6') == -1 ? Common.api + url : Common.baseApi + '/' + url), //url.indexOf('hadb5')
-            data: data,
-            timeout: 30000, //was 10000 on hadb5
-            async: async,
-            success: (data) => ((data, succesMessage) => {
-                if (data.status != 'Success' && error)
-                    error(data); //Soft error
-                else if (success)
-                    success(data)
+    //    $.ajax({
+    //        type: 'POST',
+    //        url: url.indexOf('http') == 0 ? url : (url.indexOf('hadb6') == -1 ? Common.api + url : Common.baseApi + '/' + url), //url.indexOf('hadb5')
+    //        data: data,
+    //        timeout: 30000, //was 10000 on hadb5
+    //        async: async,
+    //        success: (data) => ((data, succesMessage) => {
+    //            if (data.status != 'Success' && error)
+    //                error(data); //Soft error
+    //            else if (success)
+    //                success(data)
 
-                this.pendingServiceCalls.shift();
+    //            this.pendingServiceCalls.shift();
 
-                if (this.pendingServiceCalls.length > 0)
-                    this.pendingServiceCalls[0]();
+    //            if (this.pendingServiceCalls.length > 0)
+    //                this.pendingServiceCalls[0]();
 
-                this.hideLoading(succesMessage);
-            })(data, message),
-            error: (jqXHR: JQueryXHR, textStatus: string, errorThrown: string) => Services.error(url, textStatus, errorThrown)});
-    }
+    //            this.hideLoading(succesMessage);
+    //        })(data, message),
+    //        error: (jqXHR: JQueryXHR, textStatus: string, errorThrown: string) => Services.error(url, textStatus, errorThrown)});
+    //}
 
 
     private static hideLoading(message: string = null) {
