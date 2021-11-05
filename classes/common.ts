@@ -17,8 +17,8 @@
     private static h2rA: RegExp = new RegExp("<a href=[\"'](https?:\\/\\/.*?)[\"']>(.*?)<\\/a>", 'gi')
 
     public static dom = $(document.body);
-    private static _api: string;
-    private static _baseApi: string;
+    //private static _api: string;
+    //private static _baseApi: string;
     public static apiSchemaTags = '{tag:[tagid,plurname,singname,category,yearstart,yearend,{parents:[empty,{collapse:{parent:id}}]}]}'
     public static base64chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
@@ -38,23 +38,23 @@
         return typeof App == 'undefined' || !App.isDev() ? "00e763e5df5f47e3a4a64aea3a18fdaa" : "0f38b3d8b8ec48ba9d406e9edb5700ce";
     }
 
-    public static get api(): string {
-        if (!this._api)
-            this._api = Common.baseApi + '/hadb6' + (this.isDevOrBeta ? 'beta' : '') + '.'; //'/hadb5'
+    //public static get api(): string {
+    //    if (!this._api)
+    //        this._api = Common.baseApi + '/hadb6' + (this.isDevOrBeta ? 'beta' : '') + '.'; //'/hadb5'
 
-        return this._api;
-    }
+    //    return this._api;
+    //}
 
-    public static get baseApi(): string {
-        if (!this._api) {
-            //this._baseApi = location.protocol + '//' + (this.isDevOrBeta ? ((location.protocol == 'https:' ? 'betasecure.' : 'beta.')) : (location.protocol == 'https:' ? 'secure' : '')) + 'api.historiskatlas.dk/api';
-            this._baseApi = location.protocol + '//' + (location.protocol == 'https:' ? 'secure' : '') + 'api.historiskatlas.dk/api';
-            //this._api = 'http://beta.api.historiskatlas.dk/hadb5.';
-            //this._api = 'http://34.252.49.216/hadb5beta.'
-        }
+    //public static get baseApi(): string {
+    //    if (!this._api) {
+    //        //this._baseApi = location.protocol + '//' + (this.isDevOrBeta ? ((location.protocol == 'https:' ? 'betasecure.' : 'beta.')) : (location.protocol == 'https:' ? 'secure' : '')) + 'api.historiskatlas.dk/api';
+    //        this._baseApi = location.protocol + '//' + (location.protocol == 'https:' ? 'secure' : '') + 'api.historiskatlas.dk/api';
+    //        //this._api = 'http://beta.api.historiskatlas.dk/hadb5.';
+    //        //this._api = 'http://34.252.49.216/hadb5beta.'
+    //    }
 
-        return this._baseApi;
-    }
+    //    return this._baseApi;
+    //}
 
     public static get baseUrl(): string {
         return location.protocol + '//' + location.host;

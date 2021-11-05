@@ -4,9 +4,9 @@ class HaDigDag extends polymer.Base implements polymer.Element {
     @property({ type: Array, notify: true })
     public digdags: Array<HARegionTypeCategory>;
 
-    ready() {
-        this.$.ajax.url = Common.api + 'regiontypecategory.json?v=1&count=all&parentid=0&schema={regiontypecategory:[id,name,{regiontypes:[regiontypeid,name,periodstart,periodend]}]}';
-    }
+    //ready() {
+    //    this.$.ajax.url = Common.api + 'regiontypecategory.json?v=1&count=all&parentid=0&schema={regiontypecategory:[id,name,{regiontypes:[regiontypeid,name,periodstart,periodend]}]}';
+    //}
 
     public getData() {
         var digdagJSON = LocalStorage.get('ha-digdag', 7 * 24);
@@ -18,12 +18,13 @@ class HaDigDag extends polymer.Base implements polymer.Element {
             }
         }
 
-        this.$.ajax.generateRequest();
+        //this.$.ajax.generateRequest();
+        Services.HAAPI_GET('regiontypecategories', {}, (result) => this.handleResponse(result));
     }
 
-    private handleResponse() {
-        LocalStorage.set('ha-digdag', JSON.stringify(this.$.ajax.lastResponse.data), true);
-        this.handleData(this.$.ajax.lastResponse.data);
+    private handleResponse(result: any) {
+        LocalStorage.set('ha-digdag', JSON.stringify(result.data), true); //this.$.ajax.lastResponse.data
+        this.handleData(result.data);
     }
 
     private handleData(data: Array<Object>) {

@@ -6,7 +6,7 @@
     public showChildren: boolean;
 
     constructor(data: any) {
-        this._id = data.id;
+        this._id = data.regiontypecategoryid;
         this._name = data.name;
 
         this._regionTypes = [];
