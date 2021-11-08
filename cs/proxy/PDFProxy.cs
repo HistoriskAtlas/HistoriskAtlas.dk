@@ -79,7 +79,8 @@ namespace HistoriskAtlas5.Frontend
                 text += " - Fotograf: " + (string.IsNullOrEmpty(geoimage.image.photographer) ? "Ikke angivet" : geoimage.image.photographer);
                 text += string.IsNullOrEmpty(licens) ? "" : (" - " + licens);
                 text += string.IsNullOrEmpty(geoimage.image.licensee) ? "" : " " + geoimage.image.licensee;
-                writeImage("https://secureapi.historiskatlas.dk/api/hadb6.image/" + geoimage.image.imageid + "?action=scale&amp;size={640:10000}&amp;scalemode=inner", text); //hadb5.image
+                //writeImage("https://secureapi.historiskatlas.dk/api/hadb6.image/" + geoimage.image.imageid + "?action=scale&amp;size={640:10000}&amp;scalemode=inner", text); //hadb5.image
+                writeImage($"https://haapi.historiskatlas.dk/image/{geoimage.image.imageid}.jpg?width=640&key=00e763e5df5f47e3a4a64aea3a18fdaa", text); //hadb5.image
             }
         }
 
