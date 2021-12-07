@@ -61,6 +61,7 @@ class HaMaps extends polymer.Base implements polymer.Element {
             newMaps.push(new HaMap({ id: 42008, name: 'HERE mini', orgproductionendyear: 2016 }))
             //newMaps.push(new HaMap({ id: 42009, name: 'HERE aerial', orgproductionendyear: 2016 }))
             newMaps.push(new HaMap({ id: 42010, name: 'ArcGIS Online test', orgproductionendyear: 2020 }))
+            newMaps.push(new HaMap({ id: 42011, name: 'OmniMaps - Lave', orgproductionendyear: 1945 }))
         }
 
         HaMaps.defaultMap = this.byId[Global.defaultTheme.mapid];

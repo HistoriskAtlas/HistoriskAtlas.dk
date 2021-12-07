@@ -25,6 +25,14 @@
     public static openGeoWindowInNewTab: boolean;
 
     public static get isDevOrBeta(): boolean {
+
+
+
+        //return false;
+
+
+
+
         if (this.standalone)
             return document.location.hostname.indexOf('beta') == 0 || document.location.hostname.indexOf('localhost') == 0;
         return App.isDev() || document.location.hostname.indexOf('beta') == 0;
