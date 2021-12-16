@@ -62,6 +62,7 @@ class HaMaps extends polymer.Base implements polymer.Element {
             //newMaps.push(new HaMap({ id: 42009, name: 'HERE aerial', orgproductionendyear: 2016 }))
             newMaps.push(new HaMap({ id: 42010, name: 'ArcGIS Online test', orgproductionendyear: 2020 }))
             newMaps.push(new HaMap({ id: 42011, name: 'OmniMaps - Lave', orgproductionendyear: 1945 }))
+            newMaps.push(new HaMap({ id: 42012, name: 'OmniMaps - Høje', orgproductionendyear: 1899 }))
         }
 
         HaMaps.defaultMap = this.byId[Global.defaultTheme.mapid];
@@ -118,6 +119,9 @@ class HaMaps extends polymer.Base implements polymer.Element {
     public loadExtendedData(map: HaMap) {
         //Services.get('map', { count: 1, schema: '{map:[licenstagid,licensee,source,about]}', id: map.id }, (result) => {
         //    var data = result.data[0];
+        if (map.id > 10000)
+            return;
+
         Services.HAAPI_GET('map', { id: map.id }, (result) => {
             var data = result.data;
             var i = this.maps.indexOf(map);
