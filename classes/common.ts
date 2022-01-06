@@ -45,6 +45,9 @@
         //return App.isDev() ? "ZGV2ZWxvcG" : "aGlzdG9yaX";
         return typeof App == 'undefined' || !App.isDev() ? "00e763e5df5f47e3a4a64aea3a18fdaa" : "0f38b3d8b8ec48ba9d406e9edb5700ce";
     }
+    public static get omniMapsKey(): string {
+        return "f9c58d10887b4de79e8d4e60f4e4cced";
+    }
 
     //public static get api(): string {
     //    if (!this._api)

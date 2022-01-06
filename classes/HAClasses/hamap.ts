@@ -57,6 +57,34 @@
 
     public static getTileUrlFromMapID(id: number) {
         switch (id) {
+            case 230:
+            case 239:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 14:
+            case 16:
+            case 17:
+            case 19:
+            case 20:
+            case 38:
+            case 40:
+            case 42:
+            case 43:
+            case 44:
+            case 45:
+            case 46:
+            case 47:
+            case 48:
+            case 49:
+            case 50:
+            case 51:
+            case 54:
+            case 55:
+            case 85:
+                return `https://omnimaps-apim.azure-api.net/${id}/{z}/{x}/{y}.jpg?key=${Common.omniMapsKey}`
             //case 42000:
             //    return 'http://otile1.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png';
             case 42001:
@@ -79,10 +107,6 @@
             //    return 'http://1.aerial.maps.cit.api.here.com/maptile/2.1/maptile/newest/satellite.day/{z}/{x}/{y}/256/png?app_id=8ULuzJVtMXlpZU6FXGMn&app_code=Hz7S4nhSy6orPnR1KKOHYw&lg=dan'
             case 42010:
                 return 'https://tiles.arcgis.com/tiles/LLv1s9hErwtXBU3t/arcgis/rest/services/Copenhagen_Trial_Web_Layer/MapServer/WMTS/tile/1.0.0/Copenhagen_Trial_Web_Layer/default/default028mm/{z}/{y}/{x}'
-            case 42011:
-                return 'https://omnimaps-apim.azure-api.net/54/{z}/{x}/{y}.jpg?key=f9c58d10887b4de79e8d4e60f4e4cced';
-            case 42012:
-                return 'https://omnimaps-apim.azure-api.net/55/{z}/{x}/{y}.jpg?key=f9c58d10887b4de79e8d4e60f4e4cced';
         }
 
         return `${HaMap.getTileUrlBase()}${id}/{z}/{x}/{y}.jpg?key=${Common.apiKey}`
