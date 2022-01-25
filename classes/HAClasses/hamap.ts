@@ -56,35 +56,11 @@
     }
 
     public static getTileUrlFromMapID(id: number) {
+        if (id <= 38 || (id >= 40 && id <= 85) || id == 230 || id == 239 || id == 240)
+        //if (id == 240)
+            return `https://omnimaps-apim.azure-api.net/${id}/{z}/{x}/{y}.jpg?key=${Common.omniMapsKey}`;
+
         switch (id) {
-            case 230:
-            case 239:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 14:
-            case 16:
-            case 17:
-            case 19:
-            case 20:
-            case 38:
-            case 40:
-            case 42:
-            case 43:
-            case 44:
-            case 45:
-            case 46:
-            case 47:
-            case 48:
-            case 49:
-            case 50:
-            case 51:
-            case 54:
-            case 55:
-            case 85:
-                return `https://omnimaps-apim.azure-api.net/${id}/{z}/{x}/{y}.jpg?key=${Common.omniMapsKey}`
             //case 42000:
             //    return 'http://otile1.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png';
             case 42001:

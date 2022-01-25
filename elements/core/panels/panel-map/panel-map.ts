@@ -49,7 +49,7 @@ class PanelMap extends polymer.Base implements polymer.Element {
 
     @listen('hillshadeText.tap')
     hillshadeTextTap() {
-        this.$.hillshadeSlider.value = this.hillshade ? 0.0 : 0.3;
+        this.$.hillshadeSlider.value = this.hillshade ? 0.0 : 1.0; //0.3
     }
 
     years(start: number, end: number): string {

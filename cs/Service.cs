@@ -10,6 +10,7 @@ namespace HistoriskAtlas5.Frontend
     public class Service<O>
     {
         static bool isDevOrBeta = HttpContext.Current.Request.IsLocal || HttpContext.Current.Request.Url.Host.StartsWith("beta");
+        //static bool isDevOrBeta = false;
 
         //public O Get(string url, bool? isDev = null)
         //{

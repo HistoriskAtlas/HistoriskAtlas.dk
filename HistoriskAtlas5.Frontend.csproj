@@ -701,6 +701,7 @@
     <Content Include="bower_components\webcomponentsjs\webcomponents.min.js" />
     <Content Include="css\ol.css" />
     <Content Include="css\theme.css" />
+    <Content Include="css\themes\theme-bregnetsogn.css" />
     <Content Include="css\themes\theme-modstandskamp.css" />
     <Content Include="css\themes\theme-default.css" />
     <Content Include="css\themes\theme-digterruter.css" />
@@ -912,6 +913,7 @@
     <Content Include="images\routes\route534.png" />
     <Content Include="images\theme\1001back.jpg" />
     <Content Include="images\theme\1001logo.jpg" />
+    <Content Include="images\theme\BregnetSogn_back.jpg" />
     <Content Include="images\theme\DanskeDigterruterLogo.png" />
     <Content Include="images\theme\EmilAarestrupRoute.png" />
     <Content Include="images\theme\Modstandskamp_bomb_icon.png">
