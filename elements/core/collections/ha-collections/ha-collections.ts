@@ -341,8 +341,8 @@ class HaCollections extends Tags implements polymer.Element {
 
                 if (result.data.content) {
                     this.set('collection.content', new HaContent(result.data.content))
-                    if (result.data.content.tag_contents)
-                        for (var tagid of result.data.content.tag_contents)
+                    if (result.data.content.tagids)
+                        for (var tagid of result.data.content.tagids)
                             this.addTag(App.haTags.byId[tagid], true, false);
                 }
                 else {

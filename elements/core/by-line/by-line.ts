@@ -7,6 +7,10 @@ class ByLine extends polymer.Base implements polymer.Element {
     @property({ type: Object })
     public user: HAUser;
 
+    //ready() {
+    //    console.log(this.institutions.length);
+    //}
+
     show1001User(institution: HaTag): boolean {
         return institution.id == 731; //1001 institution
     }
