@@ -86,6 +86,8 @@
             if (Math.floor(xhr.status / 100) === 2) {
                 if (success)
                     success(xhr.response);
+            } else if (xhr.status == 401) {
+                Services.unauthorized(method, url, xhr.status.toString(), 'HAAPI unauthorized');
             } else {
                 if (error)
                     error(xhr.response);
@@ -103,6 +105,11 @@
         xhr.addEventListener('error', () => Services.error(method, url, xhr.responseText, 'HAAPI error'));
         xhr.addEventListener('timeout', () => Services.error(method, url, xhr.responseText, 'HAAPI timeout'));
         xhr.send(data);
+    }
+
+    private static unauthorized(method: string, url: string, status: string, error: string) {
+        Common.dom.append(DialogAlert.create('Du har ikke adgang til at udføre denne opgave. Hvis du oplever dette gentagne gange, vil vi gerne høre om det på it@historiskatlas.dk. Teknisk info: ' + url + ' - ' + status + ' - ' + error));
+        Analytics.apiError(error, `${method} ${url} - ${(status ? status.substr(0, 50) : '(no status)')}`); //typeof App != 'undefined' ? App.haUsers.user.id : 0
     }
 
     private static error(method: string, url: string, status: string, error: string) {

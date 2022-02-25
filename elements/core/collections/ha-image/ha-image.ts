@@ -10,6 +10,11 @@ class HaImageService extends Tags implements polymer.Element {
     @property({ type: Boolean })
     public editing: boolean;
 
+    private firstTextChange: boolean = true;
+    private firstYearChange: boolean = true;
+    private firstLicenseeChange: boolean = true;
+    private firstPhotographerChange: boolean = true;
+
     //ready() {
     //    this.$.ajax.url = Common.api + 'geo.json';
     //}
@@ -17,30 +22,38 @@ class HaImageService extends Tags implements polymer.Element {
     @observe("image")
     imageChanged() {
         this.initTags('image'/*, this.image.id*/);
+        this.firstTextChange = true;
+        this.firstYearChange = true;
+        this.firstLicenseeChange = true;
+        this.firstPhotographerChange = true;
     }
     
     @observe("image.text")
     textChanged() {
-        if (this.editing)
+        if (this.editing && !this.firstTextChange)
             Services.HAAPI_PUT('image', this.image.id, {}, Common.formData({ text: this.image.text }));
+        this.firstTextChange = false;
     }
 
     @observe("image.year")
     yearChanged() {
-        if (this.editing)
+        if (this.editing && !this.firstYearChange)
             Services.HAAPI_PUT('image', this.image.id, {}, Common.formData({ year: this.image.year }));
+        this.firstYearChange = false;
     }
 
     @observe("image.licensee")
     licenseeChanged() {
-        if (this.editing)
+        if (this.editing && !this.firstLicenseeChange)
             Services.HAAPI_PUT('image', this.image.id, {}, Common.formData({ licensee: this.image.licensee }));
+        this.firstLicenseeChange = false;
     }
 
     @observe("image.photographer")
     photographerChanged() {
-        if (this.editing)
+        if (this.editing && !this.firstPhotographerChange)
             Services.HAAPI_PUT('image', this.image.id, {}, Common.formData({ photographer: this.image.photographer }));
+        this.firstPhotographerChange = false;
     }
 
     deleteImage() {

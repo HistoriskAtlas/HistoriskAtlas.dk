@@ -56,7 +56,7 @@
     }
 
     public static getTileUrlFromMapID(id: number) {
-        if (id <= 38 || (id >= 40 && id <= 154) || id == 230 || id == 237 || id == 238 || id == 239 || id == 240)
+        if (id <= 38 || (id >= 40 && id <= 159) || (id >= 163 && id <= 230) || id == 234 || id == 237 || id == 238 || id == 239 || id == 240)
         //if (id == 240)
             return `https://omnimaps-apim.azure-api.net/${id}/{z}/{x}/{y}.jpg?key=${Common.omniMapsKey}`;
 
