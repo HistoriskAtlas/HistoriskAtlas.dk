@@ -49,21 +49,21 @@ class HaMaps extends polymer.Base implements polymer.Element {
         }
         //});
 
-        if (App.isDev) {
-            //newMaps.push(new HaMap({ id: 42000, name: 'Mapquest OSM', orgproductionendyear: 2016}))
-            newMaps.push(new HaMap({ id: 42001, name: 'Stamen Watercolor', orgproductionendyear: 2016 }))
-            newMaps.push(new HaMap({ id: 42002, name: 'CartoDB Light', orgproductionendyear: 2016 }))
-            newMaps.push(new HaMap({ id: 42003, name: 'CartoDB Dark', orgproductionendyear: 2016 }))
-            newMaps.push(new HaMap({ id: 42004, name: 'HOT style', orgproductionendyear: 2016 }))
-            newMaps.push(new HaMap({ id: 42005, name: 'HERE standard', orgproductionendyear: 2016 }))
-            newMaps.push(new HaMap({ id: 42006, name: 'HERE fleet', orgproductionendyear: 2016 }))
-            newMaps.push(new HaMap({ id: 42007, name: 'HERE flame', orgproductionendyear: 2016 }))
-            newMaps.push(new HaMap({ id: 42008, name: 'HERE mini', orgproductionendyear: 2016 }))
-            //newMaps.push(new HaMap({ id: 42009, name: 'HERE aerial', orgproductionendyear: 2016 }))
-            newMaps.push(new HaMap({ id: 42010, name: 'ArcGIS Online test', orgproductionendyear: 2020 }))
-            newMaps.push(new HaMap({ id: 42011, name: 'OmniMaps - Lave', orgproductionendyear: 1945 }))
-            newMaps.push(new HaMap({ id: 42012, name: 'OmniMaps - Høje', orgproductionendyear: 1899 }))
-        }
+        //if (App.isDev) {
+        //    //newMaps.push(new HaMap({ id: 42000, name: 'Mapquest OSM', orgproductionendyear: 2016}))
+        //    newMaps.push(new HaMap({ id: 42001, name: 'Stamen Watercolor', orgproductionendyear: 2016 }))
+        //    newMaps.push(new HaMap({ id: 42002, name: 'CartoDB Light', orgproductionendyear: 2016 }))
+        //    newMaps.push(new HaMap({ id: 42003, name: 'CartoDB Dark', orgproductionendyear: 2016 }))
+        //    newMaps.push(new HaMap({ id: 42004, name: 'HOT style', orgproductionendyear: 2016 }))
+        //    newMaps.push(new HaMap({ id: 42005, name: 'HERE standard', orgproductionendyear: 2016 }))
+        //    newMaps.push(new HaMap({ id: 42006, name: 'HERE fleet', orgproductionendyear: 2016 }))
+        //    newMaps.push(new HaMap({ id: 42007, name: 'HERE flame', orgproductionendyear: 2016 }))
+        //    newMaps.push(new HaMap({ id: 42008, name: 'HERE mini', orgproductionendyear: 2016 }))
+        //    //newMaps.push(new HaMap({ id: 42009, name: 'HERE aerial', orgproductionendyear: 2016 }))
+        //    newMaps.push(new HaMap({ id: 42010, name: 'ArcGIS Online test', orgproductionendyear: 2020 }))
+        //    newMaps.push(new HaMap({ id: 42011, name: 'OmniMaps - Lave', orgproductionendyear: 1945 }))
+        //    newMaps.push(new HaMap({ id: 42012, name: 'OmniMaps - Høje', orgproductionendyear: 1899 }))
+        //}
 
         HaMaps.defaultMap = this.byId[Global.defaultTheme.mapid];
 
