@@ -4,7 +4,7 @@
             hitType: 'event',
             eventCategory: 'geo_show',
             eventAction: geo.title,
-            eventLabel: geo.id
+            eventLabel: geo.id.toString()
         });
     }
     public static mapShow(map: HaMap) {
@@ -12,7 +12,7 @@
             hitType: 'event',
             eventCategory: 'map_show',
             eventAction: map.title,
-            eventLabel: map.id
+            eventLabel: map.id.toString()
         });
     }
     public static collectionShow(collection: HaCollection) {
@@ -20,7 +20,7 @@
             hitType: 'event',
             eventCategory: 'collection_show',
             eventAction: collection.title,
-            eventLabel: collection.id
+            eventLabel: collection.id.toString()
         });
     }
     public static regionTypeShow(regionType: HARegionType) {
@@ -28,7 +28,7 @@
             hitType: 'event',
             eventCategory: 'region_type_show',
             eventAction: regionType.name,
-            eventLabel: regionType.id
+            eventLabel: regionType.id.toString()
         });
     }
     public static apiError(error: string, api: string) {
@@ -43,11 +43,26 @@
         Analytics.send({
             hitType: 'event',
             eventCategory: 'calc_route',
-            eventAction: type
+            eventAction: type.toString()
         });
     }
-    private static send(params: object) {
-        (<any>window).analytics('ha.send', params);
-        (<any>window).analytics('obm.send', params);
+
+    private static send(event: AnalyticsEvent) {
+        (<any>window).analytics('ha.send', event);
+        (<any>window).analytics('obm.send', event);
+        (<any>window).appInsights.trackEvent({
+            name: event.eventCategory,
+            properties: {
+                action: event.eventAction,
+                label: event.eventLabel
+            }
+        });
     }
+}
+
+class AnalyticsEvent {
+    hitType: string;
+    eventCategory: string;
+    eventAction: string;
+    eventLabel?: string;
 }
