@@ -27,7 +27,7 @@ class PanelEditorialNotes extends polymer.Base implements polymer.Element {
         $(this).append(DialogRichText.create('Tilføj ny note', 'Skriv noten her', (message) => {
             if (!this.content)
                 this.push('contents', new HaContent({ geoid: this.geo.id, ordering: 0, contenttypeid: 3, headline: '' }));
-            setTimeout(() => this.push('content.subContents', new HaSubContentText({ headline: '', text1: Common.html2rich(message), ordering: this.content.subContents.length }, this.content)), 100); //Timeout so Polymer has time to create the new HA-Content....
+            setTimeout(() => this.push('content.subContents', new HaSubContentText({ headline: '', text1: Common.html2rich(message), ordering: this.content.subContents.length, type: 0 }, this.content)), 100); //Timeout so Polymer has time to create the new HA-Content....
             
         }));
 
