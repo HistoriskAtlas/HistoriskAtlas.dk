@@ -1,9 +1,9 @@
 ﻿.theme-1001 main-menu.show-menu-themes {
-    background-color: black;
+/*    background-color: black;
     background-image: url(../../../../images/theme/1001back.jpg);
     background-size: 100%;
     background-position: bottom;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat;*/
     color: white;
     font-family: Georgia, "Times New Roman", Times, serif;
     letter-spacing: 1px;
@@ -13,4 +13,15 @@
     width: 80%;
     display: block;
     margin: 50px auto 30px auto;
+}
+
+.theme-1001 main-menu.show-menu-themes {
+    background-color: black;
+}
+.theme-1001 main-menu.show-menu-themes > main-menu-item > iron-collapse:nth-child(2) {
+    background-image: url(../../../../images/theme/1001back.jpg);
+    background-size: 100%;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-attachment: local;
 }

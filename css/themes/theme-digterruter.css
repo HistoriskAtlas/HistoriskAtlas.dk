@@ -37,8 +37,16 @@
     display: none;
 }
 
+/*.theme-digterruter main-menu.show-menu-themes {
+    background: linear-gradient(180deg, rgba(18,83,58,1) 0%, rgba(18,83,58,1) 145px, rgba(243,240,233,1) 145px, rgba(243,240,233,1) 100%);*/ /*#f3f0e9;*/ /*#f4edd2;*/
+/*}*/
+
 .theme-digterruter main-menu.show-menu-themes {
-    background: linear-gradient(180deg, rgba(18,83,58,1) 0%, rgba(18,83,58,1) 145px, rgba(243,240,233,1) 145px, rgba(243,240,233,1) 100%); /*#f3f0e9;*/ /*#f4edd2;*/
+    background-color: rgba(243,240,233,1);
+}
+.theme-digterruter main-menu.show-menu-themes > main-menu-item > iron-collapse:nth-child(2) {
+    background: linear-gradient(180deg, rgba(18,83,58,1) 0%, rgba(18,83,58,1) 98px, rgba(243,240,233,1) 98px, rgba(243,240,233,1) 100%);
+    background-attachment: local;
 }
 
 .theme-digterruter main-menu.show-menu-themes iron-icon[icon="close"] {

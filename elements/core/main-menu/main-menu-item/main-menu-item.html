@@ -26,13 +26,15 @@
         .default-title.main-menu-item > span {
             flex-grow: 1;
         }
-        iron-collapse.main-menu-item:nth-child(2) {
+/*        iron-collapse.main-menu-item:nth-child(2) {
             height: calc(100% - 43px);
-        }
-        iron-collapse.main-menu-item:nth-child(2).iron-collapse-opened {
+        }*/
+/*        iron-collapse.main-menu-item:nth-child(2).iron-collapse-opened {
             overflow-y: auto;
+            overflow-x: hidden;
+            scrollbar-gutter: stable;
         }
-    </style>
+*/    </style>
     <template>
         <iron-collapse opened="[[showMenuItem(showMainMenu,show)]]">
             <paper-item toggles active="{{immediateShow}}">

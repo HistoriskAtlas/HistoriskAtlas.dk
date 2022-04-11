@@ -132,3 +132,16 @@ paper-input.confirm-input[disabled] > paper-input-container, paper-textarea.conf
     height: 14px;
     opacity: .5;
 }
+
+main-menu > main-menu-item > iron-collapse:nth-child(2) {
+    height: calc(100% - 43px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    /*scrollbar-gutter: stable;*/
+}
+main-menu > main-menu-item > iron-collapse:nth-child(2) > * {
+    max-width: 270px;
+    padding-left: 16px;
+    padding-bottom: 16px;
+    padding-top: 10px;
+}
