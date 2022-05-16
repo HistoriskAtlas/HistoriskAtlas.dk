@@ -10,10 +10,10 @@ class HaImageService extends Tags implements polymer.Element {
     @property({ type: Boolean })
     public editing: boolean;
 
-    private firstTextChange: boolean = true;
-    private firstYearChange: boolean = true;
-    private firstLicenseeChange: boolean = true;
-    private firstPhotographerChange: boolean = true;
+    private lastText: string;
+    private lastYear: string;
+    private lastLicensee: string;
+    private lastPhotographer: string;
 
     //ready() {
     //    this.$.ajax.url = Common.api + 'geo.json';
@@ -22,38 +22,42 @@ class HaImageService extends Tags implements polymer.Element {
     @observe("image")
     imageChanged() {
         this.initTags('image'/*, this.image.id*/);
-        this.firstTextChange = true;
-        this.firstYearChange = true;
-        this.firstLicenseeChange = true;
-        this.firstPhotographerChange = true;
+        this.lastText = this.image.text;
+        this.lastYear = this.image.year;
+        this.lastLicensee = this.image.licensee;
+        this.lastPhotographer = this.image.photographer;
     }
     
     @observe("image.text")
     textChanged() {
-        if (this.editing && !this.firstTextChange)
+        if (this.editing && this.lastText != this.image.text) {
             Services.HAAPI_PUT('image', this.image.id, {}, Common.formData({ text: this.image.text }));
-        this.firstTextChange = false;
+            this.lastText = this.image.text
+        }        
     }
 
     @observe("image.year")
     yearChanged() {
-        if (this.editing && !this.firstYearChange)
+        if (this.editing && this.lastYear != this.image.year) {
             Services.HAAPI_PUT('image', this.image.id, {}, Common.formData({ year: this.image.year }));
-        this.firstYearChange = false;
+            this.lastYear = this.image.year;
+        }
     }
 
     @observe("image.licensee")
     licenseeChanged() {
-        if (this.editing && !this.firstLicenseeChange)
+        if (this.editing && this.lastLicensee != this.image.licensee) {
             Services.HAAPI_PUT('image', this.image.id, {}, Common.formData({ licensee: this.image.licensee }));
-        this.firstLicenseeChange = false;
+            this.lastLicensee = this.image.licensee;
+        }
     }
 
     @observe("image.photographer")
     photographerChanged() {
-        if (this.editing && !this.firstPhotographerChange)
+        if (this.editing && this.lastPhotographer != this.image.photographer) {
             Services.HAAPI_PUT('image', this.image.id, {}, Common.formData({ photographer: this.image.photographer }));
-        this.firstPhotographerChange = false;
+            this.lastPhotographer = this.image.photographer
+        }
     }
 
     deleteImage() {
