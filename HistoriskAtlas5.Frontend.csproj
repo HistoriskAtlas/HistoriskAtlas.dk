@@ -1342,15 +1342,29 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="bowerupdate.bat" />
-    <Content Include="pdf\gammel Vejledning til skribenter på HistoriskAtlas.pdf" />
-    <Content Include="pdf\Vejledning til at lave turforslag på HistoriskAtlas.dk.pdf" />
-    <Content Include="pdf\Vejledning til at lave turforslag på HistoriskAtlas.dk for kulturinstitutioner.pdf" />
-    <Content Include="pdf\Vejledning til skribenter på HistoriskAtlas.dk for kulturinstitutioner.pdf" />
-    <Content Include="pdf\Vejledning til skribenter på HistoriskAtlas.dk.pdf" />
+    <Content Include="pdf\gammel Vejledning til skribenter på HistoriskAtlas.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="pdf\Vejledning til at lave turforslag på HistoriskAtlas.dk.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="pdf\Vejledning til at lave turforslag på HistoriskAtlas.dk for kulturinstitutioner.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="pdf\Vejledning til skribenter på HistoriskAtlas.dk for kulturinstitutioner.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="pdf\Vejledning til skribenter på HistoriskAtlas.dk.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="bower.json" />
-    <Content Include="pdf\Vejledning til skribenter på HistoriskAtlas.dks kulturinstitutionslag april 2019.pdf" />
+    <Content Include="pdf\Vejledning til skribenter på HistoriskAtlas.dks kulturinstitutionslag april 2019.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include=".well-known\assetlinks.json" />
-    <Content Include="pdf\Dagsorden generalforsamling 2021.pdf" />
+    <Content Include="pdf\Dagsorden generalforsamling 2021.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="bower_components\font-roboto\.bower.json" />
     <Content Include="bower_components\font-roboto\bower.json" />
     <Content Include="bower_components\font-roboto\CONTRIBUTING.md" />
@@ -1800,6 +1814,15 @@
     <Content Include="bower_components\webcomponentsjs\build.log" />
     <Content Include="bower_components\webcomponentsjs\package.json" />
     <Content Include="bower_components\webcomponentsjs\README.md" />
+    <Content Include="pdf\budget 2022.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="pdf\Generalforsamling Foreningen Historisk Atlas 2022 - referat.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="pdf\Årsberetning 2021 Historisk Atlas.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\historiskatlas - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\historiskatlas-beta - Web Deploy.pubxml" />
     <None Include="web.Debug.config">

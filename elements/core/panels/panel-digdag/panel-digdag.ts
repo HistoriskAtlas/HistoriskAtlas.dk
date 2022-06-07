@@ -24,7 +24,7 @@ class PanelDigDag extends polymer.Base implements polymer.Element {
             this.year = e.model.child.periodStart;
 
         if (this.year > e.model.child.periodEnd)
-            this.year = Math.min(e.model.child.periodEnd, 2016);
+            this.year = Math.min(e.model.child.periodEnd, Common.digDagEndYear);
 
         e.model.set('child.active', true);
         this.type = e.model.child;

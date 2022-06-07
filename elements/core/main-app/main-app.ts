@@ -53,7 +53,7 @@ class MainApp extends App implements polymer.Element {
             App.map.HaMap = newVal;
             UrlState.mapChanged();
         }
-        this.year = newVal.orgEndYear;
+        this.year = Math.min(newVal.orgEndYear, Common.digDagEndYear);
     }
 
     @observe("timeWarpMap")
@@ -65,7 +65,7 @@ class MainApp extends App implements polymer.Element {
                 App.map.timeWarp.HaMap = newVal;
                 UrlState.secondaryMapChanged();
             }
-        this.timeWarpYear = newVal.orgEndYear;
+        this.timeWarpYear = Math.min(newVal.orgEndYear, Common.digDagEndYear);
     }
 
     @observe("year")

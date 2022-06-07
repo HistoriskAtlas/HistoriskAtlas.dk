@@ -7,7 +7,7 @@
     private fillColor: string;
     private textColor: string;
     private static minYear: number = 1660; //WAS -1000
-    private static maxYear: number = 2016;
+    private static maxYear: number = Common.digDagEndYear;
     private static yearWidth: number = 1000;
     private static offsetY: number = 0; //TODO: not working..... scales with zoom...
     private static sourceTickmark: ol.source.Vector;

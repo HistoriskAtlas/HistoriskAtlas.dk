@@ -16,6 +16,8 @@
     private static h2rP: RegExp = new RegExp("<p>(.*?)<\/p>", 'gi')
     private static h2rA: RegExp = new RegExp("<a href=[\"'](https?:\\/\\/.*?)[\"']>(.*?)<\\/a>", 'gi')
 
+    public static readonly digDagEndYear: number = 2016;
+
     public static dom = $(document.body);
     //private static _api: string;
     //private static _baseApi: string;
