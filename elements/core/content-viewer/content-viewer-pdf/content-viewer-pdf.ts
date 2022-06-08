@@ -25,7 +25,7 @@ class ContentViewerPdf extends polymer.Base implements polymer.Element {
     }
 
     private uploadSuccess(result: any) {
-        this.set('pdf.filename', result.detail.file.newName);
+        this.set('pdf.filename', result.detail.file.name);
         //this.set('pdf.title', (<string>result.detail.file.name).replace('.pdf', ''));
         this.set('pdf.title', result.detail.file.name);
         $(this.fileUpload).remove();
