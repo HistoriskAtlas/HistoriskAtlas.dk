@@ -15,6 +15,7 @@
             --paper-header-panel-waterfall-container: {
                 display: flex;
                 flex-direction: column;
+                overflow: auto;
             }
             --paper-header-panel-waterfall-tall-container: {
                 display: flex;
@@ -43,7 +44,7 @@
         content.window-basic {
             overflow: hidden;
         }
-         
+   
     </style>
     <template>
         <paper-material elevation="[[elevation]]" animated class$="[[materialClass(lightbox)]]">
