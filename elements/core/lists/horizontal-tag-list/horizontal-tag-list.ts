@@ -63,6 +63,10 @@ class HorizontalTagList extends polymer.Base implements polymer.Element {
         return (this.primary(tag) ? 'Frav' : 'V') + 'ælg som primær';
     }
 
+    tagClass(editing: boolean): string {
+        return `tag${editing ? ' editing' : ''}`;
+    }
+
     hideTitle(tagsLength: number, editing: boolean): boolean {
         //if (!tags)
         //    return true;

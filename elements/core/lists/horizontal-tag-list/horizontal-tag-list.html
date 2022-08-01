@@ -7,15 +7,19 @@
             line-height: 16px;
         }
         :host > span.horizontal-tag-list {
-            font-size: 9px; 
-            font-weight: bold; 
+            font-size: 9px;
+            font-weight: bold;
             margin-right: 10px;
             align-self: center;
             margin-bottom: 2px;
-            margin-left: 10px;
+            /*margin-left: 10px;*/
             pointer-events: none;
         }
-        .tagconfirm-input.horizontal-tag-list {
+        .tag.horizontal-tag-list {
+            margin-right: 6px;
+            font-size: 10px;
+        }
+        .tag.editing.horizontal-tag-list {
             background-color: #f2f2f2;
             padding: 2px 8px 2px 8px;
             font-size: 10px;
@@ -47,7 +51,7 @@
     <template>
         <span hidden$="[[hideTitle(tags.length,editing)]]">[[title]]</span>
         <template id="tagRepeater" is="dom-repeat" items="[[tags]]" as="tag">
-            <div class="tag" primary$="[[primary(tag,localPrimaryTag)]]">
+            <div class$="[[tagClass(editing)]]" primary$="[[primary(tag,localPrimaryTag)]]">
                 <span>[[tag.plurName]]</span>
                 <template is="dom-if" if="[[editing]]">
                     
