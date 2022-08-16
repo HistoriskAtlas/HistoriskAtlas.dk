@@ -172,17 +172,17 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     deleteContentConfirmed(e: any) {
         Common.dom.append(WindowLogin.create());
     }
-    showAllRoutesTap() {
-        App.haTags.setSelectedByCategory(9, false);
-        this.theme = Global.defaultTheme;
-        this.set('showMenuRoutes', true);
-        this.set('showMainMenu', false);
-        setTimeout(() => {
-            this.set('profCreators', true);
-            this.set('userCreators', true);
-            App.mainMenu.panelRoute.selectAll();
-        }, 500);        
-    }
+    //showAllRoutesTap() {
+    //    App.haTags.setSelectedByCategory(9, false);
+    //    this.theme = Global.defaultTheme;
+    //    this.set('showMenuRoutes', true);
+    //    this.set('showMainMenu', false);
+    //    setTimeout(() => {
+    //        this.set('profCreators', true);
+    //        this.set('userCreators', true);
+    //        App.mainMenu.panelRoute.selectAll();
+    //    }, 500);        
+    //}
     guideRouteTap() {
         window.open('../../../pdf/Vejledning til at lave turforslag på HistoriskAtlas.dk' + (App.haUsers.user.isPro ? ' for kulturinstitutioner' : '') + '.pdf', '_blank')
     }

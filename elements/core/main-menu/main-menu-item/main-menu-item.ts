@@ -28,6 +28,8 @@ class MainMenuItem extends polymer.Base implements polymer.Element {
 
     @observe('show')
     showChanged(newVal: boolean) {
+        this.dataset.show = newVal.toString();
+
         this.immediateShow = newVal;
         if (newVal)
             this.fire('shown');
