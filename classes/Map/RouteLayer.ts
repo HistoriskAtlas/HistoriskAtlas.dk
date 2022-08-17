@@ -254,7 +254,7 @@
         if ((<any>feature).locs && first) {
 
             if (collection.viaPointCount == 29) {
-                App.toast.show('Der kan max være 29 via-punkter (A-Å) pr. turforslag.');
+                App.toast.show('Der kan max være 29 via-punkter (A-Å) pr. rute.');
                 return;
             }
 

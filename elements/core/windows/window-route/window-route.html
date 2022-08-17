@@ -78,7 +78,7 @@
                             <menu-item on-tap="editorialTap">Redaktion</menu-item>
                             <menu-item on-tap="helpTap">Hjælp</menu-item>
                             <menu-item spacer></menu-item>
-                            <menu-item on-tap="deleteTap">Slet turforslag</menu-item>
+                            <menu-item on-tap="deleteTap">Slet rute</menu-item>
                         </paper-menu>
                     </paper-menu-button>
                 </template>
@@ -140,9 +140,9 @@
                     <horizontal-tag-list title="PERIODER" menu="Period" tags="[[periods]]" editing="[[editing]]" tags-service="[[tagsService()]]"></horizontal-tag-list>
                 </template>
 
-                <template is="dom-if" if="[[editing]]">
+                <!--<template is="dom-if" if="[[editing]]">
                     <window-route-contest route="[[route]]"></window-route-contest>
-                </template>
+                </template>-->
 
             </div>
         </window-basic>

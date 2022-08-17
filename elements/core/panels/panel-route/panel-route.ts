@@ -50,7 +50,7 @@ class PanelRoute extends polymer.Base implements polymer.Element {
     userChanged() {
         if (!this.user.isDefault && !this.showingUserRouteTopLevel) {
             //this.push('topLevels', { name: 'spacer', shown: false, selected: false, filter: null, ignoreCreators: false })
-            this.push('topLevels', { name: 'Mine turforslag', shown: false, selected: false, filter: (collection: HaCollection) => collection.user.id == App.haUsers.user.id, ignoreCreators: true })
+            this.push('topLevels', { name: 'Mine ruter', shown: false, selected: false, filter: (collection: HaCollection) => collection.user.id == App.haUsers.user.id, ignoreCreators: true })
             this.showingUserRouteTopLevel = true;
         }
         if (this.user.isDefault && this.showingUserRouteTopLevel) {
@@ -66,7 +66,7 @@ class PanelRoute extends polymer.Base implements polymer.Element {
 
     createNewRouteTap() {
         if (App.haUsers.user.isDefault) {
-            $(this).append(DialogConfirm.create('log-in', 'Du skal være logget ind for at kunne oprette et turforslag. Vil du logge ind nu?'));
+            $(this).append(DialogConfirm.create('log-in', 'Du skal være logget ind for at kunne oprette en rute. Vil du logge ind nu?'));
             return;
         }
 

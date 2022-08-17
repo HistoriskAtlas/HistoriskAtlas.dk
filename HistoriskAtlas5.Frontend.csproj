@@ -754,7 +754,7 @@
     <Content Include="elements\writer\dialogs\dialog-user-selection\dialog-user-selection.html" />
     <Content Include="elements\writer\windows\window-editorial\panel-news-editorial\panel-news-editorial.html" />
     <Content Include="elements\writer\windows\window-editorial\panel-stats-editorial\panel-stats-editorial.html" />
-    <Content Include="elements\writer\windows\window-route-contest\window-route-contest.html" />
+    <Content Include="elements\thrash\window-route-contest\window-route-contest.html" />
     <Content Include="elements\writer\dialogs\dialog-tag-selection\dialog-tag-selection.html" />
     <Content Include="elements\writer\dialogs\dialog-route-selection\dialog-route-selection.html" />
     <Content Include="elements\writer\lists\collection-geo-sortable-list\collection-geo-sortable-list.html" />
@@ -1234,7 +1234,7 @@
     <TypeScriptCompile Include="elements\writer\dialogs\dialog-user-selection\dialog-user-selection.ts" />
     <TypeScriptCompile Include="elements\writer\windows\window-editorial\panel-news-editorial\panel-news-editorial.ts" />
     <TypeScriptCompile Include="elements\writer\windows\window-editorial\panel-stats-editorial\panel-stats-editorial.ts" />
-    <TypeScriptCompile Include="elements\writer\windows\window-route-contest\window-route-contest.ts" />
+    <TypeScriptCompile Include="elements\thrash\window-route-contest\window-route-contest.ts" />
     <TypeScriptCompile Include="elements\writer\dialogs\dialog-tag-selection\dialog-tag-selection.ts" />
     <TypeScriptCompile Include="elements\writer\dialogs\dialog-route-selection\dialog-route-selection.ts" />
     <TypeScriptCompile Include="elements\writer\lists\collection-geo-sortable-list\collection-geo-sortable-list.ts" />

@@ -89,12 +89,15 @@
             opacity: 1 !important;
             transition: opacity 0.3s 0.5s !important;
         }
+        .disable-button.panel-digdag > paper-radio-button {
+            pointer-events: none;
+        }
     </style>
     <template>
         <div class="headline">
             <!--Danmarks historisk-administrative geografi<br />- fra 1660 til 2010<br> (pt. låst til 1980)-->
         </div>
-        <div class="listitem" on-tap="disabledTap">
+        <div class="listitem disable-button" on-tap="disabledTap">
             <span class="title" style="font-size:13px; font-weight:bold">Deaktiver</span>
             <paper-radio-button noink checked="{{disabled(type)}}" class="disabled"></paper-radio-button>
         </div>

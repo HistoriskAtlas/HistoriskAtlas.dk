@@ -123,7 +123,7 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         }
         this.set('routeTopLevels', routeTopLevels);
 
-        this.set('userTopLevels', [{ name: 'Mine turforslag', shown: false, selected: false, filter: (collection: HaCollection) => collection.user.id == App.haUsers.user.id, ignoreCreators: true }]);
+        this.set('userTopLevels', [{ name: 'Mine ruter', shown: false, selected: false, filter: (collection: HaCollection) => collection.user.id == App.haUsers.user.id, ignoreCreators: true }]);
 
         var userCollectionList = this.$$('#userCollectionList');
         if (userCollectionList)
@@ -159,7 +159,7 @@ class PanelTheme extends polymer.Base implements polymer.Element {
 
     createNewRouteTap() {
         if (App.haUsers.user.isDefault) {
-            $(this).append(DialogConfirm.create('log-in', 'Du skal være logget ind for at kunne oprette et turforslag. Vil du logge ind nu?'));
+            $(this).append(DialogConfirm.create('log-in', 'Du skal være logget ind for at kunne oprette en rute. Vil du logge ind nu?'));
             return;
         }
 

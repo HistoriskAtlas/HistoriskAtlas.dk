@@ -42,7 +42,7 @@
                 align-self: flex-end;
             }
         </style>
-        <window-basic id="windowbasic" window-title="Turforslag" width="400" height="650" right="10">
+        <window-basic id="windowbasic" window-title="Ruter" width="400" height="650" right="10">
             <div class="content">
                 <div class="list">
                     <template id="templateCollections" is="dom-repeat" items="[[collections]]" as="collection">
@@ -56,6 +56,6 @@
             </div>
         </window-basic>
 
-        <dialog-text id="routeTitleDialog" text="Angiv titel på turforslag" confirm-callback="route-title-confirmed"></dialog-text>
+        <dialog-text id="routeTitleDialog" text="Angiv titel på rute" confirm-callback="route-title-confirmed"></dialog-text>
     </template>
 </dom-module>

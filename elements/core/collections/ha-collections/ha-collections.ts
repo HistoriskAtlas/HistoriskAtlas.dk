@@ -261,7 +261,7 @@ class HaCollections extends Tags implements polymer.Element {
     }
 
     public newRoute(geo?: HaGeo) {
-        Common.dom.append(DialogText.create('Angiv titel på turforslaget', (title) => this.newCollection(title, geo)));
+        Common.dom.append(DialogText.create('Angiv titel på ruten', (title) => this.newCollection(title, geo)));
     }
 
     private newCollection(title: string, geo?: HaGeo)/*: HaCollection*/ {

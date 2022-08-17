@@ -264,7 +264,7 @@
         formData.append(prop, this['_' + prop]);
         Services.HAAPI_PUT('collection', this._id, {}, formData, (result) => {
             if (prop == 'online')
-                App.toast.show('Turforslaget er nu ' + (this._online ? '' : 'af') + 'publiceret');
+                App.toast.show('Ruten nu ' + (this._online ? '' : 'af') + 'publiceret');
         });
     }
 
@@ -364,7 +364,7 @@
     }
 
     public delete() {
-        Services.HAAPI_DELETE('collection', this._id, false, {}, (result) => App.toast.show('Turforslaget er slettet.'));
+        Services.HAAPI_DELETE('collection', this._id, false, {}, (result) => App.toast.show('Ruten er slettet.'));
     }
 
 }
