@@ -22,9 +22,12 @@ class MainApp extends App implements polymer.Element {
         return !!object;
     }
 
-    //showThemeTitle(theme: ITheme): boolean {
-    //    return theme.id != 'default';
-    //}
+    showThemeTitle(theme: ITheme): boolean {
+        return theme.name != 'default';
+    }
+    selectTheme() {
+        this.$.themeSelect.open();
+    }
 
     openCookiesWindow() {
         Common.dom.append(WindowPrivacy.create());
@@ -88,11 +91,11 @@ class MainApp extends App implements polymer.Element {
     //        return 'menu-style-theme-' + theme.id;
     //    return '';
     //}
-    mainMenuClass(showMenuThemes: boolean): string {
-        if (showMenuThemes)
-            return 'show-menu-themes';
-        return '';
-    }
+    //mainMenuClass(showMenuThemes: boolean): string {
+    //    if (showMenuThemes)
+    //        return 'show-menu-themes';
+    //    return '';
+    //}
 
     canEditCollection(collection: HaCollection): boolean {
         return App.haUsers.user.canEditCollection(collection);

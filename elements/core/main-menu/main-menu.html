@@ -68,71 +68,111 @@
             padding-top: 10px;
         }
 
+        #mainMenuThemeContent {
+            max-width: 270px;
+            padding-left: 16px;
+            padding-bottom: 16px;
+            padding-top: 10px;
+            font-size: 13px;
+        }
+
+        .nordea-logo-container {
+            /*flex-grow: 1;*/ 
+            flex-shrink:0; 
+            display: flex; 
+            align-items: flex-end; 
+            justify-content: center; 
+            padding:16px;
+        }
+        .nordea-logo-container > img {
+            width: 150px;
+        }
+
+        main-menu-item.main-menu:first-child {
+            margin-top: 8px;
+        }
+        main-menu-item.main-menu:last-child {
+            margin-bottom: 8px;
+        }
     </style>
     <template>
-        <main-menu-item show="{{showMenuMaps}}" show-main-menu="{{showMainMenu}}" menu-title="Kort" icon="ha:map">
-            <panel-map id="panelMap" class="panel" map="{{mainMap}}" maps="[[maps]]" year="{{year}}"></panel-map>
+        <!--<main-menu-item show="{{showMenuThemes}}" show-main-menu="{{showMainMenu}}" menu-title="Temaer" icon="ha:map">
+        <panel-theme id="panelTheme" class="panel" theme="{{theme}}" themes="{{themes}}" collections="{{collections}}" collection="{{collection}}" user-creators="{{userCreators}}" prof-creators="{{profCreators}}" user="[[user]]" show="[[showMenuThemes]]" show-menu-routes="{{showMenuRoutes}}" show-main-menu="{{showMainMenu}}"></panel-theme>
+    </main-menu-item>-->
+
+        <main-menu-item id="menuItemTag" show="{{showMenuTags}}" show-main-menu="{{showMainMenu}}" menu-title="Fortællinger" icon="ha:subject">
+            <panel-tag id="panelTag" class="panel" tags="{{tags}}" tag-tops="{{tagTops}}" user-creators="{{userCreators}}" prof-creators="{{profCreators}}"></panel-tag>
         </main-menu-item>
-        <main-menu-item show="{{showMenuSubjects}}" show-main-menu="{{showMainMenu}}" menu-title="Emner" icon="ha:subject">
-            <panel-tag id="panelSubject" class="panel" tags="{{tags}}" tag-tops="{{tagTops}}" tag-category="9"></panel-tag>
-        </main-menu-item>
-        <main-menu-item show="{{showMenuPeriods}}" show-main-menu="{{showMainMenu}}" menu-title="Perioder" icon="ha:period">
-            <panel-tag id="panelPeriod" class="panel" tags="{{tags}}" tag-tops="{{tagTops}}" tag-category="10"></panel-tag>
-        </main-menu-item>
-        <main-menu-item show="{{showMenuDigDag}}" show-main-menu="{{showMainMenu}}" menu-title="Grænser" icon="ha:digdag">
+
+        <main-menu-item id="menuItemDigDag" show="{{showMenuDigDag}}" show-main-menu="{{showMainMenu}}" menu-title="Grænser" icon="ha:digdag">
             <panel-digdag id="panelDigdag" class="panel" digdags="[[digdags]]" type="{{regionType}}" year="{{year}}" touch-device="[[touchDevice]]"></panel-digdag>
         </main-menu-item>
-        <main-menu-item show="{{showMenuRoutes}}" show-main-menu="{{showMainMenu}}" menu-title="Ruter" icon="ha:route"> <!--hidden$="[[!showHOD2017(isDevOrBeta,user)]]"-->
+        <main-menu-item id="menuItemRoute" show="{{showMenuRoutes}}" show-main-menu="{{showMainMenu}}" menu-title="Ruter" icon="ha:route">
+            <!--hidden$="[[!showHOD2017(isDevOrBeta,user)]]"-->
             <panel-route id="panelRoute" class="panel" collections="{{collections}}" collection="{{collection}}" top-levels="{{collectionTopLevels}}" user-creators="[[userCreators]]" prof-creators="[[profCreators]]" drawer-open="{{drawerOpen}}" show="[[showMenuRoutes]]" user="[[user]]"></panel-route>
-        </main-menu-item>
-        <main-menu-item show="{{showMenuThemes}}" show-main-menu="{{showMainMenu}}" menu-title="Temaer" icon="ha:map">
-            <panel-theme id="panelTheme" class="panel" theme="{{theme}}" themes="{{themes}}" collections="{{collections}}" collection="{{collection}}" user-creators="{{userCreators}}" prof-creators="{{profCreators}}" user="[[user]]" show="[[showMenuThemes]]" show-menu-routes="{{showMenuRoutes}}" show-main-menu="{{showMainMenu}}"></panel-theme>
         </main-menu-item>
 
         <!--<main-menu-item show="{{showMenuReset}}" show-main-menu="{{showMainMenu}}" title="Nulstil valg" icon="refresh">
         <div class="soon">Kommer snart</div>
     </main-menu-item>-->
-        <iron-collapse opened="[[showMainMenu]]" style="flex-grow: 1; display: flex; flex-direction: column;">
+        <iron-collapse opened="[[showMainMenu]]" style="flex-grow: 1; display: flex; flex-direction: column;" no-animation>
+            <div id="mainMenuThemeLogo"></div>
 
-            <!--<paper-item class="promo" on-tap="tap1001"><div class="icon icon-1001">1001</div>1001 fortællinger om Danmark</paper-item>
-    <template is="dom-if" if="[[showHOD2017(isDevOrBeta,user)]]">
-        <paper-item class="promo" on-tap="tapHOD2017"><div class="icon icon-hod">H o D</div>Historier om Danmark</paper-item>
-    </template>-->
-
-            <div style="height:10px"></div>
-            <!--<template is="dom-if" if="[[user.isPro]]">
-        <paper-item toggles active="{{showProfMenu}}" class="prof-menu">For kulturinstitutioner</paper-item>
-        <iron-collapse class="sub-menu prof-menu" opened="[[showProfMenu]]">
-            <paper-item on-tap="profGuidelinesTap">Retningslinjer for formidling</paper-item>
-        </iron-collapse>
-    </template>-->
-            <paper-item toggles active="{{showAboutMenu}}">Om HistoriskAtlas.dk</paper-item>
-            <iron-collapse class="sub-menu" opened="[[showAboutMenu]]">
-                <paper-item on-tap="theAssociationTap" class="opens-in-new-tab">Foreningen HistoriskAtlas.dk</paper-item>
-                <!--<paper-item on-tap="committeeTap">Bestyrelse og redaktionsudvalg</paper-item>-->
-                <paper-item on-tap="becomeAMemberTap" class="opens-in-new-tab">Bliv medlem af foreningen</paper-item>
-                <paper-item on-tap="monetarySupportTap" class="opens-in-new-tab">Økonomisk støtte</paper-item>
-                <paper-item on-tap="guidelinesTap">Retningslinjer for formidling</paper-item>
-                <paper-item on-tap="privacyTap">Cookie- og privatlivspolitik</paper-item>
-                <paper-item on-tap="termsOfUseTap">Brugsbetingelser / ansvarsfraskrivelse</paper-item>
-                <paper-item on-tap="facebookTap" class="opens-in-new-tab">HistoriskAtlas.dk på Facebook</paper-item>
-                <paper-item on-tap="feedbackTap">Send feedback</paper-item>
-                <paper-item on-tap="contactTap">Kontakt</paper-item>
-            </iron-collapse>
-            <!--<paper-item on-tap="blogTap">HistoriskAtlas.dk's blog</paper-item>-->
-            <paper-item toggles active="{{showHelpMenu}}">Hjælp og vejledning</paper-item>
-            <iron-collapse class="sub-menu" opened="[[showHelpMenu]]">
-                <paper-item on-tap="guidedTourTap">Start guidet tour</paper-item>
-                <paper-item on-tap="introVideoTap">Se introduktionsvideo</paper-item>
-                <paper-item on-tap="writerGuideTap">Vejledning til skribenter</paper-item>
-                <template is="dom-if" if="[[user.isPro]]">
-                    <paper-item on-tap="profGuidelinesTap">Retningslinjer for formidling</paper-item>
-                </template>
-            </iron-collapse>
-            <div style="flex-grow:1; display:flex; flex-direction: column; align-items: center;">
-                <paper-item class="digterruter-item" on-tap="tapDigterruter">Nyt tema:</paper-item>
-                <div style="flex-grow:1"></div>
+            <div id="mainMenuThemeContent">
+                <content-viewer content="[[newHaContent(theme.content)]]"></content-viewer>
             </div>
+
+            <template is="dom-if" if="[[isDefaultTheme(theme)]]">
+
+                <!--<paper-item class="promo" on-tap="tap1001"><div class="icon icon-1001">1001</div>1001 fortællinger om Danmark</paper-item>
+            <template is="dom-if" if="[[showHOD2017(isDevOrBeta,user)]]">
+                <paper-item class="promo" on-tap="tapHOD2017"><div class="icon icon-hod">H o D</div>Historier om Danmark</paper-item>
+            </template>-->
+
+                <div style="height:10px"></div>
+                <!--<template is="dom-if" if="[[user.isPro]]">
+                <paper-item toggles active="{{showProfMenu}}" class="prof-menu">For kulturinstitutioner</paper-item>
+                <iron-collapse class="sub-menu prof-menu" opened="[[showProfMenu]]">
+                    <paper-item on-tap="profGuidelinesTap">Retningslinjer for formidling</paper-item>
+                </iron-collapse>
+            </template>-->
+                <paper-item toggles active="{{showAboutMenu}}">Om HistoriskAtlas.dk</paper-item>
+                <iron-collapse class="sub-menu" opened="[[showAboutMenu]]">
+                    <paper-item on-tap="theAssociationTap" class="opens-in-new-tab">Foreningen HistoriskAtlas.dk</paper-item>
+                    <!--<paper-item on-tap="committeeTap">Bestyrelse og redaktionsudvalg</paper-item>-->
+                    <paper-item on-tap="becomeAMemberTap" class="opens-in-new-tab">Bliv medlem af foreningen</paper-item>
+                    <paper-item on-tap="monetarySupportTap" class="opens-in-new-tab">Økonomisk støtte</paper-item>
+                    <paper-item on-tap="guidelinesTap">Retningslinjer for formidling</paper-item>
+                    <paper-item on-tap="privacyTap">Cookie- og privatlivspolitik</paper-item>
+                    <paper-item on-tap="termsOfUseTap">Brugsbetingelser / ansvarsfraskrivelse</paper-item>
+                    <paper-item on-tap="facebookTap" class="opens-in-new-tab">HistoriskAtlas.dk på Facebook</paper-item>
+                    <paper-item on-tap="feedbackTap">Send feedback</paper-item>
+                    <paper-item on-tap="contactTap">Kontakt</paper-item>
+                </iron-collapse>
+                <!--<paper-item on-tap="blogTap">HistoriskAtlas.dk's blog</paper-item>-->
+                <paper-item toggles active="{{showHelpMenu}}">Hjælp og vejledning</paper-item>
+                <iron-collapse class="sub-menu" opened="[[showHelpMenu]]">
+                    <paper-item on-tap="guidedTourTap">Start guidet tour</paper-item>
+                    <paper-item on-tap="introVideoTap">Se introduktionsvideo</paper-item>
+                    <paper-item on-tap="writerGuideTap">Vejledning til skribenter</paper-item>
+                    <template is="dom-if" if="[[user.isPro]]">
+                        <paper-item on-tap="profGuidelinesTap">Retningslinjer for formidling</paper-item>
+                    </template>
+                </iron-collapse>
+                <!--<div style="flex-grow:1; display:flex; flex-direction: column; align-items: center;">
+                <paper-item class="digterruter-item" on-tap="tapDigterruter">Nyt tema:</paper-item>
+            </div>-->
+                <div style="flex-grow:1"></div>
+                <div class="nordea-logo-container">
+                    <img src="../../images/logos/nordea-fonden-black-logo.png" />
+                </div>
+            </template>
+
+
         </iron-collapse>
+        <main-menu-item id="menuItemMap" show="{{showMenuMaps}}" show-main-menu="{{showMainMenu}}" menu-title="Kort" icon="ha:map">
+            <panel-map id="panelMap" class="panel" map="{{mainMap}}" maps="[[maps]]" year="{{year}}"></panel-map>
+        </main-menu-item>
+
     </template>
 </dom-module>

@@ -16,11 +16,11 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     @property({ type: Object, notify: true })
     public collection: HaCollection;
 
-    @property({ type: Array })
-    public routeTopLevels: Array<ICollectionTopLevel>;
+    //@property({ type: Array })
+    //public routeTopLevels: Array<ICollectionTopLevel>;
 
-    @property({ type: Array })
-    public userTopLevels: Array<ICollectionTopLevel>;
+    //@property({ type: Array })
+    //public userTopLevels: Array<ICollectionTopLevel>;
 
     @property({ type: Boolean })
     public show: boolean;
@@ -46,10 +46,10 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     ready() {
         this.isDevOrBeta = Common.isDevOrBeta;
 
-        if (Common.tagsLoaded)
-            this.themeChanged()
-        else
-            HaTags.loadedCallbacks.push(() => this.themeChanged());
+        //if (Common.tagsLoaded)
+        //    this.themeChanged()
+        //else
+        //    HaTags.loadedCallbacks.push(() => this.themeChanged());
     }
 
     active(item: ITheme, theme: ITheme): boolean {
@@ -66,12 +66,12 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         return true;
     }
 
-    public getThemeByName(name: string): ITheme {
-        for (var theme of this.themes)
-            if (theme.name == name)
-                return theme;
-        return null;
-    }
+    //public getThemeByName(name: string): ITheme {
+    //    for (var theme of this.themes)
+    //        if (theme.name == name)
+    //            return theme;
+    //    return null;
+    //}
 
     @observe('showThemeMenu')
     showThemeMenuChanged(newVal: boolean, oldVal: boolean) {
@@ -98,43 +98,43 @@ class PanelTheme extends polymer.Base implements polymer.Element {
 
     @observe('theme')
     themeChanged() {
-        if (!Common.tagsLoaded)
-            return;
+        //if (!Common.tagsLoaded)
+        //    return;
 
-        //UrlState.themeChanged(); Moved to ha-themes
+        ////UrlState.themeChanged(); Moved to ha-themes
 
-        var routeTopLevels: Array<ICollectionTopLevel> = [];
-        if (this.theme.tagid && this.theme != Global.defaultTheme) {
+        //var routeTopLevels: Array<ICollectionTopLevel> = [];
+        //if (this.theme.tagid && this.theme != Global.defaultTheme) {
 
-            if (this.isDigterruter(this.theme)) {
-                var themeTag = App.haTags.byId[this.theme.tagid];
-                routeTopLevels.push(((tag: HaTag) => <ICollectionTopLevel>{
-                    name: 'Ruterne', shown: false, selected: true, ignoreCreators: true, filter: (collection: HaCollection) => collection.tags.indexOf(tag) > -1
-                })(themeTag));
-            }
+        //    if (this.isDigterruter(this.theme)) {
+        //        var themeTag = App.haTags.byId[this.theme.tagid];
+        //        routeTopLevels.push(((tag: HaTag) => <ICollectionTopLevel>{
+        //            name: 'Ruterne', shown: false, selected: true, ignoreCreators: true, filter: (collection: HaCollection) => collection.tags.indexOf(tag) > -1
+        //        })(themeTag));
+        //    }
 
-            //App.haCollections.getCollectionsByTagId(this.theme.tagid); Moved to ha-themes
-            for (var tag of App.haTags.byId[this.theme.tagid].children) {
-                if (tag.isPublicationDestination) //TODO: other category?
-                    routeTopLevels.push(((tag: HaTag) => <ICollectionTopLevel>{
-                        name: tag.singName, shown: false, selected: true, ignoreCreators: true, filter: (collection: HaCollection) => collection.tags.indexOf(tag) > -1
-                    })(tag));
-            }
-        }
-        this.set('routeTopLevels', routeTopLevels);
+        //    //App.haCollections.getCollectionsByTagId(this.theme.tagid); Moved to ha-themes
+        //    for (var tag of App.haTags.byId[this.theme.tagid].children) {
+        //        if (tag.isPublicationDestination) //TODO: other category?
+        //            routeTopLevels.push(((tag: HaTag) => <ICollectionTopLevel>{
+        //                name: tag.singName, shown: false, selected: true, ignoreCreators: true, filter: (collection: HaCollection) => collection.tags.indexOf(tag) > -1
+        //            })(tag));
+        //    }
+        //}
+        //this.set('routeTopLevels', routeTopLevels);
 
-        this.set('userTopLevels', [{ name: 'Mine ruter', shown: false, selected: false, filter: (collection: HaCollection) => collection.user.id == App.haUsers.user.id, ignoreCreators: true }]);
+        //this.set('userTopLevels', [{ name: 'Mine ruter', shown: false, selected: false, filter: (collection: HaCollection) => collection.user.id == App.haUsers.user.id, ignoreCreators: true }]);
 
-        var userCollectionList = this.$$('#userCollectionList');
-        if (userCollectionList)
-            (<CollectionList>userCollectionList).updateTopLevelSelections();
+        //var userCollectionList = this.$$('#userCollectionList');
+        //if (userCollectionList)
+        //    (<CollectionList>userCollectionList).updateTopLevelSelections();
 
-            //this.set('routeTopLevels', [
-            //    { name: 'Landsdækkende rutenet', shown: false, filter: (collection: HaCollection) => collection.tags.indexOf(App.haTags.byId[734]) > -1 },
-            //    { name: 'Vandrehistorier', shown: false, filter: (collection: HaCollection) => collection.tags.indexOf(App.haTags.byId[735]) > -1 }
-            //]);
-        //} else
-        //    this.set('routeTopLevels', []);
+        //    //this.set('routeTopLevels', [
+        //    //    { name: 'Landsdækkende rutenet', shown: false, filter: (collection: HaCollection) => collection.tags.indexOf(App.haTags.byId[734]) > -1 },
+        //    //    { name: 'Vandrehistorier', shown: false, filter: (collection: HaCollection) => collection.tags.indexOf(App.haTags.byId[735]) > -1 }
+        //    //]);
+        ////} else
+        ////    this.set('routeTopLevels', []);
     }
 
     newHaContent(content: IContent): HaContent {

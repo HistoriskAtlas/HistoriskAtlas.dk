@@ -1,0 +1,91 @@
+﻿<dom-module id="panel-tag-list">
+    <style>
+        :host {
+            display: block;
+        }
+        .listitem.panel-tag-list {
+            display: flex;
+            align-items: center;
+            border-bottom: solid 1px;
+            border-bottom-color: var(--light-gray-color);
+            /*padding: 5px 0px;*/
+            font-size: 13px;
+            height: 32px; /*was 25px*/
+        }
+        .listitem.panel-tag-list > span {
+            cursor: pointer;
+            flex-grow: 1;
+        }
+        .listsubitem.panel-tag-list {
+            padding-left: 40px !important;
+            background-color: var(--light-gray-color);
+        }
+        paper-icon-button.panel-tag-list {
+            width: 30px !important; /*was 25px*/
+            height: 30px !important; /*was 25px*/
+            padding: 3px !important;
+            color: var(--primary-color);
+            -webkit-transform: rotate(-90deg);
+            transform: rotate(-90deg);
+            transition: transform 0.3s, -webkit-transform 0.3s;
+        }
+        paper-icon-button[active].panel-tag-list {
+            transform: rotate(0deg) !important;
+        }
+        paper-checkbox.panel-tag-list {
+            pointer-events: none;
+            --paper-checkbox-unchecked-color: var(--unchecked-color);
+            --paper-checkbox-unchecked-background-color: var(--unchecked-background-color);
+            --paper-checkbox-checked-color: var(--primary-color);
+            --paper-checkbox-size: 14px; /*was 13px*/
+        }
+        paper-checkbox.top.panel-tag-list {
+            margin-right: -1px;
+            --paper-checkbox-size: 16px;
+        }
+        .listsubitem.panel-tag-list > paper-checkbox {
+            --paper-checkbox-unchecked-color: var(--unchecked-color);
+            --paper-checkbox-unchecked-background-color: var(--unchecked-background-color);
+        }
+        .buttons.panel-tag-list {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            padding-top: 20px;
+        }
+        paper-button.panel-tag-list {
+            color: var(--primary-color);
+            font-size: 13px;
+        }
+        .title.panel-tag-list {
+            flex-grow: 1;
+            user-select: none;
+            padding: 0px 0px 0px 30px;
+            font-size: 13px;
+            line-height: 13px;
+            font-weight: bold;
+        }
+    </style>
+    <template>
+        <div class="listitem light-gray-border" style="justify-content: flex-end" on-tap="toggleTop">
+            <span class="title">[[title]]</span>
+            <paper-checkbox class="top" noink checked="[[tagTopSelected(tagTops,tagTops.*)]]" on-tap="cancel"></paper-checkbox>
+        </div>
+        <template is="dom-repeat" items="{{tags}}" filter="includeTag" sort="[[sortFunction(tagCategory)]]" as="tag">
+            <div class="listitem light-gray-border" on-tap="tagTap">
+                <paper-icon-button icon="arrow-drop-down" toggles active="{{tag.showSubTags}}" noink on-tap="cancel" style$="[[hideArrow(tag)]]"></paper-icon-button>
+                <span>[[tag.plurName]]</span>
+                <paper-checkbox noink checked="[[tag.selected]]" on-tap="cancel"></paper-checkbox>
+            </div>
+            <template is="dom-if" if="[[tag.showSubTags]]">
+                <template is="dom-repeat" items="{{tag.children}}" sort="[[sortFunction(tagCategory)]]" as="subTag">
+                    <div class="listitem listsubitem" on-tap="subTagTap">
+                        <span>[[subTag.plurName]]</span>
+                        <paper-checkbox noink checked="[[subTag.selected]]" on-tap="cancel"></paper-checkbox>
+                    </div>
+                </template>
+            </template>
+        </template>
+
+    </template>
+</dom-module>

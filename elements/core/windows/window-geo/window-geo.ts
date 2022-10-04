@@ -137,7 +137,7 @@ class WindowGeo extends polymer.Base implements polymer.Element {
     }
     addBiblioContentTap() {
         var ordering = this.contents.length == 0 ? 1 : Math.max.apply(Math, this.contents.map((o) => { return o.ordering; })) + 1; //TODO: same as above?
-        var content = new HaContent({ geoid: this.geo.id, headline: '', ordering: ordering, contenttypeid: 1, biblios: [{ cql: this.geo.title, ordering: 0 }] });
+        var content = new HaContent({ geoid: this.geo.id, headline: '', ordering: ordering, contenttypeid: 1, biblios: [{ cql: `"${this.geo.title}"`, ordering: 0 }] });
         this.push('contents', content);
         this.selectedTab = ordering; //this.contents.length;
     }

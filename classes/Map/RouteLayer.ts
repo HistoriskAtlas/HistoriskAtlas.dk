@@ -146,12 +146,22 @@
         (<any>feature).distance = distance;
         (<any>feature).collection = collection;
         (<any>feature).locs = [loc1, loc2];
+
+        if (!loc1 || !loc2) {
+            var test = 42;
+        }
+
         //if (index == 0 && collection.collection_geos[0].calcRoute)
         //    (<any>feature).point = new ol.geom.Point(Common.toMapCoord(loc2));
         if (index == 1)
             (<any>feature).point = new ol.geom.Point(Common.toMapCoord(loc2));
         //(<any>feature).point = index == 0 ? new ol.geom.Point(Common.toMapCoord(loc2)) : null;
-        this.source.addFeature(feature);
+        try {
+            this.source.addFeature(feature);
+        }
+        catch {
+            console.log("ERROR adding feature for route")
+        }
         this.cache[cacheIndex] = feature;
         callback(feature, distance);
     }

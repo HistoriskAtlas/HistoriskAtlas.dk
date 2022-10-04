@@ -7,7 +7,20 @@ class HaThemes extends polymer.Base implements polymer.Element {
     @property({ type: Object, notify: true })
     public theme: ITheme;
 
+    @property({ type: Array })
+    public routeTopLevels: Array<ICollectionTopLevel>;
+
+    @property({ type: Array })
+    public userTopLevels: Array<ICollectionTopLevel>;
+
     private gettingThemes: boolean = false;
+
+    ready() {
+        if (Common.tagsLoaded)
+            this.themeChanged()
+        else
+            HaTags.loadedCallbacks.push(() => this.themeChanged());
+    }
 
     public init() { //was ready()
 
@@ -39,6 +52,13 @@ class HaThemes extends polymer.Base implements polymer.Element {
         })
     }
 
+    public getThemeByName(name: string): ITheme {
+        for (var theme of this.themes)
+            if (theme.name == name)
+                return theme;
+        return null;
+    }
+
     @observe('theme')
     themeChanged() {
         if (!Common.tagsLoaded)
@@ -46,6 +66,41 @@ class HaThemes extends polymer.Base implements polymer.Element {
 
         UrlState.themeChanged();
         this.getThemeCollections();
+
+        if (!Common.tagsLoaded)
+            return;
+
+        var routeTopLevels: Array<ICollectionTopLevel> = [];
+        if (this.theme.tagid && this.theme != Global.defaultTheme) {
+
+            if (this.isDigterruter(this.theme)) {
+                var themeTag = App.haTags.byId[this.theme.tagid];
+                routeTopLevels.push(((tag: HaTag) => <ICollectionTopLevel>{
+                    name: 'Ruterne', shown: false, selected: true, ignoreCreators: true, filter: (collection: HaCollection) => collection.tags.indexOf(tag) > -1
+                })(themeTag));
+            }
+
+            for (var tag of App.haTags.byId[this.theme.tagid].children) {
+                if (tag.isPublicationDestination) //TODO: other category?
+                    routeTopLevels.push(((tag: HaTag) => <ICollectionTopLevel>{
+                        name: tag.singName, shown: false, selected: true, ignoreCreators: true, filter: (collection: HaCollection) => collection.tags.indexOf(tag) > -1
+                    })(tag));
+            }
+        }
+
+        //TODO: Let below have an effect........................................................................................................................................................................
+
+        this.set('routeTopLevels', routeTopLevels);
+
+        this.set('userTopLevels', [{ name: 'Mine ruter', shown: false, selected: false, filter: (collection: HaCollection) => collection.user.id == App.haUsers.user.id, ignoreCreators: true }]);
+
+        var userCollectionList = this.$$('#userCollectionList');
+        if (userCollectionList)
+            (<CollectionList>userCollectionList).updateTopLevelSelections();
+
+    }
+    private isDigterruter(theme: ITheme): boolean {
+        return theme.linkname == 'digterruter';
     }
 
     private getThemeCollections() {

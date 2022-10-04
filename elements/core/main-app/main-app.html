@@ -87,7 +87,7 @@
             }
         }
 
-        .creator-filter {
+/*        .creator-filter {
             display: flex; 
             height: 100%;
             align-items: flex-end;
@@ -105,7 +105,7 @@
         }
         .creator-filter > paper-button > span {
             flex-grow: 1;
-        }
+        }*/
 
         paper-toggle-button {
             width: 32px;
@@ -143,7 +143,7 @@
         main-menu:not([shown]) {
             min-height: 100%;
         }
-        .nordeaLogo {
+/*        .nordeaLogo {
             position: absolute;
             left: 21px;
             top: 21px;
@@ -160,18 +160,8 @@
             .nordeaLogo {
                 width: 180px;
             }
-        }
-        .nordea-logo-container {
-            /*flex-grow: 1;*/ 
-            flex-shrink:0; 
-            display: flex; 
-            align-items: flex-end; 
-            justify-content: center; 
-            padding:16px;
-        }
-        .nordea-logo-container > img {
-            width: 150px;
-        }
+        }*/
+
 
         @media (max-width: 950px) {
             .hide-narrow {
@@ -210,30 +200,38 @@
             <!--drawer-focus-selector="" fixes focus steal from time-line -->
             <paper-header-panel drawer mode="waterfall" id="drawer">
 
-                <paper-toolbar class="medium-tall">
+                <paper-toolbar class="medium">
+                    <!--medium-tall-->
                     <div style="display:flex; display: flex; align-items: center; justify-content: space-between; width: 100%;">
-                        <span class="hide-narrow"><iron-icon icon="ha:logo" style="width:32px; height:32px; margin-right: 5px"></iron-icon>MENU</span>
-                        <iron-icon class="widelogo hide-wide" icon="ha:widelogo"></iron-icon>
-                        <paper-icon-button icon="close" paper-drawer-toggle tabindex="-1"></paper-icon-button>
+                        <div id="theme-selector" on-tap="selectTheme">
+                            <iron-icon id="smallHALogo" icon="ha:logo" style="width: 32px; height: 32px; margin-right: 10px; flex-shrink: 0"></iron-icon>
+                            <template is="dom-if" if="[[showThemeTitle(theme)]]">
+                                <div>[[theme.name]]</div>
+                            </template>
+                            <template is="dom-if" if="[[!showThemeTitle(theme)]]">
+                                <iron-icon class="widelogo hide-wide" icon="ha:widelogo" style="margin-right: 5px"></iron-icon>
+                                <div>Tema</div>
+                            </template>
+                            <iron-icon icon="paper-dropdown-menu:arrow-drop-down" style="flex-shrink:0"></iron-icon>
+                            <div style="flex-grow:1"></div>
+                        </div>
+                        <paper-icon-button icon="close" paper-drawer-toggle tabindex="-1" style="margin-right: -8px; flex-shrink: 0"></paper-icon-button>
                     </div>
-                    <div class="bottom fit creator-filter">
-                        <paper-button toggles noink active="{{profCreators}}" style="margin-right: 1px;">
-                            <span>Kulturinstitutionslag</span>
-                            <paper-toggle-button noink checked="[[profCreators]]"></paper-toggle-button>
-                        </paper-button>
-                        <paper-button toggles noink active="{{userCreators}}">
-                            <span>Borgerlag</span>
-                            <paper-toggle-button noink checked="[[userCreators]]"></paper-toggle-button>
-                        </paper-button>
-                    </div>
+                    <!--<div class="bottom fit creator-filter">
+                    <paper-button toggles noink active="{{profCreators}}" style="margin-right: 1px;">
+                        <span>Kulturinstitutionslag</span>
+                        <paper-toggle-button noink checked="[[profCreators]]"></paper-toggle-button>
+                    </paper-button>
+                    <paper-button toggles noink active="{{userCreators}}">
+                        <span>Borgerlag</span>
+                        <paper-toggle-button noink checked="[[userCreators]]"></paper-toggle-button>
+                    </paper-button>
+                </div>-->
                 </paper-toolbar>
 
-                <main-menu class$="[[mainMenuClass(showMenuThemes)]]" shown$="[[showMainMenu]]" show-main-menu="{{showMainMenu}}" show-menu-themes="{{showMenuThemes}}" drawer-open="{{drawerOpen}}" tags="{{tags}}" tag-tops="{{tagTops}}" main-map="{{mainMap}}" maps="[[maps]]" collections="{{collections}}" collection="{{collection}}" collection-top-levels="{{collectionTopLevels}}" year="{{year}}" digdags="[[digdags]]" region-type="{{regionType}}" touch-device="[[touchDevice]]" time-line-active="{{timeLineActive}}" user="[[user]]" theme="{{theme}}" themes="{{themes}}" prof-creators="{{profCreators}}" user-creators="{{userCreators}}"></main-menu>
-                <template is="dom-if" if="[[showMainMenu]]">
-                    <div class="nordea-logo-container">
-                        <img src="../../images/logos/nordea-fonden-black-logo.png" />
-                    </div>
-                </template>
+                <main-menu shown$="[[showMainMenu]]" show-main-menu="{{showMainMenu}}" drawer-open="{{drawerOpen}}" tags="{{tags}}" tag-tops="{{tagTops}}" main-map="{{mainMap}}" maps="[[maps]]" collections="{{collections}}" collection="{{collection}}" collection-top-levels="{{collectionTopLevels}}" year="{{year}}" digdags="[[digdags]]" region-type="{{regionType}}" touch-device="[[touchDevice]]" time-line-active="{{timeLineActive}}" user="[[user]]" theme="{{theme}}" themes="{{themes}}" prof-creators="{{profCreators}}" user-creators="{{userCreators}}"></main-menu>
+                <!--class$="[[mainMenuClass(showMenuThemes)]]" show-menu-themes="{{showMenuThemes}}"-->
+
             </paper-header-panel>
             <paper-header-panel mode="seamed" main>
                 <paper-toolbar id="toolbar">
@@ -244,10 +242,18 @@
                     <main-search open="{{searchOpen}}"></main-search>
 
                     <div style="flex-grow:1"></div>
-                    <iron-icon class="widelogo hide-narrow" icon="ha:widelogo"></iron-icon>
-                    <!--<template is="dom-if" if="[[showThemeTitle(theme)]]">
-                    <span class="hide-narrow">&nbsp;/ [[theme.name]]</span>
-                </template>-->
+                    <!--<div id="theme-selector" on-tap="selectTheme">-->
+                        <!--<template is="dom-if" if="[[!showThemeTitle(theme)]]">-->
+                    <div>
+                        <iron-icon class="widelogo hide-narrow" icon="ha:logo" style="margin-right: 5px"></iron-icon>
+                        <iron-icon class="widelogo hide-narrow" icon="ha:widelogo"></iron-icon>
+                    </div>    
+                        <!--</template>-->
+                        <!--<template is="dom-if" if="[[showThemeTitle(theme)]]">
+                            <div class="theme-logo hide-narrow">[[theme.name]]</div>
+                        </template>
+                        <iron-icon icon="paper-dropdown-menu:arrow-drop-down" style="flex-shrink:0"></iron-icon>-->
+                    <!--</div>-->
                     <div style="flex-grow:1"></div>
 
                     <mit-atlas-button id="myAtlasButton" user="[[user]]"></mit-atlas-button>
@@ -266,10 +272,10 @@
                         <time-warp-map-button map="{{timeWarpMap}}" maps="[[maps]]" lift="[[timeLineActive]]"></time-warp-map-button>
                     </template>
 
-                    <img class="nordeaLogo" src="../../images/logos/nordea-fonden-white-logo.png" />
+                    <!--<img class="nordeaLogo" src="../../images/logos/nordea-fonden-white-logo.png" />-->
                     <time-warp-closed time-warp-active="{{timeWarpActive}}"></time-warp-closed>
                     <map-tooltip></map-tooltip>
-                    <map-menu main map="{{mainMap}}" region-type="{{regionType}}" theme="{{theme}}" selected-tag-names="[[selectedTagNames]]" selected-collection-names="[[selectedCollectionNames]]" lift="[[timeLineActive]]" drawer-open="{{drawerOpen}}" selected="{{selectedLeftPanel}}" show-main-menu="{{showMainMenu}}" time-warp-active="[[timeWarpActive]]" time-warp-mode="[[timeWarpMode]]"></map-menu>
+                    <map-menu main map="{{mainMap}}" region-type="{{regionType}}" theme="{{theme}}" selected-tag-names="[[selectedTagNames]]" selected-collection-names="[[selectedCollectionNames]]" lift="[[timeLineActive]]" drawer-open="{{drawerOpen}}" selected="{{selectedLeftPanel}}" show-main-menu="{{showMainMenu}}" time-warp-active="[[timeWarpActive]]" time-warp-mode="[[timeWarpMode]]" year="[[year]]"></map-menu>
                     <map-controls lift="[[timeLineActive]]" map-rotation="[[mapRotation]]" time-warp-active="{{timeWarpActive}}"></map-controls>
                     <map-about map=[[mainMap]] time-warp-map="[[timeWarpMap]]" time-warp-mode="[[timeWarpMode]]"></map-about>
                     <time-lines active="[[timeLineActive]]" time-warp-active="[[timeWarpActive]]" nudge="[[drawerOpen]]" touch-device="[[touchDevice]]" year="{{year}}" time-warp-year="{{timeWarpYear}}"></time-lines>
@@ -330,6 +336,8 @@
         <template is="dom-if" if="[[collection]]" restamp>
             <window-route route="{{collection}}" subjects="[[collectionSubjects]]" periods="[[collectionPeriods]]" destinations="[[collectionDestinations]]" institutions="[[collectionInstitutions]]" editing="[[canEditCollection(collection,user)]]"></window-route>
         </template>
+
+        <dialog-theme-select id="themeSelect" themes="[[themes]]"></dialog-theme-select>
 
     </template>
 </dom-module>

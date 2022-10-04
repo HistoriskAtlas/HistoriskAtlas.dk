@@ -2,7 +2,7 @@
     --digterruter-red: #dd655b;
     --digterruter-green: #24523a;
     --primary-color: var(--digterruter-green) !important;
-    
+    --menu-item-color: #cde5c1 !important;
     --map-route-collapsed-color: var(--digterruter-red);
     --map-route-zero-length-color: rgba(221, 101, 91, .5);
     --map-route-line-color: var(--digterruter-green);
@@ -41,7 +41,7 @@
     background: linear-gradient(180deg, rgba(18,83,58,1) 0%, rgba(18,83,58,1) 145px, rgba(243,240,233,1) 145px, rgba(243,240,233,1) 100%);*/ /*#f3f0e9;*/ /*#f4edd2;*/
 /*}*/
 
-.theme-digterruter main-menu.show-menu-themes {
+.theme-digterruter main-menu { /*.show-menu-themes*/
     background-color: rgba(243,240,233,1);
 }
 .theme-digterruter main-menu.show-menu-themes > main-menu-item > iron-collapse:nth-child(2) {
@@ -57,4 +57,24 @@
     width: 230px;
     height: 75px;
     margin-bottom: 10px;
+}
+
+
+/*.theme-digterruter #mainMenuThemeLogo {
+    background-color: var(--primary-color);
+    background-repeat: no-repeat;
+    background-position: center;
+    
+    background-image: url('../../../../images/theme/DanskeDigterruterLogo.png');
+    height: 88px;
+    background-size: 230px;
+    background-position: top left;
+    padding-left: 16px;
+    background-origin: content-box;
+}*/
+
+.theme-digterruter #smallHALogo {
+    background-image: url(../../../../images/theme/DanskeDigterruterSmallLogo.png);
+    background-size: contain;
+    color: transparent;
 }

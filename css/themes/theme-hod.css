@@ -1,11 +1,17 @@
-﻿/*.theme-hod main-menu.show-menu-themes {
+﻿:root.theme-hod {
+    --hod-light-grey: #e4e7eb;
+    --menu-item-color: var(--hod-light-grey) !important;
+}
+
+/*.theme-hod main-menu.show-menu-themes {
     background-color: #e4e7eb;
     background-image: url(../../../../images/theme/HoD2017back.jpg);
     background-size: 100%;
     background-position: bottom;
     background-repeat: no-repeat;
 }
-*/.theme-hod main-menu.show-menu-themes .logo-theme{
+*/
+/*.theme-hod main-menu.show-menu-themes .logo-theme{
     max-width: 80%;
     min-width: 70%;
     display: block;
@@ -23,4 +29,32 @@
     background-position: bottom;
     background-repeat: no-repeat;
     background-attachment: local;
+}*/
+
+/*.theme-hod main-menu {
+    background-color: #e4e7eb;
+}*/
+
+.theme-hod main-menu[shown] {
+    background-color: var(--hod-light-grey);
+    background-image: url(../../../../images/theme/HoD2017back.jpg);
+    background-size: 100%;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-attachment: local;
+}
+
+.theme-hod #mainMenuThemeLogo {
+    max-width: 70%;
+    min-width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: calc(5vh - 10px);
+    width: 25vh;
+    height: 130px;
+
+    background-image: url(../../../../images/theme/HoD2017logo.png);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 }

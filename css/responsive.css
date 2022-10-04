@@ -32,9 +32,14 @@
         display:none !important;
     }
     .responsive-nudge {
-        margin-left: 316px !important; /*300 + 16 WAS 256 + 16*/
-        max-width: calc(100vw - 380px) !important; /* 380 = 300 + 80 */ 
+        /*margin-left: 316px !important;*/ /*300 + 16*/
+        /*margin-left: 140px !important;*/
+        /*max-width: calc(100vw - 380px) !important;*/ /* 380 = 300 + 80 */
+        /*max-width: 270px !important;*/
     }
+/*    .responsive-nudge > * {
+        max-width: 270px !important;
+    }*/
     .responsive-nudge-timelines {
         margin-left: 300px !important;
         width: calc(100% - 300px);

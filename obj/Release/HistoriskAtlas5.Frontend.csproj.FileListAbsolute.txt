@@ -3,14 +3,6 @@ C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\images\theme\Modstandskamp_pa
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\manifest.json
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\pdf\Retningslinjer for formidling på borgerlaget på HistoriskAtlas.dk.pdf
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\pdf\Retningslinjer for formidling på kulturinstitutionslaget på HistoriskAtlas.dk.pdf
-C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\HistoriskAtlas5.Frontend.dll.config
-C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\HistoriskAtlas5.Frontend.dll
-C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\HistoriskAtlas5.Frontend.pdb
-C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csproj.CoreCompileInputs.cache
-C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csproj.CopyComplete
-C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.dll
-C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.pdb
-C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csproj.AssemblyReference.cache
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\pdf\gammel Vejledning til skribenter på HistoriskAtlas.pdf
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\pdf\Vejledning til at lave turforslag på HistoriskAtlas.dk.pdf
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\pdf\Vejledning til at lave turforslag på HistoriskAtlas.dk for kulturinstitutioner.pdf
@@ -21,3 +13,11 @@ C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\pdf\Dagsorden generalforsamli
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\pdf\budget 2022.pdf
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\pdf\Generalforsamling Foreningen Historisk Atlas 2022 - referat.pdf
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\pdf\Årsberetning 2021 Historisk Atlas.pdf
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\HistoriskAtlas5.Frontend.dll.config
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\HistoriskAtlas5.Frontend.dll
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\HistoriskAtlas5.Frontend.pdb
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csproj.AssemblyReference.cache
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csproj.CoreCompileInputs.cache
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csproj.CopyComplete
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.dll
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.pdb

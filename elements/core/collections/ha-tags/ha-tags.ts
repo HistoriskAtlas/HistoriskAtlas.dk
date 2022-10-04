@@ -473,8 +473,8 @@ class HaTags extends polymer.Base implements polymer.Element {
     public updateSelectedTagNames(category: number) {
 
         if (this.tagTops[category].selected) {
-            this.set(['selectedTagNames', category], "Alle" + category); //HACK... observes didn't fire when set to the same value as other in the array....
-            this.set(['selectedTagNames', category], "Alle");
+            this.set(['selectedTagNames', category], `Alle ${(category == 9 ? 'emner' : 'perioder')}` + category); //HACK... observes didn't fire when set to the same value as other in the array....
+            this.set(['selectedTagNames', category], `Alle ${(category == 9 ? 'emner' : 'perioder')}`);
             return;
         }
 

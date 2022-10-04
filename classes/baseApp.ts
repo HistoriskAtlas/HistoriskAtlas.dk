@@ -154,8 +154,8 @@
 
         if (App.passed.theme.linkname != 'default' && !Common.embed) {
             this.drawerOpen = true;
-            App.mainMenu.showMainMenu = false;
-            App.mainMenu.showMenuThemes = true;
+            App.mainMenu.showMainMenu = true; //false
+            //App.mainMenu.showMenuThemes = true;
         }
 
         if (App.passed.redribbon) {

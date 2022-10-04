@@ -1,0 +1,49 @@
+﻿<dom-module id="dialog-theme-select">
+    <template>
+        <style>
+            paper-item.dialog-theme-select {
+                font-size: 12px;
+                min-height: 32px;
+                white-space: nowrap;
+                cursor: pointer;
+                display: flex;
+                justify-content: space-between;
+                padding-left: 33px;
+            }
+            paper-item.dialog-theme-select > div:nth-child(1) {
+                margin-right: 10px;
+            }
+
+            paper-dialog-scrollable.dialog-theme-select {
+                --paper-dialog-scrollable: {
+                    box-sizing: border-box;
+                    /*max-width: 360px;*/
+                    max-height: 70vh;
+                }
+            }
+
+            .halogo.dialog-theme-select {
+                width: 200px;
+                height: 31px;
+                cursor: pointer;
+            }
+
+        </style>
+        <paper-dialog id="dialog">
+            <h2>Vælg tema</h2>
+            <paper-dialog-scrollable>
+                <iron-icon class="halogo" icon="ha:widelogo" on-tap="selectHA"></iron-icon>
+                <paper-listbox class="dropdown-content" selected="{{newTheme}}" attr-for-selected="theme">
+                    <template is="dom-repeat" items="[[themes]]" as="theme">
+                        <!--<template is="dom-if" if="[[map.inViewTimeWarp]]">-->
+                        <paper-item theme="[[theme]]">
+                            <div>[[theme.name]]</div>
+                            <!--<div>[[years(map.orgStartYear,map.orgEndYear)]]</div>-->
+                        </paper-item>
+                        <!--</template>-->
+                    </template>
+                </paper-listbox>
+            </paper-dialog-scrollable>
+        </paper-dialog>
+    </template>
+</dom-module>

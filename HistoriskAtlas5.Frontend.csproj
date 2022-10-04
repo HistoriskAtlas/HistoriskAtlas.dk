@@ -9,7 +9,7 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <TypeScriptToolsVersion>3.7</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>4.3</TypeScriptToolsVersion>
     <TypeScriptEmitDecoratorMetadata>True</TypeScriptEmitDecoratorMetadata>
     <TypeScriptExperimentalDecorators>True</TypeScriptExperimentalDecorators>
     <UseIISExpress>true</UseIISExpress>
@@ -716,6 +716,7 @@
     <Content Include="elements\core\collections\ha-content\ha-content.html" />
     <Content Include="elements\core\content-viewer\subcontent-viewer\subcontent-viewer.html" />
     <Content Include="elements\core\content-viewer\content-viewer-pdf\content-viewer-pdf.html" />
+    <Content Include="elements\core\dialogs\dialog-theme-select\dialog-theme-select.html" />
     <Content Include="elements\core\dialogs\dialog-map-select\dialog-map-select.html" />
     <Content Include="elements\core\dialogs\dialog-video-intro\dialog-video-intro.html" />
     <Content Include="elements\core\input\dropdown-input\dropdown-input.html" />
@@ -725,6 +726,7 @@
     <Content Include="elements\core\collections\ha-contents\ha-contents.html" />
     <Content Include="elements\core\collections\ha-collections\ha-collections.html" />
     <Content Include="elements\core\collections\ha-digdag\ha-digdag.html" />
+    <Content Include="elements\core\panels\panel-tag\panel-tag-list\panel-tag-list.html" />
     <Content Include="elements\core\windows\window-ext-image\window-ext-image.html" />
     <Content Include="elements\thrash\ha-institutions\ha-institutions.html" />
     <Content Include="elements\core\collections\ha-licenses\ha-licenses.html" />
@@ -915,6 +917,7 @@
     <Content Include="images\theme\1001logo.jpg" />
     <Content Include="images\theme\BregnetSogn_back.jpg" />
     <Content Include="images\theme\DanskeDigterruterLogo.png" />
+    <Content Include="images\theme\DanskeDigterruterSmallLogo.png" />
     <Content Include="images\theme\EmilAarestrupRoute.png" />
     <Content Include="images\theme\Modstandskamp_bomb_icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -999,6 +1002,7 @@
     <TypeScriptCompile Include="elements\core\collections\ha-content\ha-content.ts" />
     <TypeScriptCompile Include="elements\core\content-viewer\subcontent-viewer\subcontent-viewer.ts" />
     <TypeScriptCompile Include="elements\core\content-viewer\content-viewer-pdf\content-viewer-pdf.ts" />
+    <TypeScriptCompile Include="elements\core\dialogs\dialog-theme-select\dialog-theme-select.ts" />
     <TypeScriptCompile Include="elements\core\dialogs\dialog-map-select\dialog-map-select.ts" />
     <TypeScriptCompile Include="elements\core\dialogs\dialog-video-intro\dialog-video-intro.ts" />
     <TypeScriptCompile Include="elements\core\input\dropdown-input\dropdown-input.ts" />
@@ -1203,6 +1207,7 @@
     <TypeScriptCompile Include="elements\core\collections\ha-contents\ha-contents.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-collections\ha-collections.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-digdag\ha-digdag.ts" />
+    <TypeScriptCompile Include="elements\core\panels\panel-tag\panel-tag-list\panel-tag-list.ts" />
     <TypeScriptCompile Include="elements\core\windows\window-ext-image\window-ext-image.ts" />
     <TypeScriptCompile Include="elements\thrash\ha-institutions\ha-institutions.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-licenses\ha-licenses.ts" />
@@ -1327,6 +1332,7 @@
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
+    <TypeScriptCompile Include="typings\polymer-ts.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1825,6 +1831,7 @@
     </Content>
     <None Include="Properties\PublishProfiles\historiskatlas - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\historiskatlas-beta - Web Deploy.pubxml" />
+    <Content Include="tsconfig.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -1931,6 +1938,9 @@
     <Folder Include="elements\editor\windows\" />
     <Folder Include="typings\closure-library\" />
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -1981,7 +1991,7 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptTarget>ES5</TypeScriptTarget>
     <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
-    <TypeScriptSourceMap>False</TypeScriptSourceMap>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
     <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
     <PublishDatabases>false</PublishDatabases>
     <TypeScriptJSXEmit>None</TypeScriptJSXEmit>

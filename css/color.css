@@ -1,7 +1,7 @@
 ﻿:root {
     --primary-color: #005d9a !important;
     --primary-contrast-color: #ffffff !important;
-    /*--primary-color-light: #0f64a6 !important;*/
+    --menu-item-color: #e7eef5 !important;
     --secondary-color: #ffcc00 !important;
     --secondary-contrast-color: #000000 !important;
     --light-gray-color: #ececec !important;

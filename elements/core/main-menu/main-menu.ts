@@ -2,8 +2,9 @@
 class MainMenu extends polymer.Base implements polymer.Element {
 
     public panelMap: PanelMap;
-    public panelSubject: PanelTag;
-    public panelPeriod: PanelTag;
+    //public panelSubject: PanelTag;
+    //public panelPeriod: PanelTag;
+    public panelTag: PanelTag;
     public panelRoute: PanelRoute;
     public panelDigdag: PanelDigDag;
     //public panelTheme: PanelTheme;
@@ -49,14 +50,14 @@ class MainMenu extends polymer.Base implements polymer.Element {
     @property({ type: Boolean, value: true, notify: true })
     public showMainMenu: boolean;
 
-    @property({ type: Boolean, value: false, notify: true })
-    public showMenuThemes: boolean;
+    //@property({ type: Boolean, value: false, notify: true })
+    //public showMenuThemes: boolean;
 
     @property({ type: Boolean, value: false })
     public showMenuDigDag: boolean;
 
     @property({ type: Boolean, value: false })
-    public showMenuSubjects: boolean;
+    public showMenuTags: boolean;
 
     @property({ type: Boolean, value: false })
     public showMenuRoutes: boolean;
@@ -88,8 +89,9 @@ class MainMenu extends polymer.Base implements polymer.Element {
     ready() {
         this.isDevOrBeta = Common.isDevOrBeta;
         this.panelMap = this.$.panelMap;
-        this.panelSubject = this.$.panelSubject;
-        this.panelPeriod = this.$.panelPeriod;
+        //this.panelSubject = this.$.panelSubject;
+        //this.panelPeriod = this.$.panelPeriod;
+        this.panelTag = this.$.panelTag;
         this.panelRoute = this.$.panelRoute;
         this.panelDigdag = this.$.panelDigdag;
         //this.panelTheme = this.$$('#panelTheme');
@@ -105,9 +107,24 @@ class MainMenu extends polymer.Base implements polymer.Element {
     @observe('showMenuDigDag')
     showMenuDigDagChanged() {
         this.timeLineActive = this.showMenuDigDag && this.drawerOpen;
+        document.documentElement.classList.toggle('menu-digdag-shown', this.showMenuDigDag)
+    }
+    @observe('showMenuTags')
+    showMenuTagsChanged() {
+        document.documentElement.classList.toggle('menu-tags-shown', this.showMenuTags)
+    }
+    @observe('showMenuRoutes')
+    showMenuRoutesChanged() {
+        document.documentElement.classList.toggle('menu-routes-shown', this.showMenuRoutes)
+    }
+    @observe('showMenuMaps')
+    showMenuMapsChanged() {
+        document.documentElement.classList.toggle('menu-maps-shown', this.showMenuMaps)
     }
     @observe('drawerOpen')
     drawerOpenChanged() {
+        document.documentElement.classList.toggle('drawer-open', this.drawerOpen)
+
         this.timeLineActive = this.showMenuDigDag && this.drawerOpen;
 
         if (this.drawerOpen && !this.$$('mainMenudialogTour') && !LocalStorage.get('firstMenuOpenTourDone')) {
@@ -150,8 +167,9 @@ class MainMenu extends polymer.Base implements polymer.Element {
     //    App.haThemes.selectTheme((<PanelTheme>this.$.panelTheme).getThemeByName('Modstandskamp'));
     //}
     tapDigterruter() {
-        this.set('showMenuThemes', true);
-        App.haThemes.selectTheme((<PanelTheme>this.$.panelTheme).getThemeByName('Danske Digterruter'));
+        //this.set('showMenuThemes', true);
+        //App.haThemes.selectTheme((<PanelTheme>this.$.panelTheme).getThemeByName('Danske Digterruter'));
+        App.haThemes.selectTheme(App.haThemes.getThemeByName('Danske Digterruter'));
     }
 
     //aboutTap() {
@@ -204,6 +222,18 @@ class MainMenu extends polymer.Base implements polymer.Element {
     profGuidelinesTap() {
         window.open('../../../pdf/Retningslinjer for formidling på kulturinstitutionslaget på HistoriskAtlas.dk.pdf', '_blank')
     }
+
+
+    isDefaultTheme(theme: ITheme): boolean {
+        return theme.linkname == 'default';
+    }
+
+    newHaContent(content: IContent): HaContent {
+        if (!content)
+            return null;
+        return new HaContent(content);
+    }
+
 }
 
 MainMenu.register();

@@ -46,6 +46,9 @@ class MapMenu extends polymer.Base implements polymer.Element {
     //@property({ type: Number, value: 0 })
     //public mode: TimeWarpModes & number;
 
+    @property({ type: Number })
+    public year: number;
+
     //private cssClassButton: string = this.main ? 'HAPrimColor' : 'HASecColor';
     //private cssClassSpacer: string = 'spacer' + (this.main ? ' HAInvertedPrimColor' : ' HAInvertedSecColor');
     //private cssClassWrapper: string = 'wrapper ' + (this.main ? 'wrapperLeft HAPrimColor' : 'wrapperRight HASecColor');
@@ -94,39 +97,39 @@ class MapMenu extends polymer.Base implements polymer.Element {
     }
 
     buttonDigDagTap(e: any) {
-        if (e.target.localName == 'iron-icon')
+        if (e.target.classList.contains('close-button'))
             this.regionType = null;
         else
             this.toggleDrawer('showMenuDigDag');
     }
 
-    buttonSubjectsTap(e: any) {
-        if (e.target.localName == 'iron-icon')
-            App.haTags.toggleTop(9, false);
+    buttonTagsTap(e: any) {
+        if (e.target.classList.contains('close-button'))
+            App.haTags.toggleTop(9, false); //TODO: toggle both emner AND perioder?!.....................................................................
         else
-            this.toggleDrawer('showMenuSubjects');
+            this.toggleDrawer('showMenuTags');
     }
 
-    buttonPeriodsTap(e: any) {
-        if (e.target.localName == 'iron-icon')
-            App.haTags.toggleTop(10, false);
-        else
-            this.toggleDrawer('showMenuPeriods');
-    }
+    //buttonPeriodsTap(e: any) {
+    //    if (e.target.localName == 'iron-icon')
+    //        App.haTags.toggleTop(10, false);
+    //    else
+    //        this.toggleDrawer('showMenuPeriods');
+    //}
 
     buttonCollectionsTap(e: any) {
-        if (e.target.localName == 'iron-icon')
+        if (e.target.classList.contains('close-button'))
             App.haCollections.deselectAll();
         else
             this.toggleDrawer('showMenuRoutes');
     }
 
-    buttonThemeTap(e: any) {
-        if (e.target.localName == 'iron-icon')
-            this.theme = Global.defaultTheme;
-        else
-            this.toggleDrawer('showMenuThemes');
-    }
+    //buttonThemeTap(e: any) {
+    //    if (e.target.localName == 'iron-icon')
+    //        this.theme = Global.defaultTheme;
+    //    else
+    //        this.toggleDrawer('showMenuThemes');
+    //}
 
     private toggleDrawer(showMenu: string) {
         if (this.drawerOpen && App.mainMenu[showMenu]) {
@@ -139,9 +142,9 @@ class MapMenu extends polymer.Base implements polymer.Element {
         this.showMainMenu = false;
     }
 
-    cssClass(main: boolean, lift: boolean, drawerOpen: boolean, timeWarpActive: boolean, timeWarpMode: TimeWarpModes): string {
+    cssClass(main: boolean, lift: boolean, drawerOpen: boolean, timeWarpActive: boolean, showMainMenu: boolean, timeWarpMode: TimeWarpModes): string {
         //return (main ? 'primary HAPrimColor' : 'HASecColor') + (lift ? ' lift' : '') + (drawerOpen ? ' responsive-nudge' : '') + (!main && mode == TimeWarpModes.SPLIT ? ' fix' : '');
-        return (main ? 'main' : 'warp') + (lift ? ' lift' : '') + ((drawerOpen && main) ? ' responsive-nudge' : '') + ((timeWarpActive && timeWarpMode == TimeWarpModes.SPLIT) ? ' time-warp-active' : '');
+        return (main ? 'main' : 'warp') + (showMainMenu ? ' show-main-menu' : '') + (lift ? ' lift' : '') + ((drawerOpen && main) ? ' responsive-nudge' : '') + ((timeWarpActive && timeWarpMode == TimeWarpModes.SPLIT) ? ' time-warp-active' : '');
     }
 
     buttonClass(main: boolean) {
@@ -152,29 +155,29 @@ class MapMenu extends polymer.Base implements polymer.Element {
     //    this.set('map', haMap);
     //}
 
-    year(startYear: number, endYear: number): string {
+    yearFormat(startYear: number, endYear: number): string {
         return Common.years(startYear, endYear)
         //return (startYear ? startYear + ' - ' : '') + endYear;
     }
 
     classDigDag(regionType: HARegionType): string {
-        return !!regionType ? '' : 'collapsed';
+        return !!regionType ? '' : 'empty';
     }
 
     classTheme(theme: ITheme): string {
         return theme.linkname != 'default' ? '' : 'collapsed';
     }
 
-    classTags(category: number): string {
-        return !!this.selectedTagNames[category] ? '' : 'collapsed';
+    classTags(): string {
+        return !!this.selectedTagNames[9] || !!this.selectedTagNames[10] ? '' : 'empty';
     }
 
     classCollections(selectedCollectionNames: string): string {
-        return !!selectedCollectionNames ? '' : 'collapsed';
+        return !!selectedCollectionNames ? '' : 'empty';
     }
 
-    TagNames(category: number): string {
-        return this.selectedTagNames[category];
+    TagNames(): string {
+        return this.selectedTagNames[9]; // + ' - ' + this.selectedTagNames[10] TODO!.......................................
     }
 
 

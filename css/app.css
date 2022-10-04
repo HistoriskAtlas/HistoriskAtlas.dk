@@ -149,3 +149,39 @@ main-menu > main-menu-item > iron-collapse:nth-child(2) > * {
 main-menu > main-menu-item[data-show="true"] {
     flex-grow: 1;
 }
+
+#theme-selector {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.theme-logo {
+    font-size: 22px;
+    margin-left: 16px;
+    user-select: none;
+}
+
+html:not(.theme-default) #menuItemTag,
+html:not(.theme-default) #buttonTags,
+html:not(.theme-default) #menuItemDigDag,
+html:not(.theme-default) #buttonDigDag,
+html:not(.theme-default) #menuItemRoute,
+html:not(.theme-default) #buttonRoutes {
+    display: none;
+}
+
+html:not(.menu-tags-shown).drawer-open .main:not(.show-main-menu).map-menu #buttonTags,
+html:not(.menu-digdag-shown).drawer-open .main:not(.show-main-menu).map-menu #buttonDigDag,
+html:not(.menu-routes-shown).drawer-open .main:not(.show-main-menu).map-menu #buttonRoutes,
+html.drawer-open .main:not(.show-main-menu).map-menu #button,
+html:not(.drawer-open) paper-button.empty.map-menu
+{
+    height: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    overflow: hidden;
+    box-shadow: none !important;
+}

@@ -4,12 +4,13 @@
 
             .content.map-menu {
                 font-size: 12px;
-                max-width: calc(100vw - 70px);
+            }
+            .content.main.map-menu {
+                width: calc(100vw - 70px);
             }
             .time-warp-active.map-menu {
                 max-width: calc(50vw - 25px) !important;
             }
-
             .main.map-menu {
                 display: flex;
                 flex-direction: column;
@@ -17,41 +18,70 @@
                 position: fixed;
                 left: 0px;
                 bottom: 0px;
-                margin: 0px 16px 10px 16px;
-                transition: margin-bottom 0.4s, margin-left ease-in-out 0.3s, max-width ease-in-out 0.3s !important;
+                margin: 0px 13px 10px 16px; /*0px 16px 10px 16px;*/
+                transition: margin-right .3s, width .3s .3s !important;
                 pointer-events: none;
+                z-index: 10;
+                height: calc(100% - 87px);
             }
-
-            .lift.map-menu {
-                margin-bottom: 74px !important; /*64 + 10*/
+            @media (max-width: 600px) {
+                .main.map-menu {
+                    height: calc(100% - 79px);
+                }
             }
-            .label.map-menu {
+            .responsive-nudge.main.map-menu {
+                width: 273px;
+                transition: margin-right .3s, width 0s !important;
+            }
+            /*.lift.map-menu {
+                margin-bottom: 74px !important;*/ /*64 + 10*/
+            /*}*/
+            
+/*            .label.map-menu {
                 margin-left: 5px;
                 font-weight: bold;
             }
+*/
+            .icon.map-menu {
+                width: 20px;
+                height: 20px;
+                transition: width .3s, padding-left .3s, padding-right .3s;
+                padding-left: 4px;
+                padding-right: 4px;
+            }
+            .responsive-nudge.map-menu .icon {
+                width: 0px;
+                padding-left: 0px;
+                padding-right: 0px;
+            }
+
             .info-title.map-menu {
                 margin-left: 5px;
                 min-width: 0;
                 overflow: hidden;
                 text-overflow: ellipsis;
+
+                flex-grow: 1;
             }
             .info-year.map-menu {
                 margin-left: 5px;
-                margin-right: 5px;
                 flex-grow: 1;
-                flex-shrink: 10000;
+                flex-shrink: 0; /*10000*/
                 min-width: 0;
                 overflow: hidden;
             }
+            .info-year.map-menu:last-child {
+                margin-right: 5px;            
+            }
             paper-button.map-menu {
-                transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1), ease-in-out 0.3s, height .3s, margin-bottom .3s, padding-bottom .3s, padding-top .3s, opacity 0s .3s !important;
+                transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), max-width .3s, height .3s, margin-top .3s, margin-bottom .3s, margin-right .3s, margin-left .3s, padding-bottom .3s, padding-top .3s, opacity 0s .3s, visibility 0s !important;
                 display: flex;
                 flex-direction: column;
                 /*align-items: center;*/
                 text-transform: none;
                 padding: 3.5px 6px;
                 margin-left: 0px;
-                margin-bottom: 5px;
+                margin-bottom: 12px; /*5px*/
                 border-radius: 15.5px;
                 background-color: white;
                 pointer-events: all;
@@ -59,11 +89,60 @@
                 max-width: 100%;
                 height: 31px;
                 opacity: 1;
+                flex-shrink: 0;
+            }
+            .main.map-menu paper-button.map-menu {
+                margin-right: 0px;
+            }
+            .flexer:last-child paper-button.map-menu {
+                margin-bottom: 5px;
             }
             paper-button[elevation="4"].map-menu {
                 box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2) !important;
             }
-            paper-button.collapsed.map-menu {
+            .flexer.map-menu {
+                display: flex;
+                width: 100%;
+            }
+            .flexer.map-menu > div:first-child {
+                flex-grow: 0;
+                transition: flex-grow .3s;
+            }
+            .responsive-nudge.map-menu .flexer.map-menu > div:first-child {
+                flex-grow: 1;
+            }
+            .responsive-nudge.map-menu paper-button {
+                box-shadow: 0 0px 0px .5px rgba(0, 0, 0, 0.14), 0 0px 0px .5px rgba(0, 0, 0, 0.12), 0 0px 0px .5px rgba(0, 0, 0, 0.2) !important;
+                /*background-color: rgba(255,255,255,0);*/
+                height: 25px;
+                margin-top: 3px;
+                margin-bottom: 15px;
+                /*margin-right: 0px !important;*/
+                /*margin-left: auto;*/
+            }
+
+            .responsive-nudge.map-menu .flexer:last-child paper-button {
+                margin-bottom: 8px;
+            }
+            .responsive-nudge.map-menu #buttonTags {
+                /*margin-left: 125px;*/
+                max-width: calc(275px - 125px) !important;
+            }
+            .responsive-nudge.map-menu #buttonDigDag {
+                /*margin-left: 105px;*/
+                max-width: calc(275px - 105px) !important;
+            }
+            .responsive-nudge.map-menu #buttonCollections {
+                /*margin-left: 85px;*/
+                max-width: calc(275px - 85px) !important;
+            }
+            .responsive-nudge.map-menu #button {
+                /*margin-left: 80px;*/
+                max-width: calc(275px - 80px) !important;
+            }
+            
+
+/*            paper-button.collapsed.map-menu {
                 transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1), ease-in-out 0.3s, height .3s, margin-bottom .3s, padding-bottom .3s, padding-top .3s, opacity 0s !important;
                 visibility: hidden;
                 opacity: 0;
@@ -72,13 +151,17 @@
                 padding-bottom: 0;
                 padding-top: 0;
             }
+*/
 
+            paper-button.empty.map-menu {
+                visibility: hidden;
+            }
             .info.map-menu {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 white-space: nowrap;
-                overflow-x: hidden;
+                /*overflow-x: hidden;*/
                 /*min-height: 24px;*/
             }
 
@@ -99,52 +182,70 @@
                 width: 16px;
                 height: 16px;
                 padding: 4px;
-                margin-left: 5px;
+                /*margin-left: 5px;*/
                 flex-shrink: 0;
             }
 
         </style>
 
-        <div class$="content [[cssClass(main,lift,drawerOpen,timeWarpActive,timeWarpMode)]]">
+        <div class$="content [[cssClass(main,lift,drawerOpen,timeWarpActive,showMainMenu,timeWarpMode)]]">
             <template is="dom-if" if="[[main]]">
-                <paper-button id="buttonSubjects" raised on-tap="buttonSubjectsTap" class$="[[classTags(9,selectedTagNames.*)]]">
-                    <div class="info">
-                        <span class="label">EMNER</span>
-                        <span class="info-title">[[TagNames(9,selectedTagNames.*)]]</span>
-                        <iron-icon icon="close"></iron-icon>
-                    </div>
-                </paper-button>
-                <paper-button id="buttonPeriods" raised on-tap="buttonPeriodsTap" class$="[[classTags(10,selectedTagNames.*)]]">
+                <div class="flexer">
+                    <div></div>
+                    <paper-button id="buttonTags" raised on-tap="buttonTagsTap" class$="[[classTags(selectedTagNames.*)]]">
+                        <div class="info">
+                            <!--<span class="label">FORTÆLLINGER</span>-->
+                            <iron-icon class="icon" icon="ha:subject"></iron-icon>
+                            <span class="info-title">[[TagNames(selectedTagNames.*)]]</span>
+                            <iron-icon class="close-button" icon="close"></iron-icon>
+                        </div>
+                    </paper-button>
+                </div>
+                <!--<paper-button id="buttonPeriods" raised on-tap="buttonPeriodsTap" class$="[[classTags(10,selectedTagNames.*)]]">
                     <div class="info">
                         <span class="label">PERIODER</span>
                         <span class="info-title">[[TagNames(10,selectedTagNames.*)]]</span>
                         <iron-icon icon="close"></iron-icon>
                     </div>
-                </paper-button>
-                <paper-button id="buttonCollections" raised on-tap="buttonCollectionsTap" class$="[[classCollections(selectedCollectionNames)]]">
-                    <div class="info">
-                        <span class="label">RUTER</span>
-                        <span class="info-title">[[selectedCollectionNames]]</span>
-                        <iron-icon icon="close"></iron-icon>
-                    </div>
-                </paper-button>
-                <paper-button id="buttonDigDag" raised on-tap="buttonDigDagTap" class$="[[classDigDag(regionType)]]">
-                    <div class="info">
-                        <span class="label">GRÆNSER</span>
-                        <span class="info-title">[[regionType.name]]</span>
-                        <iron-icon icon="close"></iron-icon>
-                    </div>
-                </paper-button>
-            </template>
-            <paper-button id="button" raised="[[raised]]" class$="[[buttonClass(main)]]">
-                <div class="info">
-                    <span class="label">KORT</span>
-                    <span class="info-title">[[map.title]]</span>
-                    <span class="info-year">[[year(map.orgStartYear,map.orgEndYear)]]</span>
-                    <iron-icon icon="paper-dropdown-menu:arrow-drop-down" style="flex-shrink:0"></iron-icon>
+                </paper-button>-->
+                <div class="flexer">
+                    <div></div>
+                    <paper-button id="buttonDigDag" raised on-tap="buttonDigDagTap" class$="[[classDigDag(regionType)]]">
+                        <div class="info">
+                            <!--<span class="label">GRÆNSER</span>-->
+                            <iron-icon class="icon" icon="ha:digdag"></iron-icon>
+                            <span class="info-title">[[regionType.name]]</span>
+                            <span class="info-year">[[year]]</span>
+                            <iron-icon class="close-button" icon="close"></iron-icon>
+                        </div>
+                    </paper-button>
                 </div>
-            </paper-button>
-            <template is="dom-if" if="[[main]]">
+                <div class="flexer">
+                    <div></div>
+                    <paper-button id="buttonCollections" raised on-tap="buttonCollectionsTap" class$="[[classCollections(selectedCollectionNames)]]">
+                        <div class="info">
+                            <!--<span class="label">RUTER</span>-->
+                            <iron-icon class="icon" icon="ha:route"></iron-icon>
+                            <span class="info-title">[[selectedCollectionNames]]</span>
+                            <iron-icon class="close-button" icon="close"></iron-icon>
+                        </div>
+                    </paper-button>
+                </div>
+            </template>
+            <div style="flex-grow: 1"></div>
+            <div class="flexer">
+                <div></div>
+                <paper-button id="button" raised="[[raised]]" class$="[[buttonClass(main)]]">
+                    <div class="info">
+                        <!--<span class="label">KORT</span>-->
+                        <iron-icon class="icon" icon="ha:map"></iron-icon>
+                        <span class="info-title">[[map.title]]</span>
+                        <span class="info-year">[[yearFormat(map.orgStartYear,map.orgEndYear)]]</span>
+                        <!--<iron-icon icon="paper-dropdown-menu:arrow-drop-down" style="flex-shrink:0"></iron-icon>-->
+                    </div>
+                </paper-button>
+            </div>
+            <!--<template is="dom-if" if="[[main]]">
                 <paper-button id="buttonTheme" raised on-tap="buttonThemeTap" class$="[[classTheme(theme)]]">
                     <div class="info">
                         <span class="label">TEMA</span>
@@ -152,7 +253,7 @@
                         <iron-icon icon="close"></iron-icon>
                     </div>
                 </paper-button>
-            </template>
+            </template>-->
         </div>
 
     </template>
