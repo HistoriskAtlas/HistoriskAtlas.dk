@@ -48,8 +48,8 @@
     }
 
     private static send(event: AnalyticsEvent) {
-        (<any>window).analytics('ha.send', event);
-        (<any>window).analytics('obm.send', event);
+        //(<any>window).analytics('ha.send', event); Migrated from Google Analytics to Application Insights Oct. 2022
+        //(<any>window).analytics('obm.send', event);
         (<any>window).appInsights.trackEvent({
             name: event.eventCategory,
             properties: {

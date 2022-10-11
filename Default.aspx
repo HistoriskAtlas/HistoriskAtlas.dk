@@ -56,15 +56,15 @@
             cfg: { connectionString: "InstrumentationKey=b2a5f111-511f-4b09-846f-6ab590229d08;IngestionEndpoint=https://westeurope-5.in.applicationinsights.azure.com/" }
         });
 
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','analytics');
+        //(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        //    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        //    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        //})(window,document,'script','https://www.google-analytics.com/analytics.js','analytics');
 
-        analytics('create', 'UA-1465579-9', {'name':'obm'}); //deprecated
-        analytics('create', 'UA-84971843-1', {'name':'ha'});
-        analytics('obm.send', 'pageview'); //deprecated
-        analytics('ha.send', 'pageview');
+        //analytics('create', 'UA-1465579-9', {'name':'obm'}); //deprecated
+        //analytics('create', 'UA-84971843-1', {'name':'ha'});
+        //analytics('obm.send', 'pageview'); //deprecated
+        //analytics('ha.send', 'pageview');
 
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./js/sw.js', { scope: '/' }).then(function (reg) {
