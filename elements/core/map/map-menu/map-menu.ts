@@ -13,8 +13,8 @@ class MapMenu extends polymer.Base implements polymer.Element {
     @property({ type: Object, notify: true })
     public theme: ITheme;    
 
-    @property({ type: Array })
-    public selectedTagNames: Array<string>;
+    @property({ type: String }) //Array
+    public selectedTagNames: string; //Array<string>
 
     @property({ type: String })
     public selectedCollectionNames: string;
@@ -105,7 +105,8 @@ class MapMenu extends polymer.Base implements polymer.Element {
 
     buttonTagsTap(e: any) {
         if (e.target.classList.contains('close-button'))
-            App.haTags.toggleTop(9, false); //TODO: toggle both emner AND perioder?!.....................................................................
+            //App.haTags.toggleTop(9, false);
+            App.haTags.unselectAllSubjectsAndPeriods();
         else
             this.toggleDrawer('showMenuTags');
     }
@@ -169,7 +170,8 @@ class MapMenu extends polymer.Base implements polymer.Element {
     }
 
     classTags(): string {
-        return !!this.selectedTagNames[9] || !!this.selectedTagNames[10] ? '' : 'empty';
+        //return !!this.selectedTagNames[9] || !!this.selectedTagNames[10] ? '' : 'empty';
+        return !!this.selectedTagNames ? '' : 'empty';
     }
 
     classCollections(selectedCollectionNames: string): string {
@@ -177,7 +179,8 @@ class MapMenu extends polymer.Base implements polymer.Element {
     }
 
     TagNames(): string {
-        return this.selectedTagNames[9]; // + ' - ' + this.selectedTagNames[10] TODO!.......................................
+        //return this.selectedTagNames[9];
+        return this.selectedTagNames;
     }
 
 

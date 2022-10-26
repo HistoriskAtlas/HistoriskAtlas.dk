@@ -9,8 +9,9 @@ class HaTags extends polymer.Base implements polymer.Element {
     @property({ type: Object, notify: true }) //Not used yet
     public passedTag: HaTag;
 
-    @property({ type: Array, notify: true, value: [] })
-    public selectedTagNames: Array<string>;
+    //@property({ type: Array, notify: true, value: [] })
+    @property({ type: String, notify: true })
+    public selectedTagNames: string; //Array<string>
 
     //@property({ type: Boolean })
     //public beingIndexed: boolean;
@@ -79,7 +80,7 @@ class HaTags extends polymer.Base implements polymer.Element {
         var selections = this.getSelectionArray(UrlState.stateObject.t);
 
         for (var data of result) { //this.$.ajax.lastResponse
-            data.selected = selections ? selections[data.tagid] : data.category == 9;
+            data.selected = selections ? selections[data.tagid] : (data.category == 9 || data.category == 10);
             this.getTagFromData(data)
             LocalStorage.set('tag-' + data.tagid, JSON.stringify(data));
             this.tagIdsInStorage.push(data.tagid);
@@ -90,7 +91,7 @@ class HaTags extends polymer.Base implements polymer.Element {
                 continue;
 
             var data = JSON.parse(LocalStorage.get('tag-' + tagID));
-            data.selected = selections ? selections[data.tagid] : data.category == 9;
+            data.selected = selections ? selections[data.tagid] : (data.category == 9 || data.category == 10);
             this.getTagFromData(data);
         }
         LocalStorage.set('tag-ids', JSON.stringify(this.tagIdsInStorage), true);
@@ -104,7 +105,7 @@ class HaTags extends polymer.Base implements polymer.Element {
             if (tag.isTop) {
                 var topTag = tagTops[tag.category];
                 if (!topTag) {
-                    tagTops[tag.category] = new HaTag({ id: 1000000 + tag.category, category: tag.category, plurname: '' });
+                    tagTops[tag.category] = new HaTag({ tagid: 1000000 + tag.category, category: tag.category, plurname: '' });
                     topTag = tagTops[tag.category];
                     //if (tag.category == 9 && !selections)
                     //    topTag.selected = true;
@@ -114,7 +115,7 @@ class HaTags extends polymer.Base implements polymer.Element {
         });
 
         for (var tagTop of tagTops)
-            (<any>tagTop)._selected = selections ? tagTop.allChildrenSelected : tagTop.category == 9;
+            (<any>tagTop)._selected = selections ? tagTop.allChildrenSelected : (tagTop.category == 9 || tagTop.category == 10);
 
         this.set('tagTops', tagTops)
         this.parentIDs = null;
@@ -131,8 +132,10 @@ class HaTags extends polymer.Base implements polymer.Element {
         if (App.passed.tag)
             this.passedTag = this.byId[App.passed.tag.id];
 
-        this.updateSelectedTagNames(9);
-        this.updateSelectedTagNames(10);
+        //this.updateSelectedTagNames(9);
+        //this.updateSelectedTagNames(10);
+        this.updateSelectedTagNames();
+
         this.loadMarkers();
     }
 
@@ -187,7 +190,7 @@ class HaTags extends polymer.Base implements polymer.Element {
         var canvasTemp = document.createElement('canvas');
         canvasTemp.width = markerSize;
         canvasTemp.height = markerSize;
-        var contextTemp = canvasTemp.getContext("2d");
+        var contextTemp = <CanvasRenderingContext2D>canvasTemp.getContext("2d", { willReadFrequently: true });
 
         var blankImageData = contextTemp.getImageData(0, 0, 1, 1);
         //var blankImageData = new ImageData(1, 1); Not (yet) supported in IE
@@ -196,7 +199,7 @@ class HaTags extends polymer.Base implements polymer.Element {
         canvas.width = 36;
         canvas.height = 48;
         var delta: number = Math.floor((canvas.width - markerSize) / 2);
-        var context = canvas.getContext("2d");
+        var context = <CanvasRenderingContext2D>canvas.getContext("2d", { willReadFrequently: true });
         var x: number = 0;
         var y: number = 0;
         //HaTags._blankMarker = document.createElement("img");
@@ -470,48 +473,98 @@ class HaTags extends polymer.Base implements polymer.Element {
     //    return this.passedTag ? tag.isChildOf(this.passedTag) : (tag.isTop && tag.category == 9); //only subjects for now
     //}
 
-    public updateSelectedTagNames(category: number) {
+    //public updateSelectedTagNames(category: number) {
 
-        if (this.tagTops[category].selected) {
-            this.set(['selectedTagNames', category], `Alle ${(category == 9 ? 'emner' : 'perioder')}` + category); //HACK... observes didn't fire when set to the same value as other in the array....
-            this.set(['selectedTagNames', category], `Alle ${(category == 9 ? 'emner' : 'perioder')}`);
+    //    if (this.tagTops[category].selected) {
+    //        this.set(['selectedTagNames', category], `Alle ${(category == 9 ? 'emner' : 'perioder')}` + category); //HACK... observes didn't fire when set to the same value as other in the array....
+    //        this.set(['selectedTagNames', category], `Alle ${(category == 9 ? 'emner' : 'perioder')}`);
+    //        return;
+    //    }
+
+    //    var selectedTags: Array<string> = [];
+    //    for (var tag of this.tags)
+    //        if (tag.category == category && tag.selected)
+    //            if (!tag.parentSelected)
+    //                selectedTags.push(tag.plurName);
+
+    //    if (selectedTags.length == 0) {
+    //        this.set(['selectedTagNames', category], '' + category); //HACK... observes didn't fire when set to the same value as other in the array....
+    //        this.set(['selectedTagNames', category], '');
+    //        return;
+    //    }
+
+    //    if (selectedTags.length == 1) {
+    //        this.set(['selectedTagNames', category], selectedTags[0]);
+    //        return;
+    //    }
+
+    //    selectedTags.sort();
+
+    //    if (selectedTags.length > 3) {
+    //        this.set(['selectedTagNames', category], selectedTags.slice(0, 3).join(", ") + "...");
+    //        return;
+    //    }
+
+    //    this.set(['selectedTagNames', category], selectedTags.slice(0, selectedTags.length - 1).join(", ") + ' og ' + selectedTags[selectedTags.length - 1]);
+    //    return;
+    //}
+
+    public updateSelectedTagNames() { //category: number
+
+        if (this.tagTops[9].selected && this.tagTops[10].selected) {
+            this.selectedTagNames = 'Alle emner fra alle perioder';
             return;
         }
 
-        var selectedTags: Array<string> = [];
-        //var selectedTagTopChildren: Array<string> = [];
+        var selectedTags: Array<Array<string>> = [,,,,,,,,,[],[]];
         for (var tag of this.tags)
-            if (tag.category == category && tag.selected)
-                if (!tag.parentSelected) {
-                    selectedTags.push(tag.plurName);
-                    //if (tag.isTop)
-                    //    selectedTagTopChildren.push(tag.plurName);
-                }
+            if (tag.selected)
+                if (!tag.parentSelected && selectedTags[tag.category])
+                    selectedTags[tag.category].push(tag.plurName.toLowerCase());
 
-        //if (selectedTagTopChildren.length == selectedTags.length) {
-        //    selectedTags = "Alle pånær ";
-        //}
+        var subjectsSelectedCount = selectedTags[9].length + (this.tagTops[9].selected ? 1 : 0);
+        var periodsSelectedCount = selectedTags[10].length + (this.tagTops[10].selected ? 1 : 0);
 
-        if (selectedTags.length == 0) {
-            this.set(['selectedTagNames', category], '' + category); //HACK... observes didn't fire when set to the same value as other in the array....
-            this.set(['selectedTagNames', category], '');
+        if (subjectsSelectedCount + periodsSelectedCount == 0) {
+            this.selectedTagNames = '';
+            return;
+        }
+        if (subjectsSelectedCount == 0) {
+            this.selectedTagNames = 'Ingen emner valgt';
+            return;
+        }
+        if (periodsSelectedCount == 0) {
+            this.selectedTagNames = 'Ingen perioder valgt';
             return;
         }
 
-        if (selectedTags.length == 1) {
-            this.set(['selectedTagNames', category], selectedTags[0]);
-            return;
-        }
+        this.selectedTagNames = `${Common.capitalize(this.getTagNameList(selectedTags[9], 9))} fra ${this.getTagNameList(selectedTags[10], 10)}`;
+    }
+    private getTagNameList(list: Array<string>, category: number): string {
+        if (list.length == 0)
+            return category == 9 ? 'alle emner' : 'alle perioder';
 
-        selectedTags.sort();
+        if (category == 10)
+            for (var i = 0; i < list.length; i++)
+                list[i] = list[i].replace('alder', 'alderen').replace('tid', 'tiden');
 
-        if (selectedTags.length > 3) {
-            this.set(['selectedTagNames', category], selectedTags.slice(0, 3).join(", ") + "...");
-            return;
-        }
+        if (list.length == 1)
+            return list[0];
 
-        this.set(['selectedTagNames', category], selectedTags.slice(0, selectedTags.length - 1).join(", ") + ' og ' + selectedTags[selectedTags.length - 1]);
-        return;
+        list.sort();
+
+        if (list.length > 3)
+            return list.slice(0, 3).join(', ') + ', mfl.';
+
+        return list.slice(0, list.length - 1).join(', ') + ' og ' + list[list.length - 1];
+    }
+
+    public unselectAllSubjectsAndPeriods() {
+        IconLayer.updateDisabled = true;
+        this.setTagTopsSelected(9, false);
+        this.setTagTopsSelected(10, false);
+        IconLayer.updateDisabled = false;
+        IconLayer.updateShown();
     }
 
     public toggleTop(category: number, value: boolean) {
@@ -523,17 +576,19 @@ class HaTags extends polymer.Base implements polymer.Element {
         //});
 
         //HaTags.tagTop[this.tagCategory].selected = selected;
+        this.setTagTopsSelected(category, value);
 
+        IconLayer.updateDisabled = false;
+        IconLayer.updateShown();
+    }
+
+    private setTagTopsSelected(category: number, value: boolean) {
         if (this.tagTops[category].selected != value)
             this.set('tagTops.' + category + '.selected', value);
         else {
             this.set('tagTops.' + category + '.selected', !value);
             this.set('tagTops.' + category + '.selected', value);
         }
-
-
-        IconLayer.updateDisabled = false;
-        IconLayer.updateShown();
     }
 
 }

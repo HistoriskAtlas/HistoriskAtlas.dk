@@ -34,6 +34,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
     private curRequest: IGeoRequest;
     private responses: Array<any>;
     private isLoading: boolean;
+    private updateShownGeosCallCount: number = 0;
     //private lastGeoIdsLoaded: Array<number>;
     //private tagsIsLoaded: boolean;
     public static pageSize: number = 100000; //was 500
@@ -341,6 +342,8 @@ class HaGeos extends polymer.Base implements polymer.Element {
     }
 
     public updateShownGeos(idsChanged: Array<number>, changedTo: boolean, themeTagID: number = null, userCreators: boolean = null, profCreators: boolean = null) {
+
+        this.updateShownGeosCallCount++;
         App.loading.show(HaGeos.showingText);
 
         //if (App.haUsers.user.isAdmin) {
@@ -348,7 +351,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
         //    return;
         //}
 
-        if ((this.curRequest.userLayer && !idsChanged) || (App.haTags.tagTops[9].selected && !idsChanged)) {
+        if ((this.curRequest.userLayer && !idsChanged) || (App.haTags.tagTops[9].selected && App.haTags.tagTops[10].selected && !idsChanged)) {
             this.updateShownGeosFinally(idsChanged);
             return;
         }
@@ -363,18 +366,18 @@ class HaGeos extends polymer.Base implements polymer.Element {
             profCreators = this.profCreators;
 
         var selectedTagIds: Array<number> = [];
-        if (idsChanged && changedTo) {
-            if (idsChanged.indexOf(App.haTags.tagTops[9].id) > -1) {
-                App.haGeos.geos.forEach((geo) => {
-                    if (!geo.shown)
-                        geo.show();
-                });
-                this.updateShownGeosFinally(idsChanged);
-                return;
-            }
+        //if (idsChanged && changedTo) {
+        //    if (idsChanged.indexOf(App.haTags.tagTops[9].id) > -1 && idsChanged.indexOf(App.haTags.tagTops[10].id) > -1) {
+        //        App.haGeos.geos.forEach((geo) => {
+        //            if (!geo.shown)
+        //                geo.show();
+        //        });
+        //        this.updateShownGeosFinally(idsChanged);
+        //        return;
+        //    }
 
-            selectedTagIds = idsChanged;
-        } else
+        //    selectedTagIds = idsChanged;
+        //} else
             for (var tag of App.haTags.tags) //TODO: created selectedTags array?
                 if (tag.selected)
                     selectedTagIds.push(tag.id);
@@ -410,36 +413,43 @@ class HaGeos extends polymer.Base implements polymer.Element {
         //}
 
         //Services.get('geo', send, (data) => {
-        Services.HAAPI_GET('geos', params, (data) => {
-            if (data.data.length == 0) {
-                this.hideAll(idsChanged);
-                return;
-            }
-
-            if (idsChanged && changedTo) {
-                for (var geoid of data.data) {
-                    var geo = App.haGeos.geos[geoid]
-                    if (geo)
-                        if (!geo.shown)
-                            geo.show();
+        ((updateShownGeosCallCount) =>
+            Services.HAAPI_GET('geos', params, (data) => {
+                if (this.updateShownGeosCallCount != updateShownGeosCallCount) {
+                    App.loading.hide(HaGeos.showingText);
+                    return;
                 }
-            } else
-                App.haGeos.geos.forEach((geo) => {
-                    if (data.data.indexOf(geo.id) > -1) {
-                        if (!geo.shown)
-                            geo.show();
-                    } else {
-                        if (geo.shown)
-                            geo.hide();
+
+                if (data.data.length == 0) {
+                    this.hideAll(idsChanged);
+                    return;
+                }
+
+                if (idsChanged && changedTo) {
+                    for (var geoid of data.data) {
+                        var geo = App.haGeos.geos[geoid]
+                        if (geo)
+                            if (!geo.shown)
+                                geo.show();
                     }
-                })
+                } else
+                    App.haGeos.geos.forEach((geo) => {
+                        if (data.data.indexOf(geo.id) > -1) {
+                            if (!geo.shown)
+                                geo.show();
+                        } else {
+                            if (geo.shown)
+                                geo.hide();
+                        }
+                    })
 
 
-            this.updateShownGeosFinally(idsChanged);
+                this.updateShownGeosFinally(idsChanged);
 
-        }, (data) => {
-            this.updateShownGeosFinally(null);
-        })
+            }, (data) => {
+                this.updateShownGeosFinally(null);
+            })
+        )(this.updateShownGeosCallCount);
     }
 
     private hideAll(idsChanged: Array<number>) {

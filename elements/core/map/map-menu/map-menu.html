@@ -60,8 +60,8 @@
                 min-width: 0;
                 overflow: hidden;
                 text-overflow: ellipsis;
-
                 flex-grow: 1;
+                font-size: 13px;
             }
             .info-year.map-menu {
                 margin-left: 5px;
@@ -69,6 +69,7 @@
                 flex-shrink: 0; /*10000*/
                 min-width: 0;
                 overflow: hidden;
+                font-size: 13px;
             }
             .info-year.map-menu:last-child {
                 margin-right: 5px;            
@@ -192,11 +193,11 @@
             <template is="dom-if" if="[[main]]">
                 <div class="flexer">
                     <div></div>
-                    <paper-button id="buttonTags" raised on-tap="buttonTagsTap" class$="[[classTags(selectedTagNames.*)]]">
+                    <paper-button id="buttonTags" raised on-tap="buttonTagsTap" class$="[[classTags(selectedTagNames)]]"> <!--selectedTagNames.*-->
                         <div class="info">
                             <!--<span class="label">FORTÆLLINGER</span>-->
                             <iron-icon class="icon" icon="ha:subject"></iron-icon>
-                            <span class="info-title">[[TagNames(selectedTagNames.*)]]</span>
+                            <span class="info-title">[[TagNames(selectedTagNames)]]</span> <!--TagNames(selectedTagNames.*)-->
                             <iron-icon class="close-button" icon="close"></iron-icon>
                         </div>
                     </paper-button>

@@ -103,7 +103,8 @@
 
         //TODO: Should be part of the buffered loading system in HaGeos.......
         App.haGeos.updateShownGeos(idsChanged, val);
-        App.haTags.updateSelectedTagNames(this.category);
+        if (this.category == 9 || this.category == 10)
+            App.haTags.updateSelectedTagNames(); //this.category
 
 
 
@@ -125,7 +126,7 @@
             App.haTags.notifyPath("tags." + App.haTags.tags.indexOf(this) + ".children." + this.children.indexOf(tag) + ".selected", this._selected);
         });
 
-        UrlState.tagSelectedChanged();
+        UrlState.tagSelectedChanged(); //TODO: How many times is this called?
 
         return idsChanged;
     }
