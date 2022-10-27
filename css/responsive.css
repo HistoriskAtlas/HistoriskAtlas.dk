@@ -23,7 +23,6 @@
     transition: left 0.4s, right 0.4s, top 0.4s, bottom 0.4s, width 0.4s, height 0.4s;
 }
 
-/* Polymer defined wide */ 
 @media (min-width: 640px) {
     .hide-when-wide {
         display: none !important;
@@ -32,44 +31,16 @@
         display:none !important;
     }
     .responsive-nudge {
-        /*margin-left: 316px !important;*/ /*300 + 16*/
+        /*margin-left: 316px !important;*/
+        margin-left: 270px !important;
         /*margin-left: 140px !important;*/
         /*max-width: calc(100vw - 380px) !important;*/ /* 380 = 300 + 80 */
         /*max-width: 270px !important;*/
     }
-/*    .responsive-nudge > * {
-        max-width: 270px !important;
-    }*/
     .responsive-nudge-timelines {
         margin-left: 300px !important;
         width: calc(100% - 300px);
     }
-}
-
-/* Smartphones (portrait and landscape) ----------- */
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
-    /* Styles */
-}
-
-/* Smartphones (landscape) ----------- */
-@media only screen and (min-width : 321px) {
-    /* Styles */
-}
-
-/* Smartphones (portrait) ----------- */
-@media only screen and (max-width : 320px) {
-}
-
-/* iPads (portrait and landscape) ----------- */
-@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
-}
-
-/* iPads (landscape) ----------- */
-@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) {
-}
-
-/* iPads (portrait) ----------- */
-@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {
 }
 
 @media only screen and (max-width : 576px) {

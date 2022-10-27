@@ -29,9 +29,11 @@
 
         iron-icon.main-menu-item {
             padding-left: 3px;
-            padding-right: 15px;
         }
 
+        iron-icon.main-menu-item:first-child {
+            padding-right: 15px;
+        }
 /*        iron-collapse.main-menu-item:nth-child(2) {
             height: calc(100% - 43px);
         }*/
@@ -45,15 +47,22 @@
             --iron-collapse-transition-duration: 0ms !important;
         }    
 */
+        paper-item.main-menu-item iron-icon:last-child {
+            transition: transform .3s;
+        }
+        paper-item.main-menu-item[active] iron-icon:last-child {
+            transform: rotate(90deg);
+        }
+
     </style>
     <template>
         <iron-collapse opened="[[showMenuItem(showMainMenu,show)]]">
             <paper-item toggles active="{{immediateShow}}">
                 <content select=".header">
                     <div class="default-title">
-                        <iron-icon icon="[[leftIcon(show)]]"></iron-icon>
+                        <iron-icon icon="[[icon]]"></iron-icon>
                         <span>[[menuTitle]]</span>
-                        <!--<iron-icon icon="[[rightIcon(show)]]"></iron-icon>-->
+                        <iron-icon icon="chevron-right"></iron-icon>
                     </div>
                 </content>
             </paper-item>

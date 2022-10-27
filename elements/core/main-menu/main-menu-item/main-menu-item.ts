@@ -41,13 +41,13 @@ class MainMenuItem extends polymer.Base implements polymer.Element {
     //        this.show = false;
     //}
 
-    leftIcon(show: boolean): string {
-        return show ? 'chevron-left' : this.icon;
-    }
+    //leftIcon(show: boolean): string {
+    //    return show ? 'chevron-left' : this.icon;
+    //}
 
-    rightIcon(show: boolean): string {
-        return show ? '' : 'chevron-right'; //help-outline
-    }
+    //rightIcon(show: boolean): string {
+    //    return show ? '' : 'chevron-right'; //help-outline
+    //}
     
 }
 

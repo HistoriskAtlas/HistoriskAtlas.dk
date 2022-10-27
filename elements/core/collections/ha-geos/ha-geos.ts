@@ -365,7 +365,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
         if (profCreators === null)
             profCreators = this.profCreators;
 
-        var selectedTagIds: Array<number> = [];
+        var selectedTagIds: Array<Array<number>> = [];
         //if (idsChanged && changedTo) {
         //    if (idsChanged.indexOf(App.haTags.tagTops[9].id) > -1 && idsChanged.indexOf(App.haTags.tagTops[10].id) > -1) {
         //        App.haGeos.geos.forEach((geo) => {
@@ -378,9 +378,10 @@ class HaGeos extends polymer.Base implements polymer.Element {
 
         //    selectedTagIds = idsChanged;
         //} else
-            for (var tag of App.haTags.tags) //TODO: created selectedTags array?
-                if (tag.selected)
-                    selectedTagIds.push(tag.id);
+
+        for (var tag of App.haTags.tags) //TODO: created selectedTags array?
+            if (tag.selected)
+                (selectedTagIds[tag.category] ?? (selectedTagIds[tag.category] = [])).push(tag.id);
 
         if (selectedTagIds.length == 0) {
             this.hideAll(idsChanged);
@@ -404,7 +405,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
         if (userCreators != profCreators)
             params.ugc = userCreators;
         params.dest = themeTagID;
-        params.tags = selectedTagIds.join(',');
+        params.tags = selectedTagIds.map(ids => `${selectedTagIds.indexOf(ids)}:${ids.join(',')}`).filter(x => x).join('|');
         //if (!App.haUsers.user.isDefault)
         //    params.sid = (<any>document).sid;
 
@@ -425,14 +426,14 @@ class HaGeos extends polymer.Base implements polymer.Element {
                     return;
                 }
 
-                if (idsChanged && changedTo) {
-                    for (var geoid of data.data) {
-                        var geo = App.haGeos.geos[geoid]
-                        if (geo)
-                            if (!geo.shown)
-                                geo.show();
-                    }
-                } else
+                //if (idsChanged && changedTo) {
+                //    for (var geoid of data.data) {
+                //        var geo = App.haGeos.geos[geoid]
+                //        if (geo)
+                //            if (!geo.shown)
+                //                geo.show();
+                //    }
+                //} else
                     App.haGeos.geos.forEach((geo) => {
                         if (data.data.indexOf(geo.id) > -1) {
                             if (!geo.shown)
