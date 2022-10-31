@@ -183,5 +183,6 @@ html:not(.drawer-open) paper-button.empty.map-menu
     margin-bottom: 0px;
     margin-top: 0px;
     overflow: hidden;
-    box-shadow: none !important;
+    /*box-shadow: none !important;*/
+    transform: scaleY(0);
 }

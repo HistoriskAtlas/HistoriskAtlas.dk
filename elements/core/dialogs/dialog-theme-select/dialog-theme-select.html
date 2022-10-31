@@ -2,7 +2,7 @@
     <template>
         <style>
             paper-item.dialog-theme-select {
-                font-size: 12px;
+                font-size: 14px;
                 min-height: 32px;
                 white-space: nowrap;
                 cursor: pointer;
@@ -23,9 +23,14 @@
             }
 
             .halogo.dialog-theme-select {
-                width: 200px;
-                height: 31px;
+                width: 270px;
                 cursor: pointer;
+                margin-left: 25px;
+            }
+            .halogo.dialog-theme-select:after {
+                content: '(uden tematisering)';
+                white-space: nowrap;
+                align-self: flex-end;
             }
 
         </style>

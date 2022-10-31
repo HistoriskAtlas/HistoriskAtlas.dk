@@ -75,14 +75,14 @@
                 margin-right: 5px;            
             }
             paper-button.map-menu {
-                transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), max-width .3s, height .3s, margin-top .3s, margin-bottom .3s, margin-right .3s, margin-left .3s, padding-bottom .3s, padding-top .3s, opacity 0s .3s, visibility 0s !important;
+                transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), max-width .3s, height .3s, transform .3s, margin-top .3s, margin-bottom .3s, margin-right .3s, margin-left .3s, padding-bottom .3s, padding-top .3s, opacity 0s .3s, visibility 0s !important;
                 display: flex;
                 flex-direction: column;
                 /*align-items: center;*/
                 text-transform: none;
                 padding: 3.5px 6px;
                 margin-left: 0px;
-                margin-bottom: 5px; /*12px*/
+                margin-bottom: 12px;
                 border-radius: 15.5px;
                 background-color: white;
                 pointer-events: all;
@@ -91,6 +91,9 @@
                 height: 31px;
                 opacity: 1;
                 flex-shrink: 0;
+            }
+            paper-button.map-menu:last-child {
+                margin-bottom: 5px;
             }
 /*            .main.map-menu paper-button.map-menu {
                 margin-right: 0px;
@@ -216,7 +219,7 @@
                 <!--</div>
                 <div class="flexer">
                     <div></div>-->
-                    <paper-button id="buttonCollections" raised on-tap="buttonCollectionsTap" class$="[[classCollections(selectedCollectionNames)]]">
+                    <paper-button id="buttonRoutes" raised on-tap="buttonRoutesTap" class$="[[classCollections(selectedCollectionNames)]]">
                         <div class="info">
                             <!--<span class="label">RUTER</span>-->
                             <iron-icon class="icon" icon="ha:route"></iron-icon>

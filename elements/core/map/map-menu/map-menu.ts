@@ -118,7 +118,7 @@ class MapMenu extends polymer.Base implements polymer.Element {
     //        this.toggleDrawer('showMenuPeriods');
     //}
 
-    buttonCollectionsTap(e: any) {
+    buttonRoutesTap(e: any) {
         if (e.target.classList.contains('close-button'))
             App.haCollections.deselectAll();
         else
