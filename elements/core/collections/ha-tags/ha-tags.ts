@@ -512,7 +512,7 @@ class HaTags extends polymer.Base implements polymer.Element {
     public updateSelectedTagNames() { //category: number
 
         if (this.tagTops[9].selected && this.tagTops[10].selected) {
-            this.selectedTagNames = 'Alle emner fra alle perioder';
+            this.selectedTagNames = 'Alle fortællinger';
             return;
         }
 
@@ -529,12 +529,8 @@ class HaTags extends polymer.Base implements polymer.Element {
             this.selectedTagNames = '';
             return;
         }
-        if (subjectsSelectedCount == 0) {
-            this.selectedTagNames = 'Ingen emner valgt';
-            return;
-        }
-        if (periodsSelectedCount == 0) {
-            this.selectedTagNames = 'Ingen perioder valgt';
+        if (selectedTags[9].length + selectedTags[10].length == 0) {
+            this.selectedTagNames = 'Alle fortællinger';
             return;
         }
 
@@ -542,7 +538,7 @@ class HaTags extends polymer.Base implements polymer.Element {
     }
     private getTagNameList(list: Array<string>, category: number): string {
         if (list.length == 0)
-            return category == 9 ? 'alle emner' : 'alle perioder';
+            return category == 9 ? 'alle fortællinger' : 'alle perioder';
 
         if (category == 10)
             for (var i = 0; i < list.length; i++)

@@ -380,8 +380,11 @@ class HaGeos extends polymer.Base implements polymer.Element {
         //} else
 
         for (var tag of App.haTags.tags) //TODO: created selectedTags array?
-            if (tag.selected)
-                (selectedTagIds[tag.category] ?? (selectedTagIds[tag.category] = [])).push(tag.id);
+            if (tag.selected) {
+                var tagIds = selectedTagIds[tag.category] ?? (selectedTagIds[tag.category] = []);
+                if (!App.haTags.tagTops[tag.category]?.selected)
+                    tagIds.push(tag.id)
+            }
 
         if (selectedTagIds.length == 0) {
             this.hideAll(idsChanged);
