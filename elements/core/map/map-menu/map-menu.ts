@@ -85,7 +85,7 @@ class MapMenu extends polymer.Base implements polymer.Element {
     //    this.selected = newVal ? '3' : null;
     //}
 
-    @listen("button.tap")
+    @listen("buttonMaps.tap")
     buttonTap() {
         if (!this.main)
         {

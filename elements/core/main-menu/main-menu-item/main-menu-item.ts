@@ -17,7 +17,8 @@ class MainMenuItem extends polymer.Base implements polymer.Element {
     public showMainMenu: boolean;
 
     showMenuItem(showMainMenu: boolean, show: boolean): boolean {
-        return showMainMenu || show;
+        //return showMainMenu || show;
+        return true;
     }
 
     @observe('immediateShow')

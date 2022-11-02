@@ -115,7 +115,9 @@
         <!--<main-menu-item show="{{showMenuReset}}" show-main-menu="{{showMainMenu}}" title="Nulstil valg" icon="refresh">
         <div class="soon">Kommer snart</div>
     </main-menu-item>-->
-        <iron-collapse opened="[[showMainMenu]]" style="flex-grow: 1; display: flex; flex-direction: column;" no-animation>
+        
+        <!--<iron-collapse opened="[[showMainMenu]]" style="flex-grow: 1; display: flex; flex-direction: column;" no-animation>-->
+        <div style="flex-grow: 1; display: flex; flex-direction: column; overflow-y:hidden">
             <div id="mainMenuThemeLogo"></div>
 
             <div id="mainMenuThemeContent">
@@ -169,7 +171,9 @@
             </template>
 
 
-        </iron-collapse>
+        </div>
+        <!--</iron-collapse>-->
+
         <main-menu-item id="menuItemMap" show="{{showMenuMaps}}" show-main-menu="{{showMainMenu}}" menu-title="Kort" icon="ha:map">
             <panel-map id="panelMap" class="panel" map="{{mainMap}}" maps="[[maps]]" year="{{year}}"></panel-map>
         </main-menu-item>

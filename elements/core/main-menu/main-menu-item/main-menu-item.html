@@ -11,7 +11,14 @@
             --paper-item-focused-before: {
                 background: none;
             }
-}
+        }
+/*        paper-item.main-menu-item > div {
+            transition: color .3s, background-color .3s;
+        }
+        paper-item.main-menu-item[active] > div {
+            color: black;
+        }
+*/
         .default-title.main-menu-item {
             flex-grow: 1;
             display: flex;
@@ -25,6 +32,7 @@
         }
         .default-title.main-menu-item > span {
             flex-grow: 1;
+            /*font-weight: bold;*/
         }
 
         iron-icon.main-menu-item {
@@ -48,10 +56,11 @@
         }    
 */
         paper-item.main-menu-item iron-icon:last-child {
+            transform: rotate(90deg);
             transition: transform .3s;
         }
         paper-item.main-menu-item[active] iron-icon:last-child {
-            transform: rotate(90deg);
+            transform: rotate(270deg);
         }
 
     </style>
