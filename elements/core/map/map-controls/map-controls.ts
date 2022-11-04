@@ -1,8 +1,8 @@
 ﻿@component("map-controls")
 class MapControls extends polymer.Base implements polymer.Element {
 
-    @property({ type: Boolean })
-    public lift: boolean;
+    //@property({ type: Boolean })
+    //public lift: boolean;
 
     @property({ type: Number })
     public mapRotation: number;
@@ -17,10 +17,10 @@ class MapControls extends polymer.Base implements polymer.Element {
         this.hideClass = Common.embed ? '' : 'hide-when-narrow';
     }
 
-    @observe("lift")
-    liftChanged(newVal: boolean) {
-        $(this).css('margin-bottom', newVal ? '79px' : '15px'); /*64 + 15*/
-    }
+    //@observe("lift")
+    //liftChanged(newVal: boolean) {
+    //    $(this).css('margin-bottom', newVal ? '79px' : '15px'); /*64 + 15*/
+    //}
 
     //@observe("mapRotation")
     //mapRotationChanged(newVal: number) {

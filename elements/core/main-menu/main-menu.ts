@@ -65,8 +65,8 @@ class MainMenu extends polymer.Base implements polymer.Element {
     @property({ type: Boolean, value: false })
     public showMenuMaps: boolean;
 
-    @property({ type: Boolean, notify: true })
-    public timeLineActive: boolean;
+    //@property({ type: Boolean, notify: true })
+    //public timeLineActive: boolean;
 
     @property({ type: Object })
     public user: HAUser;
@@ -106,7 +106,7 @@ class MainMenu extends polymer.Base implements polymer.Element {
 
     @observe('showMenuDigDag')
     showMenuDigDagChanged() {
-        this.timeLineActive = this.showMenuDigDag && this.drawerOpen;
+        //this.timeLineActive = this.showMenuDigDag && this.drawerOpen;
         document.documentElement.classList.toggle('menu-digdag-shown', this.showMenuDigDag)
     }
     @observe('showMenuTags')
@@ -125,7 +125,7 @@ class MainMenu extends polymer.Base implements polymer.Element {
     drawerOpenChanged() {
         document.documentElement.classList.toggle('drawer-open', this.drawerOpen)
 
-        this.timeLineActive = this.showMenuDigDag && this.drawerOpen;
+        //this.timeLineActive = this.showMenuDigDag && this.drawerOpen;
 
         if (this.drawerOpen && !this.$$('mainMenudialogTour') && !LocalStorage.get('firstMenuOpenTourDone')) {
             var dialogTour = <DialogTour>DialogTour.create('Kulturinstitutionslaget og borgerlaget', 'Her kan du vælge, hvad der vises på kortet. Vil du kun se professionelt indhold fra arkiver, biblioteker og museer, så aktiver kun kulturinstitutionslaget. Vil du også se borgerskabte fortællinger og ruter, så aktiver borgerlaget.', -40, null, null, null, 5, null, -15, null, true, 'firstMenuOpenTourDone');

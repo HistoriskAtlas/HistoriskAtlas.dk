@@ -7,8 +7,8 @@ class Global extends polymer.Base implements polymer.Element {
     @property({ type: Number, notify: true })
     public timeWarpMode: TimeWarpModes;
 
-    @property({ type: Boolean, notify: true })
-    public timeLineActive: boolean;
+    //@property({ type: Boolean, notify: true })
+    //public timeLineActive: boolean;
 
     //@property({ type: Boolean, notify: true })
     //public routesActive: boolean;

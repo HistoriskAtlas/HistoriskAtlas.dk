@@ -1,0 +1,24 @@
+﻿<dom-module id="time-lines">
+    <template>
+        <style>
+            :host {
+                position:fixed;
+                /*bottom:0px;*/
+                width:100%;
+                /*display:flex;*/
+                transition:bottom 0.4s, margin-left ease-in-out 0.3s, width ease-in-out 0.3s;
+                
+                /*display: table;
+                table-layout: fixed;*/
+                display: flex;
+            }
+            time-line {
+                flex-grow:1;
+            }
+        </style>
+        <time-line id="mainTimeLine" main year="{{year}}" active="{{active}}" time-warp-active="[[timeWarpActive]]" touch-device="[[touchDevice]]"></time-line>
+        <!--<template is="dom-if" if="[[timeWarpActive]]">
+            <time-line id="timeWarpTimeLine" year="{{timeWarpYear}}" active="{{active}}" time-warp-active="[[timeWarpActive]]" touch-device="[[touchDevice]]"></time-line>
+        </template>-->
+    </template>
+</dom-module>

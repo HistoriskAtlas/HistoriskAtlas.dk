@@ -792,8 +792,8 @@
     <Content Include="elements\core\dialogs\dialog-publish\dialog-rich-text.html" />
     <Content Include="elements\writer\file-upload\file-upload.html" />
     <Content Include="elements\core\input\plain-text\plain-text.html" />
-    <Content Include="elements\core\time-line-slider\time-line-slider.html" />
-    <Content Include="elements\core\time-lines\time-lines.html" />
+    <Content Include="elements\thrash\time-line-slider\time-line-slider.html" />
+    <Content Include="elements\thrash\time-lines\time-lines.html" />
     <Content Include="elements\core\timewarp\time-warp-closed\time-warp-closed.html" />
     <Content Include="elements\core\timewarp\time-warp-button\time-warp-button.html" />
     <Content Include="elements\core\timewarp\time-warp-opacity-button\time-warp-opacity-button.html" />
@@ -803,7 +803,7 @@
     <Content Include="elements\core\dialogs\dialog-loading\dialog-loading.html" />
     <Content Include="elements\core\toast-wrapper\toast-wrapper.html" />
     <Content Include="elements\core\mit-atlas-button\mit-atlas-button.html" />
-    <Content Include="elements\core\time-line\time-line.html" />
+    <Content Include="elements\thrash\time-line\time-line.html" />
     <Content Include="elements\core\input\rich-text\rich-text.html" />
     <Content Include="elements\core\panels\panel-tag\panel-tag.html" />
     <Content Include="elements\core\windows\abouts\window-contact\window-contact.html" />
@@ -1270,8 +1270,8 @@
     <TypeScriptCompile Include="elements\core\dialogs\dialog-publish\dialog-rich-text.ts" />
     <TypeScriptCompile Include="elements\writer\file-upload\file-upload.ts" />
     <TypeScriptCompile Include="elements\core\input\plain-text\plain-text.ts" />
-    <TypeScriptCompile Include="elements\core\time-line-slider\time-line-slider.ts" />
-    <TypeScriptCompile Include="elements\core\time-lines\time-lines.ts" />
+    <TypeScriptCompile Include="elements\thrash\time-line-slider\time-line-slider.ts" />
+    <TypeScriptCompile Include="elements\thrash\time-lines\time-lines.ts" />
     <TypeScriptCompile Include="elements\core\timewarp\time-warp-closed\time-warp-closed.ts" />
     <TypeScriptCompile Include="elements\core\timewarp\time-warp-button\time-warp-button.ts" />
     <TypeScriptCompile Include="elements\core\timewarp\time-warp-opacity-button\time-warp-opacity-button.ts" />
@@ -1281,7 +1281,7 @@
     <TypeScriptCompile Include="elements\core\dialogs\dialog-loading\dialog-loading.ts" />
     <TypeScriptCompile Include="elements\core\toast-wrapper\toast-wrapper.ts" />
     <TypeScriptCompile Include="elements\core\mit-atlas-button\mit-atlas-button.ts" />
-    <TypeScriptCompile Include="elements\core\time-line\time-line.ts" />
+    <TypeScriptCompile Include="elements\thrash\time-line\time-line.ts" />
     <TypeScriptCompile Include="elements\core\input\rich-text\rich-text.ts" />
     <TypeScriptCompile Include="elements\core\windows\abouts\window-contact\window-contact.ts" />
     <TypeScriptCompile Include="elements\thrash\window-monetary-support\window-monetary-support.ts" />

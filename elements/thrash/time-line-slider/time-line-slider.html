@@ -1,0 +1,23 @@
+﻿<dom-module id="time-line-slider">
+    <template>
+        <style>
+            :host {
+                display: table-cell;
+            }
+            paper-slider {
+                display: table-cell;
+                /*height:16px;*/
+                margin-left: -10px;
+                margin-top: 10px;
+                --paper-slider-active-color: var(--paper-grey-400);
+                --paper-slider-knob-color: var(--paper-grey-400);
+                --paper-slider-knob-start-color: var(--paper-grey-400);
+                --paper-slider-knob-start-border-color: var(--paper-grey-400);
+                --paper-slider-height: 4px;
+                --webkit-transform: rotate(-90deg);
+                transform: rotate(-90deg);
+            }   
+        </style>
+        <paper-slider id="slider" min="6" max="13" step="1" immediate-value="{{value}}" value="[[value]]" snaps max-markers="13"></paper-slider>
+    </template>
+</dom-module>

@@ -19,8 +19,8 @@ class TimeWarpMapButton extends polymer.Base implements polymer.Element {
     //@property({ type: String })
     //public placeholder: string;
 
-    @property({ type: Boolean })
-    public lift: boolean;
+    //@property({ type: Boolean })
+    //public lift: boolean;
 
     constructor() {
         super();

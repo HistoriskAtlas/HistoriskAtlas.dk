@@ -19,8 +19,8 @@ class MapMenu extends polymer.Base implements polymer.Element {
     @property({ type: String })
     public selectedCollectionNames: string;
 
-    @property({ type: Boolean, value: false })
-    public lift: boolean;
+    //@property({ type: Boolean, value: false })
+    //public lift: boolean;
 
     @property({ type: Boolean, notify: true })
     public drawerOpen: boolean;
@@ -143,9 +143,9 @@ class MapMenu extends polymer.Base implements polymer.Element {
         this.showMainMenu = false;
     }
 
-    cssClass(main: boolean, lift: boolean, drawerOpen: boolean, timeWarpActive: boolean, showMainMenu: boolean, timeWarpMode: TimeWarpModes): string {
+    cssClass(main: boolean, drawerOpen: boolean, timeWarpActive: boolean, showMainMenu: boolean, timeWarpMode: TimeWarpModes): string { //lift: boolean,
         //return (main ? 'primary HAPrimColor' : 'HASecColor') + (lift ? ' lift' : '') + (drawerOpen ? ' responsive-nudge' : '') + (!main && mode == TimeWarpModes.SPLIT ? ' fix' : '');
-        return (main ? 'main' : 'warp') + (showMainMenu ? ' show-main-menu' : '') + (lift ? ' lift' : '') + ((drawerOpen && main) ? ' responsive-nudge' : '') + ((timeWarpActive && timeWarpMode == TimeWarpModes.SPLIT) ? ' time-warp-active' : '');
+        return (main ? 'main' : 'warp') + (showMainMenu ? ' show-main-menu' : '') + ((drawerOpen && main) ? ' responsive-nudge' : '') + ((timeWarpActive && timeWarpMode == TimeWarpModes.SPLIT) ? ' time-warp-active' : ''); //(lift ? ' lift' : '') + 
     }
 
     buttonClass(main: boolean) {

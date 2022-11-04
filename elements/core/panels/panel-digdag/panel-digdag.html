@@ -1,8 +1,8 @@
 ﻿<dom-module id="panel-digdag">
     <style>
         :host {
-            display: block;
-            /*padding: 0px 10px;*/
+            display: flex;
+            flex-direction: column;
         }
         .headline.panel-digdag {
             font-size: 16px;
@@ -15,6 +15,7 @@
             font-size: 13px;
             padding: 30px 10px 10px 10px;
             color: var(--dark-gray-color);
+            order: 1000000;
         }
         .listitem.panel-digdag {
             display: flex;
@@ -92,23 +93,45 @@
         .disable-button.panel-digdag > paper-radio-button {
             pointer-events: none;
         }
+        paper-slider.panel-digdag {
+            --paper-slider-active-color: transparent; /*var(--primary-color)*/
+            --paper-slider-knob-color: var(--primary-color);
+            --paper-slider-knob-start-color: var(--primary-color);
+            --paper-slider-knob-start-border-color: var(--primary-color);
+            width: 100%;
+        }
+        #year-selector.panel-digdag {
+            font-size: 13px;
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-bottom: 18px;
+            background-color: var(--light-gray-color);
+            padding-top: 6px;
+        }
+        #year-selector > div:first-child {
+            position: relative;
+            transform: translateY(4px);
+            width: 32px;
+            text-align: center;
+            user-select: none;
+        }
     </style>
     <template>
         <div class="headline">
             <!--Danmarks historisk-administrative geografi<br />- fra 1660 til 2010<br> (pt. låst til 1980)-->
         </div>
-        <div class="listitem disable-button" on-tap="disabledTap">
+        <div class="listitem disable-button" on-tap="disabledTap" style$="[[styleListStyle(0,0)]]">
             <span class="title" style="font-size:13px; font-weight:bold">Deaktiver</span>
             <paper-radio-button noink checked="{{disabled(type)}}" class="disabled"></paper-radio-button>
         </div>
         <template is="dom-repeat" items="{{digdags}}" as="digdag">
-            <div class="listitem light-gray-border" on-tap="digdagTap">
+            <div class="listitem light-gray-border" on-tap="digdagTap" style$="[[styleListStyle(digdag.id,0)]]">
                 <div style="cursor:pointer"><paper-icon-button icon="arrow-drop-down" toggles disabled active="{{digdag.showChildren}}" noink></paper-icon-button></div>
                 <span class="noselect">[[digdag.name]]</span>
             </div>
             <template is="dom-if" if="[[digdag.showChildren]]">
                 <template id="childTemplate" is="dom-repeat" items="{{digdag.regionTypes}}" as="child">
-                    <div class$="[[classListItem(year,child)]]" on-tap="childTap" on-down="childDown">
+                    <div class="listitem listsubitem noselect" on-tap="childTap" on-down="childDown" style$="[[styleListStyle(digdag.id,child.id)]]"> <!--[[classListItem(year,child)]]-->
                         <template is="dom-if" if="[[showInfoButton(touchDevice,digdag)]]">
                             <paper-icon-button class="info" icon="info-outline" on-tap="infoTap" keyBindings="[[child]]"></paper-icon-button> <!--keyBindings="[[child]]" needed because of on-tap (?!?!?!) -->
                         </template>
@@ -116,11 +139,19 @@
                         <span class="years">[[years(child.periodStart,child.periodEnd)]]</span>
                         <paper-radio-button noink checked="{{child.active}}"></paper-radio-button>
                     </div>
+                    <!--<template is="dom-if" if="[[child.active]]" restamp>-->
+                    <!--</template>-->
                 </template>
             </template>
         </template>
         <div class="attribution">
             Data leveret af <a href="http://digdag.dk/" target="_blank" style="color:inherit">DigDag.dk</a>
         </div>
+
+        <div id="year-selector" hidden$="[[disabled(type)]]">
+            <div style$="[[yearSliderStyle(immediateYear,type.periodStart,type.periodEnd)]]">[[immediateYear]]</div>
+            <paper-slider min="[[minYear(type.periodStart)]]" max="[[maxYear(type.periodEnd)]]" step="1" value="{{year}}" immediate-value="{{immediateYear}}"></paper-slider>
+        </div>
+
     </template>
 </dom-module>

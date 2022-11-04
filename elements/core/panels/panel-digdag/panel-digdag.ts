@@ -7,8 +7,14 @@ class PanelDigDag extends polymer.Base implements polymer.Element {
     @property({ type: Object, notify: true, value: null })
     private type: HARegionType & Object;
 
-    @property({ type: Number, notify: true })
+    @property({ type: Number, notify: true, value: 2016 })
     private year: number;
+
+    //@property({ type: Number })
+    //private immediateSliderYear: number;
+
+    //@property({ type: Number, value: 2016 })
+    //private sliderYear: number;
 
     @property({ type: Boolean })
     public touchDevice: boolean;
@@ -28,6 +34,9 @@ class PanelDigDag extends polymer.Base implements polymer.Element {
 
         e.model.set('child.active', true);
         this.type = e.model.child;
+
+        document.getElementById('year-selector').style.order = (parseInt((<HTMLDivElement>e.currentTarget).style.order) + 1).toString();
+
         clearTimeout(this.childDownTimeout);
     }
     childDown(e: any) {
@@ -51,6 +60,17 @@ class PanelDigDag extends polymer.Base implements polymer.Element {
     years(start: number, end: number): string {
         return Common.years(start, end);
     }
+    minYear(start: number): number {
+        return start ? Math.max(start, 1660) : 1660;
+    }
+    maxYear(end: number): number {
+        return Math.min(2016, end);
+    }
+    yearSliderStyle(year: number, start: number, end: number): string {
+        var minYear = this.minYear(start);
+        var maxYear = this.maxYear(end);
+        return `margin-left:${((year - minYear) / (maxYear - minYear)) * 178}px`;
+    }
 
     disabled(type: HARegionType): boolean {
         return type == null;
@@ -65,14 +85,27 @@ class PanelDigDag extends polymer.Base implements polymer.Element {
 
     //    this.update(e.model.child);
     //}
-    classListItem(year: number, regionType: HARegionType): string {
-        return 'listitem listsubitem noselect' + ((year < regionType.periodStart || year > regionType.periodEnd) ? ' inactive' : '');
+    //classListItem(year: number, regionType: HARegionType): string {
+    //    return 'listitem listsubitem noselect' + ((year < regionType.periodStart || year > regionType.periodEnd) ? ' inactive' : '');
+    //}
+    styleListStyle(majorId: number, minorId: number): string {
+        return `order:${majorId * 10000 + minorId * 10}`;
     }
 
     @observe("type")
     typeChanged(newVal: HARegionType) {
         this.update(newVal);
     }
+
+    @observe("year")
+    yearChanged(newVal: HARegionType) {
+        var test = 42;
+    }
+
+    //@listen("value-changed")
+    //sliderValueChanged(newVal: number, test: any, test2: any) {
+    //    return false;
+    //}
 
     private update(activeRegionType: HARegionType) {
         if (!this.digdags)

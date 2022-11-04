@@ -32,8 +32,8 @@
     @property({ type: Boolean, notify: true })
     public timeWarpActive: boolean;
 
-    @property({ type: Boolean, notify: true })
-    public timeLineActive: boolean;
+    //@property({ type: Boolean, notify: true })
+    //public timeLineActive: boolean;
 
     //@property({ type: Boolean, notify: true })
     //public routesActive: boolean;
@@ -121,7 +121,7 @@
         App.mainMenu = <MainMenu>document.querySelector('main-menu');
         App.toast = <ToastWrapper>document.querySelector('toast-wrapper');
         App.loading = <DialogLoading>document.querySelector('dialog-loading');
-        App.timeline = <TimeLine>document.querySelector('#mainTimeLine');
+        //App.timeline = <TimeLine>document.querySelector('#mainTimeLine');
         App.mapTooltip = <MapTooltip>document.querySelector('map-tooltip');
         App.haTags = <HaTags>document.querySelector('ha-tags');
         App.haGeos = <HaGeos>document.querySelector('ha-geos');

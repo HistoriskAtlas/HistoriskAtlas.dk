@@ -426,7 +426,7 @@
         if (this.digDagLayer)
             this.digDagLayer.show(type);
         else
-            (<ol.Collection<ol.layer.Base>>this.getLayers()).insertAt(4, this.digDagLayer = new DigDagLayer(type, App.timeline.year));
+            (<ol.Collection<ol.layer.Base>>this.getLayers()).insertAt(4, this.digDagLayer = new DigDagLayer(type, App.global.year));
     }
     public hideDigDagLayer(): void {
         if (this.digDagLayer)

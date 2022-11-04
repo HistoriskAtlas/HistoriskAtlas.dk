@@ -13,8 +13,8 @@ class HaGeos extends polymer.Base implements polymer.Element {
     @property({ type: Number })
     public timeWarpYear: number;
 
-    @property({ type: Boolean })
-    public timeLineActive: boolean;
+    //@property({ type: Boolean })
+    //public timeLineActive: boolean;
 
     @property({ type: Boolean })
     public userCreators: boolean;
