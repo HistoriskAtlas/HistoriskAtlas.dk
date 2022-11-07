@@ -193,3 +193,41 @@ html.menu-maps-shown.drawer-open #buttonMaps
 {
     margin-bottom: calc(100vh - 252px + 12px);
 }
+
+.widelogo {
+    min-width: 0px;
+    max-width: 200px;
+    width: unset;
+    height: 32px;
+    flex-shrink: 100;
+    flex-grow: 1;
+}
+
+@media (max-width: 950px) {
+    .hide-narrow {
+        display: none;
+    }
+}
+
+@media (min-width: 951px) {
+    .hide-wide {
+        display: none;
+    }
+}
+
+theme-selector[data-open] {
+    max-height: 50vh;
+    overflow-y: auto;
+}
+theme-selector[data-open] .arrow.theme-selector {
+    transform: rotate(270deg);
+}
+
+#themeSelectorToolbar {
+    height: unset;
+}
+
+#themeSelectorToolbar > #topBar.paper-toolbar {
+    height: unset;
+    padding: 0px;
+}

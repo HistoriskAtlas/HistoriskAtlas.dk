@@ -22,12 +22,12 @@ class MainApp extends App implements polymer.Element {
         return !!object;
     }
 
-    showThemeTitle(theme: ITheme): boolean {
-        return theme.name != 'default';
-    }
-    selectTheme() {
-        this.$.themeSelect.open();
-    }
+    //showThemeTitle(theme: ITheme): boolean {
+    //    return theme.name != 'default';
+    //}
+    //selectTheme() {
+    //    this.$.themeSelect.open();
+    //}
 
     openCookiesWindow() {
         Common.dom.append(WindowPrivacy.create());

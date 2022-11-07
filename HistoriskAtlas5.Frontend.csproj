@@ -716,7 +716,7 @@
     <Content Include="elements\core\collections\ha-content\ha-content.html" />
     <Content Include="elements\core\content-viewer\subcontent-viewer\subcontent-viewer.html" />
     <Content Include="elements\core\content-viewer\content-viewer-pdf\content-viewer-pdf.html" />
-    <Content Include="elements\core\dialogs\dialog-theme-select\dialog-theme-select.html" />
+    <Content Include="elements\thrash\dialog-theme-select\dialog-theme-select.html" />
     <Content Include="elements\core\dialogs\dialog-map-select\dialog-map-select.html" />
     <Content Include="elements\core\dialogs\dialog-video-intro\dialog-video-intro.html" />
     <Content Include="elements\core\input\dropdown-input\dropdown-input.html" />
@@ -726,6 +726,7 @@
     <Content Include="elements\core\collections\ha-contents\ha-contents.html" />
     <Content Include="elements\core\collections\ha-collections\ha-collections.html" />
     <Content Include="elements\core\collections\ha-digdag\ha-digdag.html" />
+    <Content Include="elements\core\main-app\theme-selector\theme-selector.html" />
     <Content Include="elements\core\panels\panel-tag\panel-tag-list\panel-tag-list.html" />
     <Content Include="elements\core\windows\window-ext-image\window-ext-image.html" />
     <Content Include="elements\thrash\ha-institutions\ha-institutions.html" />
@@ -1002,7 +1003,7 @@
     <TypeScriptCompile Include="elements\core\collections\ha-content\ha-content.ts" />
     <TypeScriptCompile Include="elements\core\content-viewer\subcontent-viewer\subcontent-viewer.ts" />
     <TypeScriptCompile Include="elements\core\content-viewer\content-viewer-pdf\content-viewer-pdf.ts" />
-    <TypeScriptCompile Include="elements\core\dialogs\dialog-theme-select\dialog-theme-select.ts" />
+    <TypeScriptCompile Include="elements\thrash\dialog-theme-select\dialog-theme-select.ts" />
     <TypeScriptCompile Include="elements\core\dialogs\dialog-map-select\dialog-map-select.ts" />
     <TypeScriptCompile Include="elements\core\dialogs\dialog-video-intro\dialog-video-intro.ts" />
     <TypeScriptCompile Include="elements\core\input\dropdown-input\dropdown-input.ts" />
@@ -1207,6 +1208,7 @@
     <TypeScriptCompile Include="elements\core\collections\ha-contents\ha-contents.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-collections\ha-collections.ts" />
     <TypeScriptCompile Include="elements\core\collections\ha-digdag\ha-digdag.ts" />
+    <TypeScriptCompile Include="elements\core\main-app\theme-selector\theme-selector.ts" />
     <TypeScriptCompile Include="elements\core\panels\panel-tag\panel-tag-list\panel-tag-list.ts" />
     <TypeScriptCompile Include="elements\core\windows\window-ext-image\window-ext-image.ts" />
     <TypeScriptCompile Include="elements\thrash\ha-institutions\ha-institutions.ts" />

@@ -1,0 +1,104 @@
+﻿<dom-module id="theme-selector">
+    <style>
+        :host {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            max-height: 64px;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            cursor: pointer;
+            user-select: none;
+            width: 100%;
+            transition: max-height .3s;
+        }
+
+        :host > paper-item.theme-selector {
+            display: flex;
+            align-items: center;
+            width: 240px;
+            min-height: 64px;
+            padding: 0 40px 0 16px;
+            line-height: 18px;
+        }
+        :host > paper-item.theme-selector:before {
+            background: none;
+        }
+        :host > paper-item.theme-selector[data-active] {
+            order: -1;
+
+        }
+        :host > paper-item.theme-selector:not([data-active]):hover {
+            background-color: rgba(255,255,255,.1);
+        }
+
+        #smallHALogo {
+            width: 32px;
+            height: 32px;
+            margin-right: 10px;
+            flex-shrink: 0
+        }
+
+        .arrow.theme-selector {
+            left: 260px;
+            height: 63px;
+            position: absolute;
+            transform: rotate(90deg);
+            transition: transform .3s;
+            pointer-events: none;
+            margin-top: 1px;
+        }
+
+        .widelogo.theme-selector {
+            max-width: 140px;
+        }
+        paper-item.default-theme[data-active]:after {
+            content: 'Tema';
+            display: block;
+            flex-grow: 1;
+            text-align: right;
+            padding-top: 2px;
+        }
+        .seperator.theme-selector {
+            position: absolute;
+            width: 100%;
+            height:64px;
+            border-bottom: 1px solid rgba(255,255,255,.1);
+        }
+
+        @media (max-width: 600px) {
+            :host > paper-item.theme-selector {
+                min-height: 56px !important;
+            }
+
+            .arrow.theme-selector, .seperator.theme-selector {
+                height: 56px;
+            }
+        }
+    </style>
+    <template>
+        <div class="seperator"></div>
+
+        <iron-icon class="arrow" icon="chevron-right"></iron-icon>
+
+        <template is="dom-if" if="[[showTheme('default',open,theme)]]">
+            <paper-item on-tap="tapTheme" data-active$="[[activeTheme('default',theme)]]" class="default-theme">
+                <iron-icon id="smallHALogo" icon="ha:logo"></iron-icon>
+                <iron-icon class="widelogo" icon="ha:widelogo" style="margin-right: 5px"></iron-icon>  <!--hide-wide-->
+            </paper-item>
+        </template>
+
+        <template is="dom-repeat" items="[[themes]]" as="child">
+            <template is="dom-if" if="[[showTheme(child.linkname,open,theme)]]">
+                <paper-item on-tap="tapTheme" theme="[[child]]" data-active$="[[activeTheme(child.linkname,theme)]]">
+                    <iron-icon id="smallHALogo" icon="ha:logo"></iron-icon>
+                    <div>[[child.name]]</div>
+                </paper-item>
+            </template>
+        </template>
+
+
+        <!--<paper-icon-button icon="close" paper-drawer-toggle tabindex="-1" style="margin-right: -8px; flex-shrink: 0"></paper-icon-button>-->
+
+    </template>
+</dom-module>
