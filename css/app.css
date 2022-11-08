@@ -220,7 +220,7 @@ theme-selector[data-open] {
     overflow-y: auto;
 }
 theme-selector[data-open] .arrow.theme-selector {
-    transform: rotate(270deg);
+    transform: rotate(180deg);
 }
 
 #themeSelectorToolbar {
@@ -230,4 +230,23 @@ theme-selector[data-open] .arrow.theme-selector {
 #themeSelectorToolbar > #topBar.paper-toolbar {
     height: unset;
     padding: 0px;
+}
+
+#themeSelectorToolbar-close {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0px;
+    right: -46px;
+    width: 48px;
+    height: 64px;
+    background-color: var(--primary-color);
+    box-shadow: 2px 2px 8px rgb(0 0 0 / 15%);
+    border-bottom-right-radius: 32px;
+    border-top-right-radius: 32px;
+    clip-path: polygon(0px 0px, 64px 0px, 64px 64px, 0px 64px);
+}
+
+html:not(.drawer-open) #themeSelectorToolbar-close {
+    display: none;
 }

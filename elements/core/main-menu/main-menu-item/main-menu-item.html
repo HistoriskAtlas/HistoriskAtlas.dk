@@ -35,11 +35,12 @@
             /*font-weight: bold;*/
         }
 
-        iron-icon.main-menu-item {
+/*        iron-icon.main-menu-item {
             padding-left: 3px;
         }
-
+*/
         iron-icon.main-menu-item:first-child {
+            padding-left: 3px;
             padding-right: 15px;
         }
 /*        iron-collapse.main-menu-item:nth-child(2) {
@@ -56,11 +57,13 @@
         }    
 */
         paper-item.main-menu-item iron-icon:last-child {
-            transform: rotate(90deg);
+            width: 32px;
+            height: 32px;
+            transform: rotate(0deg);
             transition: transform .3s;
         }
         paper-item.main-menu-item[active] iron-icon:last-child {
-            transform: rotate(270deg);
+            transform: rotate(180deg);
         }
 
     </style>
@@ -71,7 +74,7 @@
                     <div class="default-title">
                         <iron-icon icon="[[icon]]"></iron-icon>
                         <span>[[menuTitle]]</span>
-                        <iron-icon icon="chevron-right"></iron-icon>
+                        <iron-icon icon="arrow-drop-down"></iron-icon>
                     </div>
                 </content>
             </paper-item>

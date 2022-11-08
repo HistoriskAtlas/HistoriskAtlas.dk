@@ -16,7 +16,7 @@
         :host > paper-item.theme-selector {
             display: flex;
             align-items: center;
-            width: 240px;
+            width: 238px;
             min-height: 64px;
             padding: 0 40px 0 16px;
             line-height: 18px;
@@ -40,13 +40,14 @@
         }
 
         .arrow.theme-selector {
-            left: 260px;
+            left: 252px;
             height: 63px;
             position: absolute;
-            transform: rotate(90deg);
+            transform: rotate(0deg);
             transition: transform .3s;
             pointer-events: none;
             margin-top: 1px;
+            width: 32px;
         }
 
         .widelogo.theme-selector {
@@ -79,7 +80,7 @@
     <template>
         <div class="seperator"></div>
 
-        <iron-icon class="arrow" icon="chevron-right"></iron-icon>
+        <iron-icon class="arrow" icon="arrow-drop-down"></iron-icon>
 
         <template is="dom-if" if="[[showTheme('default',open,theme)]]">
             <paper-item on-tap="tapTheme" data-active$="[[activeTheme('default',theme)]]" class="default-theme">
@@ -96,9 +97,6 @@
                 </paper-item>
             </template>
         </template>
-
-
-        <!--<paper-icon-button icon="close" paper-drawer-toggle tabindex="-1" style="margin-right: -8px; flex-shrink: 0"></paper-icon-button>-->
 
     </template>
 </dom-module>
