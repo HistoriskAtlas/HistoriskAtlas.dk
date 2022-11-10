@@ -194,6 +194,18 @@ html.menu-maps-shown.drawer-open #buttonMaps
     margin-bottom: calc(100vh - 252px + 12px);
 }
 
+#logo {
+    flex-shrink: 0;
+    margin-right: 5px;
+    padding-right: 18px;
+    width: 50px;
+    height: 100%;
+    box-shadow: rgb(0 0 0 / 15%) 2px 2px 8px;
+    border-bottom-right-radius: 32px;
+    border-top-right-radius: 32px;
+    clip-path: polygon(0px 0px, 64px 0px, 64px 64px, 0px 64px);
+}
+
 .widelogo {
     min-width: 0px;
     max-width: 200px;
