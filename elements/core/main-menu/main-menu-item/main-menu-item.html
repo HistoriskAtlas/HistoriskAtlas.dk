@@ -32,30 +32,25 @@
         }
         .default-title.main-menu-item > span {
             flex-grow: 1;
-            /*font-weight: bold;*/
         }
-
-/*        iron-icon.main-menu-item {
-            padding-left: 3px;
-        }
-*/
         iron-icon.main-menu-item:first-child {
             padding-left: 3px;
             padding-right: 15px;
         }
-/*        iron-collapse.main-menu-item:nth-child(2) {
-            height: calc(100% - 43px);
-        }*/
-/*        iron-collapse.main-menu-item:nth-child(2).iron-collapse-opened {
-            overflow-y: auto;
-            overflow-x: hidden;
-            scrollbar-gutter: stable;
+        .content-holder.main-menu-item {
+            transform: translateZ(0px); /* to position scroll overflow shade correctly */
         }
-*/
-/*        iron-collapse.main.main-menu-item {
-            --iron-collapse-transition-duration: 0ms !important;
-        }    
-*/
+        .content-holder.main-menu-item > iron-collapse:after {
+            position: fixed;
+            content: '';
+            left: 0px;
+            top: 0px;
+            width: calc(100% - 12px);
+            height: 100%;
+            pointer-events: none;
+            background: linear-gradient(0deg, rgba(255,255,255,1) 0px, rgba(255,255,255,0) 30px, rgba(255,255,255,0) calc(100% - 30px), rgba(255,255,255,1));
+        }
+
         paper-item.main-menu-item iron-icon:last-child {
             width: 32px;
             height: 32px;
@@ -79,8 +74,10 @@
                 </content>
             </paper-item>
         </iron-collapse>
-        <iron-collapse opened="[[show]]">
-            <content></content>
-        </iron-collapse>
+        <div class="content-holder">
+            <iron-collapse opened="[[show]]">
+                <content></content>
+            </iron-collapse>
+        </div>
   </template>
 </dom-module>

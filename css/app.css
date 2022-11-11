@@ -133,13 +133,13 @@ paper-input.confirm-input[disabled] > paper-input-container, paper-textarea.conf
     opacity: .5;
 }
 
-main-menu > main-menu-item > iron-collapse:nth-child(2) {
-    height: calc(100vh - 252px); /*height: calc(100% - 43px);*/
+main-menu > main-menu-item > div > iron-collapse { /*iron-collapse:nth-child(2)*/
+    height: calc(100vh - 252px);
     overflow-y: auto;
     overflow-x: hidden;
     /*scrollbar-gutter: stable;*/
 }
-main-menu > main-menu-item > iron-collapse:nth-child(2) > * {
+main-menu > main-menu-item > div > iron-collapse > * {
     max-width: 270px;
     padding-left: 16px;
     padding-bottom: 16px;
