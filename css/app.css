@@ -242,6 +242,7 @@ theme-selector[data-open] .arrow.theme-selector {
 #themeSelectorToolbar > #topBar.paper-toolbar {
     height: unset;
     padding: 0px;
+    transform: translateZ(0px);  /* to position scroll overflow shade correctly on theme select */
 }
 
 #themeSelectorToolbar-close {

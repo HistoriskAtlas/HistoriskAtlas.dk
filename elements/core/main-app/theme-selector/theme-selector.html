@@ -12,6 +12,16 @@
             width: 100%;
             transition: max-height .3s;
         }
+        :host:after {
+            position: fixed;
+            content: '';
+            left: 0px;
+            top: 0px;
+            width: calc(100% - 12px);
+            height: 100%;
+            pointer-events: none;
+            background: linear-gradient(0deg, var(--primary-color) 0px, rgba(255,255,255,0) 16px, rgba(255,255,255,0) calc(100% - 16px), var(--primary-color));
+        }
 
         :host > paper-item.theme-selector {
             display: flex;

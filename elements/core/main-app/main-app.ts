@@ -83,7 +83,7 @@ class MainApp extends App implements polymer.Element {
     }
 
     public disableLeftPanelSwipe(touchDevice: boolean, narrow: boolean): boolean {
-        return !touchDevice || !narrow;
+        return true; // !touchDevice || !narrow;
     }
 
     //mainMenuClass(theme: ITheme, showMenuThemes: boolean): string {
