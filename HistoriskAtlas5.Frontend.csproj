@@ -1831,6 +1831,12 @@
     <Content Include="pdf\Årsberetning 2021 Historisk Atlas.pdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="css\fonts\roboto-v30-latin-700.woff" />
+    <Content Include="css\fonts\roboto-v30-latin-700.woff2" />
+    <Content Include="css\fonts\roboto-v30-latin-italic.woff" />
+    <Content Include="css\fonts\roboto-v30-latin-italic.woff2" />
+    <Content Include="css\fonts\roboto-v30-latin-regular.woff" />
+    <Content Include="css\fonts\roboto-v30-latin-regular.woff2" />
     <None Include="Properties\PublishProfiles\historiskatlas - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\historiskatlas-beta - Web Deploy.pubxml" />
     <Content Include="tsconfig.json" />

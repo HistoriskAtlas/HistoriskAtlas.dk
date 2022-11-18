@@ -7,7 +7,7 @@
             /*transition: background-color 0.4s;*/
         }
 
-        #content, #placeholder {
+        #content.rich-text, #placeholder.rich-text {
             padding-top: 17px;
             outline: none;
             min-height: 16px;
@@ -21,12 +21,12 @@
             height: 20px;
         }
 
-        #editorPanel {
+        #editorPanel.rich-text {
             position: absolute;
             top: 0px;
             display: flex;
             width: calc(100% - 34px);
-            justify-content:flex-start;
+            justify-content: flex-start;
             transition: opacity 0.4s, padding-top 0.4s;
             opacity: 0;
             color: grey;
@@ -34,35 +34,35 @@
             background-color: inherit;
             padding-top: 0px;
         }
-        #placeholder {
+        #placeholder.rich-text {
             position: absolute;
             top: 0px;
             pointer-events: none;
             color: red;
             display: none;
         }
-        
-        #content:empty:not(:focus) ~ #placeholder {
+
+        #content.rich-text:empty:not(:focus) ~ #placeholder {
             display: block !important;
         }
-        #content:focus {
+        #content.rich-text:focus {
             padding-top: 25px !important;
         }
-        #content:focus ~ #placeholder {
+        #content.rich-text:focus ~ #placeholder {
             padding-top: 25px !important;
         }
-        #content:focus ~ #editorPanel {
+        #content.rich-text:focus ~ #editorPanel {
             opacity: 1;
             pointer-events: auto;
             padding-top: 5px;
         }
 
-        font {
-            font-size:20px;
+        font.rich-text {
+            font-size: 20px;
         }
 
-        #readmore {
-            cursor: pointer; 
+        #readmore.rich-text {
+            cursor: pointer;
             margin-top: 10px;
             align-self: flex-end;
         }

@@ -126,8 +126,8 @@
     
     <%=string.Format("<link rel=\"import\" href=\"{0}\">", System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/bundles/ha_core_" + (fullapp ? "" : "geo_only_")  + "html"))%>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold&lang=da" type="text/css" /> <%--,italic,thin,light,bolditalic,black,medium--%>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" /> <%--TODO: needed?--%>
+    <%--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold&lang=da" type="text/css" />--%> <%--,italic,thin,light,bolditalic,black,medium--%>
+    <%--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />--%>
     <%:System.Web.Optimization.Styles.Render("~/bundles/ha_css") %>
    
     <style is="custom-style"> /*TODO: ARE these needed? */
