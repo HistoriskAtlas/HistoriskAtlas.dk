@@ -247,7 +247,6 @@ html.menu-maps-shown.drawer-open #buttonMaps
         display: none;
     }
 }
-
 theme-selector[data-open] {
     max-height: 50vh;
     overflow-y: auto;
