@@ -66,7 +66,8 @@ class PanelMap extends polymer.Base implements polymer.Element {
     //}
 
     backgroundStyle(url: string): string {
-        return "background-image: linear-gradient(to right, rgba(255,255,255,1.0), rgba(255,255,255,0.7), rgba(255,255,255,0.0)), url('" + url + "')"; /*rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.0))*/
+        //return "background-image: linear-gradient(to right, rgba(255,255,255,1.0), rgba(255,255,255,0.7), rgba(255,255,255,0.0)), url('" + url + "')";
+        return `background-image: url('${url}')`;
     }
 
     active(item: HaMap, map: HaMap): boolean {

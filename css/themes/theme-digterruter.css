@@ -2,6 +2,7 @@
     --digterruter-red: #dd655b;
     --digterruter-green: #24523a;
     --primary-color: var(--digterruter-green) !important;
+    --menu-background-color: rgba(243,240,233,1) !important;
     --menu-item-color: #cde5c1 !important;
     --map-route-collapsed-color: var(--digterruter-red);
     --map-route-zero-length-color: rgba(221, 101, 91, .5);
@@ -41,10 +42,10 @@
     background: linear-gradient(180deg, rgba(18,83,58,1) 0%, rgba(18,83,58,1) 145px, rgba(243,240,233,1) 145px, rgba(243,240,233,1) 100%);*/ /*#f3f0e9;*/ /*#f4edd2;*/
 /*}*/
 
-.theme-digterruter main-menu { /*.show-menu-themes*/
+/*.theme-digterruter main-menu {
     background-color: rgba(243,240,233,1);
 }
-.theme-digterruter main-menu.show-menu-themes > main-menu-item > iron-collapse:nth-child(2) {
+*/.theme-digterruter main-menu.show-menu-themes > main-menu-item > iron-collapse:nth-child(2) {
     background: linear-gradient(180deg, rgba(18,83,58,1) 0%, rgba(18,83,58,1) 98px, rgba(243,240,233,1) 98px, rgba(243,240,233,1) 100%);
     background-attachment: local;
 }
@@ -78,3 +79,7 @@
     background-size: contain;
     color: transparent;
 }
+
+/*.theme-digterruter #menuItemRoute {
+    display: block !important;
+}*/

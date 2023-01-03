@@ -234,6 +234,12 @@ class MainMenu extends polymer.Base implements polymer.Element {
         return new HaContent(content);
     }
 
+    aboutThemeTap() {
+        switch (this.theme.linkname) {
+            case '1001':
+                Common.dom.append(WindowInstitution.create(App.haTags.byId[731])); break;
+        }
+    }
 }
 
 MainMenu.register();

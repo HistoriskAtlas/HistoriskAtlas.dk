@@ -144,7 +144,7 @@ class PanelTheme extends polymer.Base implements polymer.Element {
     }
 
     hideHeadline(theme: ITheme): boolean {
-        return this.isHoD2017(theme) || this.is1001(theme) || this.isDigterruter(theme);
+        return this.isHoD2017(theme) || this.isDigterruter(theme); //this.is1001(theme) || 
     }
 
     isHoD2017(theme: ITheme): boolean {
@@ -187,12 +187,12 @@ class PanelTheme extends polymer.Base implements polymer.Element {
         window.open('../../../pdf/Vejledning til at lave turforslag på HistoriskAtlas.dk' + (App.haUsers.user.isPro ? ' for kulturinstitutioner' : '') + '.pdf', '_blank')
     }
 
-    is1001(theme: ITheme): boolean {
-        return theme.linkname == '1001';
-    }
-    about1001Tap() {
-        Common.dom.append(WindowInstitution.create(App.haTags.byId[731]));
-    }
+    //is1001(theme: ITheme): boolean {
+    //    return theme.linkname == '1001';
+    //}
+    //about1001Tap() {
+    //    Common.dom.append(WindowInstitution.create(App.haTags.byId[731]));
+    //}
 
     isModstandskamp(theme: ITheme): boolean {
         return theme.linkname == 'modstandskamp';

@@ -1,9 +1,11 @@
-﻿.theme-1001 main-menu.show-menu-themes {
-/*    background-color: black;
-    background-image: url(../../../../images/theme/1001back.jpg);
-    background-size: 100%;
-    background-position: bottom;
-    background-repeat: no-repeat;*/
+﻿:root.theme-1001 {
+    --primary-color: #222 !important;
+    --menu-item-color: white !important;
+    --menu-text-color: white !important;
+    --menu-background-color: black !important;
+}
+
+/*.theme-1001 main-menu.show-menu-themes {
     color: white;
     font-family: Georgia, "Times New Roman", Times, serif;
     letter-spacing: 1px;
@@ -24,4 +26,44 @@
     background-position: bottom;
     background-repeat: no-repeat;
     background-attachment: local;
+}*/
+
+.theme-1001 main-menu[shown] {
+    /*color: white;*/
+    font-family: Georgia, "Times New Roman", Times, serif;
+    letter-spacing: 1px;
+    /*background-color: black;*/
+    background-image: url(../../../../images/theme/1001back.jpg);
+    background-size: 100%;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-attachment: local;
 }
+
+.theme-1001 #mainMenuThemeLogo {
+    max-width: 70%;
+    min-width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: calc(5vh - 10px);
+    width: 25vh;
+    height: 130px;
+    background-image: url(../../../../images/theme/1001logo.jpg);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.theme-1001 #mainMenuAboutTheme {
+    visibility: visible;
+    color: #ecdf39;
+    font-size: 13px;
+    margin-bottom: 160px
+}
+.theme-1001 #mainMenuAboutTheme::after {
+    content: 'om 1001 fortællinger';
+}
+
+/*.theme-1001 main-menu.main-app {
+    max-height: max(100%,700px)
+}*/

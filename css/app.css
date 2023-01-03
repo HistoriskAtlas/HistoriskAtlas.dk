@@ -26,6 +26,15 @@
     url('fonts/roboto-v30-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
+html {
+    height: 100%;
+    overflow: hidden;
+    --main-menu-item-count: 4;
+}
+html:not(.theme-default) {
+    --main-menu-item-count: 1;
+}
+
 body {
     margin: 0px;
     padding: 0;
@@ -34,11 +43,6 @@ body {
     font-family: 'Roboto', sans-serif;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
     -webkit-tap-highlight-color: transparent;
-}
-
-html {
-    height: 100%;
-    overflow: hidden;
 }
 
 ::-webkit-scrollbar {
@@ -155,7 +159,7 @@ paper-input.confirm-input[disabled] > paper-input-container, paper-textarea.conf
 }
 
 main-menu > main-menu-item > div > iron-collapse { /*iron-collapse:nth-child(2)*/
-    height: calc(100vh - 252px);
+    height: calc(100vh - var(--main-menu-item-count) * 43px - 16px - var(--top-bar-height)); /*calc(100vh - 252px);*/
     overflow-y: auto;
     overflow-x: hidden;
     /*scrollbar-gutter: stable;*/
@@ -212,7 +216,7 @@ html.menu-digdag-shown.drawer-open #buttonDigDag,
 html.menu-routes-shown.drawer-open #buttonRoutes,
 html.menu-maps-shown.drawer-open #buttonMaps
 {
-    margin-bottom: calc(100vh - 252px + 12px);
+    margin-bottom: calc(100vh - var(--main-menu-item-count) * 43px + 12px);
 }
 
 #logo {
@@ -282,4 +286,8 @@ theme-selector[data-open] .arrow.theme-selector {
 
 html:not(.drawer-open) #themeSelectorToolbar-close {
     display: none;
+}
+
+html:not(theme-default) #mainContainer.paper-header-panel {
+    overflow-y: auto !important;
 }

@@ -18,23 +18,33 @@
             font-size: 11px;
         }*/
         .listitem.panel-map {
+            position: relative;
             display: flex;
             align-items: center;
             border-bottom: solid 1px;
-            border-bottom-color: #eeeeee;
+            border-bottom-color: rgba(0,0,0,.1);
             font-size: 12px;
             height: 28px;
             cursor: pointer;
             border-bottom-right-radius: 18px;
             border-top-right-radius: 18px;
+            overflow: hidden;
         }
-        .listitem.panel-map > div {
+        .listitem.panel-map > div:not(:first-child) {
             flex-grow: 1;
             padding-left: 5px;
-            text-shadow: 0px 0px 2px white, 0px 0px 4px white, 0px 0px 6px white, 0px 0px 8px white, 0px 0px 10px white;
+            text-shadow: 0px 0px 2px white, 0px 0px 4px var(--menu-background-color), 0px 0px 6px var(--menu-background-color), 0px 0px 8px var(--menu-background-color), 0px 0px 10px var(--menu-background-color);
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+        }
+        .listitem-background.panel-map {
+            opacity: .2;
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
         paper-radio-button.panel-map {
             --paper-radio-button-unchecked-color: #777777;
@@ -91,7 +101,8 @@
             </div>
             <template is="dom-repeat" items="{{maps}}">
                 <template is="dom-if" if="[[visible(item.inView,filter)]]">
-                    <div class="listitem" on-tap="itemTap" style$="[[backgroundStyle(item.previewUrl)]]">
+                    <div class="listitem" on-tap="itemTap">
+                        <div class="listitem-background" style$="[[backgroundStyle(item.previewUrl)]]"></div>
                         <div>
                             <!--<div class="title">-->
                             <span class="year">[[years(item.orgStartYear,item.orgEndYear)]]</span><span class="title"> [[item.title]]</span>

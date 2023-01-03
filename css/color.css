@@ -1,6 +1,8 @@
 ﻿:root {
     --primary-color: #005d9a !important;
     --primary-contrast-color: #ffffff !important;
+    --menu-text-color: #000000 !important;
+    --menu-background-color: #ffffff !important;
     --menu-item-color: #e7eef5 !important;
     --secondary-color: #ffcc00 !important;
     --secondary-contrast-color: #000000 !important;

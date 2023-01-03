@@ -1,4 +1,15 @@
-﻿/* Polymer defined narrow */ 
+﻿:root {
+    --top-bar-height: 64px;
+}
+
+@media (max-width: 600px) {
+    :root {
+        --top-bar-height: 56px;
+    }
+}
+
+
+/* Polymer defined narrow */ 
 @media (max-width: 639px) {
     .hide-when-narrow {
         display: none !important;

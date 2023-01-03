@@ -53,7 +53,7 @@
             margin-top: 10px;
         }
 */
-        .digterruter-item.main-menu {
+/*        .digterruter-item.main-menu {
             background-image: url(../../../images/theme/DanskeDigterruterLogo.png);
             background-color: #24523a;
             background-position: center 40px;
@@ -66,7 +66,7 @@
             justify-content: center;
             align-items: flex-start;
             padding-top: 10px;
-        }
+        }*/
 
         #mainMenuThemeContent {
             max-width: 270px;
@@ -74,6 +74,13 @@
             padding-bottom: 16px;
             padding-top: 10px;
             font-size: 13px;
+        }
+
+        #mainMenuAboutTheme {
+            visibility: hidden;
+            padding-left: 16px;
+            padding-right: 16px;
+            cursor: pointer;
         }
 
         .nordea-logo-container {
@@ -94,6 +101,7 @@
         main-menu-item.main-menu:last-child {
             margin-bottom: 8px;
         }
+
     </style>
     <template>
         <!--<main-menu-item show="{{showMenuThemes}}" show-main-menu="{{showMainMenu}}" menu-title="Temaer" icon="ha:map">
@@ -123,6 +131,9 @@
             <div id="mainMenuThemeContent">
                 <content-viewer content="[[newHaContent(theme.content)]]"></content-viewer>
             </div>
+
+            <div id="mainMenuAboutTheme" on-tap="aboutThemeTap"></div>
+
 
             <template is="dom-if" if="[[isDefaultTheme(theme)]]">
 
