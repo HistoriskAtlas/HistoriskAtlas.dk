@@ -91,6 +91,7 @@
 
     public static html2rich(html: string): string {
         var result: string = html;
+        result = result.replace(/[\n\r]/gi, '');
         result = result.replace(Common.h2rItalic, "'''$1'''");
         result = result.replace(Common.h2rBold, "''$1''");
         result = result.replace(Common.h2rSpace, " ");
