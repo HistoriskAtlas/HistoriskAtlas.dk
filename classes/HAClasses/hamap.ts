@@ -86,7 +86,7 @@
         //}
 
         //return `${HaMap.getTileUrlBase()}${id}/{z}/{x}/{y}.jpg?key=${Common.apiKey}`
-        return `https://omnimaps-apim.azure-api.net/${id}/{z}/{x}/{y}.jpg?key=${Common.omniMapsKey}`;
+        return `${Common.omniMapsUrl}/${id}/{z}/{x}/{y}.jpg?key=${Common.omniMapsKey}`;
     }
     //private static getTileUrlBase(): string {
     //    //return location.protocol + "//tile.historiskatlas.dk/tile/" + Common.apiKey + "/";

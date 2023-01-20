@@ -5,7 +5,7 @@
             source: new ol.source.XYZ({
                 //url: location.protocol + '//tile.historiskatlas.dk/tile/hillshade/' + Common.apiKey + '/{z}/{x}/{y}.png',
                 //url: `https://haapi.historiskatlas.dk/cache/tile_hillshade/{z}/{x}/{y}.png?key=${Common.apiKey}`,
-                url: `https://omnimaps-apim.azure-api.net/144/{z}/{x}/{y}.webp?key=${Common.omniMapsKey}`,
+                url: `${Common.omniMapsUrl}/144/{z}/{x}/{y}.webp?key=${Common.omniMapsKey}`,
                 crossOrigin: 'Anonymous'
             })
         });

@@ -69,7 +69,7 @@
     public static getUrl(type: string, year: number) {
         //return location.protocol + '//tile.historiskatlas.dk/tile/digdag/' + Common.apiKey + '/' + type.replace("/", "_") + '/' + year + '/{z}/{x}/{y}.png';
         //return `https://haapi.historiskatlas.dk/cache/tile_digdag/${type.replace("/", "_")}/${year}/{z}/{x}/{y}.png?key=${Common.apiKey}`;
-        return `https://omnimaps-apim.azure-api.net/digdag/${type.replace("/", "_")}/${year}/{z}/{x}/{y}.png?key=${Common.omniMapsKey}`;
+        return `${Common.omniMapsUrl}/digdag/${type.replace("/", "_")}/${year}/{z}/{x}/{y}.png?key=${Common.omniMapsKey}`;
     }
 
 

@@ -21,8 +21,10 @@
     public static dom = $(document.body);
     //private static _api: string;
     //private static _baseApi: string;
-    public static apiSchemaTags = '{tag:[tagid,plurname,singname,category,yearstart,yearend,{parents:[empty,{collapse:{parent:id}}]}]}'
-    public static base64chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+    public static readonly apiSchemaTags = '{tag:[tagid,plurname,singname,category,yearstart,yearend,{parents:[empty,{collapse:{parent:id}}]}]}'
+    public static readonly base64chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+    //public static readonly omniMapsUrl = 'https://omnimaps-apim.azure-api.net';
+    public static readonly omniMapsUrl = 'https://maps.omnitech.dk';
 
     public static openGeoWindowInNewTab: boolean;
 
