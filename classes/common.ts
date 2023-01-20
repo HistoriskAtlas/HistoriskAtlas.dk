@@ -1,7 +1,7 @@
 ﻿class Common {
 
-    private static r2hItalic: RegExp = new RegExp("'''(.*?)'''", 'gi')
-    private static r2hBold: RegExp = new RegExp("''(.*?)''", 'gi')
+    private static r2hItalic: RegExp = new RegExp("'''(.*?)'''", 'gis')
+    private static r2hBold: RegExp = new RegExp("''(.*?)''", 'gis')
     private static r2hSpace: RegExp = new RegExp("  ", 'gi')
     private static r2hLinebreak: RegExp = new RegExp("\\n", 'gi')
     private static r2hA: RegExp = new RegExp("\\[(https?:\\/\\/.*?) (.*?)\\]", 'gi')
