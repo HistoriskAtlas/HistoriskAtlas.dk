@@ -39,7 +39,7 @@
     background-color: var(--hod-light-grey);
     background-image: url(../../../../images/theme/HoD2017back.jpg);
     background-size: 100%;
-    background-position: bottom;
+    background-position: center bottom 50px;
     background-repeat: no-repeat;
     background-attachment: local;
 }
@@ -57,4 +57,14 @@
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+.theme-hod #mainMenuAboutTheme {
+    visibility: visible;
+    font-size: 13px;
+    margin: 10px 0px 160px 30px;
+}
+
+.theme-hod #mainMenuAboutTheme::after {
+    content: 'Om Historier om Danmark';
 }

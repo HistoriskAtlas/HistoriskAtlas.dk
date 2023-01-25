@@ -60,6 +60,9 @@
     margin-bottom: 10px;
 }
 
+.theme-digterruter main-menu collection-list {
+    margin-bottom: 32px;
+}
 
 /*.theme-digterruter #mainMenuThemeLogo {
     background-color: var(--primary-color);

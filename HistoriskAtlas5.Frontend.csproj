@@ -716,6 +716,7 @@
     <Content Include="elements\core\collections\ha-content\ha-content.html" />
     <Content Include="elements\core\content-viewer\subcontent-viewer\subcontent-viewer.html" />
     <Content Include="elements\core\content-viewer\content-viewer-pdf\content-viewer-pdf.html" />
+    <Content Include="elements\core\dialogs\dialog-tour-main-menu\dialog-tour-main-menu.html" />
     <Content Include="elements\thrash\dialog-theme-select\dialog-theme-select.html" />
     <Content Include="elements\core\dialogs\dialog-map-select\dialog-map-select.html" />
     <Content Include="elements\core\dialogs\dialog-video-intro\dialog-video-intro.html" />
@@ -763,7 +764,7 @@
     <Content Include="elements\writer\lists\collection-geo-sortable-list\collection-geo-sortable-list.html" />
     <Content Include="elements\core\lists\geo-list-item\geo-list-item.html" />
     <Content Include="elements\core\lists\geo-list\geo-list.html" />
-    <Content Include="elements\core\panels\panel-theme\panel-theme.html" />
+    <Content Include="elements\thrash\panel-theme\panel-theme.html" />
     <Content Include="elements\core\content-viewer\content-viewer.html" />
     <Content Include="elements\thrash\window-member-signup\window-member-signup.html" />
     <Content Include="elements\core\windows\window-institution\window-institution.html" />
@@ -1003,6 +1004,7 @@
     <TypeScriptCompile Include="elements\core\collections\ha-content\ha-content.ts" />
     <TypeScriptCompile Include="elements\core\content-viewer\subcontent-viewer\subcontent-viewer.ts" />
     <TypeScriptCompile Include="elements\core\content-viewer\content-viewer-pdf\content-viewer-pdf.ts" />
+    <TypeScriptCompile Include="elements\core\dialogs\dialog-tour-main-menu\dialog-tour-main-menu.ts" />
     <TypeScriptCompile Include="elements\thrash\dialog-theme-select\dialog-theme-select.ts" />
     <TypeScriptCompile Include="elements\core\dialogs\dialog-map-select\dialog-map-select.ts" />
     <TypeScriptCompile Include="elements\core\dialogs\dialog-video-intro\dialog-video-intro.ts" />
@@ -1254,7 +1256,7 @@
     <TypeScriptCompile Include="elements\core\main-app\global-app\global-app.ts" />
     <TypeScriptCompile Include="elements\core\map\map-tooltip\map-tooltip.ts" />
     <TypeScriptCompile Include="elements\admin\windows\window-admin\panel-admin\panel-admin.ts" />
-    <TypeScriptCompile Include="elements\core\panels\panel-theme\panel-theme.ts" />
+    <TypeScriptCompile Include="elements\thrash\panel-theme\panel-theme.ts" />
     <TypeScriptCompile Include="elements\core\panels\panel-route\panel-route.ts" />
     <TypeScriptCompile Include="elements\core\content-viewer\content-viewer.ts" />
     <TypeScriptCompile Include="elements\core\red-ribbon\red-ribbon.ts" />

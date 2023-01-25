@@ -1,15 +1,102 @@
-﻿.theme-modstandskamp main-menu.show-menu-themes {
+﻿:root.theme-modstandskamp {
+    --modstandskamp-light-grey: #e9e9e9;
+    --modstandskamp-dark-grey: #2b312f;
+    --primary-color: var(--modstandskamp-dark-grey) !important;
+    --menu-background-color: var(--modstandskamp-light-grey) !important;
+    --menu-item-color: var(--modstandskamp-light-grey) !important;
+    --main-menu-theme-content: '<div><div>Nedkastninger og sabotage<br>i Danmark 1940 - 1945</div><div><a href="/?th!nedkastning">Nedkastninger</a>Nedkastninger af bl.a. SOE-agenter, våben og sprængstof til hjælp i modstandskampen fra de allierede.</div><div><a href="/?th!sabotage">Sabotage</a>Sabotage af virksomheder, der leverede varer til Tyskland. Sabotagen skete ved brandattentater eller sprængninger.</div> Kortet viser alle nedkastninger fra 1940 til 1945 og alle industrisabotager frem til 31.12. 1942. Fra 1.1. 1943 til 5.5. der har opnået skadeerstatning på minimum 200.000 i nutidskroner eller derover. </div><div><div>Besøg Frihedsmuseet</div> Gå under jorden i besættelsestidens Danmark og kom helt tæt på modstandskampen under 2. verdenskrig. I besættelsestidens skyggefulde gader møder du fem historiske personer. Alle har valgt side, og alle må møde konsekvenserne.<br><br><div> Esplanaden 13<br>1263 København K<br><br><a href="http://frihedsmuseet.dk">frihedsmuseet.dk</a></div></div>';
+}
+
+/*.theme-modstandskamp main-menu.show-menu-themes {
     color: black;
     font-size: 12px;
 }
-.theme-modstandskamp main-menu.show-menu-themes {
+*//*.theme-modstandskamp main-menu.show-menu-themes {
     background-color: #e9e9e9;
-}
+}*/
 
-.theme-modstandskamp main-menu.show-menu-themes > main-menu-item > iron-collapse:nth-child(2) {
+/*.theme-modstandskamp main-menu.show-menu-themes > main-menu-item > iron-collapse:nth-child(2) {
     background-image: url(../../../../images/theme/Modstandskamp_back.jpg);
     background-size: 100%;
     background-position: bottom;
     background-repeat: no-repeat;
     background-attachment: local;
+}
+*/
+
+.theme-modstandskamp #mainMenuThemeContent > content-viewer {
+    display: none;
+}
+
+.theme-modstandskamp main-menu[shown] {
+    background-image: url(../../../../images/theme/Modstandskamp_back.jpg);
+    background-size: 100%;
+    background-position: center bottom 50px;
+    background-repeat: no-repeat;
+    background-attachment: local;
+}
+
+.theme-modstandskamp #mainMenuThemeContentCustomHtml {
+    position: relative;
+}
+
+.theme-modstandskamp #mainMenuThemeContentCustomHtml:before {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: -16px;
+    right: -16px;
+    bottom: -16px;
+    opacity: .7;
+    background-color: var(--modstandskamp-light-grey);
+    filter: blur(10px);
+}
+.theme-modstandskamp #mainMenuThemeContentCustomHtml > div:first-child {
+    color: #d83c30;
+    position: relative;
+}
+.theme-modstandskamp #mainMenuThemeContentCustomHtml > div:first-child > div:first-child { /*headline*/
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-top: 5px
+}
+.theme-modstandskamp #mainMenuThemeContentCustomHtml > div:first-child > div:nth-child(2) {
+    margin-bottom: 10px;
+    background-image: url(../../../../images/theme/Modstandskamp_parachute_icon.png);
+    background-position: left 5px center;
+    background-repeat: no-repeat;
+    background-size: 24px;
+    padding-left: 40px;
+}
+.theme-modstandskamp #mainMenuThemeContentCustomHtml > div:first-child > div:nth-child(3) {
+    margin-bottom: 10px;
+    background-image: url(../../../../images/theme/Modstandskamp_bomb_icon.png);
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: 30px;
+    padding-left: 40px;
+}
+
+.theme-modstandskamp #mainMenuThemeContentCustomHtml > div:nth-child(2) {
+    position: relative;
+    color: #355e9c;
+    margin-top: 20px;
+    margin-bottom: 350px;
+}
+
+.theme-modstandskamp #mainMenuThemeContentCustomHtml > div:nth-child(2) > div:first-child {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.theme-modstandskamp #mainMenuThemeContentCustomHtml > div:nth-child(2) > div:last-child {
+    font-weight:bold
+}
+
+.theme-modstandskamp #mainMenuThemeContentCustomHtml > div a {
+    font-weight: bold;
+    display: block;
+    color: inherit;
 }

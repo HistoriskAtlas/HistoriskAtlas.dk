@@ -117,12 +117,7 @@ class HaThemes extends polymer.Base implements polymer.Element {
             return;
         }
 
-        //Services.get('theme', { //TODO: Implement as HAAPI Call......
-        Services.HAAPI_GET(`theme/${theme.linkname}`, null,
-            //name: theme.name,
-            //schema: '{theme:[linkname,name,mapid,maplatitude,maplongitude,mapzoom,tagid,' + ContentViewer.contentSchema + ']}',
-        //}, 
-        (result) => {
+        Services.HAAPI_GET(`theme/${theme.linkname}`, null, (result) => {
             this.theme = <ITheme>result.data;
             this.theme.isfullyloaded = true;
             this.set('themes.' + this.themes.indexOf(theme), this.theme);

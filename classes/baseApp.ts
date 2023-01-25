@@ -83,6 +83,12 @@
     @property({ type: Object })
     public theme: ITheme;    
 
+    @property({ type: Array })
+    public routeTopLevels: Array<ICollectionTopLevel>;
+
+    //@property({ type: Array })
+    //public userTopLevels: Array<ICollectionTopLevel>;
+
     public instanceIsDev(): boolean {
         return App.isDev();
     }
@@ -113,7 +119,7 @@
             (<any>document).sid = LocalStorage.get("sessionID");
 
         //this.beingIndexed = /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent) || App.isDev;
-        this.cookieConcent = LocalStorage.get("cookieConcent") == 'true';
+        this.cookieConcent = LocalStorage.get("cookieConcentV2") == 'true';
 
         //App.instance = this;
         //App.dom = $(document.body);
@@ -230,8 +236,43 @@
                 root.classList.remove(className);
         }
         var id = `theme-${this.theme.linkname}`;
-        Common.loadCSS(id, `css/themes/${id}.css`);
         root.classList.add(id);
+        Common.loadCSS(id, `css/themes/${id}.css`, () => {
+            document.getElementById('mainMenuThemeContentCustomHtml').innerHTML = Common.getStyleVar('--main-menu-theme-content').replace(/^"+|"+$/g, '');
+        });
+
+        if (Common.tagsLoaded)
+            this.setThemeRouteTopLevels()
+        else
+            HaTags.loadedCallbacks.push(() => this.setThemeRouteTopLevels());
+    }
+
+    private setThemeRouteTopLevels() {
+        var routeTopLevels: Array<ICollectionTopLevel> = [];
+        if (this.theme.tagid && this.theme != Global.defaultTheme) {
+
+            if (this.theme.linkname == 'digterruter') {
+                var themeTag = App.haTags.byId[this.theme.tagid];
+                routeTopLevels.push(((tag: HaTag) => <ICollectionTopLevel>{
+                    name: 'Ruterne', shown: false, selected: true, ignoreCreators: true, filter: (collection: HaCollection) => collection.tags.indexOf(tag) > -1
+                })(themeTag));
+            }
+
+            //App.haCollections.getCollectionsByTagId(this.theme.tagid); Moved to ha-themes
+            for (var tag of App.haTags.byId[this.theme.tagid].children) {
+                if (tag.isPublicationDestination) //TODO: other category?
+                    routeTopLevels.push(((tag: HaTag) => <ICollectionTopLevel>{
+                        name: tag.singName, shown: false, selected: true, ignoreCreators: true, filter: (collection: HaCollection) => collection.tags.indexOf(tag) > -1
+                    })(tag));
+            }
+        }
+        this.set('routeTopLevels', routeTopLevels);
+
+        //this.set('userTopLevels', [{ name: 'Mine ruter', shown: false, selected: false, filter: (collection: HaCollection) => collection.user.id == App.haUsers.user.id, ignoreCreators: true }]);
+
+        //var userCollectionList = this.$$('#userCollectionList');
+        //if (userCollectionList)
+        //    (<CollectionList>userCollectionList).updateTopLevelSelections();
     }
 
 

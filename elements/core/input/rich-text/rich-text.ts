@@ -30,8 +30,8 @@ class RichText extends polymer.Base implements polymer.Element {
     //@property({ type: Boolean })
     //public showPlaceholder: boolean;
 
-    @property({ type: Boolean })
-    public isIE: boolean;
+    //@property({ type: Boolean })
+    //public isIE: boolean;
 
     private static matchGeoLink: RegExp = new RegExp('<a href=["\']http:\/\/historiskatlas\.dk\/.*?_\\((.*?)\\)["\']>(.*?)<\/a>', 'g');
     private static matchBlankLink: RegExp = new RegExp('target="_blank"', 'g');
@@ -39,7 +39,7 @@ class RichText extends polymer.Base implements polymer.Element {
 
     ready() {
         //this.contentChanged();
-        this.isIE = Common.isIE;
+        //this.isIE = Common.isIE;
 
         window.addEventListener('beforeunload', (e) => {
             if (!this.editable)
@@ -86,8 +86,8 @@ class RichText extends polymer.Base implements polymer.Element {
 
     keyup() { //Needed in IE10+?
         var elem = <HTMLDivElement>this.$.content;
-        //this.set('immediateContent', elem.innerHTML);
-        this.set('immediateContent', this.isIE ? elem.innerHTML.replace(/<\s*font[^>]*>(.*?)<\s*\/\s*font\s*>/gi, '$1') : elem.innerHTML); //IE hack to remove weird font tags...
+        this.set('immediateContent', elem.innerHTML);
+        //this.set('immediateContent', this.isIE ? elem.innerHTML.replace(/<\s*font[^>]*>(.*?)<\s*\/\s*font\s*>/gi, '$1') : elem.innerHTML); //IE hack to remove weird font tags...
     }
 
     paste(e: ClipboardEvent) {

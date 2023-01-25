@@ -38,7 +38,7 @@ class MainApp extends App implements polymer.Element {
     }
 
     cookieConcentGiven() {
-        LocalStorage.set("cookieConcent", "true");
+        LocalStorage.set("cookieConcentV2", "true");
         Common.dom.append(DialogTourIntro.create());
     }
 

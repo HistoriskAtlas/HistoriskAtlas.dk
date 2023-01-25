@@ -86,6 +86,12 @@ class MainMenu extends polymer.Base implements polymer.Element {
     @property({ type: Boolean, notify: true })
     public profCreators: boolean;
 
+    @property({ type: Array })
+    public routeTopLevels: Array<ICollectionTopLevel>;
+
+    @property({ type: Array })
+    public userTopLevels: Array<ICollectionTopLevel>;
+
     ready() {
         this.isDevOrBeta = Common.isDevOrBeta;
         this.panelMap = this.$.panelMap;
@@ -128,16 +134,19 @@ class MainMenu extends polymer.Base implements polymer.Element {
         //this.timeLineActive = this.showMenuDigDag && this.drawerOpen;
 
         if (this.drawerOpen && !this.$$('mainMenudialogTour') && !LocalStorage.get('firstMenuOpenTourDone')) {
-            var dialogTour = <DialogTour>DialogTour.create('Kulturinstitutionslaget og borgerlaget', 'Her kan du vælge, hvad der vises på kortet. Vil du kun se professionelt indhold fra arkiver, biblioteker og museer, så aktiver kun kulturinstitutionslaget. Vil du også se borgerskabte fortællinger og ruter, så aktiver borgerlaget.', -40, null, null, null, 5, null, -15, null, true, 'firstMenuOpenTourDone');
-            dialogTour.id = 'mainMenudialogTour';
-            $(this).before(dialogTour);
-            dialogTour.setCSS('position', 'fixed');
-            dialogTour.setCSS('top', 'initial');
-            $(dialogTour).css('margin-top', '-10px');
-            $(dialogTour).css('z-index', 1000);
-            //dialogTour.width = 366;
 
-            LocalStorage.set('firstMenuOpenTourDone', 'true');
+            //var dialogTour = <DialogTour>DialogTour.create('Kulturinstitutionslaget og borgerlaget', 'Her kan du vælge, hvad der vises på kortet. Vil du kun se professionelt indhold fra arkiver, biblioteker og museer, så aktiver kun kulturinstitutionslaget. Vil du også se borgerskabte fortællinger og ruter, så aktiver borgerlaget.', -40, null, null, null, 5, null, -15, null, true, 'firstMenuOpenTourDone');
+            //dialogTour.id = 'mainMenudialogTour';
+            //$(this).before(dialogTour);
+            //dialogTour.setCSS('position', 'fixed');
+            //dialogTour.setCSS('top', 'initial');
+            //$(dialogTour).css('margin-top', '-10px');
+            //$(dialogTour).css('z-index', 1000);
+            ////dialogTour.width = 366;
+
+            //LocalStorage.set('firstMenuOpenTourDone', 'true');
+
+            $(this).before(DialogTourMainMenu.create());
         }
     }
 
@@ -238,8 +247,49 @@ class MainMenu extends polymer.Base implements polymer.Element {
         switch (this.theme.linkname) {
             case '1001':
                 Common.dom.append(WindowInstitution.create(App.haTags.byId[731])); break;
+            case 'hod':
+                Common.dom.append(WindowInstitution.create(App.haTags.byId[736])); break;
         }
     }
+
+    //@observe('theme')
+    //themeChanged() {
+    //    //if (!Common.tagsLoaded)
+    //    //    return;
+
+    //    var routeTopLevels: Array<ICollectionTopLevel> = [];
+    //    if (this.theme.tagid && this.theme != Global.defaultTheme) {
+
+    //        if (this.theme.linkname == 'digterruter') {
+    //            var themeTag = App.haTags.byId[this.theme.tagid];
+    //            routeTopLevels.push(((tag: HaTag) => <ICollectionTopLevel>{
+    //                name: 'Ruterne', shown: false, selected: true, ignoreCreators: true, filter: (collection: HaCollection) => collection.tags.indexOf(tag) > -1
+    //            })(themeTag));
+    //        }
+
+    //        //App.haCollections.getCollectionsByTagId(this.theme.tagid); Moved to ha-themes
+    //        for (var tag of App.haTags.byId[this.theme.tagid].children) {
+    //            if (tag.isPublicationDestination) //TODO: other category?
+    //                routeTopLevels.push(((tag: HaTag) => <ICollectionTopLevel>{
+    //                    name: tag.singName, shown: false, selected: true, ignoreCreators: true, filter: (collection: HaCollection) => collection.tags.indexOf(tag) > -1
+    //                })(tag));
+    //        }
+    //    }
+    //    this.set('routeTopLevels', routeTopLevels);
+
+    //    this.set('userTopLevels', [{ name: 'Mine ruter', shown: false, selected: false, filter: (collection: HaCollection) => collection.user.id == App.haUsers.user.id, ignoreCreators: true }]);
+
+    //    var userCollectionList = this.$$('#userCollectionList');
+    //    if (userCollectionList)
+    //        (<CollectionList>userCollectionList).updateTopLevelSelections();
+
+    //        //this.set('routeTopLevels', [
+    //        //    { name: 'Landsdækkende rutenet', shown: false, filter: (collection: HaCollection) => collection.tags.indexOf(App.haTags.byId[734]) > -1 },
+    //        //    { name: 'Vandrehistorier', shown: false, filter: (collection: HaCollection) => collection.tags.indexOf(App.haTags.byId[735]) > -1 }
+    //        //]);
+    //    //} else
+    //    //    this.set('routeTopLevels', []);
+    //}
 }
 
 MainMenu.register();

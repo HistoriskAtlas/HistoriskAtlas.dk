@@ -221,22 +221,28 @@
         //} (document));
     }
 
-    public static loadCSS(id: string, src: string) {
-        if (document.getElementById(id))
+    public static loadCSS(id: string, src: string, callback: () => void = null) {
+        if (!document.getElementById(id)) {
+            var link = document.createElement("link");
+            link.id = id;
+            link.rel = "stylesheet";
+            link.type = "text/css";
+            link.href = src;
+            document.getElementsByTagName("head")[0].appendChild(link)
+        }
+
+        if (!callback)
             return;
 
-        var link = document.createElement("link");
-        link.id = id;
-        link.rel = "stylesheet";
-        link.type = "text/css";
-        link.href = src;
-        document.getElementsByTagName("head")[0].appendChild(link)
+        var img = document.createElement('img'); //hack
+        img.onerror = () => callback();
+        img.src = src;
     }
 
 
-    public static get isIE(): boolean {
-        return window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
-    }
+    //public static get isIE(): boolean {
+    //    return window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
+    //}
 
     public static savePDF(url: string, title: string, method: string = 'GET', data: string = null) {
         var loadingText = "Henter PDF";
@@ -259,9 +265,9 @@
     }
 
     public static saveBlob(blob: Blob, filename: string, forceDownload: boolean = true) {
-        if (window.navigator.msSaveOrOpenBlob)
-            window.navigator.msSaveOrOpenBlob(blob, filename);
-        else {
+        //if (window.navigator.msSaveOrOpenBlob)
+        //    window.navigator.msSaveOrOpenBlob(blob, filename);
+        //else {
             var url = window.URL || (<any>window).webkitURL;
             var elem = window.document.createElement('a');
             elem.href = url.createObjectURL(blob);
@@ -273,7 +279,7 @@
             elem.click();
             document.body.removeChild(elem);
             url.revokeObjectURL(elem.href);
-        }
+        //}
     }
 
     public static truncateHtml(html: string, reqCount: number) {
