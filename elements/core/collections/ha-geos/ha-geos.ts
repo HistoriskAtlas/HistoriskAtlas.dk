@@ -129,7 +129,7 @@ class HaGeos extends polymer.Base implements polymer.Element {
     }
 
     private updateAllGeosFromAPI(removeAlso: boolean) {
-        var themeTagID = this.theme ? this.theme.tagid : App.passed.theme.tagid;
+        var themeTagID = (this.theme ? this.theme.tagid : App.passed.theme.tagid) || Global.defaultTheme.tagid;
         if (this.profCreators)
             this.processRequest({ themeTagID: themeTagID, ugc: false, removeAlso: removeAlso, userLayer: false });
         if (this.userCreators)
