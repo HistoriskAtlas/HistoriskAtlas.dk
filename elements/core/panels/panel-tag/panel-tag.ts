@@ -16,7 +16,7 @@ class PanelTag extends polymer.Base implements polymer.Element {
     @property({ type: String, value: 'Kulturinstitutioner' })
     public createdBy: string;
 
-    public tagsServiceAwaitingTagSelect: Tags;
+    //public tagsServiceAwaitingTagSelect: Tags;
 
     allCreatorsChecked(profCreators: boolean, userCreators: boolean): boolean { return userCreators && profCreators; }
     profCreatorsChecked(profCreators: boolean, userCreators: boolean): boolean { return !userCreators && profCreators; }

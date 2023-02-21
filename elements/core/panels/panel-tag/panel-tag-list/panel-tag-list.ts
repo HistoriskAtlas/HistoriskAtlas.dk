@@ -49,15 +49,15 @@ class PanelTagList extends polymer.Base implements polymer.Element {
     }
 
     private _tagTap(tag: HaTag): boolean {
-        var tagsServiceAwaitingTagSelect = (<PanelTag>App.mainMenu['panelTag']).tagsServiceAwaitingTagSelect;
+        //var tagsServiceAwaitingTagSelect = (<PanelTag>App.mainMenu['panelTag']).tagsServiceAwaitingTagSelect;
 
-        if (tagsServiceAwaitingTagSelect) {
-            if (tagsServiceAwaitingTagSelect.addTag(tag, true, true))
-                tagsServiceAwaitingTagSelect = null;
-            else
-                App.toast.show('"' + tag.plurName + '" er allerede tilføjet. Vælg en anden.')
-            return true;
-        }
+        //if (tagsServiceAwaitingTagSelect) {
+        //    if (tagsServiceAwaitingTagSelect.addTag(tag, true, true))
+        //        tagsServiceAwaitingTagSelect = null;
+        //    else
+        //        App.toast.show('"' + tag.plurName + '" er allerede tilføjet. Vælg en anden.')
+        //    return true;
+        //}
 
         return false;
     }

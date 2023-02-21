@@ -16,22 +16,38 @@ class HorizontalTagList extends polymer.Base implements polymer.Element {
     @property({ type: Object, value: {} })
     public localPrimaryTag: HaTag;
 
-    @property({ type: Boolean, value: false })
-    public addingTag: boolean;
+    //@property({ type: Boolean, value: false })
+    //public addingTag: boolean;
 
     @property({ type: Object })
     public tagsService: Tags | HaGeoService;
 
     addTagTap() {
-        this.addingTag = !this.addingTag;
-        if (!this.addingTag) {
-            (<PanelTag>App.mainMenu['panel' + this.menu]).tagsServiceAwaitingTagSelect = null;
-            return;
-        }
+        //this.addingTag = !this.addingTag;
 
-        App.mainMenu.drawerOpen = true;
-        App.mainMenu['showMenu' + this.menu + 's'] = true;
-        (<PanelTag>App.mainMenu['panel' + this.menu]).tagsServiceAwaitingTagSelect = this.tagsService;
+        //if (!this.addingTag) {
+        //    (<PanelTag>App.mainMenu['panel' + this.menu]).tagsServiceAwaitingTagSelect = null;
+        //    return;
+        //}
+
+        //App.mainMenu.drawerOpen = true;
+        //App.mainMenu['showMenu' + this.menu + 's'] = true;
+        //(<PanelTag>App.mainMenu['panel' + this.menu]).tagsServiceAwaitingTagSelect = this.tagsService;
+
+        var tagCategory = this.menu == 'Subject' ? 9 : 10;
+
+        var tags = [];
+        for (var tag of App.haTags.tags)
+            if (tag.category == tagCategory && this.tags.indexOf(tag) == -1)
+                tags.push(tag);
+
+        tags.sort((t1: HaTag, t2: HaTag) => t1.singName.localeCompare(t2.singName));
+
+        Common.dom.append(DialogTagSelection.create(`Vælg ${this.menu == 'Subject' ? 'emne' : 'periode'}`, tags, (tag: HaTag) => {
+            this.tagsService.addTag(tag, true, true);
+        }));
+
+
         App.toast.show('Vælg fra listen');
     }
 
@@ -73,10 +89,10 @@ class HorizontalTagList extends polymer.Base implements polymer.Element {
         return tagsLength == 0 && !editing;
     }
 
-    @observe('tags.length')
-    tagsLengthChanged() {
-        this.addingTag = false;
-    }
+    //@observe('tags.length')
+    //tagsLengthChanged() {
+    //    this.addingTag = false;
+    //}
 
 }
 
