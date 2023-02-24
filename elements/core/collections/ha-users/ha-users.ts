@@ -103,11 +103,11 @@ class HaUsers extends polymer.Base implements polymer.Element {
     private writerModuleLoaded() {
         if (!LocalStorage.get('firstLogInTourDone'))
             Common.dom.append(this.firstLogInTour = <DialogTour>DialogTour.create('Start her!', 'Dette er MitAtlas menuen. Her kan du bla. oprette nye fortællinger på kortet. Prøv det nu!', null, -25, 50, null, null, 6, -15, null, true, 'firstLogInTourDone'));
-        else
-            if (LocalStorage.isBefore('user-news-shown', WindowUserNews.lastUpdate)) {
-                Common.dom.append(WindowUserNews.create());
-                LocalStorage.set('user-news-shown', 'true', true);
-            }
+        //else
+        //    if (LocalStorage.isBefore('user-news-shown', WindowUserNews.lastUpdate)) {
+        //        Common.dom.append(WindowUserNews.create());
+        //        LocalStorage.set('user-news-shown', 'true', true);
+        //    }
     }
 
     @observe('user.favourites.geos.splices')

@@ -53,6 +53,10 @@ class MitAtlasButton extends polymer.Base implements polymer.Element {
         App.haCollections.newRoute();
     }
 
+    importRouteTap() {
+        App.haCollections.importRoute();
+    }
+
     userCanCreateEmbed(user: HAUser): boolean {
         return user.isPro;
         //return (user.isPro && Common.isDevOrBeta) || user.isAdmin;
@@ -62,21 +66,17 @@ class MitAtlasButton extends polymer.Base implements polymer.Element {
     }
 
     profileTap() {
-        //$(this).append(WindowProfile.create());
         Common.dom.append(WindowProfile.create());
     }
 
-    newsTap() {
-        //$(this).append(WindowUserNews.create());
-        Common.dom.append(WindowUserNews.create());
-    }
+    //newsTap() {
+    //    Common.dom.append(WindowUserNews.create());
+    //}
 
     adminTap() {
-        //$(this).append(WindowAdmin.create());
         Common.dom.append(WindowAdmin.create());
     }
     editorialTap() {
-        //$(this).append(WindowEditorial.create());
         Common.dom.append(WindowEditorial.create());
 
     }

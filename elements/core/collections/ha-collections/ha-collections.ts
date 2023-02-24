@@ -261,7 +261,7 @@ class HaCollections extends Tags implements polymer.Element {
     }
 
     public newRoute(geo?: HaGeo) {
-        Common.dom.append(DialogText.create('Angiv titel på ruten', (title) => this.newCollection(title, geo)));
+        Common.dom.append(DialogText.create('Angiv titel på ruten', (title) => this.newCollection(title, geo), null, null, "Titel", "Opret"));
     }
 
     private newCollection(title: string, geo?: HaGeo)/*: HaCollection*/ {
@@ -297,6 +297,31 @@ class HaCollections extends Tags implements polymer.Element {
         });
         //return collection;
     }
+
+    public importRoute() {
+        Common.dom.append(DialogText.create('Indsæt adresse (URL) for rute der skal importeres', (url) => {
+
+            var oaMatch = /outdooractive.com\/.*\/(\d*?)\/$/g.exec(url);
+            if (!oaMatch) {
+                Common.dom.append(DialogAlert.create("Den angivne URL ser ikke ud til at være en korrekt formateret Outdooractive rute URL"));
+                return;
+            }
+
+            //Common.dom.append(DialogAlert.create(`Fandt Outdooractive rute med id: ${oaMatch[1]}`));
+
+
+            Services.HAAPI_POST('collection', { schema: 'outdooractive' }, Common.formData({ oaId: oaMatch[1] }), (data) => {
+                var collection = new HaCollection(data.data);
+                this.push('collections', collection);
+                this.select(collection);
+            });
+
+
+                        
+
+        }, null, "Der understøttes kun import fra outdooractive.com", "URL", "Importér"));
+    }
+
 
     @observe('collection')
     collectionChanged(newVal: HaCollection, oldVal: HaCollection) {

@@ -11,6 +11,9 @@ class DialogText extends polymer.Base implements polymer.Element {
     public confirmCallback: string;
 
     @property({ type: String })
+    public headline: string;
+
+    @property({ type: String })
     public text: string;
 
     @property({ type: String })
@@ -25,17 +28,27 @@ class DialogText extends polymer.Base implements polymer.Element {
     @property({ type: String })
     public errorMessage: string;
 
+    @property({ type: String })
+    public label: string;
+
+    @property({ type: String, value: "OK" })
+    public textOK: string;
+
     @property({ type: Boolean, value: false })
     public autoValidate: boolean;    
 
     private confirmCallbackFunction: (string) => void;
 
-    constructor(text: string, confirmCallbackFunction: (string) => void, prefilled: string = null) {
+    constructor(headline: string, confirmCallbackFunction: (string) => void, prefilled: string = null, text: string = null, label: string = null, textOK: string = null) {
         super();
-        if (!text) //if declerative created
+        if (!headline) //if declerative created
             return;
+        this.headline = headline;
         this.text = text;
         this.confirmCallbackFunction = confirmCallbackFunction;
+        this.label = label;
+        if (textOK)
+            this.textOK = textOK;
         this.open(null, prefilled);
     }
 

@@ -823,7 +823,7 @@
     <Content Include="elements\writer\panels\panel-editorial-notes\panel-editorial-notes.html" />
     <Content Include="elements\writer\windows\window-route-editorial\window-route-editorial.html" />
     <Content Include="elements\writer\windows\window-geo-editorial\window-geo-editorial.html" />
-    <Content Include="elements\writer\windows\window-user-news\window-user-news.html" />
+    <Content Include="elements\thrash\window-user-news\window-user-news.html" />
     <Content Include="elements\core\windows\window-terms-of-use\window-terms-of-use.html" />
     <Content Include="elements\thrash\window-about\window-about.html" />
     <Content Include="elements\core\windows\window-privacy\window-privacy.html" />
@@ -1302,7 +1302,7 @@
     <TypeScriptCompile Include="elements\writer\panels\panel-editorial-notes\panel-editorial-notes.ts" />
     <TypeScriptCompile Include="elements\writer\windows\window-route-editorial\window-route-editorial.ts" />
     <TypeScriptCompile Include="elements\writer\windows\window-geo-editorial\window-geo-editorial.ts" />
-    <TypeScriptCompile Include="elements\writer\windows\window-user-news\window-user-news.ts" />
+    <TypeScriptCompile Include="elements\thrash\window-user-news\window-user-news.ts" />
     <TypeScriptCompile Include="elements\core\windows\window-terms-of-use\window-terms-of-use.ts" />
     <TypeScriptCompile Include="elements\thrash\window-about\window-about.ts" />
     <TypeScriptCompile Include="elements\core\windows\window-privacy\window-privacy.ts" />

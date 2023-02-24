@@ -79,9 +79,10 @@
                 
                 <template is="dom-if" if="[[userCanCreateRoute(isDevOrBeta,user)]]">
                     <paper-item on-tap="newRouteTap">Opret rute</paper-item>
+                    <paper-item on-tap="importRouteTap">Importér rute</paper-item>
                 </template>
 
-                <paper-item on-tap="newsTap">Nyheder</paper-item>
+                <!--<paper-item on-tap="newsTap">Nyheder</paper-item>-->
                 <!--<template is="dom-if" if="[[user.isEditor]]">-->
                     <paper-item disabled class="spacer"><div></div></paper-item>
                     <paper-item on-tap="editorialTap">Redaktion</paper-item>

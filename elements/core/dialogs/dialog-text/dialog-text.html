@@ -1,13 +1,17 @@
 ﻿<dom-module id="dialog-text">
     <template>
         <style>
+            paper-dialog.dialog-text > p:not(:empty) {
+                margin-top: 12px;
+            }
         </style>
         <paper-dialog id="dialog" always-on-top>
-            <h2>[[text]]</h2>
-            <paper-input id="dialogInput" autofocus value="{{input}}" on-keydown="checkForEnter" type="[[type]]" required="[[required]]" minlength="[[minlength]]" error-message="[[errorMessage]]" auto-validate="[[autoValidate]]"></paper-input>
+            <h2>[[headline]]</h2>
+            <p>[[text]]</p>
+            <paper-input id="dialogInput" autofocus value="{{input}}" on-keydown="checkForEnter" type="[[type]]" required="[[required]]" minlength="[[minlength]]" error-message="[[errorMessage]]" auto-validate="[[autoValidate]]" label="[[label]]"></paper-input>
             <div class="buttons">
                 <paper-button on-tap="dismiss">Annullér</paper-button>
-                <paper-button on-tap="confirm">OK</paper-button>
+                <paper-button on-tap="confirm">[[textOK]]</paper-button>
             </div>
         </paper-dialog>
     </template>
