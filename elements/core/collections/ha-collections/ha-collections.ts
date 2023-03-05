@@ -307,6 +307,8 @@ class HaCollections extends Tags implements polymer.Element {
                 return;
             }
 
+            App.haCollections.deselectAll();
+
             //Common.dom.append(DialogAlert.create(`Fandt Outdooractive rute med id: ${oaMatch[1]}`));
 
 
