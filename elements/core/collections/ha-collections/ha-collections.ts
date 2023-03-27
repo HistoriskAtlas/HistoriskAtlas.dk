@@ -257,6 +257,7 @@ class HaCollections extends Tags implements polymer.Element {
 
     public deselect(collection: HaCollection) {
         this.$.selector.deselect(collection);
+        collection.editing = false;
         App.map.iconLayer.visible = true;
     }
 
@@ -583,12 +584,13 @@ class HaCollections extends Tags implements polymer.Element {
         var drawPath: boolean = collection.cyclic;
         var totalDistance: number = 0;
         this.waitingForCallbackCount = collection.collection_geos.length - 1;
-        var canEdit: boolean = App.haUsers.user.canEditCollection(collection);
+
+        //var canEdit: boolean = App.haUsers.user.canEditCollection(collection);
 
         var i = 0;
         for (var cg of collection.collection_geos) { //TODO: Reuse features on collection when present?................
             //if (lastCG) {
-            var drawViaPoint = onlyRedrawViaPoints ? false : (cg.isViaPoint && collection == this.collection && (canEdit || cg.showOnMap))
+            var drawViaPoint = onlyRedrawViaPoints ? false : (cg.isViaPoint && collection == this.collection && (collection.editing || cg.showOnMap)) //canEdit
             var viaPoint = App.map.routeLayer.addPath(cg.geo.icon.coord4326, lastCG.geo.icon.coord4326, collection, drawViaPoint, drawPath, lastCG.calcRoute, i, (feature, distance) => { //TODO: use addFeatureS instead......
 
                 //TODO: calc extent of the whole collection: ..... console.log(feature.getGeometry().getExtent());

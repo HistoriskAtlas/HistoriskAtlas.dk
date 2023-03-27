@@ -11,6 +11,7 @@
     private _content: HaContent;
 
     private _selected: boolean;
+    private _editing: boolean;
 
     //private maps: Array<HaGeo>;
     //private _geoIds: Array<number>;
@@ -121,6 +122,13 @@
     }
     set selected(val: boolean) {
         this._selected = val;
+    }
+
+    get editing(): boolean {
+        return this._editing;
+    }
+    set editing(val: boolean) {
+        this._editing = val;
     }
 
     public get isUGC(): boolean {

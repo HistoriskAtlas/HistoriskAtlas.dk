@@ -1,54 +1,70 @@
 ﻿<dom-module id="window-route">
     <template>
         <style>
-            .content {
+            .window-route .content {
                 margin: 0px 17px 17px 17px;
                 font-size: 14px;
                 display: flex;
                 flex-direction: column;
                 height: 100%;
             }
-            .content > * {
+            .window-route .content > * {
                 flex-shrink: 0;
             }
-            .geo-list {
+            .window-route .geo-list {
                 /*flex-grow: 1;*/
                 /*flex-shrink: 1 !important;*/
             }
-            #byAndInfoLine {
-                display: flex; 
+            .window-route #byAndInfoLine {
+                display: flex;
                 margin: 10px 10px 20px 10px;
             }
-            by-line {
+            .window-route by-line {
                 margin-top: 3.5px;
             }
-            .info-line {
+            .window-route .info-line {
                 font-size: small;
                 font-style: italic;
                 display: flex;
                 /*justify-content: space-between;*/
                 align-items: center;
             }
-            .dropdown-content {
+            .window-route .dropdown-content {
                 padding: 5px 5px 3px 5px;
             }
-            .dropdown-content > iron-icon {
+            .window-route .dropdown-content > iron-icon {
                 padding: 4px;
                 cursor: pointer;
                 display: block;
                 /*white-space: nowrap;*/
             }
-            .cyclic-toggle {
+            .window-route .cyclic-toggle {
                 pointer-events: none;
                 margin-left: auto;
             }
-            content-viewer {
+            .window-route content-viewer {
                 font-size: 12px;
                 line-height: 16px;
             }
+            .window-route #footer {
+                display: flex;
+                align-items: flex-end;
+                padding-top: 17px;
+            }
+            .window-route paper-fab {
+                width: 40px;
+                height: 40px;
+                padding: 8px;
+            }
+            window-basic.local-editing.window-route #editRoute,
+            window-basic:not(.editing).window-route #editRoute,
+            window-basic:not(.local-editing).window-route #viewRoute,
+            window-basic:not(.editing).window-route #viewRoute {
+                display: none
+            }
         </style>
         <ha-content content="{{route.content}}"></ha-content>
-        <window-basic id="windowbasic" window-title="[[route.title]]" width="400" height="650" right="10">
+        <window-basic id="windowbasic" window-title="[[route.title]]" width="400" height="650" right="10" class$="[[windowClass(editing,localEditing)]]">
             <div class="toolbar">
                 <paper-menu-button dynamic-align close-on-activate no-overlap>
                     <paper-icon-button icon="file-download" class="dropdown-trigger"></paper-icon-button>
@@ -85,12 +101,12 @@
             </div>
 
             <div id="content" class="content">
-                <content-viewer id="introContentViewer" content="{{route.content}}" editing="[[editing]]"></content-viewer>  <!--truncate-text-at="300"  TODO: maybe more long text to secondary tab.... -->
+                <content-viewer id="introContentViewer" content="{{route.content}}" editing="[[localEditing]]"></content-viewer>  <!--truncate-text-at="300"  TODO: maybe more long text to secondary tab.... -->
 
                 <div id="byAndInfoLine">
                     <by-line user="[[route.user]]" institutions="[[institutions]]"></by-line>
                     <div id="infoLine" class="info-line">
-                        <template is="dom-if" if="[[editing]]">
+                        <template is="dom-if" if="[[localEditing]]">
                             <paper-menu-button id="paperMenuButtonType" horizontal-align="right">
                                 <div class="dropdown-trigger">
                                     <!--<span>[[formatType(route.type)]]</span>-->
@@ -105,7 +121,7 @@
                                 </div>
                             </paper-menu-button>
                         </template>
-                        <template is="dom-if" if="[[!editing]]">
+                        <template is="dom-if" if="[[!localEditing]]">
                             <!--<span>[[formatType(route.type)]]</span>-->
                             <iron-icon icon="[[iconType(route.type)]]"></iron-icon>
                         </template>
@@ -114,7 +130,7 @@
                     </div>
                 </div>
 
-                <template is="dom-if" if="[[editing]]">
+                <template is="dom-if" if="[[localEditing]]">
                     <list-auto-suggest id="geoAutosuggest" class="geo-list" items="{{route.collection_geos}}" autosuggest-service="geos" existing-ids="[[getAutosuggestExistingIds(route.collection_geos,route.collection_geos.length)]]" name-path="title" suggest-name-path="title"> <!--autosuggest-schema="[[getAutosuggestSchema(route.collection_geos,route.collection_geos.length)]]"-->
                         <div class="list">
                             <collection-geo-sortable-list id="geoSortableList" items="{{route.collection_geos}}" editing></collection-geo-sortable-list>
@@ -129,16 +145,22 @@
             </paper-menu-button>-->
                     </list-auto-suggest>
                 </template>
-                <template is="dom-if" if="[[showReadonlyGeos(route.distance,editing)]]">
+                <template is="dom-if" if="[[showReadonlyGeos(route.distance,localEditing)]]">
                     <collection-geo-list collection-geos="[[route.collection_geos]]" class="geo-list"></collection-geo-list>
                 </template>
 
                 <div style="flex-grow:1"></div>
 
-                <horizontal-tag-list id="subjects" title="EMNER" menu="Subject" tags="[[subjects]]" editing="[[editing]]" tags-service="[[tagsService()]]"></horizontal-tag-list>
-                <template is="dom-if" if="[[showPeriodTags(periods.length,editing)]]">
-                    <horizontal-tag-list title="PERIODER" menu="Period" tags="[[periods]]" editing="[[editing]]" tags-service="[[tagsService()]]"></horizontal-tag-list>
-                </template>
+                <div id="footer">
+                    <div style="flex-grow:1">
+                        <horizontal-tag-list id="subjects" title="EMNER" menu="Subject" tags="[[subjects]]" editing="[[localEditing]]" tags-service="[[tagsService()]]"></horizontal-tag-list>
+                        <template is="dom-if" if="[[showPeriodTags(periods.length,localEditing)]]">
+                            <horizontal-tag-list title="PERIODER" menu="Period" tags="[[periods]]" editing="[[localEditing]]" tags-service="[[tagsService()]]"></horizontal-tag-list>
+                        </template>
+                    </div>
+                    <paper-fab id="editRoute" icon="create" class="HAPrimColor"></paper-fab>
+                    <paper-fab id="viewRoute" icon="done" class="HAPrimColor"></paper-fab>
+                </div>
 
                 <!--<template is="dom-if" if="[[editing]]">
                     <window-route-contest route="[[route]]"></window-route-contest>

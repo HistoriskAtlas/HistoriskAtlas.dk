@@ -14,6 +14,9 @@ class WindowRoute extends polymer.Base implements polymer.Element {
     public editing: boolean;
 
     @property({ type: Boolean, value: false })
+    public localEditing: boolean;
+
+    @property({ type: Boolean, value: false })
     public windowEditorialShown: boolean;
 
     @property({ type: Array, notify: true })
@@ -29,9 +32,32 @@ class WindowRoute extends polymer.Base implements polymer.Element {
         Analytics.collectionShow(this.route);
     }
 
+    @listen("editRoute.tap")
+    editRouteTap() {
+        this.localEditing = true;
+    }
+
+    @listen("viewRoute.tap")
+    viewRouteTap() {
+        this.localEditing = false;
+    }
+
     @observe('editing')
     editingChanged() {
-        if (!LocalStorage.get('firstRouteTourDone') && this.editing) {
+        if (!this.editing)
+            this.localEditing = false;
+    }
+
+    @observe('localEditing')
+    localEditingChanged() {
+
+        if (this.route) {
+            this.route.editing = this.localEditing;
+            //App.haCollections.select(this.route, null, false, false); //To update viaPoints showing
+            App.haCollections.drawRoute(this.route);
+        }
+
+        if (!LocalStorage.get('firstRouteTourDone') && this.localEditing) {
             this.spawnDialogTour('introContentViewer', 40, 'Du har oprettet en rute', 'Du kan altid finde hjælp i menuen (⋮) øverst. Skal vi hjælpe dig med de næste skridt nu?', null, null, null, null, true);
             this.curTourStep = 1;
         } else
@@ -306,15 +332,19 @@ class WindowRoute extends polymer.Base implements polymer.Element {
         this.$$('#paperMenuButtonType').close();
     }
 
-    showPeriodTags(length: number, editing: boolean): boolean {
-        return editing || length > 0;
+    windowClass(editing:boolean, localEditing: boolean): string {
+        return `${editing ? "editing " : ""}${localEditing ? "local-editing" : ""}`;
+    }
+
+    showPeriodTags(length: number, localEditing: boolean): boolean {
+        return localEditing || length > 0;
     }
     tagsService(): Tags {
         return App.haCollections;
     }
 
-    showReadonlyGeos(distance: number, editing: boolean): boolean {
-        return !editing && distance > 0;
+    showReadonlyGeos(distance: number, localEditing: boolean): boolean {
+        return !localEditing && distance > 0;
     }
 }
 

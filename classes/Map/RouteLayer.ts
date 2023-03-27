@@ -250,7 +250,10 @@
         if (!(collection == App.haCollections.collection))
             return;
 
-        if (!App.haUsers.user.canEditCollection(collection))
+        //if (!App.haUsers.user.canEditCollection(collection))
+        //    return;
+
+        if (!collection.editing)
             return;
 
         //var viaPoint: ol.Feature;
