@@ -44,7 +44,10 @@ class PanelInstitutionAdmin extends polymer.Base implements polymer.Element {
         //    'schema': '{institution:{' + (this.filter ? 'filters:[{tag:[{plurname:{like:' + this.filter + '}}]}],' : '') + 'fields:[id,type,deleted,geoviews,{user_institutions:[{user:[firstname,lastname]}]},{tag:[plurname]}]}}',
         //    'count': 'all',
         //    'deleted': 'any'
-        Services.HAAPI_GET('institutions', { schema: 'admin' }, (result) => {
+        var params: any = { schema: 'admin' };
+        if (this.filter)
+            params.filter = this.filter;
+        Services.HAAPI_GET('institutions', params, (result) => {
             this.updateInstitutions(result.data);
             if (callback)
                 callback();

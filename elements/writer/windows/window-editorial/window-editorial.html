@@ -20,6 +20,7 @@
             <paper-tabs id="tabs" selected="{{selectedTab}}" noink class="header bottom fit">
                 <paper-tab>Nyheder</paper-tab>
                 <paper-tab>Fortællinger</paper-tab>
+                <paper-tab>Ruter</paper-tab>
                 <template is="dom-if" if="[[hasWriters()]]">
                     <paper-tab>Skribenter</paper-tab>
                 </template>
@@ -29,6 +30,7 @@
             <iron-pages selected="[[selectedTab]]" selected-attribute="selected">
                 <panel-news-editorial></panel-news-editorial>
                 <panel-geo-editorial></panel-geo-editorial>
+                <panel-collection-editorial></panel-collection-editorial>
                 <template is="dom-if" if="[[hasWriters()]]">
                     <panel-user-editorial></panel-user-editorial>
                 </template>

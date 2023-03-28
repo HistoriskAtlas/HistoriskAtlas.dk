@@ -756,6 +756,7 @@
     <Content Include="elements\core\windows\window-search\window-search-result\window-search-result.html" />
     <Content Include="elements\writer\dialogs\dialog-embed\dialog-embed.html" />
     <Content Include="elements\writer\dialogs\dialog-user-selection\dialog-user-selection.html" />
+    <Content Include="elements\writer\windows\window-editorial\panel-collection-editorial\panel-collection-editorial.html" />
     <Content Include="elements\writer\windows\window-editorial\panel-news-editorial\panel-news-editorial.html" />
     <Content Include="elements\writer\windows\window-editorial\panel-stats-editorial\panel-stats-editorial.html" />
     <Content Include="elements\thrash\window-route-contest\window-route-contest.html" />
@@ -1241,6 +1242,7 @@
     <TypeScriptCompile Include="elements\core\windows\window-search\window-search-result\window-search-result.ts" />
     <TypeScriptCompile Include="elements\writer\dialogs\dialog-embed\dialog-embed.ts" />
     <TypeScriptCompile Include="elements\writer\dialogs\dialog-user-selection\dialog-user-selection.ts" />
+    <TypeScriptCompile Include="elements\writer\windows\window-editorial\panel-collection-editorial\panel-collection-editorial.ts" />
     <TypeScriptCompile Include="elements\writer\windows\window-editorial\panel-news-editorial\panel-news-editorial.ts" />
     <TypeScriptCompile Include="elements\writer\windows\window-editorial\panel-stats-editorial\panel-stats-editorial.ts" />
     <TypeScriptCompile Include="elements\thrash\window-route-contest\window-route-contest.ts" />

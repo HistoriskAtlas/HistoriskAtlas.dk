@@ -204,9 +204,16 @@ class HaCollections extends Tags implements polymer.Element {
         }
     }
 
+    public selectById(collectionId: number) {
+        var collections = this.collections.filter(c => c.id == collectionId);
+        if (collections == null || collections.length == 0)
+            return;
+        this.select(collections[0]);
+    }
+
     public select(collection: HaCollection, addGeo?: HaGeo, mapClick: boolean = false, anim: boolean = true) {
-        if (!App.haUsers.user.isWriter)
-            App.map.iconLayer.visible = false;
+        //if (!App.haUsers.user.isWriter)
+        //    App.map.iconLayer.visible = false;
 
         App.map.showRouteLayer();
 
@@ -258,7 +265,7 @@ class HaCollections extends Tags implements polymer.Element {
     public deselect(collection: HaCollection) {
         this.$.selector.deselect(collection);
         collection.editing = false;
-        App.map.iconLayer.visible = true;
+        //App.map.iconLayer.visible = true;
     }
 
     public newRoute(geo?: HaGeo) {
@@ -712,7 +719,7 @@ class HaCollections extends Tags implements polymer.Element {
 
         if (this.collection) {
             this.$.selector.deselect(this.collection);
-            App.map.iconLayer.visible = true;
+            //App.map.iconLayer.visible = true;
         }
 
         CollectionList.ignoreCollectionChanges = true;

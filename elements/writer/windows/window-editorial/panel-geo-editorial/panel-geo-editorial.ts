@@ -111,6 +111,8 @@ class PanelGeoEditorial extends polymer.Base implements polymer.Element {
             case 1: params.parentuserid = App.haUsers.user.id; break;
             case 2: params.institutionid = App.haUsers.user.currentInstitution.id; break;
         }
+        if (this.filter)
+            params.filter = this.filter
         Services.HAAPI_GET('geos', params, (result) => {
             this.updateGeos(result.data);
         })
