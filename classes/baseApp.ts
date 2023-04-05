@@ -238,7 +238,7 @@
         var id = `theme-${this.theme.linkname}`;
         root.classList.add(id);
         Common.loadCSS(id, `css/themes/${id}.css`, () => {
-            document.getElementById('mainMenuThemeContentCustomHtml').innerHTML = Common.getStyleVar('--main-menu-theme-content').replace(/^"+|"+$/g, '');
+            document.getElementById('mainMenuThemeContentCustomHtml').innerHTML = Common.getStyleVar('--main-menu-theme-content').replace(/^"+|"+$/g, '').replace(/\\"/g, '"');
         });
 
         if (Common.tagsLoaded)
