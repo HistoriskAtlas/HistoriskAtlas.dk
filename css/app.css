@@ -214,7 +214,7 @@ html:not(.drawer-open) paper-button.empty.map-menu
 html.menu-tags-shown.drawer-open #buttonTags,
 html.menu-digdag-shown.drawer-open #buttonDigDag,
 html.menu-routes-shown.drawer-open #buttonRoutes,
-html.menu-maps-shown.drawer-open #buttonMaps
+html.menu-maps-shown.drawer-open #buttonMaps:not(.HASecColor)
 {
     margin-bottom: calc(100vh - var(--main-menu-item-count) * 43px + 12px);
 }
