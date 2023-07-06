@@ -81,7 +81,7 @@
         var xhr = new XMLHttpRequest();
         xhr.open(method, url, true);
         xhr.responseType = 'json';
-        xhr.timeout = 10000;
+        xhr.timeout = 20000; //was 10000
         xhr.addEventListener('load', () => {
             if (Math.floor(xhr.status / 100) === 2) {
                 if (success)
@@ -102,8 +102,9 @@
         });
         if (progress)
             xhr.addEventListener('progress', (e: ProgressEvent) => progress(e));
-        xhr.addEventListener('error', () => Services.error(method, url, xhr.responseText, 'HAAPI error'));
-        xhr.addEventListener('timeout', () => Services.error(method, url, xhr.responseText, 'HAAPI timeout'));
+        xhr.addEventListener('error', () => Services.error(method, url, xhr.responseType == 'text' ? xhr.responseText : '', 'HAAPI error'));
+        xhr.addEventListener('timeout', () => Services.error(method, url, xhr.responseType == 'text' ? xhr.responseText : '', 'HAAPI timeout'));
+        //xhr.addEventListener('abort', () => {        });
         xhr.send(data);
     }
 
