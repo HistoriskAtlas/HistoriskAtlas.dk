@@ -702,6 +702,7 @@
     <Content Include="css\ol.css" />
     <Content Include="css\theme.css" />
     <Content Include="css\themes\theme-bregnetsogn.css" />
+    <Content Include="css\themes\theme-vandringer.css" />
     <Content Include="css\themes\theme-modstandskamp.css" />
     <Content Include="css\themes\theme-default.css" />
     <Content Include="css\themes\theme-digterruter.css" />
@@ -923,6 +924,8 @@
     <Content Include="images\theme\DanskeDigterruterLogo.png" />
     <Content Include="images\theme\DanskeDigterruterSmallLogo.png" />
     <Content Include="images\theme\EmilAarestrupRoute.png" />
+    <Content Include="images\theme\HistoriskeVandringerLogo.jpg" />
+    <Content Include="images\theme\HistoriskeVandringerSmallLogo.png" />
     <Content Include="images\theme\Modstandskamp_bomb_icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

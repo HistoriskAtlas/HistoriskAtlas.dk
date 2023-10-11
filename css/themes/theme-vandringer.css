@@ -1,0 +1,106 @@
+﻿:root.theme-vandringer {
+    --vandringer-red: #984f48;
+    --vandringer-green: #5b653e;
+    --primary-color: var(--vandringer-green) !important;
+    --menu-background-color: rgba(255,255,255,1) !important;
+    /*--menu-item-color: #b4d545 !important;*/
+    --map-route-collapsed-color: var(--vandringer-red);
+    /*--map-route-zero-length-color: rgba(221, 101, 91, .5);*/
+    --map-route-line-color: var(--vandringer-green);
+    --map-route-via-point-color: var(--vandringer-red);
+    --map-route-via-point-type: numeric;
+}
+
+.theme-vandringer embed-app paper-toolbar.window-basic {
+    background-color: white !important;
+    color: var(--vandringer-green) !important;
+}
+.theme-vandringer embed-app paper-toolbar.window-basic .title {
+    font-weight: bold !important;
+    padding-left: 0px;
+}
+.theme-vandringer embed-app window-route collection-geo-list {
+    display: none;
+}
+
+.theme-vandringer window-basic a, .theme-vandringer panel-theme a {
+    color: var(--vandringer-red);
+    text-decoration: none;
+}
+.theme-vandringer main-menu a {
+    color: var(--vandringer-red);
+    text-decoration: none;
+}
+.theme-vandringer .institution.by-line {
+    color: var(--vandringer-red);
+}
+
+.theme-vandringer paper-toolbar.medium-tall.main-app {
+    height: 64px !important;
+}
+.theme-vandringer paper-toolbar.medium-tall.main-app #bottomBar {
+    display: none;
+}
+
+/*.theme-vandringer main-menu.show-menu-themes {
+    background: linear-gradient(180deg, rgba(18,83,58,1) 0%, rgba(18,83,58,1) 145px, rgba(243,240,233,1) 145px, rgba(243,240,233,1) 100%);*/ /*#f3f0e9;*/ /*#f4edd2;*/
+/*}*/
+
+/*.theme-vandringer main-menu {
+    background-color: rgba(243,240,233,1);
+}
+*/.theme-vandringer main-menu.show-menu-themes > main-menu-item > iron-collapse:nth-child(2) {
+    background: linear-gradient(180deg, rgba(18,83,58,1) 0%, rgba(18,83,58,1) 98px, rgba(243,240,233,1) 98px, rgba(243,240,233,1) 100%);
+    background-attachment: local;
+}
+
+.theme-vandringer main-menu.show-menu-themes iron-icon[icon="close"] {
+    fill: #fff;
+}
+
+/*.theme-vandringer main-menu.show-menu-themes .logo-theme {
+    width: 230px;
+    height: 75px;
+    margin-bottom: 10px;
+}
+*/
+.theme-vandringer main-menu collection-list {
+    margin-bottom: 32px;
+}
+
+/*.theme-vandringer #mainMenuThemeLogo {
+    background-color: var(--primary-color);
+    background-repeat: no-repeat;
+    background-position: center;
+    
+    background-image: url('../../../../images/theme/DanskeDigterruterLogo.png');
+    height: 88px;
+    background-size: 230px;
+    background-position: top left;
+    padding-left: 16px;
+    background-origin: content-box;
+}*/
+
+.theme-vandringer #smallHALogo {
+    background-image: url(../../../../images/theme/HistoriskeVandringerSmallLogo.png);
+    background-size: contain;
+    color: transparent;
+}
+
+/*.theme-vandringer #menuItemRoute {
+    display: block !important;
+}*/
+
+.theme-vandringer main-menu[shown] {
+    background-color: white;
+    background-image: url(../../../../images/theme/HistoriskeVandringerLogo.jpg);
+    background-size: 80%;
+    background-position: center bottom 90px; 
+    background-repeat: no-repeat;
+    background-attachment: local;
+}
+
+.theme-vandringer #mainMenuThemeContent, .theme-vandringer main-menu collection-list {
+    background-color: white;
+}
+

@@ -251,7 +251,7 @@
         var routeTopLevels: Array<ICollectionTopLevel> = [];
         if (this.theme.tagid && this.theme != Global.defaultTheme) {
 
-            if (this.theme.linkname == 'digterruter') {
+            if (this.theme.linkname == 'digterruter' || this.theme.linkname == 'vandringer') {
                 var themeTag = App.haTags.byId[this.theme.tagid];
                 routeTopLevels.push(((tag: HaTag) => <ICollectionTopLevel>{
                     name: 'Ruterne', shown: false, selected: true, ignoreCreators: true, filter: (collection: HaCollection) => collection.tags.indexOf(tag) > -1

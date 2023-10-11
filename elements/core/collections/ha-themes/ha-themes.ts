@@ -39,7 +39,7 @@ class HaThemes extends polymer.Base implements polymer.Element {
         this.gettingThemes = true;
         var params: any = {}
         if (!Common.isDevOrBeta)
-            params.linknames = `1001,hod,modstandskamp,digterruter,${App.passed.theme.linkname}`
+            params.linknames = `1001,hod,modstandskamp,digterruter,vandringer,${App.passed.theme.linkname}`
 
         Services.HAAPI_GET('themes', params, (result) => {
             //this.showThemeMenu = false; TODO...................................................................
@@ -73,7 +73,7 @@ class HaThemes extends polymer.Base implements polymer.Element {
         var routeTopLevels: Array<ICollectionTopLevel> = [];
         if (this.theme.tagid && this.theme != Global.defaultTheme) {
 
-            if (this.isDigterruter(this.theme)) {
+            if (this.isDigterruter(this.theme) || this.isVandringer(this.theme)) {
                 var themeTag = App.haTags.byId[this.theme.tagid];
                 routeTopLevels.push(((tag: HaTag) => <ICollectionTopLevel>{
                     name: 'Ruterne', shown: false, selected: true, ignoreCreators: true, filter: (collection: HaCollection) => collection.tags.indexOf(tag) > -1
@@ -101,6 +101,9 @@ class HaThemes extends polymer.Base implements polymer.Element {
     }
     private isDigterruter(theme: ITheme): boolean {
         return theme.linkname == 'digterruter';
+    }
+    private isVandringer(theme: ITheme): boolean {
+        return theme.linkname == 'vandringer';
     }
 
     private getThemeCollections() {
