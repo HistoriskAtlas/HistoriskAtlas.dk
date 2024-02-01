@@ -18,7 +18,7 @@ class PanelLogin extends polymer.Base implements polymer.Element {
         //Common.loadJS('google-jssdk', '//apis.google.com/js/client:platform.js');
         (<any>window).handleFacebookResponse = (response) => this.handleFacebookResponse(response);
         Common.loadJS('facebook-jssdk', '//connect.facebook.net/da_DK/sdk.js', () => {
-            (<any>window).FB.init({ appId: '876939902336614', cookie: true, xfbml: true, version: 'v11.0' }); //TODO: callback when button is clicked?!................................
+            (<any>window).FB.init({ appId: '876939902336614', cookie: true, xfbml: true, version: 'v19.0' }); //was version 'v11.0' TODO: callback when button is clicked?!................................
 
         });
         Common.loadJS('google-jssdk', '//accounts.google.com/gsi/client', () => {
