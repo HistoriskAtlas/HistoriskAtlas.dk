@@ -52,15 +52,19 @@
     <br>
     <b>vælg sprog</b> / select language<br>
     <% 
+        var genericTitle = "";
         NameValueCollection qs = Request.QueryString;
         foreach (string lang in new string[] { "da", "en", "de" }) {
-            if (qs[lang + "Title"] == null && qs[lang + "GeoID"] == null)
+            if (qs[lang + "Title"] == null && qs[lang + "GeoID"] == null && Request.QueryString[lang + "Url"] == null)
                 continue;
 
             int geoid = qs[lang + "GeoID"] == null ? 0 : Int32.Parse(qs[lang + "GeoID"]);
-            HistoriskAtlas5.Frontend.HAGeo geo = GetGeo(geoid);
-            string title = Request.QueryString[lang + "Title"] == null ? geo.title : HttpUtility.UrlDecode(Request.QueryString[lang + "Title"]);
+            HistoriskAtlas5.Frontend.HAGeo geo = geoid == 0 ? null : GetGeo(geoid);
+            string title = Request.QueryString[lang + "Title"] == null ? (geo == null ? genericTitle : geo.title) : HttpUtility.UrlDecode(Request.QueryString[lang + "Title"]);
             string url = Request.QueryString[lang + "Url"] == null ? geo.absUrlPath : HttpUtility.UrlDecode(Request.QueryString[lang + "Url"]);
+
+            if (lang == "da")
+                genericTitle = title;
            %>
     <br>
     <a href="<%=url%>">
