@@ -18,6 +18,6 @@ C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\HistoriskAtlas5.Frontend.dll
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\bin\HistoriskAtlas5.Frontend.pdb
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csproj.AssemblyReference.cache
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csproj.CoreCompileInputs.cache
-C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.csproj.CopyComplete
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.dll
 C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\HistoriskAtlas5.Frontend.pdb
+C:\Users\Rasmus\source\repos\HistoriskAtlas.dk\obj\Release\Historis.B62E0C79.Up2Date
