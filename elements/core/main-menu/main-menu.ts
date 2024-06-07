@@ -192,7 +192,8 @@ class MainMenu extends polymer.Base implements polymer.Element {
     //    Common.dom.append(WindowCommittee.create());
     //}
     becomeAMemberTap() {
-        window.open('https://docs.google.com/forms/d/e/1FAIpQLSccVmHV4lPkaO8f2qsphqAA66zLNEW55WB77n__eXHHmIVmSw/viewform?usp=sf_link', '_blank')
+        //window.open('https://docs.google.com/forms/d/e/1FAIpQLSccVmHV4lPkaO8f2qsphqAA66zLNEW55WB77n__eXHHmIVmSw/viewform?usp=sf_link', '_blank')
+        window.open('http://blog.historiskatlas.dk/bliv-medlem/', '_blank')
         //Common.dom.append(WindowBecomeAMember.create());
     }
     guidelinesTap() {
