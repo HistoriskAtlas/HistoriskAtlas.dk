@@ -55,6 +55,10 @@
 }
 
 .theme-1001 #mainMenuAboutTheme {
+    display: none;
+}
+
+/*.theme-1001 #mainMenuAboutTheme {
     visibility: visible;
     color: #ecdf39;
     font-size: 13px;
@@ -62,8 +66,4 @@
 }
 .theme-1001 #mainMenuAboutTheme::after {
     content: 'om 1001 fortællinger';
-}
-
-/*.theme-1001 main-menu.main-app {
-    max-height: max(100%,700px)
 }*/
