@@ -69,7 +69,7 @@ namespace HistoriskAtlas5.Frontend
         {
             get
             {
-                return title.Replace(' ', '_').Replace(':', '_').Replace('/', '_').Replace("?", "") + "_(" + geoid + ")";
+                return title.Replace(' ', '_').Replace(':', '_').Replace('/', '_').Replace("?", "").Replace("\n", "").Replace("\r", "") + "_(" + geoid + ")";
             }
         }
 
