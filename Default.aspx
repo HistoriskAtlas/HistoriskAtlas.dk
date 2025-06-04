@@ -214,7 +214,8 @@
             //} else {
                 // polyfill the platform first!
                 var e = document.createElement('script');
-                e.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+                //e.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+                e.src = '/js/webcomponents-lite.min.js';
                 document.body.appendChild(e);
             //}
         })();
