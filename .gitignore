@@ -250,3 +250,8 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/bin/HistoriskAtlas5.Frontend.dll
+/bin/HistoriskAtlas5.Frontend.pdb
+/obj/Release/HistoriskAtlas5.Frontend.dll
+/HistoriskAtlas5.Frontend.csproj.user
+/obj/Release/HistoriskAtlas5.Frontend.pdb
